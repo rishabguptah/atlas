@@ -1,0 +1,430 @@
+<title>Where the Money Moved</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a sea chart. One wide map per story, a ledger strip under it, notes in the margin column on wide screens. */
+:root {
+  --paper: #eef2f1;
+  --sea: #dde7e8;
+  --land: #fbfaf6;
+  --coast: #b9c6c7;
+  --ink: #15242a;
+  --muted: #5b6d72;
+  --rule: #c9d5d6;
+  --lapis: #2148a0;
+  --saffron: #c07a0c;
+  --forced: #b3322b;
+  --card: #ffffff;
+  --f-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0c1619; --sea: #10232a; --land: #1f3138; --coast: #36505a; --ink: #e2ebec; --muted: #93a7ab;
+  --rule: #29404a; --lapis: #86a8ff; --saffron: #f0b04a; --forced: #ff7b6e; --card: #13252c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #0c1619; --sea: #10232a; --land: #1f3138; --coast: #36505a; --ink: #e2ebec; --muted: #93a7ab;
+  --rule: #29404a; --lapis: #86a8ff; --saffron: #f0b04a; --forced: #ff7b6e; --card: #13252c; color-scheme: dark }
+
+body { background: var(--paper); color: var(--ink); font: 15px/1.55 var(--f-body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 60px; display: grid; gap: 56px; }
+h1, h2 { font-family: var(--f-display); font-weight: 400; text-wrap: balance; margin: 0; line-height: 1.05; }
+h1 { font-size: clamp(40px, 7vw, 76px); letter-spacing: -0.01em; }
+h2 { font-size: clamp(30px, 4.4vw, 46px); }
+h1 em, h2 em { color: var(--lapis); }
+p { margin: 0; max-width: 66ch; }
+.eyebrow { font: 500 11px/1 var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 14px; }
+header p { font-size: 17px; color: var(--muted); }
+section { display: grid; gap: 18px; }
+.lede { display: grid; gap: 10px; }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+@media (max-width: 860px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.map { background: var(--sea); border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+.map svg { display: block; width: 100%; height: auto; }
+.land { fill: var(--land); stroke: var(--coast); stroke-width: .6; }
+.grat { fill: none; stroke: var(--coast); stroke-width: .4; opacity: .5; }
+.route { fill: none; stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 3; opacity: .55; }
+.route.on { opacity: .95; stroke-width: 1.4; }
+.trail { fill: none; stroke-width: 2; stroke-linecap: round; }
+.hub-label { font: 500 11px var(--f-body); fill: var(--ink); paint-order: stroke; stroke: var(--sea); stroke-width: 3px; stroke-linejoin: round; }
+.hub-label.now { font: 600 13px var(--f-body); }
+.hub-label.past { fill: var(--muted); font-weight: 400; }
+@keyframes pulse { from { r: 6; opacity: .7 } to { r: 22; opacity: 0 } }
+.ring { fill: none; stroke-width: 2; animation: pulse 1.8s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) { .ring { animation: none; opacity: .35; r: 12; } }
+
+.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.yearbox { font: 400 clamp(34px, 5vw, 48px)/1 var(--f-display); min-width: 4.5ch; font-variant-numeric: tabular-nums; }
+.slider { flex: 1 1 260px; display: grid; gap: 4px; min-width: 0; }
+input[type=range] { width: 100%; accent-color: var(--lapis); }
+button, .chip { font: 500 13px var(--f-body); color: var(--ink); background: var(--card); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+button:hover, .chip:hover { border-color: var(--muted); }
+button:focus-visible, .chip:focus-visible, input:focus-visible, .bar:focus-visible, .mig:focus-visible { outline: 2px solid var(--lapis); outline-offset: 2px; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.notes { display: grid; gap: 12px; }
+.note { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; display: grid; gap: 6px; }
+.note h3 { margin: 0; font: 400 24px/1.1 var(--f-display); }
+.note .when { font: 500 12px var(--f-mono); color: var(--muted); }
+.note .lost { color: var(--muted); font-size: 13.5px; }
+.note .src { font-size: 12px; color: var(--muted); }
+.cause { display: inline-block; font: 500 11px/1 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 3px 6px; border-radius: 3px; border: 1px solid currentColor; margin-right: 6px; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+
+.ledger { overflow-x: auto; border-top: 1px solid var(--rule); padding-top: 10px; }
+.ledger svg { display: block; min-width: 720px; width: 100%; height: auto; }
+.axis text, .tick-label { font: 400 10.5px var(--f-mono); fill: var(--muted); }
+.axis line, .axis path { stroke: var(--rule); }
+.bar { cursor: pointer; }
+.bar rect { rx: 2; }
+.bar text { font: 500 10.5px var(--f-body); pointer-events: none; }
+.cursor { stroke: var(--ink); stroke-width: 1.5; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.stat { padding: 14px 16px 14px 0; display: grid; gap: 4px; align-content: start; }
+.stat + .stat { border-left: 1px solid var(--rule); padding-left: 16px; }
+@media (max-width: 700px) { .stat + .stat { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule); } }
+.stat b { font: 400 40px/1 var(--f-display); font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13.5px; color: var(--muted); }
+.charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; }
+.chart { display: grid; gap: 6px; min-width: 0; }
+.chart h3 { margin: 0; font: 600 14px var(--f-body); }
+.chart .sub { font-size: 12.5px; color: var(--muted); }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.gridline { stroke: var(--rule); stroke-width: .6; }
+.line { fill: none; stroke-width: 2.2; stroke-linejoin: round; }
+.ev line { stroke: var(--muted); stroke-dasharray: 2 3; }
+.ev text { font: 400 10px var(--f-mono); fill: var(--muted); }
+.legend { display: flex; gap: 16px; font-size: 13px; flex-wrap: wrap; }
+.tip { position: absolute; pointer-events: none; background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: 6px 9px; font: 12px var(--f-mono); color: var(--ink); white-space: nowrap; box-shadow: 0 2px 10px rgb(0 0 0 / .12); }
+.chart-box { position: relative; }
+
+.migs { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 10px; }
+.mig { text-align: left; border-radius: 4px; padding: 12px 14px; display: grid; gap: 4px; background: var(--card); border: 1px solid var(--rule); cursor: pointer; font: inherit; color: inherit; }
+.mig[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.mig b { font: 400 21px/1.1 var(--f-display); }
+.mig .when { font: 500 11.5px var(--f-mono); color: var(--muted); }
+.mig p { font-size: 13.5px; }
+.mig .src { font-size: 11.5px; color: var(--muted); }
+.mpath { fill: none; stroke-width: 1.8; stroke-linecap: round; opacity: .8; }
+.mpath.dim { opacity: .12; }
+.mpath.hi { stroke-width: 3.2; opacity: 1; }
+footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 14px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Atlas · Economy, trade and migration</div>
+    <h1>Where the <em>money</em> moved</h1>
+    <p>The centre of world trade has never stayed put. It passed from Dilmun to New York in the west and from Lothal to Shanghai in the east, and every handover had a cause: a sack, a silted harbour, a new sea route. Drag the year and watch the baton change hands.</p>
+  </header>
+
+  <section id="relay">
+    <div class="controls">
+      <div class="yearbox mono" id="year" aria-live="polite"></div>
+      <div class="slider">
+        <input type="range" id="yr" min="0" max="1000" step="1" aria-label="Year">
+        <div class="mono eyebrow" style="display:flex;justify-content:space-between"><span>2500 BCE</span><span>0</span><span>1000</span><span>1500</span><span>Today</span></div>
+      </div>
+      <button id="play" type="button">Play</button>
+    </div>
+    <div class="chips" role="group" aria-label="Which relay">
+      <button class="chip" id="c-west" type="button" aria-pressed="true"><span class="dot" style="background:var(--lapis)"></span>West: Dilmun to New York</button>
+      <button class="chip" id="c-east" type="button" aria-pressed="true"><span class="dot" style="background:var(--saffron)"></span>East: Lothal to Shanghai</button>
+      <button class="chip" id="c-routes" type="button" aria-pressed="true">Trade routes</button>
+    </div>
+    <div class="stage">
+      <div class="map" id="relaymap"></div>
+      <div class="notes" id="notes"></div>
+    </div>
+    <div class="ledger"><svg id="gantt" role="img" aria-label="Timeline of leading trade hubs"></svg></div>
+  </section>
+
+  <section id="india">
+    <div class="lede">
+      <div class="eyebrow">Maddison Project 2020</div>
+      <h2>India and Britain, <em>four centuries</em> apart and back</h2>
+      <p>In 1600, the year the East India Company was chartered, the land that is now India had an economy about sixteen times the size of the land that is now the United Kingdom, and average incomes were not far apart. Then the gap opened.</p>
+    </div>
+    <div class="stats" id="stats"></div>
+    <div class="legend"><span><span class="dot" style="background:var(--saffron)"></span>India (today's borders)</span><span><span class="dot" style="background:var(--lapis)"></span>United Kingdom (today's borders)</span></div>
+    <div class="charts">
+      <div class="chart"><h3>Income per person</h3><div class="sub">GDP per capita, 2011 international dollars, log scale</div><div class="chart-box" id="ch-pc"></div></div>
+      <div class="chart"><h3>Size of the whole economy</h3><div class="sub">GDP, billions of 2011 international dollars, log scale</div><div class="chart-box" id="ch-gdp"></div></div>
+    </div>
+  </section>
+
+  <section id="migrations">
+    <div class="lede">
+      <div class="eyebrow">Population lens</div>
+      <h2>People on the <em>move</em></h2>
+      <p>Twenty-one movements that remade who lives where, from the first walk out of Africa to Partition. Red lines were forced. Pick one to trace it.</p>
+    </div>
+    <div class="chips" id="eras" role="group" aria-label="Era"></div>
+    <div class="map" id="migmap"></div>
+    <div class="migs" id="miglist"></div>
+  </section>
+
+  <footer>
+    <div>Economic series: <span id="mpdcite"></span>, CC BY 4.0, via Our World in Data. Values are for territory inside today's borders.</div>
+    <div>Hubs, routes and migrations are drafts written from the works cited on each card and are waiting for the atlas's fact-checker. The relay order is a judgement in the tradition of Braudel and Arrighi, and the two chains overlap on purpose. Route lines are straight joins between stops, not surveyed paths.</div>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+/*__DATA__*/
+(() => {
+const NOW = DATA.now;
+const fmtY = y => y < 0 ? `${-y} BCE` : y < 1000 ? `${y} CE` : `${y}`;
+const span = (a, b) => `${fmtY(a)} to ${b == null ? 'today' : fmtY(b)}`;
+const CAUSE = { war: 'War or sack', silt: 'Harbour silted', trade: 'Trade moved', capital: 'Power moved', climate: 'Climate' };
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const land = topojson.feature(DATA.land, DATA.land.objects.land);
+
+// Piecewise year scale shared by slider and ledger: deep past compressed, recent centuries roomy.
+const yDom = [-2500, -500, 1000, 1500, NOW], yRng = [0, .2, .45, .7, 1];
+const toT = d3.scaleLinear().domain(yDom).range(yRng).clamp(true);
+const fromT = d3.scaleLinear().domain(yRng).range(yDom).clamp(true);
+
+function makeMap(el, h) {
+  const W = 960, H = h;
+  const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img');
+  const proj = d3.geoNaturalEarth1();
+  return { svg, proj, path: d3.geoPath(proj), W, H };
+}
+
+// ---------- Relay ----------
+const R = makeMap('#relaymap', 520);
+R.proj.fitExtent([[10, 10], [R.W - 10, R.H - 10]], { type: 'MultiPoint', coordinates: [[-80, 55], [130, 55], [-80, -12], [130, -12]] });
+R.svg.attr('aria-label', 'Map of leading trade hubs');
+R.svg.append('path').datum(d3.geoGraticule10()).attr('class', 'grat').attr('d', R.path);
+R.svg.append('path').datum(land).attr('class', 'land').attr('d', R.path);
+const gRoutes = R.svg.append('g'), gTrail = R.svg.append('g'), gHubs = R.svg.append('g');
+const routeSel = gRoutes.selectAll('path').data(DATA.trade).join('path').attr('class', 'route')
+  .attr('d', d => R.path({ type: 'LineString', coordinates: d.line }));
+routeSel.append('title').text(d => `${d.name} (${span(d.start, d.end)}): ${d.goods.join(', ')}`);
+
+const show = { west: true, east: true, routes: true };
+const colorOf = r => r.id.endsWith('west') ? 'var(--lapis)' : 'var(--saffron)';
+let year = -2200;
+
+function activeLegs(r, y) { return r.legs.filter(l => l.start <= y && y < (l.end ?? NOW + 1)); }
+
+function drawRelay() {
+  document.getElementById('year').textContent = fmtY(year);
+  document.getElementById('yr').value = Math.round(toT(year) * 1000);
+  routeSel.attr('display', show.routes ? null : 'none').classed('on', d => d.start <= year && year <= d.end);
+  const relays = DATA.relays.filter(r => show[r.id.endsWith('west') ? 'west' : 'east']);
+  // trail: hubs that have started, joined in order
+  gTrail.selectAll('path').data(relays, r => r.id).join('path').attr('class', 'trail')
+    .attr('stroke', colorOf).attr('opacity', .75)
+    .attr('d', r => { const pts = r.legs.filter(l => l.start <= year).map(l => l.at); return pts.length > 1 ? R.path({ type: 'LineString', coordinates: pts }) : null; });
+  const hubs = [];
+  relays.forEach(r => r.legs.forEach((l, i) => { if (l.start <= year) hubs.push({ r, l, k: r.id + i, now: l.start <= year && year < (l.end ?? NOW + 1) }); }));
+  // one label per place: prefer the active leg
+  const seen = new Set();
+  hubs.sort((a, b) => b.now - a.now);
+  const g = gHubs.selectAll('g.hub').data(hubs, d => d.k).join(enter => {
+    const e = enter.append('g').attr('class', 'hub');
+    e.append('circle').attr('class', 'ring');
+    e.append('circle').attr('class', 'core');
+    e.append('text');
+    return e;
+  });
+  g.attr('transform', d => `translate(${R.proj(d.l.at)})`);
+  g.select('.ring').attr('display', d => d.now ? null : 'none').attr('stroke', d => colorOf(d.r));
+  g.select('.core').attr('r', d => d.now ? 6 : 3).attr('fill', d => d.now ? colorOf(d.r) : 'var(--land)')
+    .attr('stroke', d => colorOf(d.r)).attr('stroke-width', 1.5);
+  g.select('text').attr('class', d => 'hub-label ' + (d.now ? 'now' : 'past'))
+    .attr('x', d => d.l.at[0] > 100 ? 9 : -9).attr('text-anchor', d => d.l.at[0] > 100 ? 'start' : 'end').attr('dy', '0.35em')
+    .text(d => { const n = d.l.name.split(' (')[0]; if (seen.has(n)) return ''; seen.add(n); return n; });
+  g.filter(d => d.now).raise();
+
+  const notes = document.getElementById('notes');
+  const cards = relays.flatMap(r => activeLegs(r, year).map(l => ({ r, l })));
+  notes.innerHTML = '';
+  if (!cards.length) {
+    const next = relays.flatMap(r => r.legs).filter(l => l.start > year).sort((a, b) => a.start - b.start)[0];
+    notes.innerHTML = `<div class="note"><div class="when">Between hubs</div><p>No hub in these chains leads in ${fmtY(year)}.${next ? ` Next up: ${next.name.split(' (')[0]}, from ${fmtY(next.start)}.` : ''}</p></div>`;
+  }
+  cards.forEach(({ r, l }) => {
+    const d = document.createElement('div'); d.className = 'note';
+    d.innerHTML = `<div class="when"><span class="dot" style="background:${colorOf(r)}"></span>${r.id.endsWith('west') ? 'West' : 'East'} · ${span(l.start, l.end)}</div>
+      <h3></h3><p class="why"></p>${l.lost ? `<p class="lost"><span class="cause" style="color:${colorOf(r)}"></span></p>` : ''}<div class="src"></div>`;
+    d.querySelector('h3').textContent = l.name;
+    d.querySelector('.why').textContent = l.why;
+    if (l.lost) { d.querySelector('.cause').textContent = CAUSE[l.cause] || l.cause; d.querySelector('.lost').append(l.lost); }
+    d.querySelector('.src').textContent = 'Source: ' + l.src.join('; ');
+    notes.append(d);
+  });
+  drawCursor();
+}
+
+// Ledger strip: one row per relay, one bar per hub.
+const G = { W: 1100, rowH: 34, top: 8, left: 52, right: 12 };
+const gx = d3.scaleLinear().domain(yRng).range(yRng.map(t => G.left + t * (G.W - G.left - G.right)));
+const xOf = y => gx(toT(y));
+const gsvg = d3.select('#gantt').attr('viewBox', `0 0 ${G.W} ${G.top + G.rowH * 2 * 2 + 26}`);
+function drawGantt() {
+  gsvg.selectAll('*').remove();
+  DATA.relays.forEach((r, ri) => {
+    const base = G.top + ri * G.rowH * 2;
+    gsvg.append('text').attr('class', 'tick-label').attr('x', 0).attr('y', base + G.rowH).attr('dy', '0.35em').text(ri ? 'EAST' : 'WEST');
+    // stagger overlapping bars on two lanes
+    const laneEnd = [-1e9, -1e9];
+    r.legs.forEach(l => {
+      const e = l.end ?? NOW;
+      const lane = laneEnd[0] <= l.start ? 0 : laneEnd[1] <= l.start ? 1 : 0;
+      laneEnd[lane] = e;
+      const y0 = base + lane * G.rowH + 4, x0 = xOf(l.start), x1 = xOf(e);
+      const b = gsvg.append('g').attr('class', 'bar').attr('tabindex', 0).attr('role', 'button').attr('aria-label', `${l.name}, ${span(l.start, l.end)}`)
+        .on('click', () => { year = l.start; stop(); drawRelay(); })
+        .on('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); year = l.start; stop(); drawRelay(); } });
+      b.append('rect').attr('x', x0).attr('y', y0).attr('width', Math.max(2, x1 - x0)).attr('height', G.rowH - 8).attr('fill', colorOf(r)).attr('opacity', .85);
+      const nm = l.name.split(' (')[0];
+      if (x1 - x0 > nm.length * 6.2 + 6) b.append('text').attr('x', x0 + 5).attr('y', y0 + (G.rowH - 8) / 2).attr('dy', '0.35em').attr('fill', 'var(--paper)').text(nm);
+      else if (x1 + nm.length * 6.2 + 6 > G.W) b.append('text').attr('x', x0 - 4).attr('text-anchor', 'end').attr('y', y0 + (G.rowH - 8) / 2).attr('dy', '0.35em').attr('fill', 'var(--ink)').text(nm);
+      else b.append('text').attr('x', x1 + 4).attr('y', y0 + (G.rowH - 8) / 2).attr('dy', '0.35em').attr('fill', 'var(--ink)').text(nm);
+      b.append('title').text(`${l.name}: ${span(l.start, l.end)}`);
+    });
+  });
+  const axY = G.top + G.rowH * 4 + 6;
+  const ticks = [-2500, -2000, -1500, -1000, -500, 0, 500, 1000, 1250, 1500, 1750, 1900, 2000];
+  const ax = gsvg.append('g').attr('class', 'axis');
+  ax.append('line').attr('x1', G.left).attr('x2', G.W - G.right).attr('y1', axY).attr('y2', axY);
+  ticks.forEach(t => { ax.append('line').attr('x1', xOf(t)).attr('x2', xOf(t)).attr('y1', axY).attr('y2', axY + 4);
+    ax.append('text').attr('x', xOf(t)).attr('y', axY + 15).attr('text-anchor', 'middle').text(t < 0 ? `${-t} BCE` : t); });
+  gsvg.append('line').attr('class', 'cursor').attr('y1', G.top - 4).attr('y2', axY);
+}
+function drawCursor() { gsvg.select('.cursor').attr('x1', xOf(year)).attr('x2', xOf(year)); }
+
+let timer = null;
+const playBtn = document.getElementById('play');
+function stop() { if (timer) { timer.stop(); timer = null; playBtn.textContent = 'Play'; } }
+playBtn.addEventListener('click', () => {
+  if (timer) return stop();
+  if (year >= NOW) year = -2500;
+  playBtn.textContent = 'Pause';
+  let t = toT(year), last = null;
+  timer = d3.timer(el => { const dt = last == null ? 0 : el - last; last = el; t += dt / 40000; year = Math.round(fromT(t)); drawRelay(); if (t >= 1) stop(); });
+});
+document.getElementById('yr').addEventListener('input', e => { stop(); year = Math.round(fromT(+e.target.value / 1000)); drawRelay(); });
+for (const k of ['west', 'east', 'routes']) {
+  const b = document.getElementById('c-' + k);
+  b.addEventListener('click', () => { show[k] = !show[k]; b.setAttribute('aria-pressed', show[k]); drawRelay(); });
+}
+drawGantt(); drawRelay();
+
+// ---------- India vs Britain ----------
+const E = DATA.econ;
+const asMap = pts => new Map(pts.map(p => [p[0], p[1]]));
+const gI = asMap(E.india.gdp), gU = asMap(E.uk.gdp), pI = asMap(E.india.gdp_per_capita), pU = asMap(E.uk.gdp_per_capita);
+const ratio = (a, b, y) => a.get(y) / b.get(y);
+const both = [...gI.keys()].filter(y => gU.has(y)).sort((a, b) => a - b);
+const passBack = both.find(y => y > 1960 && both.filter(z => z >= y).every(z => gI.get(z) > gU.get(z)));
+const pcLast = Math.max(...[...pI.keys()].filter(y => pU.has(y)));
+const stats = [
+  [`${Math.round(ratio(gI, gU, 1600))}×`, 'India\'s economy against Britain\'s in 1600'],
+  [`${(ratio(pU, pI, 1600)).toFixed(1)}×`, 'Britain\'s income per person against India\'s in 1600'],
+  [`${Math.round(ratio(pU, pI, 1950))}×`, 'the same gap in 1950, three years after independence'],
+  [`${passBack}`, `the year India's economy passed Britain's for good; by ${pcLast} the income gap had narrowed to ${(ratio(pU, pI, pcLast)).toFixed(1)}×`],
+];
+document.getElementById('stats').innerHTML = stats.map(([b, s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('');
+document.getElementById('mpdcite').textContent = DATA.mpdCite;
+
+const EVENTS = [[1600, 'East India Co.'], [1757, 'Plassey'], [1858, 'Crown rule'], [1947, 'Independence'], [1991, 'Reforms']];
+function lineChart(el, series, fmt, yLabel) {
+  const W = 560, H = 300, m = { t: 22, r: 14, b: 26, l: 52 };
+  const box = d3.select(el);
+  const svg = box.append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', yLabel);
+  const x = d3.scaleLinear().domain([1500, 2018]).range([m.l, W - m.r]);
+  const all = series.flatMap(s => s.pts.filter(p => p[0] >= 1500).map(p => p[1]));
+  const y = d3.scaleLog().domain([d3.min(all) * 0.8, d3.max(all) * 1.25]).range([H - m.b, m.t]);
+  y.ticks(5).filter(t => String(t)[0] === '1' || String(t)[0] === '3').forEach(t => {
+    svg.append('line').attr('class', 'gridline').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(t)).attr('y2', y(t));
+    svg.append('text').attr('class', 'tick-label').attr('x', m.l - 6).attr('y', y(t)).attr('dy', '0.35em').attr('text-anchor', 'end').text(fmt(t));
+  });
+  [1500, 1600, 1700, 1800, 1900, 2000].forEach(t => svg.append('text').attr('class', 'tick-label').attr('x', x(t)).attr('y', H - 8).attr('text-anchor', 'middle').text(t));
+  const ev = svg.append('g').attr('class', 'ev');
+  EVENTS.forEach(([yr, name], i) => { ev.append('line').attr('x1', x(yr)).attr('x2', x(yr)).attr('y1', m.t - 6 + (i % 2) * 10).attr('y2', H - m.b);
+    ev.append('text').attr('x', x(yr) + 3).attr('y', m.t - 8 + (i % 2) * 10).text(name); });
+  series.forEach(s => {
+    const pts = s.pts.filter(p => p[0] >= 1500);
+    svg.append('path').attr('class', 'line').attr('stroke', s.color).attr('d', d3.line().x(p => x(p[0])).y(p => y(p[1]))(pts));
+    const lp = pts[pts.length - 1];
+    svg.append('circle').attr('cx', x(lp[0])).attr('cy', y(lp[1])).attr('r', 3.5).attr('fill', s.color);
+    pts.filter(p => p[0] < 1820).forEach(p => svg.append('circle').attr('cx', x(p[0])).attr('cy', y(p[1])).attr('r', 2.6).attr('fill', 'var(--card)').attr('stroke', s.color).attr('stroke-width', 1.4));
+  });
+  // hover readout
+  const tip = box.append('div').attr('class', 'tip').attr('hidden', true);
+  const vline = svg.append('line').attr('stroke', 'var(--ink)').attr('stroke-width', .8).attr('y1', m.t).attr('y2', H - m.b).attr('display', 'none');
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent')
+    .on('pointermove', ev => {
+      const [px] = d3.pointer(ev); const yr = Math.round(x.invert(px));
+      const near = s => { let best = null; s.pts.forEach(p => { if (p[0] >= 1500 && (!best || Math.abs(p[0] - yr) < Math.abs(best[0] - yr))) best = p; }); return best; };
+      const vals = series.map(s => [s, near(s)]);
+      vline.attr('display', null).attr('x1', x(yr)).attr('x2', x(yr));
+      const r = svg.node().getBoundingClientRect(), k = r.width / W;
+      tip.attr('hidden', null).style('left', Math.min(px * k + 10, r.width - 170) + 'px').style('top', '28px')
+        .html(`${yr}<br>` + vals.map(([s, p]) => `<span style="color:${s.color}">●</span> ${s.name}: ${fmt(p[1])}${p[0] !== yr ? ` <span style="opacity:.6">(${p[0]})</span>` : ''}`).join('<br>'));
+    })
+    .on('pointerleave', () => { tip.attr('hidden', true); vline.attr('display', 'none'); });
+}
+const money = v => v >= 1000 ? `$${d3.format(',')(Math.round(v))}` : `$${Math.round(v)}`;
+lineChart('#ch-pc', [{ name: 'India', color: 'var(--saffron)', pts: E.india.gdp_per_capita }, { name: 'UK', color: 'var(--lapis)', pts: E.uk.gdp_per_capita }], money, 'GDP per capita, India and UK, 1500 to 2018');
+lineChart('#ch-gdp', [{ name: 'India', color: 'var(--saffron)', pts: E.india.gdp.map(p => [p[0], p[1] / 1e9]) }, { name: 'UK', color: 'var(--lapis)', pts: E.uk.gdp.map(p => [p[0], p[1] / 1e9]) }],
+  v => v >= 1000 ? `$${d3.format(',.0f')(v / 1000)}tn` : `$${d3.format(',.0f')(v)}bn`, 'Total GDP, India and UK, 1500 to 2018');
+
+// ---------- Migrations ----------
+const M = makeMap('#migmap', 470);
+M.proj.fitExtent([[6, 6], [M.W - 6, M.H - 6]], { type: 'Sphere' });
+M.svg.attr('aria-label', 'Map of major migrations');
+M.svg.append('path').datum(d3.geoGraticule10()).attr('class', 'grat').attr('d', M.path);
+M.svg.append('path').datum(land).attr('class', 'land').attr('d', M.path);
+const ERAS = [['all', 'All', () => true], ['deep', 'Before farming', m => m.start < -10000], ['ancient', 'Farmers and seafarers', m => m.start >= -10000 && m.start < 300],
+  ['medieval', '300 to 1500', m => m.start >= 300 && m.start < 1500], ['modern', 'Since 1500', m => m.start >= 1500]];
+const eraColor = m => m.forced ? 'var(--forced)' : m.start < -10000 ? 'var(--muted)' : m.start < 300 ? 'var(--saffron)' : m.start < 1500 ? 'var(--ink)' : 'var(--lapis)';
+const defs = M.svg.append('defs');
+const mpaths = M.svg.append('g').selectAll('path').data(DATA.migs).join('path').attr('class', 'mpath')
+  .attr('stroke', eraColor).attr('d', d => M.path({ type: 'LineString', coordinates: d.line }));
+const mends = M.svg.append('g').selectAll('circle').data(DATA.migs).join('circle')
+  .attr('r', 3.2).attr('fill', eraColor).attr('transform', d => `translate(${M.proj(d.line[d.line.length - 1])})`);
+mpaths.append('title').text(d => d.name);
+let era = 'all', pick = null;
+const fmtPeople = p => p[0] === p[1] ? `about ${d3.format('.2~s')(p[0]).replace('M', ' million')}` : `${d3.format('.3~s')(p[0]).replace('M', '')} to ${d3.format('.3~s')(p[1]).replace('M', ' million')}`;
+function drawMigs() {
+  const f = ERAS.find(e => e[0] === era)[2];
+  mpaths.attr('display', d => f(d) ? null : 'none').classed('dim', d => pick && d !== pick).classed('hi', d => d === pick);
+  mends.attr('display', d => f(d) ? null : 'none').attr('opacity', d => pick && d !== pick ? .15 : 1);
+  if (pick) mpaths.filter(d => d === pick).raise();
+  const list = document.getElementById('miglist'); list.innerHTML = '';
+  DATA.migs.filter(f).forEach(m => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'mig'; b.setAttribute('aria-pressed', m === pick);
+    b.innerHTML = `<span class="when"><span class="dot"></span></span><b></b><p></p><span class="src"></span>`;
+    b.querySelector('.dot').style.background = eraColor(m);
+    b.querySelector('.when').append(`${m.approx ? 'c. ' : ''}${span(m.start, m.end)}${m.people ? ' · ' + fmtPeople(m.people) + ' people' : ''}${m.forced ? ' · forced' : ''}`);
+    b.querySelector('b').textContent = m.name;
+    b.querySelector('p').textContent = m.why;
+    b.querySelector('.src').textContent = m.stops.join(' → ') + ' · ' + m.src.join('; ');
+    b.addEventListener('click', () => { pick = pick === m ? null : m; drawMigs(); });
+    list.append(b);
+  });
+}
+const erasEl = document.getElementById('eras');
+ERAS.forEach(([k, label]) => {
+  const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = label; b.setAttribute('aria-pressed', k === era);
+  b.addEventListener('click', () => { era = k; pick = null; erasEl.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === b)); drawMigs(); });
+  erasEl.append(b);
+});
+const red = document.createElement('span'); red.className = 'chip'; red.style.cursor = 'default'; red.innerHTML = '<span class="dot" style="background:var(--forced)"></span>Forced';
+erasEl.append(red);
+drawMigs();
+})();
+</script>
