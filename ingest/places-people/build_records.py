@@ -30,6 +30,9 @@ GEONAMES = {'cite': 'GeoNames cities1000 via the all-the-cities 3.1.0 npm packag
 LARGEST = {'cite': 'Wikipedia, "List of largest cities throughout history", tables after Morris 2010, Modelski 2003 '
                    'and Chandler 1987; transcribed 2026-10-24',
            'url': 'https://en.wikipedia.org/wiki/List_of_largest_cities_throughout_history'}
+REBA = {'cite': 'Reba, Reitsma & Seto 2016, Spatializing 6,000 years of global urbanization from 3700 BC to AD 2000, '
+                'Scientific Data 3:160034 (after Chandler 1987 and Modelski 2003). Attribution, non-commercial, share-alike',
+        'url': 'https://doi.org/10.7910/DVN/LMCQGX'}
 BOOKS = {'chandler': 'Chandler, Four Thousand Years of Urban Growth (1987)',
          'modelski': 'Modelski, World Cities: -3000 to 2000 (2003)',
          'morris': 'Morris, The Measure of Civilization / Why the West Rules (2010)'}
@@ -37,6 +40,8 @@ BOOKS = {'chandler': 'Chandler, Four Thousand Years of Urban Growth (1987)',
 # Same slugs the Living Atlas already uses, so its stubs merge into these records.
 ALIASES = {'saint_petersburg': 'st_petersburg', 'kiev': 'kyiv', 'rio_de_janeiro': 'rio', 'xi_an': 'xian',
            'mohenjo_daro': 'mohenjo', 'new_york_city': 'new_york', 'benin': 'benin_city'}
+# Reba series that mix two places under one city id: from this year on, points belong to another place.
+REBA_SPLITS = {'Memphis_29.8_31.3': (1800, 'place:memphis_united_states')}
 COUNTRY_NAMES = {'IR': 'Iran', 'RU': 'Russia', 'KR': 'South Korea', 'KP': 'North Korea', 'SY': 'Syria',
                  'TW': 'Taiwan', 'VN': 'Vietnam', 'BO': 'Bolivia', 'VE': 'Venezuela', 'TZ': 'Tanzania',
                  'MD': 'Moldova', 'LA': 'Laos', 'CD': 'DR Congo', 'CG': 'Congo', 'PS': 'Palestine',
@@ -88,6 +93,64 @@ def dist(lat1, lon1, lat2, lon2):
     p1, p2 = math.radians(lat1), math.radians(lat2)
     a = math.sin((p2 - p1) / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(math.radians(lon2 - lon1) / 2) ** 2
     return 12742 * math.asin(math.sqrt(a))
+
+
+def reba_series(places, la):
+    """Match each Reba city to a place record by name within 30 km, or add a new place. Returns [(place id, points)]."""
+    path = os.path.join(RAW, 'reba', 'historical_urban_population.csv')
+    if not os.path.exists(path):
+        print('no Reba data in raw/places-people/reba/, skipping')
+        return []
+    cities = defaultdict(lambda: {'pts': {}})
+    for r in csv.DictReader(open(path, encoding='utf-8-sig')):
+        if not int(r['pop'] or 0):
+            continue
+        c = cities[r['cityid']]
+        c.update(name=r['City'], other=r['OtherName'], today=r['Country'], lat=float(r['Latitude']),
+                 lon=float(r['Longitude']), certainty=int(r['Certainty']))
+        y = int(r['year'])
+        c['pts'][y] = max(c['pts'].get(y, 0), int(r['pop']))
+    by_base = defaultdict(list)  # name slug -> place records carrying it (plain or suffixed id)
+    pool = places + [p for p in la if 'lat' in p]
+    for p in pool:
+        by_base[p['id'][6:]].append(p)
+        by_base[slug(p['name'])].append(p)
+    taken = {p['id'][6:] for p in pool}
+    out, matched = [], 0
+    for cid, c in sorted(cities.items()):
+        names = [ALIASES.get(slug(n), slug(n)) for n in (c['name'], *c['other'].split(',')) if n.strip()]
+        near = [(dist(c['lat'], c['lon'], p['lat'], p['lon']), p['id']) for n in names for p in by_base.get(n, [])]
+        near = [n for n in near if n[0] < 30]
+        if near:
+            pid = min(near)[1]
+            matched += 1
+        else:
+            base = names[0]
+            for s in (base, f'{base}_{slug(c["today"])}', f'{base}_{slug(cid)}'):
+                if s not in taken:
+                    break
+            taken.add(s)
+            pid = 'place:' + s
+            rec = {'id': pid, 'kind': 'place', 'name': c['name'], 'subtype': 'city', 'lenses': ['geography', 'population'],
+                   'today': c['today'], 'lat': round(c['lat'], 4), 'lon': round(c['lon'], 4),
+                   'ext': {'reba': cid}, 'sources': [REBA], 'status': 'sourced'}
+            if c['certainty'] > 1:
+                rec['note'] = f'Reba geocoding certainty {c["certainty"]} of 3 (1 is best)'
+            places.append(rec)
+            by_base[s].append(rec)
+        pts = [[y, c['pts'][y]] for y in sorted(c['pts'])]
+        if cid in REBA_SPLITS:
+            cut, other = REBA_SPLITS[cid]
+            out.append((other, [p for p in pts if p[0] >= cut]))
+            pts = [p for p in pts if p[0] < cut]
+        out.append((pid, pts))
+    # Two Reba cities can land on one place (e.g. old and new names); keep one series per place, the longer one.
+    best = {}
+    for pid, pts in out:
+        if pid not in best or len(pts) > len(best[pid]):
+            best[pid] = pts
+    print(f'reba: {len(cities)} cities, {matched} matched to existing places, {len(best)} series')
+    return sorted(best.items())
 
 
 def dump(name, recs):
@@ -194,6 +257,8 @@ def main():
                'status': 'draft'}
         places.append(rec)
     places.sort(key=lambda r: r['id'])
+    reba = reba_series(places, la)
+    places.sort(key=lambda r: r['id'])
     place_ids = {p['id'] for p in places} | {p['id'] for p in la}
 
     # ---- Person records ---------------------------------------------------------------------------
@@ -255,6 +320,11 @@ def main():
                          'note': 'Years when this was the largest city in the world, per this source. Transcribed '
                                  'through a summarising web fetch, so draft until checked against the page',
                          'sources': [{'cite': BOOKS[src]}, LARGEST], 'status': 'draft'})
+    for pid, pts in reba:
+        measures.append({'id': f'm:population:{pid[6:]}:reba2016', 'kind': 'measure', 'of': pid, 'metric': 'population',
+                         'unit': 'people', 'points': pts, 'lenses': ['population'],
+                         'note': 'Years when the city made Chandler\'s or Modelski\'s lists; gaps mean not listed, not empty',
+                         'sources': [REBA], 'status': 'sourced'})
     measures.sort(key=lambda r: r['id'])
 
     dump('places.jsonl', places)

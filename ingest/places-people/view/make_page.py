@@ -49,21 +49,17 @@ def main(land_path, out_path):
                   role.replace('_', ' '), GROUPS.get(role, 'ideas' if ideas else 'other'), r['fame'],
                   r['ext']['wikipedia']])
 
-    big = []  # [year, place index, people, source]
+    cities = []  # [place index, [year, people, year, people, ...]] from Reba et al. 2016
     for m in measures:
-        if m['id'].endswith(':geonames'):
-            continue
-        src = m['id'].rsplit(':', 1)[1]
-        for pt in m['points']:
-            big.append([pt[0], place(m['of']), pt[1], src])
-    big.sort()
+        if m['id'].endswith(':reba2016'):
+            cities.append([place(m['of']), [v for pt in m['points'] for v in pt[:2]]])
 
-    data = json.dumps({'people': H, 'places': P, 'largest': big}, ensure_ascii=False, separators=(',', ':'))
+    data = json.dumps({'people': H, 'places': P, 'cities': cities}, ensure_ascii=False, separators=(',', ':'))
     land = open(land_path, encoding='utf-8').read()
     html = open(os.path.join(HERE, 'page.html'), encoding='utf-8').read()
     html = html.replace('/*DATA*/null', data).replace('/*LAND*/null', land)
     open(out_path, 'w', encoding='utf-8').write(html)
-    print(f'{out_path}: {len(html) // 1024} KB, {len(H)} people, {len(P)} places, {len(big)} largest-city points')
+    print(f'{out_path}: {len(html) // 1024} KB, {len(H)} people, {len(P)} places, {len(cities)} city series')
 
 
 if __name__ == '__main__':

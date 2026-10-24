@@ -49,7 +49,7 @@ aside h2 { font: 700 20px/1.2 var(--display); margin: 0; text-wrap: balance; }
 aside h3 { font: 600 11px var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 6px; }
 .search { width: 100%; box-sizing: border-box; font: 14px var(--body); padding: 8px 10px; border: 1px solid var(--rule); border-radius: 4px; background: var(--sea); color: var(--ink); }
 .facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 12px; margin: 0; }
-.facts dt { color: var(--muted); font-size: 12px; padding-top: 1px; }
+.facts dt { color: var(--muted); font-size: 12px; padding-top: 1px; font-variant-numeric: tabular-nums; }
 .facts dd { margin: 0; }
 .list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .who { all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 5px 2px; border-bottom: 1px solid var(--rule); cursor: pointer; }
@@ -75,7 +75,7 @@ aside h3 { font: 600 11px var(--body); text-transform: uppercase; letter-spacing
 <div class="app">
   <header>
     <h1>Who Could Have Met</h1>
-    <div class="sub">The 3,000 most-remembered people in history, at their birthplaces, alive in the year you choose. Pick anyone to see who lived in the same city at the same time.</div>
+    <div class="sub">The world's cities and its 3,000 most-remembered people, in the year you choose. Pick anyone to see who lived in the same city at the same time.</div>
   </header>
   <div class="mapwrap">
     <canvas id="map" aria-label="World map of famous people alive in the chosen year"></canvas>
@@ -102,13 +102,14 @@ aside h3 { font: 600 11px var(--body); text-transform: uppercase; letter-spacing
 <script>
 const DATA = /*DATA*/null;
 const LAND = /*LAND*/null;
+const CHIPS = [["cities", "Cities"]];
 const GROUPS = [["power", "Rulers & politics"], ["war", "War"], ["faith", "Religion"], ["ideas", "Science & philosophy"], ["words", "Writers"], ["arts", "Arts"], ["other", "Other"]];
 const css = n => getComputedStyle(document.documentElement).getPropertyValue("--" + n).trim();
 
 // people: [name, born, died, birthPlace, deathPlace, role, group, fame, wikiSlug]
 const P = DATA.places, H = DATA.people.map((r, i) => ({ i, name: r[0], b: r[1], d: r[2] ?? r[1] + 70, dKnown: r[2] != null,
   bp: r[3], dp: r[4], role: r[5], g: r[6], fame: r[7], wiki: r[8] }));
-const on = Object.fromEntries(GROUPS.map(g => [g[0], true]));
+const on = Object.fromEntries([...CHIPS, ...GROUPS].map(g => [g[0], true]));
 let year = 1504, sel = null, met = [];
 
 // Slider is piecewise so the crowded centuries get room: 3000 BCE..500 BCE, 500 BCE..1500, 1500..2020.
@@ -149,17 +150,39 @@ function resize() {
   draw();
 }
 const xy = i => { const [x, y] = proj([P[i][2], P[i][1]]); return [t.applyX(x), t.applyY(y)]; };
-function largestAt(y) {
-  let best = null;
-  for (const r of DATA.largest) { if (r[0] > y) break; if (y - r[0] <= 300) best = r; }
-  return best;
+// Cities: Reba et al. series, shown between a city's first and last listed year, interpolated on a log scale.
+const C = DATA.cities.map(([pi, f]) => ({ pi, ys: f.filter((_, k) => k % 2 === 0), ps: f.filter((_, k) => k % 2) }));
+function popAt(c, y) {
+  const n = c.ys.length;
+  if (y < c.ys[0] || y > c.ys[n - 1]) return 0;
+  let k = 0; while (k < n - 1 && c.ys[k + 1] <= y) k++;
+  if (c.ys[k] === y || k === n - 1) return c.ps[k];
+  // A long gap means the city dropped off the lists; show it only just after its last listing.
+  if (c.ys[k + 1] - c.ys[k] > 300) return y - c.ys[k] <= 50 ? c.ps[k] : 0;
+  const f = (y - c.ys[k]) / (c.ys[k + 1] - c.ys[k]);
+  return Math.round(Math.exp(Math.log(c.ps[k]) * (1 - f) + Math.log(c.ps[k + 1]) * f));
 }
+let cityCache = [-1e9, []];
+function citiesAt(y) {
+  if (cityCache[0] !== y) cityCache = [y, C.map(c => ({ pi: c.pi, pop: popAt(c, y) })).filter(c => c.pop > 0).sort((a, b) => b.pop - a.pop)];
+  return cityCache[1];
+}
+const largestAt = y => citiesAt(y)[0];
+const round2 = v => { const m = 10 ** Math.max(0, Math.floor(Math.log10(v)) - 1); return (Math.round(v / m) * m).toLocaleString(); };
 function draw() {
   ctx.clearRect(0, 0, W, Hh);
   ctx.save(); ctx.translate(t.x, t.y); ctx.scale(t.k, t.k);
   ctx.beginPath(); path(land); ctx.fillStyle = css("land"); ctx.fill();
   ctx.lineWidth = .6 / t.k; ctx.strokeStyle = css("coast"); ctx.stroke();
   ctx.restore();
+  if (on.cities) {
+    ctx.lineWidth = 1; ctx.strokeStyle = css("muted"); ctx.globalAlpha = .7;
+    for (const c of citiesAt(year)) {
+      const [x, y] = xy(c.pi), r = Math.max(1.5, Math.sqrt(c.pop) / 90) * Math.min(2, Math.sqrt(t.k));
+      ctx.beginPath(); ctx.rect(x - r, y - r, 2 * r, 2 * r); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
   const col = Object.fromEntries(GROUPS.map(g => [g[0], css(g[0])]));
   drawn = [];
   const live = H.filter(p => on[p.g] && alive(p, year)).sort((a, b) => a.fame - b.fame);
@@ -172,9 +195,9 @@ function draw() {
   ctx.globalAlpha = 1;
   const big = largestAt(year);
   if (big) {
-    const [x, y] = xy(big[1]);
+    const [x, y] = xy(big.pi);
     ctx.beginPath(); ctx.arc(x, y, 9, 0, 7); ctx.lineWidth = 2; ctx.strokeStyle = css("ink"); ctx.stroke();
-    label(`${P[big[1]][0]} · largest city`, x + 12, y + 4, css("ink"));
+    label(`${P[big.pi][0]} · largest city`, x + 12, y + 4, css("ink"));
   }
   if (sel) {
     const [bx, by] = xy(sel.bp), a = sel.dp >= 0 ? xy(sel.dp) : null;
@@ -195,7 +218,7 @@ function draw() {
     label(sel.name, bx + 11, by - 8, css("ink"), true);
   }
   const n = H.filter(p => alive(p, year)).length;
-  document.getElementById("yearLabel").innerHTML = `${fy(year)}<small>${n.toLocaleString()} of 3,000 alive</small>`;
+  document.getElementById("yearLabel").innerHTML = `${fy(year)}<small>${n.toLocaleString()} people · ${citiesAt(year).length} cities</small>`;
 }
 function label(s, x, y, c, bold) {
   ctx.font = `${bold ? 600 : 500} 12px "IBM Plex Sans", system-ui, sans-serif`;
@@ -229,9 +252,10 @@ function row(p, extra) {
 function panel() {
   if (!sel) {
     const live = H.filter(p => alive(p, year)).sort((a, b) => b.fame - a.fame).slice(0, 15);
-    const big = largestAt(year);
-    body.innerHTML = `<h2>Alive in ${fy(year)}</h2>
-      ${big ? `<p class="big">The world's largest city was probably ${esc(P[big[1]][0])}, at about ${big[2].toLocaleString()} people (${big[3][0].toUpperCase() + big[3].slice(1)}, ${fy(big[0])}).</p>` : ""}
+    const top = citiesAt(year).slice(0, 8), big = top[0];
+    body.innerHTML = `<h2>The world in ${fy(year)}</h2>
+      ${big ? `<p class="big">The largest city was probably ${esc(P[big.pi][0])}, at about ${round2(big.pop)} people.</p>
+      <div><h3>Biggest cities</h3><dl class="facts">${top.map(c => `<dt>${round2(c.pop)}</dt><dd>${esc(P[c.pi][0])}${P[c.pi][3] ? `, <span class="note">${esc(P[c.pi][3])}</span>` : ""}</dd>`).join("")}</dl></div>` : ""}
       <div><h3>Most remembered people alive</h3><ul class="list">${live.map(p => row(p, esc(P[p.bp][0]))).join("") || '<li class="note">Nobody in the dataset is alive this year.</li>'}</ul></div>
       ${about()}`;
     return;
@@ -250,7 +274,8 @@ function panel() {
 }
 function about() {
   return `<p class="note">Dots sit at each person's birthplace, sized by fame. "Could have met" means overlapping adult lives and a shared city, a hint that they might have crossed paths, not proof that they did.
-    People: <a href="https://pantheon.world" target="_blank" rel="noopener">Pantheon</a> 2025 (CC BY 4.0). Places: GeoNames (CC BY 4.0). Largest cities: Chandler 1987, Modelski 2003 and Morris 2010, via Wikipedia's list (draft transcription).</p>`;
+    Squares are cities, sized by population, between the first and last year a city appears in Reba et al.'s lists; short gaps are interpolated, and a city drops off the map during long gaps in the lists.
+    People: <a href="https://pantheon.world" target="_blank" rel="noopener">Pantheon</a> 2025 (CC BY 4.0). Cities: <a href="https://doi.org/10.1038/sdata.2016.34" target="_blank" rel="noopener">Reba, Reitsma &amp; Seto 2016</a>, after Chandler and Modelski. Places: GeoNames (CC BY 4.0).</p>`;
 }
 function focusOn(p, k) {
   const [x, y] = proj([P[p.bp][2], P[p.bp][1]]);
@@ -284,7 +309,8 @@ playBtn.addEventListener("click", () => {
 });
 
 // ---- Legend ----
-document.getElementById("legend").innerHTML = GROUPS.map(([g, n]) => `<button class="chip" type="button" data-g="${g}" aria-pressed="true"><i style="background:var(--${g})"></i>${n}</button>`).join("");
+document.getElementById("legend").innerHTML = `<button class="chip" type="button" data-g="cities" aria-pressed="true"><i style="border:1.5px solid var(--muted);border-radius:1px;width:7px;height:7px"></i>Cities</button>` +
+  GROUPS.map(([g, n]) => `<button class="chip" type="button" data-g="${g}" aria-pressed="true"><i style="background:var(--${g})"></i>${n}</button>`).join("");
 document.getElementById("legend").addEventListener("click", e => {
   const b = e.target.closest(".chip"); if (!b) return;
   on[b.dataset.g] = !on[b.dataset.g]; b.setAttribute("aria-pressed", on[b.dataset.g]); draw();
