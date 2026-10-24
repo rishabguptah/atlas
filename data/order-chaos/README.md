@@ -7,7 +7,7 @@ Which states looked fragile before they broke, and how often would we have been 
 | File | What | Status |
 | --- | --- | --- |
 | `polities.jsonl` | 682 polity stubs (peak area ≥ 50,000 km², lifespan ≥ 50 years). states-war owns polity records; these merge into theirs. | sourced |
-| `area.jsonl` | `m:area:<polity>:cliopatria`, territory in million km² at every Cliopatria change point | sourced |
+| `area.jsonl` | `m:area:<polity>:cliopatria`, territory in million km² at every Cliopatria change point. Skips ids states-war already publishes (it owns polity area). | sourced |
 | `fragility.jsonl` | `m:fragility:<polity>:atlas_lab`, out-of-sample probability of breaking within 50 years, every 10 years. New metric `fragility`, unit `probability_break_within_50y`. | sourced (model output; see `note`) |
 | `endings.jsonl` | `event:end_<polity>` for every polity that ended: subtype `collapse` (tags `withered` or `snapped`) or `succession` (a handoff) | sourced |
 | `secular-cycles.jsonl` | 8 secular cycles with phases, from Turchin & Nefedov (2009). New event subtype `secular_cycle` with a `phases` field. | draft |
