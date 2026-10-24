@@ -20,8 +20,8 @@ CYCLES = [
     ("Tudor-Stuart England", "polity:kingdom_of_england", [("expansion", 1485, 1580), ("stagflation", 1580, 1640), ("crisis", 1640, 1660), ("depression", 1660, 1730)]),
     ("Capetian France", "polity:kingdom_of_france", [("expansion", 1150, 1250), ("stagflation", 1250, 1315), ("crisis", 1315, 1360), ("depression", 1360, 1450)]),
     ("Valois France", "polity:kingdom_of_france", [("expansion", 1450, 1520), ("stagflation", 1520, 1560), ("crisis", 1560, 1600), ("depression", 1600, 1660)]),
-    ("Roman Republic", "polity:roman_republic", [("expansion", -350, -180), ("stagflation", -180, -130), ("crisis", -130, -30)]),
-    ("Roman Principate", "polity:roman_empire", [("expansion", -30, 165), ("stagflation", 165, 235), ("crisis", 235, 285)]),
+    ("Roman Republic", "polity:roman_rep", [("expansion", -350, -180), ("stagflation", -180, -130), ("crisis", -130, -30)]),
+    ("Roman Principate", "polity:roman", [("expansion", -30, 165), ("stagflation", 165, 235), ("crisis", 235, 285)]),
     ("Muscovy", "polity:grand_principality_of_moscow", [("expansion", 1460, 1530), ("stagflation", 1530, 1565), ("crisis", 1565, 1615)]),
     ("Romanov Russia", "polity:tsardom_of_russia", [("expansion", 1620, 1690), ("stagflation", 1690, 1725), ("crisis", 1725, 1762)]),
 ]

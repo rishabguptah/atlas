@@ -32,9 +32,53 @@ SRC = [{"cite": "Seshat Global History Databank, Cliopatria v0.2.1 (Bennett et a
 FEATURES = ["log_area", "share_of_peak", "change_25y", "change_100y", "log_age", "era"]
 
 
+# Polity ids must match states-war's (ingest/states-war/cliopatria.py), which owns polity records:
+# Living Atlas ids first, then its slug rule, "(X)" names get _group, clashes get _2, _3...
+LIVING_ATLAS = {
+    'akkad': 'Akkadian Empire', 'egypt_nk': 'New Kingdom of Egypt', 'hittite': 'Hittites',
+    'assyria': 'Neo-Assyrian Empire', 'babylonia': 'Neo-Babylonian Empire', 'zhou': 'Zhou Dynasty',
+    'achaemenid': 'Achaemenid Empire', 'carthage_e': 'Carthage', 'macedon': 'Macedonian Empire',
+    'maurya': 'Maurya Empire', 'seleucid': 'Seleucid Empire', 'ptolemaic': 'Ptolemaic Kingdom',
+    'qin': 'Qin Dynasty', 'xiongnu': 'Xiongnu', 'han': 'Han Dynasty', 'roman_rep': 'Roman Republic',
+    'roman': 'Roman Empire', 'parthian': 'Parthian Empire', 'kushan': 'Kushan Empire',
+    'aksum_e': 'Kingdom of Axum', 'sasanian': 'Sasanian Empire', 'gupta': 'Gupta Empire',
+    'hunnic': 'Hunnic Empire', 'byzantine': 'Byzantine Empire', 'ghana_e': 'Ghana Empire',
+    'sui': 'Sui Dynasty', 'tang': 'Tang Dynasty', 'tibetan': 'Tibetan Empire', 'umayyad': 'Umayyad Caliphate',
+    'abbasid': 'Abbasid Caliphate', 'srivijaya': 'Srivijaya', 'carolingian': 'Carolingian Empire',
+    'khmer': 'Khmer Empire', 'chola': 'Chola Empire', 'fatimid': 'Fatimid Caliphate', 'liao': 'Liao Dynasty',
+    'hre': 'Holy Roman Empire', 'song': 'Northern Song', 'seljuk': 'Great Seljuk Empire',
+    'almohad': 'Almohad Caliphate', 'delhi_s': '(Delhi Sultanate)', 'mongol': 'Mongol Empire',
+    'mali': 'Mali Empire', 'mamluk': 'Mamluk Sultanate', 'ottoman': 'Ottoman Empire',
+    'vijayanagara_e': 'Vijayanagara Empire', 'timurid': 'Timurid Empire', 'ming': 'Ming Dynasty',
+    'aztec': 'Aztec Triple Alliance', 'inca': 'Inca Empire', 'songhai': 'Songhai Empire',
+    'portuguese': 'Portuguese Empire', 'spanish': 'Spanish Empire', 'safavid': 'Safavid Dynasty',
+    'mughal': 'Mughal Empire', 'british': '(British Empire)', 'plc': 'Polish-Lithuanian Commonwealth',
+    'qing': 'Qing Dynasty', 'russian': 'Russian Empire', 'usa': 'United States of America',
+    'japan_e': 'Empire of Japan', 'german_e': 'German Empire', 'habsburg': 'Habsburg Monarchy',
+    'austria_h': 'Austria-Hungary', 'ussr': 'Union of Soviet Socialist Republics',
+}
+
+
 def slug(s):
-    s = re.sub(r"[^a-z0-9]+", "_", s.lower()).strip("_")
-    return s or "x"
+    return re.sub(r"_+", "_", re.sub(r"[^a-z0-9]+", "_", s.lower().replace("ü", "u").replace("ö", "o")
+                                     .replace("é", "e").replace("á", "a").replace("ç", "c"))).strip("_")
+
+
+def polity_ids(names):
+    ids, taken = {}, set()
+    for lid, name in LIVING_ATLAS.items():
+        ids[name] = "polity:" + lid
+        taken.add(lid)
+    for name in sorted(names):
+        if name in ids:
+            continue
+        s = slug(name) + ("_group" if name.startswith("(") else "")
+        base, n = s, 2
+        while s in taken:
+            s, n = f"{base}_{n}", n + 1
+        taken.add(s)
+        ids[name] = "polity:" + s
+    return ids
 
 
 def ring_centroid(ring):
@@ -63,6 +107,8 @@ def km_between(a, b):
 def load():
     d = json.loads(RAW.read_text())
     pol = defaultdict(list)
+    global ALL_NAMES
+    ALL_NAMES = {f["properties"]["Name"] for f in d["features"]}
     for f in d["features"]:
         p = f["properties"]
         if p["Name"].startswith("(") or p.get("Type") != "POLITY":
@@ -192,8 +238,9 @@ def main():
     classify_endings(pols)
     keep = {n: p for n, p in pols.items()
             if p["peak_area"] >= MIN_PEAK and (min(p["end"], LAST) - p["start"]) >= MIN_LIFE}
+    ids = polity_ids(ALL_NAMES)
     for p in keep.values():
-        p["id"] = "polity:" + slug(p["name"])
+        p["id"] = ids[p["name"]]
         p["fold"] = int(hashlib.md5(p["name"].encode()).hexdigest(), 16) % 2
 
     rows = []   # (polity, t, x, y, known)
