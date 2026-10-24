@@ -14,7 +14,8 @@ CITE = ('Bolt, Jutta and Jan Luiten van Zanden (2020), "Maddison style estimates
         'the world economy. A new 2020 update", Maddison Project Database, version 2020')
 HOME = 'https://www.rug.nl/ggdc/historicaldevelopment/maddison/releases/maddison-project-database-2020'
 REGIONS = {'World', 'East Asia', 'Eastern Europe', 'Latin America', 'South and South-East Asia',
-           'Sub-Sahara Africa', 'Western Europe'}
+           'Sub-Sahara Africa', 'Western Europe', 'Middle East', 'Western Offshoots'}
+FORMER = {'Former USSR', 'Former Yugoslavia', 'Czechoslovakia'}  # former states: territory as of their last borders
 METRICS = [('GDP per capita', 'gdp_per_capita', '2011 int$'),
            ('Population', 'population', 'people'),
            ('GDP', 'gdp', '2011 int$')]
@@ -55,9 +56,10 @@ def main():
     for entity in sorted({e for e, _ in series}):
         region = entity in REGIONS
         out.append({'id': place_id(entity), 'kind': 'place', 'name': entity, 'stub': True,
-                    'subtype': 'region', 'today': None if region else entity,
+                    'subtype': 'region', 'today': None if region or entity in FORMER else entity,
                     'what': ('A world region as grouped by the Maddison Project.' if region else
-                             'The territory inside today\'s borders of ' + entity + ', as the Maddison Project counts it.'),
+                             ('The territory of ' + entity + ' within its last borders, as the Maddison Project counts it.' if entity in FORMER else
+                             'The territory inside today\'s borders of ' + entity + ', as the Maddison Project counts it.')),
                     'lenses': ['economy', 'population'], 'sources': src[:1], 'status': 'sourced'})
         for _, metric, unit in METRICS:
             pts = sorted(series.get((entity, metric), []))

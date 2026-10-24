@@ -5,6 +5,8 @@
 <style>
 /* Layout: a sea chart. One wide map per story, a ledger strip under it, notes in the margin column on wide screens. */
 :root {
+  --ramp-lo: #f4e4a6; --ramp-mid: #3f9a8c; --ramp-hi: #15296a; --nodata: #e6ebea;
+  --c1: #2148a0; --c2: #c07a0c; --c3: #2f7d6d; --c4: #b3322b; --c5: #7a4fa0; --c6: #6b7b2c;
   --paper: #eef2f1;
   --sea: #dde7e8;
   --land: #fbfaf6;
@@ -22,10 +24,12 @@
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #0c1619; --sea: #10232a; --land: #1f3138; --coast: #36505a; --ink: #e2ebec; --muted: #93a7ab;
-  --rule: #29404a; --lapis: #86a8ff; --saffron: #f0b04a; --forced: #ff7b6e; --card: #13252c; color-scheme: dark } }
+  --rule: #29404a; --lapis: #86a8ff; --saffron: #f0b04a; --forced: #ff7b6e; --card: #13252c;
+  --ramp-lo: #24404a; --ramp-mid: #3fa08e; --ramp-hi: #ffd479; --nodata: #182a31; --c1: #86a8ff; --c2: #f0b04a; --c3: #5fcfb5; --c4: #ff7b6e; --c5: #c59cf0; --c6: #b9c86a; color-scheme: dark } }
 :root[data-theme="dark"] {
   --paper: #0c1619; --sea: #10232a; --land: #1f3138; --coast: #36505a; --ink: #e2ebec; --muted: #93a7ab;
-  --rule: #29404a; --lapis: #86a8ff; --saffron: #f0b04a; --forced: #ff7b6e; --card: #13252c; color-scheme: dark }
+  --rule: #29404a; --lapis: #86a8ff; --saffron: #f0b04a; --forced: #ff7b6e; --card: #13252c;
+  --ramp-lo: #24404a; --ramp-mid: #3fa08e; --ramp-hi: #ffd479; --nodata: #182a31; --c1: #86a8ff; --c2: #f0b04a; --c3: #5fcfb5; --c4: #ff7b6e; --c5: #c59cf0; --c6: #b9c86a; color-scheme: dark }
 
 body { background: var(--paper); color: var(--ink); font: 15px/1.55 var(--f-body); }
 .wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 60px; display: grid; gap: 56px; }
@@ -114,6 +118,20 @@ button:focus-visible, .chip:focus-visible, input:focus-visible, .bar:focus-visib
 .mpath { fill: none; stroke-width: 1.8; stroke-linecap: round; opacity: .8; }
 .mpath.dim { opacity: .12; }
 .mpath.hi { stroke-width: 3.2; opacity: 1; }
+.ramp { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); }
+.ramp svg { width: 260px; max-width: 100%; height: 28px; overflow: visible; }
+.nodata { display: inline-block; width: 14px; height: 10px; background: var(--nodata); border: 1px solid var(--coast); vertical-align: -1px; margin-right: 4px; }
+.country { stroke: var(--coast); stroke-width: .4; }
+.country:hover { stroke: var(--ink); stroke-width: 1.2; }
+.two { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 24px; }
+@media (max-width: 860px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.area { stroke: var(--paper); stroke-width: .5; }
+.spark-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: 14px 18px; }
+.spark { display: grid; gap: 2px; min-width: 0; }
+.spark b { font: 600 12.5px var(--f-body); display: flex; justify-content: space-between; gap: 6px; }
+.spark b span { font: 400 11px var(--f-mono); color: var(--muted); }
+.spark svg { width: 100%; height: auto; display: block; overflow: visible; }
+.group-label { grid-column: 1 / -1; padding-top: 6px; border-top: 1px solid var(--rule); }
 footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; border-top: 1px solid var(--rule); padding-top: 14px; }
 </style>
 
@@ -145,6 +163,22 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; border
     <div class="ledger"><svg id="gantt" role="img" aria-label="Timeline of leading trade hubs"></svg></div>
   </section>
 
+  <section id="wealth">
+    <div class="lede">
+      <div class="eyebrow">Wealth map</div>
+      <h2>The <em>great divergence</em>, country by country</h2>
+      <p>Average income, population or trade on today's map, year by year. Watch northwest Europe and its offshoots pull away after 1800, and East Asia close the gap after 1960. Each country shows its latest estimate in the window shown in the key; grey means no estimate yet.</p>
+    </div>
+    <div class="controls">
+      <div class="yearbox mono" id="w-year"></div>
+      <div class="slider"><input type="range" id="w-yr" aria-label="Year for the wealth map"><div class="mono eyebrow" style="display:flex;justify-content:space-between"><span id="w-min"></span><span id="w-max"></span></div></div>
+      <button id="w-play" type="button">Play</button>
+    </div>
+    <div class="chips" id="w-metrics" role="group" aria-label="What to show"></div>
+    <div class="map chart-box" id="wealthmap"></div>
+    <div class="ramp" id="w-ramp"></div>
+  </section>
+
   <section id="india">
     <div class="lede">
       <div class="eyebrow">Maddison Project 2020</div>
@@ -159,11 +193,46 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; border
     </div>
   </section>
 
+  <section id="people">
+    <div class="lede">
+      <div class="eyebrow">HYDE 3.2 · Klein Goldewijk</div>
+      <h2>Twelve thousand years of <em>people</em></h2>
+      <p>World population by continent since the end of the last ice age. The time axis stretches the recent past, because almost all the growth happened there. Switch to shares to see how long Asia has held most of humanity.</p>
+    </div>
+    <div class="chips" role="group" aria-label="Population view"><button class="chip" id="h-total" type="button" aria-pressed="true">Total</button><button class="chip" id="h-share" type="button" aria-pressed="false">Share</button></div>
+    <div class="two">
+      <div class="chart"><h3>Population by continent</h3><div class="sub" id="h-sub">People, 10,000 BCE to 2015</div><div class="chart-box" id="ch-hyde"></div><div class="legend" id="h-legend"></div></div>
+      <div class="chart"><h3>Share of people living in towns</h3><div class="sub">World urban share, HYDE 3.1 estimates</div><div class="chart-box" id="ch-urban"></div></div>
+    </div>
+  </section>
+
+  <section id="globalisation">
+    <div class="lede">
+      <div class="eyebrow">TRADHIST · Penn World Table · Costa, Palma and Reis</div>
+      <h2>How connected the world <em>got</em></h2>
+      <p>World trade as a share of world output rose through the 1800s, collapsed between the world wars, and only passed its 1913 level again in the 1970s. Before 1800, intercontinental trade per person shows which European states lived off the oceans.</p>
+    </div>
+    <div class="two">
+      <div class="chart"><h3>World trade as a share of world GDP</h3><div class="sub">Exports plus imports over GDP</div><div class="chart-box" id="ch-trade"></div></div>
+      <div class="chart"><h3>Intercontinental trade per person, 1500 to 1800</h3><div class="sub">Pounds per person, constant 1700 prices</div><div class="chart-box" id="ch-ic"></div></div>
+    </div>
+  </section>
+
+  <section id="silver">
+    <div class="lede">
+      <div class="eyebrow">Clio-Infra · USGS · Jacks 2019</div>
+      <h2>Silver, and the price of <em>everything else</em></h2>
+      <p>Spanish American silver paid for the Manila galleons and the tea trade. The mine series start in 1681, after Potosí's peak, so they show Mexico's long reign and then the American and Australian booms. Below them, real prices of 22 goods the routes carried since 1850 (1900 = 100, log scale).</p>
+    </div>
+    <div class="chart"><h3>Silver mined, by country</h3><div class="sub">Tonnes per year</div><div class="chart-box" id="ch-silver"></div><div class="legend" id="s-legend"></div></div>
+    <div class="spark-grid" id="prices"></div>
+  </section>
+
   <section id="migrations">
     <div class="lede">
       <div class="eyebrow">Population lens</div>
       <h2>People on the <em>move</em></h2>
-      <p>Twenty-one movements that remade who lives where, from the first walk out of Africa to Partition. Red lines were forced. Pick one to trace it.</p>
+      <p><span id="migcount"></span> movements that remade who lives where, from the first walk out of Africa to the factory towns of coastal China. Red lines were forced. Pick one to trace it.</p>
     </div>
     <div class="chips" id="eras" role="group" aria-label="Era"></div>
     <div class="map" id="migmap"></div>
@@ -171,7 +240,8 @@ footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 6px; border
   </section>
 
   <footer>
-    <div>Economic series: <span id="mpdcite"></span>, CC BY 4.0, via Our World in Data. Values are for territory inside today's borders.</div>
+    <div>Economic series: <span id="mpdcite"></span>, CC BY 4.0, via Our World in Data. Values are for territory inside today's borders; before a country split off, the map borrows its former state's figure (USSR, Yugoslavia, Czechoslovakia) and the tooltip says so.</div>
+    <div>Population: HYDE 3.2 and 3.1 (Klein Goldewijk et al.), Gapminder v5 with UN WPP 2017, Clio-Infra. Trade: Fouquin and Hugot, TRADHIST (CEPII 2016); Penn World Table 9.0; Costa, Palma and Reis (2015). Metals: Clio-Infra and USGS. Prices: Jacks (2019), Cliometrica. All via Our World in Data's dataset mirror.</div>
     <div>Hubs, routes and migrations are drafts written from the works cited on each card and are waiting for the atlas's fact-checker. The relay order is a judgement in the tradition of Braudel and Arrighi, and the two chains overlap on purpose. Route lines are straight joins between stops, not surveyed paths.</div>
   </footer>
 </div>
@@ -220,7 +290,7 @@ function activeLegs(r, y) { return r.legs.filter(l => l.start <= y && y < (l.end
 function drawRelay() {
   document.getElementById('year').textContent = fmtY(year);
   document.getElementById('yr').value = Math.round(toT(year) * 1000);
-  routeSel.attr('display', show.routes ? null : 'none').classed('on', d => d.start <= year && year <= d.end);
+  routeSel.attr('display', show.routes ? null : 'none').classed('on', d => d.start <= year && year <= (d.end ?? NOW));
   const relays = DATA.relays.filter(r => show[r.id.endsWith('west') ? 'west' : 'east']);
   // trail: hubs that have started, joined in order
   gTrail.selectAll('path').data(relays, r => r.id).join('path').attr('class', 'trail')
@@ -425,6 +495,195 @@ ERAS.forEach(([k, label]) => {
 });
 const red = document.createElement('span'); red.className = 'chip'; red.style.cursor = 'default'; red.innerHTML = '<span class="dot" style="background:var(--forced)"></span>Forced';
 erasEl.append(red);
+document.getElementById('migcount').textContent = DATA.migs.length;
 drawMigs();
+})();
+</script>
+<script>
+(() => {
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmtY = y => y < 0 ? `${-y} BCE` : y < 1000 ? `${y} CE` : `${y}`;
+const si = v => d3.format('.3~s')(v).replace('G', 'B');
+
+// Latest point at or before year, if it is no older than maxAge.
+function at(pts, y, maxAge) {
+  if (!pts) return null;
+  let lo = 0, hi = pts.length - 1, best = -1;
+  while (lo <= hi) { const mid = (lo + hi) >> 1; if (pts[mid][0] <= y) { best = mid; lo = mid + 1; } else hi = mid - 1; }
+  if (best < 0 || y - pts[best][0] > maxAge) return null;
+  return pts[best];
+}
+
+// ---------- Wealth map ----------
+const W = DATA.wealth;
+const METRICS = {
+  gdppc: { label: 'Income per person', min: 1500, max: 2018, start: 1870, age: 60, unit: '2011 int$',
+    scale: () => d3.scaleSequentialLog([400, 60000], d3.interpolateRgbBasis([css('--ramp-lo'), css('--ramp-mid'), css('--ramp-hi')])).clamp(true),
+    ticks: [500, 1000, 3000, 10000, 30000], fmt: v => '$' + d3.format(',')(Math.round(v)) },
+  pop: { label: 'Population', min: 1500, max: 2019, start: 1800, age: 60, unit: 'people',
+    scale: () => d3.scaleSequentialLog([2e5, 1.4e9], d3.interpolateRgbBasis([css('--ramp-lo'), css('--ramp-mid'), css('--ramp-hi')])).clamp(true),
+    ticks: [1e6, 1e7, 1e8, 1e9], fmt: si },
+  trade: { label: 'Trade share of GDP', min: 1827, max: 2014, start: 1913, age: 10, unit: 'exports plus imports over GDP',
+    scale: () => d3.scaleSequentialSqrt([0, 1.2], d3.interpolateRgbBasis([css('--ramp-lo'), css('--ramp-mid'), css('--ramp-hi')])).clamp(true),
+    ticks: [0.1, 0.3, 0.6, 1], fmt: v => Math.round(v * 100) + '%' },
+};
+let metric = 'gdppc', wYear = 1870, wTimer = null;
+const WM = { W: 960, H: 470 };
+const wsvg = d3.select('#wealthmap').append('svg').attr('viewBox', `0 0 ${WM.W} ${WM.H}`).attr('role', 'img').attr('aria-label', 'World map shaded by the chosen measure');
+const wproj = d3.geoNaturalEarth1().fitExtent([[6, 6], [WM.W - 6, WM.H - 6]], { type: 'Sphere' });
+const wpath = d3.geoPath(wproj);
+wsvg.append('path').datum(d3.geoGraticule10()).attr('class', 'grat').attr('d', wpath);
+const feats = topojson.feature(DATA.countries, DATA.countries.objects.countries).features.filter(f => f.id !== 'Antarctica');
+const cs = wsvg.append('g').selectAll('path').data(feats).join('path').attr('class', 'country').attr('d', wpath);
+const wtip = d3.select('#wealthmap').append('div').attr('class', 'tip').attr('hidden', true);
+function valueOf(name) {
+  const M = METRICS[metric];
+  let p = at(W[metric][name], wYear, M.age), via = null;
+  if (!p && metric === 'gdppc' && W.parent[name]) { p = at(W.parents[W.parent[name]], wYear, M.age); if (p) via = W.names[W.parent[name]]; }
+  return p ? { y: p[0], v: p[1], via } : null;
+}
+let colour = METRICS.gdppc.scale();
+function drawWealth() {
+  const M = METRICS[metric];
+  document.getElementById('w-year').textContent = wYear;
+  document.getElementById('w-yr').value = wYear;
+  cs.attr('fill', d => { const v = valueOf(d.id); return v ? colour(v.v) : 'var(--nodata)'; });
+}
+function setMetric(k) {
+  metric = k; const M = METRICS[k]; colour = M.scale();
+  const r = document.getElementById('w-yr'); r.min = M.min; r.max = M.max; r.step = 1;
+  wYear = Math.min(M.max, Math.max(M.min, k === 'trade' && wYear < M.min ? M.start : wYear));
+  document.getElementById('w-min').textContent = M.min; document.getElementById('w-max').textContent = M.max;
+  document.querySelectorAll('#w-metrics .chip').forEach(c => c.setAttribute('aria-pressed', c.dataset.k === k));
+  // key
+  const ramp = d3.select('#w-ramp').html('');
+  const rs = ramp.append('svg').attr('viewBox', '0 0 260 28');
+  const id = 'g' + k;
+  const gr = rs.append('defs').append('linearGradient').attr('id', id);
+  d3.range(0, 1.01, 0.1).forEach(t => gr.append('stop').attr('offset', t).attr('stop-color', colour(colour.domain()[0] * (k === 'trade' ? 1 : 1) + 0 || 0) && colour(k === 'trade' ? t * t * 1.2 : Math.exp(Math.log(colour.domain()[0]) + t * (Math.log(colour.domain()[1]) - Math.log(colour.domain()[0]))))));
+  rs.append('rect').attr('x', 0).attr('y', 0).attr('width', 260).attr('height', 10).attr('fill', `url(#${id})`);
+  const pos = v => k === 'trade' ? Math.sqrt(v / 1.2) * 260 : (Math.log(v) - Math.log(colour.domain()[0])) / (Math.log(colour.domain()[1]) - Math.log(colour.domain()[0])) * 260;
+  M.ticks.forEach(t => rs.append('text').attr('class', 'tick-label').attr('x', pos(t)).attr('y', 24).attr('text-anchor', 'middle').text(M.fmt(t)));
+  ramp.append('span').text(`${M.label}, ${M.unit}. Latest estimate within ${M.age} years.`);
+  ramp.append('span').html('<span class="nodata"></span>No estimate');
+  drawWealth();
+}
+const mEl = document.getElementById('w-metrics');
+Object.entries(METRICS).forEach(([k, M]) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.dataset.k = k; b.textContent = M.label;
+  b.addEventListener('click', () => setMetric(k)); mEl.append(b); });
+cs.on('pointermove', (ev, d) => {
+  const v = valueOf(d.id), M = METRICS[metric];
+  const r = wsvg.node().getBoundingClientRect(); const [px, py] = d3.pointer(ev, wsvg.node());
+  const k = r.width / WM.W;
+  wtip.attr('hidden', null).style('left', Math.min(px * k + 12, r.width - 200) + 'px').style('top', (py * k + 12) + 'px')
+    .text(v ? `${d.id}: ${M.fmt(v.v)} (${v.y}${v.via ? ', ' + v.via + ' figure' : ''})` : `${d.id}: no estimate`);
+}).on('pointerleave', () => wtip.attr('hidden', true));
+const wStop = () => { if (wTimer) { wTimer.stop(); wTimer = null; document.getElementById('w-play').textContent = 'Play'; } };
+document.getElementById('w-yr').addEventListener('input', e => { wStop(); wYear = +e.target.value; drawWealth(); });
+document.getElementById('w-play').addEventListener('click', () => {
+  if (wTimer) return wStop();
+  const M = METRICS[metric]; if (wYear >= M.max) wYear = M.min;
+  document.getElementById('w-play').textContent = 'Pause';
+  let last = 0;
+  wTimer = d3.timer(el => { if (el - last < 90) return; last = el; wYear = Math.min(M.max, wYear + (wYear < 1800 ? 10 : wYear < 1950 ? 2 : 1)); drawWealth(); if (wYear >= M.max) wStop(); });
+});
+setMetric('gdppc');
+
+// ---------- shared small line chart ----------
+function chart(el, { series, x, y, xTicks, yTicks, fmtX = d => d, fmtY, events = [], H = 280, Wd = 560 }) {
+  const m = { t: events.length ? 40 : 18, r: 14, b: 26, l: 52 };
+  const svg = d3.select(el).html('').append('svg').attr('viewBox', `0 0 ${Wd} ${H}`).attr('role', 'img');
+  x.range([m.l, Wd - m.r]); y.range([H - m.b, m.t]);
+  yTicks.forEach(t => { svg.append('line').attr('class', 'gridline').attr('x1', m.l).attr('x2', Wd - m.r).attr('y1', y(t)).attr('y2', y(t));
+    svg.append('text').attr('class', 'tick-label').attr('x', m.l - 6).attr('y', y(t)).attr('dy', '0.35em').attr('text-anchor', 'end').text(fmtY(t)); });
+  xTicks.forEach(t => svg.append('text').attr('class', 'tick-label').attr('x', x(t)).attr('y', H - 8).attr('text-anchor', 'middle').text(fmtX(t)));
+  const ev = svg.append('g').attr('class', 'ev');
+  events.forEach(([yr, name], i) => { ev.append('line').attr('x1', x(yr)).attr('x2', x(yr)).attr('y1', m.t - 22 + (i % 3) * 11).attr('y2', H - m.b);
+    ev.append('text').attr('x', x(yr) + 3).attr('y', m.t - 24 + (i % 3) * 11).text(name); });
+  series.forEach(s => {
+    svg.append('path').attr('class', 'line').attr('stroke', s.color).attr('stroke-width', s.w || 2.2).attr('opacity', s.op || 1)
+      .attr('d', d3.line().defined(p => p[1] > 0 || !y.base).x(p => x(p[0])).y(p => y(p[1]))(s.pts));
+    if (s.label) { const lp = s.pts[s.pts.length - 1]; svg.append('text').attr('class', 'tick-label').attr('x', x(lp[0]) + 4).attr('y', y(lp[1])).attr('dy', '0.35em').attr('fill', s.color).style('fill', s.color).text(s.label); }
+    if (s.dots) s.pts.forEach(p => svg.append('circle').attr('cx', x(p[0])).attr('cy', y(p[1])).attr('r', 2.6).attr('fill', 'var(--card)').attr('stroke', s.color).attr('stroke-width', 1.4));
+  });
+  return { svg, x, y, m, Wd, H };
+}
+
+// ---------- HYDE population ----------
+const REG = ['Asia', 'Africa', 'Europe', 'North and Central America', 'South America', 'Oceania'];
+const RC = ['var(--c1)', 'var(--c2)', 'var(--c3)', 'var(--c4)', 'var(--c5)', 'var(--c6)'];
+const hyYears = DATA.hyde.Asia.map(p => p[0]).filter(y => y <= 2015);
+const hyRows = hyYears.map(y => { const o = { y }; REG.forEach(r => { const p = DATA.hyde[r].find(q => q[0] === y); o[r] = p ? p[1] : 0; }); return o; });
+const hx = () => d3.scaleLinear().domain([-10000, -3000, 1, 1500, 1900, 2015]).range([0, .18, .4, .66, .86, 1]).clamp(true);
+let hShare = false;
+function drawHyde() {
+  const xs = hx(); const W0 = 560, ml = 52, mr = 14;
+  const x = d3.scaleLinear().domain(xs.domain()).range(xs.range().map(t => ml + t * (W0 - ml - mr)));
+  const rows = hyRows.map(o => { if (!hShare) return o; const t = REG.reduce((a, r) => a + o[r], 0); const n = { y: o.y }; REG.forEach(r => n[r] = o[r] / t); return n; });
+  const stack = d3.stack().keys(REG)(rows);
+  const y = d3.scaleLinear().domain([0, hShare ? 1 : d3.max(stack[stack.length - 1], d => d[1])]);
+  const yT = hShare ? [0, .25, .5, .75, 1] : [0, 2e9, 4e9, 6e9];
+  const c = { series: [], x: d3.scaleLinear(), y };
+  const svg = d3.select('#ch-hyde').html('').append('svg').attr('viewBox', `0 0 ${W0} 300`).attr('role', 'img').attr('aria-label', 'Stacked population by continent');
+  y.range([274, 18]);
+  yT.forEach(t => { svg.append('line').attr('class', 'gridline').attr('x1', ml).attr('x2', W0 - mr).attr('y1', y(t)).attr('y2', y(t));
+    svg.append('text').attr('class', 'tick-label').attr('x', ml - 6).attr('y', y(t)).attr('dy', '0.35em').attr('text-anchor', 'end').text(hShare ? Math.round(t * 100) + '%' : si(t)); });
+  [-10000, -3000, 1, 1000, 1500, 1900, 2000].forEach(t => svg.append('text').attr('class', 'tick-label').attr('x', x(t)).attr('y', 292).attr('text-anchor', 'middle').text(t < 0 ? `${-t / 1000}k BCE` : t === 1 ? '1 CE' : t));
+  svg.append('g').selectAll('path').data(stack).join('path').attr('class', 'area').attr('fill', (d, i) => RC[i])
+    .attr('d', d3.area().x(d => x(d.data.y)).y0(d => y(d[0])).y1(d => y(d[1])));
+  document.getElementById('h-sub').textContent = hShare ? 'Share of world population, 10,000 BCE to 2015' : 'People, 10,000 BCE to 2015';
+  const last = hyRows[hyRows.length - 1], tot = REG.reduce((a, r) => a + last[r], 0);
+  svg.append('text').attr('class', 'tick-label').attr('x', W0 - mr).attr('y', 12).attr('text-anchor', 'end').text(`2015: ${si(tot)} people`);
+}
+document.getElementById('h-legend').innerHTML = REG.map((r, i) => `<span><span class="dot" style="background:${RC[i]}"></span>${r}</span>`).join('');
+for (const [id, v] of [['h-total', false], ['h-share', true]]) document.getElementById(id).addEventListener('click', () => {
+  hShare = v; document.getElementById('h-total').setAttribute('aria-pressed', !v); document.getElementById('h-share').setAttribute('aria-pressed', v); drawHyde(); });
+drawHyde();
+chart('#ch-urban', { series: [{ pts: DATA.urban.filter(p => p[0] >= -5000), color: 'var(--lapis)', dots: true }],
+  x: d3.scaleLinear().domain([-5000, 2000]), y: d3.scaleLinear().domain([0, 0.5]),
+  xTicks: [-5000, -3000, -1000, 1000, 2000], fmtX: t => t < 0 ? `${-t} BCE` : t, yTicks: [0, .1, .2, .3, .4, .5], fmtY: t => Math.round(t * 100) + '%' });
+
+// ---------- Globalisation ----------
+chart('#ch-trade', { series: [{ pts: DATA.worldTrade.tradhist, color: 'var(--lapis)', label: 'TRADHIST' }, { pts: DATA.worldTrade.pwt, color: 'var(--saffron)', label: 'PWT', w: 1.6 }],
+  x: d3.scaleLinear().domain([1827, 2014]), y: d3.scaleLinear().domain([0, 0.65]),
+  xTicks: [1850, 1900, 1950, 2000], yTicks: [0, .1, .2, .3, .4, .5, .6], fmtY: t => Math.round(t * 100) + '%',
+  events: [[1869, 'Suez'], [1914, 'WWI'], [1929, 'Crash'], [1945, 'WWII ends'], [1991, 'USSR ends']] });
+const IC = DATA.ic, icKeys = Object.keys(IC);
+const hiIC = { 'England and Wales': 'var(--c4)', 'Holland': 'var(--c2)', 'Portugal': 'var(--c3)', 'Spain': 'var(--c1)', 'France': 'var(--c5)' };
+chart('#ch-ic', { series: icKeys.map(k => ({ pts: IC[k], color: hiIC[k] || 'var(--muted)', w: hiIC[k] ? 2.2 : 1, op: hiIC[k] ? 1 : .5, label: hiIC[k] ? k.replace(' and Wales', '') : null, dots: !!hiIC[k] })),
+  x: d3.scaleLinear().domain([1500, 1800]), y: d3.scaleLinear().domain([0, d3.max(icKeys.flatMap(k => IC[k].map(p => p[1]))) * 1.1]),
+  xTicks: [1500, 1600, 1700, 1800], yTicks: d3.ticks(0, d3.max(icKeys.flatMap(k => IC[k].map(p => p[1]))), 4), fmtY: t => '£' + d3.format('.2~f')(t) });
+
+// ---------- Silver ----------
+const SV = DATA.silver, svKeys = Object.keys(SV);
+const svColor = { Mexico: 'var(--c2)', Peru: 'var(--c3)', Bolivia: 'var(--c4)', 'United States': 'var(--c1)', Canada: 'var(--c5)', Australia: 'var(--c6)', China: 'var(--ink)', Chile: 'var(--muted)' };
+const smooth = pts => pts.map((p, i) => { const w = pts.slice(Math.max(0, i - 2), i + 3); return [p[0], d3.mean(w, q => q[1])]; });
+chart('#ch-silver', { series: svKeys.map(k => ({ pts: smooth(SV[k]), color: svColor[k], w: 1.8 })),
+  x: d3.scaleLinear().domain([1681, 2014]), y: d3.scaleLinear().domain([0, d3.max(svKeys.flatMap(k => SV[k].map(p => p[1])))]),
+  xTicks: [1700, 1750, 1800, 1850, 1900, 1950, 2000], yTicks: [0, 1000, 2000, 3000, 4000, 5000, 6000].filter(t => t <= d3.max(svKeys.flatMap(k => SV[k].map(p => p[1])))), fmtY: t => d3.format(',')(t),
+  events: [[1810, 'Mexican independence'], [1859, 'Comstock Lode'], [1873, 'Silver demonetised']], H: 330, Wd: 1100 });
+document.getElementById('s-legend').innerHTML = svKeys.map(k => `<span><span class="dot" style="background:${svColor[k]}"></span>${k}</span>`).join('') + '<span style="color:var(--muted)">Five-year moving average</span>';
+
+// ---------- Prices ----------
+const GROUPS = [['Food', ['Wheat', 'Rice', 'Corn', 'Sugar', 'Beef']], ['Crops and drinks', ['Coffee', 'Tea', 'Cocoa', 'Tobacco', 'Cotton', 'Wool', 'Rubber', 'Palm oil']],
+  ['Energy', ['Coal', 'Petroleum', 'Natural gas']], ['Metals', ['Copper', 'Tin', 'Iron ore', 'Steel', 'Gold', 'Silver']]];
+const pg = document.getElementById('prices');
+GROUPS.forEach(([g, ks]) => {
+  const h = document.createElement('div'); h.className = 'group-label eyebrow'; h.textContent = g; pg.append(h);
+  ks.forEach(k => {
+    const pts = (DATA.prices[k] || []).filter(p => p[1] > 0); if (!pts.length) return;
+    const d = document.createElement('div'); d.className = 'spark';
+    const lo = d3.min(pts, p => p[1]), hi = d3.max(pts, p => p[1]);
+    d.innerHTML = `<b>${k}<span>${pts[0][0]}: ${Math.round(pts[0][1])} → ${Math.round(pts[pts.length - 1][1])}</span></b>`;
+    pg.append(d);
+    const Wd = 170, H = 56;
+    const x = d3.scaleLinear().domain([1850, 2015]).range([2, Wd - 4]);
+    const y = d3.scaleLog().domain([Math.min(lo, 30), Math.max(hi, 300)]).range([H - 3, 3]);
+    const svg = d3.select(d).append('svg').attr('viewBox', `0 0 ${Wd} ${H}`).attr('role', 'img').attr('aria-label', `${k} real price index`);
+    svg.append('line').attr('class', 'gridline').attr('x1', 0).attr('x2', Wd).attr('y1', y(100)).attr('y2', y(100));
+    svg.append('path').attr('fill', 'none').attr('stroke', 'var(--lapis)').attr('stroke-width', 1.4).attr('d', d3.line().x(p => x(p[0])).y(p => y(p[1]))(pts));
+    const lp = pts[pts.length - 1]; svg.append('circle').attr('cx', x(lp[0])).attr('cy', y(lp[1])).attr('r', 2.4).attr('fill', 'var(--lapis)');
+  });
+});
 })();
 </script>
