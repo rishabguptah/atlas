@@ -1,6 +1,6 @@
 # Usage: python3 views/disease-climate/build_page.py BORDERS_DIR OUT.html [local]
 # Builds the Plague and Climate page from data/disease-climate/ plus the land outline and the
-# 1300 border snapshot from the Living Atlas borders folder (land-50m.json, world_1300.json).
+# 1300, 1530 and 1815 border snapshots from the Living Atlas borders folder (land-50m.json, world_<year>.json).
 # With "local", d3 and topojson load from file:// paths so a headless browser can render it offline.
 import sys, os, json, glob
 
@@ -16,13 +16,14 @@ dc = {
     'relations': jsonl('relations.jsonl'),
     'places': jsonl('places.jsonl'),
     'stubs': jsonl('stubs.jsonl'),
-    'routes': json.load(open(os.path.join(DATA, 'geo', 'black_death_routes.geojson'))),
+    'routes': json.load(open(os.path.join(DATA, 'geo', 'spread_routes.geojson'))),
 }
 J = lambda o: json.dumps(o, separators=(',', ':'), ensure_ascii=False)
 s = open(os.path.join(os.path.dirname(__file__), 'page.src.html')).read()
 s = s.replace('/*__DC__*/', 'const DC = ' + J(dc) + ';')
 s = s.replace('/*__LAND__*/', 'const LAND = ' + J(json.load(open(os.path.join(borders, 'land-50m.json')))) + ';')
-s = s.replace('/*__B1300__*/', 'const B1300 = ' + J(json.load(open(os.path.join(borders, 'world_1300.json')))) + ';')
+snaps = {y: json.load(open(os.path.join(borders, 'world_%d.json' % y))) for y in (1300, 1530, 1815)}
+s = s.replace('/*__BORDERS__*/', 'const BORDERS = ' + J(snaps) + ';')
 if local:
     s = s.replace('https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js', 'file://' + local + '/d3-7.8.5/package/dist/d3.min.js')
     s = s.replace('https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js', 'file://' + local + '/topojson-client-3.1.0/package/dist/topojson-client.min.js')

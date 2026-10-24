@@ -3,7 +3,7 @@
 # until the judge workstream checks it against the source.
 #
 # Run: python3 ingest/disease-climate/records.py
-# Writes data/disease-climate/{events,relations,places,routes}.jsonl and geo/black_death_routes.geojson.
+# Writes data/disease-climate/{events,relations,places,stubs,routes}.jsonl and geo/spread_routes.geojson.
 
 import json, os, re
 
@@ -472,6 +472,215 @@ WAY = {
     ('barcelona', 'valencia'): [[1.0, 40.6]],
 }
 
+# ---- Round 2: more outbreaks, famines and links ----
+SRC.update({
+    'rosenberg1962': {'cite': 'Rosenberg, C. E. (1962). The Cholera Years: The United States in 1832, 1849, and 1866. University of Chicago Press.'},
+    'evans1987': {'cite': 'Evans, R. J. (1987). Death in Hamburg: Society and Politics in the Cholera Years 1830-1910. Oxford University Press.'},
+    'mcgrew1965': {'cite': 'McGrew, R. E. (1965). Russia and the Cholera, 1823-1832. University of Wisconsin Press.'},
+    'kudlick1996': {'cite': 'Kudlick, C. J. (1996). Cholera in Post-Revolutionary Paris: A Cultural History. University of California Press.'},
+    'morris1976': {'cite': 'Morris, R. J. (1976). Cholera 1832: The Social Response to an Epidemic. Croom Helm.'},
+    'cook1998': {'cite': 'Cook, N. D. (1998). Born to Die: Disease and New World Conquest, 1492-1650. Cambridge University Press.'},
+    'mcneill1976': {'cite': 'McNeill, W. H. (1976). Plagues and Peoples. Anchor.'},
+    'alfani2013': {'cite': 'Alfani, G. (2013). Plague in seventeenth-century Europe and the decline of Italy: an epidemiological hypothesis. European Review of Economic History 17(4).', 'url': 'https://doi.org/10.1093/ereh/het013'},
+    'alexander1980': {'cite': 'Alexander, J. T. (1980). Bubonic Plague in Early Modern Russia: Public Health and Urban Disaster. Johns Hopkins University Press.'},
+    'frandsen2010': {'cite': 'Frandsen, K.-E. (2010). The Last Plague in the Baltic Region 1709-1713. Museum Tusculanum Press.'},
+    'lachiver1991': {'cite': 'Lachiver, M. (1991). Les annees de misere: la famine au temps du Grand Roi. Fayard.'},
+    'kikuchi': {'cite': 'Kikuchi, I. (2000). Nihon no rekishi saigai: Edo kohen no jishi to kikin. And Jannetta, A. (1987). Epidemics and Mortality in Early Modern Japan. Princeton.'},
+    'lumey2011': {'cite': 'Lumey, L. H. et al. (2011). Prenatal famine and adult health. Annual Review of Public Health 32.', 'url': 'https://doi.org/10.1146/annurev-publhealth-031210-101230'},
+    'patenaude2002': {'cite': 'Patenaude, B. M. (2002). The Big Show in Bololand: The American Relief Expedition to Soviet Russia in the Famine of 1921. Stanford University Press.'},
+    'majd2003': {'cite': 'Majd, M. G. (2003). The Great Famine and Genocide in Persia, 1917-1919. University Press of America; Afary, J. (2004) review in Iranian Studies.'},
+    'haggard2007': {'cite': 'Haggard, S. and Noland, M. (2007). Famine in North Korea: Markets, Aid, and Reform. Columbia University Press.'},
+    'checchi2013': {'cite': 'Checchi, F. and Robinson, W. C. (2013). Mortality among populations of southern and central Somalia affected by severe food insecurity and famine during 2010-2012. FAO/FEWS NET.'},
+    'heerten2017': {'cite': 'Heerten, L. (2017). The Biafran War and Postcolonial Humanitarianism. Cambridge University Press.'},
+    'reid2008': {'cite': 'Reid, A. (2011). Leningrad: Tragedy of a City under Siege, 1941-44. Bloomsbury.'},
+    'mann_ch': {'cite': 'Mann, C. C. (2011). 1493: Uncovering the New World Columbus Created. Knopf.'},
+    'webb2009': {'cite': 'Webb, J. L. A. (2009). Humanity\'s Burden: A Global History of Malaria. Cambridge University Press.'},
+    'fenner1988': {'cite': 'Fenner, F. et al. (1988). Smallpox and Its Eradication. World Health Organization.', 'url': 'https://apps.who.int/iris/handle/10665/39485'},
+    'snow1855': {'cite': 'Snow, J. (1855). On the Mode of Communication of Cholera, 2nd ed. London.'},
+    'halliday1999': {'cite': 'Halliday, S. (1999). The Great Stink of London: Sir Joseph Bazalgette and the Cleansing of the Victorian Metropolis. Sutton.'},
+    'echenberg2011': {'cite': 'Echenberg, M. (2011). Africa in the Time of Cholera. Cambridge University Press.'},
+    'mcneill_jr2000': {'cite': 'Humphreys, M. (1992). Yellow Fever and the South. Rutgers University Press.'},
+    'patterson1993': {'cite': 'Patterson, K. D. (1993). Typhus and its control in Russia, 1870-1940. Medical History 37(4).'},
+    'talty2009': {'cite': 'Talty, S. (2009). The Illustrious Dead: The Terrifying Story of How Typhus Killed Napoleon\'s Greatest Army. Crown; Raoult, D. et al. (2006) Journal of Infectious Diseases 193(1).'},
+    'manzoni': {'cite': 'Manzoni, A. (1827/1842). I promessi sposi (The Betrothed), chapters 31-35.'},
+    'defoe': {'cite': 'Defoe, D. (1722). A Journal of the Plague Year.'},
+    'camus': {'cite': 'Camus, A. (1947). La Peste.'},
+    'rinderpest': {'cite': 'Pankhurst, R. (1966). The Great Ethiopian Famine of 1888-1892. Journal of the History of Medicine 21(2); Spinage, C. A. (2003). Cattle Plague: A History. Springer.'},
+    'hays2005': {'cite': 'Hays, J. N. (2005). Epidemics and Pandemics: Their Impacts on Human History. ABC-CLIO.'},
+    'zinsser': {'cite': 'Zinsser, H. (1935). Rats, Lice and History. Little, Brown.'},
+})
+
+# Plague returns and other epidemics
+ev('pestis_secunda', 'epidemic', 'Pestis secunda', 1361, 1363, 48.86, 2.35, None, ['disease', 'population'], S('benedictow', 'biraben'),
+   'The first return of plague after the Black Death, remembered in England and France as the "children\'s plague".',
+   'It hit those born since 1348 hardest, so Europe\'s population could not bounce back; plague then returned every decade or so for 300 years.')
+ev('italian_plague_1629', 'epidemic', 'Italian plague of 1629-1631', 1629, 1631, 45.46, 9.19, [1000000, 1000000], ['disease', 'economy', 'literature'], S('alfani2013', 'manzoni'),
+   'German and French armies fighting over Mantua brought plague into northern Italy, killing half of Milan and a third of Venice.',
+   'Alfani argues it explains why Italy fell behind northern Europe; Venice built Santa Maria della Salute to give thanks for its end.',
+   deaths_approx=True)
+ev('naples_plague_1656', 'epidemic', 'Naples plague of 1656', 1656, 1658, 40.85, 14.27, [150000, 200000], ['disease', 'population'], S('alfani2013'),
+   'Plague killed around half of Naples, then one of Europe\'s largest cities, in a few months.',
+   'The single deadliest city outbreak of the 17th century.')
+ev('baltic_plague_1709', 'epidemic', 'Great Northern War plague', 1709, 1713, 55.68, 12.57, None, ['disease', 'military'], S('frandsen2010'),
+   'Plague moved with armies of the Great Northern War through Poland, Prussia, the Baltic, Stockholm and Copenhagen.',
+   'Copenhagen lost about a third of its people in 1711; it was the last great plague of northern Europe.')
+ev('moscow_plague_1771', 'epidemic', 'Moscow plague of 1771', 1770, 1772, 55.76, 37.62, [52000, 100000], ['disease', 'order'], S('alexander1980'),
+   'Plague came home with soldiers from the Russo-Turkish war and killed perhaps a fifth of Moscow.',
+   'When the archbishop removed a miracle-working icon to stop crowds gathering, a mob killed him in the Plague Riot.')
+ev('napoleon_typhus_1812', 'epidemic', 'Typhus in the Grande Armee', 1812, 1812, 54.69, 25.28, [100000, 300000], ['disease', 'military'], S('talty2009', 'zinsser'),
+   'Lice-borne typhus and dysentery destroyed much of Napoleon\'s army on the road to and from Moscow.',
+   'Mass graves in Vilnius dug up in 2001 showed typhus and trench fever in the soldiers\' remains.',
+   deaths_approx=True)
+ev('cholera_1826', 'epidemic', 'Second cholera pandemic', 1826, 1837, 22.57, 88.36, None, ['disease', 'order', 'ideas'], S('pollitzer', 'mcgrew1965', 'rosenberg1962'),
+   'Cholera left Bengal again and for the first time reached Europe and North America.',
+   'Riots broke out from St Petersburg to Liverpool over rumours that doctors were killing the poor.')
+ev('cholera_london_1854', 'epidemic', 'Broad Street cholera outbreak', 1854, 1854, 51.513, -0.137, [616, 616], ['disease', 'ideas'], S('snow1855'),
+   'An outbreak in Soho that John Snow traced to a single water pump on Broad Street.',
+   'His dot map is a founding moment of epidemiology and of data maps.')
+ev('rinderpest_africa', 'epidemic', 'African rinderpest panzootic', 1887, 1897, 9.03, 38.74, None, ['disease', 'economy', 'population'], S('rinderpest'),
+   'A cattle plague brought into the Horn of Africa killed most of the cattle from Ethiopia to South Africa.',
+   'Herding societies starved, and the famine and depopulation eased the European conquest of East and southern Africa.')
+ev('russian_typhus_1918', 'epidemic', 'Russian Civil War typhus', 1918, 1922, 55.76, 37.62, [2000000, 3000000], ['disease', 'military', 'order'], S('patterson1993'),
+   'Typhus spread through armies, refugees and railways during the Russian Civil War.',
+   'Lenin said "either socialism defeats the louse, or the louse defeats socialism".',
+   deaths_approx=True)
+ev('smallpox_eradication', 'epidemic', 'End of smallpox', 1967, 1980, 2.05, 45.32, None, ['disease', 'ideas'], S('fenner1988'),
+   'The WHO campaign to eradicate smallpox, which had killed perhaps 300 million people in the 20th century alone.',
+   'The last natural case was Ali Maow Maalin in Merca, Somalia, in 1977; the only human disease ever eradicated.')
+
+# More famines
+ev('french_famine_1693', 'famine', 'French famine of 1693-1694', 1693, 1694, 47.0, 2.5, [1300000, 1300000], ['geography', 'population', 'order'], S('lachiver1991'),
+   'A cold, wet 1692 and 1693 during the Maunder Minimum ruined French harvests.',
+   'About 1.3 million died, a larger share of France than died in the First World War.',
+   deaths_approx=True)
+ev('grand_hiver_1709', 'famine', 'Great Frost of 1709', 1709, 1710, 46.0, 2.0, [600000, 600000], ['geography', 'population'], S('lachiver1991'),
+   'The coldest European winter in 500 years froze the sea at Venice and killed winter wheat across France.',
+   'Some 600,000 died in France on top of the losses of the War of the Spanish Succession.',
+   deaths_approx=True)
+ev('kyoho_famine', 'famine', 'Kyoho famine', 1732, 1733, 33.6, 130.4, None, ['geography', 'order'], S('kikuchi'),
+   'Locusts and cold destroyed rice crops in western Japan.',
+   'It led to the first great rice riot in Edo, against rice wholesalers, in 1733.')
+ev('tenpo_famine', 'famine', 'Tenpo famine', 1833, 1837, 38.27, 140.87, None, ['geography', 'order'], S('kikuchi'),
+   'Cold summers wrecked harvests across Japan, worst in the northeast.',
+   'Oshio Heihachiro rose in revolt in Osaka in 1837; the shogunate\'s weak response is read as a step toward its fall.')
+ev('ethiopia_famine_1888', 'famine', 'Great Ethiopian famine', 1888, 1892, 12.0, 39.0, None, ['geography', 'population', 'disease'], S('rinderpest'),
+   'Rinderpest killed most of Ethiopia\'s cattle, then drought and locusts followed.',
+   'Pankhurst estimated a third of Ethiopia died; it is still called Kifu Qen, the evil days.')
+ev('persian_famine_1917', 'famine', 'Persian famine of 1917-1919', 1917, 1919, 35.69, 51.39, [500000, 2000000], ['military', 'population', 'order'], S('majd2003'),
+   'Drought, wartime occupation and grain requisitioning by foreign armies left Persia starving.',
+   'Death estimates are among the most contested of any modern famine.')
+ev('russian_famine_1921', 'famine', 'Russian famine of 1921-1922', 1921, 1922, 53.2, 50.15, [5000000, 5000000], ['order', 'military', 'economy'], S('patenaude2002'),
+   'Drought on the Volga after years of civil war and grain requisitions.',
+   'Herbert Hoover\'s American Relief Administration fed about ten million people a day at its peak.',
+   deaths_approx=True)
+ev('leningrad_siege_famine', 'famine', 'Siege of Leningrad famine', 1941, 1944, 59.93, 30.34, [630000, 1000000], ['military', 'population'], S('reid2008'),
+   'German and Finnish forces cut Leningrad off for 872 days.',
+   'Most of the dead starved, the largest loss of life in any modern city.')
+ev('dutch_hunger_winter', 'famine', 'Dutch Hunger Winter', 1944, 1945, 52.37, 4.9, [18000, 22000], ['military', 'population', 'ideas'], S('lumey2011'),
+   'A German blockade of the western Netherlands in the winter of 1944-45.',
+   'Children conceived during it carried health effects for life, a founding case for epigenetics.')
+ev('biafra_famine', 'famine', 'Biafran famine', 1967, 1970, 5.5, 7.5, [500000, 2000000], ['military', 'order'], S('heerten2017'),
+   'Nigeria\'s blockade of secessionist Biafra during the civil war.',
+   'Images of it gave birth to modern humanitarian NGOs such as Medecins Sans Frontieres.')
+ev('north_korea_famine', 'famine', 'North Korean famine', 1994, 1998, 39.03, 125.75, [240000, 3500000], ['order', 'economy'], S('haggard2007'),
+   'The loss of Soviet aid and floods collapsed food distribution in North Korea.',
+   'Called the Arduous March at home; markets grew up in the gaps the state left.')
+ev('somalia_famine_2011', 'famine', 'Somalia famine of 2011', 2010, 2012, 2.05, 45.32, [258000, 258000], ['order', 'geography'], S('checchi2013'),
+   'Drought in the Horn of Africa in a war zone where al-Shabaab blocked aid.',
+   'Half of the dead were children under five.')
+
+rel('event:little_ice_age', 'contributed_to', 'event:french_famine_1693', 0.6, 'Lachiver 1991', S('lachiver1991'), 'Cold, wet summers in the depths of the Maunder Minimum.')
+rel('event:little_ice_age', 'contributed_to', 'event:grand_hiver_1709', 0.5, 'Lachiver 1991', S('lachiver1991'), 'The most extreme winter of the Little Ice Age in western Europe.')
+rel('event:little_ice_age', 'contributed_to', 'event:finnish_famine_1696', 0.6, 'Jutikkala 1955', S('jutikkala'), 'Frost-killed harvests in consecutive years.')
+rel('event:little_ice_age', 'contributed_to', 'event:tenpo_famine', 0.4, 'Japanese climate historians', S('kikuchi'), 'Cold summers in the 1830s, a late cold phase.')
+rel('event:little_ice_age', 'contributed_to', 'event:irish_famine_1740', 0.5, 'Dickson 1997', S('dickson'), 'The Great Frost of 1739-40.')
+rel('event:tambora', 'contributed_to', 'event:cholera_1817', 0.25, 'Wood 2014', S('wood2014'), 'Wood argues disrupted monsoons in Bengal let a new cholera strain emerge.')
+rel('event:cholera_1817', 'contributed_to', 'event:cholera_1826', 0.5, 'Pollitzer 1959', S('pollitzer'), 'The same Bengal reservoir, now reaching Europe on new trade and army routes.')
+rel('event:italian_plague_1629', 'contributed_to', 'work:the_betrothed', 0.9, 'Manzoni', S('manzoni'), 'The plague of Milan is the climax of the novel.')
+rel('event:great_plague_london', 'contributed_to', 'work:journal_plague_year', 0.9, 'Defoe', S('defoe'), 'Defoe reconstructed the year from the Bills of Mortality.')
+rel('event:rinderpest_africa', 'caused', 'event:ethiopia_famine_1888', 0.8, 'Pankhurst 1966', S('rinderpest'), 'Most of Ethiopia\'s plough oxen died.')
+rel('event:smallpox_inca', 'contributed_to', 'polity:inca', 0.7, 'Cook 1998', S('cook1998'), 'Huayna Capac\'s death split the empire between Huascar and Atahualpa just before Pizarro landed.')
+rel('event:napoleon_typhus_1812', 'contributed_to', 'event:napoleon_russia_1812', 0.6, 'Talty 2009', S('talty2009'), 'Disease killed more of the Grande Armee than Russian guns.')
+rel('event:moscow_plague_1771', 'caused', 'event:moscow_plague_riot', 0.9, 'Alexander 1980', S('alexander1980'), 'Quarantine and the icon order set the crowd off.')
+rel('event:great_famine_1315', 'contributed_to', 'event:black_death', 0.3, 'Jordan 1996', S('jordan1996'), 'The famine left a population that had stopped growing well before 1348.', slug='great_famine_black_death_jordan')
+rel('event:black_death', 'contributed_to', 'event:pestis_secunda', 0.8, 'Benedictow 2004', S('benedictow'), 'Plague stayed in Europe\'s rodents and came back.')
+
+ev('smallpox_inca', 'epidemic', 'Smallpox in the Inca Empire', 1524, 1528, -2.9, -79.0, None, ['disease', 'order'], S('cook1998', 'mcneill1976'),
+   'A new disease, most likely smallpox, ran ahead of the Spanish down the Andes.',
+   'It killed the emperor Huayna Capac and his heir, starting the civil war that Pizarro walked into in 1532.',
+   start_approx=True, end_approx=True)
+ev('moscow_plague_riot', 'revolt', 'Moscow Plague Riot', 1771, 1771, 55.75, 37.62, None, ['order'], S('alexander1980'),
+   'A crowd sacked the Chudov monastery and killed Archbishop Ambrosius during the plague.',
+   'Catherine II sent Grigory Orlov to restore order; plague riots recur wherever quarantine meets fear.')
+
+STUBS += [
+    dict(id='polity:inca', kind='polity', name='Inca Empire', start=1438, end=1533, lenses=['order'], sources=S('cook1998')),
+    dict(id='event:napoleon_russia_1812', kind='event', subtype='war', name='French invasion of Russia', start=1812, end=1812, lenses=['military'], sources=S('talty2009')),
+    dict(id='work:the_betrothed', kind='work', subtype='book', name='The Betrothed', start=1827, lenses=['literature'], sources=S('manzoni')),
+    dict(id='work:journal_plague_year', kind='work', subtype='book', name='A Journal of the Plague Year', start=1722, lenses=['literature'], sources=S('defoe')),
+]
+
+CHOLERA = [
+    ('calcutta', 'Calcutta', 'India', 22.57, 88.36, 1826, 6, None, None, 'Cholera spread again out of the Ganges delta.'),
+    ('orenburg', 'Orenburg', 'Russia', 51.77, 55.1, 1829, 8, 'calcutta', 'land', 'It came up the caravan roads through Afghanistan and Bukhara.'),
+    ('astrakhan', 'Astrakhan', 'Russia', 46.35, 48.03, 1830, 7, 'calcutta', 'land', 'A second arm came through Persia and across the Caspian.'),
+    ('moscow', 'Moscow', 'Russia', 55.76, 37.62, 1830, 9, 'astrakhan', 'river', 'Up the Volga with the river trade; the first European capital hit.'),
+    ('mecca', 'Mecca', 'Saudi Arabia', 21.42, 39.83, 1831, 5, 'calcutta', 'sea', 'Pilgrims died by the thousand during the hajj of 1831.'),
+    ('warsaw', 'Warsaw', 'Poland', 52.23, 21.01, 1831, 4, 'moscow', 'land', 'Russian troops sent against the November Uprising carried it.'),
+    ('st_petersburg', 'St Petersburg', 'Russia', 59.93, 30.34, 1831, 6, 'moscow', 'land', 'Cholera riots on Sennaya Square; Nicholas I faced down the crowd.'),
+    ('cairo', 'Cairo', 'Egypt', 30.04, 31.24, 1831, 8, 'mecca', 'land', 'Returning pilgrims brought it to Egypt.'),
+    ('berlin', 'Berlin', 'Germany', 52.52, 13.4, 1831, 8, 'warsaw', 'land', 'Hegel\'s death in November was put down to cholera.'),
+    ('vienna', 'Vienna', 'Austria', 48.21, 16.37, 1831, 9, 'warsaw', 'land', None),
+    ('hamburg', 'Hamburg', 'Germany', 53.55, 9.99, 1831, 10, 'berlin', 'river', 'Down the Elbe from Berlin.'),
+    ('sunderland', 'Sunderland', 'United Kingdom', 54.91, -1.38, 1831, 10, 'hamburg', 'sea', 'Britain\'s first case, from a ship out of the Baltic.'),
+    ('edinburgh', 'Edinburgh', 'United Kingdom', 55.95, -3.19, 1832, 1, 'sunderland', 'land', None),
+    ('london', 'London', 'United Kingdom', 51.51, -0.13, 1832, 2, 'sunderland', 'land', 'More than 5,000 died; the slow start of London\'s sewers.'),
+    ('paris', 'Paris', 'France', 48.86, 2.35, 1832, 3, 'london', 'land', 'About 18,000 died, including the prime minister Casimir Perier; it set the scene for the June rising in Les Miserables.'),
+    ('liverpool', 'Liverpool', 'United Kingdom', 53.41, -2.99, 1832, 5, 'london', 'land', 'Crowds attacked hospitals, believing doctors killed patients for dissection.'),
+    ('quebec', 'Quebec', 'Canada', 46.81, -71.21, 1832, 6, 'liverpool', 'sea', 'Emigrant ships from Britain and Ireland brought it past the Grosse Ile quarantine.'),
+    ('montreal', 'Montreal', 'Canada', 45.5, -73.57, 1832, 6, 'quebec', 'river', None),
+    ('new_york', 'New York', 'United States', 40.71, -74.01, 1832, 6, 'montreal', 'land', 'About 3,500 died and the well-off fled; preachers called it punishment for vice.'),
+    ('new_orleans', 'New Orleans', 'United States', 29.95, -90.07, 1832, 10, 'new_york', 'sea', 'With yellow fever the same autumn, perhaps a sixth of the city died.'),
+]
+CHOLERA_WAY = {
+    ('calcutta', 'orenburg'): [[80.0, 28.5], [69.2, 34.5], [64.4, 39.8], [58.0, 46.0]],
+    ('calcutta', 'astrakhan'): [[80.0, 28.5], [69.2, 34.5], [59.6, 36.3], [51.4, 35.7], [50.6, 40.5]],
+    ('calcutta', 'mecca'): [[87.0, 18.0], [80.5, 6.0], [62.0, 13.0], [45.0, 12.2], [43.4, 12.7], [39.1, 21.5]],
+    ('hamburg', 'sunderland'): [[8.3, 54.0], [3.0, 54.8]],
+    ('liverpool', 'quebec'): [[-4.0, 53.6], [-6.5, 55.4], [-20.0, 55.5], [-40.0, 52.0], [-55.0, 47.5], [-60.0, 47.6], [-66.0, 49.4]],
+    ('new_york', 'new_orleans'): [[-73.0, 38.5], [-75.3, 35.2], [-79.5, 30.0], [-80.0, 25.3], [-82.5, 24.3], [-87.0, 28.5], [-89.4, 29.0]],
+}
+SMALLPOX = [
+    ('santo_domingo', 'Santo Domingo', 'Dominican Republic', 18.47, -69.89, 1518, 12, None, None, 'The first recorded smallpox in the Americas swept the surviving Taino of Hispaniola.'),
+    ('santiago_de_cuba', 'Santiago de Cuba', 'Cuba', 20.02, -75.82, 1519, 3, 'santo_domingo', 'sea', None),
+    ('veracruz', 'Veracruz', 'Mexico', 19.18, -96.13, 1520, 4, 'santiago_de_cuba', 'sea', 'It landed with Narvaez\'s expedition, sent from Cuba to arrest Cortes.'),
+    ('tlaxcala', 'Tlaxcala', 'Mexico', 19.32, -98.24, 1520, 9, 'veracruz', 'land', 'Cortes\'s allies were struck too.'),
+    ('tenochtitlan', 'Tenochtitlan', 'Mexico', 19.43, -99.13, 1520, 10, 'tlaxcala', 'land', 'The emperor Cuitlahuac died of it after 80 days on the throne.'),
+    ('iximche', 'Iximche', 'Guatemala', 14.73, -90.99, 1520, 12, 'tenochtitlan', 'land', 'The Annals of the Kaqchikels describe the dead filling the land.'),
+    ('tumebamba', 'Tumebamba', 'Ecuador', -2.9, -79.0, 1527, 6, 'iximche', 'land', 'Huayna Capac died of a new fever here, five years before Pizarro arrived.'),
+    ('cuzco', 'Cuzco', 'Peru', -13.53, -71.97, 1528, 6, 'tumebamba', 'land', 'His heir Ninan Cuyochi died too, leaving Huascar and Atahualpa to fight for the throne.'),
+]
+SMALLPOX_WAY = {
+    ('santiago_de_cuba', 'veracruz'): [[-78.0, 19.6], [-84.9, 21.6], [-86.4, 22.3], [-90.0, 22.6], [-94.5, 20.3]],
+    ('iximche', 'tumebamba'): [[-86.0, 12.5], [-81.0, 8.6], [-78.0, 7.5], [-77.5, 3.0]],
+}
+
+SPREADS = [
+    dict(event='black_death', route='black_death_spread', name='Spread of the Black Death', rows=BD, way=WAY,
+         sources=S('benedictow', 'christakos'),
+         src_for={'chu_valley': ['spyrou2022'], 'kaffa': ['wheelis'], **{k: ['dols'] for k in ('alexandria', 'cairo', 'damascus', 'gaza', 'aleppo', 'mecca', 'tunis')}},
+         what='The likely path of the Black Death from the Tian Shan to Moscow, city by city.',
+         why='It followed the trade network: caravan roads to the Black Sea, galleys to every Mediterranean port, then rivers and roads inland.'),
+    dict(event='cholera_1826', route='cholera_1826_spread', name='Spread of cholera, 1826-1832', rows=CHOLERA, way=CHOLERA_WAY,
+         sources=S('pollitzer', 'mcgrew1965', 'evans1987', 'morris1976', 'kudlick1996', 'rosenberg1962'),
+         what='Cholera\'s first journey to Europe and North America, from Bengal to New Orleans in six years.',
+         why='It moved with armies, pilgrims, river barges and emigrant ships, faster each year as steam and trade sped up.'),
+    dict(event='smallpox_aztec', route='smallpox_americas_spread', name='Smallpox in the Americas, 1518-1528', rows=SMALLPOX, way=SMALLPOX_WAY,
+         sources=S('crosby', 'cook1998', 'mcneill1976'),
+         what='Smallpox from Hispaniola to Mexico and down the Andes, running ahead of the conquerors.',
+         why='It killed two emperors, Cuitlahuac and Huayna Capac, and broke both great American empires before Spanish armies finished them.'),
+]
+
 def slugok(s):
     assert re.fullmatch(r'[a-z0-9_]+', s), s
     return s
@@ -506,28 +715,31 @@ def main():
                                'confidence': r['conf'], 'view': r['view'], 'note': r['note'], 'lenses': ['order', 'geography'],
                                'sources': r['src'], 'status': 'draft'}))
 
-    # Black Death places (stubs owned by places-people) and spread relations
-    places, feats = [], []
-    coords = {b[0]: (b[4], b[3]) for b in BD}
-    bd_src = S('benedictow', 'christakos')
-    for slug, name, today, lat, lon, y, m, via, mode, note in BD:
-        places.append(drop_none({'id': 'place:' + slugok(slug), 'kind': 'place', 'subtype': 'city', 'name': name, 'today': today,
-                                 'lat': lat, 'lon': lon, 'lenses': ['geography'], 'sources': bd_src, 'status': 'draft', 'stub': True}))
-        src = S('spyrou2022') if slug == 'chu_valley' else S('wheelis') if slug == 'kaffa' else S('dols') if slug in ('alexandria', 'cairo', 'damascus', 'gaza', 'aleppo', 'mecca', 'tunis') else bd_src
-        rels.append(drop_none({'id': 'rel:black_death_spread_to_' + slug, 'kind': 'relation', 'type': 'spread_to',
-                               'from': 'event:black_death', 'to': 'place:' + slug, 'start': y, 'start_approx': True,
-                               'month': m, 'via': 'place:' + via if via else None, 'mode': mode, 'note': note,
-                               'lenses': ['disease'], 'sources': src, 'status': 'draft'}))
-        if via:
-            pts = [list(coords[via])] + WAY.get((via, slug), []) + [list(coords[slug])]
-            feats.append({'type': 'Feature', 'properties': {'ref': 'route:black_death_spread', 'from': 'place:' + via, 'to': 'place:' + slug,
-                                                            'year': y, 'month': m, 'mode': mode},
-                          'geometry': {'type': 'LineString', 'coordinates': pts}})
-    routes = [{'id': 'route:black_death_spread', 'kind': 'route', 'subtype': 'epidemic_spread', 'name': 'Spread of the Black Death',
-               'start': 1338, 'end': 1353, 'stops': ['place:' + b[0] for b in BD], 'geo': 'geo/black_death_routes.geojson',
-               'lenses': ['disease', 'economy', 'geography'], 'sources': S('benedictow', 'spyrou2022', 'christakos'), 'status': 'draft',
-               'what': 'The likely path of the Black Death from the Tian Shan to Moscow, city by city.',
-               'why': 'It followed the trade network: caravan roads to the Black Sea, galleys to every Mediterranean port, then rivers and roads inland.'}]
+    # Spread maps: place stubs (owned by places-people), spread_to relations and route lines
+    places, feats, routes, seen = [], [], [], set()
+    for sp in SPREADS:
+        ev_slug, rows, way = sp['event'], sp['rows'], sp['way']
+        coords = {b[0]: (b[4], b[3]) for b in rows}
+        rid = 'route:' + sp['route']
+        for slug, name, today, lat, lon, y, m, via, mode, note in rows:
+            if slug not in seen:
+                seen.add(slug)
+                places.append(drop_none({'id': 'place:' + slugok(slug), 'kind': 'place', 'subtype': 'city', 'name': name, 'today': today,
+                                         'lat': lat, 'lon': lon, 'lenses': ['geography'], 'sources': sp['sources'], 'status': 'draft', 'stub': True}))
+            src = S(*sp['src_for'][slug]) if slug in sp.get('src_for', {}) else sp['sources']
+            rels.append(drop_none({'id': 'rel:' + ev_slug + '_spread_to_' + slug, 'kind': 'relation', 'type': 'spread_to',
+                                   'from': 'event:' + ev_slug, 'to': 'place:' + slug, 'start': y, 'start_approx': True,
+                                   'month': m, 'via': 'place:' + via if via else None, 'mode': mode, 'note': note,
+                                   'lenses': ['disease'], 'sources': src, 'status': 'draft'}))
+            if via:
+                pts = [list(coords[via])] + way.get((via, slug), []) + [list(coords[slug])]
+                feats.append({'type': 'Feature', 'properties': {'ref': rid, 'from': 'place:' + via, 'to': 'place:' + slug,
+                                                                'year': y, 'month': m, 'mode': mode},
+                              'geometry': {'type': 'LineString', 'coordinates': pts}})
+        routes.append({'id': rid, 'kind': 'route', 'subtype': 'epidemic_spread', 'name': sp['name'],
+                       'start': rows[0][5], 'end': max(r[5] for r in rows), 'stops': ['place:' + b[0] for b in rows],
+                       'geo': 'geo/spread_routes.geojson', 'lenses': ['disease', 'economy', 'geography'], 'sources': sp['sources'],
+                       'status': 'draft', 'what': sp['what'], 'why': sp['why']})
 
     def write(name, rows):
         with open(os.path.join(OUT, name), 'w') as f:
@@ -539,7 +751,9 @@ def main():
     write('places.jsonl', places)
     write('stubs.jsonl', others)
     write('routes.jsonl', routes)
-    with open(os.path.join(OUT, 'geo', 'black_death_routes.geojson'), 'w') as f:
+    old = os.path.join(OUT, 'geo', 'black_death_routes.geojson')
+    if os.path.exists(old): os.remove(old)
+    with open(os.path.join(OUT, 'geo', 'spread_routes.geojson'), 'w') as f:
         json.dump({'type': 'FeatureCollection', 'features': feats}, f, separators=(',', ':'))
     print('geo features', len(feats))
 
