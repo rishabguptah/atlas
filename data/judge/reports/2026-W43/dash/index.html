@@ -50,7 +50,7 @@
     <div class="tile warn"><span class="k">Partly right</span><span class="v dash-skeleton" data-source="totals" data-field="partly">—</span><span class="s">close, but a date or wording is off</span></div>
     <div class="tile bad"><span class="k">Wrong</span><span class="v dash-skeleton" data-source="totals" data-field="contradicted">—</span><span class="s">a source says otherwise</span></div>
     <div class="tile"><span class="k">No source found</span><span class="v dash-skeleton" data-source="totals" data-field="unverified">—</span><span class="s">could not be checked either way</span></div>
-    <div class="tile bad"><span class="k">Kernel records with a source link</span><span class="v dash-skeleton" data-source="src_totals" data-field="with_url">—</span><span class="s">of <span data-source="src_totals" data-field="records">—</span>; the rest cite "written by Claude, not yet checked"</span></div>
+    <div class="tile warn"><span class="k">Kernel records with a source link</span><span class="v dash-skeleton" data-source="src_totals" data-field="with_url">—</span><span class="s">of <span data-source="src_totals" data-field="records">—</span>; <span data-source="src_totals" data-field="unchecked_cite">—</span> still cite only "not yet checked"</span></div>
   </section>
 
   <section class="grid">
@@ -92,7 +92,7 @@
       <h2>Sourcing by kind of record</h2>
       <p class="note">Records in the kernel build, how many are drafts waiting for the judge, and how many link to a source.</p>
       <table id="src-table" data-source="sourcing" data-row-key="kind">
-        <thead><tr><th data-field="kind">Kind</th><th data-field="records" class="num">Records</th><th data-field="draft" class="num">Draft</th><th data-field="with_url" class="num">With a link</th></tr></thead>
+        <thead><tr><th data-field="kind">Kind</th><th data-field="records" class="num">Records</th><th data-field="draft" class="num">Draft</th><th data-field="with_url" class="num">With a link</th><th data-field="unchecked_cite" class="num">Not yet checked</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -134,7 +134,7 @@ dash.calc('src_totals', {
   title: 'Sourcing totals',
   description: 'Adds up records and records with a source link across every kind.',
   inputs: ['sourcing'],
-  fn: (sourcing) => [{ records: sourcing.reduce((a, r) => a + r.records, 0), with_url: sourcing.reduce((a, r) => a + r.with_url, 0), draft: sourcing.reduce((a, r) => a + r.draft, 0) }],
+  fn: (sourcing) => [{ records: sourcing.reduce((a, r) => a + r.records, 0), with_url: sourcing.reduce((a, r) => a + r.with_url, 0), draft: sourcing.reduce((a, r) => a + r.draft, 0), unchecked_cite: sourcing.reduce((a, r) => a + r.unchecked_cite, 0) }],
 });
 dash.calc('by_type', {
   title: 'Verdicts by kind of claim',
@@ -156,7 +156,7 @@ dash.calc('summary', {
   fn: (totals, src_totals) => {
     const t = totals[0], s = src_totals[0];
     const pct = Math.round(t.accuracy * 100);
-    return [{ text: `${pct}% of checkable claims were right, ${t.partly} were close and ${t.contradicted} were wrong. The bigger problem is sourcing: ${s.with_url} of ${s.records} kernel records link to a source, so every claim still rests on memory until it is checked.` }];
+    return [{ text: `${pct}% of checkable claims were right, ${t.partly} were close and ${t.contradicted} were wrong. ${d3.format(',')(s.with_url)} of ${d3.format(',')(s.records)} kernel records now link to a source; the ${d3.format(',')(s.unchecked_cite)} carried over from the Living Atlas still rest on memory until they are checked.` }];
   },
 });
 
@@ -245,8 +245,9 @@ function draw() {
   fill(null, 'totals', 'contradicted');
   fill(null, 'totals', 'unverified');
   fill(null, 'totals', 'accuracy', (v) => v == null ? '—' : fmtPct(v));
-  fill(null, 'src_totals', 'with_url');
-  fill(null, 'src_totals', 'records');
+  fill(null, 'src_totals', 'with_url', d3.format(','));
+  fill(null, 'src_totals', 'records', d3.format(','));
+  fill(null, 'src_totals', 'unchecked_cite', d3.format(','));
   const s = dash.data('summary');
   document.querySelector('[data-source="summary"]').textContent = s.status === 'ok' && s.data.length ? s.data[0].text : '—';
 
@@ -267,7 +268,7 @@ function draw() {
 
   const so = dash.data('sourcing');
   rowsTable('src-table', so.status === 'ok' ? so.data : [], [
-    { f: 'kind' }, { f: 'records', num: 1, fmt: d3.format(',') }, { f: 'draft', num: 1, fmt: d3.format(',') }, { f: 'with_url', num: 1, fmt: d3.format(',') },
+    { f: 'kind' }, { f: 'records', num: 1, fmt: d3.format(',') }, { f: 'draft', num: 1, fmt: d3.format(',') }, { f: 'with_url', num: 1, fmt: d3.format(',') }, { f: 'unchecked_cite', num: 1, fmt: d3.format(',') },
   ]);
   const au = dash.data('audit');
   rowsTable('audit-table', au.status === 'ok' ? au.data : [], [{ f: 'id' }, { f: 'level' }, { f: 'msg' }]);
