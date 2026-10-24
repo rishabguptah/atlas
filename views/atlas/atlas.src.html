@@ -1,0 +1,1251 @@
+<title>Atlas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one sheet. The question goes across the top, the map and one shared year take the middle,
+   and the margin column reads whatever the map is pointing at: this year, this place, or the guide's answer. */
+:root {
+  --paper: #f5f0e3; --sea: #d3e2df; --sea-line: #bcd0cc; --land: #ece3cb; --land-edge: #a9987a;
+  --ink: #26251f; --ink-soft: #625e51; --rule: #d6ccb4; --accent: #1d4f6e; --warn: #a3321f;
+  --wash: rgba(38, 37, 31, 0.06); --card: #fbf8ef; --emp-op: 0.42; --oth-op: 0.13;
+  --y-places: #1d4f6e; --y-people: #c0602c; --y-money: #9a6f0e; --y-disease: #a3321f; --y-ideas: #2f68a8; --y-order: #5a4a8a;
+  --b-calm: #6f9a6a; --b-watch: #c9a227; --b-fragile: #d0702c; --b-critical: #b42a2a;
+  --l-geography: #2f7a6b; --l-military: #a3321f; --l-economy: #9a6f0e; --l-population: #7a5a9e; --l-disease: #5f7d1f;
+  --l-religion: #b05a86; --l-ideas: #2f68a8; --l-literature: #8a5a3a; --l-people: #c0602c; --l-order: #4a4a6a;
+  --display: "IM Fell English SC", "IM Fell English", Georgia, serif;
+  --serif: "Spectral", Georgia, "Times New Roman", serif;
+  --fell: "IM Fell English", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121a1b; --sea: #0d171b; --sea-line: #1b2a2f; --land: #1e2926; --land-edge: #43534b;
+    --ink: #ebe4d2; --ink-soft: #a9a391; --rule: #2d3836; --accent: #82b8d8; --warn: #e57a62;
+    --wash: rgba(235, 228, 210, 0.07); --card: #172123; --emp-op: 0.36; --oth-op: 0.10;
+    --y-places: #82b8d8; --y-people: #f09a5c; --y-money: #e0b44c; --y-disease: #ef7f6a; --y-ideas: #8cb8f0; --y-order: #b3a3e6;
+    --b-calm: #8cc286; --b-watch: #e6c650; --b-fragile: #f0965a; --b-critical: #ff6b6b;
+    --l-geography: #6cc3ad; --l-military: #e57a62; --l-economy: #e0b44c; --l-population: #b79be0; --l-disease: #a8c95c;
+    --l-religion: #e08ab8; --l-ideas: #82b8e8; --l-literature: #d0a07a; --l-people: #f09a5c; --l-order: #a8a8d0;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121a1b; --sea: #0d171b; --sea-line: #1b2a2f; --land: #1e2926; --land-edge: #43534b;
+  --ink: #ebe4d2; --ink-soft: #a9a391; --rule: #2d3836; --accent: #82b8d8; --warn: #e57a62;
+  --wash: rgba(235, 228, 210, 0.07); --card: #172123; --emp-op: 0.36; --oth-op: 0.10;
+  --y-places: #82b8d8; --y-people: #f09a5c; --y-money: #e0b44c; --y-disease: #ef7f6a; --y-ideas: #8cb8f0; --y-order: #b3a3e6;
+  --b-calm: #8cc286; --b-watch: #e6c650; --b-fragile: #f0965a; --b-critical: #ff6b6b;
+  --l-geography: #6cc3ad; --l-military: #e57a62; --l-economy: #e0b44c; --l-population: #b79be0; --l-disease: #a8c95c;
+  --l-religion: #e08ab8; --l-ideas: #82b8e8; --l-literature: #d0a07a; --l-people: #f09a5c; --l-order: #a8a8d0;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 15px; line-height: 1.5; }
+button, input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+a { color: var(--accent); text-underline-offset: 2px; }
+[hidden] { display: none !important; }
+
+.app {
+  height: 100%; display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas: "top top" "map panel" "time panel";
+}
+.top {
+  grid-area: top; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 18px; align-items: center;
+  padding-block: 10px 9px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--rule);
+}
+.brand { font-family: var(--display); font-size: 30px; line-height: 1; margin: 0; font-weight: 400; }
+.askbar { display: flex; gap: 8px; min-width: 0; }
+.askbar input { flex: 1; min-width: 0; border: 1px solid var(--rule); background: var(--card); padding: 7px 12px; border-radius: 999px; font-size: 15.5px; font-family: var(--fell); }
+.layers { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.layers .lab { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-right: 2px; }
+.chip { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 3px 11px 3px 9px; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.chip i { width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--ink)); display: inline-block; }
+.chip[aria-pressed="true"] { border-color: var(--c, var(--ink)); background: color-mix(in srgb, var(--c, var(--ink)) 14%, transparent); }
+.chip[aria-pressed="false"] { color: var(--ink-soft); }
+.chip[aria-pressed="false"] i { background: transparent; border: 1.5px solid var(--c, var(--ink)); box-sizing: border-box; }
+
+.map { grid-area: map; position: relative; overflow: hidden; background: var(--sea); min-height: 0; }
+.map svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+.sphere { fill: var(--sea); }
+.grat { fill: none; stroke: var(--sea-line); stroke-width: calc(0.6px / var(--k, 1)); }
+.land { fill: var(--land); stroke: var(--land-edge); stroke-width: calc(0.6px / var(--k, 1)); }
+.poly { stroke: var(--paper); stroke-width: calc(0.5px / var(--k, 1)); fill-opacity: var(--oth-op); transition: fill-opacity .4s; }
+.poly.emp { fill-opacity: var(--emp-op); }
+.close .poly, .close .polylab { display: none; }
+.poly.hi { fill-opacity: 0.7; stroke: var(--ink); stroke-width: calc(1.4px / var(--k, 1)); }
+.polylab { font-family: var(--display); font-size: 13px; fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 3px; text-anchor: middle; pointer-events: none; opacity: .85; }
+.pt { cursor: pointer; }
+.pt text { font-size: 11px; fill: var(--ink-soft); paint-order: stroke; stroke: var(--paper); stroke-width: 3px; pointer-events: none; display: none; }
+.zoomed .pt.lbl text, .pt.always text { display: block; }
+.city .dot { fill: var(--y-places); fill-opacity: .55; stroke: var(--paper); stroke-width: .8; }
+.city.wonder .dot { fill: var(--y-money); }
+.city.hi .dot { fill-opacity: 1; stroke: var(--ink); stroke-width: 1.4; }
+.city.hi text { display: block; font-size: 13.5px; font-weight: 600; fill: var(--ink); }
+.city .ring { fill: none; stroke: var(--warn); stroke-width: 1.6; display: none; }
+.city.hi .ring { display: block; }
+@media (prefers-reduced-motion: no-preference) { .city.hi .ring, .sel .pulse { animation: pulse 2.2s ease-out infinite; transform-origin: 0 0; } }
+@keyframes pulse { from { transform: scale(.6); opacity: 1; } to { transform: scale(2.2); opacity: 0; } }
+.person circle { fill: var(--y-people); fill-opacity: .8; stroke: var(--paper); stroke-width: .7; }
+.person.top text { display: block; }
+.order circle { fill: var(--bc); fill-opacity: .18; stroke: var(--bc); stroke-width: 1.3; }
+.order.critical circle { fill-opacity: .3; stroke-width: 2; }
+.order text { font-family: var(--display); fill: var(--ink); }
+.order.big text { display: block; }
+.broke path { stroke: var(--b-critical); stroke-width: 2.4; stroke-linecap: round; }
+.broke text { fill: var(--b-critical); font-family: var(--mono); font-size: 10px; }
+.shock circle { fill: none; stroke: var(--sc); stroke-width: 2; }
+.shock .core { fill: var(--sc); stroke: none; }
+.shock.famine circle:not(.core) { stroke-dasharray: 3 2; }
+.shock text { display: block; fill: var(--sc); font-style: italic; }
+.reached circle { fill: var(--y-disease); stroke: var(--paper); stroke-width: .8; }
+.hub rect { fill: var(--y-money); stroke: var(--paper); stroke-width: .8; }
+.hub.lbl text { fill: var(--y-money); font-weight: 600; }
+.school rect { fill: none; stroke: var(--y-ideas); stroke-width: 1.4; }
+.work path { fill: var(--y-ideas); fill-opacity: .7; }
+.stop circle { fill: var(--paper); stroke: var(--y-ideas); stroke-width: 1.8; }
+.stop.now circle { fill: var(--y-ideas); }
+.stop.now text { display: block; fill: var(--y-ideas); font-weight: 600; }
+.line { fill: none; stroke-linecap: round; stroke-linejoin: round; cursor: pointer; }
+.line.trade { stroke: var(--y-money); stroke-width: calc(2px / var(--k, 1)); stroke-opacity: .75; }
+.line.mig { stroke: var(--y-people); stroke-width: calc(2px / var(--k, 1)); stroke-dasharray: calc(5px / var(--k, 1)) calc(4px / var(--k, 1)); stroke-opacity: .8; }
+.line.mig.forced { stroke: var(--warn); }
+.line.leg { stroke: var(--y-ideas); stroke-width: calc(1.8px / var(--k, 1)); stroke-opacity: .55; }
+.line.leg.fresh { stroke-opacity: 1; stroke-width: calc(2.6px / var(--k, 1)); }
+.line.bd { stroke: var(--y-disease); stroke-width: calc(1.6px / var(--k, 1)); stroke-opacity: .7; }
+.line:hover { stroke-opacity: 1; }
+.linelab { font-family: var(--fell); font-style: italic; font-size: 12px; paint-order: stroke; stroke: var(--paper); stroke-width: 3px; pointer-events: none; }
+.route { fill: none; stroke: var(--rc, var(--l-military)); stroke-width: calc(2.6px / var(--k, 1)); stroke-linecap: round; stroke-linejoin: round; }
+.route.cut { stroke-dasharray: calc(6px / var(--k, 1)) calc(5px / var(--k, 1)); }
+.routelab { font-family: var(--fell); font-style: italic; font-size: 12.5px; fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 3.5px; pointer-events: none; }
+.pin circle { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+.pin text { display: block; font-size: 12.5px; fill: var(--ink); font-weight: 500; }
+.selring { fill: var(--ink); fill-opacity: .05; stroke: var(--ink); stroke-width: calc(1.2px / var(--k, 1)); stroke-dasharray: calc(4px / var(--k, 1)) calc(3px / var(--k, 1)); pointer-events: none; }
+.sel circle { fill: none; stroke: var(--ink); stroke-width: 2; pointer-events: none; }
+.sel .pulse { stroke: var(--warn); }
+.yearplate { position: absolute; left: 14px; top: 10px; font-family: var(--display); font-size: 36px; line-height: 1; pointer-events: none; text-shadow: 0 0 6px var(--sea), 0 0 2px var(--sea); }
+.maphint { position: absolute; left: 14px; top: 52px; font-size: 12.5px; color: var(--ink-soft); font-style: italic; pointer-events: none; text-shadow: 0 0 4px var(--sea); }
+.caption {
+  position: absolute; left: 14px; right: 14px; bottom: 12px; max-width: 520px; background: var(--card); border: 1px solid var(--rule);
+  border-left: 4px solid var(--lc, var(--ink)); padding: 8px 12px; font-size: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+.caption b { font-family: var(--display); font-weight: 400; font-size: 18px; display: block; line-height: 1.15; }
+.caption .lens { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--lc); }
+
+.time { grid-area: time; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; border-top: 1px solid var(--rule);
+  padding-block: 6px 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; }
+.time .playbtn { grid-row: 1 / 3; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; font-size: 13px; }
+.strip { height: 22px; display: block; width: 100%; cursor: pointer; }
+.strip line { stroke-width: 1; vector-effect: non-scaling-stroke; }
+.time input { width: 100%; min-width: 0; accent-color: var(--ink); margin: 0; }
+.time output { grid-row: 1 / 3; grid-column: 3; font-family: var(--mono); font-size: 13px; min-width: 76px; text-align: right; }
+
+.panel { grid-area: panel; border-left: 1px solid var(--rule); overflow-y: auto; min-height: 0; display: flex; flex-direction: column; }
+.tabs { position: sticky; top: 0; z-index: 3; background: var(--paper); display: flex; gap: 2px; border-bottom: 1px solid var(--rule); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 12px; }
+.tab { border: 0; background: none; padding: 9px 10px 8px; cursor: pointer; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); border-bottom: 2px solid transparent; }
+.tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.pane { padding: 14px max(16px, env(safe-area-inset-right, 0px)) 40px 16px; display: flex; flex-direction: column; gap: 14px; }
+.kick { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 0; }
+.ttl { font-family: var(--display); font-size: 26px; line-height: 1.1; margin: 2px 0 0; font-weight: 400; }
+.sub { font-size: 14px; color: var(--ink-soft); margin: 2px 0 0; }
+.sec { display: grid; gap: 6px; }
+.sec > h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 0; display: flex; align-items: center; gap: 7px; border-top: 1px solid var(--rule); padding-top: 10px; }
+.sec > h3 i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); display: inline-block; }
+.sec > h3 .n { margin-left: auto; letter-spacing: 0; text-transform: none; }
+.sec.off > h3 { opacity: .55; }
+.items { display: grid; gap: 1px; }
+.it { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 10px; padding: 4px 6px; border-radius: 3px; font-size: 14px; line-height: 1.35; }
+.it:hover, .it:focus-visible { background: var(--wash); }
+.it b { font-weight: 600; }
+.it .y { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); white-space: nowrap; align-self: baseline; }
+.it .w { grid-column: 1 / -1; font-size: 13px; color: var(--ink-soft); }
+.it.dim { opacity: .6; }
+.tag { display: inline-block; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 0 5px; margin-left: 4px; vertical-align: 1px; background: var(--wash); }
+.tag.now { background: var(--ink); color: var(--paper); }
+.band { display: inline-block; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 0 6px; color: #fff; background: var(--bc); }
+.focus { border: 1px solid var(--rule); border-left: 4px solid var(--c, var(--ink)); background: var(--card); border-radius: 3px; padding: 10px 12px; display: grid; gap: 4px; font-size: 14.5px; }
+.focus .fk { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--c); }
+.focus .ft { font-family: var(--fell); font-size: 20px; line-height: 1.15; }
+.focus p { margin: 0; }
+.focus .why { font-style: italic; color: var(--ink-soft); }
+.srcs { list-style: none; margin: 2px 0 0; padding: 0; font-size: 12px; color: var(--ink-soft); display: grid; gap: 2px; }
+.srcs li::before { content: "§ "; }
+.srcs .unchecked { color: var(--warn); font-family: var(--mono); font-size: 10.5px; margin-left: 4px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.btn { border: 1px solid var(--rule); background: var(--card); border-radius: 4px; padding: 5px 11px; cursor: pointer; font-size: 13.5px; }
+.btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn:disabled { opacity: .5; cursor: default; }
+.spark { width: 100%; height: 46px; display: block; }
+.spark .ln { fill: none; stroke: var(--y-order); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.spark .thr { stroke: var(--b-fragile); stroke-dasharray: 3 3; vector-effect: non-scaling-stroke; }
+.spark .now { stroke: var(--ink); vector-effect: non-scaling-stroke; }
+.note { font-size: 12.5px; color: var(--ink-soft); margin: 0; }
+.foot { font-size: 12px; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 10px; }
+
+/* guide */
+.hint { font-size: 12.5px; color: var(--ink-soft); }
+.examples { display: grid; gap: 6px; }
+.ex { text-align: left; border: 1px solid var(--rule); background: transparent; border-radius: 4px; padding: 7px 10px; cursor: pointer; font-family: var(--fell); font-size: 15px; line-height: 1.3; display: flex; gap: 8px; align-items: baseline; }
+.ex:hover { background: var(--wash); }
+.ex .tg { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); white-space: nowrap; margin-left: auto; }
+.ex .tg.cur { color: var(--l-geography); }
+.answer { display: grid; gap: 16px; }
+.q { font-family: var(--display); font-size: 23px; line-height: 1.15; margin: 0; font-weight: 400; }
+.badge { display: inline-block; font-family: var(--mono); font-size: 11px; border: 1px solid var(--warn); color: var(--warn); border-radius: 3px; padding: 1px 7px; }
+.short { margin: 0; font-size: 15.5px; }
+.status { font-size: 13px; color: var(--ink-soft); display: flex; gap: 8px; align-items: center; }
+.status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--l-economy); }
+@media (prefers-reduced-motion: no-preference) { .status .dot { animation: blink 1s infinite alternate; } }
+@keyframes blink { to { opacity: .2; } }
+.meter { display: grid; gap: 3px; }
+.mrow { display: grid; grid-template-columns: 96px 1fr 34px; gap: 8px; align-items: center; font-size: 13px; background: none; border: 0; padding: 2px 0; cursor: pointer; text-align: left; }
+.mrow .bar { height: 8px; background: var(--wash); border-radius: 4px; overflow: hidden; }
+.mrow .bar i { display: block; height: 100%; background: var(--c); border-radius: 4px; }
+.mrow .n { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-align: right; }
+.mrow.off { opacity: .35; }
+.mrow.off .name { text-decoration: line-through; }
+.player { position: sticky; top: 36px; z-index: 2; background: var(--paper); display: flex; gap: 6px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.player .count { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin-left: auto; }
+.player .prog { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--ink); width: 0; }
+.steps { display: grid; gap: 8px; }
+.step { border: 1px solid var(--rule); border-left: 4px solid var(--c); background: var(--card); border-radius: 3px; }
+.step > button { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; padding: 8px 11px; display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: baseline; }
+.step > button:focus-visible { outline: 2px solid var(--accent); }
+.step .i { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+.step .t { font-family: var(--fell); font-size: 16.5px; line-height: 1.2; }
+.step .y { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); white-space: nowrap; }
+.step .ln { grid-column: 2 / 4; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--c); }
+.step .body { display: none; padding: 0 11px 10px; font-size: 14.5px; }
+.step.on { box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+.step.on .body { display: block; }
+.step.muted { opacity: .4; }
+.step p { margin: 0 0 6px; }
+.conf { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+.view { border-top: 1px solid var(--rule); padding-top: 8px; display: grid; gap: 3px; font-size: 14px; }
+.view .hd { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.view .nm { font-family: var(--fell); font-size: 16px; }
+.view .sch { font-style: italic; color: var(--ink-soft); }
+.view .st { margin-left: auto; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; padding: 1px 6px; border-radius: 3px; background: var(--wash); }
+.view .st.strong { background: var(--l-geography); color: var(--paper); }
+.view .fa { font-size: 13px; color: var(--ink-soft); }
+.view .fa b { color: var(--ink); font-weight: 600; }
+.whatif { border: 1px dashed var(--rule); border-radius: 3px; padding: 8px 11px; font-size: 14px; cursor: pointer; text-align: left; background: transparent; display: grid; gap: 4px; }
+.whatif b { font-family: var(--fell); font-weight: 400; font-size: 16px; }
+.unk { margin: 0; padding-left: 18px; font-size: 14px; }
+.error { border: 1px solid var(--warn); color: var(--warn); padding: 8px 11px; border-radius: 3px; font-size: 14px; }
+.follow textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 56px; border: 1px solid var(--rule); background: var(--card); padding: 8px 10px; border-radius: 4px; font-size: 15px; }
+
+@media (max-width: 860px) {
+  .app { height: auto; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 50vh auto auto; grid-template-areas: "top" "map" "time" "panel"; }
+  .top { grid-template-columns: minmax(0, 1fr); }
+  .brand { font-size: 24px; }
+  .map { position: sticky; top: 0; z-index: 4; height: 50vh; border-bottom: 1px solid var(--rule); }
+  .panel { border-left: 0; overflow: visible; }
+  .tabs { top: 50vh; padding-left: max(12px, env(safe-area-inset-left, 0px)); }
+  .player { top: calc(50vh + 36px); }
+  .pane { padding-left: max(16px, env(safe-area-inset-left, 0px)); }
+  .yearplate { font-size: 26px; }
+  .maphint { top: 40px; }
+  .caption { font-size: 13px; }
+}
+</style>
+
+<div class="app">
+  <header class="top">
+    <h1 class="brand">Atlas</h1>
+    <form class="askbar" id="ask">
+      <input id="qbox" type="text" placeholder="Ask anything: why did Rome fall but Constantinople last?" aria-label="Ask the atlas" autocomplete="off">
+      <button class="btn primary" id="go" type="submit">Ask</button>
+      <button class="btn" id="stop" type="button" hidden>Stop</button>
+    </form>
+    <div class="layers" id="layers" role="group" aria-label="Lenses on the map"><span class="lab">Lenses</span></div>
+  </header>
+
+  <section class="map" id="map" aria-label="World map. Click anywhere to see everything there.">
+    <svg id="svg">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="context-stroke"/></marker>
+      </defs>
+    </svg>
+    <div class="yearplate" id="yp"></div>
+    <div class="maphint" id="maphint">Click anywhere to see every lens there</div>
+    <div class="caption" id="caption" hidden></div>
+  </section>
+
+  <div class="time">
+    <button class="playbtn" id="playyear" aria-label="Play through time">▶</button>
+    <svg class="strip" id="strip" viewBox="0 0 1000 22" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <input type="range" id="year" min="0" max="1000" step="1" aria-label="Year">
+    <output id="yout"></output>
+  </div>
+
+  <aside class="panel" id="panel">
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="now" aria-selected="true">This year</button>
+      <button class="tab" role="tab" data-tab="here" aria-selected="false">Here</button>
+      <button class="tab" role="tab" data-tab="guide" aria-selected="false">Guide</button>
+    </div>
+    <div class="pane" id="pane-now"></div>
+    <div class="pane" id="pane-here" hidden></div>
+    <div class="pane" id="pane-guide" hidden>
+      <span class="hint" id="askhint"></span>
+      <div class="examples" id="examples"></div>
+      <div class="answer" id="answer" hidden></div>
+      <p class="foot">Rule of the house: AI drafts, sources decide. Every answer here is a draft until the judge checks it. Live answers name sources the model believes exist; they are marked unchecked.</p>
+    </div>
+  </aside>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+/*__ENTRIES__*/
+/*__LAYERS__*/
+const LAND = /*__LAND__*/;
+const TOURS = /*__TOURS__*/;
+</script>
+<script>
+(() => {
+  // ---------- basics ----------
+  const NOW = 2025, MIN = -4000, SPAN = NOW - MIN, CURVE = 1.6;
+  const LENSES = ["geography", "military", "economy", "population", "disease", "religion", "ideas", "literature", "people", "order"];
+  const LENS_NAME = { geography: "Geography", military: "Military", economy: "Economy & trade", population: "Population & migration", disease: "Disease & climate", religion: "Religion", ideas: "Ideas", literature: "Literature", people: "People", order: "Order & chaos" };
+  const lensColor = l => `var(--l-${LENSES.includes(l) ? l : "order"})`;
+  const LAYERS = [
+    { k: "places", n: "Cities" }, { k: "people", n: "People" }, { k: "money", n: "Trade & migration" },
+    { k: "disease", n: "Plague & climate" }, { k: "ideas", n: "Ideas & faith" }, { k: "order", n: "Order & chaos" },
+  ];
+  const LENS_LAYER = { geography: "places", military: "order", economy: "money", population: "money", disease: "disease", religion: "ideas", ideas: "ideas", literature: "ideas", people: "people", order: "order" };
+  const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
+  const fmtSpan = (s, e) => `${s == null ? "?" : fmtYear(s)}–${e == null ? "today" : fmtYear(e)}`;
+  const tToYear = t => Math.round(NOW - SPAN * Math.pow(1 - t, CURVE));
+  const yearToT = y => 1 - Math.pow(Math.max(0, NOW - y) / SPAN, 1 / CURVE);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const clampYear = y => Math.max(MIN, Math.min(NOW, Math.round(Number(y) || 0)));
+  const km = (a, b) => d3.geoDistance(a, b) * 6371;
+  const fmtN = n => n >= 1e9 ? (n / 1e9).toFixed(1).replace(/\.0$/, "") + " billion" : n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, "") + " million" : n >= 1e4 ? Math.round(n / 1e3) + ",000" : String(Math.round(n));
+  const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const stepAt = (series, y) => { if (!series || !series.length || y < series[0][0]) return null; let v = null; for (const [yy, x] of series) { if (yy <= y) v = x; else break; } return v; };
+  const interp = (series, y) => {
+    if (!series || !series.length || y < series[0][0] || y > series[series.length - 1][0]) return null;
+    for (let i = 1; i < series.length; i++) if (y <= series[i][0]) { const [a, va] = series[i - 1], [b, vb] = series[i]; return va + (vb - va) * (y - a) / (b - a || 1); }
+    return series[series.length - 1][1];
+  };
+
+  // ---------- data: one shape for every workstream ----------
+  const byId = Object.fromEntries(ENTRIES.map(e => [e.id, e]));
+  const EMP = Object.fromEntries(EMPIRES.map(e => [e.id, e]));
+  const OLDNAMES = { istanbul: [[-9999, "Byzantium"], [330, "Constantinople"], [1453, "Istanbul"]] };
+  const nameAt = (e, y) => { const n = OLDNAMES[e.id]; if (!n) return e.name; let s = e.name; for (const [yy, nm] of n) if (y >= yy) s = nm; return s; };
+  const popAt = (e, y) => interp(POP[e.id], y);
+  const alive = (e, y) => y >= e.start && (e.end == null || y < e.end);
+
+  const PPL = PEOPLE.people.map((r, i) => {
+    const bp = PEOPLE.places[r[3]], dp = PEOPLE.places[r[4]];
+    return { i, name: r[0], b: r[1], d: r[2], occ: r[5], grp: r[6], hpi: r[7], wiki: r[8], place: bp ? bp[0] : "", country: bp ? bp[3] : "", lat: bp ? bp[1] : null, lon: bp ? bp[2] : null, dplace: dp ? dp[0] : "" };
+  }).filter(p => p.lat != null).sort((a, b) => b.hpi - a.hpi);
+  const adult = (p, y) => y >= p.b + 15 && y <= (p.d ?? p.b + 80);
+
+  const TRADE = MONEY.trade.map((t, i) => ({ ...t, id: "trade" + i, pts: t.line }));
+  const MIGS = MONEY.migs.map((m, i) => ({ ...m, id: "mig" + i, pts: m.line }));
+  const HUBS = MONEY.relays.flatMap(r => r.legs.map(l => ({ ...l, relay: r.name, lon: l.at[0], lat: l.at[1] })));
+
+  const PL = Object.fromEntries(PLAGUE.places.map(p => [p.id, p]));
+  const SHOCKS = PLAGUE.events.filter(e => e.lat != null);
+  const ARRIVE = Object.fromEntries(PLAGUE.relations.filter(r => r.type === "spread_to").map(r => [r.to, { y: r.start, m: r.month || 1, note: r.note, sources: r.sources }]));
+  const BD = PLAGUE.routes.features.map(f => ({ ...f.properties, pts: f.geometry.coordinates }));
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const SHOCK_C = { epidemic: "var(--y-disease)", famine: "var(--b-watch)", eruption: "var(--b-fragile)", climate_shift: "var(--l-geography)", collapse: "var(--y-order)", revolt: "var(--y-order)", war: "var(--l-military)" };
+  const SHOCK_N = { epidemic: "epidemic", famine: "famine", eruption: "eruption", climate_shift: "climate shift", collapse: "collapse", revolt: "revolt", war: "war" };
+
+  const IP = IDEAS.places;
+  const ipt = id => { const p = IP[id]; return p ? { lon: p.lo, lat: p.la, name: p.n } : null; };
+  const JOURNEYS = IDEAS.routes.map(r => {
+    const steps = r.steps.map((s, i) => ({ ...s, i, at: ipt(s.p), from: s.via ? ipt(s.via) : null })).filter(s => s.at);
+    return { ...r, steps, y0: steps[0]?.y, y1: steps[steps.length - 1]?.y };
+  });
+  const SCHOOLS = IDEAS.ideas.filter(x => x.p && IP[x.p]).map(x => ({ ...x, ...ipt(x.p) }));
+  const WORKS = IDEAS.works.filter(x => x.p && IP[x.p]).map(x => ({ ...x, ...ipt(x.p) }));
+  const THINKERS = Object.fromEntries(IDEAS.people.map(p => [p.id, p]));
+
+  const POLS = ORDER.polities.filter(p => p.c).map(p => ({ ...p, lat: p.c[0], lon: p.c[1] }));
+  const band = r => r == null ? "none" : r >= 2 * ORDER.thr ? "critical" : r >= ORDER.thr ? "fragile" : r >= ORDER.base ? "watch" : "calm";
+  const polAlive = (p, y) => y >= p.s && y <= p.e;
+  const areaAt = (p, y) => stepAt(p.a, y) ?? (p.pk ? p.pk[1] : 0.05);
+  const fragAt = (p, y) => stepAt(p.f, y);
+
+  // ---------- state ----------
+  const state = {
+    year: 1348, k: 1, borders: true, hi: new Set(), muted: new Set(), answer: null, active: -1, playing: false,
+    on: { places: true, people: true, money: true, disease: true, ideas: true, order: false },
+    sel: null, tab: "now",
+  };
+
+  // ---------- map ----------
+  const mapEl = document.getElementById("map");
+  const svg = d3.select("#svg");
+  const root = svg.append("g");
+  const projection = d3.geoNaturalEarth1();
+  const path = d3.geoPath(projection);
+  const land = topojson.feature(LAND, LAND.objects.land);
+  const gSphere = root.append("path").attr("class", "sphere");
+  const gGrat = root.append("path").attr("class", "grat");
+  const gLand = root.append("path").attr("class", "land");
+  const gPoly = root.append("g");
+  const gPolyLab = root.append("g");
+  const gSelRing = root.append("path").attr("class", "selring");
+  const G = {};
+  for (const k of ["order", "money", "ideas", "disease", "places", "people"]) G[k] = root.append("g").attr("data-layer", k);
+  const gRoutes = root.append("g");
+  const gPins = root.append("g");
+  const gSel = root.append("g");
+  let W = 800, H = 500;
+
+  const PALETTE = ["#c9787a", "#d6a84f", "#7fa36f", "#7d98b8", "#a58bb8", "#c98a5a", "#6fa5a0", "#a9a861", "#e0957d", "#b47fa0", "#8c9fd0", "#cdb07a"];
+  EMPIRES.forEach((e, i) => { e.color = PALETTE[(i * 5) % PALETTE.length]; });
+  const hashColor = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0; return PALETTE[Math.abs(h) % PALETTE.length]; };
+  const SNAPS = Object.keys(POLITIES).map(Number).sort((a, b) => a - b);
+  const snapFor = y => { let s = SNAPS[0]; for (const v of SNAPS) if (v <= y) s = v; return s; };
+  const featCache = {};
+  function featuresFor(s) {
+    if (featCache[s]) return featCache[s];
+    const t = POLITIES[s];
+    const fc = topojson.feature(t, Object.values(t.objects)[0]).features;
+    return featCache[s] = fc.map(f => {
+      const p = f.properties || {}, name = (p.NAME || "").trim(), subj = (p.SUBJECTO || "").trim();
+      const emp = EMPIRES.find(e => s >= e.start && s <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj))) || null;
+      return { f, name: name || subj, emp, d: path(f), area: path.area(f), c: path.centroid(f) };
+    }).filter(d => d.d);
+  }
+  let curSnap;
+  function drawPolys(force) {
+    const s = state.borders ? snapFor(state.year) : null;
+    if (force || s !== curSnap) {
+      curSnap = s;
+      const list = s == null ? [] : featuresFor(s);
+      gPoly.selectAll("path").data(list).join("path").attr("class", "poly").attr("d", d => d.d)
+        .attr("fill", d => d.emp ? d.emp.color : hashColor(d.name)).classed("emp", d => !!d.emp);
+    }
+    gPoly.selectAll("path").classed("hi", d => d.emp && state.hi.has("polity:" + d.emp.id));
+    const best = new Map();
+    (s == null ? [] : featuresFor(s)).forEach(d => { if (d.emp && state.hi.has("polity:" + d.emp.id) && (!best.has(d.emp.id) || best.get(d.emp.id).area < d.area)) best.set(d.emp.id, d); });
+    gPolyLab.selectAll("text").data([...best.values()], d => d.emp.id).join("text").attr("class", "polylab").text(d => d.emp.name);
+  }
+  // The state drawn under a point in the current border snapshot (smallest polygon that contains it).
+  function ruledBy(lon, lat, y) {
+    const list = featuresFor(snapFor(y)); const whole = path.area({ type: "Sphere" }) * 0.4;
+    let best = null;
+    for (const d of list) if (d.area < whole && d3.geoContains(d.f, [lon, lat]) && (!best || d.area < best.area)) best = d;
+    return best;
+  }
+
+  // Points keep their screen size while the map zooms.
+  function placeScaled() {
+    const k = state.k;
+    root.selectAll(".pt").attr("transform", d => { const p = projection([d.lon, d.lat]); return p ? `translate(${p[0]},${p[1]}) scale(${1 / k})` : null; });
+    gPolyLab.selectAll("text").attr("transform", d => `translate(${d.c[0]},${d.c[1]}) scale(${1 / k})`);
+    root.selectAll(".linelab, .routelab").attr("transform", d => `translate(${d.lx},${d.ly}) scale(${1 / k})`);
+    mapEl.classList.toggle("zoomed", k >= 4);
+    mapEl.classList.toggle("close", k >= 14);
+  }
+  const zoom = d3.zoom().scaleExtent([1, 80]).on("zoom", ev => {
+    root.attr("transform", ev.transform);
+    const changed = Math.abs(Math.log(ev.transform.k / state.k)) > 0.15;
+    state.k = ev.transform.k;
+    svg.style("--k", ev.transform.k);
+    if (changed) drawPeople();
+    placeScaled();
+  });
+  svg.call(zoom).on("dblclick.zoom", null);
+
+  function layout() {
+    const r = mapEl.getBoundingClientRect();
+    // Keep the same place in the middle when the map changes size.
+    const t0 = d3.zoomTransform(svg.node()), had = W && projection.invert ? projection.invert(t0.invert([W / 2, H / 2])) : null;
+    W = Math.max(200, r.width); H = Math.max(200, r.height);
+    svg.attr("viewBox", `0 0 ${W} ${H}`);
+    projection.fitExtent([[6, 6], [W - 6, H - 6]], { type: "Sphere" });
+    gSphere.attr("d", path({ type: "Sphere" }));
+    gGrat.attr("d", path(d3.geoGraticule10()));
+    gLand.attr("d", path(land));
+    for (const k in featCache) delete featCache[k];
+    zoom.translateExtent([[-W, -H], [W * 2, H * 2]]);
+    drawPolys(true); drawAll(true); drawOverlay(); drawSel();
+    if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had); svg.call(zoom.transform, d3.zoomIdentity.translate(W / 2 - t0.k * x, H / 2 - t0.k * y).scale(t0.k)); }
+    else if (t0.k > 1 || t0.x || t0.y) svg.call(zoom.transform, d3.zoomIdentity);
+  }
+  function flyTo(v, ms = 1400) {
+    if (!v || !isFinite(v.lon) || !isFinite(v.lat)) return;
+    const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]);
+    const k = Math.max(1, Math.min(80, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
+    const [x, y] = projection([v.lon, v.lat]);
+    const t = d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k);
+    svg.interrupt().transition().duration(reduceMotion() ? 0 : ms).call(zoom.transform, t);
+  }
+  // Pan only if the point is off screen; keep the zoom the person chose.
+  function reveal(lon, lat) {
+    const t = d3.zoomTransform(svg.node()), p = projection([lon, lat]); if (!p) return;
+    const [sx, sy] = t.apply(p);
+    if (sx < 30 || sy < 30 || sx > W - 30 || sy > H - 30) flyTo({ lon, lat, zoom: Math.max(t.k, 2) }, 900);
+  }
+
+  // ---------- layers ----------
+  const onClickSel = fn => function (ev, d) { ev.stopPropagation(); select(fn(d)); };
+  function points(g, cls, data, key, build) {
+    return g.selectAll(`g.${cls.split(" ")[0]}`).data(data, key).join(enter => {
+      const e = enter.append("g").attr("class", "pt " + cls);
+      build(e); e.append("title");
+      return e;
+    });
+  }
+  function lines(g, cls, data, key) {
+    return g.selectAll(`path.${cls.split(" ")[0]}`).data(data, key).join("path").attr("class", "line " + cls).attr("d", d => path({ type: "LineString", coordinates: d.pts }));
+  }
+  const lab = (g, data, key, color) => g.selectAll("text.linelab").data(data, key).join("text").attr("class", "linelab")
+    .style("fill", color).text(d => d.name).each(d => { const m = projection(d.pts[Math.floor(d.pts.length / 2)]) || [0, 0]; d.lx = m[0] + 4; d.ly = m[1] - 5; });
+
+  function drawPlaces() {
+    const y = state.year, g = G.places;
+    const list = state.on.places ? ENTRIES.filter(e => alive(e, y) || state.hi.has("place:" + e.id)) : ENTRIES.filter(e => state.hi.has("place:" + e.id));
+    const sel = points(g, "city lbl", list, d => d.id, e => { e.append("circle").attr("class", "ring").attr("r", 9); e.append("circle").attr("class", "dot"); e.append("text").attr("x", 7).attr("y", 4); })
+      .classed("wonder", d => d.layer === "wonders").classed("hi", d => state.hi.has("place:" + d.id)).on("click", onClickSel(cityCard));
+    sel.select(".dot").attr("r", d => { const p = popAt(d, y); return p ? Math.max(2.6, Math.min(10, Math.sqrt(p) / 100)) : 2.6; });
+    sel.select("text").text(d => nameAt(d, y));
+    sel.select("title").text(d => { const p = popAt(d, y); return `${nameAt(d, y)}${p ? ` · about ${fmtN(p)} people` : ""}`; });
+    sel.filter(".hi").raise();
+  }
+  function drawPeople() {
+    const y = state.year, g = G.people;
+    const n = Math.min(450, Math.round(14 + 22 * Math.pow(state.k, 1.25)));
+    const list = state.on.people ? PPL.filter(p => adult(p, y)).slice(0, n) : [];
+    const sel = points(g, "person lbl", list, d => d.i, e => { e.append("circle"); e.append("text").attr("x", 6).attr("y", -4); })
+      .classed("top", (d, i) => i < 6).on("click", onClickSel(personCard));
+    sel.select("circle").attr("r", d => 2 + Math.max(0, d.hpi - 60) / 9);
+    sel.select("text").text(d => d.name);
+    sel.select("title").text(d => `${d.name} · ${d.occ} · ${fmtSpan(d.b, d.d)} · born ${d.place}`);
+    placeScaled();
+  }
+  function drawMoney() {
+    const y = state.year, g = G.money, on = state.on.money;
+    const tr = on ? TRADE.filter(t => y >= t.start && y <= t.end) : [];
+    const mg = on ? MIGS.filter(m => y >= m.start && y <= m.end) : [];
+    const hb = on ? HUBS.filter(h => y >= h.start && y <= h.end) : [];
+    lines(g, "trade", tr, d => d.id).on("click", onClickSel(tradeCard)).selectAll("title").data(d => [d]).join("title").text(d => d.name);
+    g.selectAll("path.trade").raise();
+    lines(g, "mig", mg, d => d.id).classed("forced", d => d.forced).attr("marker-end", "url(#arrow)").on("click", onClickSel(migCard))
+      .selectAll("title").data(d => [d]).join("title").text(d => d.name);
+    lab(g, [...tr, ...mg], d => d.id, d => d.start != null && MIGS.includes(d) ? "var(--y-people)" : "var(--y-money)");
+    const s = points(g, "hub lbl always", hb, d => d.name, e => { e.append("rect").attr("x", -4).attr("y", -4).attr("width", 8).attr("height", 8).attr("transform", "rotate(45)"); e.append("text").attr("x", 8).attr("y", 4); })
+      .on("click", onClickSel(hubCard));
+    s.select("text").text(d => d.name.replace(/ \(.*\)/, ""));
+    s.select("title").text(d => `${d.name} · trade hub ${fmtSpan(d.start, d.end)}`);
+  }
+  function drawDisease() {
+    const y = state.year, g = G.disease, on = state.on.disease;
+    const ev = on ? SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 2 && y <= (e.end ?? NOW) + 8) : [];
+    const s = points(g, "shock", ev, d => d.id, e => { e.append("circle").attr("class", "halo"); e.append("circle").attr("class", "core").attr("r", 2.5); e.append("text").attr("x", 8).attr("y", 14); })
+      .attr("class", d => "pt shock " + d.subtype).style("--sc", d => SHOCK_C[d.subtype] || "var(--y-disease)").on("click", onClickSel(shockCard));
+    s.select(".halo").attr("r", d => d.deaths ? 5 + Math.max(0, Math.log10(d.deaths[1]) - 3) * 2.6 : 7);
+    s.select("text").text(d => d.name);
+    s.select("title").text(d => `${d.name} · ${SHOCK_N[d.subtype] || d.subtype} · ${fmtSpan(d.start, d.end)}`);
+    // The Black Death month by month, from the Plague & Climate workstream.
+    const bdOn = on && y >= 1338 && y <= 1365;
+    const routes = bdOn ? BD.filter(r => r.year <= y) : [];
+    lines(g, "bd", routes, d => d.from + d.to).on("click", onClickSel(() => shockCard(SHOCKS.find(e => e.id === "event:black_death"))));
+    const reached = bdOn ? Object.entries(ARRIVE).filter(([id, a]) => a.y <= y && PL[id]).map(([id, a]) => ({ id, ...a, lon: PL[id].lon, lat: PL[id].lat, name: PL[id].name })) : [];
+    const r = points(g, "reached", reached, d => d.id, e => { e.append("circle").attr("r", 2.6); e.append("text").attr("x", 5).attr("y", 3); }).on("click", onClickSel(d => ({ lon: d.lon, lat: d.lat, name: d.name })));
+    r.select("text").text(d => d.name);
+    r.select("title").text(d => `${d.name} · plague arrives ${MONTHS[(d.m || 1) - 1]} ${d.y}`);
+  }
+  function drawIdeas() {
+    const y = state.year, g = G.ideas, on = state.on.ideas;
+    const legs = [], stops = [];
+    if (on) for (const j of JOURNEYS) {
+      if (y < j.y0 || y > j.y1 + 150) continue;
+      const vis = j.steps.filter(s => s.y <= y && y - s.y < 400);
+      const last = vis[vis.length - 1];
+      vis.forEach(s => {
+        if (s.from && (s.from.lon !== s.at.lon || s.from.lat !== s.at.lat)) legs.push({ id: j.id + s.i, j, s, pts: [[s.from.lon, s.from.lat], [s.at.lon, s.at.lat]], fresh: y - s.y < 40 });
+        stops.push({ id: j.id + s.i, j, s, lon: s.at.lon, lat: s.at.lat, now: s === last && y - s.y < 60 });
+      });
+    }
+    lines(g, "leg", legs, d => d.id).classed("fresh", d => d.fresh).attr("marker-end", d => d.fresh ? "url(#arrow)" : null).on("click", onClickSel(d => journeyCard(d.j, d.s)))
+      .selectAll("title").data(d => [d]).join("title").text(d => `${d.j.n}: ${d.s.text}`);
+    g.selectAll("text.linelab").remove();
+    const sc = on ? SCHOOLS.filter(x => y >= x.s && (x.e == null || y <= x.e)) : [];
+    const ss = points(g, "school lbl", sc, d => d.id, e => { e.append("rect").attr("x", -3.5).attr("y", -3.5).attr("width", 7).attr("height", 7); e.append("text").attr("x", 7).attr("y", 10); }).on("click", onClickSel(ideaCard));
+    ss.select("text").text(d => d.n); ss.select("title").text(d => `${d.n} · ${d.sub} · ${fmtSpan(d.s, d.e)}`);
+    const wk = on ? WORKS.filter(w => w.s <= y && w.s > y - 100) : [];
+    const ws = points(g, "work lbl", wk, d => d.id, e => { e.append("path").attr("d", "M0-4.5L4.5 0 0 4.5-4.5 0z"); e.append("text").attr("x", 7).attr("y", -3); }).on("click", onClickSel(workCard));
+    ws.select("text").text(d => d.n); ws.select("title").text(d => `${d.n} · written ${fmtYear(d.s)}`);
+    const st = points(g, "stop lbl", stops, d => d.id, e => { e.append("circle").attr("r", 3.2); e.append("text").attr("x", 7).attr("y", 4); })
+      .classed("now", d => d.now).on("click", onClickSel(d => journeyCard(d.j, d.s)));
+    st.select("text").text(d => d.now ? d.j.n : d.s.at.name); st.select("title").text(d => `${d.j.n} · ${d.s.at.name}, ${fmtYear(d.s.y)}`);
+    st.filter(".now").raise();
+  }
+  function drawOrder() {
+    const y = state.year, g = G.order, on = state.on.order;
+    const list = on ? POLS.filter(p => polAlive(p, y)) : [];
+    list.forEach(p => { p._a = areaAt(p, y); p._f = fragAt(p, y); p._b = band(p._f); });
+    list.sort((a, b) => b._a - a._a);
+    const s = points(g, "order lbl", list, d => d.id, e => { e.append("circle"); e.append("text").attr("text-anchor", "middle"); })
+      .attr("class", (d, i) => `pt order lbl ${d._b}${i < 8 ? " big" : ""}`).style("--bc", d => `var(--b-${d._b === "none" ? "calm" : d._b})`).on("click", onClickSel(polityCard));
+    s.select("circle").attr("r", d => 3 + Math.sqrt(d._a) * 7);
+    s.select("text").attr("y", d => -(5 + Math.sqrt(d._a) * 7)).style("font-size", d => 10 + Math.min(4, Math.sqrt(d._a) * 2) + "px").text(d => d.n);
+    s.select("title").text(d => `${d.n} · ${d._b === "none" ? "no score yet" : d._b + ", " + Math.round(d._f * 100) + "% risk of breaking within 25 years"}`);
+    const broke = on ? POLS.filter(p => p.b && p.e <= y && p.e > y - 20) : [];
+    const b = points(g, "broke lbl", broke, d => d.id, e => { e.append("path").attr("d", "M-5-5L5 5M5-5L-5 5"); e.append("text").attr("x", 7).attr("y", 4); }).on("click", onClickSel(polityCard));
+    b.select("text").text(d => `${d.n} breaks`); b.select("title").text(d => `${d.n} ended ${fmtYear(d.e)} without a successor (${d.st})`);
+  }
+  let rafAll = 0;
+  function drawAll(now) {
+    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawPlaces(); drawPeople(); placeScaled(); };
+    if (now) { cancelAnimationFrame(rafAll); run(); } else if (!rafAll) rafAll = requestAnimationFrame(run);
+  }
+
+  // ---------- selection: one place, every lens ----------
+  function drawSel() {
+    const s = state.sel;
+    gSelRing.attr("d", s ? path(d3.geoCircle().center([s.lon, s.lat]).radius(R_KM / 111.2)()) : null);
+    const d = s ? [s] : [];
+    gSel.selectAll("g.sel").data(d).join(e => { const g = e.append("g").attr("class", "pt sel"); g.append("circle").attr("class", "pulse").attr("r", 8); g.append("circle").attr("r", 4); return g; });
+    placeScaled();
+  }
+  const R_KM = 300;
+  function select(card, opts = {}) {
+    if (!card || !isFinite(card.lon) || !isFinite(card.lat)) return;
+    state.sel = card;
+    document.getElementById("maphint").hidden = true;
+    if (card.year != null && opts.setYear) animateYear(card.year);
+    drawSel();
+    if (opts.fly) reveal(card.lon, card.lat);
+    setTab("here");
+    renderHere();
+  }
+  svg.on("click", ev => {
+    const [mx, my] = d3.pointer(ev, root.node());
+    const ll = projection.invert([mx, my]);
+    if (!ll || !isFinite(ll[0])) return;
+    // Snap to the nearest named place within a few pixels.
+    const tol = 9 / state.k, near = (lon, lat) => { const p = projection([lon, lat]); return p ? Math.hypot(p[0] - mx, p[1] - my) : 1e9; };
+    let best = null, bd = tol;
+    for (const e of ENTRIES) { const d = near(e.lon, e.lat); if (d < bd) { bd = d; best = { lon: e.lon, lat: e.lat, name: nameAt(e, state.year) }; } }
+    for (const p of NAMED) { const d = near(p.lon, p.lat); if (d < bd) { bd = d; best = { ...p }; } }
+    select(best || { lon: ll[0], lat: ll[1], name: null });
+  });
+
+  // Every named place any workstream knows, for snapping clicks and naming spots.
+  const NAMED = [
+    ...ENTRIES.map(e => ({ lon: e.lon, lat: e.lat, name: e.name })),
+    ...Object.values(IP).map(p => ({ lon: p.lo, lat: p.la, name: p.n })),
+    ...PLAGUE.places.map(p => ({ lon: p.lon, lat: p.lat, name: p.name })),
+    ...HUBS.map(h => ({ lon: h.lon, lat: h.lat, name: h.name.replace(/ \(.*\)/, "") })),
+  ];
+  const PPLACES = PEOPLE.places.map(p => ({ lon: p[2], lat: p[1], name: p[0] }));
+  function nameNear(lon, lat) {
+    const nearest = list => { let best = null, bd = 1e9; for (const p of list) { const d = km([lon, lat], [p.lon, p.lat]); if (d < bd) { bd = d; best = p; } } return [best, bd]; };
+    const [n, dn] = nearest(NAMED);
+    if (n && dn < 25) return n.name;
+    const [q, dq] = nearest(PPLACES);
+    if (q && dq < 15) return q.name;
+    return n && dn < 200 ? `Near ${n.name}` : null;
+  }
+
+  // ---------- cards: the same item, wherever it is clicked ----------
+  const src1 = s => !s ? [] : Array.isArray(s) ? s.map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c, url: x.url || x.u }) : [{ cite: s.c || s.cite, url: s.u || s.url }];
+  const wiki = t => t ? [{ cite: "Wikipedia: " + t.replace(/_/g, " "), url: "https://en.wikipedia.org/wiki/" + encodeURIComponent(t.replace(/ /g, "_")) }] : [];
+  function cityCard(e) {
+    const y = state.year, p = popAt(e, y), ev = (EVENTS[e.id] || []);
+    return { kind: "city", c: "var(--y-places)", lon: e.lon, lat: e.lat, name: nameAt(e, y), kick: e.layer === "wonders" ? "Wonder" : "City", title: nameAt(e, y),
+      meta: `${fmtSpan(e.start, e.end)}${e.today ? " · today " + e.today : ""}${p ? ` · about ${fmtN(p)} people in ${fmtYear(y)}` : ""}`,
+      body: e.what, why: e.why, sources: [], events: ev, entry: e };
+  }
+  function personCard(p) {
+    return { kind: "person", c: "var(--y-people)", lon: p.lon, lat: p.lat, name: p.place, kick: `Person · ${p.occ}`, title: p.name, year: p.b + 30,
+      meta: `${fmtSpan(p.b, p.d)} · born in ${p.place}${p.country ? ", " + p.country : ""}${p.dplace && p.dplace !== p.place ? ` · died in ${p.dplace}` : ""}`, sources: wiki(p.wiki) };
+  }
+  function tradeCard(t) {
+    const m = t.pts[Math.floor(t.pts.length / 2)];
+    return { kind: "trade", c: "var(--y-money)", lon: m[0], lat: m[1], name: null, kick: "Trade route", title: t.name, year: Math.round((t.start + t.end) / 2), line: t.pts,
+      meta: `${fmtSpan(t.start, t.end)} · ${t.goods.join(", ")}`, body: t.why, sources: src1(t.src) };
+  }
+  function migCard(m) {
+    const p = m.pts[m.pts.length - 1];
+    return { kind: "mig", c: "var(--y-people)", lon: p[0], lat: p[1], name: null, kick: m.forced ? "Forced migration" : "Migration", title: m.name, year: m.start, line: m.pts,
+      meta: `${fmtSpan(m.start, m.end)}${m.people ? ` · about ${fmtN(m.people)} people` : ""}${m.stops ? " · " + m.stops.join(" → ") : ""}`, body: m.why, sources: src1(m.src) };
+  }
+  function hubCard(h) {
+    return { kind: "hub", c: "var(--y-money)", lon: h.lon, lat: h.lat, name: h.name.replace(/ \(.*\)/, ""), kick: `Trade hub · ${h.relay}`, title: h.name, year: h.start,
+      meta: fmtSpan(h.start, h.end), body: h.why, why: h.lost ? "How it lost the crown: " + h.lost : "", sources: src1(h.src) };
+  }
+  function shockCard(e) {
+    if (!e) return null;
+    return { kind: "shock", c: SHOCK_C[e.subtype] || "var(--y-disease)", lon: e.lon, lat: e.lat, name: null, kick: SHOCK_N[e.subtype] || e.subtype, title: e.name, year: e.start,
+      meta: `${fmtSpan(e.start, e.end)}${e.deaths ? ` · ${e.deaths[0] === e.deaths[1] ? "about " + fmtN(e.deaths[0]) : fmtN(e.deaths[0]) + " to " + fmtN(e.deaths[1])} deaths` : ""}`,
+      body: e.what, why: e.why, sources: src1(e.sources), shock: e };
+  }
+  function journeyCard(j, s) {
+    return { kind: "journey", c: "var(--y-ideas)", lon: s.at.lon, lat: s.at.lat, name: s.at.name, kick: `Idea journey · step ${s.i + 1} of ${j.steps.length}`, title: j.n, year: s.y,
+      meta: `${s.at.name}, ${fmtYear(s.y)}${s.ya ? " (approx.)" : ""}`, body: s.text, why: j.why, sources: src1(s.src), journey: j, step: s };
+  }
+  function ideaCard(x) {
+    return { kind: "idea", c: "var(--y-ideas)", lon: x.lon, lat: x.lat, name: x.name, kick: x.sub, title: x.n, year: x.s, meta: `${fmtSpan(x.s, x.e)} · ${x.name}`, body: x.w, sources: src1(x.src) };
+  }
+  function workCard(w) {
+    const a = THINKERS[w.a];
+    return { kind: "work", c: "var(--y-ideas)", lon: w.lon, lat: w.lat, name: w.name, kick: `Work · ${w.sub || ""}`, title: w.n, year: w.s, meta: `${a ? a.n + " · " : ""}written ${fmtYear(w.s)} in ${w.name}`, body: w.w, sources: src1(w.src) };
+  }
+  function polityCard(p) {
+    const y = state.year, f = fragAt(p, y), b = band(f);
+    return { kind: "polity", c: "var(--y-order)", lon: p.lon, lat: p.lat, name: null, kick: "State · Order & chaos", title: p.n, year: Math.max(p.s, Math.min(p.e, y)),
+      meta: `${fmtSpan(p.s, p.e)} · peak about ${p.pk ? p.pk[1].toFixed(2) : "?"} million km² in ${p.pk ? fmtYear(p.pk[0]) : "?"}`,
+      body: p.b ? `Ended ${fmtYear(p.e)} without a clear successor (${p.st === "withered" ? "withered away slowly" : "snapped suddenly"}).` : `Ended ${fmtYear(p.e)} with a handoff to a successor state.`,
+      sources: wiki(p.wiki), polity: p };
+  }
+  function cardHTML(c) {
+    if (!c || !c.title) return "";
+    return `<div class="focus" style="--c:${c.c}"><span class="fk">${esc(c.kick)}</span><span class="ft">${esc(c.title)}</span>
+      ${c.meta ? `<span class="sub">${esc(c.meta)}</span>` : ""}${c.body ? `<p>${esc(c.body)}</p>` : ""}${c.why ? `<p class="why">${esc(c.why)}</p>` : ""}
+      ${c.polity ? sparkHTML(c.polity) : ""}
+      ${srcList(c.sources)}
+      <div class="row">${c.year != null && c.year !== state.year ? `<button class="btn" data-a="${act(() => animateYear(c.year))}">Go to ${esc(fmtYear(c.year))}</button>` : ""}${c.journey ? journeyNav(c) : ""}<button class="btn" data-a="${act(() => askAbout(c))}">Ask about this</button></div></div>`;
+  }
+  function journeyNav(c) {
+    const j = c.journey, i = c.step.i;
+    const go = k => act(() => { const s = j.steps[k]; select(journeyCard(j, s), { fly: true }); animateYear(s.y); });
+    return `${i > 0 ? `<button class="btn" data-a="${go(i - 1)}">◀ Back</button>` : ""}${i < j.steps.length - 1 ? `<button class="btn primary" data-a="${go(i + 1)}">Next stop ▶</button>` : ""}`;
+  }
+  function sparkHTML(p) {
+    if (!p.f || p.f.length < 2) return "";
+    const x0 = p.f[0][0], x1 = p.f[p.f.length - 1][0], ym = Math.max(2.2 * ORDER.thr, d3.max(p.f, d => d[1]));
+    const X = v => (v - x0) / (x1 - x0 || 1) * 300, Y = v => 44 - v / ym * 40;
+    const d = p.f.map((q, i) => `${i ? "L" : "M"}${X(q[0]).toFixed(1)} ${Y(q[1]).toFixed(1)}`).join("");
+    const yy = state.year, nowX = yy >= x0 && yy <= x1 ? X(yy) : null, f = fragAt(p, yy), b = band(f);
+    return `<div><svg class="spark" viewBox="0 0 300 46" preserveAspectRatio="none"><line class="thr" x1="0" x2="300" y1="${Y(ORDER.thr)}" y2="${Y(ORDER.thr)}"/><path class="ln" d="${d}"/>${nowX != null ? `<line class="now" x1="${nowX}" x2="${nowX}" y1="0" y2="46"/>` : ""}</svg>
+      <span class="note">Risk of breaking within 25 years, from territory alone (dashed line: the lab's warning threshold). ${f != null ? `In ${fmtYear(yy)}: <span class="band" style="--bc:var(--b-${b === "none" ? "calm" : b})">${b}</span> ${Math.round(f * 100)}%` : ""}</span></div>`;
+  }
+
+  // ---------- panel helpers ----------
+  let ACTS = [];
+  const act = fn => (ACTS.push(fn), ACTS.length - 1);
+  document.getElementById("panel").addEventListener("click", ev => {
+    const b = ev.target.closest("[data-a]"); if (!b) return;
+    const fn = ACTS[+b.dataset.a]; if (fn) fn();
+  });
+  const sourceRow = (s, live) => `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite || s.url)}</a>` : esc(s.cite)}${live ? '<span class="unchecked">unchecked</span>' : ""}</li>`;
+  const srcList = (arr, live) => arr && arr.length ? `<ul class="srcs">${arr.map(s => sourceRow(s, live)).join("")}</ul>` : "";
+  const item = (title, y, w, fn, dim) => `<button class="it${dim ? " dim" : ""}" data-a="${act(fn)}"><span>${title}</span><span class="y">${esc(y ?? "")}</span>${w ? `<span class="w">${esc(w)}</span>` : ""}</button>`;
+  const sec = (layer, title, items, n) => items.length ? `<div class="sec${state.on[layer] === false ? " off" : ""}" style="--c:var(--y-${layer})"><h3><i></i>${esc(title)}${n != null ? `<span class="n">${esc(n)}</span>` : ""}</h3><div class="items">${items.join("")}</div></div>` : "";
+  const goCard = (c, setYear) => () => { select(c, { fly: true, setYear }); };
+  const nearby = (list, lon, lat, r) => list.map(x => ({ x, d: km([lon, lat], [x.lon, x.lat]) })).filter(o => o.d <= r).sort((a, b) => a.d - b.d);
+  const nearLine = (pts, lon, lat) => d3.min(pts, p => km([lon, lat], p));
+
+  // ---------- This year ----------
+  function renderNow() {
+    const y = state.year; ACTS = ACTS.slice(0, 0);
+    const el = document.getElementById("pane-now");
+    const evs = [];
+    for (const e of ENTRIES) for (const [yy, t, bad] of (EVENTS[e.id] || [])) if (Math.abs(yy - y) <= 25) evs.push({ e, yy, t, bad });
+    evs.sort((a, b) => Math.abs(a.yy - y) - Math.abs(b.yy - y));
+    const cities = ENTRIES.filter(e => alive(e, y)).map(e => ({ e, p: popAt(e, y) })).filter(o => o.p).sort((a, b) => b.p - a.p).slice(0, 6);
+    const ppl = PPL.filter(p => adult(p, y)).slice(0, 8);
+    const tr = TRADE.filter(t => y >= t.start && y <= t.end), mg = MIGS.filter(m => y >= m.start && y <= m.end);
+    const hubs = HUBS.filter(h => y >= h.start && y <= h.end);
+    const sh = SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 5 && y <= (e.end ?? NOW) + 10).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y)).slice(0, 6);
+    const moving = [];
+    for (const j of JOURNEYS) for (const s of j.steps) if (Math.abs(s.y - y) <= 40) moving.push({ j, s });
+    moving.sort((a, b) => Math.abs(a.s.y - y) - Math.abs(b.s.y - y));
+    const pols = POLS.filter(p => polAlive(p, y)).map(p => ({ p, a: areaAt(p, y), f: fragAt(p, y) }));
+    const shaky = pols.filter(o => o.f != null && o.f >= ORDER.thr).sort((a, b) => b.a - a.a).slice(0, 5);
+    const broke = POLS.filter(p => p.b && p.e <= y && p.e > y - 25).slice(0, 4);
+    const total = { pol: pols.length, shaky: pols.filter(o => o.f != null && o.f >= ORDER.thr).length };
+    const ind = MONEY.econ.india, uk = MONEY.econ.uk, gi = interp(ind.gdp_per_capita, y), gu = interp(uk.gdp_per_capita, y);
+    el.innerHTML = `
+      <div><p class="kick">The world in</p><h2 class="ttl">${esc(fmtYear(y))}</h2>
+      <p class="sub">${pols.length} states on the map${total.shaky ? `, ${total.shaky} of them fragile` : ""} · ${ppl.length ? PPL.filter(p => adult(p, y)).length + " famous people alive" : "no famous people recorded yet"} · ${tr.length} trade routes running</p></div>
+      ${sec("places", "Happening now", evs.slice(0, 6).map(o => item(`<b>${esc(nameAt(o.e, o.yy))}</b>: ${esc(o.t)}`, fmtYear(o.yy), "", goCard(cityCard(o.e)))))}
+      ${sec("places", "Biggest cities", cities.map(o => item(`<b>${esc(nameAt(o.e, y))}</b>`, "~" + fmtN(o.p), "", goCard(cityCard(o.e)))))}
+      ${sec("people", "Alive and grown up", ppl.map(p => item(`<b>${esc(p.name)}</b> · ${esc(p.occ)}`, fmtSpan(p.b, p.d), "", goCard(personCard(p)))))}
+      ${sec("money", "Money moving", [
+        ...hubs.map(h => item(`<b>${esc(h.name)}</b> <span class="tag">richest crossroads</span>`, fmtSpan(h.start, h.end), "", goCard(hubCard(h)))),
+        ...tr.map(t => item(`<b>${esc(t.name)}</b>`, t.goods.slice(0, 3).join(", "), "", goCard(tradeCard(t)))),
+        ...mg.map(m => item(`<b>${esc(m.name)}</b> <span class="tag">${m.forced ? "forced" : "migration"}</span>`, fmtSpan(m.start, m.end), "", goCard(migCard(m)))),
+        ...(gi || gu ? [item(`GDP per person: India <b>$${gi ? Math.round(gi).toLocaleString() : "?"}</b>, Britain <b>$${gu ? Math.round(gu).toLocaleString() : "?"}</b>`, "Maddison", "", () => {})] : []),
+      ])}
+      ${sec("disease", "Plague, famine and climate", sh.map(e => item(`<b>${esc(e.name)}</b> <span class="tag">${esc(SHOCK_N[e.subtype] || e.subtype)}</span>`, fmtSpan(e.start, e.end), "", goCard(shockCard(e)))))}
+      ${sec("ideas", "Ideas on the move", moving.slice(0, 6).map(o => item(`<b>${esc(o.j.n)}</b> reaches ${esc(o.s.at.name)}`, fmtYear(o.s.y), o.s.text, goCard(journeyCard(o.j, o.s)))))}
+      ${sec("order", "Most fragile big states", [
+        ...shaky.map(o => item(`<b>${esc(o.p.n)}</b> <span class="band" style="--bc:var(--b-${band(o.f)})">${band(o.f)}</span>`, Math.round(o.f * 100) + "%", "", goCard(polityCard(o.p)))),
+        ...broke.map(p => item(`<b>${esc(p.n)}</b> broke apart`, fmtYear(p.e), "", goCard(polityCard(p)))),
+      ])}
+      <div class="row"><button class="btn" data-a="${act(() => { document.getElementById("qbox").value = `What was the world like in ${fmtYear(y)}, and what was about to change?`; document.getElementById("ask").requestSubmit(); })}">Ask the guide about ${esc(fmtYear(y))}</button></div>
+      ${footHTML()}`;
+  }
+  function footHTML() {
+    return `<p class="foot">One map, six workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
+  }
+
+  // ---------- Here ----------
+  function renderHere() {
+    const el = document.getElementById("pane-here");
+    const s = state.sel, y = state.year;
+    ACTS = [];
+    if (!s) { el.innerHTML = `<p class="sub">Click anywhere on the map, or on anything in the other tabs, and this column gathers every lens for that spot and year.</p>`; return; }
+    const { lon, lat } = s;
+    const rb = ruledBy(lon, lat, y);
+    const city = ENTRIES.map(e => ({ e, d: km([lon, lat], [e.lon, e.lat]) })).sort((a, b) => a.d - b.d)[0];
+    const exact = city && city.d < 40 ? city.e : null;
+    const name = s.name || (exact ? nameAt(exact, y) : null) || nameNear(lon, lat) || (rb ? rb.name : null) || `${Math.abs(lat).toFixed(1)}°${lat >= 0 ? "N" : "S"}, ${Math.abs(lon).toFixed(1)}°${lon >= 0 ? "E" : "W"}`;
+    // Places
+    const cityItems = [];
+    if (exact) {
+      const p = popAt(exact, y);
+      const ev = (EVENTS[exact.id] || []).slice().sort((a, b) => Math.abs(a[0] - y) - Math.abs(b[0] - y)).slice(0, 6).sort((a, b) => a[0] - b[0]);
+      cityItems.push(item(`<b>${esc(nameAt(exact, y))}</b>${alive(exact, y) ? "" : ` <span class="tag">${y < exact.start ? "not founded yet" : "gone"}</span>`}`, p ? "~" + fmtN(p) : fmtSpan(exact.start, exact.end), exact.what, goCard(cityCard(exact))));
+      ev.forEach(([yy, t, bad]) => cityItems.push(item(`${bad ? "⚔ " : ""}${esc(t)}`, fmtYear(yy), "", () => animateYear(yy), Math.abs(yy - y) > 50)));
+    }
+    nearby(ENTRIES.filter(e => e !== exact && alive(e, y)), lon, lat, 500).slice(0, 4).forEach(o => cityItems.push(item(`${esc(nameAt(o.x, y))}`, Math.round(o.d) + " km", "", goCard(cityCard(o.x)), true)));
+    // Order
+    const orderItems = [];
+    const pol = POLS.filter(p => polAlive(p, y)).map(p => { const a = areaAt(p, y); const rad = Math.sqrt(Math.max(a, 0.01) * 1e6 / Math.PI); return { p, a, sc: km([lon, lat], [p.lon, p.lat]) / rad }; }).sort((a, b) => a.sc - b.sc)[0];
+    if (pol && pol.sc < 1.6) {
+      const f = fragAt(pol.p, y), b = band(f);
+      orderItems.push(item(`<b>${esc(pol.p.n)}</b> ${f != null ? `<span class="band" style="--bc:var(--b-${b})">${b}</span>` : ""}`, fmtSpan(pol.p.s, pol.p.e), f != null ? `${Math.round(f * 100)}% risk of breaking within 25 years (territory model)` : "", goCard(polityCard(pol.p))));
+    }
+    // People
+    const born = nearby(PPL, lon, lat, 60);
+    const here = born.filter(o => adult(o.x, y)).slice(0, 6), ever = born.filter(o => !adult(o.x, y)).slice(0, 6);
+    const alivePeople = nearby(PPL.filter(p => adult(p, y)), lon, lat, R_KM).filter(o => o.d > 60).slice(0, 5);
+    const pItems = [
+      ...here.map(o => item(`<b>${esc(o.x.name)}</b> <span class="tag now">alive</span> · ${esc(o.x.occ)}`, fmtSpan(o.x.b, o.x.d), "", goCard(personCard(o.x)))),
+      ...alivePeople.map(o => item(`<b>${esc(o.x.name)}</b> <span class="tag now">alive</span> · ${esc(o.x.occ)}`, `${Math.round(o.d)} km`, "", goCard(personCard(o.x)))),
+      ...ever.map(o => item(`${esc(o.x.name)} · ${esc(o.x.occ)}`, fmtSpan(o.x.b, o.x.d), "", goCard(personCard(o.x), true), true)),
+    ];
+    const meet = [...here, ...alivePeople].length >= 2 ? `${[...here, ...alivePeople].slice(0, 2).map(o => o.x.name).join(" and ")} could have met around here in ${fmtYear(y)}.` : "";
+    // Money
+    const mItems = [];
+    nearby(HUBS, lon, lat, 500).slice(0, 3).forEach(o => mItems.push(item(`<b>${esc(o.x.name)}</b> ${y >= o.x.start && y <= o.x.end ? '<span class="tag now">hub now</span>' : ""}`, fmtSpan(o.x.start, o.x.end), o.x.why, goCard(hubCard(o.x)), !(y >= o.x.start && y <= o.x.end))));
+    TRADE.map(t => ({ t, d: nearLine(t.pts, lon, lat) })).filter(o => o.d < 450).sort((a, b) => a.d - b.d).slice(0, 4)
+      .forEach(o => { const on = y >= o.t.start && y <= o.t.end; mItems.push(item(`<b>${esc(o.t.name)}</b> ${on ? '<span class="tag now">running</span>' : ""}`, fmtSpan(o.t.start, o.t.end), "", goCard(tradeCard(o.t)), !on)); });
+    MIGS.map(m => ({ m, d: nearLine(m.pts, lon, lat) })).filter(o => o.d < 600).sort((a, b) => a.d - b.d).slice(0, 3)
+      .forEach(o => { const on = y >= o.m.start && y <= o.m.end; mItems.push(item(`${esc(o.m.name)} ${on ? '<span class="tag now">under way</span>' : ""}`, fmtSpan(o.m.start, o.m.end), "", goCard(migCard(o.m)), !on)); });
+    const inIndia = lat > 6 && lat < 36 && lon > 67 && lon < 92, inUK = lat > 49.8 && lat < 59 && lon > -8.5 && lon < 2;
+    const econ = inIndia ? MONEY.econ.india : inUK ? MONEY.econ.uk : null;
+    if (econ) { const g = interp(econ.gdp_per_capita, y), pp = interp(econ.population, y); if (g || pp) mItems.unshift(item(`${inIndia ? "India" : "Britain"}: ${g ? `<b>$${Math.round(g).toLocaleString()}</b> per person` : ""}${g && pp ? ", " : ""}${pp ? fmtN(pp) + " people" : ""}`, "Maddison", "", () => {})); }
+    // Disease
+    const dItems = [];
+    const plague = Object.entries(ARRIVE).map(([id, a]) => ({ id, a, p: PL[id] })).filter(o => o.p).map(o => ({ ...o, d: km([lon, lat], [o.p.lon, o.p.lat]) })).sort((a, b) => a.d - b.d)[0];
+    if (plague && plague.d < 200) dItems.push(item(`Black Death reaches <b>${esc(plague.p.name)}</b>`, `${MONTHS[(plague.a.m || 1) - 1]} ${plague.a.y}`, plague.a.note, () => animateYear(plague.a.y)));
+    nearby(SHOCKS, lon, lat, 1200).sort((a, b) => Math.abs(a.x.start - y) - Math.abs(b.x.start - y)).slice(0, 5)
+      .forEach(o => { const on = y >= o.x.start && y <= (o.x.end ?? NOW); dItems.push(item(`<b>${esc(o.x.name)}</b> ${on ? '<span class="tag now">now</span>' : ""}`, fmtSpan(o.x.start, o.x.end), "", goCard(shockCard(o.x)), !on && Math.abs(o.x.start - y) > 100)); });
+    // Ideas
+    const iItems = [];
+    const stops = [];
+    for (const j of JOURNEYS) for (const st of j.steps) { const d = km([lon, lat], [st.at.lon, st.at.lat]); if (d < 250) stops.push({ j, st, d }); }
+    stops.sort((a, b) => Math.abs(a.st.y - y) - Math.abs(b.st.y - y)).slice(0, 5).sort((a, b) => a.st.y - b.st.y)
+      .forEach(o => iItems.push(item(`<b>${esc(o.j.n)}</b> in ${esc(o.st.at.name)}`, fmtYear(o.st.y), o.st.text, goCard(journeyCard(o.j, o.st), true), Math.abs(o.st.y - y) > 150)));
+    nearby(SCHOOLS, lon, lat, 250).slice(0, 3).forEach(o => { const on = y >= o.x.s && (o.x.e == null || y <= o.x.e); iItems.push(item(`${esc(o.x.n)} ${on ? '<span class="tag now">open</span>' : ""}`, fmtSpan(o.x.s, o.x.e), "", goCard(ideaCard(o.x)), !on)); });
+    nearby(WORKS, lon, lat, 250).sort((a, b) => Math.abs(a.x.s - y) - Math.abs(b.x.s - y)).slice(0, 3).forEach(o => iItems.push(item(`<i>${esc(o.x.n)}</i> written`, fmtYear(o.x.s), "", goCard(workCard(o.x)), o.x.s > y)));
+
+    el.innerHTML = `
+      <div><p class="kick">Here, in ${esc(fmtYear(y))}</p><h2 class="ttl">${esc(name)}</h2>
+      ${rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(snapFor(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(snapFor(y)))} border map</p>`}</div>
+      ${cardHTML(s)}
+      ${rb && rb.emp ? `<div class="focus" style="--c:${rb.emp.color}"><span class="fk">Empire</span><span class="ft">${esc(rb.emp.name)}</span><span class="sub">${esc(fmtSpan(rb.emp.start, rb.emp.end))}${rb.emp.peak ? ` · peak ${rb.emp.peak[1]} million km² in ${esc(fmtYear(rb.emp.peak[0]))}` : ""}</span><p>${esc(rb.emp.what || "")}</p>${rb.emp.why ? `<p class="why">${esc(rb.emp.why)}</p>` : ""}</div>` : ""}
+      ${sec("places", "The place", cityItems)}
+      ${sec("order", "Order & chaos", orderItems)}
+      ${sec("people", "People", pItems, meet ? "" : null)}${meet ? `<p class="note">${esc(meet)}</p>` : ""}
+      ${sec("money", "Money & migration", mItems)}
+      ${sec("disease", "Plague & climate", dItems)}
+      ${sec("ideas", "Ideas & faith", iItems)}
+      <p class="note">Within about ${R_KM} km of the marked spot (people: born within 60 km). Faded rows belong to other centuries; tap one to jump there.</p>
+      <div class="row"><button class="btn primary" data-a="${act(() => askAbout({ title: name, year: y, here: true }))}">Ask the guide about ${esc(name)} in ${esc(fmtYear(y))}</button></div>`;
+  }
+
+  // ---------- tabs ----------
+  function setTab(t) {
+    state.tab = t;
+    document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === t));
+    for (const k of ["now", "here", "guide"]) document.getElementById("pane-" + k).hidden = k !== t;
+    if (t === "now") renderNow(); else if (t === "here") renderHere();
+  }
+  document.querySelectorAll(".tab").forEach(b => b.onclick = () => setTab(b.dataset.tab));
+  let panelTimer;
+  function refreshPanel() { clearTimeout(panelTimer); panelTimer = setTimeout(() => { if (state.tab === "now") renderNow(); else if (state.tab === "here") renderHere(); }, 140); }
+
+  // ---------- lens chips ----------
+  const layersEl = document.getElementById("layers");
+  const chip = (k, n, c) => { const b = document.createElement("button"); b.className = "chip"; b.dataset.k = k; b.style.setProperty("--c", c); b.innerHTML = `<i></i>${esc(n)}`; layersEl.appendChild(b); return b; };
+  const chips = {};
+  for (const L of LAYERS) chips[L.k] = chip(L.k, L.n, `var(--y-${L.k})`);
+  chips.borders = chip("borders", "Borders", "var(--land-edge)");
+  function syncChips() { for (const k in chips) chips[k].setAttribute("aria-pressed", k === "borders" ? state.borders : state.on[k]); }
+  layersEl.addEventListener("click", ev => {
+    const b = ev.target.closest(".chip"); if (!b) return;
+    const k = b.dataset.k;
+    if (k === "borders") { state.borders = !state.borders; drawPolys(); } else { state.on[k] = !state.on[k]; drawAll(); }
+    syncChips(); refreshPanel();
+  });
+  function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); } }
+
+  // ---------- year ----------
+  const yearIn = document.getElementById("year"), yout = document.getElementById("yout"), yp = document.getElementById("yp");
+  function setYear(y) {
+    y = clampYear(y);
+    if (y === state.year && yout.textContent) return;
+    state.year = y;
+    yearIn.value = Math.round(yearToT(y) * 1000);
+    yout.textContent = fmtYear(y);
+    yp.textContent = fmtYear(y);
+    drawAll(); refreshPanel();
+  }
+  let yearAnim;
+  function animateYear(to, ms = 1100) {
+    cancelAnimationFrame(yearAnim);
+    const from = state.year; to = clampYear(to);
+    if (from === to || reduceMotion()) return setYear(to);
+    const t0 = performance.now();
+    const tick = now => { const p = Math.min(1, (now - t0) / ms); setYear(from + (to - from) * d3.easeCubicInOut(p)); if (p < 1) yearAnim = requestAnimationFrame(tick); };
+    yearAnim = requestAnimationFrame(tick);
+  }
+  yearIn.addEventListener("input", () => { cancelAnimationFrame(yearAnim); stopTime(); setYear(tToYear(yearIn.value / 1000)); });
+  // Play through time: about 40 seconds from 4000 BCE to today, slower where history is denser.
+  const playBtn = document.getElementById("playyear");
+  let timeRaf = 0, lastT = 0;
+  function stopTime() { cancelAnimationFrame(timeRaf); timeRaf = 0; playBtn.textContent = "▶"; playBtn.setAttribute("aria-label", "Play through time"); }
+  playBtn.onclick = () => {
+    if (timeRaf) return stopTime();
+    if (state.year >= NOW - 1) setYear(MIN);
+    playBtn.textContent = "❚❚"; playBtn.setAttribute("aria-label", "Pause");
+    lastT = performance.now();
+    const tick = now => {
+      const t = Math.min(1, yearToT(state.year) + (now - lastT) / 40000); lastT = now;
+      let ny = tToYear(t); if (ny <= state.year) ny = state.year + 1;
+      setYear(ny);
+      if (state.year >= NOW) return stopTime();
+      timeRaf = requestAnimationFrame(tick);
+    };
+    timeRaf = requestAnimationFrame(tick);
+  };
+  // The strip above the slider: when each lens has something to say.
+  (function drawStrip() {
+    const st = d3.select("#strip");
+    const rows = [
+      ["places", ENTRIES.flatMap(e => (EVENTS[e.id] || []).map(v => v[0]))],
+      ["disease", SHOCKS.map(e => e.start)],
+      ["ideas", JOURNEYS.flatMap(j => j.steps.map(s => s.y))],
+      ["order", POLS.filter(p => p.b).map(p => p.e)],
+    ];
+    rows.forEach(([k, ys], i) => {
+      st.append("g").selectAll("line").data(ys.filter(y => y >= MIN && y <= NOW)).join("line")
+        .attr("x1", y => yearToT(y) * 1000).attr("x2", y => yearToT(y) * 1000).attr("y1", 1 + i * 5.3).attr("y2", 5 + i * 5.3)
+        .style("stroke", `var(--y-${k})`).style("stroke-opacity", k === "order" ? 0.35 : 0.7);
+    });
+    st.on("click", ev => { const r = st.node().getBoundingClientRect(); stopTime(); animateYear(tToYear((ev.clientX - r.left) / r.width), 700); });
+  })();
+
+  // ---------- guide overlay ----------
+  let overlay = { routes: [], pins: [], lens: "military" };
+  function drawOverlay() {
+    const rs = (overlay.routes || []).filter(r => Array.isArray(r.points) && r.points.length >= 2).map((r, i) => {
+      const pts = r.points.map(p => [Number(p[0]), Number(p[1])]).filter(p => isFinite(p[0]) && isFinite(p[1]));
+      const mid = projection(pts[Math.floor(pts.length / 2)]) || [0, 0];
+      return { ...r, i, pts, lx: mid[0] + 6, ly: mid[1] - 6 };
+    }).filter(r => r.pts.length >= 2);
+    const col = r => r.style === "plague" ? "var(--l-disease)" : r.style === "cut" ? "var(--warn)" : lensColor(r.lens || overlay.lens);
+    gRoutes.selectAll("path").data(rs, d => d.i + d.label).join(
+      enter => enter.append("path").attr("class", "route").attr("marker-end", "url(#arrow)")
+        .each(function (d) {
+          d3.select(this).attr("d", path({ type: "LineString", coordinates: d.pts }));
+          if (reduceMotion() || d.style === "cut") return;
+          const L = this.getTotalLength();
+          d3.select(this).attr("stroke-dasharray", `${L} ${L}`).attr("stroke-dashoffset", L)
+            .transition().delay(700).duration(1800).ease(d3.easeCubicOut).attr("stroke-dashoffset", 0)
+            .on("end", function () { d3.select(this).attr("stroke-dasharray", null); });
+        })
+    ).classed("cut", d => d.style === "cut").style("--rc", col).attr("d", d => path({ type: "LineString", coordinates: d.pts }));
+    gRoutes.selectAll("text").data(rs, d => d.i + d.label).join("text").attr("class", "routelab").text(d => d.label || "");
+    const ps = (overlay.pins || []).filter(p => isFinite(p.lon) && isFinite(p.lat));
+    gPins.selectAll("g.pin").data(ps, d => d.name + d.lon).join(enter => {
+      const g = enter.append("g").attr("class", "pt pin");
+      g.append("circle").attr("r", 4.5);
+      g.append("text").attr("x", 8).attr("y", 4).text(d => d.name);
+      return g;
+    });
+    placeScaled();
+  }
+  const caption = document.getElementById("caption");
+  function showCaption(s) {
+    if (!s) { caption.hidden = true; return; }
+    caption.hidden = false;
+    caption.style.setProperty("--lc", lensColor(s.lens));
+    caption.innerHTML = `<span class="lens">${esc(LENS_NAME[s.lens] || s.lens || "")}${s.year != null ? " · " + esc(fmtYear(clampYear(s.year))) : ""}</span><b>${esc(s.title || s.q || "")}</b>`;
+  }
+  // The guide's one tool: set the year, the view, the lenses and the highlights together.
+  function applyScene(s) {
+    if (!s) return;
+    state.hi = new Set(s.highlight || []);
+    overlay = { routes: s.routes || [], pins: s.pins || [], lens: s.lens };
+    ensureLayers([LENS_LAYER[s.lens], ...(Array.isArray(s.layers) ? s.layers : [])]);
+    if (s.year != null) animateYear(s.year); else drawAll();
+    drawOverlay();
+    if (s.view) flyTo(s.view, 1600);
+    showCaption(s);
+  }
+
+  // ---------- guide answers ----------
+  const answerEl = document.getElementById("answer");
+  function renderAnswer() {
+    const A = state.answer; if (!A) { answerEl.hidden = true; return; }
+    answerEl.hidden = false;
+    document.getElementById("examples").hidden = true;
+    const live = A.live;
+    const lensVals = LENSES.map(l => [l, Number((A.lenses || {})[l]) || 0]).filter(d => d[1] > 0).sort((a, b) => b[1] - a[1]);
+    const steps = A.steps || [];
+    answerEl.innerHTML = `
+      <div class="sec">
+        <h2 class="q">${esc(A.question)}</h2>
+        <div><span class="badge">${live ? "Live AI draft · sources unchecked" : "Curated draft · sources listed, judge pending"}</span> <button class="btn" id="newq" style="float:right">New question</button></div>
+        ${A.short ? `<p class="short">${esc(A.short)}</p>` : ""}
+        <div class="status" ${A.loading ? "" : "hidden"}><span class="dot"></span><span>${esc(A.loading || "")}</span></div>
+        ${A.error ? `<div class="error">${esc(A.error)}</div>` : ""}
+      </div>
+      ${lensVals.length ? `<div class="sec"><h3 style="border:0;padding:0">How much each lens explains · tap to mute</h3><div class="meter">${lensVals.map(([l, v]) =>
+        `<button class="mrow${state.muted.has(l) ? " off" : ""}" data-lens="${l}" style="--c:${lensColor(l)}" aria-pressed="${!state.muted.has(l)}"><span class="name">${esc(LENS_NAME[l])}</span><span class="bar"><i style="width:${Math.round(Math.min(1, v) * 100)}%"></i></span><span class="n">${Math.round(Math.min(1, v) * 100)}</span></button>`).join("")}</div></div>` : ""}
+      ${steps.length ? `<div class="sec">
+        <div class="player"><button class="btn" id="prev" aria-label="Previous step">◀</button><button class="btn primary" id="play">${state.playing ? "Pause" : "Play tour"}</button><button class="btn" id="next" aria-label="Next step">▶</button><span class="count" id="count"></span><span class="prog" id="prog"></span></div>
+        <div class="steps">${steps.map((s, i) => `
+          <div class="step${i === state.active ? " on" : ""}${state.muted.has(s.lens) ? " muted" : ""}" style="--c:${lensColor(s.lens)}" data-i="${i}">
+            <button aria-expanded="${i === state.active}"><span class="i">${String(i + 1).padStart(2, "0")}</span><span class="t">${esc(s.title)}</span><span class="y">${s.year != null ? esc(fmtYear(clampYear(s.year))) : ""}</span><span class="ln">${esc(LENS_NAME[s.lens] || s.lens || "")}</span></button>
+            <div class="body"><p>${esc(s.text)}</p>${s.confidence != null ? `<span class="conf">confidence ${Math.round(Number(s.confidence) * 100)}%</span>` : ""}${srcList(s.sources, live)}</div>
+          </div>`).join("")}</div></div>` : ""}
+      ${(A.views || []).length ? `<div class="sec"><h3 style="border:0;padding:0">Competing explanations</h3>${A.views.map(v => `
+        <div class="view"><div class="hd"><span class="nm">${esc(v.name)}</span><span class="sch">${esc(v.school || "")}</span><span class="st ${esc(v.strength || "")}">${esc(v.strength || "")}</span></div>
+          <div>${esc(v.claim)}</div>
+          ${v.for ? `<div class="fa"><b>For:</b> ${esc(v.for)}</div>` : ""}${v.against ? `<div class="fa"><b>Against:</b> ${esc(v.against)}</div>` : ""}${srcList(v.sources, live)}</div>`).join("")}</div>` : ""}
+      ${(A.whatifs || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What if · simulated, speculative</h3>${A.whatifs.map((w, i) => `
+        <button class="whatif" data-w="${i}"><b>${esc(w.q)}</b><span>${esc(w.a)}</span>${w.confidence != null ? `<span class="conf">plausibility ${Math.round(Number(w.confidence) * 100)}%</span>` : ""}</button>`).join("")}</div>` : ""}
+      ${(A.unknowns || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What we don't know</h3><ul class="unk">${A.unknowns.map(u => `<li>${esc(u)}</li>`).join("")}</ul></div>` : ""}
+      ${!A.loading ? `<form class="follow" id="follow"><textarea id="fbox" rows="2" placeholder="Ask a follow-up" aria-label="Follow-up question"></textarea><div class="row"><button class="btn" type="submit">Follow up</button></div></form>` : ""}`;
+    updatePlayer();
+  }
+  answerEl.addEventListener("click", ev => {
+    const st = ev.target.closest(".step > button");
+    if (st) { stopPlay(); const i = +st.parentElement.dataset.i; activate(i === state.active ? -1 : i); return; }
+    const m = ev.target.closest(".mrow");
+    if (m) { const l = m.dataset.lens; state.muted.has(l) ? state.muted.delete(l) : state.muted.add(l); renderAnswer(); return; }
+    const w = ev.target.closest(".whatif");
+    if (w) { stopPlay(); const s = state.answer.whatifs[+w.dataset.w]; applyScene({ ...s, title: s.q, lens: "order" }); return; }
+    if (ev.target.id === "prev") { stopPlay(); step(-1); }
+    if (ev.target.id === "next") { stopPlay(); step(1); }
+    if (ev.target.id === "play") { state.playing ? stopPlay() : startPlay(); }
+    if (ev.target.id === "newq") { abortLive(); stopPlay(); state.answer = null; state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); drawAll(); showCaption(null); answerEl.hidden = true; document.getElementById("examples").hidden = false; document.getElementById("qbox").focus(); }
+  });
+  answerEl.addEventListener("submit", ev => {
+    if (ev.target.id !== "follow") return;
+    ev.preventDefault();
+    const q = document.getElementById("fbox").value.trim();
+    if (q) ask(q, true);
+  });
+  function activate(i) {
+    const steps = state.answer?.steps || [];
+    state.active = i;
+    document.querySelectorAll(".step").forEach(el => { const on = +el.dataset.i === i; el.classList.toggle("on", on); el.querySelector("button").setAttribute("aria-expanded", on); });
+    if (i >= 0 && steps[i]) {
+      applyScene(steps[i]);
+      const el = document.querySelector(`.step[data-i="${i}"]`);
+      if (el) el.scrollIntoView({ block: "nearest", behavior: reduceMotion() ? "auto" : "smooth" });
+    }
+    updatePlayer();
+  }
+  function step(d) {
+    const steps = state.answer?.steps || []; if (!steps.length) return false;
+    let i = state.active;
+    for (let n = 0; n < steps.length; n++) { i += d; if (i < 0 || i >= steps.length) return false; if (!state.muted.has(steps[i].lens)) { activate(i); return true; } }
+    return false;
+  }
+  function updatePlayer() {
+    const n = state.answer?.steps?.length || 0;
+    const c = document.getElementById("count"); if (c) c.textContent = n ? `${state.active + 1 || "–"} of ${n}${state.answer.loading ? "+" : ""}` : "";
+    const p = document.getElementById("play"); if (p) p.textContent = state.playing ? "Pause" : "Play tour";
+  }
+  let playTimer;
+  const STEP_MS = 9000;
+  function startPlay() {
+    state.playing = true; updatePlayer();
+    if (state.active < 0 || state.active >= (state.answer.steps.length - 1)) state.active = -1;
+    const advance = () => { if (!step(1)) { if (!state.answer.loading) return stopPlay(); } runProgress(); playTimer = setTimeout(advance, STEP_MS); };
+    advance();
+  }
+  function runProgress() {
+    const bar = document.getElementById("prog"); if (!bar) return;
+    bar.style.transition = "none"; bar.style.width = "0";
+    requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.transition = `width ${STEP_MS}ms linear`; bar.style.width = "100%"; }));
+  }
+  function stopPlay() {
+    state.playing = false; clearTimeout(playTimer);
+    const bar = document.getElementById("prog"); if (bar) { bar.style.transition = "none"; bar.style.width = "0"; }
+    updatePlayer();
+  }
+
+  const EXAMPLES = [
+    ...TOURS.map((t, i) => ({ q: t.question, tour: i })),
+    { q: "What did the end of the world look like in 1177 BCE?" },
+    { q: "Why did the Black Death hit Europe so much harder than China?" },
+    { q: "How did India go from about a quarter of world GDP to a few percent under British rule?" },
+    { q: "Why did India rarely unite while China kept reuniting?" },
+    { q: "When did Western Europe actually start to become rich?" },
+  ];
+  const exEl = document.getElementById("examples");
+  exEl.innerHTML = `<h3 class="kick">Try one</h3>` + EXAMPLES.map((e, i) => `<button class="ex" data-x="${i}">${esc(e.q)}<span class="tg${e.tour != null ? " cur" : ""}">${e.tour != null ? "curated tour" : "live"}</span></button>`).join("");
+  exEl.addEventListener("click", ev => {
+    const b = ev.target.closest(".ex"); if (!b) return;
+    const e = EXAMPLES[+b.dataset.x];
+    document.getElementById("qbox").value = e.q;
+    if (e.tour != null) openTour(TOURS[e.tour]); else ask(e.q, false);
+  });
+  function openTour(t) {
+    abortLive(); convo = []; state.muted.clear();
+    state.answer = JSON.parse(JSON.stringify(t)); state.active = -1;
+    setTab("guide"); renderAnswer(); activate(0);
+  }
+  function askAbout(c) {
+    const q = c.here ? `What was going on around ${c.title} in ${fmtYear(c.year)}, across every lens?` : `Tell me about ${c.title}${c.year != null ? ` (${fmtYear(c.year)})` : ""}: why did it matter, and what did it connect to?`;
+    document.getElementById("qbox").value = q;
+    ask(q, false);
+  }
+
+  // ---------- live AI ----------
+  const goBtn = document.getElementById("go"), stopBtn = document.getElementById("stop"), hint = document.getElementById("askhint");
+  let sample = null, ctl = null, convo = [];
+  const placeIndex = ENTRIES.map(e => `${e.id}|${e.name}|${e.lat.toFixed(2)},${e.lon.toFixed(2)}|${e.start}..${e.end ?? ""}`).join("\n");
+  const polityIndex = EMPIRES.map(e => `${e.id}|${e.name}|${e.start}..${e.end ?? ""}`).join("\n");
+  const RULES = `You are the Atlas Guide, a history guide that answers by driving an interactive world map for Rishi.
+Rishi wants the feeling of seeing history from a perspective nobody has had. Mix: 55% rigorous, 45% fun.
+Answer through several lenses: ${LENSES.join(", ")}. Give competing explanations from named historians or schools, say which the evidence favours, and say plainly what is not known. "We don't know" is a fine answer.
+
+The map has data layers the reader can see under your tour: places (cities and wonders with population), people (3,000 famous people at their birthplaces), money (trade routes, trade hubs, migrations, India and UK GDP), disease (epidemics, famines, eruptions, climate shifts, the Black Death month by month), ideas (idea and faith journeys, schools, books) and order (every state in Cliopatria with a fragility score). A step's lens switches on its layer; add "layers":[...] to switch on others that show the evidence.
+
+OUTPUT: JSON Lines only. One JSON object per line, no prose, no markdown, no code fences. Lines in this order:
+1. {"t":"answer","short":"2-4 sentence direct answer","lenses":{"geography":0.0-1.0, ...how much each relevant lens explains}}
+2. 6 to 10 step lines, a guided tour in time order where possible:
+{"t":"step","lens":"one lens","title":"short vivid title","year":integer (negative = BCE),"view":{"lon":number,"lat":number,"span":degrees of longitude across the screen},"layers":["places|people|money|disease|ideas|order"],"highlight":["place:<id>","polity:<id>"],"pins":[{"name":"label","lon":number,"lat":number}],"routes":[{"label":"what moved","points":[[lon,lat],[lon,lat],...]}],"text":"2-4 sentences, concrete, with numbers and names","confidence":0.0-1.0,"sources":[{"cite":"Author, Title (year)","url":"optional"}]}
+3. 2 to 5 lines: {"t":"view","name":"historian or school","school":"short label","lens":"lens","strength":"strong|medium|weak","claim":"one sentence","for":"evidence for","against":"evidence against","sources":[{"cite":"..."}]}
+4. 1 or 2 lines: {"t":"whatif","q":"a counterfactual question","a":"2-3 sentences","confidence":0.0-1.0,"year":integer,"view":{"lon":number,"lat":number,"span":number}}
+5. 1 line: {"t":"unknowns","items":["what historians cannot settle", "..."]}
+
+MAP RULES: span is how many degrees of longitude the view shows: 300 = whole world, 50 = the Mediterranean, 15 = a country like Italy, 4 = a city and its surroundings. Routes are [lon,lat] pairs (longitude first). Pins mark places not in the index; use real coordinates. Highlight only ids from the index below.
+SOURCE RULES: cite only works you are confident exist (author, title, year) or en.wikipedia.org article URLs you are confident exist. Never invent a URL. Prefer fewer, real sources.
+
+PLACE INDEX (id|name|lat,lon|start..end):
+${placeIndex}
+
+POLITY INDEX (id|name|start..end):
+${polityIndex}`;
+  (async () => {
+    try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; }
+    if (!sample) hint.textContent = "Live answers need this page open in Claude. Curated tours work anywhere.";
+  })();
+  function abortLive() { if (ctl) { ctl.abort(); ctl = null; } }
+  const ERR = {
+    not_granted: "Live answers are off because Claude access was not allowed for this page. The curated tour still works.",
+    sampling_disabled: "Claude isn't available for this account here.",
+    rate_limited: "Too many questions at once. Wait a minute and ask again.",
+    session_expired: "Your Claude session expired. Sign in again and retry.",
+    refused: "Claude declined this one. Try rephrasing the question.",
+    empty_completion: "The answer came back empty. Try asking a narrower question.",
+    prompt_too_large: "That conversation got too long. Start a fresh question.",
+    upstream_error: "The connection dropped. Ask again to retry.",
+  };
+  const LAYER_KEYS = LAYERS.map(l => l.k);
+  function normStep(o) {
+    return {
+      lens: LENSES.includes(o.lens) ? o.lens : "order", title: String(o.title || ""), text: String(o.text || ""),
+      year: o.year != null && isFinite(o.year) ? clampYear(o.year) : null,
+      view: o.view && isFinite(o.view.lon) && isFinite(o.view.lat) ? { lon: +o.view.lon, lat: +o.view.lat, span: +o.view.span || undefined, zoom: +o.view.zoom || undefined } : null,
+      layers: Array.isArray(o.layers) ? o.layers.filter(l => LAYER_KEYS.includes(l)) : [],
+      highlight: Array.isArray(o.highlight) ? o.highlight.map(String).filter(h => (h.startsWith("place:") && byId[h.slice(6)]) || (h.startsWith("polity:") && EMP[h.slice(7)])) : [],
+      pins: Array.isArray(o.pins) ? o.pins.filter(p => p && isFinite(p.lon) && isFinite(p.lat)).map(p => ({ name: String(p.name || ""), lon: +p.lon, lat: +p.lat })).slice(0, 8) : [],
+      routes: Array.isArray(o.routes) ? o.routes.filter(r => r && Array.isArray(r.points)).slice(0, 5) : [],
+      confidence: isFinite(o.confidence) ? +o.confidence : null,
+      sources: Array.isArray(o.sources) ? o.sources.filter(s => s && s.cite).map(s => ({ cite: String(s.cite), url: /^https:\/\/en\.wikipedia\.org\//.test(s.url || "") ? s.url : undefined })) : [],
+    };
+  }
+  function eat(A, line) {
+    line = line.trim();
+    if (!line || line[0] !== "{") return false;
+    let o; try { o = JSON.parse(line); } catch { return false; }
+    if (o.t === "answer") { A.short = String(o.short || ""); A.lenses = o.lenses || {}; }
+    else if (o.t === "step") A.steps.push(normStep(o));
+    else if (o.t === "view") A.views.push({ ...o, sources: (o.sources || []).filter(s => s && s.cite) });
+    else if (o.t === "whatif") { const n = normStep(o); A.whatifs.push({ ...o, view: n.view, year: n.year, pins: [] }); }
+    else if (o.t === "unknowns") A.unknowns = (o.items || []).map(String);
+    else return false;
+    return o.t;
+  }
+  async function ask(q, followUp) {
+    setTab("guide");
+    if (!sample) {
+      const t = TOURS.find(t => t.question.toLowerCase() === q.toLowerCase());
+      if (t) return openTour(t);
+      hint.textContent = "Live answers need this page open in Claude. Try a curated tour below."; document.getElementById("examples").hidden = false; return;
+    }
+    abortLive(); stopPlay();
+    const prev = followUp && state.answer;
+    if (!followUp) convo = [];
+    const selTxt = state.sel ? `; reader has selected ${state.sel.title || state.sel.name || "a spot"} at ${state.sel.lat.toFixed(1)},${state.sel.lon.toFixed(1)}` : "";
+    const on = LAYER_KEYS.filter(k => state.on[k]).join(", ");
+    const mapNow = `Map now: year ${state.year}; layers on: ${on}${selTxt}${prev ? `; previous question: "${prev.question}"` : ""}.`;
+    const turns = [{ role: "user", content: RULES }, ...convo, { role: "user", content: `${mapNow}\nQUESTION: ${q}` }];
+    state.answer = { question: q, live: true, loading: "Thinking through the lenses…", steps: [], views: [], whatifs: [], unknowns: [], lenses: {} };
+    state.active = -1; state.muted.clear();
+    renderAnswer();
+    goBtn.disabled = true; stopBtn.hidden = false; hint.textContent = "";
+    const A = state.answer;
+    const my = ctl = new AbortController();
+    let done = 0;
+    const consume = text => {
+      const lines = text.split("\n"), complete = lines.length - 1;
+      let changed = false, firstStep = false;
+      for (; done < complete; done++) { const t = eat(A, lines[done]); if (t) changed = true; if (t === "step" && A.steps.length === 1) firstStep = true; }
+      if (changed && state.answer === A) { A.loading = A.steps.length ? `Writing step ${A.steps.length + 1}…` : "Writing the tour…"; renderAnswer(); if (firstStep) activate(0); }
+    };
+    try {
+      const res = await sample(turns, { signal: my.signal, cache: false, onText: ({ text }) => consume(text) });
+      consume(res.text + "\n");
+      convo.push({ role: "user", content: `${mapNow}\nQUESTION: ${q}` }, { role: "assistant", content: res.text });
+      if (convo.length > 6) convo = convo.slice(-6);
+      if (!A.steps.length && !A.short) A.error = "The answer didn't come back in a shape the map can read. Ask again.";
+      if (res.truncated) A.error = "The answer was cut short. Ask a narrower question.";
+    } catch (e) {
+      if (e && e.text) consume(e.text + "\n");
+      if (e?.code !== "cancelled") A.error = ERR[e?.code] || ERR.upstream_error;
+      if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; hint.textContent = ERR[e.code]; }
+    } finally {
+      if (ctl === my) { ctl = null; goBtn.disabled = false; stopBtn.hidden = true; }
+      A.loading = "";
+      if (state.answer === A) { renderAnswer(); if (state.active < 0 && A.steps.length) activate(0); }
+    }
+  }
+  document.getElementById("ask").addEventListener("submit", ev => {
+    ev.preventDefault();
+    const q = document.getElementById("qbox").value.trim(); if (!q) return;
+    const t = TOURS.find(t => t.question.toLowerCase() === q.toLowerCase());
+    t ? openTour(t) : ask(q, false);
+  });
+  stopBtn.onclick = () => abortLive();
+
+  // ---------- start: 1348, the Black Death year, where five lenses overlap ----------
+  syncChips();
+  new ResizeObserver(() => layout()).observe(mapEl);
+  layout();
+  setYear(1348);
+  setTab("now");
+  flyTo({ lon: 45, lat: 35, span: 140 }, 0);
+})();
+</script>
