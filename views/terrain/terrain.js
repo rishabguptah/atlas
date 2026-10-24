@@ -3,6 +3,9 @@
 //   drawRelief(group, path, href)            the painted relief image, at the sphere's bounds
 //   const t = drawTerrain(group, projection, path, data, k, {onSelect})
 //   t.update(k)                              call on zoom (k = zoom scale) to show, space and declutter labels
+//   const r = drawRealms(group, projection, path, borderFeatures, k, {colorOf, nameOf, onSelect})
+//   r.update(k)                              strategy-game political look: flat colours (multiply) over the
+//                                            relief-political image, dark borders, one curved name per realm
 //
 // data is terrain.json from views/terrain/export.py. Both calls are safe to repeat on resize: they clear
 // what they drew before. Stroke widths and font sizes use calc(Npx / var(--k)), so set --k on an ancestor
@@ -133,6 +136,114 @@
     return { update, root, highlight: id => text.classed('sel', d => d.id === id) };
   }
 
+  // ---- Political map in the strategy-game style: flat colours over the relief, dark borders, big curved names ----
+  const REALM_STYLE = `
+.realms .realm-fill { mix-blend-mode: multiply; cursor: pointer; fill-opacity: var(--realm-op, .82); }
+.realms .realm-fill.unclaimed { fill: none; }
+.political-map .terrain .tl { display: none !important; }
+.political-map .terrain .tw { fill: #eef4f1; stroke: rgba(28, 56, 70, .55); }
+.political-map .terrain .tw-river, .political-map .terrain .tw-lake { fill: #1f4b5e; stroke: rgba(240, 234, 216, .6); }
+.political-map .terrain .river { stroke: #3f7590; }
+.realms .realm-band { fill: none; mix-blend-mode: multiply; stroke-width: calc(3.4px / var(--k, 1)); stroke-opacity: .55; stroke-linejoin: round; pointer-events: none; }
+.realms .realm-line { fill: none; stroke: var(--realm-border, rgba(30, 20, 12, .8)); stroke-width: calc(1.1px / var(--k, 1)); stroke-linejoin: round; pointer-events: none; }
+.realms text { font-family: var(--realm-font, "Cinzel", "Cormorant Garamond", Georgia, serif); font-weight: 700; text-transform: uppercase;
+  fill: var(--realm-ink, rgba(26, 16, 8, .74)); pointer-events: none; }
+.realms .realm-fill.sel { stroke: #fff6dc; stroke-width: calc(2.4px / var(--k, 1)); }
+`;
+
+  function solve3(A, b) {  // Gaussian elimination for the quadratic fit
+    const m = A.map((r, i) => [...r, b[i]]);
+    for (let c = 0; c < 3; c++) {
+      let p = c; for (let r = c + 1; r < 3; r++) if (Math.abs(m[r][c]) > Math.abs(m[p][c])) p = r;
+      [m[c], m[p]] = [m[p], m[c]];
+      if (Math.abs(m[c][c]) < 1e-12) return [0, 0, 0];
+      for (let r = 0; r < 3; r++) if (r !== c) { const f = m[r][c] / m[c][c]; for (let j = c; j < 4; j++) m[r][j] -= f * m[c][j]; }
+    }
+    return [m[0][3] / m[0][0], m[1][3] / m[1][1], m[2][3] / m[2][2]];
+  }
+  const pct = (a, q) => { const s = [...a].sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(q * s.length))]; };
+
+  // Where to letter a realm's name: a gentle curve along the territory's long axis, in map units.
+  function realmLabel(f, name, path, projection) {
+    const [[x0, y0], [x1, y1]] = path.bounds(f), w = x1 - x0, h = y1 - y0, N = 22, pts = [];
+    for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+      const x = x0 + (i + .5) / N * w, y = y0 + (j + .5) / N * h, ll = projection.invert([x, y]);
+      if (ll && d3.geoContains(f, ll)) pts.push([x, y]);
+    }
+    if (pts.length < 5) return null;
+    const mx = d3.mean(pts, p => p[0]), my = d3.mean(pts, p => p[1]);
+    let sxx = 0, syy = 0, sxy = 0;
+    for (const [x, y] of pts) { sxx += (x - mx) ** 2; syy += (y - my) ** 2; sxy += (x - mx) * (y - my); }
+    let ang = .5 * Math.atan2(2 * sxy, sxx - syy);
+    ang = Math.max(-.6, Math.min(.6, ang));  // stay readable: never steeper than about 35 degrees
+    const ax = [Math.cos(ang), Math.sin(ang)], nx = [-ax[1], ax[0]];
+    const t = pts.map(([x, y]) => (x - mx) * ax[0] + (y - my) * ax[1]);
+    const n = pts.map(([x, y]) => (x - mx) * nx[0] + (y - my) * nx[1]);
+    const cell = Math.max(w, h) / N;
+    const lo = pct(t, .04) - cell / 2, hi = pct(t, .96) + cell / 2, chord = hi - lo;
+    const thick = pct(n, .9) - pct(n, .1) + cell;
+    let A = [[0, 0, 0], [0, 0, 0], [0, 0, 0]], b = [0, 0, 0];
+    t.forEach((tt, i) => { const v = [tt * tt, tt, 1]; for (let r = 0; r < 3; r++) { b[r] += v[r] * n[i]; for (let c = 0; c < 3; c++) A[r][c] += v[r] * v[c]; } });
+    const q = pts.length > 8 ? solve3(A, b) : [0, 0, 0];
+    const lim = thick * .22;
+    const line = d3.range(9).map(i => {
+      const tt = lo + chord * i / 8, off = Math.max(-lim, Math.min(lim, q[0] * tt * tt + q[1] * tt + q[2]));
+      return [mx + ax[0] * tt + nx[0] * off, my + ax[1] * tt + nx[1] * off];
+    });
+    const fs = Math.min(thick * .5, chord * .9 / (name.length * .82 + .5));
+    return { line, fs, chord };
+  }
+
+  function drawRealms(group, projection, path, features, k = 1, opts = {}) {
+    const doc = group.node().ownerDocument;
+    if (!doc.getElementById('realm-style')) {
+      const st = doc.createElement('style'); st.id = 'realm-style'; st.textContent = REALM_STYLE; doc.head.appendChild(st);
+    }
+    const colorOf = opts.colorOf || (() => '#c9a66b'), nameOf = opts.nameOf || (f => f.properties.NAME || f.properties.SUBJECTO);
+    group.selectAll('g.realms').remove();
+    const root = group.append('g').attr('class', 'realms');
+    // colorOf may return null for land nobody holds: it stays bare parchment, with no name
+    const items = features.map(f => ({ f, name: nameOf(f), color: colorOf(f), d: path(f), area: path.area(f) })).filter(d => d.d);
+    root.append('g').selectAll('path').data(items).join('path').attr('class', d => d.color ? 'realm-fill' : 'realm-fill unclaimed')
+      .attr('d', d => d.d).attr('fill', d => d.color || null)
+      .on('click', (e, d) => { opts.onSelect && opts.onSelect(d.f); root.selectAll('.realm-fill').classed('sel', x => x.name === d.name); });
+    root.append('g').selectAll('path').data(items.filter(d => d.color)).join('path').attr('class', 'realm-band')
+      .attr('d', d => d.d).attr('stroke', d => d3.color(d.color).darker(.9));
+    root.append('g').selectAll('path').data(items).join('path').attr('class', 'realm-line').attr('d', d => d.d);
+
+    // one name per realm, on its largest piece
+    const best = new Map();
+    const [[sx0], [sx1]] = path.bounds({ type: 'Sphere' }), maxW = (sx1 - sx0) * .45;
+    for (const d of items) if (d.name && d.color && (path.bounds(d.f)[1][0] - path.bounds(d.f)[0][0]) < maxW && (!best.has(d.name) || best.get(d.name).area < d.area)) best.set(d.name, d);
+    const labels = [...best.values()].sort((a, b) => b.area - a.area);
+    const lg = root.append('g'), defs = root.append('defs');
+    const uid = 'r' + Math.random().toString(36).slice(2, 7);
+    let n = 0;
+
+    function update(k) {
+      for (const d of labels) {
+        if (d.lab === undefined && d.area * k * k > 900) {
+          d.lab = realmLabel(d.f, d.name, path, projection);
+          if (d.lab) {
+            const L = d.lab.line, e = d.lab.chord * 2, id = `${uid}-${n++}`;
+            const dx = (L[1][0] - L[0][0]), dy = (L[1][1] - L[0][1]), m = Math.hypot(dx, dy) || 1;
+            const ex = (L[8][0] - L[7][0]), ey = (L[8][1] - L[7][1]), me = Math.hypot(ex, ey) || 1;
+            defs.append('path').attr('id', id).attr('d', 'M' + [L[0][0] - dx / m * e, L[0][1] - dy / m * e] + 'L'
+              + d3.line().curve(d3.curveCatmullRom)(L).slice(1) + 'L' + [L[8][0] + ex / me * e, L[8][1] + ey / me * e]);
+            const natural = d.name.length * d.lab.fs * .82;
+            d.el = lg.append('text').style('font-size', d.lab.fs + 'px')
+              .attr('textLength', Math.min(d.lab.chord * .86, natural * 2.6)).attr('lengthAdjust', 'spacing');
+            d.el.append('textPath').attr('href', '#' + id).attr('startOffset', '50%').attr('text-anchor', 'middle').text(d.name);
+          }
+        }
+        if (d.el) { const px = d.lab.fs * k; d.el.style('display', px >= 7 && px <= 80 ? null : 'none').style('opacity', px > 48 ? .55 : null); }
+      }
+    }
+    update(k);
+    return { update, root };
+  }
+
+  global.drawRealms = drawRealms;
   global.drawTerrain = drawTerrain;
   global.drawRelief = drawRelief;
 })(typeof window !== 'undefined' ? window : globalThis);

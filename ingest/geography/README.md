@@ -25,9 +25,10 @@ Build (needs numpy, scipy, shapely, netCDF4, Pillow):
 ```sh
 python3 ingest/geography/features.py RAW
 python3 ingest/geography/relief.py RAW OUT 4096          # -> OUT/relief-4096.webp (copied to views/terrain/terrain-relief.webp)
-python3 views/terrain/export.py LAYER views/terrain/terrain-relief.webp   # -> LAYER/terrain.json + image
+python3 ingest/geography/relief.py RAW OUT --political 4096   # -> strategy-game texture (views/terrain/terrain-political.webp)
+python3 views/terrain/export.py LAYER views/terrain/terrain-relief.webp views/terrain/terrain-political.webp
 python3 views/terrain/build.py LAYER terrain.html        # standalone preview page
 ```
 
-`views/terrain/terrain.js` has `drawRelief` and `drawTerrain` for any d3 + SVG view; see the comment at its top.
+`views/terrain/terrain.js` has `drawRelief`, `drawTerrain` and `drawRealms` (the political, strategy-game look) for any d3 + SVG view; see the comment at its top.
 Tiers: 1 always named, 2 from zoom 1.6x, 3 from 2.5x, 4 from 4x, 5 from 6x, 6 from 9x.

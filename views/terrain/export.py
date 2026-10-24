@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Compile the terrain layer that views draw under everything else.
 
-Usage: python3 views/terrain/export.py OUT_DIR [RELIEF_WEBP]
+Usage: python3 views/terrain/export.py OUT_DIR [RELIEF_WEBP [POLITICAL_WEBP]]
 Reads data/geography/features.jsonl, data/geography/geo/terrain.geojson and the 37 straits and passes
 from the states-war chokepoint map (ingest/geography/chokepoints.json). Writes OUT_DIR/terrain.json and,
 when RELIEF_WEBP is given, copies it to OUT_DIR/terrain-relief.webp.
@@ -55,7 +55,7 @@ for f in geo['features']:
 tiers = {'1': 'always', '2': 'zoom 1.6+', '3': 'zoom 2.5+', '4': 'zoom 4+', '5': 'zoom 6+', '6': 'zoom 9+'}
 data = {
     'version': 1,
-    'image': {'file': 'terrain-relief.webp', 'projection': 'd3.geoNaturalEarth1, unrotated',
+    'image': {'file': 'terrain-relief.webp', 'political': 'terrain-political.webp', 'projection': 'd3.geoNaturalEarth1, unrotated',
               'covers': 'path.bounds({type:"Sphere"}); transparent outside the sphere'},
     'tiers': tiers,
     'sources': ['Natural Earth physical vectors v5.1.2 (public domain)', 'NOAA ETOPO2v2c relief (public domain)',
@@ -67,4 +67,6 @@ with open(path, 'w', encoding='utf-8') as f:
     json.dump(data, f, ensure_ascii=False, separators=(',', ':'))
 if len(sys.argv) > 2:
     shutil.copy(sys.argv[2], os.path.join(out_dir, 'terrain-relief.webp'))
+if len(sys.argv) > 3:
+    shutil.copy(sys.argv[3], os.path.join(out_dir, 'terrain-political.webp'))
 print(f'{path}: {len(labels)} labels, {len(points)} points, {len(rivers)} rivers, {os.path.getsize(path) // 1024} KB')

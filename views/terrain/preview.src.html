@@ -1,7 +1,7 @@
 <title>Atlas Terrain</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap">
 <style>
 /* Layout: one full-bleed engraved-atlas sheet; a title cartouche, layer switches and a feature card float over it.
    A single paper look by choice, so the relief colours read the same for every viewer. */
@@ -63,7 +63,12 @@ button { font: inherit; color: inherit; }
 <div id="map"><svg id="svg" role="img" aria-label="Illustrated world relief map with mountain ranges, deserts, seas, rivers, straits and passes"></svg></div>
 <div class="cartouche">
   <h1>Terrain</h1>
-  <p>Mountains, deserts, seas, rivers, straits and passes. Zoom in for smaller names; click a name to see why it mattered.</p>
+  <p>Realms painted over the land, or the land on its own. Zoom in for smaller names; click a name to see why it mattered.</p>
+  <div class="switches" role="group" aria-label="Map style">
+    <button id="mode-political" aria-pressed="true">Political</button>
+    <button id="mode-physical" aria-pressed="false">Physical</button>
+  </div>
+  <div class="switches" id="years" role="group" aria-label="Year"></div>
   <div class="switches" role="group" aria-label="Layers">
     <button id="sw-relief" aria-pressed="true">Relief</button>
     <button id="sw-rivers" aria-pressed="true">Rivers</button>
@@ -76,10 +81,21 @@ button { font: inherit; color: inherit; }
 <div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">&minus;</button><button id="zhome" aria-label="Show the whole world">&#8962;</button></div>
 
 <script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script>/*__TERRAIN_JS__*/</script>
 <script>
 const TERRAIN = /*__TERRAIN__*/;
 const RELIEF = "/*__RELIEF__*/";
+const RELIEF_POLITICAL = "/*__RELIEF_POLITICAL__*/";
+const BORDERS = /*__BORDERS__*/;
+// strategy-game palette: strong but earthy, so the relief still reads through a multiply blend
+const PALETTE = ['#d0463a', '#3f6fb5', '#e3b23c', '#5b9a4a', '#8e4fa8', '#d9782f', '#2f9c9a', '#b8456f', '#7a8f2e',
+  '#c45f9a', '#4c86c9', '#a8642c', '#6aa86f', '#c9a02c', '#5d5fb0', '#b0393b'];
+const colorOf = f => { const n = f.properties.SUBJECTO || f.properties.NAME; if (!n) return null; let h = 0;
+  for (const c of n) h = (h * 31 + c.charCodeAt(0)) >>> 0; return PALETTE[h % PALETTE.length]; };
+const YEARS = Object.keys(BORDERS).map(Number).sort((a, b) => a - b);
+let mode = 'political', year = YEARS.includes(1600) ? 1600 : YEARS[0], realms;
+const fmtYear = y => y < 0 ? `${-y} BCE` : `${y}`;
 const KIND = { mountain_range: 'Mountain range', desert: 'Desert', plateau: 'Plateau', plain: 'Plain or steppe', basin: 'Basin',
   valley: 'Valley', lowland: 'Lowland', depression: 'Depression', gorge: 'Gorge', isthmus: 'Isthmus', wetland: 'Wetland',
   delta: 'Delta', tundra: 'Tundra', peninsula: 'Peninsula', region: 'Region', ocean: 'Ocean', sea: 'Sea', gulf: 'Gulf',
@@ -97,11 +113,26 @@ function draw() {
   const { width: W, height: H } = svg.node().getBoundingClientRect();
   projection.fitExtent([[6, 6], [W - 6, H - 6]], { type: 'Sphere' });
   base.selectAll('*').remove();
-  drawRelief(base, path, RELIEF);
+  drawRelief(base, path, mode === 'political' ? RELIEF_POLITICAL : RELIEF);
+  realms = null;
+  svg.classed('political-map', mode === 'political');
+  if (mode === 'political') {
+    const t = BORDERS[year], feats = topojson.feature(t, Object.values(t.objects)[0]).features;
+    realms = drawRealms(base.append('g'), projection, path, feats, k, { colorOf, onSelect: f => showRealm(f) });
+  }
   base.append('path').attr('class', 'grat').attr('d', path(d3.geoGraticule10())).style('stroke-width', 'calc(.6px / var(--k, 1))');
   base.append('path').attr('class', 'sphere-edge').attr('d', path({ type: 'Sphere' })).style('stroke-width', 'calc(1.2px / var(--k, 1))');
   terrain = drawTerrain(over, projection, path, TERRAIN, k, { onSelect: show });
   applySwitches();
+}
+
+function showRealm(f) {
+  const card = document.getElementById('card'), p = f.properties;
+  card.innerHTML = `<button class="close" aria-label="Close">&times;</button><div class="kind">Realm in ${fmtYear(year)}</div>
+    <h2>${p.NAME || p.SUBJECTO}</h2>${p.SUBJECTO && p.SUBJECTO !== p.NAME ? `<p>Part of ${p.SUBJECTO}</p>` : ''}
+    <div class="meta">Borders: historical-basemaps (GPL-3.0)</div>`;
+  card.hidden = false;
+  card.querySelector('.close').onclick = () => { card.hidden = true; };
 }
 
 function show(d) {
@@ -123,7 +154,7 @@ const zoom = d3.zoom().scaleExtent([1, 14]).on('zoom', e => {
   k = e.transform.k;
   root.attr('transform', e.transform);
   svg.style('--k', k);
-}).on('end', () => { terrain.update(k); scale(); });
+}).on('end', () => { terrain.update(k); realms && realms.update(k); scale(); });
 svg.call(zoom);
 d3.select('#zin').on('click', () => svg.transition().duration(350).call(zoom.scaleBy, 1.8));
 d3.select('#zout').on('click', () => svg.transition().duration(350).call(zoom.scaleBy, 1 / 1.8));
@@ -143,6 +174,22 @@ function applySwitches() {
   over.selectAll('.pt-peak').style('opacity', sw.names ? null : 0);
   over.selectAll('.pt-strait, .pt-pass').style('display', sw.gates ? null : 'none');
 }
+function setMode(m) {
+  mode = m;
+  document.getElementById('mode-political').setAttribute('aria-pressed', m === 'political');
+  document.getElementById('mode-physical').setAttribute('aria-pressed', m === 'physical');
+  document.getElementById('years').hidden = m !== 'political';
+  draw();
+}
+document.getElementById('mode-political').addEventListener('click', () => setMode('political'));
+document.getElementById('mode-physical').addEventListener('click', () => setMode('physical'));
+const yearsEl = document.getElementById('years');
+for (const y of YEARS) {
+  const b = document.createElement('button'); b.id = 'year-' + y; b.textContent = fmtYear(y);
+  b.setAttribute('aria-pressed', y === year);
+  b.addEventListener('click', () => { year = y; yearsEl.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); draw(); });
+  yearsEl.appendChild(b);
+}
 for (const key of Object.keys(sw)) {
   document.getElementById('sw-' + key).addEventListener('click', e => {
     sw[key] = !sw[key];
@@ -161,5 +208,5 @@ const { width: W0, height: H0 } = svg.node().getBoundingClientRect();
 const [cx, cy] = projection([45, 35]);
 const k0 = W0 < 700 ? 3.2 : 1.8;
 svg.call(zoom.transform, d3.zoomIdentity.translate(W0 / 2 - cx * k0, H0 / 2 - cy * k0).scale(k0));
-terrain.update(k0); scale();
+terrain.update(k0); realms && realms.update(k0); scale();
 </script>
