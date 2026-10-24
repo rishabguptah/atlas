@@ -1,0 +1,1485 @@
+{
+ "checked": 735,
+ "counts": {
+  "error": 1,
+  "warning": 245
+ },
+ "findings": [
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "damascus",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "aleppo",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "byblos",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "jerusalem",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "athens",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "rome",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "istanbul",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "luoyang",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "xian",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "varanasi",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "patna",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "plovdiv",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "erbil",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "cadiz",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "marseille",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "samarkand",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "alexandria",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "antioch",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "london",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "paris",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "kyoto",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "cairo",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "baghdad",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "venice",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mexico_city",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "cholula",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "cusco",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "uruk",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ur",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "babylon",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "nineveh",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mohenjo",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "harappa",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hattusa",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ugarit",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "troy",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "sybaris",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "persepolis",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "carthage",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "pompeii",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "memphis",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "akhetaten",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "petra",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ephesus",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "teotihuacan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "tikal",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "merv",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ctesiphon",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "angkor",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "cahokia",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "great_zimbabwe",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "chan_chan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hedeby",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "sarai",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "vijayanagara",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "fatehpur",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ravenser",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "heracleion",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "giza",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hanging_gardens",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "artemis",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "zeus",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mausoleum",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "colossus",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "lighthouse",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "library",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "second_temple",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "temple_bel",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "bamiyan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "nalanda",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "porcelain",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "yuanmingyuan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hagia_sophia",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "beijing",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "nanjing",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hangzhou",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "kaifeng",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "guangzhou",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "tokyo",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "osaka",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "nara",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "gyeongju",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "seoul",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "anyang",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "karakorum",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "delhi",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "agra",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "lahore",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "kolkata",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mumbai",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "chennai",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "anuradhapura",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "bagan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ayutthaya",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "bangkok",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "malacca",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "singapore",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hanoi",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "isfahan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "herat",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "bukhara",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "rayy",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "tehran",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "nishapur",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hamadan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "pasargadae",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mecca",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "medina",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "sanaa",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "dilmun",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mari",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ebla",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "sardis",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "tyre",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "cordoba",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "seville",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "granada",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "lisbon",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "madrid",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "amsterdam",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "antwerp",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "bruges",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "cologne",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "trier",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "aachen",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hamburg",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "lubeck",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "prague",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "vienna",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "budapest",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "krakow",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "warsaw",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "moscow",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "kyiv",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "novgorod",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "st_petersburg",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "berlin",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "milan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "florence",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "genoa",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "naples",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "syracuse",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "thessaloniki",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "dublin",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "knossos",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mycenae",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "miletus",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "timbuktu",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "gao",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "jenne_jeno",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "kano",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "benin_city",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "kilwa",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mombasa",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "aksum",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "meroe",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "fez",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "marrakesh",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "kairouan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "tunis",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "new_york",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "philadelphia",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "quebec",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "havana",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "lima",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "potosi",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "manila",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "buenos_aires",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "rio",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "salvador",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "chichen_itza",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "palenque",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "monte_alban",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "caral",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "tiwanaku",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "machu_picchu",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "event.after_end",
+   "id": "harappa",
+   "msg": "event 'Bricks hauled off for the railway' (1856) is long after the place ended (-1300)"
+  },
+  {
+   "level": "error",
+   "rule": "event.before_start",
+   "id": "buenos_aires",
+   "msg": "event 'First founding, soon abandoned' (1536) is before the place's start (1580)"
+  },
+  {
+   "level": "warning",
+   "rule": "empire.no_borders",
+   "id": "akkad",
+   "msg": "no border names to match, so it is never shaded"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "akkad",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "egypt_nk",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hittite",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "assyria",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "babylonia",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "zhou",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "achaemenid",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "carthage_e",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "macedon",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "maurya",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "seleucid",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ptolemaic",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "qin",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "xiongnu",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "han",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "roman_rep",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "roman",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "parthian",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "kushan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "aksum_e",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "sasanian",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "gupta",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hunnic",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "byzantine",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ghana_e",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "sui",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "tang",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "tibetan",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "umayyad",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "abbasid",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "srivijaya",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "carolingian",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "khmer",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "chola",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "fatimid",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "liao",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "hre",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "song",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "seljuk",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "almohad",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "delhi_s",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mongol",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mali",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mamluk",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ottoman",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "vijayanagara_e",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "timurid",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ming",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "aztec",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "inca",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "songhai",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "portuguese",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "spanish",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "safavid",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "mughal",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "dutch",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "british",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "french",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "plc",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "qing",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "russian",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "usa",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "japan_e",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "german_e",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "habsburg",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "austria_h",
+   "msg": "no sources[]; every fact needs one"
+  },
+  {
+   "level": "warning",
+   "rule": "source.missing",
+   "id": "ussr",
+   "msg": "no sources[]; every fact needs one"
+  }
+ ]
+}

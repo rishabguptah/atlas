@@ -1,0 +1,400 @@
+<title>Plague and Climate</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Libre+Franklin:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a chronicle beside a sea chart. Map takes the width, a narrow ledger column keeps the date, the count and the latest entries. */
+:root {
+  --bg: #eff0ec; --panel: #f7f7f3; --sea: #d6dfdf; --land: #ebe8df; --border: #b8bdb5;
+  --ink: #1c2321; --ink-soft: #5a6460; --rule: #cdd2cd;
+  --plague: #8c1c2f; --plague-hot: #cf4a2c; --unreached: #8d958f;
+  --sea-route: #2f6d8f; --river-route: #3a8a7a; --land-route: #8b6a32;
+  --famine: #9a7b14; --eruption: #c2581c; --climate: #2c7c90; --collapse: #4f4a72;
+  --display: "IM Fell English", "Iowan Old Style", Georgia, serif;
+  --body: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111615; --panel: #171d1c; --sea: #16201f; --land: #232b29; --border: #3a4542;
+  --ink: #e8e4da; --ink-soft: #9ba49f; --rule: #2c3533;
+  --plague: #e4576b; --plague-hot: #ff9661; --unreached: #67716d;
+  --sea-route: #79b2d4; --river-route: #73c4b0; --land-route: #cfa665;
+  --famine: #d8b443; --eruption: #f08a4b; --climate: #6cc0d4; --collapse: #a59fd6;
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111615; --panel: #171d1c; --sea: #16201f; --land: #232b29; --border: #3a4542;
+  --ink: #e8e4da; --ink-soft: #9ba49f; --rule: #2c3533;
+  --plague: #e4576b; --plague-hot: #ff9661; --unreached: #67716d;
+  --sea-route: #79b2d4; --river-route: #73c4b0; --land-route: #cfa665;
+  --famine: #d8b443; --eruption: #f08a4b; --climate: #6cc0d4; --collapse: #a59fd6;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1280px; margin: 0 auto; padding-block: 20px 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 16px; }
+header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; }
+h1 { font: 400 clamp(30px, 5vw, 44px)/1 var(--display); margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+h1 i { color: var(--plague); }
+.dek { margin: 6px 0 0; color: var(--ink-soft); max-width: 62ch; }
+nav { display: flex; gap: 4px; background: var(--panel); border: 1px solid var(--rule); border-radius: 999px; padding: 3px; }
+nav button { font: 500 13px/1 var(--body); color: var(--ink-soft); background: none; border: 0; border-radius: 999px; padding: 9px 14px; cursor: pointer; }
+nav button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--plague-hot); outline-offset: 2px; }
+
+.stage { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: start; }
+@media (max-width: 860px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.mapbox { position: relative; background: var(--sea); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.mapbox svg { display: block; width: 100%; height: auto; }
+.land { fill: var(--land); stroke: var(--border); stroke-width: 0.5; }
+.polity { fill: none; stroke: var(--border); stroke-width: 0.6; stroke-dasharray: 2 2; }
+.polity-hit { fill: transparent; stroke: none; }
+.grat { fill: none; stroke: var(--rule); stroke-width: 0.5; }
+.route { fill: none; stroke-width: 1.6; stroke-linecap: round; }
+.route.sea { stroke: var(--sea-route); }
+.route.river { stroke: var(--river-route); }
+.route.land { stroke: var(--land-route); }
+.city { stroke-width: 1.2; }
+.city.off { fill: var(--panel); stroke: var(--unreached); }
+.city.on { fill: var(--plague); stroke: var(--panel); }
+.pulse { fill: none; stroke: var(--plague-hot); }
+.clabel { font: 500 10.5px var(--body); fill: var(--ink); paint-order: stroke; stroke: var(--sea); stroke-width: 3px; stroke-linejoin: round; pointer-events: none; }
+.clabel.off { fill: var(--ink-soft); }
+.tip { position: absolute; pointer-events: none; background: var(--panel); color: var(--ink); border: 1px solid var(--rule); border-radius: 4px;
+  padding: 6px 9px; font-size: 12.5px; max-width: 260px; box-shadow: 0 2px 10px rgb(0 0 0 / 0.12); }
+.tip b { display: block; }
+.tip span { color: var(--ink-soft); font-family: var(--mono); font-size: 11.5px; }
+
+.ledger { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 16px; display: grid; gap: 14px; min-width: 0; }
+.eyebrow { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
+.when { font: italic 400 34px/1.05 var(--display); }
+.count { display: flex; align-items: baseline; gap: 8px; font-variant-numeric: tabular-nums; }
+.count b { font: 500 26px/1 var(--mono); color: var(--plague); }
+.bar { height: 4px; background: var(--rule); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--plague); }
+.latest { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.latest li { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 8px; font-size: 13px; line-height: 1.4; }
+.latest time { font: 400 11.5px/1.5 var(--mono); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.latest b { font-weight: 600; }
+.latest p { margin: 2px 0 0; color: var(--ink-soft); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--ink-soft); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { display: inline-block; width: 18px; height: 2px; }
+.legend .dot { width: 9px; height: 9px; border-radius: 50%; }
+
+.controls { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 12px; align-items: center; }
+.play { width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--plague); color: #fff; cursor: pointer; font-size: 15px; }
+input[type=range] { width: 100%; accent-color: var(--plague); }
+.ticks { grid-column: 2; display: flex; justify-content: space-between; font: 400 11px var(--mono); color: var(--ink-soft); }
+.note { font-size: 12.5px; color: var(--ink-soft); max-width: 80ch; margin: 0; }
+
+/* Shocks view */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 500 12.5px/1 var(--body); border: 1px solid var(--rule); background: var(--panel); color: var(--ink); border-radius: 999px; padding: 7px 11px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.chip[aria-pressed="false"] { opacity: 0.45; }
+.chip i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.tl { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; overflow-x: auto; }
+.tl svg { display: block; min-width: 720px; width: 100%; height: auto; }
+.tl text { font: 400 10.5px var(--mono); fill: var(--ink-soft); }
+.tl .lane { font: 500 11px var(--body); fill: var(--ink); }
+.tl line { stroke: var(--rule); }
+.ev { cursor: pointer; }
+.ev.dim { opacity: 0.15; }
+.sel { stroke: var(--ink); stroke-width: 2; }
+.detail h2 { font: 400 26px/1.1 var(--display); margin: 4px 0 0; text-wrap: balance; }
+.detail .meta { font: 400 12px var(--mono); color: var(--ink-soft); }
+.detail p { margin: 0; font-size: 13.5px; }
+.chain { display: grid; gap: 8px; }
+.link { display: grid; gap: 3px; font-size: 13px; padding: 8px 10px; border: 1px solid var(--rule); border-radius: 4px; }
+.link button { all: unset; cursor: pointer; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--rule); }
+.link .conf { display: flex; align-items: center; gap: 8px; font: 400 11px var(--mono); color: var(--ink-soft); }
+.link .conf .bar { width: 70px; }
+.link small { color: var(--ink-soft); }
+.srcs { margin: 0; padding-left: 16px; font-size: 12px; color: var(--ink-soft); display: grid; gap: 4px; }
+.srcs a { color: inherit; }
+.draft { display: inline-block; font: 500 10.5px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--rule); padding: 3px 6px; border-radius: 3px; color: var(--ink-soft); }
+@media (prefers-reduced-motion: reduce) { .pulse { display: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Plague <i>&amp;</i> Climate</h1>
+      <p class="dek" id="dek">How the Black Death rode the trade network from the Tian Shan to Moscow, month by month.</p>
+    </div>
+    <nav role="tablist" aria-label="Views">
+      <button role="tab" id="tab-spread" aria-selected="true" data-view="spread">Epidemics on the move</button>
+      <button role="tab" id="tab-shocks" aria-selected="false" data-view="shocks">Shocks, 4000 BCE–today</button>
+    </nav>
+  </header>
+
+  <section id="view-spread" class="stage">
+    <div style="display:grid;gap:12px;min-width:0">
+      <div class="chips" id="outbreaks"></div>
+      <div class="mapbox" id="mapA"><svg id="svgA" viewBox="0 0 960 600" role="img" aria-label="Map of the Black Death spreading across Eurasia and North Africa"></svg><div class="tip" id="tipA" hidden></div></div>
+      <div class="controls">
+        <button class="play" id="play" aria-label="Play">▶</button>
+        <input type="range" id="month" min="0" max="191" step="0.25" value="0" aria-label="Month">
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <p class="note">Arrival months are approximate (Benedictow 2004 for the Black Death; Pollitzer, McGrew and Rosenberg for cholera; Crosby and Cook for smallpox). Each line joins a city to the place it most likely caught plague from; those links are a model's reading of the trade network and wait for checking. Dashed outlines are the borders of the period.</p>
+    </div>
+    <aside class="ledger" aria-live="polite">
+      <div><div class="eyebrow">Reaches</div><div class="when" id="when">July 1348</div></div>
+      <div style="display:grid;gap:6px"><div class="count"><b id="nreached">0</b><span id="nof">of 61 places</span></div><div class="bar"><i id="nbar" style="width:0"></i></div></div>
+      <div><div class="eyebrow" style="margin-bottom:8px">Latest</div><ul class="latest" id="latest"></ul></div>
+      <div class="legend">
+        <span><i style="background:var(--sea-route)"></i>By sea</span>
+        <span><i style="background:var(--river-route)"></i>By river</span>
+        <span><i style="background:var(--land-route)"></i>By land</span>
+        <span><i class="dot" style="background:var(--plague)"></i>Reached</span>
+      </div>
+    </aside>
+  </section>
+
+  <section id="view-shocks" class="stage" hidden>
+    <div style="display:grid;gap:12px;min-width:0">
+      <div class="chips" id="chips"></div>
+      <div class="mapbox" id="mapB"><svg id="svgB" viewBox="0 0 960 500" role="img" aria-label="World map of epidemics, famines, eruptions and climate shifts"></svg><div class="tip" id="tipB" hidden></div></div>
+      <div class="tl" id="tl"></div>
+      <p class="note">Bars run from start to end. The time axis stretches recent centuries so modern events are readable; the Toba eruption (about 72,000 BCE) sits off the left edge. Every record is a draft written from the cited works and waits for the judge.</p>
+    </div>
+    <aside class="ledger detail" id="detail"></aside>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+/*__DC__*/
+/*__LAND__*/
+/*__BORDERS__*/
+</script>
+<script>
+(function () {
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const fmtY = y => y < 0 ? (-y).toLocaleString('en') + ' BCE' : String(y);
+  const land = topojson.feature(LAND, LAND.objects.land);
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- Epidemics on the move ----------
+  function tip(el, box, html, ev) {
+    el.innerHTML = html; el.hidden = false;
+    const r = box.getBoundingClientRect();
+    let x = ev.clientX - r.left + 12, y = ev.clientY - r.top + 12;
+    if (x + 260 > r.width) x = Math.max(4, x - 280);
+    el.style.left = x + 'px'; el.style.top = y + 'px';
+  }
+  const SPREADS = {
+    'event:black_death': { label: 'Black Death', years: '1338–1353', borders: 1300, start: [1348, 7],
+      dek: 'How the Black Death rode the trade network from the Tian Shan to Moscow, month by month.',
+      labels: ['chu_valley','sarai','kaffa','constantinople','messina','alexandria','cairo','genoa','venice','marseille','florence','paris','london','damascus','tunis','barcelona','lisbon','bergen','vienna','lubeck','moscow','mecca','dublin','novgorod','avignon','bordeaux','cologne','rome'] },
+    'event:cholera_1826': { label: 'Cholera', years: '1826–1832', borders: 1815, start: [1831, 11],
+      dek: 'Cholera\'s first journey to Europe and America, carried by armies, pilgrims, barges and emigrant ships.',
+      labels: ['calcutta','orenburg','astrakhan','moscow','st_petersburg','warsaw','berlin','vienna','london','paris','sunderland','quebec','new_york','new_orleans','mecca','cairo'] },
+    'event:smallpox_aztec': { label: 'Smallpox in the Americas', years: '1518–1528', borders: 1530, start: [1520, 12],
+      dek: 'Smallpox ran ahead of the conquerors, killing two emperors before Spanish armies reached them.', labels: null },
+  };
+  const P = Object.fromEntries(DC.places.map(p => [p.id, p]));
+  const svgA = d3.select('#svgA');
+  const W = 960, H = 600;
+  const boxA = document.getElementById('mapA'), tipA = document.getElementById('tipA');
+  const slider = document.getElementById('month');
+  const playBtn = document.getElementById('play');
+  let A = null, timer = null;
+
+  document.getElementById('outbreaks').innerHTML = Object.entries(SPREADS).map(([id, s]) =>
+    `<button class="chip" aria-pressed="${id === 'event:black_death'}" data-id="${id}">${s.label} <span style="color:var(--ink-soft)">${s.years}</span></button>`).join('');
+  document.querySelectorAll('#outbreaks .chip').forEach(b => b.onclick = () => {
+    document.querySelectorAll('#outbreaks .chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+    loadSpread(b.dataset.id);
+  });
+
+  function loadSpread(evId) {
+    stop();
+    const S = SPREADS[evId];
+    const spread = DC.relations.filter(r => r.type === 'spread_to' && r.from === evId);
+    const y0 = Math.min(...spread.map(r => r.start)), y1 = Math.max(...spread.map(r => r.start));
+    const tOf = (y, m) => (y - y0) * 12 + ((m || 6) - 1);
+    const fmtT = t => { const i = Math.floor(t); return MONTHS[i % 12] + ' ' + (y0 + Math.floor(i / 12)); };
+    const cities = spread.map(r => ({ ...P[r.to], t: tOf(r.start, r.month), via: r.via, mode: r.mode, note: r.note })).sort((a, b) => a.t - b.t);
+    const C = Object.fromEntries(cities.map(c => [c.id, c]));
+    const tMax = (y1 - y0) * 12 + 11;
+    const labels = new Set((S.labels || cities.map(c => c.id.slice(6))).map(s => 'place:' + s));
+
+    const lons = cities.map(c => c.lon), lats = cities.map(c => c.lat);
+    const proj = d3.geoAzimuthalEqualArea().rotate([-(Math.min(...lons) + Math.max(...lons)) / 2, -(Math.min(...lats) + Math.max(...lats)) / 2]);
+    const lines = DC.routes.features.filter(f => f.properties.ref === 'route:' + spreadRoute(evId)).map(f => f.geometry.coordinates);
+    proj.fitExtent([[24, 24], [W - 70, H - 24]], { type: 'MultiLineString', coordinates: [...lines, cities.map(c => [c.lon, c.lat])] });
+    const path = d3.geoPath(proj);
+    const xy = d => proj([d.lon, d.lat]);
+    svgA.selectAll('*').remove();
+    const g = svgA.append('g');
+    g.append('path').attr('class', 'grat').attr('d', path(d3.geoGraticule10()));
+    g.append('path').attr('class', 'land').attr('d', path(land));
+    const bt = BORDERS[S.borders];
+    const pol = topojson.feature(bt, Object.values(bt.objects)[0]).features.filter(f => f.properties && f.properties.NAME);
+    g.append('g').selectAll('path').data(pol).join('path').attr('class', 'polity').attr('d', path);
+    g.append('g').selectAll('path').data(pol).join('path').attr('class', 'polity-hit').attr('d', path)
+      .on('pointermove', (ev, d) => tip(tipA, boxA, `<b>${d.properties.NAME}</b><span>borders of ${S.borders}</span>`, ev))
+      .on('pointerleave', () => tipA.hidden = true);
+
+    const routes = DC.routes.features.filter(f => C[f.properties.to] && C[f.properties.from] && f.properties.ref === 'route:' + spreadRoute(evId))
+      .map(f => ({ ...f.properties, d: path(f.geometry) }));
+    const rsel = g.append('g').selectAll('path').data(routes).join('path').attr('class', d => 'route ' + d.mode).attr('d', d => d.d);
+    rsel.each(function (d) { d.L = this.getTotalLength(); d3.select(this).attr('stroke-dasharray', d.L + ' ' + d.L); });
+    routes.forEach(r => { r.tEnd = C[r.to].t; r.tStart = Math.max(C[r.from].t, r.tEnd - 3); });
+    const pulses = g.append('g');
+    const csel = g.append('g').selectAll('circle').data(cities).join('circle').attr('cx', d => xy(d)[0]).attr('cy', d => xy(d)[1]).attr('r', 4)
+      .on('pointermove', (ev, d) => tip(tipA, boxA, `<b>${d.name}</b><span>${fmtT(d.t)}${d.via ? ' · from ' + C[d.via].name + ' by ' + d.mode : ''}</span>${d.note ? '<div style="margin-top:4px">' + d.note + '</div>' : ''}`, ev))
+      .on('pointerleave', () => tipA.hidden = true);
+    const lsel = g.append('g').selectAll('text').data(cities.filter(c => labels.has(c.id))).join('text')
+      .attr('class', 'clabel').attr('x', d => xy(d)[0] + 6).attr('y', d => xy(d)[1] + 3.5).text(d => d.name.replace(/ \(.*\)/, ''));
+
+    slider.max = tMax;
+    const step = Math.max(1, Math.round((y1 - y0) / 5));
+    const ticks = []; for (let y = y0; y <= y1; y += step) ticks.push(y);
+    if (ticks[ticks.length - 1] !== y1) ticks.push(y1);
+    document.getElementById('ticks').innerHTML = ticks.map(y => `<span>${y}</span>`).join('');
+    document.getElementById('dek').textContent = S.dek;
+    DEK.spread = S.dek;
+
+    function render(t) {
+      rsel.attr('stroke-dashoffset', d => { const p = Math.max(0, Math.min(1, (t - d.tStart) / (d.tEnd - d.tStart || 1))); return d.L * (1 - p); })
+        .attr('opacity', d => t < d.tStart ? 0 : 0.9);
+      csel.attr('class', d => 'city ' + (t >= d.t ? 'on' : 'off')).attr('r', d => t >= d.t ? 4.2 : 3);
+      lsel.attr('class', d => 'clabel ' + (t >= d.t ? '' : 'off'));
+      const fresh = reduced ? [] : cities.filter(c => t >= c.t && t - c.t < 4);
+      pulses.selectAll('circle').data(fresh, d => d.id).join('circle').attr('class', 'pulse')
+        .attr('cx', d => xy(d)[0]).attr('cy', d => xy(d)[1])
+        .attr('r', d => 4 + (t - d.t) * 7).attr('stroke-width', 1.5).attr('opacity', d => 1 - (t - d.t) / 4);
+      const reached = cities.filter(c => t >= c.t);
+      document.getElementById('when').textContent = fmtT(t);
+      document.getElementById('nreached').textContent = reached.length;
+      document.getElementById('nof').textContent = 'of ' + cities.length + ' places';
+      document.getElementById('nbar').style.width = (100 * reached.length / cities.length) + '%';
+      document.getElementById('latest').innerHTML = reached.slice(-5).reverse().map(c =>
+        `<li><time>${MONTHS[Math.floor(c.t) % 12].slice(0, 3)} ${y0 + Math.floor(c.t / 12)}</time><div><b>${c.name}</b>${c.note ? '<p>' + c.note + '</p>' : ''}</div></li>`).join('') ||
+        '<li><time></time><div>Nowhere reached yet.</div></li>';
+    }
+    // Hurry through stretches where nothing new arrives.
+    const busy = t => cities.some(c => c.t > t - 2 && c.t <= t + 3);
+    A = { render, tMax, busy };
+    slider.value = tOf(...S.start);
+    render(+slider.value);
+  }
+  function spreadRoute(evId) { return { 'event:black_death': 'black_death_spread', 'event:cholera_1826': 'cholera_1826_spread', 'event:smallpox_aztec': 'smallpox_americas_spread' }[evId]; }
+  function stop() { clearInterval(timer); timer = null; playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', 'Play'); }
+  playBtn.onclick = () => {
+    if (timer) return stop();
+    let t = +slider.value; if (t >= A.tMax) t = 0;
+    playBtn.textContent = '❚❚'; playBtn.setAttribute('aria-label', 'Pause');
+    timer = setInterval(() => {
+      t += A.busy(t) ? 0.125 : 0.75;
+      if (t >= A.tMax) { t = A.tMax; stop(); }
+      slider.value = t; A.render(t);
+    }, 40);
+  };
+  slider.oninput = () => { stop(); A.render(+slider.value); };
+  const DEK = { shocks: 'Six thousand years of epidemics, famines, eruptions and climate shifts, and how they fed into each other.' };
+  loadSpread('event:black_death');
+
+  // ---------- Shocks ----------
+  const TYPES = [
+    { k: 'epidemic', label: 'Epidemics', c: 'var(--plague)' },
+    { k: 'famine', label: 'Famines', c: 'var(--famine)' },
+    { k: 'eruption', label: 'Eruptions', c: 'var(--eruption)' },
+    { k: 'climate_shift', label: 'Climate shifts', c: 'var(--climate)' },
+    { k: 'collapse', label: 'Collapses', c: 'var(--collapse)' },
+  ];
+  const TC = Object.fromEntries(TYPES.map(t => [t.k, t]));
+  const evs = DC.events.filter(e => TC[e.subtype] && !e.stub);
+  const NAMES = {};
+  [...DC.events, ...DC.stubs].forEach(e => NAMES[e.id] = e.name);
+  const E = Object.fromEntries(evs.map(e => [e.id, e]));
+  const on = new Set(TYPES.map(t => t.k));
+  let selected = 'event:black_death';
+
+  document.getElementById('chips').innerHTML = TYPES.map(t =>
+    `<button class="chip" aria-pressed="true" data-k="${t.k}"><i style="background:${t.c}"></i>${t.label} <span style="color:var(--ink-soft)">${evs.filter(e => e.subtype === t.k).length}</span></button>`).join('');
+  document.querySelectorAll('#chips .chip').forEach(b => b.onclick = () => {
+    const k = b.dataset.k; on.has(k) ? on.delete(k) : on.add(k);
+    b.setAttribute('aria-pressed', on.has(k)); renderB();
+  });
+
+  const svgB = d3.select('#svgB');
+  const projB = d3.geoNaturalEarth1().fitExtent([[8, 8], [952, 492]], { type: 'Sphere' });
+  const pathB = d3.geoPath(projB);
+  svgB.append('path').attr('d', pathB({ type: 'Sphere' })).attr('fill', 'var(--sea)');
+  svgB.append('path').attr('class', 'grat').attr('d', pathB(d3.geoGraticule10()));
+  svgB.append('path').attr('class', 'land').attr('d', pathB(land));
+  const mapped = evs.filter(e => !(e.lat === 0 && e.lon === 0));
+  const rS = d3.scaleSqrt().domain([0, 1e8]).range([3.5, 22]);
+  const sym = d => {
+    const r = d.deaths ? rS(d.deaths[1]) : 4.5;
+    if (d.subtype === 'famine') return d3.symbol(d3.symbolSquare, r * r * 3.2)();
+    if (d.subtype === 'eruption') return d3.symbol(d3.symbolTriangle, r * r * 3.4)();
+    if (d.subtype === 'collapse') return d3.symbol(d3.symbolDiamond, r * r * 3.4)();
+    return d3.symbol(d3.symbolCircle, r * r * Math.PI)();
+  };
+  const msel = svgB.append('g').selectAll('path').data(mapped.sort((a, b) => (b.deaths ? b.deaths[1] : 0) - (a.deaths ? a.deaths[1] : 0))).join('path')
+    .attr('class', 'ev').attr('transform', d => 'translate(' + projB([d.lon, d.lat]) + ')').attr('d', sym)
+    .attr('fill', d => d.subtype === 'climate_shift' ? 'none' : TC[d.subtype].c).attr('fill-opacity', 0.8)
+    .attr('stroke', d => d.subtype === 'climate_shift' ? TC[d.subtype].c : 'var(--panel)').attr('stroke-width', d => d.subtype === 'climate_shift' ? 2 : 0.8);
+  const boxB = document.getElementById('mapB'), tipB = document.getElementById('tipB');
+  const span = d => fmtY(d.start) + (d.end === d.start ? '' : d.end == null ? ' to today' : '–' + fmtY(d.end));
+  const fmtD = d => d.deaths ? (d.deaths[0] === d.deaths[1] ? '~' + d3.format('.2~s')(d.deaths[0]) : d3.format('.2~s')(d.deaths[0]) + '–' + d3.format('.2~s')(d.deaths[1])).replace(/G/g, 'B') + ' deaths' : '';
+  msel.on('pointermove', (ev, d) => tip(tipB, boxB, `<b>${d.name}</b><span>${span(d)}${d.deaths ? ' · ' + fmtD(d) : ''}</span>`, ev))
+    .on('pointerleave', () => tipB.hidden = true).on('click', (ev, d) => select(d.id));
+
+  // Timeline: a piecewise axis that gives the last millennium room to breathe.
+  const lanes = TYPES.map(t => t.k);
+  const TW = 960, LH = 34, TH = 30 + lanes.length * LH + 10, X0 = 108;
+  const x = d3.scaleLinear().domain([-4000, -1000, 500, 1500, 1800, 2030]).range([X0, X0 + 120, X0 + 260, X0 + 470, X0 + 650, TW - 14]);
+  const tl = d3.select('#tl').append('svg').attr('viewBox', `0 0 ${TW} ${TH}`);
+  const ticks = [-4000, -2000, -1000, 1, 500, 1000, 1500, 1800, 1900, 2000];
+  tl.append('g').selectAll('line').data(ticks).join('line').attr('x1', x).attr('x2', x).attr('y1', 22).attr('y2', TH - 6);
+  tl.append('g').selectAll('text').data(ticks).join('text').attr('x', x).attr('y', 14).attr('text-anchor', 'middle').text(d => d === 1 ? '1 CE' : d < 0 ? -d / 1000 + 'k BCE' : d);
+  tl.append('g').selectAll('text').data(TYPES).join('text').attr('class', 'lane').attr('x', 8).attr('y', (d, i) => 30 + i * LH + 16).text(d => d.label);
+  const tsel = tl.append('g').selectAll('rect').data(evs.filter(e => e.start >= -4000)).join('rect').attr('class', 'ev')
+    .attr('x', d => x(d.start)).attr('width', d => Math.max(4, x(d.end == null ? 2026 : d.end) - x(d.start)))
+    .attr('y', d => 30 + lanes.indexOf(d.subtype) * LH + 4 + (d.id.length % 3) * 6).attr('height', 9).attr('rx', 2)
+    .attr('fill', d => TC[d.subtype].c);
+  tsel.on('click', (ev, d) => select(d.id)).append('title').text(d => d.name + ' (' + span(d) + ')');
+
+  function renderB() {
+    msel.classed('dim', d => !on.has(d.subtype)).classed('sel', d => d.id === selected);
+    tsel.classed('dim', d => !on.has(d.subtype)).classed('sel', d => d.id === selected);
+    const d = E[selected];
+    const links = DC.relations.filter(r => r.confidence != null && (r.from === selected || r.to === selected));
+    const link = r => {
+      const other = r.from === selected ? r.to : r.from;
+      const verb = r.from === selected ? (r.type === 'caused' ? 'Caused' : 'Fed into') : (r.type === 'caused' ? 'Caused by' : 'Fed by');
+      const name = NAMES[other] || other;
+      const target = E[other] ? `<button data-id="${other}">${name}</button>` : `<b>${name}</b>`;
+      return `<div class="link"><div>${verb} ${target}</div><div class="conf"><div class="bar"><i style="width:${r.confidence * 100}%"></i></div>${Math.round(r.confidence * 100)}% · ${r.view}</div>${r.note ? '<small>' + r.note + '</small>' : ''}</div>`;
+    };
+    document.getElementById('detail').innerHTML = `
+      <div><div class="eyebrow">${TC[d.subtype].label.replace(/s$/, '')}</div><h2>${d.name}</h2><div class="meta">${span(d)}${d.deaths ? ' · ' + fmtD(d) : ''}</div></div>
+      <p>${d.what}</p><p style="color:var(--ink-soft)">${d.why}</p>
+      ${links.length ? `<div><div class="eyebrow" style="margin-bottom:8px">Why chain</div><div class="chain">${links.map(link).join('')}</div></div>` : ''}
+      <div><div class="eyebrow" style="margin-bottom:6px">Sources <span class="draft">draft</span></div><ol class="srcs">${d.sources.map(s => `<li>${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.cite}</a>` : s.cite}</li>`).join('')}</ol></div>`;
+    document.querySelectorAll('#detail button[data-id]').forEach(b => b.onclick = () => select(b.dataset.id));
+  }
+  function select(id) { selected = id; renderB(); }
+  renderB();
+
+  // ---------- Tabs ----------
+  function show(v) {
+    if (!DEK[v]) v = 'spread';
+    document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-selected', b.dataset.view === v));
+    document.getElementById('view-spread').hidden = v !== 'spread';
+    document.getElementById('view-shocks').hidden = v !== 'shocks';
+    document.getElementById('dek').textContent = DEK[v];
+    if (v !== 'spread') stop();
+  }
+  document.querySelectorAll('nav button').forEach(b => b.onclick = () => { show(b.dataset.view); try { history.replaceState(null, '', '#' + b.dataset.view); } catch (e) {} });
+  show(location.hash.slice(1));
+})();
+</script>
