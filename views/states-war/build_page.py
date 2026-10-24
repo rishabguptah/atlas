@@ -45,7 +45,22 @@ def main(land_path, out):
         sides = [[{'n': x['name'], **({'p': x['polity']} if x.get('polity') else {})} for x in side] for side in b['sides']]
         used.update(x['p'] for side in sides for x in side if 'p' in x)
         bat.append({'id': b['id'], 'name': b['name'], 'y': b['start'], 'lat': b['lat'], 'lon': b['lon'], 't': b['subtype'],
-                    's': sides, 'w': b['winner'], 'why': b['why'], 'u': b['sources'][0]['url']})
+                    's': sides, 'w': b['winner'], 'why': b['why'], 'u': b['sources'][0]['url'], 'k': 1,
+                    **({'q': b['wikidata']} if b.get('wikidata') else {})})
+    for b in jl('battles-wikidata.jsonl'):
+        if b['kind'] != 'event':
+            continue
+        pr = [{'n': x['name'], **({'p': x['ref']} if x.get('ref', '').startswith('polity:') else {})} for x in b.get('participants', [])]
+        used.update(x['p'] for x in pr if 'p' in x)
+        rec = {'id': b['id'], 'name': b['name'], 'y': b['start'], 'lat': b['lat'], 'lon': b['lon'], 't': b['subtype'], 'q': b['wikidata']}
+        if pr:
+            rec['pr'] = pr
+        if b.get('wars'):
+            rec['war'] = b['wars'][0]['name']
+        if len(b['sources']) > 1:
+            rec['u'] = b['sources'][1]['url']
+        bat.append(rec)
+    bat.sort(key=lambda b: b['y'])
     ch = []
     for p in places:
         h = sorted(held.get(p['id'], []), key=lambda z: z[1])
