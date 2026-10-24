@@ -1,0 +1,330 @@
+<title>Atlas of Ideas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one-screen map app. Map fills the left, a reading column on the right (stacks under the map on phones), year rail along the bottom of the map.
+   Palette: lapis and gold of an illuminated manuscript; three inks for the three lenses. */
+:root {
+  --bg: #eef1f6; --panel: #f7f8fb; --ocean: #dfe6f1; --land: #c9d2e0; --land-edge: #b3bfd2;
+  --ink: #17213d; --muted: #56607a; --rule: #cdd4e2;
+  --religion: #946500; --ideas: #1c7563; --literature: #a8324e; --route: #946500;
+  --display: "Cormorant Garamond", "EB Garamond", Garamond, Georgia, serif;
+  --body: "Source Sans 3", "Source Sans Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0b1229; --panel: #0f1833; --ocean: #101b3b; --land: #22305a; --land-edge: #2f3f70;
+  --ink: #e7eaf3; --muted: #9aa5c2; --rule: #26345f;
+  --religion: #e3ba57; --ideas: #5cc4ad; --literature: #ee8499; --route: #e3ba57; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0b1229; --panel: #0f1833; --ocean: #101b3b; --land: #22305a; --land-edge: #2f3f70;
+  --ink: #e7eaf3; --muted: #9aa5c2; --rule: #26345f;
+  --religion: #e3ba57; --ideas: #5cc4ad; --literature: #ee8499; --route: #e3ba57; color-scheme: dark }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+.app { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 380px; grid-template-rows: auto minmax(0, 1fr); }
+header { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px;
+  padding-block: 10px 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--rule); }
+h1 { font: 600 28px/1 var(--display); margin: 0; letter-spacing: .01em; text-wrap: balance; }
+h1 em { font-style: italic; font-weight: 500; color: var(--religion); }
+.lede { color: var(--muted); font-size: 14px; margin: 0; flex: 1 1 260px; min-width: 0; }
+.lenses { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { font: 600 12px/1 var(--body); letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--rule); background: transparent; color: var(--muted);
+  padding: 7px 10px 6px; border-radius: 999px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.chip i { width: 8px; height: 8px; border-radius: 50%; background: currentColor; display: inline-block; }
+.chip[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); }
+.chip[data-lens="religion"] i { background: var(--religion); } .chip[data-lens="ideas"] i { background: var(--ideas); } .chip[data-lens="literature"] i { background: var(--literature); }
+.chip:focus-visible, button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--religion); outline-offset: 2px; }
+.mapwrap { position: relative; min-width: 0; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+svg#map { width: 100%; height: 100%; display: block; background: var(--ocean); touch-action: none; }
+.land { fill: var(--land); stroke: var(--land-edge); stroke-width: .5; vector-effect: non-scaling-stroke; }
+.graticule { fill: none; stroke: var(--land-edge); stroke-opacity: .35; stroke-width: .5; vector-effect: non-scaling-stroke; }
+.pin { stroke: var(--bg); vector-effect: non-scaling-stroke; cursor: pointer; }
+.pin.religion { fill: var(--religion); } .pin.ideas { fill: var(--ideas); } .pin.literature { fill: var(--literature); }
+.reach { fill: none; stroke: var(--religion); stroke-opacity: .45; vector-effect: non-scaling-stroke; }
+.inst { fill: none; stroke: var(--ink); stroke-opacity: .6; vector-effect: non-scaling-stroke; }
+.work { stroke: none; opacity: .85; }
+.work.religion { fill: var(--religion); } .work.ideas { fill: var(--ideas); } .work.literature { fill: var(--literature); }
+.infl { fill: none; stroke-opacity: .55; vector-effect: non-scaling-stroke; stroke-dasharray: 2 3; }
+.infl.ideas { stroke: var(--ideas); } .infl.literature { stroke: var(--literature); } .infl.religion { stroke: var(--religion); }
+.leg { fill: none; stroke: var(--route); stroke-width: 2.2; vector-effect: non-scaling-stroke; stroke-linecap: round; }
+.leg.dim { stroke-opacity: .25; }
+.stop { fill: var(--bg); stroke: var(--route); stroke-width: 2; vector-effect: non-scaling-stroke; cursor: pointer; }
+.stop.on { fill: var(--route); }
+.stoplabel { font: 600 11px var(--body); fill: var(--ink); paint-order: stroke; stroke: var(--ocean); stroke-width: 3px; pointer-events: none; }
+.rail { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: 12px; align-items: center; padding-block: 8px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; border-top: 1px solid var(--rule); background: var(--panel); }
+.year { font: 600 22px/1 var(--mono); font-variant-numeric: tabular-nums; min-width: 7.5ch; }
+.btn { font: 600 13px var(--body); border: 1px solid var(--ink); background: var(--ink); color: var(--bg); border-radius: 6px; padding: 7px 12px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
+input[type=range] { width: 100%; accent-color: var(--religion); }
+aside { background: var(--panel); border-left: 1px solid var(--rule); overflow-y: auto; min-width: 0;
+  padding-block: 14px 24px; padding-left: 18px; padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 16px; }
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--rule); }
+.tab { font: 600 13px var(--body); background: none; border: 0; border-bottom: 2px solid transparent; padding: 6px 10px 8px; color: var(--muted); cursor: pointer; }
+.tab[aria-selected="true"] { color: var(--ink); border-color: var(--religion); }
+.eyebrow { font: 600 11px/1 var(--body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0; }
+h2 { font: 600 24px/1.1 var(--display); margin: 4px 0 6px; text-wrap: balance; }
+.why { font-style: italic; color: var(--muted); margin: 0; }
+select { font: 15px var(--body); width: 100%; padding: 7px 8px; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--ink); }
+ol.steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+ol.steps li { display: grid; grid-template-columns: 8.5ch minmax(0, 1fr); gap: 10px; padding: 8px 6px; border-top: 1px solid var(--rule); cursor: pointer; border-radius: 4px; }
+ol.steps li.on { background: color-mix(in srgb, var(--religion) 14%, transparent); }
+.y { font: 600 12px/1.6 var(--mono); font-variant-numeric: tabular-nums; color: var(--route); }
+.place { font-weight: 600; }
+.step-text { margin: 2px 0 0; font-size: 14px; }
+.src { font-size: 12px; color: var(--muted); }
+.src a { color: inherit; }
+.draft { font: 600 10px/1 var(--body); letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--rule); border-radius: 3px; padding: 2px 4px; margin-right: 4px; }
+.card { border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; background: var(--bg); }
+.card h3 { font: 600 20px/1.15 var(--display); margin: 0 0 2px; }
+.card p { margin: 6px 0 0; font-size: 14px; }
+.list { display: flex; flex-direction: column; gap: 2px; }
+.row { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 4px 4px; border-radius: 4px; cursor: pointer; background: none; border: 0; text-align: left; color: var(--ink); font: 14px var(--body); }
+.row:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot.religion { background: var(--religion); } .dot.ideas { background: var(--ideas); } .dot.literature { background: var(--literature); }
+.meta { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); }
+.legend svg { vertical-align: -2px; margin-right: 4px; }
+.foot { font-size: 12px; color: var(--muted); }
+.tip { position: absolute; pointer-events: none; background: var(--panel); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px; padding: 6px 8px; font-size: 13px; max-width: 240px; box-shadow: 0 4px 14px rgb(0 0 0 / .18); }
+@media (max-width: 820px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 58vh auto; height: auto; }
+  aside { border-left: 0; border-top: 1px solid var(--rule); overflow: visible; padding-left: max(16px, env(safe-area-inset-left, 0px)); }
+  h1 { font-size: 24px; }
+  .rail { grid-template-columns: auto auto minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="app">
+  <header>
+    <h1>Atlas of <em>Ideas</em></h1>
+    <p class="lede">Faiths, schools of thought and books moving across the map. Pick a journey, or drag the year to see who was alive and what had been written.</p>
+    <div class="lenses" role="group" aria-label="Lenses">
+      <button class="chip" data-lens="religion" aria-pressed="true"><i></i>Religion</button>
+      <button class="chip" data-lens="ideas" aria-pressed="true"><i></i>Philosophy</button>
+      <button class="chip" data-lens="literature" aria-pressed="true"><i></i>Literature</button>
+    </div>
+  </header>
+  <div class="mapwrap">
+    <svg id="map" role="img" aria-label="World map of ideas"></svg>
+    <div class="tip" id="tip" hidden></div>
+    <div class="rail">
+      <button class="btn" id="play">Play</button>
+      <div class="year" id="year" aria-live="polite"></div>
+      <input type="range" id="slider" min="-1500" max="2000" step="1" aria-label="Year">
+    </div>
+  </div>
+  <aside>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-j" aria-selected="true">Journeys</button>
+      <button class="tab" role="tab" id="tab-y" aria-selected="false">This year</button>
+    </div>
+    <section id="pane-j">
+      <label class="eyebrow" for="jsel">Journey</label>
+      <select id="jsel"></select>
+      <h2 id="jname"></h2>
+      <p id="jwhat"></p>
+      <p class="why" id="jwhy"></p>
+      <ol class="steps" id="steps"></ol>
+    </section>
+    <section id="pane-y" hidden>
+      <p class="eyebrow">Alive in <span id="y2"></span></p>
+      <div class="list" id="alive"></div>
+      <p class="eyebrow" style="margin-top:14px">Written in the century before</p>
+      <div class="list" id="recent"></div>
+    </section>
+    <div class="card" id="card" hidden></div>
+    <div class="legend">
+      <span><svg width="12" height="12"><circle cx="6" cy="6" r="4" fill="var(--ideas)"/></svg>person alive</span>
+      <span><svg width="12" height="12"><rect x="2" y="2" width="7" height="7" transform="rotate(45 6 6)" fill="var(--literature)"/></svg>work written</span>
+      <span><svg width="12" height="12"><rect x="1.5" y="1.5" width="9" height="9" fill="none" stroke="var(--ink)"/></svg>school or library open</span>
+      <span><svg width="14" height="12"><circle cx="7" cy="6" r="5" fill="none" stroke="var(--religion)"/></svg>faith has arrived</span>
+      <span><svg width="18" height="12"><path d="M1 10 Q9 0 17 10" fill="none" stroke="var(--ideas)" stroke-dasharray="2 3"/></svg>influence reaching someone alive</span>
+    </div>
+    <p class="foot" id="foot"></p>
+  </aside>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+const DATA = /*__DATA__*/;
+const LAND = /*__LAND__*/;
+</script>
+<script>
+(() => {
+  const LENSES = ['religion', 'ideas', 'literature'];
+  const on = new Set(LENSES);
+  const P = DATA.places;
+  const byId = {};
+  for (const k of ['people', 'ideas', 'works']) for (const r of DATA[k]) byId[r.id] = r;
+  const lensOf = r => (r.l || []).find(l => LENSES.includes(l)) || 'ideas';
+  const visible = r => (r.l || []).some(l => on.has(l));
+  const fmt = (y, a) => y == null ? '?' : (a ? 'c. ' : '') + (y < 0 ? `${-y} BCE` : `${y}`);
+  const fmtR = r => r ? ` (${fmt(r[0])}–${fmt(r[1])})` : '';
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const srcHtml = s => s ? `<div class="src"><span class="draft">draft</span>source: <a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.c)}</a></div>` : '';
+
+  const svg = d3.select('#map'), g = svg.append('g');
+  const W = 1000, H = 520;
+  svg.attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio', 'xMidYMid meet');
+  const land = topojson.feature(LAND, LAND.objects.land);
+  const proj = d3.geoNaturalEarth1().fitExtent([[10, 10], [W - 10, H - 10]], { type: 'Sphere' });
+  const path = d3.geoPath(proj);
+  g.append('path').attr('class', 'graticule').attr('d', path(d3.geoGraticule10()));
+  g.append('path').attr('class', 'land').attr('d', path(land));
+  const xy = id => { const p = P[id]; return p ? proj([p.lo, p.la]) : null; };
+  const gReach = g.append('g'), gInst = g.append('g'), gInfl = g.append('g'), gWork = g.append('g'), gPeople = g.append('g'), gRoute = g.append('g');
+  let k = 1;
+  const zoom = d3.zoom().scaleExtent([1, 12]).on('zoom', e => { k = e.transform.k; g.attr('transform', e.transform); resize(); });
+  svg.call(zoom);
+  function resize() {
+    gPeople.selectAll('circle').attr('r', 3.6 / Math.sqrt(k));
+    gWork.selectAll('rect').attr('width', 5 / Math.sqrt(k)).attr('height', 5 / Math.sqrt(k)).attr('x', d => d.x - 2.5 / Math.sqrt(k)).attr('y', d => d.y - 2.5 / Math.sqrt(k)).attr('transform', d => `rotate(45 ${d.x} ${d.y})`);
+    gInst.selectAll('rect').attr('width', 9 / Math.sqrt(k)).attr('height', 9 / Math.sqrt(k)).attr('x', d => d.x - 4.5 / Math.sqrt(k)).attr('y', d => d.y - 4.5 / Math.sqrt(k));
+    gReach.selectAll('circle').attr('r', 7 / Math.sqrt(k));
+    gRoute.selectAll('circle').attr('r', 4.5 / Math.sqrt(k));
+    gRoute.selectAll('text').style('font-size', 11 / k + 'px').attr('dx', 7 / k).attr('dy', 3.5 / k).style('stroke-width', 3 / k + 'px');
+  }
+  function arc(a, b, bend = .22) {
+    const dx = b[0] - a[0], dy = b[1] - a[1];
+    const mx = (a[0] + b[0]) / 2 - dy * bend, my = (a[1] + b[1]) / 2 + dx * bend;
+    return `M${a[0]},${a[1]} Q${mx},${my} ${b[0]},${b[1]}`;
+  }
+  // spread people sharing a city around it
+  function jitter(id, i) { const p = xy(id); if (!p) return null; if (!i) return p; const t = i * 2.4, r = 3 + i * .9; return [p[0] + r * Math.cos(t), p[1] + r * Math.sin(t)]; }
+
+  const tip = document.getElementById('tip');
+  function showTip(e, html) { tip.innerHTML = html; tip.hidden = false; const b = svg.node().getBoundingClientRect(); tip.style.left = Math.min(e.clientX - b.left + 12, b.width - 250) + 'px'; tip.style.top = (e.clientY - b.top + 12) + 'px'; }
+  const hideTip = () => tip.hidden = true;
+
+  // ---- year layer
+  let year = 1255;
+  const slider = document.getElementById('slider');
+  function alive(r) { const s = r.s, e = r.e ?? (s + 70); return s != null && s <= year && year <= e; }
+  function drawYear() {
+    document.getElementById('year').textContent = fmt(year);
+    document.getElementById('y2').textContent = fmt(year);
+    slider.value = year;
+    const people = DATA.people.filter(r => alive(r) && visible(r));
+    const count = {};
+    const pts = people.map(r => { const i = count[r.p] = (count[r.p] ?? -1) + 1; const q = jitter(r.p, i); return q && { r, x: q[0], y: q[1] }; }).filter(Boolean);
+    gPeople.selectAll('circle').data(pts, d => d.r.id).join('circle').attr('class', d => 'pin ' + lensOf(d.r)).attr('cx', d => d.x).attr('cy', d => d.y)
+      .on('mousemove', (e, d) => showTip(e, `<b>${esc(d.r.n)}</b><br><span class="meta">${fmt(d.r.s, d.r.sa)}–${fmt(d.r.e, d.r.ea)}</span>`)).on('mouseleave', hideTip)
+      .on('click', (e, d) => card(d.r));
+    const works = DATA.works.filter(r => r.s <= year && visible(r)).map(r => { const q = xy(r.p); return q && { r, x: q[0] + 4, y: q[1] - 4 }; }).filter(Boolean);
+    gWork.selectAll('rect').data(works, d => d.r.id).join('rect').attr('class', d => 'work ' + lensOf(d.r)).style('opacity', d => Math.max(.25, 1 - (year - d.r.s) / 600))
+      .on('mousemove', (e, d) => showTip(e, `<b>${esc(d.r.n)}</b><br><span class="meta">${fmt(d.r.s, d.r.sa)}</span>`)).on('mouseleave', hideTip).on('click', (e, d) => card(d.r));
+    const inst = DATA.ideas.filter(r => r.sub === 'institution' && r.s <= year && (r.e == null || year <= r.e) && visible(r)).map(r => { const q = xy(r.p); return q && { r, x: q[0], y: q[1] }; }).filter(Boolean);
+    gInst.selectAll('rect').data(inst, d => d.r.id).join('rect').attr('class', 'inst')
+      .on('mousemove', (e, d) => showTip(e, `<b>${esc(d.r.n)}</b><br><span class="meta">${fmt(d.r.s, d.r.sa)}–${d.r.e == null ? 'today' : fmt(d.r.e, d.r.ea)}</span>`)).on('mouseleave', hideTip).on('click', (e, d) => card(d.r));
+    const reach = [];
+    if (on.has('religion')) for (const j of DATA.routes) if (j.faith) for (const s of j.steps) if (s.y <= year) { const q = xy(s.p); if (q) reach.push({ id: j.id + s.p, x: q[0], y: q[1], j, s }); }
+    gReach.selectAll('circle').data(reach, d => d.id).join('circle').attr('class', 'reach').attr('cx', d => d.x).attr('cy', d => d.y);
+    const where = Object.fromEntries(pts.map(d => [d.r.id, [d.x, d.y]]));
+    const infl = DATA.links.filter(l => l.t !== 'translated' && where[l.to] && byId[l.f] && byId[l.f].s <= year && on.has(lensOf(byId[l.to]))).map(l => {
+      const a = where[l.f] || xy(byId[l.f].p); return a && { l, d: arc(a, where[l.to], .25), c: lensOf(byId[l.to]) }; }).filter(Boolean);
+    gInfl.selectAll('path').data(infl, d => d.l.f + d.l.to).join('path').attr('class', d => 'infl ' + d.c).attr('d', d => d.d);
+    resize();
+    listYear(people);
+  }
+  function listYear(people) {
+    const row = r => `<button class="row" data-id="${r.id}"><span class="dot ${lensOf(r)}"></span><span>${esc(r.n)}</span><span class="meta">${r.p ? esc(P[r.p]?.n || '') : ''}</span></button>`;
+    document.getElementById('alive').innerHTML = people.sort((a, b) => a.s - b.s).map(row).join('') || '<p class="foot">Nobody from this layer yet.</p>';
+    const rec = DATA.works.filter(r => r.s <= year && r.s > year - 100 && visible(r)).sort((a, b) => b.s - a.s);
+    document.getElementById('recent').innerHTML = rec.map(r => `<button class="row" data-id="${r.id}"><span class="dot ${lensOf(r)}"></span><span>${esc(r.n)}</span><span class="meta">${fmt(r.s, r.sa)}</span></button>`).join('') || '<p class="foot">Nothing in this layer.</p>';
+  }
+  document.getElementById('pane-y').addEventListener('click', e => { const b = e.target.closest('.row'); if (b) card(byId[b.dataset.id]); });
+
+  function card(r) {
+    const el = document.getElementById('card'); el.hidden = false;
+    const kind = r.id.split(':')[0];
+    let meta = kind === 'person' ? `${fmt(r.s, r.sa)}${fmtR(r.sr)} – ${fmt(r.e, r.ea)}${fmtR(r.er)}` : `${fmt(r.s, r.sa)}${fmtR(r.sr)}${kind === 'idea' && r.sub === 'institution' ? ' – ' + (r.e == null ? 'today' : fmt(r.e, r.ea)) : ''}`;
+    const at = r.p && P[r.p] ? ' · ' + esc(P[r.p].n) : '';
+    const by = r.a && byId[r.a] ? `<p>By <b>${esc(byId[r.a].n)}</b></p>` : '';
+    const links = DATA.links.filter(l => l.f === r.id || l.to === r.id).map(l => {
+      const o = byId[l.f === r.id ? l.to : l.f]; if (!o) return '';
+      const verb = { teacher_of: l.f === r.id ? 'taught' : 'student of', influenced: l.f === r.id ? 'influenced' : 'influenced by', translated: l.f === r.id ? 'translated' : 'translated by' }[l.t] || l.t;
+      return `<p><span class="meta">${verb}</span> <b>${esc(o.n)}</b>${l.y ? ` <span class="meta">${fmt(l.y)}</span>` : ''}: ${esc(l.note)}</p>`; }).join('');
+    el.innerHTML = `<p class="eyebrow">${esc(r.sub || (r.roles || []).join(', ') || kind)}</p><h3>${esc(r.n)}</h3><div class="meta">${meta}${at}</div><p>${esc(r.w)}</p>${by}${links}${srcHtml(r.src)}`;
+    if (window.matchMedia('(max-width: 820px)').matches) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ---- journeys
+  const jsel = document.getElementById('jsel');
+  jsel.innerHTML = DATA.routes.map(j => `<option value="${j.id}">${esc(j.n)}</option>`).join('');
+  let J = null, shown = 0, timer = null;
+  function pickJourney(id, fit = true) {
+    stop(); J = DATA.routes.find(j => j.id === id); jsel.value = id;
+    document.getElementById('jname').textContent = J.n;
+    document.getElementById('jwhat').textContent = J.what;
+    document.getElementById('jwhy').textContent = J.why;
+    document.getElementById('steps').innerHTML = J.steps.map((s, i) => `<li data-i="${i}"><span class="y">${fmt(s.y, s.ya)}</span><div><span class="place">${esc(P[s.p]?.n)}</span><p class="step-text">${esc(s.text)}</p>${srcHtml(s.src)}</div></li>`).join('');
+    shown = J.steps.length; drawRoute(-1);
+    if (fit) fitTo(J.steps.flatMap(s => [s.p, s.via]).filter(Boolean));
+  }
+  function drawRoute(active) {
+    const legs = J.steps.slice(0, shown).map((s, i) => ({ s, i, a: s.via && xy(s.via), b: xy(s.p) })).filter(d => d.b);
+    gRoute.selectAll('path').data(legs.filter(d => d.a), d => d.i).join(enter => enter.append('path').attr('class', 'leg').attr('d', d => arc(d.a, d.b))
+      .each(function (d) { if (active === d.i) { const L = this.getTotalLength(); d3.select(this).attr('stroke-dasharray', L).attr('stroke-dashoffset', L).transition().duration(900).attr('stroke-dashoffset', 0).on('end', function () { d3.select(this).attr('stroke-dasharray', null); }); } }))
+      .classed('dim', d => active >= 0 && d.i !== active);
+    const seen = new Map(); legs.forEach(d => seen.set(d.s.p, d));
+    const stops = [...seen.values()];
+    gRoute.selectAll('circle').data(stops, d => d.s.p).join('circle').attr('class', 'stop').classed('on', d => active >= 0 && J.steps[active].p === d.s.p)
+      .attr('cx', d => d.b[0]).attr('cy', d => d.b[1]).on('click', (e, d) => goStep(d.i));
+    gRoute.selectAll('text').data(stops, d => d.s.p).join('text').attr('class', 'stoplabel').attr('x', d => d.b[0]).attr('y', d => d.b[1]).text(d => P[d.s.p]?.n);
+    document.querySelectorAll('#steps li').forEach(li => li.classList.toggle('on', +li.dataset.i === active));
+    resize();
+  }
+  function goStep(i) {
+    shown = Math.max(shown, i + 1); year = J.steps[i].y; drawYear(); drawRoute(i);
+    const li = document.querySelector(`#steps li[data-i="${i}"]`);
+    if (li && !window.matchMedia('(max-width: 820px)').matches) li.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+  function fitTo(ids) {
+    const pts = ids.map(xy).filter(Boolean); if (!pts.length) return;
+    const [x0, x1] = d3.extent(pts, p => p[0]), [y0, y1] = d3.extent(pts, p => p[1]);
+    const s = Math.min(8, .8 / Math.max((x1 - x0 + 40) / W, (y1 - y0 + 40) / H));
+    const t = d3.zoomIdentity.translate(W / 2, H / 2).scale(s).translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
+    svg.transition().duration(matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 900).call(zoom.transform, t);
+  }
+  const playBtn = document.getElementById('play');
+  function stop() { clearInterval(timer); timer = null; playBtn.textContent = 'Play'; }
+  playBtn.onclick = () => {
+    if (timer) return stop();
+    playBtn.textContent = 'Pause';
+    if (!document.getElementById('pane-j').hidden && J) {
+      shown = 0; let i = 0; drawRoute(-1); goStep(0);
+      timer = setInterval(() => { i++; if (i >= J.steps.length) { stop(); drawRoute(-1); return; } goStep(i); }, 1900);
+    } else {
+      timer = setInterval(() => { year = Math.min(2000, year + 10); if (year === -1) year = 1; drawYear(); if (year >= 2000) stop(); }, 120);
+    }
+  };
+  document.getElementById('steps').addEventListener('click', e => { const li = e.target.closest('li'); if (li && !e.target.closest('a')) { stop(); goStep(+li.dataset.i); } });
+  jsel.onchange = () => pickJourney(jsel.value);
+  slider.oninput = () => { stop(); year = +slider.value || 1; drawYear(); };
+
+  // ---- tabs and lenses
+  function tab(which) {
+    const j = which === 'j'; stop();
+    document.getElementById('tab-j').setAttribute('aria-selected', j); document.getElementById('tab-y').setAttribute('aria-selected', !j);
+    document.getElementById('pane-j').hidden = !j; document.getElementById('pane-y').hidden = j;
+    gRoute.style('display', j ? null : 'none');
+  }
+  document.getElementById('tab-j').onclick = () => tab('j');
+  document.getElementById('tab-y').onclick = () => tab('y');
+  document.querySelectorAll('.chip').forEach(b => b.onclick = () => {
+    const l = b.dataset.lens; on.has(l) ? on.delete(l) : on.add(l); b.setAttribute('aria-pressed', on.has(l)); drawYear(); });
+
+  const n = DATA.people.length + DATA.ideas.length + DATA.works.length + DATA.links.length + DATA.routes.length;
+  document.getElementById('foot').textContent = `${DATA.people.length} people, ${DATA.ideas.length} faiths, schools and institutions, ${DATA.works.length} works, ${DATA.links.length} influence and translation links, ${DATA.routes.length} journeys. All ${n} are drafts written from general knowledge, each tied to the article that should confirm it, until the judge checks them.`;
+  pickJourney('aristotle_road');
+  drawYear();
+  drawRoute(-1);
+})();
+</script>
