@@ -549,10 +549,10 @@ const TOURS = /*__TOURS__*/;
   // ---------- examples ----------
   const EXAMPLES = [
     { q: TOURS[0].question, tour: 0 },
+    { q: "Why did India rarely consolidate into one state?" },
+    { q: "Why did China keep consolidating into one state?" },
+    { q: "When did Western Europe actually start to become rich?" },
     { q: "What did the end of the world look like in 1177 BCE?" },
-    { q: "Why do some cities last 5,000 years while others die within a century?" },
-    { q: "How did India go from about a quarter of world GDP to a few percent under British rule?" },
-    { q: "Why did the Mongols conquer so much so fast, and why did it fall apart?" },
   ];
   const exEl = document.getElementById("examples");
   exEl.innerHTML = `<h3>Try one</h3>` + EXAMPLES.map((e, i) => `<button class="ex" data-x="${i}">${esc(e.q)}<span class="tag${e.tour != null ? " cur" : ""}">${e.tour != null ? "curated tour" : "live"}</span></button>`).join("");
