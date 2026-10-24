@@ -44,11 +44,29 @@ L['war'] = {
     'held': [[r['to'], r['from'], r['start'], r['end']] for r in held],
     'names': {pid: names.get(pid, pid.split(':', 1)[1].replace('_', ' ')) for pid in {r['from'] for r in held}},
 }
-data = '\n'.join(f'const {k.upper()} = {J(v)};' for k, v in L.items()) + f'\nconst ORDER = {J(order)};\n'
+# Wikidata battles and sieges, compact: [name, subtype, year, lat, lon, wikidata, participants, war].
+# Skip the ones the curated list already tells better (same name and year).
+cur = {(e['name'].lower(), e['start']) for e in L['war']['battles']}
+wd = os.path.join(repo, 'data/states-war/battles-wikidata.jsonl')
+if os.path.exists(wd):
+    L['war']['wd'] = [[e['name'], e['subtype'], e['start'], round(e['lat'], 3), round(e['lon'], 3), e.get('wikidata'),
+                       ' / '.join(p['name'] for p in e.get('participants') or []), (e.get('wars') or [{}])[0].get('name')]
+                      for e in rows('battles-wikidata.jsonl') if e['kind'] == 'event' and e.get('lat') is not None
+                      and e.get('start') is not None and (e['name'].lower(), e['start']) not in cur]
+
+# Terrain basemap (relief image, labels, rivers) from the terrain workstream, when it is there.
+terrain_js, relief = '', ''
+if os.path.exists(layers + 'terrain.json'):
+    import base64
+    L['terrain'] = json.load(open(layers + 'terrain.json'))
+    terrain_js = open(layers + 'terrain.js', encoding='utf-8').read()
+    relief = 'data:image/webp;base64,' + base64.b64encode(open(layers + 'terrain-relief.webp', 'rb').read()).decode()
+data = '\n'.join(f'const {k.upper()} = {J(v)};' for k, v in L.items()) + f'\nconst ORDER = {J(order)};\nconst RELIEF = {J(relief)};\n'
+if 'terrain' not in L: data += 'const TERRAIN = null;\n'
 
 land = J(json.load(open(atlas + 'borders/land-50m.json')))
 tours = [json.load(open(f)) for f in sorted(glob.glob(os.path.join(repo, 'data/guide/tours/*.json')))]
-s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours))
+s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours)).replace('/*__TERRAIN_JS__*/', terrain_js)
 if local:
     s = s.replace('https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js', 'file://' + local + '/d3-7.8.5/package/dist/d3.min.js')
     s = s.replace('https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js', 'file://' + local + '/topojson-client-3.1.0/package/dist/topojson-client.min.js')

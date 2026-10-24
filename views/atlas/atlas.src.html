@@ -75,6 +75,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .sphere { fill: var(--sea); }
 .grat { fill: none; stroke: var(--sea-line); stroke-width: calc(0.6px / var(--k, 1)); }
 .land { fill: var(--land); stroke: var(--land-edge); stroke-width: calc(0.6px / var(--k, 1)); }
+.terrain-on .land { fill-opacity: .25; }
+.terrain-on .poly { fill-opacity: calc(var(--oth-op) * .8); }
+.terrain-on .poly.emp { fill-opacity: calc(var(--emp-op) * .75); }
+.war-on .terrain .pt-strait, .war-on .terrain .pt-pass { display: none; }
+.map { --terrain-halo: color-mix(in srgb, var(--paper) 75%, transparent); }
 .poly { stroke: var(--paper); stroke-width: calc(0.5px / var(--k, 1)); fill-opacity: var(--oth-op); transition: fill-opacity .4s; }
 .poly.emp { fill-opacity: var(--emp-op); }
 .close .poly, .close .polylab { display: none; }
@@ -82,7 +87,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .polylab { font-family: var(--display); font-size: 13px; fill: var(--ink); paint-order: stroke; stroke: var(--paper); stroke-width: 3px; text-anchor: middle; pointer-events: none; opacity: .85; }
 .pt { cursor: pointer; }
 .pt text { font-size: 11px; fill: var(--ink-soft); paint-order: stroke; stroke: var(--paper); stroke-width: 3px; pointer-events: none; display: none; }
-.zoomed .pt.lbl text, .pt.always text { display: block; }
+.zoomed .pt.lbl text, .pt.always text, .map .terrain .pt text { display: block; }
 .city .dot { fill: var(--y-places); fill-opacity: .55; stroke: var(--paper); stroke-width: .8; }
 .city.wonder .dot { fill: var(--y-money); }
 .city.hi .dot { fill-opacity: 1; stroke: var(--ink); stroke-width: 1.4; }
@@ -309,6 +314,9 @@ a { color: var(--accent); text-underline-offset: 2px; }
 <script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
 <script>
+/*__TERRAIN_JS__*/
+</script>
+<script>
 /*__ENTRIES__*/
 /*__LAYERS__*/
 const LAND = /*__LAND__*/;
@@ -384,17 +392,21 @@ const TOURS = /*__TOURS__*/;
   const areaAt = (p, y) => stepAt(p.a, y) ?? (p.pk ? p.pk[1] : 0.05);
   const fragAt = (p, y) => stepAt(p.f, y);
 
-  const BATTLES = WAR.battles;
+  // Curated battles carry sides and a why; the Wikidata ones add breadth (participants, war).
+  const BATTLES = WAR.battles.map(b => ({ ...b, cur: true })).concat((WAR.wd || []).map(([name, subtype, start, lat, lon, wd, parts, war]) => ({
+    id: "wd" + wd, name, subtype, start, lat, lon, parts, war, sources: wd ? [{ cite: "Wikidata " + wd, url: "https://www.wikidata.org/wiki/" + wd }] : [] })));
+  const BAT_BY_YEAR = d3.group(BATTLES, b => b.start);
+  const battlesNear = (y, w) => { const out = []; for (let yy = y - w; yy <= y + w; yy++) { const g = BAT_BY_YEAR.get(yy); if (g) out.push(...g); } return out; };
   const CHOKES = WAR.chokepoints;
   const HELD = {};
   for (const [c, pid, s0, e0] of WAR.held) (HELD[c] = HELD[c] || []).push({ pid, s: s0, e: e0, n: WAR.names[pid] || pid });
   for (const k in HELD) HELD[k].sort((a, b) => a.s - b.s);
   const holderAt = (id, y) => (HELD[id] || []).filter(h => y >= h.s && y <= h.e).map(h => h.n);
-  const sideNames = b => (b.sides || []).map(side => side.map(x => x.name).join(", "));
+  const sideNames = b => b.sides ? b.sides.map(side => side.map(x => x.name).join(", ")) : b.parts ? [b.parts] : [];
 
   // ---------- state ----------
   const state = {
-    year: 1348, k: 1, borders: true, hi: new Set(), muted: new Set(), answer: null, active: -1, playing: false,
+    year: 1348, k: 1, borders: true, terrain: !!TERRAIN, hi: new Set(), muted: new Set(), answer: null, active: -1, playing: false,
     on: { places: true, people: true, money: true, disease: true, ideas: true, order: false, war: true },
     sel: null, tab: "now",
   };
@@ -408,8 +420,10 @@ const TOURS = /*__TOURS__*/;
   const land = topojson.feature(LAND, LAND.objects.land);
   const gSphere = root.append("path").attr("class", "sphere");
   const gGrat = root.append("path").attr("class", "grat");
+  const gRelief = root.append("g");
   const gLand = root.append("path").attr("class", "land");
   const gPoly = root.append("g");
+  const gTerrain = root.append("g");
   const gPolyLab = root.append("g");
   const gSelRing = root.append("path").attr("class", "selring");
   const G = {};
@@ -449,6 +463,19 @@ const TOURS = /*__TOURS__*/;
     (s == null ? [] : featuresFor(s)).forEach(d => { if (d.emp && state.hi.has("polity:" + d.emp.id) && (!best.has(d.emp.id) || best.get(d.emp.id).area < d.area)) best.set(d.emp.id, d); });
     gPolyLab.selectAll("text").data([...best.values()], d => d.emp.id).join("text").attr("class", "polylab").text(d => d.emp.name);
   }
+  // Terrain basemap: painted relief, rivers and named ranges, deserts, seas, straits and passes.
+  let terrainT = null;
+  function drawTerrainLayer() {
+    gRelief.selectAll("*").remove(); gTerrain.selectAll("*").remove(); terrainT = null;
+    mapEl.classList.toggle("terrain-on", !!(TERRAIN && state.terrain));
+    if (!TERRAIN || !state.terrain) return;
+    if (RELIEF) drawRelief(gRelief, path, RELIEF);
+    terrainT = drawTerrain(gTerrain, projection, path, TERRAIN, state.k, { onSelect: d => {
+      const at = d.at || d.line[Math.floor(d.line.length / 2)];
+      select({ kind: "terrain", c: "var(--l-geography)", lon: at[0], lat: at[1], name: d.name, kick: (d.t || "").replace(/_/g, " "), title: d.name, body: d.what, why: d.why,
+        sources: d.wikidata ? [{ cite: "Wikidata " + d.wikidata, url: "https://www.wikidata.org/wiki/" + d.wikidata }] : [] });
+    } });
+  }
   // The state drawn under a point in the current border snapshot (smallest polygon that contains it).
   function ruledBy(lon, lat, y) {
     const list = featuresFor(snapFor(y)); const whole = path.area({ type: "Sphere" }) * 0.4;
@@ -460,7 +487,7 @@ const TOURS = /*__TOURS__*/;
   // Points keep their screen size while the map zooms.
   function placeScaled() {
     const k = state.k;
-    root.selectAll(".pt").attr("transform", d => { const p = projection([d.lon, d.lat]); return p ? `translate(${p[0]},${p[1]}) scale(${1 / k})` : null; });
+    root.selectAll(".pt").filter(d => d && d.lon != null).attr("transform", d => { const p = projection([d.lon, d.lat]); return p ? `translate(${p[0]},${p[1]}) scale(${1 / k})` : null; });
     gPolyLab.selectAll("text").attr("transform", d => `translate(${d.c[0]},${d.c[1]}) scale(${1 / k})`);
     root.selectAll(".linelab, .routelab").attr("transform", d => `translate(${d.lx},${d.ly}) scale(${1 / k})`);
     mapEl.classList.toggle("zoomed", k >= 4);
@@ -471,9 +498,10 @@ const TOURS = /*__TOURS__*/;
     const changed = Math.abs(Math.log(ev.transform.k / state.k)) > 0.15;
     state.k = ev.transform.k;
     svg.style("--k", ev.transform.k);
-    if (changed) drawPeople();
+    if (changed) { drawPeople(); drawWar(); }
     placeScaled();
   });
+  zoom.on("end", () => { if (terrainT) terrainT.update(state.k); });
   svg.call(zoom).on("dblclick.zoom", null);
 
   function layout() {
@@ -488,7 +516,7 @@ const TOURS = /*__TOURS__*/;
     gLand.attr("d", path(land));
     for (const k in featCache) delete featCache[k];
     zoom.translateExtent([[-W, -H], [W * 2, H * 2]]);
-    drawPolys(true); drawAll(true); drawOverlay(); drawSel();
+    drawTerrainLayer(); drawPolys(true); drawAll(true); drawOverlay(); drawSel();
     if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had); svg.call(zoom.transform, d3.zoomIdentity.translate(W / 2 - t0.k * x, H / 2 - t0.k * y).scale(t0.k)); }
     else if (t0.k > 1 || t0.x || t0.y) svg.call(zoom.transform, d3.zoomIdentity);
   }
@@ -617,11 +645,13 @@ const TOURS = /*__TOURS__*/;
   }
   function drawWar() {
     const y = state.year, g = G.war, on = state.on.war;
-    const bs = on ? BATTLES.filter(b => Math.abs(b.start - y) <= 12) : [];
+    // Curated battles linger 12 years; Wikidata ones show for their own year and two either side, thinned by zoom.
+    const cap = Math.round(40 * Math.pow(state.k, 1.3));
+    const bs = on ? [...battlesNear(y, 12).filter(b => b.cur), ...battlesNear(y, 2).filter(b => !b.cur).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y) || (b.parts || "").length - (a.parts || "").length).slice(0, cap)] : [];
     const s = points(g, "battle lbl", bs, d => d.id, e => { e.append("circle").attr("r", 6); e.append("path").attr("d", "M-4.5-4.5L4.5 4.5M4.5-4.5L-4.5 4.5"); e.append("text").attr("x", 7).attr("y", -4); })
-      .classed("always", d => Math.abs(d.start - y) <= 2).style("opacity", d => 1 - Math.abs(d.start - y) / 16).on("click", onClickSel(battleCard));
+      .classed("always", d => d.cur && Math.abs(d.start - y) <= 2).style("opacity", d => 1 - Math.abs(d.start - y) / 16).on("click", onClickSel(battleCard));
     s.select("text").text(d => d.name.replace(/^(Battle|Siege|Sack) of /, ""));
-    s.select("title").text(d => `${d.name} · ${fmtYear(d.start)} · ${sideNames(d).join(" vs ")}`);
+    s.select("title").text(d => `${d.name} · ${fmtYear(d.start)}${d.war ? " · " + d.war : ""} · ${sideNames(d).join(" vs ")}`);
     const cs = on ? CHOKES : [];
     const c = points(g, "choke lbl", cs, d => d.id, e => { e.append("path").attr("d", "M-4-5L4-5 0 0 4 5-4 5 0 0z"); e.append("text").attr("x", 7).attr("y", 4); }).on("click", onClickSel(chokeCard));
     c.select("text").text(d => d.name);
@@ -736,7 +766,8 @@ const TOURS = /*__TOURS__*/;
   function battleCard(b) {
     const sides = sideNames(b), w = b.winner;
     return { kind: "battle", c: "var(--y-war)", lon: b.lon, lat: b.lat, name: null, kick: b.subtype, title: b.name, year: b.start,
-      meta: `${fmtYear(b.start)} · ${sides.join(" vs ")}${w != null && sides[w] ? ` · won by ${sides[w]}` : w == null ? " · inconclusive" : ""}`, body: b.why, sources: src1(b.sources) };
+      meta: b.cur ? `${fmtYear(b.start)} · ${sides.join(" vs ")}${w != null && sides[w] ? ` · won by ${sides[w]}` : w == null ? " · inconclusive" : ""}` : `${fmtYear(b.start)}${b.war ? " · " + b.war : ""}`,
+      body: b.cur ? b.why : b.parts ? "Fought by " + b.parts + "." : "", sources: src1(b.sources) };
   }
   function chokeCard(c) {
     const y = state.year, h = holderAt(c.id, y), hist = HELD[c.id] || [];
@@ -802,7 +833,8 @@ const TOURS = /*__TOURS__*/;
     const pols = POLS.filter(p => polAlive(p, y)).map(p => ({ p, a: areaAt(p, y), f: fragAt(p, y) }));
     const shaky = pols.filter(o => o.f != null && o.f >= ORDER.thr).sort((a, b) => b.a - a.a).slice(0, 5);
     const broke = POLS.filter(p => p.b && p.e <= y && p.e > y - 25).slice(0, 4);
-    const fights = BATTLES.filter(b => Math.abs(b.start - y) <= 10).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y)).slice(0, 6);
+    const near = battlesNear(y, 10), nb = near.filter(b => Math.abs(b.start - y) <= 1).length;
+    const fights = near.sort((a, b) => (b.cur - a.cur) || Math.abs(a.start - y) - Math.abs(b.start - y)).slice(0, 6);
     const flips = [];
     for (const c of CHOKES) { const hs = HELD[c.id] || []; for (let i = 1; i < hs.length; i++) if (hs[i].n !== hs[i - 1].n && Math.abs(hs[i].s - y) <= 25) flips.push({ c, h: hs[i], prev: hs[i - 1] }); }
     flips.sort((a, b) => Math.abs(a.h.s - y) - Math.abs(b.h.s - y));
@@ -823,6 +855,7 @@ const TOURS = /*__TOURS__*/;
       ${sec("disease", "Plague, famine and climate", sh.map(e => item(`<b>${esc(e.name)}</b> <span class="tag">${esc(SHOCK_N[e.subtype] || e.subtype)}</span>`, fmtSpan(e.start, e.end), "", goCard(shockCard(e)))))}
       ${sec("ideas", "Ideas on the move", moving.slice(0, 6).map(o => item(`<b>${esc(o.j.n)}</b> reaches ${esc(o.s.at.name)}`, fmtYear(o.s.y), o.s.text, goCard(journeyCard(o.j, o.s)))))}
       ${sec("war", "War and chokepoints", [
+        ...(nb > 1 ? [item(`<b>${nb}</b> battles and sieges recorded within a year of ${esc(fmtYear(y))}`, "Wikidata", "", () => {})] : []),
         ...fights.map(b => item(`<b>${esc(b.name)}</b>`, fmtYear(b.start), sideNames(b).join(" vs "), goCard(battleCard(b)))),
         ...flips.slice(0, 4).map(o => item(`<b>${esc(o.c.name)}</b> passes from ${esc(o.prev.n)} to ${esc(o.h.n)}`, fmtYear(o.h.s), "", goCard(chokeCard(o.c)))),
       ])}
@@ -834,7 +867,7 @@ const TOURS = /*__TOURS__*/;
       ${footHTML()}`;
   }
   function footHTML() {
-    return `<p class="foot">One map, seven workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Borders and Battles (battles, chokepoints and their holders from Cliopatria borders); Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
+    return `<p class="foot">One map, seven workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Borders and Battles (curated battles plus about 11,000 from Wikidata, chokepoints and their holders from Cliopatria borders); terrain basemap (relief, rivers, named ranges, deserts and seas); Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
   }
 
   // ---------- Here ----------
@@ -893,7 +926,7 @@ const TOURS = /*__TOURS__*/;
     // War
     const wItems = [];
     nearby(CHOKES, lon, lat, 350).slice(0, 2).forEach(o => { const h = holderAt(o.x.id, y); wItems.push(item(`<b>${esc(o.x.name)}</b>`, h.length ? h.join(", ") : "unheld", o.x.why, goCard(chokeCard(o.x)))); });
-    nearby(BATTLES, lon, lat, 400).sort((a, b) => Math.abs(a.x.start - y) - Math.abs(b.x.start - y)).slice(0, 5).sort((a, b) => a.x.start - b.x.start)
+    nearby(BATTLES, lon, lat, 300).sort((a, b) => Math.abs(a.x.start - y) - Math.abs(b.x.start - y)).slice(0, 6).sort((a, b) => a.x.start - b.x.start)
       .forEach(o => wItems.push(item(`<b>${esc(o.x.name)}</b>`, fmtYear(o.x.start), sideNames(o.x).join(" vs "), goCard(battleCard(o.x), true), Math.abs(o.x.start - y) > 50)));
     // Ideas
     const iItems = [];
@@ -937,11 +970,12 @@ const TOURS = /*__TOURS__*/;
   const chips = {};
   for (const L of LAYERS) chips[L.k] = chip(L.k, L.n, `var(--y-${L.k})`);
   chips.borders = chip("borders", "Borders", "var(--land-edge)");
-  function syncChips() { for (const k in chips) chips[k].setAttribute("aria-pressed", k === "borders" ? state.borders : state.on[k]); }
+  if (TERRAIN) chips.terrain = chip("terrain", "Terrain", "var(--l-geography)");
+  function syncChips() { for (const k in chips) chips[k].setAttribute("aria-pressed", k === "borders" ? state.borders : k === "terrain" ? state.terrain : state.on[k]); mapEl.classList.toggle("war-on", state.on.war); }
   layersEl.addEventListener("click", ev => {
     const b = ev.target.closest(".chip"); if (!b) return;
     const k = b.dataset.k;
-    if (k === "borders") { state.borders = !state.borders; drawPolys(); } else { state.on[k] = !state.on[k]; drawAll(); }
+    if (k === "borders") { state.borders = !state.borders; drawPolys(); } else if (k === "terrain") { state.terrain = !state.terrain; drawTerrainLayer(); } else { state.on[k] = !state.on[k]; drawAll(); }
     syncChips(); refreshPanel();
   });
   function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); } }
