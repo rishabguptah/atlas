@@ -1,0 +1,326 @@
+<title>Who Could Have Met</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,500;0,700;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one working screen. A wide map with the year and its controls under it, and a reading panel beside it (below on phones). */
+:root {
+  --sea: #e9eef2; --land: #d6dccf; --coast: #b9c1b3; --ink: #1b2330; --muted: #5b6575; --rule: #c9d0d8;
+  --panel: #f7f9fa; --accent: #9a3b1f; --halo: rgba(255,255,255,.85);
+  --power: #c9761d; --war: #c23b3b; --faith: #7457cf; --ideas: #1f86ad; --words: #2f8f50; --arts: #c8508f; --other: #7d8591;
+  --display: "Spectral", Georgia, "Times New Roman", serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --sea: #0e141b; --land: #222b35; --coast: #36424f; --ink: #e4e8ee; --muted: #98a2b1; --rule: #2c3540;
+  --panel: #141b23; --accent: #f08a5d; --halo: rgba(14,20,27,.85);
+  --power: #e7963d; --war: #ef6b6b; --faith: #a08cf0; --ideas: #4fb6dd; --words: #5cc07f; --arts: #ec7fb9; --other: #9aa3ae;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --sea: #0e141b; --land: #222b35; --coast: #36424f; --ink: #e4e8ee; --muted: #98a2b1; --rule: #2c3540;
+  --panel: #141b23; --accent: #f08a5d; --halo: rgba(14,20,27,.85);
+  --power: #e7963d; --war: #ef6b6b; --faith: #a08cf0; --ideas: #4fb6dd; --words: #5cc07f; --arts: #ec7fb9; --other: #9aa3ae;
+  color-scheme: dark }
+html, body { height: 100%; }
+body { background: var(--sea); color: var(--ink); font: 14px/1.5 var(--body); }
+.app { height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 340px; grid-template-rows: auto minmax(0, 1fr) auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px; gap: 10px 20px; box-sizing: border-box; }
+header { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 18px; }
+h1 { font: 700 26px/1.1 var(--display); margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+.sub { color: var(--muted); max-width: 70ch; }
+.mapwrap { position: relative; min-height: 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--rule); padding: 3px 8px; border-radius: 3px; font-size: 12px; white-space: nowrap; }
+.legend { position: absolute; left: 10px; bottom: 10px; display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100% - 20px); }
+.chip { font: 500 12px var(--body); border: 1px solid var(--rule); background: var(--panel); color: var(--ink); border-radius: 999px; padding: 3px 10px 3px 8px; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+.chip i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.chip[aria-pressed="false"] { opacity: .45; }
+.chip:focus-visible, button:focus-visible, input:focus-visible, .who:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.controls { grid-column: 1; display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: 14px; }
+.year { font: 700 34px/1 var(--display); font-variant-numeric: tabular-nums; min-width: 5.2em; }
+.year small { font: 500 13px var(--mono); color: var(--muted); display: block; margin-top: 4px; letter-spacing: .02em; }
+button.play { font: 600 13px var(--body); background: var(--ink); color: var(--sea); border: 0; border-radius: 4px; padding: 8px 14px; cursor: pointer; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+.ticks { display: flex; justify-content: space-between; font: 11px var(--mono); color: var(--muted); }
+aside { grid-column: 2; grid-row: 2 / 4; background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; overflow-y: auto; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+#body { display: flex; flex-direction: column; gap: 14px; }
+aside h2 { font: 700 20px/1.2 var(--display); margin: 0; text-wrap: balance; }
+aside h3 { font: 600 11px var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 6px; }
+.search { width: 100%; box-sizing: border-box; font: 14px var(--body); padding: 8px 10px; border: 1px solid var(--rule); border-radius: 4px; background: var(--sea); color: var(--ink); }
+.facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 12px; margin: 0; }
+.facts dt { color: var(--muted); font-size: 12px; padding-top: 1px; font-variant-numeric: tabular-nums; }
+.facts dd { margin: 0; }
+.list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.who { all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 5px 2px; border-bottom: 1px solid var(--rule); cursor: pointer; }
+.who:hover .n { text-decoration: underline; }
+.who i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.who .n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.who .m { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+.where { display: block; grid-column: 2 / -1; font-size: 12px; color: var(--muted); }
+.note { font-size: 12px; color: var(--muted); }
+.note a, aside a { color: var(--accent); }
+.big { font: italic 500 15px/1.4 var(--display); }
+@media (max-width: 820px) {
+  .app { height: auto; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 62vh auto auto; }
+  aside { grid-column: 1; grid-row: auto; max-height: none; }
+  .year { font-size: 28px; }
+  .controls { grid-template-columns: auto auto; justify-content: space-between; }
+  .controls > div:last-child { grid-column: 1 / -1; }
+  .ticks span:nth-child(2), .ticks span:nth-child(5) { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="app">
+  <header>
+    <h1>Who Could Have Met</h1>
+    <div class="sub">The world's cities and its 3,000 most-remembered people, in the year you choose. Pick anyone to see who lived in the same city at the same time.</div>
+  </header>
+  <div class="mapwrap">
+    <canvas id="map" aria-label="World map of famous people alive in the chosen year"></canvas>
+    <div class="tip" id="tip" hidden></div>
+    <div class="legend" id="legend"></div>
+  </div>
+  <div class="controls">
+    <div class="year" id="yearLabel" aria-live="polite">1504<small>0 alive</small></div>
+    <button class="play" id="play" type="button">Play</button>
+    <div>
+      <input id="slider" type="range" min="0" max="1000" step="1" aria-label="Year">
+      <div class="ticks"><span>3000 BCE</span><span>500 BCE</span><span>500</span><span>1500</span><span>1750</span><span>2020</span></div>
+    </div>
+  </div>
+  <aside id="panel">
+    <input class="search" id="search" list="names" placeholder="Find a person, e.g. Ibn Battuta" autocomplete="off">
+    <datalist id="names"></datalist>
+    <div id="body"></div>
+  </aside>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+const DATA = /*DATA*/null;
+const LAND = /*LAND*/null;
+const CHIPS = [["cities", "Cities"]];
+const GROUPS = [["power", "Rulers & politics"], ["war", "War"], ["faith", "Religion"], ["ideas", "Science & philosophy"], ["words", "Writers"], ["arts", "Arts"], ["other", "Other"]];
+const css = n => getComputedStyle(document.documentElement).getPropertyValue("--" + n).trim();
+
+// people: [name, born, died, birthPlace, deathPlace, role, group, fame, wikiSlug]
+const P = DATA.places, H = DATA.people.map((r, i) => ({ i, name: r[0], b: r[1], d: r[2] ?? r[1] + 70, dKnown: r[2] != null,
+  bp: r[3], dp: r[4], role: r[5], g: r[6], fame: r[7], wiki: r[8] }));
+const on = Object.fromEntries([...CHIPS, ...GROUPS].map(g => [g[0], true]));
+let year = 1504, sel = null, met = [];
+
+// Slider is piecewise so the crowded centuries get room: 3000 BCE..500 BCE, 500 BCE..1500, 1500..2020.
+const KNOTS = [[0, -3000], [180, -500], [600, 1500], [800, 1750], [1000, 2020]];
+function s2y(s) { for (let k = 1; k < KNOTS.length; k++) if (s <= KNOTS[k][0]) { const [a, ya] = KNOTS[k - 1], [b, yb] = KNOTS[k]; return Math.round(ya + (s - a) / (b - a) * (yb - ya)) || 1; } return 2020; }
+function y2s(y) { for (let k = 1; k < KNOTS.length; k++) if (y <= KNOTS[k][1]) { const [a, ya] = KNOTS[k - 1], [b, yb] = KNOTS[k]; return a + (y - ya) / (yb - ya) * (b - a); } return 1000; }
+const fy = y => y < 0 ? `${-y} BCE` : y < 1000 ? `${y} CE` : `${y}`;
+const alive = (p, y) => p.b <= y && y <= p.d;
+
+function km(a, b) {
+  const [la1, lo1] = [P[a][1], P[a][2]].map(x => x * Math.PI / 180), [la2, lo2] = [P[b][1], P[b][2]].map(x => x * Math.PI / 180);
+  const h = Math.sin((la2 - la1) / 2) ** 2 + Math.cos(la1) * Math.cos(la2) * Math.sin((lo2 - lo1) / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(h));
+}
+// Could have met: adult lives (15+) overlap, and a birth or death place within 50 km of one of yours.
+function couldMeet(p) {
+  const mine = [p.bp, p.dp].filter(x => x >= 0), out = [];
+  for (const q of H) {
+    if (q === p) continue;
+    const from = Math.max(p.b, q.b) + 15, to = Math.min(p.d, q.d);
+    if (from > to) continue;
+    let best = null;
+    for (const a of mine) for (const b of [q.bp, q.dp]) if (b >= 0) { const k = km(a, b); if (k < 50 && (!best || k < best.k)) best = { k, a, b }; }
+    if (best) out.push({ q, from, to, ...best });
+  }
+  return out.sort((x, y) => y.q.fame - x.q.fame);
+}
+
+// ---- Map ----
+const canvas = document.getElementById("map"), ctx = canvas.getContext("2d"), tip = document.getElementById("tip");
+const land = topojson.feature(LAND, LAND.objects.land);
+const proj = d3.geoNaturalEarth1(), path = d3.geoPath(proj, ctx);
+let W = 0, Hh = 0, t = d3.zoomIdentity, drawn = [];
+function resize() {
+  const r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  W = r.width; Hh = r.height; canvas.width = W * dpr; canvas.height = Hh * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  proj.fitExtent([[8, 8], [W - 8, Hh - 8]], { type: "Sphere" });
+  draw();
+}
+const xy = i => { const [x, y] = proj([P[i][2], P[i][1]]); return [t.applyX(x), t.applyY(y)]; };
+// Cities: Reba et al. series, shown between a city's first and last listed year, interpolated on a log scale.
+const C = DATA.cities.map(([pi, f]) => ({ pi, ys: f.filter((_, k) => k % 2 === 0), ps: f.filter((_, k) => k % 2) }));
+function popAt(c, y) {
+  const n = c.ys.length;
+  if (y < c.ys[0] || y > c.ys[n - 1]) return 0;
+  let k = 0; while (k < n - 1 && c.ys[k + 1] <= y) k++;
+  if (c.ys[k] === y || k === n - 1) return c.ps[k];
+  // A long gap means the city dropped off the lists; show it only just after its last listing.
+  if (c.ys[k + 1] - c.ys[k] > 300) return y - c.ys[k] <= 50 ? c.ps[k] : 0;
+  const f = (y - c.ys[k]) / (c.ys[k + 1] - c.ys[k]);
+  return Math.round(Math.exp(Math.log(c.ps[k]) * (1 - f) + Math.log(c.ps[k + 1]) * f));
+}
+let cityCache = [-1e9, []];
+function citiesAt(y) {
+  if (cityCache[0] !== y) cityCache = [y, C.map(c => ({ pi: c.pi, pop: popAt(c, y) })).filter(c => c.pop > 0).sort((a, b) => b.pop - a.pop)];
+  return cityCache[1];
+}
+const largestAt = y => citiesAt(y)[0];
+const round2 = v => { const m = 10 ** Math.max(0, Math.floor(Math.log10(v)) - 1); return (Math.round(v / m) * m).toLocaleString(); };
+function draw() {
+  ctx.clearRect(0, 0, W, Hh);
+  ctx.save(); ctx.translate(t.x, t.y); ctx.scale(t.k, t.k);
+  ctx.beginPath(); path(land); ctx.fillStyle = css("land"); ctx.fill();
+  ctx.lineWidth = .6 / t.k; ctx.strokeStyle = css("coast"); ctx.stroke();
+  ctx.restore();
+  if (on.cities) {
+    ctx.lineWidth = 1; ctx.strokeStyle = css("muted"); ctx.globalAlpha = .7;
+    for (const c of citiesAt(year)) {
+      const [x, y] = xy(c.pi), r = Math.max(1.5, Math.sqrt(c.pop) / 90) * Math.min(2, Math.sqrt(t.k));
+      ctx.beginPath(); ctx.rect(x - r, y - r, 2 * r, 2 * r); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+  const col = Object.fromEntries(GROUPS.map(g => [g[0], css(g[0])]));
+  drawn = [];
+  const live = H.filter(p => on[p.g] && alive(p, year)).sort((a, b) => a.fame - b.fame);
+  ctx.globalAlpha = sel ? .35 : .85;
+  for (const p of live) {
+    const [x, y] = xy(p.bp), r = Math.max(1.6, (p.fame - 66) / 9) * Math.min(2, Math.sqrt(t.k));
+    ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fillStyle = col[p.g]; ctx.fill();
+    drawn.push([x, y, r, p]);
+  }
+  ctx.globalAlpha = 1;
+  const big = largestAt(year);
+  if (big) {
+    const [x, y] = xy(big.pi);
+    ctx.beginPath(); ctx.arc(x, y, 9, 0, 7); ctx.lineWidth = 2; ctx.strokeStyle = css("ink"); ctx.stroke();
+    label(`${P[big.pi][0]} · largest city`, x + 12, y + 4, css("ink"));
+  }
+  if (sel) {
+    const [bx, by] = xy(sel.bp), a = sel.dp >= 0 ? xy(sel.dp) : null;
+    for (const m of met) if (alive(m.q, year)) {
+      const [mx, my] = xy(m.q.bp);
+      ctx.beginPath(); ctx.arc(mx, my, 4, 0, 7); ctx.fillStyle = col[m.q.g]; ctx.fill();
+      ctx.lineWidth = 1.5; ctx.strokeStyle = css("halo"); ctx.stroke();
+    }
+    if (a && sel.dp !== sel.bp) {
+      ctx.beginPath(); ctx.moveTo(bx, by);
+      const mx = (bx + a[0]) / 2, my = (by + a[1]) / 2 - Math.hypot(a[0] - bx, a[1] - by) * .25;
+      ctx.quadraticCurveTo(mx, my, a[0], a[1]);
+      ctx.setLineDash([4, 3]); ctx.lineWidth = 1.5; ctx.strokeStyle = css("accent"); ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); ctx.arc(a[0], a[1], 4, 0, 7); ctx.strokeStyle = css("accent"); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(bx, by, 7, 0, 7); ctx.fillStyle = css(sel.g); ctx.fill();
+    ctx.lineWidth = 2.5; ctx.strokeStyle = css("accent"); ctx.stroke();
+    label(sel.name, bx + 11, by - 8, css("ink"), true);
+  }
+  const n = H.filter(p => alive(p, year)).length;
+  document.getElementById("yearLabel").innerHTML = `${fy(year)}<small>${n.toLocaleString()} people · ${citiesAt(year).length} cities</small>`;
+}
+function label(s, x, y, c, bold) {
+  ctx.font = `${bold ? 600 : 500} 12px "IBM Plex Sans", system-ui, sans-serif`;
+  const w = ctx.measureText(s).width;
+  if (x + w > W - 6) x = Math.max(6, x - w - 24);
+  ctx.lineWidth = 3.5; ctx.strokeStyle = css("halo"); ctx.strokeText(s, x, y); ctx.fillStyle = c; ctx.fillText(s, x, y);
+}
+function pick(ev) {
+  const r = canvas.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top;
+  let best = null, bd = 10;
+  for (const [px, py, pr, p] of drawn) { const d = Math.hypot(px - x, py - y) - pr; if (d < bd) { bd = d; best = p; } }
+  return [best, x, y];
+}
+const zoom = d3.zoom().scaleExtent([1, 24]).on("zoom", e => { t = e.transform; draw(); });
+d3.select(canvas).call(zoom).on("dblclick.zoom", null);
+canvas.addEventListener("pointermove", ev => {
+  const [p, x, y] = pick(ev);
+  if (!p) { tip.hidden = true; return; }
+  tip.hidden = false; tip.textContent = `${p.name} · ${p.role}`;
+  tip.style.left = Math.min(x + 12, W - tip.offsetWidth - 4) + "px"; tip.style.top = (y + 12) + "px";
+});
+canvas.addEventListener("pointerleave", () => tip.hidden = true);
+canvas.addEventListener("click", ev => { const [p] = pick(ev); if (p) select(p); });
+
+// ---- Panel ----
+const body = document.getElementById("body"), esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const span = p => `${fy(p.b)} – ${p.dKnown ? fy(p.d) : "?"}`;
+function row(p, extra) {
+  return `<li><button class="who" data-i="${p.i}" type="button"><i style="background:var(--${p.g})"></i><span class="n">${esc(p.name)}</span><span class="m">${span(p)}</span>${extra ? `<span class="where">${extra}</span>` : ""}</button></li>`;
+}
+function panel() {
+  if (!sel) {
+    const live = H.filter(p => alive(p, year)).sort((a, b) => b.fame - a.fame).slice(0, 15);
+    const top = citiesAt(year).slice(0, 8), big = top[0];
+    body.innerHTML = `<h2>The world in ${fy(year)}</h2>
+      ${big ? `<p class="big">The largest city was probably ${esc(P[big.pi][0])}, at about ${round2(big.pop)} people.</p>
+      <div><h3>Biggest cities</h3><dl class="facts">${top.map(c => `<dt>${round2(c.pop)}</dt><dd>${esc(P[c.pi][0])}${P[c.pi][3] ? `, <span class="note">${esc(P[c.pi][3])}</span>` : ""}</dd>`).join("")}</dl></div>` : ""}
+      <div><h3>Most remembered people alive</h3><ul class="list">${live.map(p => row(p, esc(P[p.bp][0]))).join("") || '<li class="note">Nobody in the dataset is alive this year.</li>'}</ul></div>
+      ${about()}`;
+    return;
+  }
+  const p = sel, here = met.filter(m => alive(m.q, year)).length;
+  body.innerHTML = `<div><h3>${esc(p.role)}</h3><h2>${esc(p.name)}</h2></div>
+    <dl class="facts"><dt>Lived</dt><dd>${span(p)}${p.dKnown ? `, about ${p.d - p.b} years` : ""}</dd>
+    <dt>Born</dt><dd>${esc(P[p.bp][0])}${P[p.bp][3] ? `, ${esc(P[p.bp][3])}` : ""}</dd>
+    ${p.dp >= 0 ? `<dt>Died</dt><dd>${esc(P[p.dp][0])}${P[p.dp][3] ? `, ${esc(P[p.dp][3])}` : ""}</dd>` : ""}
+    <dt>Fame</dt><dd>${p.fame} / 100 <span class="note">(Pantheon index)</span></dd></dl>
+    <div><h3>Could have met · ${met.length}</h3>
+    <p class="note">Adults at the same time, with a birth or death place within 50 km of ${esc(p.name)}'s. ${here} of them are alive in ${fy(year)} and ringed on the map.</p>
+    <ul class="list">${met.slice(0, 40).map(m => row(m.q, `${esc(P[m.b][0])} · both adults ${fy(m.from)}–${fy(m.to)}`)).join("") || '<li class="note">Nobody in the 3,000 shares a city with them at the same time.</li>'}</ul></div>
+    <p class="note"><a href="https://en.wikipedia.org/wiki/${encodeURIComponent(p.wiki)}" target="_blank" rel="noopener">Read on Wikipedia</a> · <button class="who" style="display:inline;width:auto;border:0;color:var(--accent)" id="clear" type="button">Back to the year</button></p>`;
+  document.getElementById("clear").onclick = () => { sel = null; met = []; panel(); draw(); };
+}
+function about() {
+  return `<p class="note">Dots sit at each person's birthplace, sized by fame. "Could have met" means overlapping adult lives and a shared city, a hint that they might have crossed paths, not proof that they did.
+    Squares are cities, sized by population, between the first and last year a city appears in Reba et al.'s lists; short gaps are interpolated, and a city drops off the map during long gaps in the lists.
+    People: <a href="https://pantheon.world" target="_blank" rel="noopener">Pantheon</a> 2025 (CC BY 4.0). Cities: <a href="https://doi.org/10.1038/sdata.2016.34" target="_blank" rel="noopener">Reba, Reitsma &amp; Seto 2016</a>, after Chandler and Modelski. Places: GeoNames (CC BY 4.0).</p>`;
+}
+function focusOn(p, k) {
+  const [x, y] = proj([P[p.bp][2], P[p.bp][1]]);
+  d3.select(canvas).call(zoom.transform, d3.zoomIdentity.translate(W / 2 - x * k, Hh / 2 - y * k).scale(k));
+}
+function select(p) {
+  sel = p; met = couldMeet(p);
+  if (!alive(p, year)) setYear(Math.min(p.d, p.b + 40));
+  panel(); draw();
+}
+body.addEventListener("click", ev => { const b = ev.target.closest(".who[data-i]"); if (b) select(H[+b.dataset.i]); });
+const byName = new Map(H.map(p => [p.name.toLowerCase(), p]));
+document.getElementById("names").innerHTML = [...H].sort((a, b) => b.fame - a.fame).map(p => `<option value="${esc(p.name)}">`).join("");
+document.getElementById("search").addEventListener("change", e => { const p = byName.get(e.target.value.trim().toLowerCase()); if (p) select(p); });
+
+// ---- Time ----
+const slider = document.getElementById("slider");
+function setYear(y) { year = y; slider.value = y2s(y); if (!sel) panel(); else panel(); draw(); }
+slider.addEventListener("input", () => setYear(s2y(+slider.value)));
+let timer = null;
+const playBtn = document.getElementById("play");
+playBtn.addEventListener("click", () => {
+  if (timer) { clearInterval(timer); timer = null; playBtn.textContent = "Play"; return; }
+  playBtn.textContent = "Pause";
+  const slow = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  timer = setInterval(() => {
+    const s = +slider.value + (slow ? 10 : 2);
+    if (s > 1000) { clearInterval(timer); timer = null; playBtn.textContent = "Play"; return; }
+    year = s2y(s); slider.value = s; panel(); draw();
+  }, slow ? 400 : 70);
+});
+
+// ---- Legend ----
+document.getElementById("legend").innerHTML = `<button class="chip" type="button" data-g="cities" aria-pressed="true"><i style="border:1.5px solid var(--muted);border-radius:1px;width:7px;height:7px"></i>Cities</button>` +
+  GROUPS.map(([g, n]) => `<button class="chip" type="button" data-g="${g}" aria-pressed="true"><i style="background:var(--${g})"></i>${n}</button>`).join("");
+document.getElementById("legend").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if (!b) return;
+  on[b.dataset.g] = !on[b.dataset.g]; b.setAttribute("aria-pressed", on[b.dataset.g]); draw();
+});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
+new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+new ResizeObserver(resize).observe(canvas);
+
+slider.value = y2s(year);
+select(H.find(p => p.name === "Leonardo da Vinci") || H[0]);
+resize();
+focusOn(sel, 3);
+</script>

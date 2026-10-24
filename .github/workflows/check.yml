@@ -15,3 +15,5 @@ jobs:
         run: python3 tools/build.py
       - name: Export the Living Atlas from the kernel
         run: python3 views/living-atlas/export.py dist/living-atlas.js
+      - name: Judge audit (plausibility and sourcing)
+        run: python3 ingest/judge/audit.py dist/kernel.json

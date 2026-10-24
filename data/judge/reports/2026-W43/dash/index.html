@@ -1,0 +1,282 @@
+<style>
+.jd { display: grid; gap: var(--cds-gap-lg); font-family: var(--font-anthropic-sans); }
+.jd h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+.jd h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.jd .note { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); margin: 0; }
+.jd .lede { margin: var(--cds-gap-xs) 0 0; max-width: 68ch; }
+.jd .tiles { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+.jd .tile, .jd .card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+.jd .tile { display: grid; gap: var(--cds-gap-xs); align-content: start; }
+.jd .tile .k { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.jd .tile .v { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; }
+.jd .tile .s { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.jd .tile.bad .v { color: var(--color-bad); }
+.jd .tile.warn .v { color: var(--color-warn); }
+.jd .tile.ok .v { color: var(--color-ok); }
+.jd .grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); }
+.jd .card { display: grid; gap: var(--cds-gap-sm); align-content: start; }
+.jd .chart { min-height: 210px; position: relative; }
+.jd .scroll { overflow: auto; max-height: 34rem; }
+.jd table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.jd th { text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); position: sticky; top: 0; background: var(--color-panel); }
+.jd td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+.jd td.num, .jd th.num { text-align: right; }
+.jd .pill { display: inline-block; padding: 0 var(--cds-pad-sm); border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.jd .v-supported { color: var(--color-ok); }
+.jd .v-partly { color: var(--color-warn); }
+.jd .v-contradicted { color: var(--color-bad); }
+.jd .v-unverified { color: var(--color-fg-muted); }
+.jd .controls { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+.jd input[type=search] { font: inherit; padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); min-width: 0; flex: 1 1 12rem; }
+.jd .chip { font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-bg); color: var(--color-fg); cursor: pointer; }
+.jd .chip[aria-pressed=true] { border-color: var(--color-fg); }
+.jd a { color: inherit; }
+.jd .tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); }
+.jd .legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.jd .legend i { display: inline-block; width: .6rem; height: .6rem; border-radius: 2px; margin-right: .3rem; vertical-align: middle; }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+[data-dash-source-state=empty] { color: transparent; }
+</style>
+
+<div class="jd">
+  <header id="top">
+    <h1>Atlas judge, week 43</h1>
+    <p class="lede" data-source="summary" data-field="text">—</p>
+  </header>
+
+  <section class="tiles" id="tiles">
+    <div class="tile"><span class="k">Claims checked</span><span class="v dash-skeleton" data-source="totals" data-field="checked">—</span><span class="s">drawn at random from the kernel</span></div>
+    <div class="tile ok"><span class="k">Right</span><span class="v dash-skeleton" data-source="totals" data-field="accuracy">—</span><span class="s"><span data-source="totals" data-field="supported">—</span> supported, of claims a source could settle</span></div>
+    <div class="tile warn"><span class="k">Partly right</span><span class="v dash-skeleton" data-source="totals" data-field="partly">—</span><span class="s">close, but a date or wording is off</span></div>
+    <div class="tile bad"><span class="k">Wrong</span><span class="v dash-skeleton" data-source="totals" data-field="contradicted">—</span><span class="s">a source says otherwise</span></div>
+    <div class="tile"><span class="k">No source found</span><span class="v dash-skeleton" data-source="totals" data-field="unverified">—</span><span class="s">could not be checked either way</span></div>
+    <div class="tile bad"><span class="k">Kernel records with a source link</span><span class="v dash-skeleton" data-source="src_totals" data-field="with_url">—</span><span class="s">of <span data-source="src_totals" data-field="records">—</span>; the rest cite "written by Claude, not yet checked"</span></div>
+  </section>
+
+  <section class="grid">
+    <div class="card" id="by-type">
+      <h2>Where the mistakes are</h2>
+      <p class="note">Verdicts by kind of claim. Dates and areas drift more than events.</p>
+      <div class="legend" id="legend"></div>
+      <div class="chart" id="type-chart" data-source="by_type"></div>
+    </div>
+    <div class="card" id="fixes">
+      <h2>Fixes to make</h2>
+      <p class="note">Every claim that was not plainly right, with what the source says and a suggested change.</p>
+      <div class="scroll">
+        <table id="fix-table" data-source="verdicts" data-row-key="claim">
+          <thead><tr><th data-field="claim">Claim</th><th data-field="verdict">Verdict</th><th data-field="text">Atlas says</th><th data-field="fix">Fix</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="claims">
+    <h2>All claims this week</h2>
+    <p class="note">Each claim was checked against the source named beside it. Search or filter by verdict.</p>
+    <div class="controls">
+      <input type="search" id="q" placeholder="Search claims, places, sources" aria-label="Search claims">
+      <div class="controls" id="chips"></div>
+    </div>
+    <div class="scroll">
+      <table id="claim-table" data-source="verdicts" data-row-key="claim">
+        <thead><tr><th data-field="claim">Claim</th><th data-field="type">Kind</th><th data-field="text">Atlas says</th><th data-field="verdict">Verdict</th><th data-field="evidence">What the source says</th><th data-field="source">Source</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card" id="sourcing">
+      <h2>Sourcing by kind of record</h2>
+      <p class="note">Records in the kernel build, how many are drafts waiting for the judge, and how many link to a source.</p>
+      <table id="src-table" data-source="sourcing" data-row-key="kind">
+        <thead><tr><th data-field="kind">Kind</th><th data-field="records" class="num">Records</th><th data-field="draft" class="num">Draft</th><th data-field="with_url" class="num">With a link</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="card" id="audit">
+      <h2>Records that contradict each other</h2>
+      <p class="note">The judge's audit compares records in the kernel, such as an event dated before its city exists.</p>
+      <table id="audit-table" data-source="audit" data-row-key="id">
+        <thead><tr><th data-field="id">Record</th><th data-field="level">Level</th><th data-field="msg">Problem</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="card" id="weeks">
+      <h2>Week by week</h2>
+      <p class="note">One row per weekly sample. The goal is a rising share right and no wrong claims left unfixed.</p>
+      <table id="week-table" data-source="weeks" data-row-key="week">
+        <thead><tr><th data-field="week">Week</th><th data-field="checked" class="num">Checked</th><th data-field="supported" class="num">Right</th><th data-field="partly" class="num">Partly</th><th data-field="contradicted" class="num">Wrong</th><th data-field="accuracy" class="num">Share right</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+<script>
+const VERDICTS = ['supported', 'partly', 'contradicted', 'unverified'];
+const LABEL = { supported: 'Right', partly: 'Partly', contradicted: 'Wrong', unverified: 'No source' };
+const TYPE = { start: 'Start dates', end: 'End dates', text: 'Descriptions', event: 'Events', population: 'Populations', polity_dates: 'Empire dates', polity_peak: 'Empire peak areas' };
+
+dash.calc('totals', {
+  title: 'Verdict counts',
+  description: 'Counts each verdict; share right is supported claims over claims a source could settle.',
+  inputs: ['verdicts'],
+  fn: (verdicts) => {
+    const n = (v) => verdicts.filter((r) => r.verdict === v).length;
+    const settled = verdicts.length - n('unverified');
+    return [{ checked: verdicts.length, supported: n('supported'), partly: n('partly'), contradicted: n('contradicted'), unverified: n('unverified'), accuracy: settled ? n('supported') / settled : null }];
+  },
+});
+dash.calc('src_totals', {
+  title: 'Sourcing totals',
+  description: 'Adds up records and records with a source link across every kind.',
+  inputs: ['sourcing'],
+  fn: (sourcing) => [{ records: sourcing.reduce((a, r) => a + r.records, 0), with_url: sourcing.reduce((a, r) => a + r.with_url, 0), draft: sourcing.reduce((a, r) => a + r.draft, 0) }],
+});
+dash.calc('by_type', {
+  title: 'Verdicts by kind of claim',
+  description: 'Counts each verdict within each kind of claim.',
+  inputs: ['verdicts'],
+  fn: (verdicts) => {
+    const kinds = [...new Set(verdicts.map((r) => r.type))];
+    return kinds.map((type) => {
+      const row = { type };
+      for (const v of ['supported', 'partly', 'contradicted', 'unverified']) row[v] = verdicts.filter((r) => r.type === type && r.verdict === v).length;
+      return row;
+    });
+  },
+});
+dash.calc('summary', {
+  title: 'Takeaway',
+  description: 'One sentence from the verdict counts and the sourcing totals.',
+  inputs: ['totals', 'src_totals'],
+  fn: (totals, src_totals) => {
+    const t = totals[0], s = src_totals[0];
+    const pct = Math.round(t.accuracy * 100);
+    return [{ text: `${pct}% of checkable claims were right, ${t.partly} were close and ${t.contradicted} were wrong. The bigger problem is sourcing: ${s.with_url} of ${s.records} kernel records link to a source, so every claim still rests on memory until it is checked.` }];
+  },
+});
+
+const fmtPct = d3.format('.0%');
+const color = { supported: 'var(--color-ok)', partly: 'var(--color-warn)', contradicted: 'var(--color-bad)', unverified: 'var(--cds-chart-muted)' };
+const state = { q: '', verdict: null };
+
+const legend = document.getElementById('legend');
+legend.replaceChildren(...VERDICTS.map((v) => { const s = document.createElement('span'); const i = document.createElement('i'); i.style.background = color[v]; s.append(i, LABEL[v]); return s; }));
+
+const chips = document.getElementById('chips');
+for (const v of [null, ...VERDICTS]) {
+  const b = document.createElement('button');
+  b.className = 'chip'; b.type = 'button'; b.textContent = v ? LABEL[v] : 'All';
+  b.setAttribute('aria-pressed', String(v === state.verdict));
+  b.addEventListener('click', () => { state.verdict = v; chips.querySelectorAll('.chip').forEach((c, i) => c.setAttribute('aria-pressed', String([null, ...VERDICTS][i] === v))); draw(); });
+  chips.append(b);
+}
+document.getElementById('q').addEventListener('input', (e) => { state.q = e.target.value.toLowerCase(); draw(); });
+
+function fill(sel, src, field, fmt) {
+  document.querySelectorAll(`[data-source="${src}"][data-field="${field}"]:not(th)`).forEach((el) => {
+    const d = dash.data(src);
+    el.classList.toggle('dash-skeleton', d.status === 'loading');
+    if (d.status !== 'ok' || !d.data.length) { el.textContent = '—'; return; }
+    const v = d.data[0][field];
+    el.textContent = fmt ? fmt(v) : String(v);
+  });
+}
+
+function pill(td, v) { const s = document.createElement('span'); s.className = `pill v-${v}`; s.textContent = v; td.append(s); }
+
+function rowsTable(id, rows, cols) {
+  const tb = document.querySelector(`#${id} tbody`);
+  tb.replaceChildren(...rows.map((r) => {
+    const tr = document.createElement('tr');
+    for (const c of cols) {
+      const td = document.createElement('td');
+      if (c.num) td.className = 'num';
+      if (c.render) c.render(td, r); else td.textContent = c.fmt ? c.fmt(r[c.f]) : (r[c.f] ?? '');
+      tr.append(td);
+    }
+    return tr;
+  }));
+}
+
+function drawChart() {
+  const box = document.getElementById('type-chart');
+  const d = dash.data('by_type');
+  box.replaceChildren();
+  if (d.status !== 'ok') return;
+  const rows = d.data;
+  const W = box.clientWidth || 360, bar = 18, gap = 10;
+  const svg = d3.select(box).append('svg').attr('width', '100%');
+  const labels = svg.append('g').selectAll('text').data(rows).join('text').text((r) => TYPE[r.type] || r.type)
+    .attr('font-size', 'var(--cds-font-size-caption)').attr('fill', 'var(--color-fg-muted)');
+  const left = Math.ceil(d3.max(labels.nodes(), (n) => n.getComputedTextLength())) + 10;
+  const H = rows.length * (bar + gap) + 24;
+  svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+  const max = d3.max(rows, (r) => VERDICTS.reduce((a, v) => a + r[v], 0));
+  const x = d3.scaleLinear([0, max], [left, W - 8]);
+  const y = (i) => i * (bar + gap) + 4;
+  labels.attr('x', 0).attr('y', (r, i) => y(i) + bar / 2 + 4);
+  svg.append('g').selectAll('line').data(x.ticks(Math.min(max, 6))).join('line')
+    .attr('x1', x).attr('x2', x).attr('y1', 0).attr('y2', H - 20).attr('stroke', 'var(--cds-chart-grid)');
+  svg.append('g').selectAll('text').data(x.ticks(Math.min(max, 6))).join('text').text(d3.format('d'))
+    .attr('x', x).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 'var(--cds-font-size-caption)').attr('fill', 'var(--color-fg-muted)');
+  const tip = d3.select(box).append('div').attr('class', 'tip').style('opacity', 0);
+  rows.forEach((r, i) => {
+    let acc = 0;
+    for (const v of VERDICTS) {
+      if (!r[v]) continue;
+      svg.append('rect').attr('x', x(acc)).attr('y', y(i)).attr('width', Math.max(1, x(acc + r[v]) - x(acc) - 2)).attr('height', bar).attr('rx', 3)
+        .style('fill', color[v])
+        .on('mousemove', (e) => { const [mx, my] = d3.pointer(e, box); tip.style('opacity', 1).style('left', Math.min(mx + 10, W - 150) + 'px').style('top', (my + 12) + 'px').text(`${TYPE[r.type] || r.type}: ${r[v]} ${LABEL[v].toLowerCase()}`); })
+        .on('mouseleave', () => tip.style('opacity', 0));
+      acc += r[v];
+    }
+  });
+}
+
+function draw() {
+  fill(null, 'totals', 'checked');
+  fill(null, 'totals', 'supported');
+  fill(null, 'totals', 'partly');
+  fill(null, 'totals', 'contradicted');
+  fill(null, 'totals', 'unverified');
+  fill(null, 'totals', 'accuracy', (v) => v == null ? '—' : fmtPct(v));
+  fill(null, 'src_totals', 'with_url');
+  fill(null, 'src_totals', 'records');
+  const s = dash.data('summary');
+  document.querySelector('[data-source="summary"]').textContent = s.status === 'ok' && s.data.length ? s.data[0].text : '—';
+
+  drawChart();
+
+  const v = dash.data('verdicts');
+  const rows = v.status === 'ok' ? v.data : [];
+  rowsTable('fix-table', rows.filter((r) => r.verdict !== 'supported'), [
+    { f: 'claim' }, { f: 'verdict', render: (td, r) => pill(td, r.verdict) }, { f: 'text' }, { f: 'fix' },
+  ]);
+  const shown = rows.filter((r) => (!state.verdict || r.verdict === state.verdict) &&
+    (!state.q || [r.text, r.evidence, r.source, r.ref].join(' ').toLowerCase().includes(state.q)));
+  rowsTable('claim-table', shown, [
+    { f: 'claim' }, { f: 'type', fmt: (t) => TYPE[t] || t }, { f: 'text' },
+    { f: 'verdict', render: (td, r) => pill(td, r.verdict) }, { f: 'evidence' },
+    { f: 'source', render: (td, r) => { if (r.url) { const a = document.createElement('a'); a.href = r.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = r.source; td.append(a); } else td.textContent = r.source; } },
+  ]);
+
+  const so = dash.data('sourcing');
+  rowsTable('src-table', so.status === 'ok' ? so.data : [], [
+    { f: 'kind' }, { f: 'records', num: 1, fmt: d3.format(',') }, { f: 'draft', num: 1, fmt: d3.format(',') }, { f: 'with_url', num: 1, fmt: d3.format(',') },
+  ]);
+  const au = dash.data('audit');
+  rowsTable('audit-table', au.status === 'ok' ? au.data : [], [{ f: 'id' }, { f: 'level' }, { f: 'msg' }]);
+  const wk = dash.data('weeks');
+  rowsTable('week-table', wk.status === 'ok' ? wk.data : [], [
+    { f: 'week' }, { f: 'checked', num: 1 }, { f: 'supported', num: 1 }, { f: 'partly', num: 1 }, { f: 'contradicted', num: 1 },
+    { f: 'accuracy', num: 1, fmt: (x) => x == null ? '—' : fmtPct(x) },
+  ]);
+}
+
+dash.onData(draw);
+</script>
