@@ -10,7 +10,7 @@ Writes:
                   and the ancient cities in the largest-city tables
   measures.jsonl  GeoNames modern population per city, and largest-city population figures by source
 """
-import csv, json, math, os, re, sys, unicodedata
+import csv, gzip, json, math, os, re, sys, unicodedata
 from collections import Counter, defaultdict
 
 import pycountry
@@ -33,6 +33,8 @@ LARGEST = {'cite': 'Wikipedia, "List of largest cities throughout history", tabl
 REBA = {'cite': 'Reba, Reitsma & Seto 2016, Spatializing 6,000 years of global urbanization from 3700 BC to AD 2000, '
                 'Scientific Data 3:160034 (after Chandler 1987 and Modelski 2003). Attribution, non-commercial, share-alike',
         'url': 'https://doi.org/10.7910/DVN/LMCQGX'}
+WIKIDATA = {'cite': 'Wikidata query, 2026-10-24 (CC0)', 'url': 'https://www.wikidata.org/'}
+PLEIADES = {'cite': 'Pleiades gazetteer of ancient places, dump of 2026-10-24 (CC BY 3.0)', 'url': 'https://pleiades.stoa.org/'}
 BOOKS = {'chandler': 'Chandler, Four Thousand Years of Urban Growth (1987)',
          'modelski': 'Modelski, World Cities: -3000 to 2000 (2003)',
          'morris': 'Morris, The Measure of Civilization / Why the West Rules (2010)'}
@@ -153,6 +155,173 @@ def reba_series(places, la):
     return sorted(best.items())
 
 
+def wd_point(s):
+    """'Point(lon lat)' -> (lat, lon)."""
+    m = re.match(r'Point\(([-\d.eE]+) ([-\d.eE]+)\)', s or '')
+    return (float(m.group(2)), float(m.group(1))) if m else None
+
+
+def wd_year(s):
+    m = re.match(r'(-?\d+)-', s or '')
+    if not m:
+        return None
+    y = int(m.group(1))
+    y = y - 1 if y <= 0 else y  # SPARQL dates use astronomical years: -0752 is 753 BCE, 0000 is 1 BCE
+    return y if -10000 < y < 2100 else None
+
+
+def enrich(places, la):
+    """Add Wikidata ids, founding years and Pleiades ids to existing places, and add notable ancient places.
+
+    Sources (copied into raw/places-people/ from /mnt/project-files/atlas/raw/):
+      wikidata/cities.csv        cities with population, inception and sitelinks
+      wikidata/pleiades_wd.csv   Wikidata items that carry a Pleiades id
+      wikidata/lost_cities.csv   ancient cities, archaeological sites, ghost towns
+      pleiades/pleiades-places-*.csv.gz
+    """
+    wdir, pdir = os.path.join(RAW, 'wikidata'), os.path.join(RAW, 'pleiades')
+    if not os.path.isdir(wdir):
+        print('no Wikidata/Pleiades dumps in raw/places-people/, skipping enrichment')
+        return
+    mine = {p['id']: p for p in places}
+    by_name, by_wd, by_pl = defaultdict(list), {}, {}
+    for p in places + [p for p in la if 'lat' in p]:
+        for n in {p['id'][6:], slug(p['name'])}:
+            by_name[n].append(p)
+        if p.get('wikidata'):
+            by_wd[p['wikidata']] = p
+    taken = {p['id'][6:] for p in places} | {p['id'][6:] for p in la}
+    stats = Counter()
+
+    def own(p):
+        """The record of mine to write into: an existing one, or a new full record that takes over a Living Atlas stub."""
+        if p['id'] in mine:
+            return mine[p['id']]
+        rec = {'id': p['id'], 'kind': 'place', 'name': p['name'], 'subtype': p.get('subtype', 'site'),
+               'lenses': ['geography', 'population'], 'lat': p['lat'], 'lon': p['lon'], 'sources': [], 'status': 'sourced'}
+        if p.get('today'):
+            rec['today'] = p['today']
+        places.append(rec)
+        mine[rec['id']] = rec
+        stats['living atlas stubs taken over'] += 1
+        return rec
+
+    def match(name, lat, lon, qid=None, pid=None):
+        if qid and qid in by_wd:
+            return by_wd[qid]
+        if pid and pid in by_pl:
+            return by_pl[pid]
+        near = [(dist(lat, lon, p['lat'], p['lon']), p['id'], p) for p in by_name.get(ALIASES.get(slug(name), slug(name)), [])]
+        near = [n for n in near if n[0] < 20]
+        return min(near, key=lambda n: n[:2])[2] if near else None
+
+    def add(name, lat, lon, subtype, today=None):
+        base = ALIASES.get(slug(name), slug(name))
+        for s in (base, today and f'{base}_{slug(today)}', f'{base}_ancient', None):
+            if s and s not in taken:
+                break
+        if s is None:
+            s = f'{base}_{len(taken)}'
+        taken.add(s)
+        rec = {'id': 'place:' + s, 'kind': 'place', 'name': name, 'subtype': subtype, 'lenses': ['geography', 'population'],
+               'lat': round(lat, 4), 'lon': round(lon, 4), 'sources': [], 'status': 'sourced'}
+        if today:
+            rec['today'] = today
+        places.append(rec)
+        mine[rec['id']] = rec
+        by_name[s].append(rec)
+        by_name[slug(name)].append(rec)
+        return rec
+
+    def cite(rec, src):
+        if src not in rec['sources']:
+            rec['sources'].append(src)
+
+    def link(rec, qid=None, pid=None):
+        if qid and not rec.get('wikidata'):
+            rec['wikidata'] = qid
+            by_wd[qid] = rec
+        if pid:
+            rec.setdefault('ext', {})['pleiades'] = pid
+            by_pl[pid] = rec
+
+    # 1. Modern cities: Wikidata id and inception year on the places we already have.
+    for r in csv.DictReader(open(os.path.join(wdir, 'cities.csv'), encoding='utf-8')):
+        pt, qid = wd_point(r['coord']), r['item'].rsplit('/', 1)[1]
+        if not pt:
+            continue
+        p = match(r['itemLabel'], *pt, qid)
+        if not p:
+            continue
+        rec = own(p)
+        link(rec, qid)
+        y = wd_year(r['inception'])
+        if y and 'start' not in rec:
+            rec['start'], rec['start_approx'] = y, True
+            stats['founding years'] += 1
+        cite(rec, WIKIDATA)
+        stats['cities matched to wikidata'] += 1
+
+    # 2. Pleiades settlements that also have a Wikidata item (a rough notability filter).
+    pl_wd = {}
+    for r in csv.DictReader(open(os.path.join(wdir, 'pleiades_wd.csv'), encoding='utf-8')):
+        pl_wd.setdefault(r['pleiades'], r)
+    pfile = sorted(f for f in os.listdir(pdir) if f.startswith('pleiades-places-') and f.endswith('.csv.gz'))[-1]
+    for r in csv.DictReader(gzip.open(os.path.join(pdir, pfile), 'rt', encoding='utf-8')):
+        types = {t.strip() for t in r['featureTypes'].split(',')}
+        if not types & {'settlement', 'urban', 'settlement-modern'} or not r['reprLat'] or r['id'] not in pl_wd:
+            continue
+        w, qid = pl_wd[r['id']], pl_wd[r['id']]['item'].rsplit('/', 1)[1]
+        lat, lon = float(r['reprLat']), float(r['reprLong'])
+        p = match(r['title'], lat, lon, qid, r['id'])
+        if p:
+            rec = own(p)
+            stats['pleiades matched'] += 1
+        else:
+            rec = add(w['itemLabel'] or r['title'], lat, lon, 'city')
+            rec['tags'] = ['ancient']
+            lo, hi = (int(float(x)) for x in (r['minDate'], r['maxDate'])) if r['minDate'] and r['maxDate'] else (None, None)
+            if lo and -100000 < lo < 2100:
+                rec['start'], rec['start_approx'] = lo, True
+            if hi is not None and hi < 1900 and hi != 0:
+                rec['end'], rec['end_approx'] = hi, True
+            if r['description']:
+                rec['what'] = r['description'][:300]
+            stats['pleiades added'] += 1
+        link(rec, qid, r['id'])
+        cite(rec, PLEIADES)
+        cite(rec, WIKIDATA)
+
+    # 3. Ancient cities and well-known archaeological sites from Wikidata.
+    seen = set()
+    for r in csv.DictReader(open(os.path.join(wdir, 'lost_cities.csv'), encoding='utf-8')):
+        qid, pt = r['item'].rsplit('/', 1)[1], wd_point(r['coord'])
+        if qid in seen or not pt:
+            continue
+        seen.add(qid)
+        kind = r['typeLabel']
+        if not (kind == 'ancient city' or (kind == 'archaeological site' and int(r['sitelinks'] or 0) >= 15)):
+            continue
+        p = match(r['itemLabel'], *pt, qid, r['pleiades'] or None)
+        if p:
+            rec = own(p)
+            stats['ancient matched'] += 1
+        else:
+            if re.match(r'Q\d+$', r['itemLabel']):
+                continue  # no English label
+            rec = add(r['itemLabel'], *pt, 'city' if kind == 'ancient city' else 'site')
+            rec['tags'] = ['ancient']
+            stats['ancient added'] += 1
+        link(rec, qid, r['pleiades'] or None)
+        for f, v in (('start', wd_year(r['inception'])), ('end', wd_year(r['dissolved']))):
+            if v and f not in rec and not (f == 'end' and rec.get('ext', {}).get('geonames')):
+                rec[f], rec[f + '_approx'] = v, True
+        if rec.get('start') and rec.get('end') and rec['start'] > rec['end']:
+            rec.pop('end'); rec.pop('end_approx', None)
+        cite(rec, WIKIDATA)
+    print('enrich:', dict(stats))
+
+
 def dump(name, recs):
     with open(os.path.join(OUT, name), 'w', encoding='utf-8') as f:
         for r in recs:
@@ -257,6 +426,7 @@ def main():
                'status': 'draft'}
         places.append(rec)
     places.sort(key=lambda r: r['id'])
+    enrich(places, la)
     reba = reba_series(places, la)
     places.sort(key=lambda r: r['id'])
     place_ids = {p['id'] for p in places} | {p['id'] for p in la}
