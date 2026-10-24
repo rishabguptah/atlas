@@ -10,7 +10,7 @@
   --paper: #f5f0e3; --sea: #d3e2df; --sea-line: #bcd0cc; --land: #ece3cb; --land-edge: #a9987a;
   --ink: #26251f; --ink-soft: #625e51; --rule: #d6ccb4; --accent: #1d4f6e; --warn: #a3321f;
   --wash: rgba(38, 37, 31, 0.06); --card: #fbf8ef; --emp-op: 0.42; --oth-op: 0.13;
-  --y-places: #1d4f6e; --y-people: #c0602c; --y-money: #9a6f0e; --y-disease: #a3321f; --y-ideas: #2f68a8; --y-order: #5a4a8a;
+  --y-places: #1d4f6e; --y-people: #c0602c; --y-money: #9a6f0e; --y-disease: #a3321f; --y-ideas: #2f68a8; --y-order: #5a4a8a; --y-war: #3d4f66;
   --b-calm: #6f9a6a; --b-watch: #c9a227; --b-fragile: #d0702c; --b-critical: #b42a2a;
   --l-geography: #2f7a6b; --l-military: #a3321f; --l-economy: #9a6f0e; --l-population: #7a5a9e; --l-disease: #5f7d1f;
   --l-religion: #b05a86; --l-ideas: #2f68a8; --l-literature: #8a5a3a; --l-people: #c0602c; --l-order: #4a4a6a;
@@ -24,7 +24,7 @@
     --paper: #121a1b; --sea: #0d171b; --sea-line: #1b2a2f; --land: #1e2926; --land-edge: #43534b;
     --ink: #ebe4d2; --ink-soft: #a9a391; --rule: #2d3836; --accent: #82b8d8; --warn: #e57a62;
     --wash: rgba(235, 228, 210, 0.07); --card: #172123; --emp-op: 0.36; --oth-op: 0.10;
-    --y-places: #82b8d8; --y-people: #f09a5c; --y-money: #e0b44c; --y-disease: #ef7f6a; --y-ideas: #8cb8f0; --y-order: #b3a3e6;
+    --y-places: #82b8d8; --y-people: #f09a5c; --y-money: #e0b44c; --y-disease: #ef7f6a; --y-ideas: #8cb8f0; --y-order: #b3a3e6; --y-war: #a9bdd6;
     --b-calm: #8cc286; --b-watch: #e6c650; --b-fragile: #f0965a; --b-critical: #ff6b6b;
     --l-geography: #6cc3ad; --l-military: #e57a62; --l-economy: #e0b44c; --l-population: #b79be0; --l-disease: #a8c95c;
     --l-religion: #e08ab8; --l-ideas: #82b8e8; --l-literature: #d0a07a; --l-people: #f09a5c; --l-order: #a8a8d0;
@@ -35,7 +35,7 @@
   --paper: #121a1b; --sea: #0d171b; --sea-line: #1b2a2f; --land: #1e2926; --land-edge: #43534b;
   --ink: #ebe4d2; --ink-soft: #a9a391; --rule: #2d3836; --accent: #82b8d8; --warn: #e57a62;
   --wash: rgba(235, 228, 210, 0.07); --card: #172123; --emp-op: 0.36; --oth-op: 0.10;
-  --y-places: #82b8d8; --y-people: #f09a5c; --y-money: #e0b44c; --y-disease: #ef7f6a; --y-ideas: #8cb8f0; --y-order: #b3a3e6;
+  --y-places: #82b8d8; --y-people: #f09a5c; --y-money: #e0b44c; --y-disease: #ef7f6a; --y-ideas: #8cb8f0; --y-order: #b3a3e6; --y-war: #a9bdd6;
   --b-calm: #8cc286; --b-watch: #e6c650; --b-fragile: #f0965a; --b-critical: #ff6b6b;
   --l-geography: #6cc3ad; --l-military: #e57a62; --l-economy: #e0b44c; --l-population: #b79be0; --l-disease: #a8c95c;
   --l-religion: #e08ab8; --l-ideas: #82b8e8; --l-literature: #d0a07a; --l-people: #f09a5c; --l-order: #a8a8d0;
@@ -104,6 +104,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .shock.famine circle:not(.core) { stroke-dasharray: 3 2; }
 .shock text { display: block; fill: var(--sc); font-style: italic; }
 .reached circle { fill: var(--y-disease); stroke: var(--paper); stroke-width: .8; }
+.battle path { stroke: var(--y-war); stroke-width: 2.2; stroke-linecap: round; }
+.battle circle { fill: var(--paper); fill-opacity: .7; stroke: none; }
+.battle.lbl text { fill: var(--y-war); font-weight: 600; }
+.choke path { fill: var(--y-war); stroke: var(--paper); stroke-width: .8; }
+.choke text { fill: var(--y-war); font-style: italic; }
 .hub rect { fill: var(--y-money); stroke: var(--paper); stroke-width: .8; }
 .hub.lbl text { fill: var(--y-money); font-weight: 600; }
 .school rect { fill: none; stroke: var(--y-ideas); stroke-width: 1.4; }
@@ -318,9 +323,9 @@ const TOURS = /*__TOURS__*/;
   const lensColor = l => `var(--l-${LENSES.includes(l) ? l : "order"})`;
   const LAYERS = [
     { k: "places", n: "Cities" }, { k: "people", n: "People" }, { k: "money", n: "Trade & migration" },
-    { k: "disease", n: "Plague & climate" }, { k: "ideas", n: "Ideas & faith" }, { k: "order", n: "Order & chaos" },
+    { k: "disease", n: "Plague & climate" }, { k: "ideas", n: "Ideas & faith" }, { k: "order", n: "Order & chaos" }, { k: "war", n: "War & chokepoints" },
   ];
-  const LENS_LAYER = { geography: "places", military: "order", economy: "money", population: "money", disease: "disease", religion: "ideas", ideas: "ideas", literature: "ideas", people: "people", order: "order" };
+  const LENS_LAYER = { geography: "places", military: "war", economy: "money", population: "money", disease: "disease", religion: "ideas", ideas: "ideas", literature: "ideas", people: "people", order: "order" };
   const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
   const fmtSpan = (s, e) => `${s == null ? "?" : fmtYear(s)}–${e == null ? "today" : fmtYear(e)}`;
   const tToYear = t => Math.round(NOW - SPAN * Math.pow(1 - t, CURVE));
@@ -379,10 +384,18 @@ const TOURS = /*__TOURS__*/;
   const areaAt = (p, y) => stepAt(p.a, y) ?? (p.pk ? p.pk[1] : 0.05);
   const fragAt = (p, y) => stepAt(p.f, y);
 
+  const BATTLES = WAR.battles;
+  const CHOKES = WAR.chokepoints;
+  const HELD = {};
+  for (const [c, pid, s0, e0] of WAR.held) (HELD[c] = HELD[c] || []).push({ pid, s: s0, e: e0, n: WAR.names[pid] || pid });
+  for (const k in HELD) HELD[k].sort((a, b) => a.s - b.s);
+  const holderAt = (id, y) => (HELD[id] || []).filter(h => y >= h.s && y <= h.e).map(h => h.n);
+  const sideNames = b => (b.sides || []).map(side => side.map(x => x.name).join(", "));
+
   // ---------- state ----------
   const state = {
     year: 1348, k: 1, borders: true, hi: new Set(), muted: new Set(), answer: null, active: -1, playing: false,
-    on: { places: true, people: true, money: true, disease: true, ideas: true, order: false },
+    on: { places: true, people: true, money: true, disease: true, ideas: true, order: false, war: true },
     sel: null, tab: "now",
   };
 
@@ -400,7 +413,7 @@ const TOURS = /*__TOURS__*/;
   const gPolyLab = root.append("g");
   const gSelRing = root.append("path").attr("class", "selring");
   const G = {};
-  for (const k of ["order", "money", "ideas", "disease", "places", "people"]) G[k] = root.append("g").attr("data-layer", k);
+  for (const k of ["order", "money", "ideas", "disease", "war", "places", "people"]) G[k] = root.append("g").attr("data-layer", k);
   const gRoutes = root.append("g");
   const gPins = root.append("g");
   const gSel = root.append("g");
@@ -602,9 +615,21 @@ const TOURS = /*__TOURS__*/;
     const b = points(g, "broke lbl", broke, d => d.id, e => { e.append("path").attr("d", "M-5-5L5 5M5-5L-5 5"); e.append("text").attr("x", 7).attr("y", 4); }).on("click", onClickSel(polityCard));
     b.select("text").text(d => `${d.n} breaks`); b.select("title").text(d => `${d.n} ended ${fmtYear(d.e)} without a successor (${d.st})`);
   }
+  function drawWar() {
+    const y = state.year, g = G.war, on = state.on.war;
+    const bs = on ? BATTLES.filter(b => Math.abs(b.start - y) <= 12) : [];
+    const s = points(g, "battle lbl", bs, d => d.id, e => { e.append("circle").attr("r", 6); e.append("path").attr("d", "M-4.5-4.5L4.5 4.5M4.5-4.5L-4.5 4.5"); e.append("text").attr("x", 7).attr("y", -4); })
+      .classed("always", d => Math.abs(d.start - y) <= 2).style("opacity", d => 1 - Math.abs(d.start - y) / 16).on("click", onClickSel(battleCard));
+    s.select("text").text(d => d.name.replace(/^(Battle|Siege|Sack) of /, ""));
+    s.select("title").text(d => `${d.name} · ${fmtYear(d.start)} · ${sideNames(d).join(" vs ")}`);
+    const cs = on ? CHOKES : [];
+    const c = points(g, "choke lbl", cs, d => d.id, e => { e.append("path").attr("d", "M-4-5L4-5 0 0 4 5-4 5 0 0z"); e.append("text").attr("x", 7).attr("y", 4); }).on("click", onClickSel(chokeCard));
+    c.select("text").text(d => d.name);
+    c.select("title").text(d => { const h = holderAt(d.id, y); return `${d.name} · ${h.length ? "held by " + h.join(", ") : "no state holds it"} in ${fmtYear(y)}`; });
+  }
   let rafAll = 0;
   function drawAll(now) {
-    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawPlaces(); drawPeople(); placeScaled(); };
+    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawPlaces(); drawPeople(); placeScaled(); };
     if (now) { cancelAnimationFrame(rafAll); run(); } else if (!rafAll) rafAll = requestAnimationFrame(run);
   }
 
@@ -645,6 +670,7 @@ const TOURS = /*__TOURS__*/;
     ...Object.values(IP).map(p => ({ lon: p.lo, lat: p.la, name: p.n })),
     ...PLAGUE.places.map(p => ({ lon: p.lon, lat: p.lat, name: p.name })),
     ...HUBS.map(h => ({ lon: h.lon, lat: h.lat, name: h.name.replace(/ \(.*\)/, "") })),
+    ...CHOKES.map(c => ({ lon: c.lon, lat: c.lat, name: c.name })),
   ];
   const PPLACES = PEOPLE.places.map(p => ({ lon: p[2], lat: p[1], name: p[0] }));
   function nameNear(lon, lat) {
@@ -707,11 +733,24 @@ const TOURS = /*__TOURS__*/;
       body: p.b ? `Ended ${fmtYear(p.e)} without a clear successor (${p.st === "withered" ? "withered away slowly" : "snapped suddenly"}).` : `Ended ${fmtYear(p.e)} with a handoff to a successor state.`,
       sources: wiki(p.wiki), polity: p };
   }
+  function battleCard(b) {
+    const sides = sideNames(b), w = b.winner;
+    return { kind: "battle", c: "var(--y-war)", lon: b.lon, lat: b.lat, name: null, kick: b.subtype, title: b.name, year: b.start,
+      meta: `${fmtYear(b.start)} · ${sides.join(" vs ")}${w != null && sides[w] ? ` · won by ${sides[w]}` : w == null ? " · inconclusive" : ""}`, body: b.why, sources: src1(b.sources) };
+  }
+  function chokeCard(c) {
+    const y = state.year, h = holderAt(c.id, y), hist = HELD[c.id] || [];
+    const runs = []; for (const r of hist) { const last = runs[runs.length - 1]; if (last && last.n === r.n && r.s <= last.e + 30) last.e = Math.max(last.e, r.e); else runs.push({ ...r }); }
+    return { kind: "choke", c: "var(--y-war)", lon: c.lon, lat: c.lat, name: c.name, kick: c.subtype === "pass" ? "Mountain pass" : "Chokepoint", title: c.name,
+      meta: h.length ? `Held by ${h.join(", ")} in ${fmtYear(y)}` : `No state holds it in ${fmtYear(y)}`, body: c.what, why: c.why, sources: src1(c.sources),
+      holders: runs.slice(-12) };
+  }
   function cardHTML(c) {
     if (!c || !c.title) return "";
     return `<div class="focus" style="--c:${c.c}"><span class="fk">${esc(c.kick)}</span><span class="ft">${esc(c.title)}</span>
       ${c.meta ? `<span class="sub">${esc(c.meta)}</span>` : ""}${c.body ? `<p>${esc(c.body)}</p>` : ""}${c.why ? `<p class="why">${esc(c.why)}</p>` : ""}
       ${c.polity ? sparkHTML(c.polity) : ""}
+      ${c.holders && c.holders.length ? `<div class="items">${c.holders.map(r => item(`${esc(r.n)}`, fmtSpan(r.s, r.e), "", () => animateYear(r.s), !(state.year >= r.s && state.year <= r.e))).join("")}</div>` : ""}
       ${srcList(c.sources)}
       <div class="row">${c.year != null && c.year !== state.year ? `<button class="btn" data-a="${act(() => animateYear(c.year))}">Go to ${esc(fmtYear(c.year))}</button>` : ""}${c.journey ? journeyNav(c) : ""}<button class="btn" data-a="${act(() => askAbout(c))}">Ask about this</button></div></div>`;
   }
@@ -763,6 +802,10 @@ const TOURS = /*__TOURS__*/;
     const pols = POLS.filter(p => polAlive(p, y)).map(p => ({ p, a: areaAt(p, y), f: fragAt(p, y) }));
     const shaky = pols.filter(o => o.f != null && o.f >= ORDER.thr).sort((a, b) => b.a - a.a).slice(0, 5);
     const broke = POLS.filter(p => p.b && p.e <= y && p.e > y - 25).slice(0, 4);
+    const fights = BATTLES.filter(b => Math.abs(b.start - y) <= 10).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y)).slice(0, 6);
+    const flips = [];
+    for (const c of CHOKES) { const hs = HELD[c.id] || []; for (let i = 1; i < hs.length; i++) if (hs[i].n !== hs[i - 1].n && Math.abs(hs[i].s - y) <= 25) flips.push({ c, h: hs[i], prev: hs[i - 1] }); }
+    flips.sort((a, b) => Math.abs(a.h.s - y) - Math.abs(b.h.s - y));
     const total = { pol: pols.length, shaky: pols.filter(o => o.f != null && o.f >= ORDER.thr).length };
     const ind = MONEY.econ.india, uk = MONEY.econ.uk, gi = interp(ind.gdp_per_capita, y), gu = interp(uk.gdp_per_capita, y);
     el.innerHTML = `
@@ -779,6 +822,10 @@ const TOURS = /*__TOURS__*/;
       ])}
       ${sec("disease", "Plague, famine and climate", sh.map(e => item(`<b>${esc(e.name)}</b> <span class="tag">${esc(SHOCK_N[e.subtype] || e.subtype)}</span>`, fmtSpan(e.start, e.end), "", goCard(shockCard(e)))))}
       ${sec("ideas", "Ideas on the move", moving.slice(0, 6).map(o => item(`<b>${esc(o.j.n)}</b> reaches ${esc(o.s.at.name)}`, fmtYear(o.s.y), o.s.text, goCard(journeyCard(o.j, o.s)))))}
+      ${sec("war", "War and chokepoints", [
+        ...fights.map(b => item(`<b>${esc(b.name)}</b>`, fmtYear(b.start), sideNames(b).join(" vs "), goCard(battleCard(b)))),
+        ...flips.slice(0, 4).map(o => item(`<b>${esc(o.c.name)}</b> passes from ${esc(o.prev.n)} to ${esc(o.h.n)}`, fmtYear(o.h.s), "", goCard(chokeCard(o.c)))),
+      ])}
       ${sec("order", "Most fragile big states", [
         ...shaky.map(o => item(`<b>${esc(o.p.n)}</b> <span class="band" style="--bc:var(--b-${band(o.f)})">${band(o.f)}</span>`, Math.round(o.f * 100) + "%", "", goCard(polityCard(o.p)))),
         ...broke.map(p => item(`<b>${esc(p.n)}</b> broke apart`, fmtYear(p.e), "", goCard(polityCard(p)))),
@@ -787,7 +834,7 @@ const TOURS = /*__TOURS__*/;
       ${footHTML()}`;
   }
   function footHTML() {
-    return `<p class="foot">One map, six workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
+    return `<p class="foot">One map, seven workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Borders and Battles (battles, chokepoints and their holders from Cliopatria borders); Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
   }
 
   // ---------- Here ----------
@@ -843,6 +890,11 @@ const TOURS = /*__TOURS__*/;
     if (plague && plague.d < 200) dItems.push(item(`Black Death reaches <b>${esc(plague.p.name)}</b>`, `${MONTHS[(plague.a.m || 1) - 1]} ${plague.a.y}`, plague.a.note, () => animateYear(plague.a.y)));
     nearby(SHOCKS, lon, lat, 1200).sort((a, b) => Math.abs(a.x.start - y) - Math.abs(b.x.start - y)).slice(0, 5)
       .forEach(o => { const on = y >= o.x.start && y <= (o.x.end ?? NOW); dItems.push(item(`<b>${esc(o.x.name)}</b> ${on ? '<span class="tag now">now</span>' : ""}`, fmtSpan(o.x.start, o.x.end), "", goCard(shockCard(o.x)), !on && Math.abs(o.x.start - y) > 100)); });
+    // War
+    const wItems = [];
+    nearby(CHOKES, lon, lat, 350).slice(0, 2).forEach(o => { const h = holderAt(o.x.id, y); wItems.push(item(`<b>${esc(o.x.name)}</b>`, h.length ? h.join(", ") : "unheld", o.x.why, goCard(chokeCard(o.x)))); });
+    nearby(BATTLES, lon, lat, 400).sort((a, b) => Math.abs(a.x.start - y) - Math.abs(b.x.start - y)).slice(0, 5).sort((a, b) => a.x.start - b.x.start)
+      .forEach(o => wItems.push(item(`<b>${esc(o.x.name)}</b>`, fmtYear(o.x.start), sideNames(o.x).join(" vs "), goCard(battleCard(o.x), true), Math.abs(o.x.start - y) > 50)));
     // Ideas
     const iItems = [];
     const stops = [];
@@ -861,6 +913,7 @@ const TOURS = /*__TOURS__*/;
       ${sec("order", "Order & chaos", orderItems)}
       ${sec("people", "People", pItems, meet ? "" : null)}${meet ? `<p class="note">${esc(meet)}</p>` : ""}
       ${sec("money", "Money & migration", mItems)}
+      ${sec("war", "War & chokepoints", wItems)}
       ${sec("disease", "Plague & climate", dItems)}
       ${sec("ideas", "Ideas & faith", iItems)}
       <p class="note">Within about ${R_KM} km of the marked spot (people: born within 60 km). Faded rows belong to other centuries; tap one to jump there.</p>
@@ -939,7 +992,7 @@ const TOURS = /*__TOURS__*/;
       ["places", ENTRIES.flatMap(e => (EVENTS[e.id] || []).map(v => v[0]))],
       ["disease", SHOCKS.map(e => e.start)],
       ["ideas", JOURNEYS.flatMap(j => j.steps.map(s => s.y))],
-      ["order", POLS.filter(p => p.b).map(p => p.e)],
+      ["war", BATTLES.map(b => b.start)],
     ];
     rows.forEach(([k, ys], i) => {
       st.append("g").selectAll("line").data(ys.filter(y => y >= MIN && y <= NOW)).join("line")
@@ -1129,12 +1182,12 @@ const TOURS = /*__TOURS__*/;
 Rishi wants the feeling of seeing history from a perspective nobody has had. Mix: 55% rigorous, 45% fun.
 Answer through several lenses: ${LENSES.join(", ")}. Give competing explanations from named historians or schools, say which the evidence favours, and say plainly what is not known. "We don't know" is a fine answer.
 
-The map has data layers the reader can see under your tour: places (cities and wonders with population), people (3,000 famous people at their birthplaces), money (trade routes, trade hubs, migrations, India and UK GDP), disease (epidemics, famines, eruptions, climate shifts, the Black Death month by month), ideas (idea and faith journeys, schools, books) and order (every state in Cliopatria with a fragility score). A step's lens switches on its layer; add "layers":[...] to switch on others that show the evidence.
+The map has data layers the reader can see under your tour: places (cities and wonders with population), people (3,000 famous people at their birthplaces), money (trade routes, trade hubs, migrations, India and UK GDP), disease (epidemics, famines, eruptions, climate shifts, the Black Death month by month), ideas (idea and faith journeys, schools, books) order (every state in Cliopatria with a fragility score) and war (battles, sieges, and who held each strait and pass). A step's lens switches on its layer; add "layers":[...] to switch on others that show the evidence.
 
 OUTPUT: JSON Lines only. One JSON object per line, no prose, no markdown, no code fences. Lines in this order:
 1. {"t":"answer","short":"2-4 sentence direct answer","lenses":{"geography":0.0-1.0, ...how much each relevant lens explains}}
 2. 6 to 10 step lines, a guided tour in time order where possible:
-{"t":"step","lens":"one lens","title":"short vivid title","year":integer (negative = BCE),"view":{"lon":number,"lat":number,"span":degrees of longitude across the screen},"layers":["places|people|money|disease|ideas|order"],"highlight":["place:<id>","polity:<id>"],"pins":[{"name":"label","lon":number,"lat":number}],"routes":[{"label":"what moved","points":[[lon,lat],[lon,lat],...]}],"text":"2-4 sentences, concrete, with numbers and names","confidence":0.0-1.0,"sources":[{"cite":"Author, Title (year)","url":"optional"}]}
+{"t":"step","lens":"one lens","title":"short vivid title","year":integer (negative = BCE),"view":{"lon":number,"lat":number,"span":degrees of longitude across the screen},"layers":["places|people|money|disease|ideas|order|war"],"highlight":["place:<id>","polity:<id>"],"pins":[{"name":"label","lon":number,"lat":number}],"routes":[{"label":"what moved","points":[[lon,lat],[lon,lat],...]}],"text":"2-4 sentences, concrete, with numbers and names","confidence":0.0-1.0,"sources":[{"cite":"Author, Title (year)","url":"optional"}]}
 3. 2 to 5 lines: {"t":"view","name":"historian or school","school":"short label","lens":"lens","strength":"strong|medium|weak","claim":"one sentence","for":"evidence for","against":"evidence against","sources":[{"cite":"..."}]}
 4. 1 or 2 lines: {"t":"whatif","q":"a counterfactual question","a":"2-3 sentences","confidence":0.0-1.0,"year":integer,"view":{"lon":number,"lat":number,"span":number}}
 5. 1 line: {"t":"unknowns","items":["what historians cannot settle", "..."]}

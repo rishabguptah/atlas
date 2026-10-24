@@ -32,6 +32,18 @@ order = {
     'polities': [{k: p.get(k) for k in ('id', 'n', 's', 'e', 'pk', 'c', 'b', 'st', 'wiki', 'a', 'f')} for p in lab['polities']],
 }
 L = {name: json.load(open(layers + name + '.json')) for name in ('people', 'money', 'plague', 'ideas')}
+
+# States & war straight from the kernel records: battles, chokepoints and who held them.
+rows = lambda f: [json.loads(l) for l in open(os.path.join(repo, 'data/states-war', f)) if l.strip()]
+bat, chk = rows('battles.jsonl'), rows('chokepoints.jsonl')
+held = [r for r in chk if r['kind'] == 'relation' and r['type'] == 'controls']
+names = {r['id']: r['name'] for r in rows('polities.jsonl') if r.get('name')}
+L['war'] = {
+    'battles': [{k: e.get(k) for k in ('id', 'name', 'subtype', 'start', 'lat', 'lon', 'sides', 'winner', 'why', 'sources')} for e in bat if e['kind'] == 'event' and e.get('lat') is not None],
+    'chokepoints': [{k: e.get(k) for k in ('id', 'name', 'subtype', 'lat', 'lon', 'what', 'why', 'sources')} for e in chk if e['kind'] == 'place'],
+    'held': [[r['to'], r['from'], r['start'], r['end']] for r in held],
+    'names': {pid: names.get(pid, pid.split(':', 1)[1].replace('_', ' ')) for pid in {r['from'] for r in held}},
+}
 data = '\n'.join(f'const {k.upper()} = {J(v)};' for k, v in L.items()) + f'\nconst ORDER = {J(order)};\n'
 
 land = J(json.load(open(atlas + 'borders/land-50m.json')))
