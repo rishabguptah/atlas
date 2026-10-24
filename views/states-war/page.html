@@ -1,0 +1,477 @@
+<title>Borders and Battles</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: a chart-room table. Full-bleed map, a timeline rail along the bottom, a dossier panel on the right (a bottom sheet on phones). One dark look by choice. */
+:root {
+  color-scheme: dark;
+  --sea: #0e1922;
+  --sea-2: #132230;
+  --land: #2a343c;
+  --line: #34444f;
+  --panel: #111d27;
+  --ink: #ebe6db;
+  --muted: #93a1aa;
+  --blood: #e4583f;
+  --brass: #d9b462;
+  --focus: #9cc6e8;
+  --f-label: "Barlow Condensed", "Roboto Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-text: "Source Serif 4", Georgia, "Times New Roman", serif;
+}
+html, body { height: 100%; }
+body { background: var(--sea); color: var(--ink); font-family: var(--f-label); overflow: hidden; }
+* { box-sizing: border-box; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.app { position: relative; height: 100%; display: grid; grid-template-columns: minmax(0, 1fr) 360px; grid-template-rows: minmax(0, 1fr) auto; }
+.map { grid-column: 1; grid-row: 1; position: relative; min-width: 0; min-height: 0; }
+.map svg { width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+.map svg:active { cursor: grabbing; }
+.rail { grid-column: 1; grid-row: 2; border-top: 1px solid var(--line); background: var(--sea-2);
+  padding-block: 10px 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; }
+.panel { grid-column: 2; grid-row: 1 / span 2; background: var(--panel); border-left: 1px solid var(--line);
+  overflow-y: auto; padding-block: 18px 24px; padding-left: 20px; padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+
+/* year readout over the map */
+.readout { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); top: 12px; pointer-events: none; }
+.readout .yr { font-size: clamp(44px, 7vw, 84px); font-weight: 700; line-height: .9; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+.readout .era { font-size: .32em; font-weight: 500; color: var(--muted); letter-spacing: .08em; margin-left: .2em; }
+.readout .sub { font-size: 15px; color: var(--muted); letter-spacing: .04em; margin-top: 6px; }
+.layers { position: absolute; right: 12px; top: 12px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; max-width: 60%; }
+.chip { background: rgba(14, 25, 34, .78); border: 1px solid var(--line); border-radius: 3px; padding: 4px 9px; font-size: 14px;
+  letter-spacing: .05em; text-transform: uppercase; cursor: pointer; color: var(--muted); }
+.chip[aria-pressed="true"] { color: var(--ink); border-color: var(--muted); }
+.chip .sw { display: inline-block; width: 9px; height: 9px; margin-right: 6px; vertical-align: 0; }
+.zoom { position: absolute; right: 12px; bottom: 12px; display: flex; flex-direction: column; gap: 4px; }
+.zoom button { width: 34px; height: 34px; background: rgba(14, 25, 34, .85); border: 1px solid var(--line); border-radius: 3px; font-size: 18px; cursor: pointer; }
+.tip { position: absolute; pointer-events: none; background: rgba(9, 16, 22, .94); border: 1px solid var(--line); padding: 6px 9px; font-size: 15px;
+  border-radius: 3px; max-width: 260px; line-height: 1.25; }
+.tip small { display: block; color: var(--muted); font-size: 13px; letter-spacing: .03em; }
+
+/* timeline rail */
+.rail-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.rail-top button { background: none; border: 1px solid var(--line); border-radius: 3px; height: 30px; min-width: 34px; cursor: pointer; font-size: 15px; padding: 0 10px; letter-spacing: .04em; }
+.rail-top button.play { min-width: 76px; text-transform: uppercase; }
+.rail-top .legend { margin-left: auto; color: var(--muted); font-size: 13px; letter-spacing: .04em; display: flex; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
+.legend i { display: inline-block; width: 18px; height: 2px; vertical-align: 4px; margin-right: 5px; }
+#timeline { width: 100%; height: 64px; display: block; cursor: pointer; touch-action: none; }
+#timeline text { fill: var(--muted); font-size: 12px; font-family: var(--f-label); letter-spacing: .04em; }
+
+/* dossier */
+.kicker { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.panel h2 { font-size: 30px; font-weight: 700; line-height: 1.02; margin: 4px 0 6px; text-wrap: balance; }
+.panel h3 { font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 22px 0 8px; border-bottom: 1px solid var(--line); padding-bottom: 5px; }
+.panel p, .prose { font-family: var(--f-text); font-size: 15.5px; line-height: 1.5; margin: 6px 0; color: var(--ink); }
+.meta { font-size: 16px; color: var(--muted); letter-spacing: .02em; }
+.meta b { color: var(--ink); font-weight: 600; }
+.back { background: none; border: 0; padding: 0; color: var(--focus); cursor: pointer; font-size: 15px; letter-spacing: .04em; margin-bottom: 12px; }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.list li { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 5px 4px; border-radius: 3px; cursor: pointer; font-size: 16px; }
+.list li:hover, .list li:focus-visible { background: rgba(255, 255, 255, .05); }
+.list .y { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 14px; }
+.list .nm { min-width: 0; overflow-wrap: anywhere; }
+.list .tag { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.list .tag.won { color: #8fc48a; } .list .tag.lost { color: var(--blood); }
+.bars { display: grid; gap: 6px; }
+.bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; cursor: pointer; font-size: 16px; }
+.bar .track { grid-column: 1 / -1; height: 5px; background: rgba(255, 255, 255, .06); border-radius: 2px; overflow: hidden; }
+.bar .track span { display: block; height: 100%; }
+.bar .v { white-space: nowrap; text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; font-size: 14px; }
+.bar .n { min-width: 0; overflow-wrap: anywhere; }
+.sides { display: grid; gap: 10px; }
+.side { border-left: 3px solid var(--line); padding-left: 10px; }
+.side.win { border-color: #8fc48a; }
+.side .lab { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.side a, .plink { color: var(--ink); text-decoration: underline; text-decoration-color: var(--muted); text-underline-offset: 3px; cursor: pointer; background: none; border: 0; padding: 0; font-size: 17px; text-align: left; }
+.draft { display: inline-block; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--brass); border: 1px solid var(--brass); padding: 1px 6px; border-radius: 2px; }
+.links { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; font-size: 15px; }
+.links a { color: var(--focus); }
+.spark text { fill: var(--muted); font-size: 11px; font-family: var(--f-label); }
+.held { width: 100%; height: 30px; display: block; }
+.note { font-size: 13px; color: var(--muted); line-height: 1.4; margin-top: 18px; font-family: var(--f-text); }
+.note a { color: var(--muted); }
+
+/* map marks */
+.pol { stroke: var(--sea); stroke-width: .6; vector-effect: non-scaling-stroke; cursor: pointer; }
+.pol:hover, .pol.sel { stroke: var(--ink); stroke-width: 1.4; }
+.lbl { fill: var(--ink); font-family: var(--f-label); font-weight: 600; text-anchor: middle; paint-order: stroke; stroke: rgba(10, 18, 25, .7); stroke-linejoin: round; pointer-events: none; letter-spacing: .04em; text-transform: uppercase; }
+.bat { cursor: pointer; }
+.bat .x { stroke: var(--blood); stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.bat .halo { fill: rgba(228, 88, 63, .18); stroke: none; }
+.chk { cursor: pointer; }
+.chk rect { fill: var(--sea); stroke: var(--brass); vector-effect: non-scaling-stroke; stroke-width: 1.6; }
+.chk.open rect { fill: var(--brass); }
+
+@media (max-width: 760px) {
+  .app { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto 42%; }
+  .panel { grid-column: 1; grid-row: 3; border-left: 0; border-top: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 14px 20px; }
+  .rail { padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .rail-top .legend { display: none; }
+  .layers { max-width: 55%; }
+  .chip { font-size: 12px; padding: 3px 7px; }
+  .readout .sub { font-size: 13px; }
+  .zoom { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="app">
+  <div class="map" id="map">
+    <svg id="svg" role="img" aria-label="World map of states, battles and chokepoints for the selected year"></svg>
+    <div class="readout"><div class="yr" id="yr"></div><div class="sub" id="yrsub"></div></div>
+    <div class="layers" role="group" aria-label="Layers">
+      <button class="chip" id="t-borders" aria-pressed="true"><span class="sw" style="background:#7f9c6b"></span>States</button>
+      <button class="chip" id="t-battles" aria-pressed="true"><span class="sw" style="background:var(--blood)"></span>Battles</button>
+      <button class="chip" id="t-choke" aria-pressed="true"><span class="sw" style="background:var(--brass);transform:rotate(45deg) scale(.8)"></span>Chokepoints</button>
+      <button class="chip" id="t-labels" aria-pressed="true">Names</button>
+    </div>
+    <div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">&minus;</button><button id="zhome" aria-label="Show the whole world">&#8962;</button></div>
+    <div class="tip" id="tip" hidden></div>
+  </div>
+  <div class="rail">
+    <div class="rail-top">
+      <button id="prev" aria-label="Back 25 years">&lsaquo;</button>
+      <button id="play" class="play">Play</button>
+      <button id="next" aria-label="Forward 25 years">&rsaquo;</button>
+      <div class="legend"><span><i style="background:var(--ink);opacity:.45"></i>states on the map</span><span><i style="background:var(--blood)"></i>battles</span><span>borders every 25 years</span></div>
+    </div>
+    <svg id="timeline" aria-label="Timeline, 3400 BCE to 2024. Drag or use the arrow keys to change the year." tabindex="0" role="slider" aria-valuemin="-3400" aria-valuemax="2024"></svg>
+  </div>
+  <aside class="panel" id="panel" aria-live="polite"></aside>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+/*__DATA__*/
+</script>
+<script>
+(() => {
+const YEARS = TOPO.years;
+const FEATS = topojson.feature(TOPO, TOPO.objects.borders).features;
+const LANDF = topojson.feature(LAND, LAND.objects.land);
+const byYear = new Map(YEARS.map(y => [y, []]));
+FEATS.forEach((f, i) => f.properties.years.forEach(y => byYear.get(y).push(i)));
+const PALETTE = ['#7f9c6b', '#b07a57', '#6f8fb0', '#a7895a', '#8c6f9e', '#5f9a94', '#b3665f', '#9aa25a', '#7b7fb5', '#c19a6b', '#5e8a6a', '#a0697f', '#6a9bc0', '#b58f3e', '#8e8a62', '#7d6a9a'];
+const hash = s => { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return h >>> 0; };
+const keyOf = p => p.group || p.ref;
+const color = k => PALETTE[hash(k) % PALETTE.length];
+const fmtY = y => y < 0 ? `${-y} BCE` : `${y} CE`;
+const fmtA = a => a >= 1 ? `${a.toFixed(1)}M km²` : a >= .01 ? `${Math.round(a * 1000)}k km²` : `${Math.round(a * 1e6)} km²`;
+const pname = id => (POL[id] || [id.replace(/^polity:/, '')])[0];
+const snapOf = y => { let s = YEARS[0]; for (const v of YEARS) if (v <= y) s = v; return s; };
+const state = { year: 1275, sel: null, show: { borders: true, battles: true, choke: true, labels: true }, k: 1 };
+try { const s = JSON.parse(localStorage.getItem('bb-layers') || 'null'); if (s) Object.assign(state.show, s); } catch (e) {}
+
+/* map */
+const svg = d3.select('#svg'), mapEl = document.getElementById('map');
+const root = svg.append('g');
+const proj = d3.geoNaturalEarth1();
+const path = d3.geoPath(proj);
+const gSea = root.append('path').attr('fill', 'var(--sea)');
+const gGrat = root.append('path').attr('fill', 'none').attr('stroke', 'rgba(255,255,255,.04)').attr('vector-effect', 'non-scaling-stroke');
+const gLand = root.append('path').attr('fill', 'var(--land)');
+const gPol = root.append('g'), gLbl = root.append('g'), gChk = root.append('g'), gBat = root.append('g');
+let W = 0, H = 0, pathCache = new Map(), centroidCache = new Map();
+function layout() {
+  const r = mapEl.getBoundingClientRect(); W = r.width; H = r.height;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+  proj.fitExtent([[8, 70], [W - 8, H - 8]], { type: 'Sphere' });
+  pathCache.clear(); centroidCache.clear();
+  gSea.attr('d', path({ type: 'Sphere' }));
+  gGrat.attr('d', path(d3.geoGraticule10()));
+  gLand.attr('d', path(LANDF));
+  render();
+}
+const pd = i => { if (!pathCache.has(i)) pathCache.set(i, path(FEATS[i]) || ''); return pathCache.get(i); };
+function centroid(i) {
+  if (!centroidCache.has(i)) {
+    const f = FEATS[i], g = f.geometry;
+    let best = g;
+    if (g && g.type === 'MultiPolygon') {
+      let ba = -1;
+      for (const c of g.coordinates) { const p = { type: 'Polygon', coordinates: c }, a = path.area(p); if (a > ba) { ba = a; best = p; } }
+    }
+    centroidCache.set(i, best ? path.centroid(best) : [NaN, NaN]);
+  }
+  return centroidCache.get(i);
+}
+const zoom = d3.zoom().scaleExtent([1, 24]).on('zoom', e => {
+  root.attr('transform', e.transform); state.k = e.transform.k; scaleMarks();
+});
+svg.call(zoom).on('dblclick.zoom', null);
+d3.select('#zin').on('click', () => svg.transition().duration(300).call(zoom.scaleBy, 1.8));
+d3.select('#zout').on('click', () => svg.transition().duration(300).call(zoom.scaleBy, 1 / 1.8));
+d3.select('#zhome').on('click', () => svg.transition().duration(400).call(zoom.transform, d3.zoomIdentity));
+function flyTo(lon, lat, k = 4) {
+  const [x, y] = proj([lon, lat]);
+  const kk = Math.max(k, state.k);
+  svg.transition().duration(650).call(zoom.transform, d3.zoomIdentity.translate(W / 2, H / 2).scale(kk).translate(-x, -y));
+}
+
+const tip = document.getElementById('tip');
+function showTip(e, html) {
+  tip.innerHTML = html; tip.hidden = false;
+  const r = mapEl.getBoundingClientRect();
+  let x = e.clientX - r.left + 14, y = e.clientY - r.top + 14;
+  if (x + 260 > r.width) x = e.clientX - r.left - 270;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+const hideTip = () => { tip.hidden = true; };
+
+function render() {
+  const snap = snapOf(state.year);
+  const ids = state.show.borders ? byYear.get(snap) : [];
+  gPol.selectAll('path').data(ids, i => i).join('path')
+    .attr('class', i => 'pol' + (state.sel && state.sel.t === 'p' && keyOf(FEATS[i].properties) === state.sel.id ? ' sel' : ''))
+    .attr('d', pd).attr('fill', i => color(keyOf(FEATS[i].properties)))
+    .attr('fill-opacity', i => state.sel && state.sel.t === 'p' ? (keyOf(FEATS[i].properties) === state.sel.id ? .95 : .55) : .82)
+    .on('mousemove', (e, i) => { const p = FEATS[i].properties; showTip(e, `${p.name}${p.group ? `<small>part of ${pname(p.group)}</small>` : ''}<small>${fmtY(p.from)} to ${fmtY(p.to)} in this outline</small>`); })
+    .on('mouseleave', hideTip)
+    .on('click', (e, i) => select({ t: 'p', id: keyOf(FEATS[i].properties) }));
+  // one label per realm, at its largest piece
+  const realms = new Map();
+  for (const i of ids) {
+    const p = FEATS[i].properties, k = keyOf(p), a = p.area_km2;
+    const r = realms.get(k) || { k, area: 0, best: i, ba: -1 };
+    r.area += a; if (a > r.ba) { r.ba = a; r.best = i; }
+    realms.set(k, r);
+  }
+  state.realms = [...realms.values()].sort((a, b) => b.area - a.area);
+  const lbls = state.show.labels && state.show.borders ? state.realms.filter(r => r.area > 120000).slice(0, 60) : [];
+  gLbl.selectAll('text').data(lbls, r => r.k).join('text').attr('class', 'lbl')
+    .attr('x', r => centroid(r.best)[0]).attr('y', r => centroid(r.best)[1])
+    .attr('data-s', r => Math.max(8, Math.min(17, 4 + Math.sqrt(r.area) / 260)))
+    .text(r => shortName(pname(r.k)));
+  // battles: this quarter-century bright, the last century fading
+  const bats = state.show.battles ? BAT.filter(b => b.y >= snap - 100 && b.y < snap + 25) : [];
+  gBat.selectAll('g').data(bats, b => b.id).join(en => {
+    const g = en.append('g').attr('class', 'bat');
+    g.append('circle').attr('class', 'halo');
+    g.append('path').attr('class', 'x');
+    return g;
+  }).attr('transform', b => { const [x, y] = proj([b.lon, b.lat]); return `translate(${x},${y})`; })
+    .attr('opacity', b => b.y >= snap ? 1 : Math.max(.18, .75 - (snap - b.y) / 140))
+    .attr('data-now', b => b.y >= snap ? 1 : 0)
+    .on('mousemove', (e, b) => showTip(e, `${b.name}<small>${fmtY(b.y)}${b.w != null ? ` · won by ${b.s[b.w].map(x => x.n).join(', ')}` : ''}</small>`))
+    .on('mouseleave', hideTip)
+    .on('click', (e, b) => { e.stopPropagation(); select({ t: 'b', id: b.id }); });
+  const chks = state.show.choke ? CHOKE.filter(c => !c.start || c.start <= snap + 24) : [];
+  gChk.selectAll('g').data(chks, c => c.id).join(en => { const g = en.append('g').attr('class', 'chk'); g.append('rect'); return g; })
+    .attr('transform', c => { const [x, y] = proj([c.lon, c.lat]); return `translate(${x},${y})`; })
+    .classed('open', c => state.sel && state.sel.t === 'c' && state.sel.id === c.id)
+    .on('mousemove', (e, c) => { const h = holderAt(c, snap); showTip(e, `${c.name}<small>${h ? 'held by ' + pname(h[0]) : 'no state holds it in this snapshot'}</small>`); })
+    .on('mouseleave', hideTip)
+    .on('click', (e, c) => { e.stopPropagation(); select({ t: 'c', id: c.id }); });
+  scaleMarks();
+  readout(snap);
+  drawCursor(snap);
+  panel();
+}
+function scaleMarks() {
+  const k = state.k;
+  gLbl.selectAll('text').attr('font-size', function () { return Math.min(22, (+this.getAttribute('data-s')) * Math.sqrt(k)) / k + 'px'; })
+    .attr('stroke-width', 3 / k)
+    .attr('opacity', function () { return (+this.getAttribute('data-s')) * Math.sqrt(k) < 9 ? 0 : 1; });
+  gBat.selectAll('g').each(function () {
+    const now = this.getAttribute('data-now') === '1', s = (now ? 6 : 4) / Math.sqrt(k) * (k > 1 ? 1 : 1);
+    d3.select(this).select('.x').attr('d', `M${-s},${-s}L${s},${s}M${-s},${s}L${s},${-s}`).attr('stroke-width', now ? 2.2 : 1.4);
+    d3.select(this).select('.halo').attr('r', now ? s * 2.1 : 0);
+  });
+  const c = 3.8 / Math.sqrt(k);
+  gChk.selectAll('rect').attr('x', -c).attr('y', -c).attr('width', 2 * c).attr('height', 2 * c).attr('transform', 'rotate(45)');
+}
+const shortName = n => n.replace(/^(Kingdom|Empire|Republic|Sultanate|Emirate|Principality|Duchy|Grand Duchy|Khanate|Caliphate) of (the )?/, '').replace(/ (Dynasty|Empire|Caliphate|Sultanate|Kingdom|Khaganate)$/, '');
+function holderAt(c, y) { return c.h.find(h => h[1] <= y && y <= h[2]); }
+function readout(snap) {
+  const yr = document.getElementById('yr');
+  yr.innerHTML = `${Math.abs(snap)}<span class="era">${snap < 0 ? 'BCE' : 'CE'}</span>`;
+  const n = state.realms.length;
+  const nb = BAT.filter(b => b.y >= snap && b.y < snap + 25).length;
+  document.getElementById('yrsub').textContent = `${n} states on the map${nb ? ` · ${nb} battle${nb > 1 ? 's' : ''} by ${fmtY(Math.min(snap + 24, 2024))}` : ''}`;
+}
+
+/* timeline: stretched where history is dense */
+const tl = d3.select('#timeline');
+const TD = [-3400, -1000, 0, 1000, 1500, 1800, 2024], TR = [0, .14, .32, .54, .7, .84, 1];
+let tx = d3.scaleLinear().domain(TD).range(TR);
+function drawTimeline() {
+  const w = tl.node().getBoundingClientRect().width, h = 64;
+  tl.attr('viewBox', `0 0 ${w} ${h}`).selectAll('*').remove();
+  tx = d3.scaleLinear().domain(TD).range(TR.map(r => 18 + r * (w - 36)));
+  const counts = YEARS.map(y => [y, new Set(byYear.get(y).map(i => keyOf(FEATS[i].properties))).size]);
+  const cy = d3.scaleLinear().domain([0, d3.max(counts, d => d[1])]).range([40, 6]);
+  tl.append('path').datum(counts).attr('fill', 'rgba(235,230,219,.10)').attr('stroke', 'rgba(235,230,219,.45)').attr('stroke-width', 1)
+    .attr('d', d3.area().x(d => tx(d[0])).y0(40).y1(d => cy(d[1])).curve(d3.curveMonotoneX));
+  tl.append('g').selectAll('line').data(BAT).join('line').attr('x1', b => tx(b.y)).attr('x2', b => tx(b.y)).attr('y1', 42).attr('y2', 48)
+    .attr('stroke', 'var(--blood)').attr('stroke-width', 1.2).attr('opacity', .8);
+  const ticks = w < 500 ? [-3000, -1000, 0, 1000, 1500, 2000] : [-3000, -1000, -500, 0, 500, 1000, 1250, 1500, 1650, 1800, 1900, 2000];
+  const g = tl.append('g');
+  g.selectAll('line').data(ticks).join('line').attr('x1', tx).attr('x2', tx).attr('y1', 50).attr('y2', 53).attr('stroke', 'var(--muted)');
+  g.selectAll('text').data(ticks).join('text').attr('x', tx).attr('y', 63).attr('text-anchor', 'middle').text(y => y < 0 ? `${-y} BC` : y === 0 ? '1 AD' : y);
+  tl.append('line').attr('id', 'cur').attr('y1', 0).attr('y2', 50).attr('stroke', 'var(--ink)').attr('stroke-width', 2);
+  drawCursor(snapOf(state.year));
+}
+function drawCursor(snap) {
+  tl.select('#cur').attr('x1', tx(snap)).attr('x2', tx(snap));
+  tl.attr('aria-valuenow', snap).attr('aria-valuetext', fmtY(snap));
+}
+function setYear(y) {
+  y = Math.max(YEARS[0], Math.min(2024, Math.round(y)));
+  const s = snapOf(y);
+  if (s === snapOf(state.year) && y === state.year) return;
+  state.year = s; render();
+}
+const fromX = x => tx.invert(x);
+tl.call(d3.drag().on('start drag', e => { stop(); setYear(fromX(e.x)); }));
+tl.on('click', e => { stop(); setYear(fromX(d3.pointer(e)[0])); });
+const step = d => { const i = YEARS.indexOf(snapOf(state.year)); setYear(YEARS[Math.max(0, Math.min(YEARS.length - 1, i + d))]); };
+document.getElementById('timeline').addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { step(1); e.preventDefault(); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { step(-1); e.preventDefault(); }
+  if (e.key === 'PageUp') { step(4); e.preventDefault(); }
+  if (e.key === 'PageDown') { step(-4); e.preventDefault(); }
+});
+d3.select('#prev').on('click', () => { stop(); step(-1); });
+d3.select('#next').on('click', () => { stop(); step(1); });
+let timer = null;
+function stop() { if (timer) { clearInterval(timer); timer = null; d3.select('#play').text('Play'); } }
+d3.select('#play').on('click', () => {
+  if (timer) return stop();
+  if (snapOf(state.year) >= 2024) setYear(-3400);
+  d3.select('#play').text('Pause');
+  timer = setInterval(() => { if (snapOf(state.year) >= 2024) return stop(); step(1); }, 650);
+});
+for (const [id, k] of [['t-borders', 'borders'], ['t-battles', 'battles'], ['t-choke', 'choke'], ['t-labels', 'labels']]) {
+  const b = document.getElementById(id);
+  b.setAttribute('aria-pressed', state.show[k]);
+  b.addEventListener('click', () => {
+    state.show[k] = !state.show[k]; b.setAttribute('aria-pressed', state.show[k]);
+    try { localStorage.setItem('bb-layers', JSON.stringify(state.show)); } catch (e) {}
+    render();
+  });
+}
+svg.on('click', e => { if (e.target.tagName !== 'path' || !e.target.classList.contains('pol')) { if (state.sel) select(null); } });
+
+/* dossier panel */
+const P = document.getElementById('panel');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function select(sel) {
+  state.sel = sel;
+  if (sel && sel.t === 'b') { const b = BAT.find(x => x.id === sel.id); if (snapOf(b.y) !== snapOf(state.year)) state.year = snapOf(b.y); flyTo(b.lon, b.lat, 3.5); }
+  if (sel && sel.t === 'c') { const c = CHOKE.find(x => x.id === sel.id); flyTo(c.lon, c.lat, 3.5); }
+  render();
+  P.scrollTop = 0;
+}
+function panel() {
+  const snap = snapOf(state.year), s = state.sel;
+  if (!s) return P.innerHTML = momentView(snap), wire();
+  if (s.t === 'p') P.innerHTML = polityView(s.id, snap);
+  if (s.t === 'b') P.innerHTML = battleView(BAT.find(x => x.id === s.id));
+  if (s.t === 'c') P.innerHTML = chokeView(CHOKE.find(x => x.id === s.id), snap);
+  wire();
+}
+function wire() {
+  P.querySelectorAll('[data-p]').forEach(el => el.onclick = () => select({ t: 'p', id: el.dataset.p }));
+  P.querySelectorAll('[data-b]').forEach(el => el.onclick = () => select({ t: 'b', id: el.dataset.b }));
+  P.querySelectorAll('[data-c]').forEach(el => el.onclick = () => select({ t: 'c', id: el.dataset.c }));
+  P.querySelectorAll('[data-y]').forEach(el => el.onclick = () => { stop(); setYear(+el.dataset.y); });
+  P.querySelectorAll('.back').forEach(el => el.onclick = () => select(null));
+  P.querySelectorAll('li[data-p],li[data-b],li[data-c]').forEach(el => { el.tabIndex = 0; el.onkeydown = e => { if (e.key === 'Enter') el.click(); }; });
+}
+const KEY_STRAITS = ['place:bosporus', 'place:strait_of_gibraltar', 'place:strait_of_malacca', 'place:strait_of_hormuz', 'place:bab_el_mandeb', 'place:khyber_pass', 'place:dardanelles', 'place:oresund'];
+function momentView(snap) {
+  const top = state.realms.slice(0, 8), max = top.length ? top[0].area : 1;
+  const now = BAT.filter(b => b.y >= snap && b.y < snap + 25);
+  const prev = BAT.filter(b => b.y < snap).slice(-3).reverse(), next = BAT.filter(b => b.y >= snap + 25).slice(0, 3);
+  let h = `<div class="kicker">The world in</div><h2>${fmtY(snap)}</h2>`;
+  h += `<p class="prose">Click a state, a battle (red cross) or a chokepoint (gold diamond). Drag the timeline or press Play to watch borders move every 25 years.</p>`;
+  h += `<h3>Largest states</h3><div class="bars">` + top.map(r => `<div class="bar" data-p="${r.k}" role="button" tabindex="0"><span class="n">${esc(pname(r.k))}</span><span class="v">${fmtA(r.area / 1e6)}</span><span class="track"><span style="width:${(100 * r.area / max).toFixed(1)}%;background:${color(r.k)}"></span></span></div>`).join('') + `</div>`;
+  if (now.length) h += `<h3>Battles, ${fmtY(snap)} to ${fmtY(Math.min(2024, snap + 24))}</h3>` + batList(now);
+  else h += `<h3>Battles nearby in time</h3>` + batList([...prev.reverse(), ...next]);
+  h += `<h3>Who holds the gates</h3><ul class="list">` + KEY_STRAITS.map(id => CHOKE.find(c => c.id === id)).filter(Boolean).map(c => {
+    const hh = holderAt(c, snap);
+    return `<li data-c="${c.id}"><span class="y">${c.sub === 'pass' ? 'pass' : 'strait'}</span><span class="nm">${esc(c.name)}</span><span class="tag">${hh ? esc(shortName(pname(hh[0]))) : 'none'}</span></li>`;
+  }).join('') + `</ul>`;
+  h += credits();
+  return h;
+}
+const batList = bs => `<ul class="list">` + bs.map(b => `<li data-b="${b.id}"><span class="y">${b.y < 0 ? -b.y + ' BC' : b.y}</span><span class="nm">${esc(b.name)}</span><span class="tag">${b.t}</span></li>`).join('') + `</ul>`;
+function polityView(id, snap) {
+  const p = POL[id] || [id, null, null];
+  const [name, start, end, sub, wd, wp, peakY, peakA] = p;
+  const here = state.realms.find(r => r.k === id);
+  let h = `<button class="back">&larr; The world in ${fmtY(snap)}</button><div class="kicker">${esc(sub || 'polity')}</div><h2>${esc(name)}</h2>`;
+  h += `<div class="meta"><b>${fmtY(start)}</b> to <b>${end == null ? 'today' : fmtY(end)}</b>${peakA ? ` · peak <b>${fmtA(peakA)}</b> in <button class="plink" data-y="${snapOf(peakY)}">${fmtY(peakY)}</button>` : ''}</div>`;
+  if (here) h += `<div class="meta">In ${fmtY(snap)}: <b>${fmtA(here.area / 1e6)}</b></div>`;
+  const a = AREA[id];
+  if (a && a.length > 1) h += `<h3>Area over time</h3>` + spark(a, snap);
+  const members = new Set(FEATS.filter(f => f.properties.group === id).map(f => f.properties.ref));
+  if (members.size) h += `<h3>Made up of</h3><ul class="list">` + [...members].slice(0, 30).map(m => `<li data-p="${m}"><span class="y">${POL[m] ? (POL[m][1] < 0 ? -POL[m][1] + ' BC' : POL[m][1]) : ''}</span><span class="nm">${esc(pname(m))}</span><span class="tag"></span></li>`).join('') + `</ul>`;
+  const fought = BAT.filter(b => b.s.some(side => side.some(x => x.p === id)));
+  if (fought.length) h += `<h3>Battles</h3><ul class="list">` + fought.map(b => {
+    const side = b.s.findIndex(sd => sd.some(x => x.p === id));
+    const res = b.w == null ? 'draw' : b.w === side ? 'won' : 'lost';
+    return `<li data-b="${b.id}"><span class="y">${b.y < 0 ? -b.y + ' BC' : b.y}</span><span class="nm">${esc(b.name)}</span><span class="tag ${res}">${res}</span></li>`;
+  }).join('') + `</ul>`;
+  const held = [];
+  for (const c of CHOKE) for (const hh of c.h) if (hh[0] === id) held.push([c, hh]);
+  if (held.length) h += `<h3>Gates it held</h3><ul class="list">` + held.map(([c, hh]) => `<li data-c="${c.id}"><span class="y">${hh[1] < 0 ? -hh[1] + ' BC' : hh[1]}</span><span class="nm">${esc(c.name)}</span><span class="tag">to ${hh[2] >= 2024 ? 'now' : hh[2] < 0 ? -hh[2] + ' BC' : hh[2]}</span></li>`).join('') + `</ul>`;
+  h += `<div class="links">${wd ? `<a href="https://www.wikidata.org/wiki/${wd}" target="_blank" rel="noopener">Wikidata ${wd}</a>` : ''}${wp ? `<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(wp.replace(/ /g, '_'))}" target="_blank" rel="noopener">Wikipedia</a>` : ''}</div>`;
+  h += `<p class="note">Borders, dates and areas come from Cliopatria (Seshat), sampled every 25 years.</p>`;
+  return h;
+}
+function spark(a, snap) {
+  const w = 300, h = 90, m = { l: 4, r: 4, t: 8, b: 16 };
+  const x = d3.scaleLinear().domain(d3.extent(a, d => d[0])).range([m.l, w - m.r]);
+  const y = d3.scaleLinear().domain([0, d3.max(a, d => d[1]) || 1]).range([h - m.b, m.t]);
+  const line = d3.line().x(d => x(d[0])).y(d => y(d[1])).curve(d3.curveStepAfter);
+  const area = d3.area().x(d => x(d[0])).y0(h - m.b).y1(d => y(d[1])).curve(d3.curveStepAfter);
+  const x0 = a[0][0], x1 = a[a.length - 1][0];
+  const cur = snap >= x0 && snap <= x1 ? `<line x1="${x(snap)}" x2="${x(snap)}" y1="${m.t - 4}" y2="${h - m.b}" stroke="var(--ink)" stroke-width="1.5"/>` : '';
+  const mx = d3.max(a, d => d[1]);
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" width="100%" role="img" aria-label="Area over time">
+    <line x1="${m.l}" x2="${w - m.r}" y1="${h - m.b}" y2="${h - m.b}" stroke="var(--line)"/>
+    <path d="${area(a)}" fill="rgba(217,180,98,.16)"/><path d="${line(a)}" fill="none" stroke="var(--brass)" stroke-width="1.5"/>${cur}
+    <text x="${m.l}" y="${h - 3}">${fmtY(x0)}</text><text x="${w - m.r}" y="${h - 3}" text-anchor="end">${fmtY(x1)}</text>
+    <text x="${w - m.r}" y="${m.t + 2}" text-anchor="end">max ${fmtA(mx)}</text></svg>`;
+}
+function battleView(b) {
+  let h = `<button class="back">&larr; The world in ${fmtY(snapOf(state.year))}</button><div class="kicker">${b.t} · ${fmtY(b.y)}</div><h2>${esc(b.name)}</h2>`;
+  h += `<p>${esc(b.why)}</p><div class="sides">` + b.s.map((side, i) => `<div class="side${b.w === i ? ' win' : ''}"><div class="lab">${b.w == null ? 'Side ' + 'AB'[i] : b.w === i ? 'Won' : 'Lost'}</div>` +
+    side.map(x => x.p ? `<div><button class="plink" data-p="${x.p}">${esc(x.n)}</button></div>` : `<div style="font-size:17px">${esc(x.n)}</div>`).join('') + `</div>`).join('') + `</div>`;
+  if (b.w == null) h += `<p class="meta">No clear winner.</p>`;
+  h += `<div class="links"><span class="draft">Draft</span><a href="${b.u}" target="_blank" rel="noopener">Check it on Wikipedia</a></div>`;
+  h += `<p class="note">Written from general knowledge and not yet checked against sources. A Wikidata pull will replace this list with thousands of sourced battles.</p>`;
+  return h;
+}
+function chokeView(c, snap) {
+  const hh = holderAt(c, snap);
+  let h = `<button class="back">&larr; The world in ${fmtY(snap)}</button><div class="kicker">${c.sub === 'pass' ? 'Mountain pass or land gate' : 'Sea chokepoint'}</div><h2>${esc(c.name)}</h2>`;
+  h += `<div class="meta">In ${fmtY(snap)}: ${hh ? `held by <button class="plink" data-p="${hh[0]}">${esc(pname(hh[0]))}</button>` : '<b>no state holds it in this snapshot</b>'}</div>`;
+  h += `<p>${esc(c.what)}</p><p>${esc(c.why)}</p>`;
+  if (c.h.length) {
+    const w = 300, x = d3.scaleLinear().domain(TD).range(TR.map(r => r * w));
+    h += `<h3>Who held it</h3><svg class="held" viewBox="0 0 ${w} 30" preserveAspectRatio="none" role="img" aria-label="Holders over time">` +
+      c.h.map(z => `<rect x="${x(z[1])}" width="${Math.max(1, x(z[2]) - x(z[1]))}" y="4" height="16" fill="${color(z[0])}"><title>${esc(pname(z[0]))}: ${fmtY(z[1])} to ${fmtY(z[2])}</title></rect>`).join('') +
+      `<line x1="${x(snap)}" x2="${x(snap)}" y1="0" y2="24" stroke="var(--ink)" stroke-width="2"/></svg>`;
+    const merged = [];
+    for (const z of c.h) { const l = merged[merged.length - 1]; if (l && l[0] === z[0]) l[2] = z[2]; else merged.push([...z]); }
+    h += `<ul class="list">` + merged.map(z => `<li data-p="${z[0]}"><span class="y">${z[1] < 0 ? -z[1] + ' BC' : z[1]}</span><span class="nm">${esc(pname(z[0]))}</span><span class="tag">${z[2] >= 2024 ? 'now' : 'to ' + (z[2] < 0 ? -z[2] + ' BC' : z[2])}</span></li>`).join('') + `</ul>`;
+  }
+  const near = BAT.filter(b => Math.hypot(b.lat - c.lat, (b.lon - c.lon) * Math.cos(c.lat * Math.PI / 180)) < 2.2);
+  if (near.length) h += `<h3>Battles nearby</h3>` + batList(near);
+  h += `<div class="links"><span class="draft">Draft</span><a href="${c.u}" target="_blank" rel="noopener">Wikipedia</a></div>`;
+  h += `<p class="note">The place description is a draft. The holders are computed from Cliopatria borders: the state whose territory contains the point, or the nearest one within 60 km.</p>`;
+  return h;
+}
+function credits() {
+  return `<p class="note">${SUMMARY}. Borders: <a href="https://github.com/Seshat-Global-History-Databank/cliopatria" target="_blank" rel="noopener">Cliopatria</a> v0.2.1, Seshat Global History Databank, CC BY 4.0, simplified for the web. Land: Natural Earth. Battles and chokepoints are drafts written from general knowledge, each linked to the article to check.</p>`;
+}
+
+new ResizeObserver(() => { layout(); drawTimeline(); }).observe(mapEl);
+layout(); drawTimeline();
+})();
+</script>
