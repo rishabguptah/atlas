@@ -188,7 +188,7 @@ def main():
     places, rels = [], []
     for slug, name, sub, lat, lon, lenses, wiki, opened, what, why in POINTS:
         url = 'https://en.wikipedia.org/wiki/' + wiki
-        rec = {'id': f'place:{slug}', 'kind': 'place', 'subtype': sub, 'name': name, 'lenses': lenses,
+        rec = {'id': f'place:{slug}', 'kind': 'place', 'stub': True, 'subtype': sub, 'name': name, 'lenses': lenses,
                'lat': lat, 'lon': lon, 'what': what, 'why': why,
                'sources': [{'cite': f'Wikipedia: {name} (written from general knowledge; check)', 'url': url}],
                'status': 'draft'}

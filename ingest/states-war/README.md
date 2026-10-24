@@ -21,7 +21,7 @@ python3 views/states-war/build_page.py path/to/land-50m.json borders-and-battles
 | `polity-relations.jsonl` | `part_of` (members of composite empires, vassals, allegiances), `allied_with` (alliances, personal unions) | sourced |
 | `geo/borders.geojson` | 5,397 border polygons, sampled every 25 years from 3400 BCE to 2024 | sourced |
 | `battles.jsonl` | 169 decisive battles and sieges, plus `participant_in` links to polities | draft |
-| `chokepoints.jsonl` | 37 straits, canals, capes and passes (`place:`), plus 667 computed `controls` spans | places draft, spans sourced |
+| `chokepoints.jsonl` | 37 straits, canals, capes and passes as `place:` stubs (places-people owns places; its fields win where it has the same id, e.g. `place:bosporus`), plus 667 computed `controls` spans | places draft, spans sourced |
 
 ## Sources and licences
 
