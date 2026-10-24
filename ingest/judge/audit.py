@@ -116,7 +116,7 @@ def audit(kernel):
     # Sourcing: how much of the kernel rests on a real, checkable source?
     src = {"records": len(recs), "draft": 0, "sourced": 0, "unchecked_cite": 0, "with_url": 0, "by_kind": {}}
     for x in recs:
-        k = src["by_kind"].setdefault(x["kind"], {"records": 0, "draft": 0, "with_url": 0})
+        k = src["by_kind"].setdefault(x["kind"], {"records": 0, "draft": 0, "with_url": 0, "unchecked_cite": 0})
         k["records"] += 1
         cites = x.get("sources") or []
         if x.get("status") == "draft":
@@ -126,6 +126,7 @@ def audit(kernel):
             src["sourced"] += 1
         if cites and all(any(u in c.get("cite", "").lower() for u in UNCHECKED) for c in cites):
             src["unchecked_cite"] += 1
+            k["unchecked_cite"] += 1
         if any(c.get("url") for c in cites):
             src["with_url"] += 1
             k["with_url"] += 1
