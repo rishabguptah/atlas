@@ -347,7 +347,12 @@ def main():
 
     def dump(name, recs):
         (OUT / name).write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in recs))
-    dump("polities.jsonl", pol_lines); dump("area.jsonl", area_lines)
+    # states-war owns polity area series: skip any measure id another workstream already publishes
+    taken = set()
+    for path in (ROOT / "data").glob("*/*.jsonl"):
+        if path.parent != OUT:
+            taken |= {json.loads(l).get("id") for l in path.read_text(encoding="utf-8").splitlines() if l.strip()}
+    dump("polities.jsonl", pol_lines); dump("area.jsonl", [m for m in area_lines if m["id"] not in taken])
     dump("fragility.jsonl", frag_lines); dump("endings.jsonl", end_lines)
     (OUT / "backtest.json").write_text(json.dumps({**backtest, "warnings": warn}, indent=1, ensure_ascii=False))
     (OUT / "lab.json").write_text(json.dumps({"backtest": backtest, "polities": lab}, ensure_ascii=False, separators=(",", ":")))
