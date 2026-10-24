@@ -15,7 +15,7 @@ bending an existing one, and say so in your PR.
 - Run `python3 tools/build.py` before you push. It fails on any error, and CI runs the same check.
 
 Workstream folders: `kernel`, `living-atlas`, `places-people`, `states-war`, `economy-trade`,
-`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`.
+`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`.
 
 ## Common fields (every record)
 
@@ -59,7 +59,7 @@ Years are integers. Negative is BCE, and there is no year 0 (-1 is 1 BCE).
 
 | Kind | Id prefix | Owner | Extra fields |
 | --- | --- | --- | --- |
-| `place` | `place:` | places-people | `subtype`: city, site, wonder, chokepoint, river, pass, region. `today`: modern country. `causes`: why it died, from the cause list. |
+| `place` | `place:` | places-people (physical features: geography) | `subtype`: city, site, wonder, chokepoint, river, pass, region; physical features also use mountain_range, desert, plateau, plain, basin, valley, lowland, delta, ocean, sea, gulf, bay, strait, channel, lake, peak (ids `place:<type>:<slug>`, e.g. `place:mtn:zagros_mountains`). `tier`: 1-6, the zoom level a map should name it at. `label_line`: `[[lon, lat], ...]` to letter the name along. `today`: modern country. `causes`: why it died, from the cause list. |
 | `polity` | `polity:` | states-war | `subtype`: empire, kingdom, city_state, republic, confederation, caliphate, nation_state. `capital`: place id, or use `capital_of` relations when it moved. `peak`: `[year, area_million_km2]`. |
 | `person` | `person:` | places-people | `born`, `died`: `{ "year", "place" }`. `roles`: e.g. ruler, philosopher, general, merchant, poet. |
 | `group` | `group:` | economy-trade | A people or population, e.g. Bantu speakers, Mongols, Vikings. |
@@ -119,5 +119,7 @@ One measure record per (thing, metric, source), with id `m:<metric>:<thing slug>
 `silt`, `faith`, `disease`, `unknown`.
 
 ## Changes
+
+v0.1 · 2026-10-24 · `geography` workstream: physical-feature subtypes, `tier`, `label_line`, `elevation_m` on places.
 
 v0 · 2026-10-24 · first version. Breaking changes will bump the version and come with a migration script.

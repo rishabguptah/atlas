@@ -1,0 +1,165 @@
+<title>Atlas Terrain</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+/* Layout: one full-bleed engraved-atlas sheet; a title cartouche, layer switches and a feature card float over it.
+   A single paper look by choice, so the relief colours read the same for every viewer. */
+:root {
+  color-scheme: light;
+  --paper: #efe7d4;
+  --paper-2: #f7f2e6;
+  --ink: #3b2a1e;
+  --muted: #7a6a58;
+  --rule: #c9b99a;
+  --accent: #8c3a22;
+  --sea-ink: #2e5e72;
+  --f-display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --f-text: "Spectral", Georgia, "Times New Roman", serif;
+}
+html, body { height: 100%; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-text); overflow: hidden; }
+* { box-sizing: border-box; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#map { position: absolute; inset: 0; }
+#map svg { width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+#map svg:active { cursor: grabbing; }
+.sphere-edge { fill: none; stroke: var(--ink); stroke-opacity: .55; }
+.grat { fill: none; stroke: var(--sea-ink); stroke-opacity: .12; }
+
+.cartouche { position: absolute; top: max(12px, env(safe-area-inset-top, 0px)); left: max(16px, env(safe-area-inset-left, 0px));
+  background: color-mix(in srgb, var(--paper-2) 90%, transparent); border: 1px solid var(--rule); outline: 1px solid var(--rule); outline-offset: 3px;
+  padding: 10px 16px 11px; max-width: min(330px, calc(100vw - 32px)); }
+.cartouche h1 { font-family: var(--f-display); font-weight: 600; font-size: 26px; letter-spacing: .2em; text-transform: uppercase; margin: 0; line-height: 1; text-wrap: balance; }
+.cartouche p { margin: 6px 0 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
+.switches { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.switches button { background: none; border: 1px solid var(--rule); border-radius: 2px; padding: 3px 9px; font-family: var(--f-display); font-weight: 600;
+  font-size: 14px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; color: var(--muted); }
+.switches button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); background: var(--paper); }
+
+.card { position: absolute; left: max(16px, env(safe-area-inset-left, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  width: min(360px, calc(100vw - 32px)); background: var(--paper-2); border: 1px solid var(--rule); padding: 12px 16px 14px; box-shadow: 0 6px 20px rgba(59, 42, 30, .12); }
+.card .kind { font-family: var(--f-display); font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+.card h2 { font-family: var(--f-display); font-size: 25px; font-weight: 600; margin: 2px 0 4px; line-height: 1.05; text-wrap: balance; }
+.card p { margin: 5px 0 0; font-size: 14.5px; line-height: 1.5; }
+.card .why { font-style: italic; }
+.card .meta { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.card .meta a { color: var(--muted); }
+.card .close { position: absolute; top: 6px; right: 8px; background: none; border: 0; font-size: 20px; cursor: pointer; color: var(--muted); }
+
+.zoom { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 4px; }
+.zoom button { width: 34px; height: 34px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 2px; font-size: 18px; cursor: pointer; }
+.scale { position: absolute; right: max(60px, calc(env(safe-area-inset-right, 0px) + 60px)); bottom: max(22px, env(safe-area-inset-bottom, 0px));
+  font-family: var(--f-display); font-size: 13px; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; }
+@media (max-width: 600px) {
+  .cartouche h1 { font-size: 20px; }
+  .cartouche p { display: none; }
+  .scale { display: none; }
+  .card { right: max(60px, calc(env(safe-area-inset-right, 0px) + 60px)); width: auto; }
+}
+</style>
+
+<div id="map"><svg id="svg" role="img" aria-label="Illustrated world relief map with mountain ranges, deserts, seas, rivers, straits and passes"></svg></div>
+<div class="cartouche">
+  <h1>Terrain</h1>
+  <p>Mountains, deserts, seas, rivers, straits and passes. Zoom in for smaller names; click a name to see why it mattered.</p>
+  <div class="switches" role="group" aria-label="Layers">
+    <button id="sw-relief" aria-pressed="true">Relief</button>
+    <button id="sw-rivers" aria-pressed="true">Rivers</button>
+    <button id="sw-names" aria-pressed="true">Names</button>
+    <button id="sw-gates" aria-pressed="true">Straits &amp; passes</button>
+  </div>
+</div>
+<div class="card" id="card" aria-live="polite" hidden></div>
+<div class="scale" id="scale"></div>
+<div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">&minus;</button><button id="zhome" aria-label="Show the whole world">&#8962;</button></div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script>/*__TERRAIN_JS__*/</script>
+<script>
+const TERRAIN = /*__TERRAIN__*/;
+const RELIEF = "/*__RELIEF__*/";
+const KIND = { mountain_range: 'Mountain range', desert: 'Desert', plateau: 'Plateau', plain: 'Plain or steppe', basin: 'Basin',
+  valley: 'Valley', lowland: 'Lowland', depression: 'Depression', gorge: 'Gorge', isthmus: 'Isthmus', wetland: 'Wetland',
+  delta: 'Delta', tundra: 'Tundra', peninsula: 'Peninsula', region: 'Region', ocean: 'Ocean', sea: 'Sea', gulf: 'Gulf',
+  bay: 'Bay', strait: 'Strait', channel: 'Channel', sound: 'Sound', lagoon: 'Lagoon', fjord: 'Fjord', inlet: 'Inlet',
+  lake: 'Lake', river: 'River', peak: 'Peak', pass: 'Pass' };
+
+const svg = d3.select('#svg');
+const projection = d3.geoNaturalEarth1();
+const path = d3.geoPath(projection);
+const root = svg.append('g');
+const base = root.append('g'), over = root.append('g');
+let k = 1, terrain;
+
+function draw() {
+  const { width: W, height: H } = svg.node().getBoundingClientRect();
+  projection.fitExtent([[6, 6], [W - 6, H - 6]], { type: 'Sphere' });
+  base.selectAll('*').remove();
+  drawRelief(base, path, RELIEF);
+  base.append('path').attr('class', 'grat').attr('d', path(d3.geoGraticule10())).style('stroke-width', 'calc(.6px / var(--k, 1))');
+  base.append('path').attr('class', 'sphere-edge').attr('d', path({ type: 'Sphere' })).style('stroke-width', 'calc(1.2px / var(--k, 1))');
+  terrain = drawTerrain(over, projection, path, TERRAIN, k, { onSelect: show });
+  applySwitches();
+}
+
+function show(d) {
+  const card = document.getElementById('card');
+  const wd = d.wikidata ? ` · <a href="https://www.wikidata.org/wiki/${d.wikidata}" target="_blank" rel="noopener">Wikidata</a>` : '';
+  const src = d.src === 'states-war' ? 'From the states and chokepoints map' : 'Natural Earth';
+  card.innerHTML = `<button class="close" aria-label="Close">&times;</button>
+    <div class="kind">${KIND[d.t] || d.t}${d.elevation_m ? ` · ${d.elevation_m.toLocaleString('en')} m` : ''}</div>
+    <h2>${d.name}</h2>
+    ${d.what ? `<p>${d.what}</p>` : ''}${d.why ? `<p class="why">${d.why}</p>` : ''}
+    ${!d.what && !d.why ? '<p class="why">No story written for this one yet.</p>' : ''}
+    <div class="meta">${src}${wd}${d.what && d.src !== 'states-war' ? ' · notes are drafts until fact-checked' : ''}</div>`;
+  card.hidden = false;
+  card.querySelector('.close').onclick = () => { card.hidden = true; terrain.highlight(null); };
+  terrain.highlight(d.id);
+}
+
+const zoom = d3.zoom().scaleExtent([1, 14]).on('zoom', e => {
+  k = e.transform.k;
+  root.attr('transform', e.transform);
+  svg.style('--k', k);
+}).on('end', () => { terrain.update(k); scale(); });
+svg.call(zoom);
+d3.select('#zin').on('click', () => svg.transition().duration(350).call(zoom.scaleBy, 1.8));
+d3.select('#zout').on('click', () => svg.transition().duration(350).call(zoom.scaleBy, 1 / 1.8));
+d3.select('#zhome').on('click', () => svg.transition().duration(450).call(zoom.transform, d3.zoomIdentity));
+
+function scale() {
+  const tiers = { 1: 0, 2: 1.6, 3: 2.5, 4: 4, 5: 6, 6: 9 };
+  const shown = Object.entries(tiers).filter(([, m]) => k >= m).length;
+  document.getElementById('scale').textContent = `Zoom ${k.toFixed(1)}× · ${shown} of 6 name tiers`;
+}
+
+const sw = { relief: true, rivers: true, names: true, gates: true };
+function applySwitches() {
+  base.select('.terrain-relief').style('display', sw.relief ? null : 'none');
+  over.select('.rivers').style('display', sw.rivers ? null : 'none');
+  over.select('.labels').style('display', sw.names ? null : 'none');
+  over.selectAll('.pt-peak').style('opacity', sw.names ? null : 0);
+  over.selectAll('.pt-strait, .pt-pass').style('display', sw.gates ? null : 'none');
+}
+for (const key of Object.keys(sw)) {
+  document.getElementById('sw-' + key).addEventListener('click', e => {
+    sw[key] = !sw[key];
+    e.currentTarget.setAttribute('aria-pressed', sw[key]);
+    applySwitches();
+  });
+}
+
+draw();
+scale();
+const mapEl = document.getElementById('map');
+let rt;
+new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(() => { draw(); }, 150); }).observe(mapEl);
+// open on the Old World crossroads, where most of the straits and passes are
+const { width: W0, height: H0 } = svg.node().getBoundingClientRect();
+const [cx, cy] = projection([45, 35]);
+const k0 = W0 < 700 ? 3.2 : 1.8;
+svg.call(zoom.transform, d3.zoomIdentity.translate(W0 / 2 - cx * k0, H0 / 2 - cy * k0).scale(k0));
+terrain.update(k0); scale();
+</script>
