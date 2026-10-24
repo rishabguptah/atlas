@@ -50,6 +50,9 @@ LIVING_ATLAS = {
     'austria_h': 'Austria-Hungary', 'ussr': 'Union of Soviet Socialist Republics',
 }
 
+# Capitals that the Living Atlas stubs would otherwise fill with a later city record
+CAPITALS = {'aztec': 'place:tenochtitlan'}
+
 SUBTYPES = [('caliphate', 'caliphate'), ('sultanate', 'kingdom'), ('khaganate', 'empire'), ('khanate', 'kingdom'),
             ('empire', 'empire'), ('dynasty', 'empire'), ('kingdom', 'kingdom'), ('kingdoms', 'kingdom'),
             ('republic', 'republic'), ('confederation', 'confederation'), ('confederacy', 'confederation'),
@@ -134,6 +137,8 @@ def main():
         st = subtype(name)
         if st:
             r['subtype'] = st
+        if ids[name][7:] in CAPITALS:
+            r['capital'] = CAPITALS[ids[name][7:]]
         r['peak'] = [yr(peak['FromYear']), max(round(peak['Area'] / 1e6, 6), 1e-6)]
         if wd:
             r['wikidata'] = wd[0][0]
