@@ -26,17 +26,21 @@ CYCLES = [
     ("Romanov Russia", "polity:tsardom_of_russia", [("expansion", 1620, 1690), ("stagflation", 1690, 1725), ("crisis", 1725, 1762)]),
 ]
 
+# Owned by disease-climate: these are stubs that merge into their records (theirs win).
+OWNED_ELSEWHERE = {"antonine_plague", "plague_of_cyprian", "plague_of_justinian", "black_death",
+                   "cocoliztli_1545", "late_antique_lia", "tambora"}
+
 # id slug, name, subtype, start, end, lat, lon, lenses, deaths [low, high] or None, wiki page, what
 SHOCKS = [
     ("antonine_plague", "Antonine Plague", "epidemic", 165, 180, 41.9, 12.5, ["disease", "order"], [5_000_000, 10_000_000], "Antonine_Plague", "Pandemic, possibly smallpox, across the Roman Empire."),
     ("plague_of_cyprian", "Plague of Cyprian", "epidemic", 249, 262, 36.8, 10.2, ["disease", "order"], None, "Plague_of_Cyprian", "Pandemic during Rome's Crisis of the Third Century."),
-    ("late_antique_little_ice_age", "Late Antique Little Ice Age", "famine", 536, 660, 50.0, 10.0, ["geography", "order"], None, "Late_Antique_Little_Ice_Age", "Volcanic winters from 536 cooled the northern hemisphere for over a century."),
+    ("late_antique_lia", "Late Antique Little Ice Age", "climate_shift", 536, 660, 50.0, 10.0, ["geography", "order"], None, "Late_Antique_Little_Ice_Age", "Volcanic winters from 536 cooled the northern hemisphere for over a century."),
     ("plague_of_justinian", "Plague of Justinian", "epidemic", 541, 549, 41.0, 28.98, ["disease", "order"], [15_000_000, 100_000_000], "Plague_of_Justinian", "First recorded bubonic plague pandemic, centred on Constantinople."),
     ("black_death", "Black Death", "epidemic", 1346, 1353, 45.0, 15.0, ["disease", "order", "population"], [25_000_000, 50_000_000], "Black_Death", "Bubonic plague killed perhaps a third to a half of Europe."),
     ("cocoliztli_1545", "Cocoliztli epidemic", "epidemic", 1545, 1548, 19.4, -99.1, ["disease", "order"], [5_000_000, 15_000_000], "Cocoliztli_epidemics", "Epidemic that devastated the population of New Spain."),
     ("huaynaputina_1600", "Huaynaputina eruption", "eruption", 1600, 1601, -16.6, -70.85, ["geography", "order"], None, "1600_Huaynaputina_eruption", "Largest eruption in recorded South American history, followed by famine in Russia."),
     ("general_crisis_17c", "General Crisis of the 17th century", "famine", 1618, 1680, 48.0, 15.0, ["geography", "order"], None, "General_Crisis", "Little Ice Age cold, wars and revolts across Eurasia."),
-    ("tambora_1815", "Tambora eruption", "eruption", 1815, 1816, -8.25, 118.0, ["geography", "order"], None, "1815_eruption_of_Mount_Tambora", "Caused the Year Without a Summer (1816)."),
+    ("tambora", "Tambora eruption", "eruption", 1815, 1816, -8.25, 118.0, ["geography", "order"], None, "1815_eruption_of_Mount_Tambora", "Caused the Year Without a Summer (1816)."),
     ("flu_1918", "1918 influenza pandemic", "epidemic", 1918, 1920, 39.0, -98.0, ["disease", "order"], [17_000_000, 50_000_000], "Spanish_flu", "Influenza pandemic at the end of the First World War."),
 ]
 
@@ -57,6 +61,8 @@ def main():
              "sources": [{"cite": f"Wikipedia: {wiki.replace('_', ' ')}", "url": WIKI + wiki}], "status": "draft"}
         if deaths:
             r["deaths"] = deaths
+        if slug in OWNED_ELSEWHERE:
+            r["stub"] = True
         shocks.append(r)
     for fn, recs in (("secular-cycles.jsonl", cyc), ("shocks.jsonl", shocks)):
         (OUT / fn).write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in recs))
