@@ -1,0 +1,3325 @@
+{
+ "question": "Will this polity break (end without a handoff to a successor) within 50 years?",
+ "unit": "polity-years sampled every 10 years; 682 polities with peak area >= 50000 km2 and life >= 50 years",
+ "features": [
+  "log_area",
+  "share_of_peak",
+  "change_25y",
+  "change_100y",
+  "log_age",
+  "era"
+ ],
+ "coefficients_standardised": {
+  "intercept": -1.936,
+  "log_area": 0.09,
+  "share_of_peak": -0.272,
+  "change_25y": -0.089,
+  "change_100y": -0.078,
+  "log_age": 0.169,
+  "era": 0.464
+ },
+ "cross_fit": {
+  "n": 15097,
+  "breaks": 2134,
+  "base_rate": 0.1414,
+  "auc": 0.632,
+  "flag_share": 0.2,
+  "threshold": 0.2031,
+  "precision_when_flagged": 0.2404,
+  "lift": 1.7,
+  "recall": 0.34,
+  "brier": 0.1176,
+  "brier_base": 0.1214,
+  "calibration": [
+   [
+    0.0446,
+    0.053,
+    1510
+   ],
+   [
+    0.0733,
+    0.098,
+    1510
+   ],
+   [
+    0.0933,
+    0.1113,
+    1509
+   ],
+   [
+    0.1098,
+    0.1093,
+    1510
+   ],
+   [
+    0.1255,
+    0.1291,
+    1510
+   ],
+   [
+    0.1422,
+    0.1318,
+    1510
+   ],
+   [
+    0.1617,
+    0.1371,
+    1510
+   ],
+   [
+    0.1873,
+    0.1637,
+    1509
+   ],
+   [
+    0.2251,
+    0.1868,
+    1510
+   ],
+   [
+    0.3148,
+    0.294,
+    1510
+   ]
+  ]
+ },
+ "baseline_age_era": {
+  "n": 15097,
+  "breaks": 2134,
+  "base_rate": 0.1414,
+  "auc": 0.602,
+  "flag_share": 0.2,
+  "threshold": 0.2013,
+  "precision_when_flagged": 0.1957,
+  "lift": 1.38,
+  "recall": 0.277,
+  "brier": 0.1199,
+  "brier_base": 0.1214,
+  "calibration": [
+   [
+    0.0479,
+    0.0642,
+    1510
+   ],
+   [
+    0.0801,
+    0.0999,
+    1512
+   ],
+   [
+    0.1034,
+    0.1178,
+    1511
+   ],
+   [
+    0.1226,
+    0.0979,
+    1511
+   ],
+   [
+    0.1395,
+    0.1157,
+    1512
+   ],
+   [
+    0.1554,
+    0.1768,
+    1510
+   ],
+   [
+    0.1724,
+    0.1742,
+    1510
+   ],
+   [
+    0.191,
+    0.175,
+    1509
+   ],
+   [
+    0.2137,
+    0.1854,
+    1510
+   ],
+   [
+    0.2515,
+    0.206,
+    1510
+   ]
+  ]
+ },
+ "time_split_pre1500_to_post1500": {
+  "n": 3722,
+  "breaks": 716,
+  "base_rate": 0.1924,
+  "auc": 0.566,
+  "flag_share": 0.2,
+  "threshold": 0.2544,
+  "precision_when_flagged": 0.2658,
+  "lift": 1.38,
+  "recall": 0.277,
+  "brier": 0.1542,
+  "brier_base": 0.1554,
+  "calibration": [
+   [
+    0.0915,
+    0.059,
+    373
+   ],
+   [
+    0.12,
+    0.1425,
+    372
+   ],
+   [
+    0.1316,
+    0.2554,
+    372
+   ],
+   [
+    0.1428,
+    0.2661,
+    372
+   ],
+   [
+    0.1571,
+    0.1452,
+    372
+   ],
+   [
+    0.1742,
+    0.2204,
+    372
+   ],
+   [
+    0.1968,
+    0.1559,
+    372
+   ],
+   [
+    0.2328,
+    0.1478,
+    372
+   ],
+   [
+    0.2762,
+    0.1989,
+    372
+   ],
+   [
+    0.3684,
+    0.3324,
+    373
+   ]
+  ]
+ },
+ "early_warning": {
+  "threshold": 0.2031,
+  "breaks_checked": 440,
+  "flagged_5_to_40y_before": 0.42,
+  "by_style": {
+   "withered": {
+    "flagged": 139,
+    "of": 182
+   },
+   "snapped": {
+    "flagged": 46,
+    "of": 258
+   }
+  }
+ },
+ "caveats": [
+  "Territory is only one signal. Turchin's structural-demographic variables (population pressure, elite overproduction, state finances) are not yet in open data the lab can reach.",
+  "Cliopatria polygons are sampled at uneven time steps, so small changes can be missed.",
+  "A handoff (renaming, reform, or a revolution that kept the territory) is detected by a heuristic: a successor starting within 2 years, within 800 km, with 60% to 170% of the area. So Russia 1917 and Qing 1912 count as handoffs, not breaks.",
+  "Many short-lived polities are absent, so base rates are for the big, well-recorded states."
+ ],
+ "sources": [
+  {
+   "cite": "Seshat Global History Databank, Cliopatria v0.2.1 (Bennett et al. 2025, Scientific Data 12:247), CC BY 4.0",
+   "url": "https://github.com/Seshat-Global-History-Databank/cliopatria"
+  }
+ ],
+ "warnings": [
+  {
+   "name": "Sumerian City-States",
+   "end": -1761,
+   "max_risk": 0.17,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Elam",
+   "end": -601,
+   "max_risk": 0.29,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Indus Valley Civilization",
+   "end": -1701,
+   "max_risk": 0.064,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Akkadian Empire",
+   "end": -2101,
+   "max_risk": 0.096,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Gutian Dynasty",
+   "end": -2001,
+   "max_risk": 0.021,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Middle Kingdom of Egypt",
+   "end": -1601,
+   "max_risk": 0.031,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Hyksos",
+   "end": -1401,
+   "max_risk": 0.052,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Babylonia",
+   "end": -601,
+   "max_risk": 0.184,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Hittites",
+   "end": -1151,
+   "max_risk": 0.099,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Shang Dynasty",
+   "end": -1001,
+   "max_risk": 0.044,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Mitanni",
+   "end": -1241,
+   "max_risk": 0.082,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "New Kingdom of Egypt",
+   "end": -801,
+   "max_risk": 0.078,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Zhou Dynasty",
+   "end": -751,
+   "max_risk": 0.093,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Kush",
+   "end": 346,
+   "max_risk": 0.24,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Phrygia",
+   "end": -676,
+   "max_risk": 0.079,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Urartu",
+   "end": -551,
+   "max_risk": 0.056,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Sabaeans",
+   "end": 282,
+   "max_risk": 0.092,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Greek City-States",
+   "end": 83,
+   "max_risk": 0.149,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Twenty-third Dynasty of Egypt",
+   "end": -701,
+   "max_risk": 0.044,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Twenty-second Dynasty of Egypt",
+   "end": -701,
+   "max_risk": 0.047,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Jin",
+   "end": -405,
+   "max_risk": 0.06,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Chu",
+   "end": -224,
+   "max_risk": 0.08,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Etruscans",
+   "end": -265,
+   "max_risk": 0.102,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Qi",
+   "end": -204,
+   "max_risk": 0.14,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Yan",
+   "end": -204,
+   "max_risk": 0.112,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Wu",
+   "end": -451,
+   "max_risk": 0.198,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Hadhramaut",
+   "end": 305,
+   "max_risk": 0.149,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Lydia",
+   "end": -541,
+   "max_risk": 0.048,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Scythia",
+   "end": -224,
+   "max_risk": 0.138,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Carthage",
+   "end": -145,
+   "max_risk": 0.349,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Twenty-sixth Dynasty of Egypt",
+   "end": -501,
+   "max_risk": 0.081,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Neo-Babylonian Empire",
+   "end": -531,
+   "max_risk": 0.066,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Achaemenid Empire",
+   "end": -327,
+   "max_risk": 0.09,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Yue",
+   "end": -334,
+   "max_risk": 0.091,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Zapotec Civilization",
+   "end": 895,
+   "max_risk": 0.343,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Magadha - Haryanka dynasty",
+   "end": -405,
+   "max_risk": 0.042,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Odrysian Kingdom",
+   "end": -338,
+   "max_risk": 0.059,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Zhao",
+   "end": -226,
+   "max_risk": 0.107,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Magadha - Shaishunaga dynasty",
+   "end": -334,
+   "max_risk": 0.062,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Wei",
+   "end": -204,
+   "max_risk": 0.059,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Minyue",
+   "end": -111,
+   "max_risk": 0.155,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Ptolemaic Kingdom",
+   "end": -28,
+   "max_risk": 0.157,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Cyrenaica",
+   "end": -92,
+   "max_risk": 0.07,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Armenia",
+   "end": 646,
+   "max_risk": 0.21,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kalinga",
+   "end": -171,
+   "max_risk": 0.09,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Atropatene",
+   "end": -165,
+   "max_risk": 0.065,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Anurādhapura",
+   "end": 1017,
+   "max_risk": 0.144,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Pontus",
+   "end": 67,
+   "max_risk": 0.246,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Galatia",
+   "end": -26,
+   "max_risk": 0.1,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Pergamon",
+   "end": -127,
+   "max_risk": 0.045,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Antigonid Macedonia",
+   "end": -165,
+   "max_risk": 0.176,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Mayan City-States",
+   "end": 849,
+   "max_risk": 0.182,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Parthian Empire",
+   "end": 237,
+   "max_risk": 0.141,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Cappadocia",
+   "end": 22,
+   "max_risk": 0.077,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Satavahana Dynasty",
+   "end": 223,
+   "max_risk": 0.156,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Mauretania",
+   "end": 42,
+   "max_risk": 0.078,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Xiongnu",
+   "end": 153,
+   "max_risk": 0.394,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Nanyue",
+   "end": -111,
+   "max_risk": 0.145,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Han Dynasty",
+   "end": 237,
+   "max_risk": 0.246,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Korean Jin",
+   "end": -92,
+   "max_risk": 0.066,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Numidia",
+   "end": -47,
+   "max_risk": 0.133,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Wusun",
+   "end": 450,
+   "max_risk": 0.276,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Nabataeans",
+   "end": 105,
+   "max_risk": 0.14,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Indo-Scythians",
+   "end": 282,
+   "max_risk": 0.281,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Indo-Greeks",
+   "end": 13,
+   "max_risk": 0.217,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Himyarite Kingdom",
+   "end": 601,
+   "max_risk": 0.301,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Great Yuan",
+   "end": 50,
+   "max_risk": 0.092,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Thracian Kingdom",
+   "end": 50,
+   "max_risk": 0.071,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Osroene",
+   "end": 214,
+   "max_risk": 0.081,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Caucasian Albania",
+   "end": 509,
+   "max_risk": 0.138,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Axum",
+   "end": 946,
+   "max_risk": 0.323,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Goguryeo",
+   "end": 681,
+   "max_risk": 0.136,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Roman Empire",
+   "end": 394,
+   "max_risk": 0.184,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Indo-Parthians",
+   "end": 90,
+   "max_risk": 0.079,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Goths",
+   "end": 206,
+   "max_risk": 0.113,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Western Satraps",
+   "end": 489,
+   "max_risk": 0.265,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Funan",
+   "end": 640,
+   "max_risk": 0.15,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Southern Xiongnu",
+   "end": 105,
+   "max_risk": 0.073,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Xianbei",
+   "end": 237,
+   "max_risk": 0.259,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Pyu City-States",
+   "end": 1045,
+   "max_risk": 0.185,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Protectorate of the Western Regions",
+   "end": 601,
+   "max_risk": 0.181,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Norse",
+   "end": 499,
+   "max_risk": 0.118,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Chámpa",
+   "end": 1652,
+   "max_risk": 0.409,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Gothia",
+   "end": 382,
+   "max_risk": 0.098,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Eastern Wu",
+   "end": 282,
+   "max_risk": 0.09,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Sasanian Empire",
+   "end": 643,
+   "max_risk": 0.166,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Eastern Kushans",
+   "end": 346,
+   "max_risk": 0.206,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Vakataka Kingdom",
+   "end": 554,
+   "max_risk": 0.104,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Indo-Sasanian Empire",
+   "end": 357,
+   "max_risk": 0.099,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Lakhmid Kingdom",
+   "end": 633,
+   "max_risk": 0.133,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Saxons",
+   "end": 799,
+   "max_risk": 0.12,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Late Pallava Empire",
+   "end": 805,
+   "max_risk": 0.261,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Tuyuhun",
+   "end": 665,
+   "max_risk": 0.212,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Yaudheya Republic",
+   "end": 377,
+   "max_risk": 0.088,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Former Liang",
+   "end": 377,
+   "max_risk": 0.083,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Gupta Empire",
+   "end": 554,
+   "max_risk": 0.223,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Alodia",
+   "end": 1506,
+   "max_risk": 0.204,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Nobatia",
+   "end": 655,
+   "max_risk": 0.11,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kalabhra Dynasty",
+   "end": 601,
+   "max_risk": 0.106,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Kamarupa Kingdom",
+   "end": 1138,
+   "max_risk": 0.211,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Kidarites",
+   "end": 450,
+   "max_risk": 0.098,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Salian Franks",
+   "end": 509,
+   "max_risk": 0.092,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Tarumanagara",
+   "end": 673,
+   "max_risk": 0.098,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Silla",
+   "end": 681,
+   "max_risk": 0.109,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Western Qin",
+   "end": 438,
+   "max_risk": 0.09,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Northern Wei",
+   "end": 533,
+   "max_risk": 0.094,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Western Roman Empire",
+   "end": 475,
+   "max_risk": 0.151,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Rouran Khaganate",
+   "end": 554,
+   "max_risk": 0.118,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "White Huns",
+   "end": 560,
+   "max_risk": 0.217,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Burgundian Kingdom",
+   "end": 660,
+   "max_risk": 0.149,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of the Suebi",
+   "end": 586,
+   "max_risk": 0.197,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Hunnic Empire",
+   "end": 673,
+   "max_risk": 0.205,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Brythons",
+   "end": 1235,
+   "max_risk": 0.266,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Vandal Kingdom",
+   "end": 533,
+   "max_risk": 0.09,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Anglo-Saxon England",
+   "end": 533,
+   "max_risk": 0.102,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of the Franks",
+   "end": 849,
+   "max_risk": 0.154,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Lombards",
+   "end": 586,
+   "max_risk": 0.121,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Ostrogothic Kingdom",
+   "end": 560,
+   "max_risk": 0.284,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Scandinavian minor kingdoms",
+   "end": 1002,
+   "max_risk": 0.25,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Liang Dynasty",
+   "end": 560,
+   "max_risk": 0.127,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Ghassanids",
+   "end": 633,
+   "max_risk": 0.105,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of the Gepids",
+   "end": 566,
+   "max_risk": 0.108,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Mercia",
+   "end": 925,
+   "max_risk": 0.43,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Bavarians",
+   "end": 787,
+   "max_risk": 0.111,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Early Lý Dynasty",
+   "end": 601,
+   "max_risk": 0.085,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Yenisei Kyrgyz",
+   "end": 1219,
+   "max_risk": 0.2,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Chalukya Dynasty",
+   "end": 756,
+   "max_risk": 0.146,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Chenla",
+   "end": 717,
+   "max_risk": 0.116,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Maukhari Dynasty",
+   "end": 611,
+   "max_risk": 0.103,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Avar Khaganate",
+   "end": 805,
+   "max_risk": 0.207,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Turk Shahis",
+   "end": 874,
+   "max_risk": 0.14,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Duchy of Spoleto",
+   "end": 898,
+   "max_risk": 0.116,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Italy",
+   "end": 1946,
+   "max_risk": 0.251,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Western Göktürks",
+   "end": 660,
+   "max_risk": 0.241,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Karkota Dynasty",
+   "end": 859,
+   "max_risk": 0.164,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Pandya Dynasty",
+   "end": 921,
+   "max_risk": 0.135,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Frisia Kingdom",
+   "end": 717,
+   "max_risk": 0.11,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Northumbria",
+   "end": 935,
+   "max_risk": 0.268,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Tibetan Empire",
+   "end": 849,
+   "max_risk": 0.142,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Tang Dynasty",
+   "end": 910,
+   "max_risk": 0.229,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Khazaria",
+   "end": 979,
+   "max_risk": 0.294,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Byzantine Empire",
+   "end": 1474,
+   "max_risk": 0.358,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Lavo Kingdom",
+   "end": 1394,
+   "max_risk": 0.282,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Dabuyid Dynasty",
+   "end": 756,
+   "max_risk": 0.104,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Turks",
+   "end": 756,
+   "max_risk": 0.13,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Sunda Kingdom",
+   "end": 1578,
+   "max_risk": 0.329,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Unified Silla",
+   "end": 935,
+   "max_risk": 0.262,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "First Bulgarian Empire",
+   "end": 1017,
+   "max_risk": 0.231,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Balhae",
+   "end": 925,
+   "max_risk": 0.131,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Water Chenla",
+   "end": 805,
+   "max_risk": 0.101,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Land Chenla",
+   "end": 805,
+   "max_risk": 0.111,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Asturias",
+   "end": 925,
+   "max_risk": 0.122,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Gurjara-Pratihara Dynasty",
+   "end": 1039,
+   "max_risk": 0.335,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Mataram Kingdom",
+   "end": 1009,
+   "max_risk": 0.128,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Nanzhao",
+   "end": 910,
+   "max_risk": 0.246,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Oghuz Turks",
+   "end": 1055,
+   "max_risk": 0.159,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Pala Empire",
+   "end": 1168,
+   "max_risk": 0.317,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Uyghur Khaganate",
+   "end": 849,
+   "max_risk": 0.158,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Abbasid Caliphate",
+   "end": 1259,
+   "max_risk": 0.367,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kimek-Kipchak confederation",
+   "end": 1235,
+   "max_risk": 0.199,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Rashtrakuta Dynasty",
+   "end": 989,
+   "max_risk": 0.408,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Principality of Serbia",
+   "end": 961,
+   "max_risk": 0.119,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Duchy of Gascony",
+   "end": 1065,
+   "max_risk": 0.173,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Viking settlements",
+   "end": 1332,
+   "max_risk": 0.282,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Qarlugs",
+   "end": 849,
+   "max_risk": 0.095,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Idrisids",
+   "end": 979,
+   "max_risk": 0.131,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Khmer Empire",
+   "end": 1867,
+   "max_risk": 0.423,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Great Moravia",
+   "end": 910,
+   "max_risk": 0.275,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Shirvan",
+   "end": 1539,
+   "max_risk": 0.261,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Magyars",
+   "end": 910,
+   "max_risk": 0.253,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "West Franks",
+   "end": 989,
+   "max_risk": 0.229,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Chola Empire",
+   "end": 1259,
+   "max_risk": 0.485,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Puebloans - Chaco Regional System",
+   "end": 1151,
+   "max_risk": 0.139,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "East Franks",
+   "end": 910,
+   "max_risk": 0.129,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Later Mayan City-States",
+   "end": 1546,
+   "max_risk": 0.207,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Tibetans",
+   "end": 1259,
+   "max_risk": 0.43,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Lower Burgundy",
+   "end": 925,
+   "max_risk": 0.194,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Ganzhou Kingdom",
+   "end": 1039,
+   "max_risk": 0.128,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Qocho Kingdom",
+   "end": 1138,
+   "max_risk": 0.155,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Sind-Habbari Dynasty",
+   "end": 1201,
+   "max_risk": 0.155,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Ziyadid dynasty",
+   "end": 1138,
+   "max_risk": 0.454,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Old Kingdom of Norway",
+   "end": 1401,
+   "max_risk": 0.179,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "County of Ribagorza",
+   "end": 1084,
+   "max_risk": 0.281,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Danelaw",
+   "end": 959,
+   "max_risk": 0.223,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kievan Rus'",
+   "end": 1240,
+   "max_risk": 0.171,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Bagratid Armenia",
+   "end": 1045,
+   "max_risk": 0.215,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Samanid Empire",
+   "end": 999,
+   "max_risk": 0.179,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Khotan",
+   "end": 1009,
+   "max_risk": 0.119,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Duchy of Bohemia",
+   "end": 1002,
+   "max_risk": 0.163,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Qarmatians",
+   "end": 1071,
+   "max_risk": 0.277,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Chandra Dynasty",
+   "end": 1055,
+   "max_risk": 0.129,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Southern Han",
+   "end": 979,
+   "max_risk": 0.128,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Fatimid Caliphate",
+   "end": 1176,
+   "max_risk": 0.474,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of León",
+   "end": 1235,
+   "max_risk": 0.214,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Wuyue",
+   "end": 979,
+   "max_risk": 0.098,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Croatia",
+   "end": 1098,
+   "max_risk": 0.167,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Caliphate of Córdoba",
+   "end": 1071,
+   "max_risk": 0.364,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Icelandic Commonwealth",
+   "end": 1271,
+   "max_risk": 0.15,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Arles",
+   "end": 1384,
+   "max_risk": 0.264,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Denmark",
+   "end": 1406,
+   "max_risk": 0.234,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Buyid Dynasty",
+   "end": 1055,
+   "max_risk": 0.228,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Ngô Dynasty",
+   "end": 1406,
+   "max_risk": 0.187,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Dali",
+   "end": 1259,
+   "max_risk": 0.162,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Chaulukya Dynasty",
+   "end": 1249,
+   "max_risk": 0.15,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Chandela Kingdom",
+   "end": 1313,
+   "max_risk": 0.155,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Ghaznavid Empire",
+   "end": 1209,
+   "max_risk": 0.402,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Poland",
+   "end": 1449,
+   "max_risk": 0.226,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Paramara Dynasty",
+   "end": 1235,
+   "max_risk": 0.182,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Chauhan Dynasty",
+   "end": 1201,
+   "max_risk": 0.194,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "County of Toulouse",
+   "end": 1249,
+   "max_risk": 0.455,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Western Xia",
+   "end": 1226,
+   "max_risk": 0.353,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Duchy of Aquitaine",
+   "end": 1439,
+   "max_risk": 0.33,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Hungary",
+   "end": 1546,
+   "max_risk": 0.357,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Duchy of Burgundy",
+   "end": 1481,
+   "max_risk": 0.16,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Lohara Dynasty",
+   "end": 1259,
+   "max_risk": 0.156,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Taifa of Valencia",
+   "end": 1249,
+   "max_risk": 0.267,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Georgia",
+   "end": 1802,
+   "max_risk": 0.349,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Taifa of Toledo",
+   "end": 1093,
+   "max_risk": 0.099,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Taifa of Murcia",
+   "end": 1249,
+   "max_risk": 0.275,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Taifa of Seville",
+   "end": 1093,
+   "max_risk": 0.068,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Great Seljuk Empire",
+   "end": 1201,
+   "max_risk": 0.313,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Takrur",
+   "end": 1235,
+   "max_risk": 0.13,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Eastern Kara-Khanids",
+   "end": 1138,
+   "max_risk": 0.127,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Halych-Volhynia occupation",
+   "end": 1240,
+   "max_risk": 0.182,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Kiev",
+   "end": 1240,
+   "max_risk": 0.224,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Rostov-Suzdal",
+   "end": 1240,
+   "max_risk": 0.134,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Chernigov",
+   "end": 1240,
+   "max_risk": 0.179,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Peremyshl",
+   "end": 1146,
+   "max_risk": 0.154,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Pereyaslavl",
+   "end": 1240,
+   "max_risk": 0.13,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Eastern Ganga Kingdom",
+   "end": 1351,
+   "max_risk": 0.151,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Smolensk",
+   "end": 1406,
+   "max_risk": 0.264,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Principality of Polotsky",
+   "end": 1249,
+   "max_risk": 0.261,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Novgorod Republic",
+   "end": 1481,
+   "max_risk": 0.182,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Sena Dynasty",
+   "end": 1235,
+   "max_risk": 0.152,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Uyunid Emirate",
+   "end": 1235,
+   "max_risk": 0.124,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Norman England",
+   "end": 1168,
+   "max_risk": 0.171,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Polonnaruwa",
+   "end": 1259,
+   "max_risk": 0.271,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Gahadavala Dynasty",
+   "end": 1201,
+   "max_risk": 0.12,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Terebovlia",
+   "end": 1146,
+   "max_risk": 0.104,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Danishmendids",
+   "end": 1187,
+   "max_risk": 0.2,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Khwarezmid Dynasty",
+   "end": 1201,
+   "max_risk": 0.147,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Ryazan",
+   "end": 1240,
+   "max_risk": 0.121,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Armenian Kingdom of Cilicia",
+   "end": 1374,
+   "max_risk": 0.209,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Jerusalem",
+   "end": 1293,
+   "max_risk": 0.341,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Hoysala Kingdom",
+   "end": 1351,
+   "max_risk": 0.217,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Minsk",
+   "end": 1313,
+   "max_risk": 0.14,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kara-Khitans",
+   "end": 1219,
+   "max_risk": 0.149,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Great Jin",
+   "end": 1235,
+   "max_risk": 0.275,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Duchy of Silesia",
+   "end": 1304,
+   "max_risk": 0.365,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Southern Song",
+   "end": 1278,
+   "max_risk": 0.194,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Zengid dynasty",
+   "end": 1259,
+   "max_risk": 0.299,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Sicily",
+   "end": 1384,
+   "max_risk": 0.285,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Duchy of Greater Poland",
+   "end": 1304,
+   "max_risk": 0.263,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Duchy of Sandomierz",
+   "end": 1304,
+   "max_risk": 0.316,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Duchy of Masovia",
+   "end": 1351,
+   "max_risk": 0.285,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Almohad Caliphate",
+   "end": 1343,
+   "max_risk": 0.267,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Angevin Empire",
+   "end": 1209,
+   "max_risk": 0.097,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Portugal",
+   "end": 1911,
+   "max_risk": 0.211,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Ghurid Dynasty",
+   "end": 1209,
+   "max_risk": 0.126,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Mahdids",
+   "end": 1506,
+   "max_risk": 0.461,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Crown of Aragon",
+   "end": 1515,
+   "max_risk": 0.226,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Duchy of Opole",
+   "end": 1304,
+   "max_risk": 0.281,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Ayyubid Sultanate",
+   "end": 1249,
+   "max_risk": 0.194,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kakatiya Dynasty",
+   "end": 1325,
+   "max_risk": 0.13,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Second Bulgarian Empire",
+   "end": 1394,
+   "max_risk": 0.328,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Principality of Turov and Pinsk",
+   "end": 1240,
+   "max_risk": 0.095,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Yadava Dynasty",
+   "end": 1325,
+   "max_risk": 0.159,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Chimu Empire",
+   "end": 1481,
+   "max_risk": 0.154,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Bohemia",
+   "end": 1528,
+   "max_risk": 0.306,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Despotate of Epirus",
+   "end": 1481,
+   "max_risk": 0.319,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Latin Empire",
+   "end": 1278,
+   "max_risk": 0.394,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Mongol Empire",
+   "end": 1293,
+   "max_risk": 0.124,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Nicaean Empire",
+   "end": 1278,
+   "max_risk": 0.132,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Pandya Empire",
+   "end": 1325,
+   "max_risk": 0.117,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Singhasari",
+   "end": 1293,
+   "max_risk": 0.101,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Mali Empire",
+   "end": 1611,
+   "max_risk": 0.383,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Hafsid Dynasty",
+   "end": 1571,
+   "max_risk": 0.319,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Zayyanid dynasty",
+   "end": 1555,
+   "max_risk": 0.159,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Mamluk Sultanate",
+   "end": 1518,
+   "max_risk": 0.187,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Sukhothai Kingdom",
+   "end": 1458,
+   "max_risk": 0.3,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Capetian House of Anjou",
+   "end": 1384,
+   "max_risk": 0.21,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Margraviate of Brandenburg",
+   "end": 1414,
+   "max_risk": 0.209,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "House of Habsburg",
+   "end": 1515,
+   "max_risk": 0.34,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Bahrani Dynasty",
+   "end": 1520,
+   "max_risk": 0.177,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Ethiopian Empire",
+   "end": 1935,
+   "max_risk": 0.2,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Naples",
+   "end": 1501,
+   "max_risk": 0.141,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Malaya",
+   "end": 1351,
+   "max_risk": 0.103,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Yuan Dynasty",
+   "end": 1374,
+   "max_risk": 0.133,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Scotland",
+   "end": 1608,
+   "max_risk": 0.181,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Majapahit",
+   "end": 1518,
+   "max_risk": 0.455,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Principality of Vladimir-Suzdal",
+   "end": 1486,
+   "max_risk": 0.408,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Shan States",
+   "end": 1563,
+   "max_risk": 0.187,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Hanthawaddy Kingdom",
+   "end": 1546,
+   "max_risk": 0.302,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Lan Na Kingdom",
+   "end": 1563,
+   "max_risk": 0.215,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Golden Horde",
+   "end": 1695,
+   "max_risk": 0.305,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Galicia-Volhynia",
+   "end": 1351,
+   "max_risk": 0.2,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Germiyanids",
+   "end": 1439,
+   "max_risk": 0.265,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Michoacán",
+   "end": 1533,
+   "max_risk": 0.124,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Beylik of Karaman",
+   "end": 1467,
+   "max_risk": 0.162,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Wallachia",
+   "end": 1858,
+   "max_risk": 0.184,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Pinya",
+   "end": 1374,
+   "max_risk": 0.233,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "House of Bourbon",
+   "end": 1594,
+   "max_risk": 0.151,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Sarbadars",
+   "end": 1394,
+   "max_risk": 0.108,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kashmiri Sultanate",
+   "end": 1587,
+   "max_risk": 0.214,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Sind-Samma Dynasty",
+   "end": 1525,
+   "max_risk": 0.17,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Ashikaga Shogunate",
+   "end": 1571,
+   "max_risk": 0.369,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Vijayanagara Empire",
+   "end": 1571,
+   "max_risk": 0.259,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Jalayirid Sultanate",
+   "end": 1401,
+   "max_risk": 0.157,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Muzaffarids",
+   "end": 1394,
+   "max_risk": 0.132,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Serbian Empire",
+   "end": 1458,
+   "max_risk": 0.261,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Bahmani Sultanate",
+   "end": 1491,
+   "max_risk": 0.207,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Principality of Moldavia",
+   "end": 1858,
+   "max_risk": 0.373,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "House of Valois-Anjou",
+   "end": 1486,
+   "max_risk": 0.197,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Tibet",
+   "end": 1952,
+   "max_risk": 0.3,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Blue Horde",
+   "end": 1449,
+   "max_risk": 0.421,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Lan Xang",
+   "end": 1708,
+   "max_risk": 0.175,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Ava Kingdom",
+   "end": 1528,
+   "max_risk": 0.214,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Northern Yuan",
+   "end": 1439,
+   "max_risk": 0.181,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Timurid Empire",
+   "end": 1528,
+   "max_risk": 0.499,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Qara Qoyunlu",
+   "end": 1467,
+   "max_risk": 0.121,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Bosnia",
+   "end": 1481,
+   "max_risk": 0.327,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Bornu Empire",
+   "end": 1894,
+   "max_risk": 0.289,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Jaunpur Sultanate",
+   "end": 1481,
+   "max_risk": 0.161,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Four Oirats",
+   "end": 1474,
+   "max_risk": 0.093,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Kalmar Union",
+   "end": 1525,
+   "max_risk": 0.206,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Aq Qoyunlu",
+   "end": 1511,
+   "max_risk": 0.129,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Adal Sultanate",
+   "end": 1546,
+   "max_risk": 0.128,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Makuria Kingdom",
+   "end": 1518,
+   "max_risk": 0.123,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Livonian Conference",
+   "end": 1563,
+   "max_risk": 0.132,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Mrauk U",
+   "end": 1787,
+   "max_risk": 0.263,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Khanate of Sibir",
+   "end": 1587,
+   "max_risk": 0.269,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Aztec Triple Alliance",
+   "end": 1520,
+   "max_risk": 0.111,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Inca Empire",
+   "end": 1571,
+   "max_risk": 0.461,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Kongo",
+   "end": 1669,
+   "max_risk": 0.153,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Khanate of Kazan",
+   "end": 1551,
+   "max_risk": 0.127,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Crimean Khanate",
+   "end": 1782,
+   "max_risk": 0.245,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Haudenosaunee",
+   "end": 1782,
+   "max_risk": 0.458,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Lodi Dynasty",
+   "end": 1528,
+   "max_risk": 0.233,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Sultanate of Sulu",
+   "end": 1879,
+   "max_risk": 0.178,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Tahirid Sultanate",
+   "end": 1515,
+   "max_risk": 0.108,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Sultanate of Palembang",
+   "end": 1821,
+   "max_risk": 0.174,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Sultanate of Malacca",
+   "end": 1861,
+   "max_risk": 0.339,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Songhai Empire",
+   "end": 1608,
+   "max_risk": 0.437,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Kartli",
+   "end": 1705,
+   "max_risk": 0.304,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Astrakhan Khanate",
+   "end": 1768,
+   "max_risk": 0.203,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kazakh Khanate",
+   "end": 1847,
+   "max_risk": 0.304,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Mongol Khanate",
+   "end": 1635,
+   "max_risk": 0.335,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Ahmadnagar Sultanate",
+   "end": 1652,
+   "max_risk": 0.275,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Berar Sultanate",
+   "end": 1578,
+   "max_risk": 0.166,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Bijapur Sultanate",
+   "end": 1686,
+   "max_risk": 0.442,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Bidar Sultanate",
+   "end": 1618,
+   "max_risk": 0.249,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Portuguese Empire",
+   "end": 1823,
+   "max_risk": 0.186,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Safavid Dynasty",
+   "end": 1737,
+   "max_risk": 0.472,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "First Toungoo Empire",
+   "end": 1756,
+   "max_risk": 0.36,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Funj Sultanate",
+   "end": 1821,
+   "max_risk": 0.222,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Spanish Empire",
+   "end": 1879,
+   "max_risk": 0.571,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Golconda Sultanate",
+   "end": 1686,
+   "max_risk": 0.155,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Eastern Moghulistan",
+   "end": 1686,
+   "max_risk": 0.205,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Western Moghulistan",
+   "end": 1635,
+   "max_risk": 0.209,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Sultanate of Maguindanao",
+   "end": 1852,
+   "max_risk": 0.303,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Denmark-Norway",
+   "end": 1940,
+   "max_risk": 0.444,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Sultanate of Banten",
+   "end": 1808,
+   "max_risk": 0.235,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Mughal Empire",
+   "end": 1858,
+   "max_risk": 0.474,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Đại Việt",
+   "end": 1833,
+   "max_risk": 0.326,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Sultanate of Johor",
+   "end": 1884,
+   "max_risk": 0.45,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Sur Empire",
+   "end": 1594,
+   "max_risk": 0.478,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Tümed",
+   "end": 1699,
+   "max_risk": 0.312,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Don Cossacks",
+   "end": 1641,
+   "max_risk": 0.169,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Saadi Sultanate",
+   "end": 1740,
+   "max_risk": 0.312,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Small Horde",
+   "end": 1737,
+   "max_risk": 0.326,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Portuguese Colonies",
+   "end": 1910,
+   "max_risk": 0.325,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Mysore",
+   "end": 1799,
+   "max_risk": 0.197,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Trịnh lords",
+   "end": 1787,
+   "max_risk": 0.199,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Nguyễn lords",
+   "end": 1775,
+   "max_risk": 0.193,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Principality of Transylvania",
+   "end": 1695,
+   "max_risk": 0.183,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Polish-Lithuanian Commonwealth",
+   "end": 1793,
+   "max_risk": 0.299,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Iberian Union",
+   "end": 1639,
+   "max_risk": 0.186,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Khoshut Khanate",
+   "end": 1695,
+   "max_risk": 0.188,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Mataram Sultanate",
+   "end": 1743,
+   "max_risk": 0.209,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Gorkha Kingdom",
+   "end": 1787,
+   "max_risk": 0.234,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Jesuit Reducciones",
+   "end": 1768,
+   "max_risk": 0.21,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Tokugawa Shogunate",
+   "end": 1869,
+   "max_risk": 0.231,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Lan Na",
+   "end": 1761,
+   "max_risk": 0.139,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "New France",
+   "end": 1791,
+   "max_risk": 0.36,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Oyo Empire",
+   "end": 1835,
+   "max_risk": 0.227,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Sultanate of Darfur",
+   "end": 1876,
+   "max_risk": 0.22,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "English Colonial Empire",
+   "end": 1779,
+   "max_risk": 0.399,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Dzungar Khanate",
+   "end": 1756,
+   "max_risk": 0.286,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Brandenburg-Prussia",
+   "end": 1720,
+   "max_risk": 0.127,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Oirat Confederation",
+   "end": 1676,
+   "max_risk": 0.172,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "New Netherland",
+   "end": 1802,
+   "max_risk": 0.325,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Yarubid dynasty",
+   "end": 1743,
+   "max_risk": 0.131,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Kalmyk Khanate",
+   "end": 1771,
+   "max_risk": 0.139,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Qasimids",
+   "end": 1802,
+   "max_risk": 0.309,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Wadai Empire",
+   "end": 1910,
+   "max_risk": 0.222,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Zaporozhian Cossacks",
+   "end": 1774,
+   "max_risk": 0.163,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Sloboda Ukraine",
+   "end": 1768,
+   "max_risk": 0.129,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Maratha Empire",
+   "end": 1845,
+   "max_risk": 0.449,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Cambodia",
+   "end": 1802,
+   "max_risk": 0.194,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Prussia",
+   "end": 1863,
+   "max_risk": 0.484,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Ashanti Empire",
+   "end": 1897,
+   "max_risk": 0.238,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Regency of Algiers",
+   "end": 1845,
+   "max_risk": 0.147,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Beylik of Tunis",
+   "end": 1884,
+   "max_risk": 0.148,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Vientiane",
+   "end": 1827,
+   "max_risk": 0.139,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Luang Phrabang",
+   "end": 1894,
+   "max_risk": 0.221,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Khanate of Kokand",
+   "end": 1876,
+   "max_risk": 0.403,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Lunda",
+   "end": 1889,
+   "max_risk": 0.157,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Karamanli Dynasty",
+   "end": 1839,
+   "max_risk": 0.21,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Carnatic Sultanate",
+   "end": 1802,
+   "max_risk": 0.125,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Bamana Empire",
+   "end": 1821,
+   "max_risk": 0.161,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Kingdom of Sardinia",
+   "end": 1861,
+   "max_risk": 0.205,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Nawab of Awadh",
+   "end": 1802,
+   "max_risk": 0.133,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Greenland",
+   "end": 1940,
+   "max_risk": 0.207,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Emirate of Diriyah",
+   "end": 1819,
+   "max_risk": 0.069,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Bahrain",
+   "end": 1845,
+   "max_risk": 0.109,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Chiangmai",
+   "end": 1884,
+   "max_risk": 0.13,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Nguyễn dynasty",
+   "end": 1884,
+   "max_risk": 0.169,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Merina Kingdom",
+   "end": 1897,
+   "max_risk": 0.135,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "British Cape Colony",
+   "end": 1884,
+   "max_risk": 0.159,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Dutch East Indies",
+   "end": 1949,
+   "max_risk": 0.203,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Empire of Haiti",
+   "end": 1915,
+   "max_risk": 0.226,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Sokoto Caliphate",
+   "end": 1904,
+   "max_risk": 0.206,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Serbs",
+   "end": 1915,
+   "max_risk": 0.187,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Kingdom of Bavaria",
+   "end": 1870,
+   "max_risk": 0.214,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Imamate of Yemen",
+   "end": 1872,
+   "max_risk": 0.114,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "United Kingdoms of Sweden and Norway",
+   "end": 1904,
+   "max_risk": 0.216,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "Talpur Dynasty",
+   "end": 1894,
+   "max_risk": 0.368,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Trucial States",
+   "end": 1894,
+   "max_risk": 0.12,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Natalia Republic",
+   "end": 1910,
+   "max_risk": 0.188,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Ottoman Tripolitania",
+   "end": 1911,
+   "max_risk": 0.218,
+   "flagged": true,
+   "style": "snapped"
+  },
+  {
+   "name": "United Principalities of Moldavia and Wallachia",
+   "end": 1916,
+   "max_risk": 0.196,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "British Raj",
+   "end": 1947,
+   "max_risk": 0.238,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "French Indochina",
+   "end": 1957,
+   "max_risk": 0.176,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Austria-Hungary",
+   "end": 1918,
+   "max_risk": 0.122,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "Empire of Japan",
+   "end": 1945,
+   "max_risk": 0.138,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "French Third Republic",
+   "end": 1939,
+   "max_risk": 0.135,
+   "flagged": false,
+   "style": "snapped"
+  },
+  {
+   "name": "British Africa",
+   "end": 1960,
+   "max_risk": 0.305,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "Italian Africa",
+   "end": 1943,
+   "max_risk": 0.17,
+   "flagged": false,
+   "style": "withered"
+  },
+  {
+   "name": "Belgian Congo",
+   "end": 1962,
+   "max_risk": 0.224,
+   "flagged": true,
+   "style": "withered"
+  },
+  {
+   "name": "North Yemen",
+   "end": 1989,
+   "max_risk": 0.236,
+   "flagged": true,
+   "style": "snapped"
+  }
+ ]
+}

@@ -1,0 +1,468 @@
+<title>Order and Chaos Lab</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a seismograph notebook. One column of instruments, each a strip with a reading and a note. */
+:root {
+  --bg: #eef1f4; --panel: #f8fafb; --ink: #19212c; --muted: #5a6677; --rule: #cfd6de; --land: #dde3e9;
+  --accent: #2a4f86;
+  --calm: #2f8577; --watch: #b8891f; --fragile: #c2542f; --critical: #8c1d2e;
+  --phase-exp: #2f857722; --phase-stag: #b8891f2e; --phase-crisis: #8c1d2e33; --phase-dep: #5a667722;
+  --display: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f141b; --panel: #161d26; --ink: #dfe5ec; --muted: #94a1b2; --rule: #2a3442; --land: #222c39;
+  --accent: #8fb3ea; --calm: #4fb3a2; --watch: #d9ad45; --fragile: #ea7b53; --critical: #f0596e;
+  --phase-exp: #4fb3a222; --phase-stag: #d9ad452e; --phase-crisis: #f0596e30; --phase-dep: #94a1b222; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f141b; --panel: #161d26; --ink: #dfe5ec; --muted: #94a1b2; --rule: #2a3442; --land: #222c39;
+  --accent: #8fb3ea; --calm: #4fb3a2; --watch: #d9ad45; --fragile: #ea7b53; --critical: #f0596e;
+  --phase-exp: #4fb3a222; --phase-stag: #d9ad452e; --phase-crisis: #f0596e30; --phase-dep: #94a1b222; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main { max-width: 1080px; margin: 0 auto; padding-block: 28px 64px; display: grid; gap: 56px }
+h1, h2 { font-family: var(--display); font-weight: 800; letter-spacing: .01em; line-height: 1; text-wrap: balance; margin: 0 }
+h1 { font-size: clamp(44px, 8vw, 92px); text-transform: uppercase }
+h2 { font-size: clamp(28px, 4.4vw, 42px); text-transform: uppercase }
+h3 { font-family: var(--display); font-weight: 600; font-size: 20px; letter-spacing: .04em; text-transform: uppercase; margin: 0 }
+p { margin: 0; max-width: 66ch }
+a { color: var(--accent) }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
+.mono, .num { font-family: var(--mono); font-variant-numeric: tabular-nums }
+section { display: grid; gap: 18px; min-width: 0 }
+.lede { font-size: 20px; color: var(--ink) }
+.note { font-size: 14.5px; color: var(--muted) }
+.draft { font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; border: 1px solid var(--watch); color: var(--watch); padding: 1px 6px; border-radius: 3px; white-space: nowrap }
+
+/* hero */
+.hero { display: grid; gap: 22px; border-bottom: 2px solid var(--ink); padding-bottom: 28px }
+.split { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px }
+.verdict { background: var(--panel); border: 1px solid var(--rule); padding: 18px; display: grid; gap: 8px; min-width: 0 }
+.verdict .big { font-family: var(--display); font-weight: 800; font-size: 64px; line-height: .9 }
+.verdict.w .big { color: var(--fragile) } .verdict.s .big { color: var(--muted) }
+
+/* controls */
+.bar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center }
+button, select, input[type=search] { font: 500 14px var(--mono); color: var(--ink); background: var(--panel); border: 1px solid var(--rule); border-radius: 4px; padding: 7px 11px }
+button { cursor: pointer } button:hover { border-color: var(--accent) }
+button[aria-pressed=true] { background: var(--ink); color: var(--bg); border-color: var(--ink) }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+input[type=range] { accent-color: var(--accent); width: 100% }
+.yearline { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center }
+.yearbig { font-family: var(--display); font-weight: 800; font-size: 40px; min-width: 4.5ch; text-align: right }
+.chips { display: flex; flex-wrap: wrap; gap: 6px }
+.chips button { font-size: 12.5px; padding: 4px 9px }
+
+/* map */
+.mapwrap { background: var(--panel); border: 1px solid var(--rule); position: relative; overflow: hidden }
+#map { display: block; width: 100%; height: auto }
+#map .land { fill: var(--land); stroke: none }
+#map .grat { fill: none; stroke: var(--rule); stroke-width: .5 }
+#map circle.dot { stroke: var(--panel); stroke-width: .8; cursor: pointer; fill-opacity: .82 }
+#map circle.dot.sel { stroke: var(--ink); stroke-width: 2.2 }
+#map circle.ring { fill: none; stroke: var(--critical); stroke-width: 1.4; stroke-dasharray: 2 2; pointer-events: none }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 12.5px var(--mono); color: var(--muted) }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 12.5px var(--mono); padding: 6px 8px; border-radius: 3px; max-width: 260px }
+
+/* chart panels */
+.panel { background: var(--panel); border: 1px solid var(--rule); padding: 16px; display: grid; gap: 12px; min-width: 0 }
+.panel svg { display: block; width: 100%; height: auto; overflow: visible }
+.axis text { fill: var(--muted); font: 11px var(--mono) } .axis line, .axis path { stroke: var(--rule) }
+.cardhead { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; align-items: baseline }
+.pill { font: 500 12px var(--mono); padding: 2px 8px; border-radius: 99px; color: var(--bg); white-space: nowrap }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 22px; font: 13px var(--mono); color: var(--muted) }
+.facts b { color: var(--ink); font-weight: 500 }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px }
+ol.rank { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px }
+ol.rank li { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 6px 4px; border-bottom: 1px solid var(--rule); cursor: pointer; font-size: 15px }
+ol.rank li:hover { background: var(--bg) }
+ol.rank .num { font-size: 13px; color: var(--muted) }
+
+/* scoreboard */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px }
+.tile { border-top: 3px solid var(--ink); padding-top: 10px; display: grid; gap: 4px; min-width: 0 }
+.tile .v { font-family: var(--display); font-weight: 800; font-size: 46px; line-height: 1 }
+.tile .v small { font-size: 22px; color: var(--muted) }
+.tile p { font-size: 14.5px; color: var(--muted) }
+table { border-collapse: collapse; font: 13px var(--mono); font-variant-numeric: tabular-nums; width: 100% }
+th, td { text-align: right; padding: 6px 10px; border-bottom: 1px solid var(--rule) } th:first-child, td:first-child { text-align: left }
+th { color: var(--muted); font-weight: 500 }
+.scroll { overflow-x: auto }
+ul.caveats { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 15px; color: var(--muted); max-width: 72ch }
+
+/* simulator */
+.sim { display: grid; grid-template-columns: minmax(240px, 300px) 1fr; gap: 20px }
+@media (max-width: 760px) { .sim { grid-template-columns: 1fr } }
+.knobs { display: grid; gap: 14px; align-content: start }
+.knob { display: grid; gap: 2px }
+.knob label { display: flex; justify-content: space-between; font: 13px var(--mono) }
+.knob small { color: var(--muted); font-size: 13px }
+.shockbtns { display: flex; flex-wrap: wrap; gap: 6px }
+.simout { display: grid; gap: 10px; min-width: 0 }
+.phasekey { display: flex; flex-wrap: wrap; gap: 4px 14px; font: 12px var(--mono); color: var(--muted) }
+.phasekey i { display: inline-block; width: 14px; height: 10px; margin-right: 5px; vertical-align: -1px; border: 1px solid var(--rule) }
+
+/* cycles */
+.cycles { display: grid; gap: 8px }
+.cyc { display: grid; grid-template-columns: 180px 1fr; gap: 12px; align-items: center; font-size: 15px }
+@media (max-width: 560px) { .cyc { grid-template-columns: 1fr; gap: 2px } }
+.cyc .track { position: relative; height: 18px; background: var(--bg); border: 1px solid var(--rule) }
+.cyc .track span { position: absolute; top: 0; bottom: 0 }
+.cyc .track span:hover { outline: 1px solid var(--ink) }
+footer { border-top: 1px solid var(--rule); padding-top: 16px; display: grid; gap: 8px; font-size: 14px; color: var(--muted) }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important } }
+</style>
+
+<main>
+  <header class="hero">
+    <div class="eyebrow">Atlas · Order and Chaos lab · edition 1</div>
+    <h1>Which states looked fragile before they broke?</h1>
+    <p class="lede">I scored <span class="num" id="nPol">682</span> states from 3400 BCE to 2024 on one question: will this state break in the next 50 years? Each score comes from its territory alone, and each one is tested on states the model never saw. The answer splits cleanly in two.</p>
+    <div class="split">
+      <div class="verdict w"><span class="eyebrow">States that withered (lost half their peak land first)</span><span class="big num" id="wPct">76%</span><p>were flagged as fragile 5 to 40 years before they ended. Slow deaths leave a trail on the map.</p></div>
+      <div class="verdict s"><span class="eyebrow">States that snapped (ended near their peak)</span><span class="big num" id="sPct">18%</span><p>were flagged. Conquest, civil war or sudden partition came out of a clear sky, at least as far as borders can see.</p></div>
+    </div>
+  </header>
+
+  <section id="map-section">
+    <div class="cardhead"><h2>The fragility map</h2><span class="eyebrow">Dot size is territory · colour is risk of breaking within 50 years</span></div>
+    <div class="yearline">
+      <button id="play" aria-label="Play through time">Play</button>
+      <input type="range" id="year" min="-3000" max="2024" step="10" value="400" aria-label="Year">
+      <span class="yearbig num" id="yearOut">400</span>
+    </div>
+    <div class="bar">
+      <button id="truth" aria-pressed="false">Show who actually broke within 50 years</button>
+      <div class="chips" id="jumps"></div>
+    </div>
+    <div class="mapwrap"><svg id="map" viewBox="0 0 960 470" role="img" aria-label="World map of states coloured by fragility"></svg><div class="tip" id="tip" hidden></div></div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section id="state">
+    <div class="cardhead"><h2 id="stName">State</h2><span id="stPill" class="pill"></span></div>
+    <div class="bar"><input type="search" id="find" list="polList" placeholder="Find a state, e.g. Tang Dynasty" aria-label="Find a state"><datalist id="polList"></datalist><div class="chips" id="picks"></div></div>
+    <div class="panel">
+      <div class="facts" id="stFacts"></div>
+      <svg id="stChart" viewBox="0 0 960 300" role="img" aria-label="Territory and fragility over time"></svg>
+      <div class="legend"><span><i style="background:var(--accent);border-radius:0;opacity:.35"></i>territory (million km²)</span><span><i style="background:var(--fragile);border-radius:0;height:3px"></i>fragility score</span><span><i style="background:none;border-top:1px dashed var(--muted);border-radius:0;height:0"></i>flag line (top 20% of all scores)</span><span><i style="background:var(--phase-crisis);border-radius:0"></i>plague or climate shock</span></div>
+      <p class="note" id="stNote"></p>
+    </div>
+    <div class="two">
+      <div class="panel"><h3>Loudest warnings</h3><p class="note">Broke, and the score saw it coming. Highest score in the 40 years before the end.</p><ol class="rank" id="hits"></ol></div>
+      <div class="panel"><h3>Clear-sky collapses</h3><p class="note">Big states that broke while the score said calm.</p><ol class="rank" id="misses"></ol></div>
+    </div>
+  </section>
+
+  <section id="score">
+    <div class="cardhead"><h2>The scoreboard</h2><span class="eyebrow">Out of sample · polity-years every 10 years</span></div>
+    <p>The model is a plain logistic regression on six readings: size, share of peak territory, change over 25 and 100 years, age, and era. States are split in two by name; each half is scored by a model fitted on the other half. A harder test fits on years before 1500 and scores everything after.</p>
+    <div class="tiles" id="tiles"></div>
+    <div class="two">
+      <div class="panel"><h3>Does a 30% score mean 30%?</h3><svg id="calib" viewBox="0 0 420 300" role="img" aria-label="Calibration chart"></svg><p class="note">Each dot is a tenth of all scores. On the line means the score is honest.</p></div>
+      <div class="panel"><h3>Against the baseline</h3><div class="scroll"><table id="cmp"></table></div><p class="note">The baseline knows only a state's age and era. Territory adds real signal, though not much, and it weakens on the later centuries.</p></div>
+    </div>
+    <h3>What this cannot see yet</h3>
+    <ul class="caveats" id="caveats"></ul>
+  </section>
+
+  <section id="sim">
+    <div class="cardhead"><h2>Run a state</h2><span class="draft">toy model</span></div>
+    <p>Peter Turchin argues that order breaks from the inside on a schedule. Population grows until land runs short, wages fall, elites multiply and fight for posts, and the treasury drains. Then comes the crisis. This toy version of his demographic-fiscal model lets you pull the levers. It is not fitted to any real state.</p>
+    <div class="sim">
+      <div class="knobs">
+        <div class="knob"><label for="kR">Population growth <span class="num" id="vR"></span></label><input id="kR" type="range" min="0.5" max="3.5" step="0.1" value="2"><small>% a year when land is plentiful</small></div>
+        <div class="knob"><label for="kG">Elite appetite <span class="num" id="vG"></span></label><input id="kG" type="range" min="0" max="0.1" step="0.005" value="0.04"><small>how fast elites multiply when labour is cheap</small></div>
+        <div class="knob"><label for="kT">Tax take <span class="num" id="vT"></span></label><input id="kT" type="range" min="0.1" max="0.5" step="0.01" value="0.3"><small>share of surplus the state collects</small></div>
+        <div class="knob"><label for="kK">State capacity <span class="num" id="vK"></span></label><input id="kK" type="range" min="0" max="2" step="0.1" value="1"><small>how much a rich state raises the land's limit (order, irrigation, roads)</small></div>
+        <div class="knob"><span class="eyebrow">Drop a shock at year <span class="num" id="vY"></span></span><input id="kY" type="range" min="20" max="760" step="10" value="150" aria-label="Shock year"><div class="shockbtns"><button data-shock="plague">Plague −35%</button><button data-shock="climate">Cold 50 years</button><button data-shock="elites">Elite boom</button><button id="clear">Clear shocks</button></div></div>
+      </div>
+      <div class="simout">
+        <div class="facts" id="simFacts"></div>
+        <svg id="simChart" viewBox="0 0 700 300" role="img" aria-label="Simulated population pressure, elites, treasury and stress"></svg>
+        <div class="phasekey"><span><i style="background:var(--phase-exp)"></i>expansion</span><span><i style="background:var(--phase-stag)"></i>stagflation</span><span><i style="background:var(--phase-crisis)"></i>crisis</span><span><i style="background:var(--phase-dep)"></i>depression</span>
+          <span><i style="background:var(--accent);height:3px"></i>population ÷ land limit</span><span><i style="background:var(--watch);height:3px"></i>elites (×start)</span><span><i style="background:var(--calm);height:3px"></i>treasury</span><span><i style="background:var(--critical);height:3px"></i>stress index</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cycles-section">
+    <div class="cardhead"><h2>Secular cycles in the record</h2><span class="draft">draft · awaiting the judge</span></div>
+    <p>Turchin and Nefedov traced eight of these cycles through English, French, Roman and Russian history. The phases below are rounded to the decade and still need checking against the book.</p>
+    <div class="cycles" id="cycles"></div>
+  </section>
+
+  <footer>
+    <div>Territory data: Seshat Global History Databank, <a href="https://github.com/Seshat-Global-History-Databank/cliopatria">Cliopatria</a> v0.2.1 (Bennett et al. 2025, <i>Scientific Data</i>), CC BY 4.0. Derived scores, handoff detection and the simulator are the Atlas lab's own work. Secular cycles: Turchin and Nefedov, <i>Secular Cycles</i> (2009). Shocks: Wikipedia, marked draft.</div>
+    <div>A "break" is a state ending without a successor that keeps its land. When a new state starts within 2 years, within 800 km, holding 60 to 170% of the old land, the lab counts a handoff instead, so Russia in 1917 and the Qing in 1912 are handoffs.</div>
+  </footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+const LAB = /*LAB*/null;
+const LAND = /*LAND*/null;
+const SHOCKS = /*SHOCKS*/null;
+const CYCLES = /*CYCLES*/null;
+
+const BT = LAB.backtest, P = LAB.polities;
+const byId = new Map(P.map(p => [p.id, p]));
+const THR = BT.early_warning.threshold, BASE = BT.cross_fit.base_rate;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmtY = y => y < 0 ? `${-y} BCE` : `${y}`;
+const pct = v => `${Math.round(v * 100)}%`;
+function band(r) { return r == null ? 'none' : r >= 2 * THR ? 'critical' : r >= THR ? 'fragile' : r >= BASE ? 'watch' : 'calm'; }
+const BAND_LABEL = { calm: 'calm', watch: 'watch', fragile: 'fragile', critical: 'critical' };
+function areaAt(p, y) { if (y < p.s || y > p.e) return 0; let v = 0; for (const [t, a] of p.a) { if (t <= y) v = a; else break; } return v; }
+function riskAt(p, y) { let v = null; for (const [t, r] of p.f) { if (t <= y) v = r; else break; } return v; }
+
+/* hero numbers, computed from the backtest */
+const st = BT.early_warning.by_style;
+document.getElementById('nPol').textContent = P.length;
+document.getElementById('wPct').textContent = pct(st.withered.flagged / st.withered.of);
+document.getElementById('sPct').textContent = pct(st.snapped.flagged / st.snapped.of);
+
+/* warnings: max risk in the 40 years before a break */
+const warn = P.filter(p => p.b).map(p => {
+  const pre = p.f.filter(([t]) => t >= p.e - 40 && t < p.e - 5);
+  return pre.length ? { p, max: Math.max(...pre.map(x => x[1])) } : null;
+}).filter(Boolean);
+
+/* ---------- map ---------- */
+const svg = d3.select('#map'), W = 960, Hm = 470;
+const proj = d3.geoEqualEarth().fitExtent([[8, 8], [W - 8, Hm - 8]], { type: 'Sphere' });
+const path = d3.geoPath(proj);
+svg.append('path').attr('class', 'grat').attr('d', path(d3.geoGraticule10()));
+svg.append('path').attr('class', 'land').attr('d', path(topojson.feature(LAND, LAND.objects.land)));
+const gRing = svg.append('g'), gDots = svg.append('g');
+const rScale = d3.scaleSqrt().domain([0, 30]).range([0, 34]);
+let year = 400, truth = false, selected = 'polity:western_roman_empire';
+const tip = document.getElementById('tip');
+
+function drawMap() {
+  document.getElementById('yearOut').textContent = fmtY(year);
+  const alive = P.map(p => ({ p, a: areaAt(p, year), r: riskAt(p, year) })).filter(d => d.a > 0).sort((x, y) => y.a - x.a);
+  const sel = gDots.selectAll('circle.dot').data(alive, d => d.p.id);
+  sel.exit().remove();
+  sel.enter().append('circle').attr('class', 'dot')
+    .on('click', (e, d) => select(d.p.id, true))
+    .on('mousemove', (e, d) => {
+      const box = svg.node().getBoundingClientRect();
+      tip.hidden = false;
+      tip.style.left = Math.min(e.clientX - box.left + 12, box.width - 200) + 'px';
+      tip.style.top = (e.clientY - box.top + 12) + 'px';
+      tip.textContent = `${d.p.n} · ${d.a.toFixed(2)} M km² · risk ${d.r == null ? 'n/a' : pct(d.r)}`;
+    })
+    .on('mouseleave', () => tip.hidden = true)
+    .merge(sel)
+    .attr('cx', d => proj([d.p.c[1], d.p.c[0]])[0]).attr('cy', d => proj([d.p.c[1], d.p.c[0]])[1])
+    .attr('r', d => Math.max(2.5, rScale(d.a)))
+    .attr('fill', d => band(d.r) === 'none' ? css('--muted') : css('--' + band(d.r)))
+    .classed('sel', d => d.p.id === selected)
+    .order();
+  const doomed = truth ? alive.filter(d => d.p.b && d.p.e > year && d.p.e <= year + 50) : [];
+  const rs = gRing.selectAll('circle.ring').data(doomed, d => d.p.id);
+  rs.exit().remove();
+  rs.enter().append('circle').attr('class', 'ring').merge(rs)
+    .attr('cx', d => proj([d.p.c[1], d.p.c[0]])[0]).attr('cy', d => proj([d.p.c[1], d.p.c[0]])[1])
+    .attr('r', d => Math.max(2.5, rScale(d.a)) + 4);
+}
+function legend() {
+  const items = [['calm', `below the ${pct(BASE)} base rate`], ['watch', `${pct(BASE)} to ${pct(THR)}`], ['fragile', `${pct(THR)}+, flagged`], ['critical', `${pct(2 * THR)}+`]];
+  document.getElementById('legend').innerHTML = items.map(([k, t]) => `<span><i style="background:var(--${k})"></i>${BAND_LABEL[k]}: ${t}</span>`).join('') +
+    `<span><i style="background:none;border:1.4px dashed var(--critical)"></i>actually broke within 50 years</span>`;
+}
+const yr = document.getElementById('year');
+yr.addEventListener('input', () => { year = +yr.value || 1; drawMap(); });
+document.getElementById('truth').addEventListener('click', e => { truth = !truth; e.target.setAttribute('aria-pressed', truth); drawMap(); });
+let timer = null;
+document.getElementById('play').addEventListener('click', e => {
+  if (timer) { clearInterval(timer); timer = null; e.target.textContent = 'Play'; return; }
+  e.target.textContent = 'Pause';
+  timer = setInterval(() => { year = year + 10 > 2024 ? -3000 : year + 10; yr.value = year; drawMap(); }, 120);
+});
+const JUMPS = [[-330, 'Alexander'], [200, 'Han and Rome'], [400, 'Fall of the West'], [750, 'Abbasids'], [1250, 'Mongols'], [1530, 'Gunpowder empires'], [1900, '1900']];
+document.getElementById('jumps').innerHTML = JUMPS.map(([y, t]) => `<button data-y="${y}">${t}</button>`).join('');
+document.getElementById('jumps').addEventListener('click', e => { const y = e.target.dataset.y; if (y) { year = +y; yr.value = year; drawMap(); } });
+
+/* ---------- state chart ---------- */
+function select(id, scroll) {
+  const p = byId.get(id); if (!p) return;
+  selected = id; drawMap(); drawState(p);
+  if (scroll) document.getElementById('state').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+}
+function drawState(p) {
+  document.getElementById('stName').textContent = p.n;
+  const pill = document.getElementById('stPill');
+  const style = { withered: ['withered, then broke', '--fragile'], snapped: ['snapped near its peak', '--critical'], handoff: ['handed off', '--accent'], alive: ['still standing in 2024', '--calm'] }[p.st];
+  pill.textContent = style[0]; pill.style.background = `var(${style[1]})`;
+  const endA = p.a.length ? p.a[p.a.length - 1][1] : 0;
+  const w = warn.find(x => x.p.id === p.id);
+  document.getElementById('stFacts').innerHTML = [
+    ['lived', `${fmtY(p.s)} to ${p.st === 'alive' ? 'today' : fmtY(p.e)}`],
+    ['peak', `${p.pk[1]} M km² in ${fmtY(p.pk[0])}`],
+    p.st !== 'alive' ? ['at the end', `${pct(endA / p.pk[1])} of peak`] : null,
+    w ? ['highest score before the end', `${pct(w.max)} (${w.max >= THR ? 'flagged' : 'not flagged'})`] : null,
+    p.h ? ['succeeded by', p.h] : null,
+  ].filter(Boolean).map(([k, v]) => `<span>${k} <b>${v}</b></span>`).join('');
+  const links = [p.wiki ? `<a href="https://en.wikipedia.org/wiki/${encodeURIComponent(p.wiki.replace(/ /g, '_'))}" target="_blank" rel="noopener">Wikipedia</a>` : '', p.wd ? `<a href="https://www.wikidata.org/wiki/${p.wd}" target="_blank" rel="noopener">Wikidata ${p.wd}</a>` : ''].filter(Boolean).join(' · ');
+  const verdict = p.st === 'withered' ? (w && w.max >= THR ? 'Its territory had been shrinking long enough that the score flagged it before the end.' : 'It shrank, but not in a way the score picked up in time.')
+    : p.st === 'snapped' ? (w && w.max >= THR ? 'It ended near its peak, yet its age and era already put it in the risky fifth.' : 'It ended close to its peak. Nothing in its borders gave warning.')
+    : p.st === 'handoff' ? `It did not break by the lab's rule: ${p.h} took over the same ground.` : 'It is still standing at the end of the record.';
+  document.getElementById('stNote').innerHTML = `${verdict} ${links}`;
+
+  const s = d3.select('#stChart'); s.selectAll('*').remove();
+  const W2 = 960, H2 = 300, m = { l: 48, r: 48, t: 12, b: 28 };
+  const x0 = p.s - 20, x1 = Math.min(2024, (p.st === 'alive' ? 2024 : p.e) + 40);
+  const x = d3.scaleLinear().domain([x0, x1]).range([m.l, W2 - m.r]);
+  const ya = d3.scaleLinear().domain([0, p.pk[1] * 1.1]).range([H2 - m.b, m.t]).nice();
+  const maxR = Math.max(0.5, d3.max(p.f, d => d[1]) || 0);
+  const yr2 = d3.scaleLinear().domain([0, Math.min(1, maxR * 1.15)]).range([H2 - m.b, m.t]);
+  for (const sh of SHOCKS) {
+    if (sh.end < x0 || sh.start > x1) continue;
+    s.append('rect').attr('x', x(Math.max(sh.start, x0))).attr('width', Math.max(2, x(Math.min(sh.end, x1)) - x(Math.max(sh.start, x0))))
+      .attr('y', m.t).attr('height', H2 - m.t - m.b).attr('fill', css('--phase-crisis')).append('title').text(`${sh.name}, ${fmtY(sh.start)}–${fmtY(sh.end)} (draft)`);
+  }
+  const steps = []; for (const [t, a] of p.a) { if (steps.length) steps.push([t, steps[steps.length - 1][1]]); steps.push([t, a]); }
+  s.append('path').datum(steps).attr('fill', css('--accent')).attr('fill-opacity', .22).attr('stroke', css('--accent')).attr('stroke-width', 1)
+    .attr('d', d3.area().x(d => x(d[0])).y0(H2 - m.b).y1(d => ya(d[1])));
+  s.append('line').attr('x1', m.l).attr('x2', W2 - m.r).attr('y1', yr2(THR)).attr('y2', yr2(THR)).attr('stroke', css('--muted')).attr('stroke-dasharray', '4 4');
+  s.append('path').datum(p.f).attr('fill', 'none').attr('stroke', css('--fragile')).attr('stroke-width', 2.2)
+    .attr('d', d3.line().x(d => x(d[0])).y(d => yr2(d[1])));
+  if (p.f.length) { const l = p.f[p.f.length - 1]; s.append('circle').attr('cx', x(l[0])).attr('cy', yr2(l[1])).attr('r', 4).attr('fill', css('--fragile')); }
+  if (p.st !== 'alive') {
+    s.append('line').attr('x1', x(p.e)).attr('x2', x(p.e)).attr('y1', m.t).attr('y2', H2 - m.b).attr('stroke', css('--ink')).attr('stroke-width', 1.5);
+    s.append('text').attr('x', x(p.e) + 5).attr('y', m.t + 12).attr('fill', css('--ink')).attr('font-family', css('--mono')).attr('font-size', 12)
+      .attr('text-anchor', x(p.e) > W2 - 160 ? 'end' : 'start').attr('dx', x(p.e) > W2 - 160 ? -10 : 0).text(p.st === 'handoff' ? `handoff ${fmtY(p.e)}` : `end ${fmtY(p.e)}`);
+  }
+  s.append('g').attr('class', 'axis').attr('transform', `translate(0,${H2 - m.b})`).call(d3.axisBottom(x).ticks(8).tickFormat(fmtY));
+  s.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(ya).ticks(5));
+  s.append('g').attr('class', 'axis').attr('transform', `translate(${W2 - m.r},0)`).call(d3.axisRight(yr2).ticks(5).tickFormat(d3.format('.0%')));
+}
+const pickIds = ['polity:western_roman_empire', 'polity:byzantine_empire', 'polity:han_dynasty', 'polity:abbasid_caliphate', 'polity:tang_dynasty', 'polity:inca_empire', 'polity:mongol_empire', 'polity:austria_hungary', 'polity:ottoman_empire'].filter(id => byId.has(id));
+document.getElementById('picks').innerHTML = pickIds.map(id => `<button data-id="${id}">${byId.get(id).n}</button>`).join('');
+document.getElementById('picks').addEventListener('click', e => { if (e.target.dataset.id) select(e.target.dataset.id); });
+document.getElementById('polList').innerHTML = P.map(p => `<option value="${p.n.replace(/"/g, '&quot;')}">`).join('');
+document.getElementById('find').addEventListener('change', e => { const p = P.find(q => q.n.toLowerCase() === e.target.value.toLowerCase()); if (p) { select(p.id); year = Math.max(-3000, Math.min(2024, p.e < 2024 ? p.e - 20 : p.pk[0])); yr.value = year; drawMap(); } });
+
+function rankList(el, rows) {
+  el.innerHTML = rows.map(r => `<li data-id="${r.p.id}"><span>${r.p.n} <span class="note">· ${fmtY(r.p.e)}</span></span><span class="num">${pct(r.max)}</span></li>`).join('');
+  el.addEventListener('click', e => { const li = e.target.closest('li'); if (li) { const p = byId.get(li.dataset.id); select(p.id); year = Math.max(-3000, p.e - 20); yr.value = year; drawMap(); } });
+}
+rankList(document.getElementById('hits'), warn.filter(w => w.max >= THR).sort((a, b) => b.max - a.max).slice(0, 8));
+rankList(document.getElementById('misses'), warn.filter(w => w.max < THR && w.p.pk[1] >= 0.5).sort((a, b) => b.p.pk[1] - a.p.pk[1]).slice(0, 8));
+
+/* ---------- scoreboard ---------- */
+const cf = BT.cross_fit, bl = BT.baseline_age_era, ts = BT.time_split_pre1500_to_post1500;
+document.getElementById('tiles').innerHTML = [
+  [`${pct(cf.precision_when_flagged)}`, `vs ${pct(cf.base_rate)}`, `of flagged state-decades broke within 50 years, against a base rate of ${pct(cf.base_rate)}. That is ${cf.lift}× the base rate.`],
+  [`${pct(BT.early_warning.flagged_5_to_40y_before)}`, '', `of ${BT.early_warning.breaks_checked} breaks were flagged 5 to 40 years ahead. Most of those were slow deaths.`],
+  [`${cf.auc.toFixed(2)}`, `vs ${bl.auc.toFixed(2)}`, `ranking skill (AUC; 0.5 is a coin flip, 1 is perfect), against ${bl.auc.toFixed(2)} for age and era alone.`],
+  [`${ts.auc.toFixed(2)}`, '', `AUC when fitted only on years before 1500 and tested on 1500 to 2024. The modern world is harder to read from borders.`],
+].map(([v, s, t]) => `<div class="tile"><span class="v num">${v} <small>${s}</small></span><p>${t}</p></div>`).join('');
+const rows = [['Base rate of breaking in 50 years', 'base_rate', pct], ['Broke when flagged', 'precision_when_flagged', pct], ['Lift over base rate', 'lift', v => v + '×'], ['Breaks caught (recall)', 'recall', pct], ['AUC', 'auc', v => v.toFixed(3)], ['Brier score (lower is better)', 'brier', v => v.toFixed(4)], ['Brier of always guessing the base rate', 'brier_base', v => v.toFixed(4)]];
+document.getElementById('cmp').innerHTML = `<tr><th></th><th>Territory model</th><th>Age and era only</th><th>Pre-1500 → post-1500</th></tr>` +
+  rows.map(([l, k, f]) => `<tr><td>${l}</td><td>${f(cf[k])}</td><td>${f(bl[k])}</td><td>${f(ts[k])}</td></tr>`).join('');
+document.getElementById('caveats').innerHTML = BT.caveats.map(c => `<li>${c}</li>`).join('');
+(function calib() {
+  const s = d3.select('#calib'), W3 = 420, H3 = 300, m = { l: 44, r: 12, t: 10, b: 34 };
+  const lim = Math.max(0.4, d3.max(cf.calibration, d => Math.max(d[0], d[1])) * 1.1);
+  const x = d3.scaleLinear().domain([0, lim]).range([m.l, W3 - m.r]), y = d3.scaleLinear().domain([0, lim]).range([H3 - m.b, m.t]);
+  s.append('line').attr('x1', x(0)).attr('y1', y(0)).attr('x2', x(lim)).attr('y2', y(lim)).attr('stroke', css('--rule')).attr('stroke-dasharray', '4 4');
+  s.append('g').attr('class', 'axis').attr('transform', `translate(0,${H3 - m.b})`).call(d3.axisBottom(x).ticks(5).tickFormat(d3.format('.0%')));
+  s.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(5).tickFormat(d3.format('.0%')));
+  s.append('text').attr('x', W3 - m.r).attr('y', H3 - 4).attr('text-anchor', 'end').attr('fill', css('--muted')).attr('font-family', css('--mono')).attr('font-size', 11).text('score');
+  s.append('text').attr('x', m.l + 4).attr('y', m.t + 10).attr('fill', css('--muted')).attr('font-family', css('--mono')).attr('font-size', 11).text('share that broke');
+  s.selectAll('circle').data(cf.calibration).enter().append('circle').attr('cx', d => x(d[0])).attr('cy', d => y(d[1])).attr('r', 5).attr('fill', css('--fragile'));
+})();
+
+/* ---------- simulator ---------- */
+function simulate(p, shocks, years = 800) {
+  let N = 0.2, E = 0.01, S = 0.5, war = false, warLen = 0, lastWarEnd = -999; const out = [], crises = [];
+  for (let t = 0; t <= years; t++) {
+    let kmul = 1;
+    for (const s of shocks) if (s.type === 'climate' && t >= s.year && t < s.year + 50) kmul *= 0.8;
+    if (war) kmul *= 0.7;
+    const k = kmul * (1 + p.tech * Math.max(S, 0) / (1 + Math.max(S, 0)));
+    for (const s of shocks) { if (s.type === 'plague' && t === s.year) N *= 0.65; if (s.type === 'elites' && t === s.year) E *= 1.6; }
+    const press = N / k, emp = E / 0.01, sfd = Math.max(0, -S);
+    const psi = Math.min(press, 1.5) * emp * (1 + 2 * sfd);
+    if (!war && psi > p.limit) { war = true; warLen = 0; crises.push(t); }
+    let phase;
+    if (war) {
+      N -= 0.022 * N; E -= 0.05 * E; S = Math.max(S, 0) * 0.85; warLen++; phase = 'crisis';
+      if (warLen >= 20 && emp < 1.1 && press < 0.9) { war = false; lastWarEnd = t; }
+    } else {
+      N += p.r * N * (1 - press); E += p.g * E * (press - 0.5);
+      S += p.tax * N * (1 - press) - 0.02 * N - 2 * E - 0.03 * Math.max(S, 0);
+      phase = t - lastWarEnd < 40 ? 'dep' : press < 0.6 ? 'exp' : 'stag';
+    }
+    E = Math.max(E, 0.003); N = Math.max(N, 0.02);
+    out.push({ t, press: Math.min(press, 2), emp, S, psi: Math.min(psi, 4), phase });
+  }
+  return { out, crises };
+}
+let shocks = [];
+const K = { r: 'kR', g: 'kG', tax: 'kT', tech: 'kK' };
+function params() { return { r: +kR.value / 100, g: +kG.value, tax: +kT.value, tech: +kK.value, limit: 2 }; }
+function drawSim() {
+  const p = params();
+  vR.textContent = (+kR.value).toFixed(1) + '%'; vG.textContent = (+kG.value).toFixed(3); vT.textContent = pct(+kT.value); vK.textContent = (+kK.value).toFixed(1); vY.textContent = kY.value;
+  const { out, crises } = simulate(p, shocks);
+  const gaps = crises.slice(1).map((c, i) => c - crises[i]);
+  document.getElementById('simFacts').innerHTML = [
+    ['crises in 800 years', crises.length],
+    ['first crisis', crises.length ? `year ${crises[0]}` : 'none'],
+    ['average gap', gaps.length ? `${Math.round(d3.mean(gaps))} years` : 'n/a'],
+    ['Turchin and Nefedov found', '200 to 300 years'],
+  ].map(([k, v]) => `<span>${k} <b>${v}</b></span>`).join('');
+  const s = d3.select('#simChart'); s.selectAll('*').remove();
+  const W4 = 700, H4 = 300, m = { l: 34, r: 10, t: 10, b: 26 };
+  const x = d3.scaleLinear().domain([0, 800]).range([m.l, W4 - m.r]);
+  const y = d3.scaleLinear().domain([0, 4]).range([H4 - m.b, m.t]);
+  let start = 0;
+  const fill = { exp: '--phase-exp', stag: '--phase-stag', crisis: '--phase-crisis', dep: '--phase-dep' };
+  for (let i = 1; i <= out.length; i++) {
+    if (i === out.length || out[i].phase !== out[start].phase) {
+      s.append('rect').attr('x', x(out[start].t)).attr('width', x(out[i - 1].t + 1) - x(out[start].t)).attr('y', m.t).attr('height', H4 - m.t - m.b).attr('fill', css(fill[out[start].phase]));
+      start = i;
+    }
+  }
+  s.append('line').attr('x1', m.l).attr('x2', W4 - m.r).attr('y1', y(2)).attr('y2', y(2)).attr('stroke', css('--critical')).attr('stroke-dasharray', '3 4').attr('stroke-opacity', .6);
+  s.append('text').attr('x', W4 - m.r - 4).attr('y', y(2) - 4).attr('text-anchor', 'end').attr('fill', css('--critical')).attr('font-family', css('--mono')).attr('font-size', 11).text('breaking point');
+  const line = key => d3.line().x(d => x(d.t)).y(d => y(Math.max(0, Math.min(4, d[key]))));
+  [['press', '--accent'], ['emp', '--watch'], ['S', '--calm'], ['psi', '--critical']].forEach(([k, c]) =>
+    s.append('path').datum(out).attr('fill', 'none').attr('stroke', css(c)).attr('stroke-width', k === 'psi' ? 2.2 : 1.6).attr('d', line(k)));
+  for (const sh of shocks) {
+    s.append('line').attr('x1', x(sh.year)).attr('x2', x(sh.year)).attr('y1', m.t).attr('y2', H4 - m.b).attr('stroke', css('--ink')).attr('stroke-width', 1);
+    s.append('text').attr('x', x(sh.year) + 3).attr('y', m.t + 11).attr('fill', css('--ink')).attr('font-family', css('--mono')).attr('font-size', 11).text(sh.type);
+  }
+  s.append('g').attr('class', 'axis').attr('transform', `translate(0,${H4 - m.b})`).call(d3.axisBottom(x).ticks(8).tickFormat(d => `yr ${d}`));
+  s.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4));
+}
+const [kR, kG, kT, kK, kY, vR, vG, vT, vK, vY] = ['kR', 'kG', 'kT', 'kK', 'kY', 'vR', 'vG', 'vT', 'vK', 'vY'].map(id => document.getElementById(id));
+[kR, kG, kT, kK, kY].forEach(el => el.addEventListener('input', drawSim));
+document.querySelectorAll('[data-shock]').forEach(b => b.addEventListener('click', () => { shocks.push({ type: b.dataset.shock, year: +kY.value }); drawSim(); }));
+document.getElementById('clear').addEventListener('click', () => { shocks = []; drawSim(); });
+
+/* ---------- cycles ---------- */
+(function cycles() {
+  const lo = -400, hi = 1800, sc = v => ((v - lo) / (hi - lo)) * 100;
+  const fill = { expansion: '--phase-exp', stagflation: '--phase-stag', crisis: '--phase-crisis', depression: '--phase-dep' };
+  const solid = { expansion: '--calm', stagflation: '--watch', crisis: '--critical', depression: '--muted' };
+  document.getElementById('cycles').innerHTML = CYCLES.map(c => `<div class="cyc"><span>${c.name.replace('Secular cycle: ', '')} <span class="note num">${fmtY(c.start)}–${fmtY(c.end)}</span></span><div class="track">${
+    c.phases.map(ph => `<span title="${ph.phase}, ${fmtY(ph.start)}–${fmtY(ph.end)}" style="left:${sc(ph.start)}%;width:${sc(ph.end) - sc(ph.start)}%;background:var(${solid[ph.phase]});opacity:.75"></span>`).join('')
+  }</div></div>`).join('') + `<div class="cyc"><span></span><div class="phasekey"><span>scale 400 BCE to 1800</span><span><i style="background:var(--calm);opacity:.75"></i>expansion</span><span><i style="background:var(--watch);opacity:.75"></i>stagflation</span><span><i style="background:var(--critical);opacity:.75"></i>crisis</span><span><i style="background:var(--muted);opacity:.75"></i>depression</span></div></div>`;
+})();
+
+legend(); drawMap(); select(selected); drawSim();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { drawMap(); select(selected); drawSim(); });
+new MutationObserver(() => { drawMap(); select(selected); drawSim(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+</script>
