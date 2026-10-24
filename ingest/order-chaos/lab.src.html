@@ -346,7 +346,7 @@ function drawState(p) {
   s.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(ya).ticks(5));
   s.append('g').attr('class', 'axis').attr('transform', `translate(${W2 - m.r},0)`).call(d3.axisRight(yr2).ticks(5).tickFormat(d3.format('.0%')));
 }
-const pickIds = ['polity:western_roman_empire', 'polity:byzantine_empire', 'polity:han_dynasty', 'polity:abbasid_caliphate', 'polity:tang_dynasty', 'polity:inca_empire', 'polity:mongol_empire', 'polity:austria_hungary', 'polity:ottoman_empire'].filter(id => byId.has(id));
+const pickIds = ['polity:western_roman_empire', 'polity:byzantine', 'polity:han', 'polity:abbasid', 'polity:tang', 'polity:inca', 'polity:mongol', 'polity:austria_h', 'polity:ottoman'].filter(id => byId.has(id));
 document.getElementById('picks').innerHTML = pickIds.map(id => `<button data-id="${id}">${byId.get(id).n}</button>`).join('');
 document.getElementById('picks').addEventListener('click', e => { if (e.target.dataset.id) select(e.target.dataset.id); });
 document.getElementById('polList').innerHTML = P.map(p => `<option value="${p.n.replace(/"/g, '&quot;')}">`).join('');
