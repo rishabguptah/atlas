@@ -246,7 +246,7 @@ function render() {
     .attr('data-s', r => Math.max(8, Math.min(17, 4 + Math.sqrt(r.area) / 260)))
     .text(r => shortName(pname(r.k)));
   // battles: this quarter-century bright, the last century fading
-  const bats = state.show.battles ? BAT.filter(b => b.y >= snap - 100 && b.y < snap + 25) : [];
+  const bats = state.show.battles ? BAT.filter(b => b.y < snap + 25 && (b.y >= snap || (b.k && b.y >= snap - 100))) : [];
   gBat.selectAll('g').data(bats, b => b.id).join(en => {
     const g = en.append('g').attr('class', 'bat');
     g.append('circle').attr('class', 'halo');
@@ -254,8 +254,8 @@ function render() {
     return g;
   }).attr('transform', b => { const [x, y] = proj([b.lon, b.lat]); return `translate(${x},${y})`; })
     .attr('opacity', b => b.y >= snap ? 1 : Math.max(.18, .75 - (snap - b.y) / 140))
-    .attr('data-now', b => b.y >= snap ? 1 : 0)
-    .on('mousemove', (e, b) => showTip(e, `${b.name}<small>${fmtY(b.y)}${b.w != null ? ` · won by ${b.s[b.w].map(x => x.n).join(', ')}` : ''}</small>`))
+    .attr('data-now', b => b.y >= snap ? 1 : 0).attr('data-k', b => b.k ? 1 : 0)
+    .on('mousemove', (e, b) => showTip(e, `${esc(b.name)}<small>${fmtY(b.y)}${b.s && b.w != null ? ` · won by ${esc(b.s[b.w].map(x => x.n).join(', '))}` : b.war ? ' · ' + esc(b.war) : ''}</small>`))
     .on('mouseleave', hideTip)
     .on('click', (e, b) => { e.stopPropagation(); select({ t: 'b', id: b.id }); });
   const chks = state.show.choke ? CHOKE.filter(c => !c.start || c.start <= snap + 24) : [];
@@ -276,9 +276,10 @@ function scaleMarks() {
     .attr('stroke-width', 3 / k)
     .attr('opacity', function () { return (+this.getAttribute('data-s')) * Math.sqrt(k) < 9 ? 0 : 1; });
   gBat.selectAll('g').each(function () {
-    const now = this.getAttribute('data-now') === '1', s = (now ? 6 : 4) / Math.sqrt(k) * (k > 1 ? 1 : 1);
-    d3.select(this).select('.x').attr('d', `M${-s},${-s}L${s},${s}M${-s},${s}L${s},${-s}`).attr('stroke-width', now ? 2.2 : 1.4);
-    d3.select(this).select('.halo').attr('r', now ? s * 2.1 : 0);
+    const now = this.getAttribute('data-now') === '1', key = this.getAttribute('data-k') === '1';
+    const s = (now ? (key ? 6 : 3.2) : 4) / Math.sqrt(k);
+    d3.select(this).select('.x').attr('d', `M${-s},${-s}L${s},${s}M${-s},${s}L${s},${-s}`).attr('stroke-width', now && key ? 2.2 : 1.2);
+    d3.select(this).select('.halo').attr('r', now && key ? s * 2.1 : 0);
   });
   const c = 3.8 / Math.sqrt(k);
   gChk.selectAll('rect').attr('x', -c).attr('y', -c).attr('width', 2 * c).attr('height', 2 * c).attr('transform', 'rotate(45)');
@@ -305,8 +306,10 @@ function drawTimeline() {
   const cy = d3.scaleLinear().domain([0, d3.max(counts, d => d[1])]).range([40, 6]);
   tl.append('path').datum(counts).attr('fill', 'rgba(235,230,219,.10)').attr('stroke', 'rgba(235,230,219,.45)').attr('stroke-width', 1)
     .attr('d', d3.area().x(d => tx(d[0])).y0(40).y1(d => cy(d[1])).curve(d3.curveMonotoneX));
-  tl.append('g').selectAll('line').data(BAT).join('line').attr('x1', b => tx(b.y)).attr('x2', b => tx(b.y)).attr('y1', 42).attr('y2', 48)
-    .attr('stroke', 'var(--blood)').attr('stroke-width', 1.2).attr('opacity', .8);
+  const bins = d3.rollups(BAT, v => v.length, b => snapOf(b.y));
+  const by = d3.scaleSqrt().domain([0, d3.max(bins, d => d[1]) || 1]).range([0, 8]);
+  tl.append('g').selectAll('rect').data(bins).join('rect').attr('x', d => tx(d[0])).attr('width', d => Math.max(1, tx(d[0] + 25) - tx(d[0]) - .5))
+    .attr('y', 41).attr('height', d => Math.max(1, by(d[1]))).attr('fill', 'var(--blood)').attr('opacity', .85);
   const ticks = w < 500 ? [-3000, -1000, 0, 1000, 1500, 2000] : [-3000, -1000, -500, 0, 500, 1000, 1250, 1500, 1650, 1800, 1900, 2000];
   const g = tl.append('g');
   g.selectAll('line').data(ticks).join('line').attr('x1', tx).attr('x2', tx).attr('y1', 50).attr('y2', 53).attr('stroke', 'var(--muted)');
@@ -384,12 +387,13 @@ function wire() {
 const KEY_STRAITS = ['place:bosporus', 'place:strait_of_gibraltar', 'place:strait_of_malacca', 'place:strait_of_hormuz', 'place:bab_el_mandeb', 'place:khyber_pass', 'place:dardanelles', 'place:oresund'];
 function momentView(snap) {
   const top = state.realms.slice(0, 8), max = top.length ? top[0].area : 1;
-  const now = BAT.filter(b => b.y >= snap && b.y < snap + 25);
+  const now = BAT.filter(b => b.y >= snap && b.y < snap + 25).sort((a, b) => (b.k || 0) - (a.k || 0) || a.y - b.y);
   const prev = BAT.filter(b => b.y < snap).slice(-3).reverse(), next = BAT.filter(b => b.y >= snap + 25).slice(0, 3);
+  const more = now.length > 14 ? `<p class="meta">and ${now.length - 14} more on the map</p>` : '';
   let h = `<div class="kicker">The world in</div><h2>${fmtY(snap)}</h2>`;
   h += `<p class="prose">Click a state, a battle (red cross) or a chokepoint (gold diamond). Drag the timeline or press Play to watch borders move every 25 years.</p>`;
   h += `<h3>Largest states</h3><div class="bars">` + top.map(r => `<div class="bar" data-p="${r.k}" role="button" tabindex="0"><span class="n">${esc(pname(r.k))}</span><span class="v">${fmtA(r.area / 1e6)}</span><span class="track"><span style="width:${(100 * r.area / max).toFixed(1)}%;background:${color(r.k)}"></span></span></div>`).join('') + `</div>`;
-  if (now.length) h += `<h3>Battles, ${fmtY(snap)} to ${fmtY(Math.min(2024, snap + 24))}</h3>` + batList(now);
+  if (now.length) h += `<h3>Battles, ${fmtY(snap)} to ${fmtY(Math.min(2024, snap + 24))}</h3>` + batList(now.slice(0, 14)) + more;
   else h += `<h3>Battles nearby in time</h3>` + batList([...prev.reverse(), ...next]);
   h += `<h3>Who holds the gates</h3><ul class="list">` + KEY_STRAITS.map(id => CHOKE.find(c => c.id === id)).filter(Boolean).map(c => {
     const hh = holderAt(c, snap);
@@ -410,10 +414,10 @@ function polityView(id, snap) {
   if (a && a.length > 1) h += `<h3>Area over time</h3>` + spark(a, snap);
   const members = new Set(FEATS.filter(f => f.properties.group === id).map(f => f.properties.ref));
   if (members.size) h += `<h3>Made up of</h3><ul class="list">` + [...members].slice(0, 30).map(m => `<li data-p="${m}"><span class="y">${POL[m] ? (POL[m][1] < 0 ? -POL[m][1] + ' BC' : POL[m][1]) : ''}</span><span class="nm">${esc(pname(m))}</span><span class="tag"></span></li>`).join('') + `</ul>`;
-  const fought = BAT.filter(b => b.s.some(side => side.some(x => x.p === id)));
+  const fought = BAT.filter(b => b.s ? b.s.some(side => side.some(x => x.p === id)) : (b.pr || []).some(x => x.p === id));
   if (fought.length) h += `<h3>Battles</h3><ul class="list">` + fought.map(b => {
-    const side = b.s.findIndex(sd => sd.some(x => x.p === id));
-    const res = b.w == null ? 'draw' : b.w === side ? 'won' : 'lost';
+    const side = b.s ? b.s.findIndex(sd => sd.some(x => x.p === id)) : -1;
+    const res = !b.s ? 'fought' : b.w == null ? 'draw' : b.w === side ? 'won' : 'lost';
     return `<li data-b="${b.id}"><span class="y">${b.y < 0 ? -b.y + ' BC' : b.y}</span><span class="nm">${esc(b.name)}</span><span class="tag ${res}">${res}</span></li>`;
   }).join('') + `</ul>`;
   const held = [];
@@ -439,12 +443,21 @@ function spark(a, snap) {
     <text x="${w - m.r}" y="${m.t + 2}" text-anchor="end">max ${fmtA(mx)}</text></svg>`;
 }
 function battleView(b) {
+  if (!b.s) return wdBattleView(b);
   let h = `<button class="back">&larr; The world in ${fmtY(snapOf(state.year))}</button><div class="kicker">${b.t} · ${fmtY(b.y)}</div><h2>${esc(b.name)}</h2>`;
   h += `<p>${esc(b.why)}</p><div class="sides">` + b.s.map((side, i) => `<div class="side${b.w === i ? ' win' : ''}"><div class="lab">${b.w == null ? 'Side ' + 'AB'[i] : b.w === i ? 'Won' : 'Lost'}</div>` +
     side.map(x => x.p ? `<div><button class="plink" data-p="${x.p}">${esc(x.n)}</button></div>` : `<div style="font-size:17px">${esc(x.n)}</div>`).join('') + `</div>`).join('') + `</div>`;
   if (b.w == null) h += `<p class="meta">No clear winner.</p>`;
   h += `<div class="links"><span class="draft">Draft</span><a href="${b.u}" target="_blank" rel="noopener">Check it on Wikipedia</a></div>`;
-  h += `<p class="note">Written from general knowledge and not yet checked against sources. A Wikidata pull will replace this list with thousands of sourced battles.</p>`;
+  h += `<p class="note">One of the key battles, written from general knowledge and not yet checked against sources.${b.q ? ` Its date and place are also on <a href="https://www.wikidata.org/wiki/${b.q}" target="_blank" rel="noopener">Wikidata</a>.` : ''}</p>`;
+  return h;
+}
+function wdBattleView(b) {
+  let h = `<button class="back">&larr; The world in ${fmtY(snapOf(state.year))}</button><div class="kicker">${b.t} · ${fmtY(b.y)}</div><h2>${esc(b.name)}</h2>`;
+  if (b.war) h += `<div class="meta">Part of <b>${esc(b.war)}</b></div>`;
+  if (b.pr && b.pr.length) h += `<h3>Who took part</h3><div class="sides"><div class="side">` + b.pr.map(x => x.p ? `<div><button class="plink" data-p="${x.p}">${esc(x.n)}</button></div>` : `<div style="font-size:17px">${esc(x.n)}</div>`).join('') + `</div></div>`;
+  h += `<div class="links"><a href="https://www.wikidata.org/wiki/${b.q}" target="_blank" rel="noopener">Wikidata ${b.q}</a>${b.u ? `<a href="${b.u}" target="_blank" rel="noopener">Wikipedia</a>` : ''}</div>`;
+  h += `<p class="note">From Wikidata (CC0). Wikidata lists participants without saying who won.</p>`;
   return h;
 }
 function chokeView(c, snap) {
@@ -462,13 +475,13 @@ function chokeView(c, snap) {
     h += `<ul class="list">` + merged.map(z => `<li data-p="${z[0]}"><span class="y">${z[1] < 0 ? -z[1] + ' BC' : z[1]}</span><span class="nm">${esc(pname(z[0]))}</span><span class="tag">${z[2] >= 2024 ? 'now' : 'to ' + (z[2] < 0 ? -z[2] + ' BC' : z[2])}</span></li>`).join('') + `</ul>`;
   }
   const near = BAT.filter(b => Math.hypot(b.lat - c.lat, (b.lon - c.lon) * Math.cos(c.lat * Math.PI / 180)) < 2.2);
-  if (near.length) h += `<h3>Battles nearby</h3>` + batList(near);
+  if (near.length) h += `<h3>Battles nearby</h3>` + batList(near.sort((a, b) => (b.k || 0) - (a.k || 0)).slice(0, 14));
   h += `<div class="links"><span class="draft">Draft</span><a href="${c.u}" target="_blank" rel="noopener">Wikipedia</a></div>`;
   h += `<p class="note">The place description is a draft. The holders are computed from Cliopatria borders: the state whose territory contains the point, or the nearest one within 60 km.</p>`;
   return h;
 }
 function credits() {
-  return `<p class="note">${SUMMARY}. Borders: <a href="https://github.com/Seshat-Global-History-Databank/cliopatria" target="_blank" rel="noopener">Cliopatria</a> v0.2.1, Seshat Global History Databank, CC BY 4.0, simplified for the web. Land: Natural Earth. Battles and chokepoints are drafts written from general knowledge, each linked to the article to check.</p>`;
+  return `<p class="note">${SUMMARY}. Borders: <a href="https://github.com/Seshat-Global-History-Databank/cliopatria" target="_blank" rel="noopener">Cliopatria</a> v0.2.1, Seshat Global History Databank, CC BY 4.0, simplified for the web. Land: Natural Earth. Battles: Wikidata (CC0), plus key battles with sides and winners written from general knowledge and marked draft. Chokepoint descriptions are drafts too.</p>`;
 }
 
 new ResizeObserver(() => { layout(); drawTimeline(); }).observe(mapEl);
