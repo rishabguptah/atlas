@@ -1,0 +1,45 @@
+{
+ "sourcing": {
+  "records": 841,
+  "draft": 841,
+  "sourced": 0,
+  "unchecked_cite": 841,
+  "with_url": 0,
+  "by_kind": {
+   "event": {
+    "records": 492,
+    "draft": 492,
+    "with_url": 0
+   },
+   "measure": {
+    "records": 106,
+    "draft": 106,
+    "with_url": 0
+   },
+   "place": {
+    "records": 176,
+    "draft": 176,
+    "with_url": 0
+   },
+   "polity": {
+    "records": 67,
+    "draft": 67,
+    "with_url": 0
+   }
+  }
+ },
+ "findings": [
+  {
+   "level": "warning",
+   "rule": "event.before_place",
+   "id": "event:buenos_aires_1536",
+   "msg": "'First founding, soon abandoned' (1536) is before Buenos Aires begins (1580)"
+  },
+  {
+   "level": "warning",
+   "rule": "event.after_place",
+   "id": "event:harappa_1856",
+   "msg": "destructive event 'Bricks hauled off for the railway' (1856) long after Harappa ended (-1300)"
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{"claim": "2026-W43-01", "type": "start", "ref": "place:benin_city", "text": "Benin City (Nigeria) was founded or first settled around 1180 CE (approx.)."}
+{"claim": "2026-W43-02", "type": "start", "ref": "place:venice", "text": "Venice (Italy) was founded or first settled around 421 CE (approx.)."}
+{"claim": "2026-W43-03", "type": "start", "ref": "place:mexico_city", "text": "Mexico City (Mexico) was founded or first settled around 1325 CE (approx.)."}
+{"claim": "2026-W43-04", "type": "start", "ref": "place:byblos", "text": "Byblos (Lebanon) was founded or first settled around 5000 BCE (approx.)."}
+{"claim": "2026-W43-05", "type": "start", "ref": "place:ravenser", "text": "Ravenser Odd (UK (Humber estuary)) was founded or first settled around 1235 CE (approx.)."}
+{"claim": "2026-W43-06", "type": "end", "ref": "place:anuradhapura", "text": "Anuradhapura ended or was abandoned around 993 CE."}
+{"claim": "2026-W43-07", "type": "end", "ref": "place:chan_chan", "text": "Chan Chan ended or was abandoned around 1470 CE."}
+{"claim": "2026-W43-08", "type": "end", "ref": "place:bamiyan", "text": "Buddhas of Bamiyan ended or was abandoned around 2001 CE."}
+{"claim": "2026-W43-09", "type": "end", "ref": "place:monte_alban", "text": "Monte Albán ended or was abandoned around 850 CE."}
+{"claim": "2026-W43-10", "type": "text", "ref": "place:beijing", "text": "Beijing: Ji, then the Mongols' Dadu, then the Ming and Qing capital. Capital of China for most of the last 750 years; around 1800 perhaps the largest city on earth."}
+{"claim": "2026-W43-11", "type": "text", "ref": "place:hangzhou", "text": "Hangzhou: Lin'an, the Southern Song capital at the end of the Grand Canal. Marco Polo called it the finest city in the world; possibly the world's largest around 1200."}
+{"claim": "2026-W43-12", "type": "text", "ref": "place:medina", "text": "Medina: Yathrib, the oasis town where Muhammad moved in 622. The Hijra year 622 is year one of the Islamic calendar."}
+{"claim": "2026-W43-13", "type": "text", "ref": "place:aachen", "text": "Aachen: Charlemagne's favourite residence and burial place. German kings were crowned here for about 600 years."}
+{"claim": "2026-W43-14", "type": "text", "ref": "place:cordoba", "text": "Córdoba: Capital of the Umayyad caliphate of al-Andalus. Around 1000 perhaps the largest city in Europe, with a famous library and the Great Mosque."}
+{"claim": "2026-W43-15", "type": "event", "ref": "event:berlin_1871", "text": "Berlin, 1871 CE: Capital of the German Empire."}
+{"claim": "2026-W43-16", "type": "event", "ref": "event:lisbon_1497", "text": "Lisbon, 1497 CE: Da Gama sails for India."}
+{"claim": "2026-W43-17", "type": "event", "ref": "event:nanjing_1421", "text": "Nanjing, 1421 CE: Ming court moves to Beijing."}
+{"claim": "2026-W43-18", "type": "event", "ref": "event:persepolis_bc518", "text": "Persepolis, 518 BCE: Darius I begins building."}
+{"claim": "2026-W43-19", "type": "event", "ref": "event:tyre_1291", "text": "Tyre, 1291 CE: Taken by the Mamluks."}
+{"claim": "2026-W43-20", "type": "event", "ref": "event:teotihuacan_200", "text": "Teotihuacan, 200 CE: Pyramid of the Sun completed."}
+{"claim": "2026-W43-21", "type": "event", "ref": "event:delhi_1206", "text": "Delhi, 1206 CE: Delhi Sultanate founded."}
+{"claim": "2026-W43-22", "type": "population", "ref": "m:population:naples:living_atlas", "text": "Naples had about 280,000 people in 1600 CE.", "point": 1600}
+{"claim": "2026-W43-23", "type": "population", "ref": "m:population:damascus:living_atlas", "text": "Damascus had about 90,000 people in 1200 CE.", "point": 1200}
+{"claim": "2026-W43-24", "type": "population", "ref": "m:population:bruges:living_atlas", "text": "Bruges had about 46,000 people in 1340 CE.", "point": 1340}
+{"claim": "2026-W43-25", "type": "population", "ref": "m:population:mexico_city:living_atlas", "text": "Mexico City had about 200,000 people in 1500 CE.", "point": 1500}
+{"claim": "2026-W43-26", "type": "population", "ref": "m:population:fez:living_atlas", "text": "Fez had about 150,000 people in 1300 CE.", "point": 1300}
+{"claim": "2026-W43-27", "type": "polity_dates", "ref": "polity:egypt_nk", "text": "Egypt (New Kingdom) lasted from 1550 BCE to 1070 BCE."}
+{"claim": "2026-W43-28", "type": "polity_dates", "ref": "polity:khmer", "text": "Khmer Empire lasted from 802 CE to 1431 CE."}
+{"claim": "2026-W43-29", "type": "polity_peak", "ref": "polity:hittite", "text": "Hittite Empire peaked around 1300 BCE at about 0.6 million km²."}
+{"claim": "2026-W43-30", "type": "polity_peak", "ref": "polity:ptolemaic", "text": "Ptolemaic Egypt peaked around 240 BCE at about 1 million km²."}

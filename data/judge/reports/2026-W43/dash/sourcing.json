@@ -1,0 +1,26 @@
+[
+ {
+  "kind": "event",
+  "records": 492,
+  "draft": 492,
+  "with_url": 0
+ },
+ {
+  "kind": "measure",
+  "records": 106,
+  "draft": 106,
+  "with_url": 0
+ },
+ {
+  "kind": "place",
+  "records": 176,
+  "draft": 176,
+  "with_url": 0
+ },
+ {
+  "kind": "polity",
+  "records": 67,
+  "draft": 67,
+  "with_url": 0
+ }
+]

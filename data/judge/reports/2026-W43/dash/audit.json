@@ -1,0 +1,14 @@
+[
+ {
+  "level": "warning",
+  "rule": "event.before_place",
+  "id": "event:buenos_aires_1536",
+  "msg": "'First founding, soon abandoned' (1536) is before Buenos Aires begins (1580)"
+ },
+ {
+  "level": "warning",
+  "rule": "event.after_place",
+  "id": "event:harappa_1856",
+  "msg": "destructive event 'Bricks hauled off for the railway' (1856) long after Harappa ended (-1300)"
+ }
+]
