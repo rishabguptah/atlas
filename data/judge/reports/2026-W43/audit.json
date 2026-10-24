@@ -1,30 +1,64 @@
 {
  "sourcing": {
-  "records": 841,
-  "draft": 841,
-  "sourced": 0,
+  "records": 4177,
+  "draft": 1554,
+  "sourced": 2623,
   "unchecked_cite": 841,
-  "with_url": 0,
+  "with_url": 3330,
   "by_kind": {
    "event": {
-    "records": 492,
-    "draft": 492,
-    "with_url": 0
+    "records": 1106,
+    "draft": 523,
+    "with_url": 613,
+    "unchecked_cite": 492
+   },
+   "idea": {
+    "records": 52,
+    "draft": 52,
+    "with_url": 52,
+    "unchecked_cite": 0
    },
    "measure": {
-    "records": 106,
+    "records": 1470,
     "draft": 106,
-    "with_url": 0
+    "with_url": 1364,
+    "unchecked_cite": 106
+   },
+   "person": {
+    "records": 126,
+    "draft": 126,
+    "with_url": 126,
+    "unchecked_cite": 0
    },
    "place": {
-    "records": 176,
-    "draft": 176,
-    "with_url": 0
+    "records": 316,
+    "draft": 316,
+    "with_url": 140,
+    "unchecked_cite": 176
    },
    "polity": {
-    "records": 67,
+    "records": 743,
     "draft": 67,
-    "with_url": 0
+    "with_url": 676,
+    "unchecked_cite": 67
+   },
+   "relation": {
+    "records": 260,
+    "draft": 260,
+    "with_url": 255,
+    "unchecked_cite": 0
+   },
+   "route": {
+    "records": 17,
+    "draft": 17,
+    "with_url": 17,
+    "unchecked_cite": 0
+   },
+   "work": {
+    "records": 87,
+    "draft": 87,
+    "with_url": 87,
+    "unchecked_cite": 0
    }
   }
  },
