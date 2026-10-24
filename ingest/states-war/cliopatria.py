@@ -36,7 +36,7 @@ LIVING_ATLAS = {
     'aksum_e': 'Kingdom of Axum', 'sasanian': 'Sasanian Empire', 'gupta': 'Gupta Empire',
     'hunnic': 'Hunnic Empire', 'byzantine': 'Byzantine Empire', 'ghana_e': 'Ghana Empire',
     'sui': 'Sui Dynasty', 'tang': 'Tang Dynasty', 'tibetan': 'Tibetan Empire', 'umayyad': 'Umayyad Caliphate',
-    'abbasid': 'Abbasid Caliphate', 'srivijaya': 'Srivijaya', 'carolingian': 'Carolingian Empire',
+    'abbasid': 'Abbasid Caliphate', 'srivijaya': 'Srivijaya', 'carolingian': '(Carolingian Empire)',
     'khmer': 'Khmer Empire', 'chola': 'Chola Empire', 'fatimid': 'Fatimid Caliphate', 'liao': 'Liao Dynasty',
     'hre': 'Holy Roman Empire', 'song': 'Northern Song', 'seljuk': 'Great Seljuk Empire',
     'almohad': 'Almohad Caliphate', 'delhi_s': '(Delhi Sultanate)', 'mongol': 'Mongol Empire',
@@ -134,7 +134,7 @@ def main():
         st = subtype(name)
         if st:
             r['subtype'] = st
-        r['peak'] = [yr(peak['FromYear']), round(peak['Area'] / 1e6, 3)]
+        r['peak'] = [yr(peak['FromYear']), max(round(peak['Area'] / 1e6, 6), 1e-6)]
         if wd:
             r['wikidata'] = wd[0][0]
         ext = {'cliopatria': name}
