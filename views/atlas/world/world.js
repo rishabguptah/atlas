@@ -198,16 +198,28 @@
   W.clearDrafts = key => { aiStore(); S.aiRows = (S.aiRows || []).filter(a => key && a[11] && a[11].ai !== key); try { localStorage.setItem(AIKEY, JSON.stringify(S.aiRows)); } catch { } S.ai = S.aiRows.length ? store(S.aiRows, "ai") : false; fire(); };
 
   // ---------- storylines (served to Up close and, as Stories, to the Director) ----------
+  // Named storylines() so it never clobbers the Story registry ATLAS.world.stories (story.js).
   const STORIES = { list: null, p: null };
-  W.stories = function () {
+  W.storylines = function () {
     if (!STORIES.p) STORIES.p = W.ready.then(ix => ix ? json(BASE + ix.stories_file) : { stories: [] }).then(d => { STORIES.list = d.stories; fire(); return d.stories; })
-      .catch(e => { console.warn("stories", e); STORIES.list = []; return []; });
+      .catch(e => { console.warn("storylines", e); STORIES.list = []; return []; });
     return STORIES.p;
   };
-  W.storyIndex = () => (S.index ? S.index.stories : []);
-  // The same storylines in the Story / Scene shape of WORLD.md (L4).
-  W.asStory = s => ({ id: s.id, title: s.title, kind: "storyline", scenes: s.steps.map((st, i) => ({ id: s.id + ":" + i, t: Math.floor(mOf(st.date) / 12), date: st.date,
-    view: { lon: st.lon, lat: st.lat, span: 10 }, actors: st.who || [], caption: st.name, text: [st.what, st.why].filter(Boolean).join(" "),
-    conf: st.date_note ? "approximate" : "estimated", sources: [st.wikipedia ? { cite: "Wikipedia: " + st.wikipedia + " (study text written from it; draft)", url: "https://en.wikipedia.org/wiki/" + encodeURIComponent(st.wikipedia.replace(/ /g, "_")) } : null, st.wikidata ? { cite: "Wikidata " + st.wikidata, url: "https://www.wikidata.org/wiki/" + st.wikidata } : null].filter(Boolean),
-    next: i + 1 < s.steps.length ? [s.id + ":" + (i + 1)] : [] })) });
+  W.storylineIndex = () => (S.index ? S.index.stories : []);
+  // The same storylines in the Story / Scene shape of WORLD.md (L4), id storyline:deep:<id>.
+  W.asStory = s => {
+    const R = W.stories && W.stories.from, step = R ? R.steps : (x => x);
+    const scenes = s.steps.map((st, i) => step({ id: "s" + i, title: st.name, year: Math.floor(mOf(st.date) / 12), date: st.date,
+      view: { lon: st.lon, lat: st.lat, span: 10 }, actors: st.who || [], text: [st.what, st.why].filter(Boolean).join(" "),
+      kick: st.place_name || null, layers: ["deep"], pins: [{ name: st.name, lon: st.lon, lat: st.lat }], deeper: { tab: "upclose" },
+      ask: `Why did ${st.name} happen, and what did it lead to?`,
+      sources: [st.wikipedia ? { cite: "Wikipedia: " + st.wikipedia + " (study text written from it; draft)", url: "https://en.wikipedia.org/wiki/" + encodeURIComponent(st.wikipedia.replace(/ /g, "_")) } : null, st.wikidata ? { cite: "Wikidata " + st.wikidata, url: "https://www.wikidata.org/wiki/" + st.wikidata } : null].filter(Boolean) },
+      i, { conf: st.date_note ? "approximate" : "estimated" }));
+    return { id: "storyline:deep:" + s.id, title: s.title, kind: "storyline", blurb: s.blurb || "", status: "draft", scenes };
+  };
+  // Register them with the Director's registry; the list fills once stories.json arrives.
+  if (W.stories && W.stories.add) {
+    W.stories.add({ kind: "storyline", list: () => (STORIES.list || []).map(W.asStory) });
+    W.ready.then(() => W.storylines());
+  }
 })();

@@ -102,7 +102,7 @@
 
   // ---------- storylines ----------
   let STORIES = [];
-  W.stories().then(s => { STORIES = s.map((st, i) => ({ ...st, i, steps: st.steps.map((p, j) => ({ ...p, j, m: mOf(p.date) })) })); renderSoon(); if (DS.story != null) redraw(); });
+  W.storylines().then(s => { STORIES = s.map((st, i) => ({ ...st, i, steps: st.steps.map((p, j) => ({ ...p, j, m: mOf(p.date) })) })); renderSoon(); if (DS.story != null) redraw(); });
   const story = () => DS.story != null ? STORIES.find(s => s.id === DS.story) : null;
   // Journeys: a storyline's steps that name the same person, in order.
   function journeys(s) {
@@ -295,7 +295,7 @@
         ${T.msg ? `<p>${esc(T.msg)}</p>` : ""}</div>
       ${stats.length ? `<div class="stats">${stats.map(o => `<div class="stat"><b>${esc(o.v)}</b><span>${esc(o.t)}</span></div>`).join("")}</div>` : ""}
       <h3>Storylines${s ? "" : " here"}</h3>
-      ${s ? `<div class="chips"><button aria-pressed="true" data-story="${esc(s.id)}">${esc(s.title)}<small>${esc(s.region || "")}</small></button><button data-a="unstory">Close</button></div>
+      ${s ? `<div class="chips"><button aria-pressed="true" data-story="${esc(s.id)}">${esc(s.title)}<small>${esc(s.region || "")}</small></button>${W.director ? `<button data-a="direct" title="Play this storyline scene by scene on the map">▶ Play on the map</button>` : ""}<button data-a="unstory">Close</button></div>
         <p class="lede">${esc(s.blurb)} <span class="note">(${esc(fmtYear(s.start))}–${esc(fmtYear(s.end))}, ${s.steps.length} steps${journeys(s).length ? ", journeys of " + journeys(s).map(j => esc(j.who)).join(", ") : ""})</span></p>
         ${(() => { const st = next || s.steps[0]; return `<button class="next" data-step="${st.j}"><span>${next ? "Next" : "Start"} · ${esc(fmtDate(st.date))}${st.place_name ? " · " + esc(st.place_name) : ""}</span><b>${esc(st.name)}</b>${st.what ? `<small>${esc(st.what)}</small>` : ""}</button>`; })()}
         <div class="steps">${s.steps.map(st => `<button class="row${st.j === DS.step ? " on" : st.m < m ? " past" : ""}" data-step="${st.j}"><span class="d">${esc(fmtDate(st.date))}</span><span><i class="${FAM[(st.family || "c")[0]] ? FAM[st.family[0]][1] : "circle"}" style="--fc:${FAM[(st.family || "c")[0]] ? FAM[st.family[0]][2] : FAM.c[2]}"></i>${esc(st.name)}${st.why ? `<small>${esc(st.why)}</small>` : ""}</span></button>`).join("")}</div>`
@@ -365,7 +365,7 @@ Answer with JSON only, one object: {"title":"...","blurb":"one sentence question
     } finally { T.busy = false; redraw(); renderSoon(true); }
   }
   // AI storylines written in this browser come back on the next visit.
-  W.stories().then(() => { try { for (const st of JSON.parse(localStorage.getItem("atlas.deep.aistories.v1") || "[]")) if (!STORIES.some(s => s.id === st.id)) STORIES.push({ ...st, i: STORIES.length, steps: st.steps.map((p, k) => ({ ...p, j: k, m: mOf(p.date) })) }); } catch { /* none */ } });
+  W.storylines().then(() => { try { for (const st of JSON.parse(localStorage.getItem("atlas.deep.aistories.v1") || "[]")) if (!STORIES.some(s => s.id === st.id)) STORIES.push({ ...st, i: STORIES.length, steps: st.steps.map((p, k) => ({ ...p, j: k, m: mOf(p.date) })) }); } catch { /* none */ } });
 
   ATLAS.tab({
     id: "upclose", name: "Up close",
@@ -379,6 +379,7 @@ Answer with JSON only, one object: {"title":"...","blurb":"one sentence question
         if (a === "play") return play();
         if (a === "restore") { for (const k of T.quieted || []) api.setOn(k, true); T.quieted = []; return renderSoon(true); }
         if (a === "fill" || a === "tell") { if (!T.busy) aiFill(a); return; }
+        if (a === "direct") { const s = story(); if (s && W.director) W.director.play(W.asStory(s)); return; }
         if (a === "unstory") { DS.story = null; DS.step = null; if (T.span === "story") T.span = "auto"; redraw(); return renderSoon(true); }
         if (a) { stop(); return setMonth((DS.m ?? spanNow().m0) + +a, { now: true }); }
         if (b.dataset.speed) { T.speed = +b.dataset.speed; return renderSoon(true); }
