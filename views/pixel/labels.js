@@ -18,7 +18,8 @@
 //
 // The page owns the engine:
 //   const L = ATLAS.labels.mount(container, projection, beforeEl)
-//   L.layout(t, W, H, { year, focus, extra: [{ pri, box: [x0, y0, x1, y1], show(on), note? }] })   note: a lens annotation
+//   L.layout(t, W, H, { year, focus, extra: [{ pri, box: [x0, y0, x1, y1], show(on), note? }], avoid: [[x0, y0, x1, y1]] })
+//     note: a lens annotation; avoid: screen rects of the map's chrome that no label may sit under
 //   L.move(t)          on every zoom frame: shift the drawn labels with CSS until the next layout
 //   L.setMood(m)       day | dusk | night | winter | chronicle
 //   L.measure(text, size, weight) -> width in px
@@ -29,7 +30,7 @@
   const STYLES = {
     realm: { size: 16, weight: 700, caps: true, spacing: 0.3 },
     province: { size: 12, weight: 500, caps: true, spacing: 0.16 },
-    ocean: { size: 16, weight: 500, caps: true, spacing: 0.5 },
+    ocean: { size: 16, weight: 500, caps: true, spacing: 0.32 },
     sea: { size: 12, weight: 600, caps: true, spacing: 0.3 },
     river: { size: 12, weight: 500, caps: false, spacing: 0.1 },
     high: { size: 12, weight: 600, caps: true, spacing: 0.22 },
@@ -180,12 +181,16 @@ svg.map-labels g { transition: opacity .3s; }
         }
       }
       for (const e of o.extra || []) cands.push({ pri: e.pri, boxes: [e.box], ext: e });
-      cands.sort((a, b) => b.pri - a.pri);
+      // Realm names go first: they are the map's first tier, so the other labels arrange themselves around them.
+      for (const c of cands) c.R = c.st === STYLES.realm;
+      cands.sort((a, b) => (b.R - a.R) || b.pri - a.pri);
+      // Screen rects the map's own chrome covers (controls, minimap, compass): no label goes under them.
+      const avoid = o.avoid || [], under = b => avoid.some(r => b[0] <= r[2] && b[2] >= r[0] && b[1] <= r[3] && b[3] >= r[1]);
       // Collision grid of 64 px cells; a few px of air around every label, more when zoomed out.
-      // Three planes, as on a strategy map: realm names (R) are big background lettering that only keeps clear of other
-      // realm names and the terrain names (G); marks' labels (P) sit on top of realm names but never on a terrain name.
+      // Three planes, as on a strategy map: realm names (R) keep clear of other realm names and the terrain names (G);
+      // marks' labels (P) keep off both, except the ones that must show (pinned, highlighted).
       const CELL = 64, grids = { R: new Map(), G: new Map(), P: new Map() }, pad = t.k < 2 ? 6 : 4;
-      const AGAINST = { R: ["R", "G"], G: ["R", "G", "P"], P: ["G", "P"] };
+      const AGAINST = { R: ["R", "G"], G: ["R", "G", "P"], P: ["R", "G", "P"] }, MUST = ["G", "P"];
       // One budget per zoom for everything but realm names, which are limited only by room.
       const max = Math.round(20 + 14 * Math.pow(t.k, 0.85));
       const cellsOf = b => { const out = []; for (let cy = Math.floor((b[1] - pad) / CELL); cy <= Math.floor((b[3] + pad) / CELL); cy++) for (let cx = Math.floor((b[0] - pad) / CELL); cx <= Math.floor((b[2] + pad) / CELL); cx++) out.push(cx + "," + cy); return out; };
@@ -197,7 +202,7 @@ svg.map-labels g { transition: opacity .3s; }
         const plane = c.st === STYLES.realm ? "R" : c.ext || !(c.base || c.st === STYLES.province) ? "P" : "G";
         // Lens annotations (not settlements): at most one per 120 px cell, so marks never turn into a wall of words.
         const cell = c.ext && c.ext.note && c.pri < 100 ? Math.floor((c.boxes[0][0] + c.boxes[0][2]) / 240) + "," + Math.floor((c.boxes[0][1] + c.boxes[0][3]) / 240) : null;
-        const ok = (plane === "R" || n < max || c.pri >= 100) && !(cell && notes.has(cell)) && !c.boxes.some(b => hit(b, AGAINST[plane])) && !(plane === "G" && c.base && c.boxes.some(blocked));
+        const ok = (plane === "R" || n < max || c.pri >= 100) && !(cell && notes.has(cell)) && !c.boxes.some(b => hit(b, plane === "P" && c.pri >= 100 ? MUST : AGAINST[plane]) || under(b)) && !(plane === "G" && c.base && c.boxes.some(blocked));
         if (ok && cell) notes.add(cell);
         if (ok) { if (plane !== "R") n++; const g2 = grids[plane]; for (const b of c.boxes) for (const key of cellsOf(b)) { const l = g2.get(key); if (l) l.push(b); else g2.set(key, [b]); } }
         if (debug) debug.push({ text: c.text || (c.ext && c.ext.text), pri: c.pri, ok, plane, boxes: c.boxes });

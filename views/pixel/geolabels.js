@@ -32,7 +32,7 @@
       let size = SIZE[d.tier] || 12;
       if (d.t === "ocean") size = 16; else if (d.t === "river") size = 12;
       const it = { text: d.name, style, size, minK: TIER_K[d.tier] || 9, pri: (PRI[d.tier] || 25) + (d.t === "ocean" ? 6 : WATER.has(d.t) && d.t !== "river" ? 2 : d.t === "river" ? -3 : 0) };
-      if (style === "ocean") it.spacing = 0.5;
+      if (style === "ocean") it.spacing = 0.32;  // wide, but not so wide an ocean name runs into the coasts at world zoom
       // Lakes keep their mixed case, like rivers.
       if (d.t === "lake") { it.style = "river"; it.size = size; }
       if (kind === "point") it.at = d.at; else it.line = d.line;
