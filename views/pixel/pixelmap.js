@@ -46,19 +46,15 @@
 
   function PixelMap(container, projection, opts) {
     const PX = opts.px || 3, PAL = opts.palette || global.PIXEL_PALETTE;
-    const T = PAL.TERRAIN.map(tones => tones.map(rgb));
-    const TP = T.map(tones => tones.map(pack));
     const C = Object.fromEntries(Object.entries(PAL.KEYS).map(([k, v]) => [k, rgb(v)]));
     const OUT = rgb(opts.outside || "#efe6cc"), OUTP = pack(OUT), RIM = pack(rgb("#2a2420"));
-    const FOAM = pack(rgb("#b8e0d4")), FOAM2 = pack(rgb("#7cb8b4")), BEACH = rgb("#e6d49a");
-    const RIVER = [pack(rgb("#3e7c9c")), pack(rgb("#5a9cb8"))];
     const canvas = document.createElement("canvas");
     canvas.className = "pixelmap";
     Object.assign(canvas.style, { position: "absolute", left: 0, top: 0, imageRendering: "pixelated", transformOrigin: "0 0", pointerEvents: "none" });
     container.prepend(canvas);
     const ctx = canvas.getContext("2d");
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
-    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [];
+    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, elevA = null, riv = null, anim = null, art = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [];
 
     // Terrain tiles: levels coarse to fine, each {cell (degrees), tdeg (tile size in degrees), url(col, row)}.
     // Tiles load on demand; until a finer tile arrives the coarser level shows, then the map re-renders.
@@ -74,7 +70,16 @@
       img.src = L.url(col, row);
       return null;
     }
-    const OUT3 = [0, 0, 0];
+    const OUT3 = [0, 0, 0, 0];
+    // Warp noise for class edges (see sample), baked as tiles per zoom scale.
+    const warpTiles = new Map();
+    function warpFor(cp) {
+      const sc = Math.max(2, Math.round(cp * 1.3)), sm = Math.max(2, Math.round(cp * 0.42));
+      let t = warpTiles.get(sc + "," + sm);
+      if (!t) { const NT = global.PixelTerrainArt.noiseTile; t = [NT(sc, sc, 5, 1), NT(sc, sc, 5, 2), NT(sm, sm, 9, 3), NT(sm, sm, 9, 4)]; warpTiles.set(sc + "," + sm, t); }
+      return t;
+    }
+    // OUT3: [class, hillshade, elevation band, elevation in metres (float)].
     function sample(lon, lat, need, u, v, exact) {
       let r = null; lon = Math.min(179.9999, lon); lat = Math.max(-89.9999, lat);
       for (let li = 0; li < levels.length; li++) {
@@ -86,12 +91,27 @@
         if (L.cell <= need) break;
       }
       if (!r) return null;
-      // Jitter by up to half a cell so cell edges read as organic shapes, not blocks, when zoomed past the data.
-      const j = exact ? 0 : r.cell > need ? 0.9 : 0.5;
-      const x = Math.min(r.w - 1, Math.max(0, Math.floor((lon - r.x0) / r.cell + (hash(u, v) - 0.5) * j)));
-      const y = Math.min(r.h - 1, Math.max(0, Math.floor((r.y0 - lat) / r.cell + (hash(v, u) - 0.5) * j)));
-      const i = (y * r.w + x) * 4;
-      OUT3[0] = r.data[i]; OUT3[1] = r.data[i + 1]; OUT3[2] = r.data[i + 2];
+      // Zoomed past the data, class edges are warped by smooth noise about a cell wide, so they read as organic
+      // shapes rather than blocks or speckle; light and elevation are interpolated so slopes stay smooth.
+      const fx = (lon - r.x0) / r.cell, fy = (r.y0 - lat) / r.cell, cp = r.cell / need;
+      let wx = 0, wy = 0;
+      if (!exact && cp > 1.2) {
+        const W = warpFor(cp);
+        wx = (W[0](u, v) - 0.5) * 1.5 + (W[2](u, v) - 0.5) * 0.5;
+        wy = (W[1](u, v) - 0.5) * 1.5 + (W[3](u, v) - 0.5) * 0.5;
+      }
+      const x = Math.min(r.w - 1, Math.max(0, Math.floor(fx + wx))), y = Math.min(r.h - 1, Math.max(0, Math.floor(fy + wy)));
+      const i = (y * r.w + x) * 4, D = r.data;
+      OUT3[0] = D[i];
+      if (cp > 1.2 && !exact) {
+        const x0 = Math.min(r.w - 2, Math.max(0, Math.floor(fx - 0.5))), y0 = Math.min(r.h - 2, Math.max(0, Math.floor(fy - 0.5)));
+        const ax = Math.min(1, Math.max(0, fx - 0.5 - x0)), ay = Math.min(1, Math.max(0, fy - 0.5 - y0)), q = (y0 * r.w + x0) * 4, q2 = q + r.w * 4;
+        for (let ch = 1; ch < 3; ch++) {
+          const t = D[q + ch] + (D[q + 4 + ch] - D[q + ch]) * ax, b = D[q2 + ch] + (D[q2 + 4 + ch] - D[q2 + ch]) * ax;
+          OUT3[ch] = t + (b - t) * ay;
+        }
+      } else { OUT3[1] = D[i + 1]; OUT3[2] = D[i + 2]; }
+      OUT3[3] = OUT3[2] * 25; OUT3[1] = Math.round(OUT3[1]); OUT3[2] = Math.round(OUT3[2]);
       return OUT3;
     }
 
@@ -128,11 +148,11 @@
       idle(step);
     }
 
-    // The terrain of the current region (U0, V0, w, h): classes, base colours, shores, rim, rivers and stamps.
+    // The terrain of the current region (U0, V0, w, h): classes, rivers, then the terrain art (terrain-art.js) and the rim.
     function terrainPass(t, need) {
       const landM = maskFor([opts.land], () => "#fff");
       base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255);
-      hs = new Uint8Array(w * h); band = new Uint8Array(w * h); NEED = need; lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h); lonA = new Float32Array(w * h);
+      hs = new Uint8Array(w * h); band = new Uint8Array(w * h); NEED = need; lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h); lonA = new Float32Array(w * h); elevA = new Float32Array(w * h);
       // Inverse projection on a coarse grid, interpolated inside cells whose corners are all on the globe and do not
       // straddle the antimeridian; exact per pixel elsewhere (near the rim). Much cheaper than inverting every pixel.
       // The grid is anchored to the world (every G-th art column and row), so any region of the same view interpolates
@@ -160,7 +180,7 @@
           }
         } else if (!inv(i, j, ll, 0)) { base[k] = OUTP; continue; }
         const s = sample(ll[0], ll[1], need, u, v) || [10, 128, 0];
-        let c = s[0]; const s1 = s[1], s2 = s[2];
+        let c = s[0]; const s1 = s[1], s2 = s[2], s3 = s[3];
         // Rivers stay thin lines when zoomed past the data: only the unjittered cell counts.
         if (c === 4 && sample(ll[0], ll[1], need, u, v, true)[0] !== 4) c = 10;
         const isLand = landM[k * 4 + 3] > 127;
@@ -169,58 +189,37 @@
         if (isLand && WATER(c) && c !== 3) c = 10;
         if (!isLand && !WATER(c)) c = 2;
         cls[k] = c; hs[k] = s1; band[k] = s2;
-        latA[k] = ll[1]; lonA[k] = ll[0];
+        latA[k] = ll[1]; lonA[k] = ll[0]; elevA[k] = s3;
         lowNoise[k] = Math.sin(ll[0] * 1.7 + Math.sin(ll[1] * 2.3)) * Math.sin(ll[1] * 2.1 + ll[0] * 0.6);
       }
-      // Base colours: three tones per class, picked by hillshade (land) or depth (sea), with a world-anchored Bayer dither.
-      for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
-        const k = j * w + i, c = cls[k]; if (c === 255) continue;
-        if (c === 4) { base[k] = RIVER[0]; continue; }
-        const d = BAYER[((V0 + j) & 3) * 4 + ((U0 + i) & 3)];
-        let tone;
-        if (c <= 2) tone = c === 2 ? (band[k] < 1 ? 2 : 1) : 1 + Math.round(d * 0.8 - (band[k] - 60) / 120);
-        else tone = 1 + Math.round((hs[k] - 128) / 34 + d * 0.9 + (c >= 6 && c <= 14 ? lowNoise[k] * 0.55 : 0));
-        const tt = Math.max(0, Math.min(2, tone));
-        // Winter: snow down to a wavering snowline (lower inland and in the north), lakes freeze.
-        if (mood === "winter" && c >= 3 && c !== 4 && Math.abs(latA[k]) > snowLine(k) + d * 2.5) base[k] = TP[5][c >= 15 ? tt : Math.min(2, tt + 1)];
-        else base[k] = TP[c][tt];
-      }
-      // Shorelines: a ring of foam in the water and a lighter rim in the shallows; beach pixels on low coasts.
-      const isW = k => cls[k] <= 2, isL = k => cls[k] >= 4 && cls[k] !== 255;
-      const near = (k, f) => f(k - 1) || f(k + 1) || f(k - w) || f(k + w);
-      const ring = new Uint8Array(w * h);
-      for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) {
-        const k = j * w + i;
-        if (isW(k) && near(k, isL)) { base[k] = FOAM; ring[k] = 1; }
-        else if (isL(k) && near(k, isW) && cls[k] >= 10 && cls[k] <= 12) base[k] = pack(mix(BEACH, T[cls[k]][2], 0.25));
-      }
-      for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) {
-        const k = j * w + i;
-        if (isW(k) && !ring[k] && near(k, q => ring[q] === 1) && ((U0 + i + V0 + j) & 1)) base[k] = FOAM2;
-      }
+      // Rivers first (they mark cls 4 and riv), then the terrain art paints every pixel from the classes (terrain-art.js).
+      riv = new Uint8Array(w * h);
+      drawRivers(t, need);
+      art = global.PixelTerrainArt.paint({ w, h, U0, V0, need, cls, hs, band, elev: elevA, latA, lonA, riv, base, mood,
+        l0: tiles[0] && tiles[0].data ? tiles[0] : null, toPx: (lon, lat) => { const p = projection([lon, lat]); return p && [Math.floor((p[0] * t.k) / PX) - U0, Math.floor((p[1] * t.k) / PX) - V0]; } });
+      anim = art.anim;
       // Rim of the world: one ink pixel where the sphere meets the paper.
       for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) {
         const k = j * w + i; if (cls[k] !== 255) continue;
         if (cls[k - 1] !== 255 || cls[k + 1] !== 255 || cls[k - w] !== 255 || cls[k + w] !== 255) base[k] = RIM;
       }
-      drawRivers(t, need);
-      stamps();
     }
     // Run terrainPass on another region of the world grid and hand back its buffers (the view's are left as they were).
-    const SEAM = 14;
+    // Wide enough for the terrain art's largest world-anchored pieces (mountain cells, landmark peaks, blur, coast distance).
+    const SEAM = 16;
     let prevView = null, tileVer = 0;
     function region(t, need, ru, rv, rw, rh) {
-      const sv = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA };
+      const sv = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
       U0 = ru; V0 = rv; w = rw; h = rh; off.width = rw; off.height = rh;
       terrainPass(t, need);
-      const out = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA };
-      ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA } = sv);
+      const out = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
+      ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = sv);
       return out;
     }
     // Copy the world-grid rectangle [u0, u1) x [v0, v1) from one region's buffers into another's.
     function blit(src, dst, u0, v0, u1, v1) {
       if (u1 <= u0 || v1 <= v0) return;
-      for (const key of ["base", "cls", "hs", "band", "lowNoise", "latA"]) {
+      for (const key of ["base", "cls", "hs", "band", "lowNoise", "latA", "lonA", "elevA", "riv", "anim"]) {
         const S = src[key], D = dst[key];
         for (let v = v0; v < v1; v++) {
           const so = (v - src.V0) * src.w + (u0 - src.U0), dO = (v - dst.V0) * dst.w + (u0 - dst.U0);
@@ -247,8 +246,9 @@
       if (!reuse) { off.width = w; off.height = h; terrainPass(t, need); }
       else {
         base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255); hs = new Uint8Array(w * h); band = new Uint8Array(w * h);
-        lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h);
-        const view = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA };
+        lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h); lonA = new Float32Array(w * h); elevA = new Float32Array(w * h);
+        riv = new Uint8Array(w * h); anim = new Uint8Array(w * h);
+        const view = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
         // The old frame's interior (its edge band may lack art anchored just outside it).
         const iu0 = P.U0 + SEAM, iv0 = P.V0 + SEAM, iu1 = P.U0 + P.w - SEAM, iv1 = P.V0 + P.h - SEAM;
         blit(P, view, Math.max(U0, iu0), Math.max(V0, iv0), Math.min(U0 + w, iu1), Math.min(V0 + h, iv1));
@@ -261,10 +261,10 @@
           const r = region(t, need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM);
           blit(r, view, u0, v0, u1, v1);
         }
-        ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA } = view);
-        off.width = w; off.height = h;
+        ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = view);
+        off.width = w; off.height = h; art = { ...art, anim };
       }
-      prevView = { k: t.k, need, mood, ver: tileVer, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA };
+      prevView = { k: t.k, need, mood, ver: tileVer, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
       terrain = base.slice();
       realmRaster.clear();
       applyRealms();
@@ -272,15 +272,14 @@
       emit("layout");
     }
 
-    function snowLine(k) { return 47 + lowNoise[k] * 4 - Math.max(0, band[k] - 20) * 0.06; }
     function setPx(i, j, col) { if (i >= 0 && j >= 0 && i < w && j < h) base[j * w + i] = col; }
-    function line(x0, y0, x1, y1, col, k) {
+    function line(x0, y0, x1, y1, col) {
       x0 |= 0; y0 |= 0; x1 |= 0; y1 |= 0;
       const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
       let e = dx + dy, n = 0;
       for (;;) {
         const q = y0 * w + x0;
-        if (x0 >= 0 && y0 >= 0 && x0 < w && y0 < h && cls[q] >= 4 && cls[q] !== 255) { base[q] = col; if (k) cls[q] = 4; }
+        if (x0 >= 0 && y0 >= 0 && x0 < w && y0 < h && cls[q] >= 4 && cls[q] !== 255) { cls[q] = 4; riv[q] = Math.max(riv[q], col); }
         if (x0 === x1 && y0 === y1 || ++n > 4000) break;
         const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; }
       }
@@ -294,44 +293,22 @@
       if (!riverGrid || riverGrid.pk !== pk) riverGrid = { pk, lines: (opts.rivers || []).map(r => ({ rank: r.rank, pts: r.line.map(ll => { const p = projection(ll); return p ? [Math.floor((p[0] * t.k) / PX), Math.floor((p[1] * t.k) / PX)] : null; }) })) };
       for (const r of riverGrid.lines) {
         if (r.rank > maxRank) continue;
-        const wide = r.rank <= 2 && need < 0.05;
+        const wide = r.rank <= 2 && need < 0.09;
         let prev = null;
         for (const g of r.pts) {
           if (!g) { prev = null; continue; }
           const q = [g[0] - U0, g[1] - V0];
           if (prev && !((prev[0] < -1 && q[0] < -1) || (prev[1] < 0 && q[1] < 0) || (prev[0] > w && q[0] > w) || (prev[1] >= h && q[1] >= h))) {
-            line(prev[0], prev[1], q[0], q[1], RIVER[0], true);
-            if (wide) line(prev[0] + 1, prev[1], q[0] + 1, q[1], RIVER[1], true);
+            // riv: 2 for the great rivers (a lighter channel), 1 for the rest; the great ones widen as you come in.
+            line(prev[0], prev[1], q[0], q[1], r.rank <= 2 ? 2 : 1);
+            if (wide) line(prev[0] + 1, prev[1], q[0] + 1, q[1], 2);
+            if (r.rank <= 1 && need < 0.035) line(prev[0], prev[1] + 1, q[0], q[1] + 1, 2);
           }
           prev = q;
         }
       }
     }
 
-    // Little bits of art anchored to the world grid: trees, peaks, hills, dunes, grass tufts and waves.
-    const TREE = {
-      7: ["..a..", ".aab.", ".aab.", "aaabb", "..t.."],
-      8: [".aab.", "aaabb", "aabbb", ".abb.", "..t.."],
-      9: [".ab.ab.", "aaabbbb", "aabbbbb", ".abbbb.", "...t..."],
-    };
-    const PEAK_S = ["..o..", ".lad.", "laadd"];
-    const SNOW_S = ["..o..", ".wsd.", "laadd"];
-    const PEAK = ["......o......", ".....olo.....", "....ollao....", "...ollaado...", "..ollaaaddo..", ".ollaaaadddo.", "ollaaaaaddddo"];
-    const SNOW = ["......o......", ".....owo.....", "....owwso....", "...owwssdo...", "..ollwaaddo..", ".ollaaaadddo.", "ollaaaaaddddo"];
-    const PEAK_M = ["....o....", "...olao..", "..ollado.", ".ollaaddo", "ollaaaddo"];
-    const SNOW_M = ["....o....", "...owso..", "..owwsdo.", ".ollaaddo", "ollaaaddo"];
-    const HILL_S = [".lab.", "llaab"];
-    const HILL = ["..lla..", ".llaab.", "llaaabb"];
-    function stamp(i, j, rows, col) {
-      const hgt = rows.length, wid = rows[0].length;
-      for (let y = 0; y < hgt; y++) for (let x = 0; x < wid; x++) {
-        const ch = rows[y][x]; if (ch === ".") continue;
-        const c = col[ch]; if (c == null) continue;
-        const ii = i + x - (wid >> 1), jj = j + y - hgt + 1, q = jj * w + ii;
-        if (ii < 0 || jj < 0 || ii >= w || jj >= h || cls[q] === 255 || cls[q] <= 3) continue;
-        base[q] = c;
-      }
-    }
     let NEED = 1, mood = opts.mood || "day";
     // Era style (eras.js): grades the cached raster per border frame and draws a frame after everything else.
     let era = opts.era || null, rv = 0, fade = null;
@@ -339,43 +316,6 @@
     // when an era is on); key changes whenever that raster does.
     const eraCtx = dk => ({ base, terrain: base, key: rv + "|" + dk, cls, hs, band, latA, ids, realms: realmsNow, w, h, U0, V0, PX, k: last.k, need: NEED, rv, mood, projection,
       at: (x, y) => [(x * last.k) / PX - U0, (y * last.k) / PX - V0] });
-    function stamps() {
-      const ink = pack(rgb("#3a3028")), trunk = pack(rgb("#3e2a1a")), snow = pack(rgb("#fbfaf4")), snow2 = pack(rgb("#c8d0d8"));
-      const big = NEED < 0.09;
-      const mu = big ? 10 : 5, mv = big ? 5 : 3;
-      for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
-        const u = U0 + i, v = V0 + j, k = j * w + i;
-        const c = cls[k], r = hash(u, v);
-        const row = Math.floor(v / mv), stag = (row & 1) * (mu >> 1);
-        if (FOREST(c) && (u % 3 === 0) && ((v + (u % 6 ? 2 : 0)) % 4 === 0) && r < 0.85) {
-          const tn = TP[c];
-          stamp(i + (r < 0.4 ? 1 : 0), j, TREE[c], { a: tn[2], b: tn[0], t: trunk });
-        } else if (c === 12 && u % 7 === 0 && v % 3 === 0 && r < 0.6) {
-          const tn = TP[12]; stamp(i, j, ["..ll.", "aa..a"], { l: tn[2], a: tn[0] });
-        } else if ((c === 10 || c === 11 || c === 6) && r < 0.05) {
-          stamp(i, j, ["a.a"], { a: TP[c][0] });
-        } else if (c === 14 && r < 0.12) {
-          stamp(i, j, ["a.a.a"], { a: pack(rgb("#4a8a9a")) });
-        }
-      }
-      // Peaks and hills: one jittered candidate per world-anchored cell, drawn back to front, sized by height.
-      const c0 = Math.floor(U0 / mu) - 2, c1 = Math.ceil((U0 + w) / mu) + 2, r0 = Math.floor(V0 / mv) - 1, r1 = Math.ceil((V0 + h) / mv) + 8;
-      for (let cv = r0; cv < r1; cv++) for (let cu = c0; cu < c1; cu++) {
-        const r = hash(cu * 7 + 3, cv * 13 + 5), r2 = hash(cv * 5 + 1, cu * 11 + 7);
-        const u = cu * mu + Math.floor(r * mu), v = cv * mv + Math.floor(r2 * mv), i = u - U0, j = v - V0;
-        if (i < 0 || j < 0 || i >= w || j >= h) continue;
-        const k = j * w + i, c = cls[k];
-        if (c === 16 || c === 17) {
-          // High flat plateaus (Tibet, the Altiplano) read as uplands, not a sea of peaks.
-          if (hash(u, v) > (Math.abs(hs[k] - 128) < 7 && c === 16 ? 0.3 : 0.88)) continue;
-          const tn = TP[16], snowy = c === 17 || (big && band[k] > 110);
-          const shape = !big ? (snowy ? SNOW_S : PEAK_S) : (band[k] > 90 || c === 17) ? (snowy ? SNOW : PEAK) : (snowy ? SNOW_M : PEAK_M);
-          stamp(i, j, shape, { o: ink, l: tn[2], a: tn[1], d: tn[0], w: snow, s: snow2 });
-        } else if (c === 15 && hash(u, v) < 0.7) {
-          const tn = TP[15]; stamp(i, j, big ? HILL : HILL_S, { l: tn[2], a: tn[1], b: tn[0] });
-        }
-      }
-    }
 
     // Realm rasters are kept per border frame (the realms array) for the current view, so scrubbing back and forth
     // through years that share a frame, or revisiting one, only copies a buffer. Cleared by render() (new view).
@@ -571,7 +511,7 @@
       ownWater(on) { water = !!on; },
       spritePixels,
       // This frame's buffers, read-only: art-pixel grid w x h whose (0, 0) is world grid (U0, V0) at transform t.
-      view() { return last && base ? { w, h, U0, V0, PX, t: last, cls, hs, band, lat: latA, lon: lonA, ids, realms: realmsNow, base, terrain, out: outNow, sprite: spriteMask, kept, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top) } : null; },
+      view() { return last && base ? { w, h, U0, V0, PX, t: last, cls, hs, band, lat: latA, lon: lonA, ids, realms: realmsNow, base, terrain, anim, out: outNow, sprite: spriteMask, kept, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top) } : null; },
       // Is this lon/lat drawn as water right now (from the last render)?
       isWater(lon, lat) { if (!cls || !last) return false; const q = this.toPixel(lon, lat); if (!q || q[0] < 0 || q[1] < 0 || q[0] >= w || q[1] >= h) return false; return cls[q[1] * w + q[0]] <= 2; },
       // Which realm is drawn under a screen point (for hover and click), from the id buffer.
@@ -592,6 +532,8 @@
       labelGrid() { return ids && last ? { ids, cls, w, h, PX, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top), realms: realmsNow } : null; },
       toPixel(lon, lat) { const p = projection([lon, lat]); return p && [Math.floor((p[0] * last.k) / PX) - U0, Math.floor((p[1] * last.k) / PX) - V0]; },
       get size() { return { w, h, PX }; },
+      // Terrain art of the last render: { anim (1 foam, 2 wave glyph, 3 river, 4 smoke), tier, ms } (terrain-art.js).
+      get art() { return art; },
     };
   }
   global.PixelMap = PixelMap;

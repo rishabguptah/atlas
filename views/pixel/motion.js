@@ -186,7 +186,13 @@
 
     // Water by palette cycling: lists of the pixels that shimmer, and each one's phase.
     function scanWater() {
-      const { cls, U0, V0 } = V, gl = [], fo = [], rv = [];
+      const { cls, U0, V0, anim } = V, gl = [], fo = [], rv = [];
+      // The terrain art marks what may cycle (1 foam, 2 wave glyph, 3 river); without it, find coasts and rivers here.
+      if (anim && anim.length === w * h && anim.some(a => a)) {
+        for (let k = 0; k < w * h; k++) { const a = anim[k]; if (!a || a > 3) continue; const u = U0 + k % w, v = V0 + ((k / w) | 0); (a === 1 ? fo : a === 2 ? gl : rv).push(k, a === 1 ? (u * 3 + v * 5) & 7 : a === 2 ? Math.floor(hash(u, v >> 1) * 8) : (u + v * 2) & 7); }
+        water = { glint: Int32Array.from(gl), foam: Int32Array.from(fo), river: Int32Array.from(rv) };
+        return;
+      }
       for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) {
         const k = j * w + i, c = cls[k]; if (c === 255) continue;
         const u = U0 + i, v = V0 + j;

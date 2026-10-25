@@ -16,17 +16,37 @@ The judge checks the atlas from outside. It does three jobs:
 3. **Forecast scoring** (`score_forecasts.py`): Brier score, skill against the base rate, and
    calibration, for the Order and Chaos lab's backtested forecasts once they exist.
 
+4. **Sourcing** (`source_records.py`): every record that still cites only "not yet checked" is searched on
+   English Wikipedia; Claude judges the claim against the excerpts only (never its own memory as the source).
+   Supported records get the article as their source; a plain wrong year is corrected; anything else stays a
+   draft with a `judge_note`. Population series are compared with the Reba et al. (2016) points instead.
+   `check_sample.py` does the same for the weekly sample, so the weekly run needs no hand checking.
+5. **Benchmark** (`bench/`): 40 questions across every lens and region (`data/judge/bench/questions.jsonl`, written
+   by `build_questions.py`), each with a rubric: points a strong answer makes, myths it must not repeat, and the
+   scholars it should weigh. `bench/run.mjs` opens the real built Atlas in headless Chromium and asks the live
+   panel each question, with the page's `sample` capability swapped for the local `claude` CLI, so the chair,
+   specialists and closing run exactly the prompts a reader's question runs. `bench/grade.mjs` scores each answer
+   out of 100: content 40 (rubric points), accuracy 20 (errors and myths), why 15 (causal chain, competing views,
+   honesty, premise), map 15 (stops inside the question's years and region, each marking something), sources 10.
+   `bench/history.py` collects every run into `data/judge/bench/history.json`, the score over time, so a prompt or
+   data change can be judged by whether the score moved.
+6. **Stub adoption** (`adopt_stubs.py`): stubs no owner ever replaced become full records in
+   `data/<owner>/adopted.jsonl`, so nothing in the kernel is ownerless.
+
+Confidence: `tools/conf.py` gives every record a `conf` class (attested, estimated, approximate, unknown) from
+per-workstream rules; `tools/build.py` writes it into `dist/kernel.json`. A record's own `conf` wins.
+
 ## Weekly run
 
 ```sh
-python3 tools/build.py
-W=$(date +%G-W%V)
-mkdir -p data/judge/reports/$W
-python3 ingest/judge/audit.py --json data/judge/reports/$W/audit.json
-python3 ingest/judge/sample_claims.py dist/kernel.json $W > data/judge/reports/$W/sample.jsonl
-# check each claim, write verdicts.jsonl (same fields as 2026-W43)
-python3 ingest/judge/report_data.py $W        # tables for the accuracy report page
+sh ingest/judge/weekly.sh            # this ISO week; or: sh ingest/judge/weekly.sh 2026-W44
 ```
+
+It builds the kernel, audits it, draws and checks the week's sample, sources unchecked records, then builds the
+Atlas page and runs and grades the benchmark. It needs the `claude` CLI signed in, Playwright and access to
+en.wikipedia.org. A full benchmark is about 280 Claude calls (40 questions, a chair, 3-4 specialists, a closing
+and a grader each), so it uses the same plan limits as everything else: if the limit is hit, each step stops,
+keeps what it finished, and resumes when rerun.
 
 Report page: https://claude.ai/artifact/8SCQjw3P1WjdtrN4FxSthN
 
