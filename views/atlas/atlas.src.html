@@ -345,6 +345,39 @@ a { color: var(--accent); text-underline-offset: 2px; }
 @media (max-width: 600px) { .eras button:not([aria-current="true"]) { color: transparent; } .eras button[aria-current="true"] { overflow: visible; z-index: 1; } }
 .map canvas.marks { position: absolute; left: 0; top: 0; pointer-events: none; }
 .maptip { position: absolute; z-index: 5; max-width: 280px; pointer-events: none; background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 8px; font-size: 12.5px; line-height: 1.35; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
+
+/* Phone: the map fills the screen; the panel is a bottom sheet (peek, half, full) you drag or tap the handle of. */
+.grab { display: none; }
+@media (max-width: 700px) {
+  html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+  .app { --peek: 92px; height: 100dvh; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; grid-template-areas: "top" "map" "time";
+    padding-bottom: calc(var(--peek) + env(safe-area-inset-bottom, 0px)); box-sizing: border-box; }
+  .top { grid-template-columns: minmax(0, 1fr); padding-block: 6px 5px; gap: 4px; }
+  .brand, .askbar { display: none; }
+  .layers { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .layers::-webkit-scrollbar { display: none; }
+  .layers .chip { flex: none; }
+  .map { position: relative; top: auto; height: auto; z-index: auto; border-bottom: 0; }
+  .time { padding-block: 4px 4px; gap: 0 10px; }
+  .time .playbtn { width: 34px; height: 34px; }
+  .yearplate { font-size: 24px; }
+  .maphint { display: none; }
+  .mapctl { top: 8px; }
+  .panel { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: 88dvh; border: 1px solid var(--rule); border-bottom: 0; border-radius: 14px 14px 0 0;
+    background: var(--paper); box-shadow: 0 -8px 24px rgba(0, 0, 0, .18); overflow: hidden; display: flex; flex-direction: column;
+    transform: translateY(calc(88dvh - var(--peek) - env(safe-area-inset-bottom, 0px))); transition: transform .28s cubic-bezier(.2, .8, .2, 1); touch-action: none; }
+  .panel[data-sheet="half"] { transform: translateY(calc(88dvh - 50dvh)); }
+  .panel[data-sheet="full"] { transform: translateY(0); }
+  .panel.dragging { transition: none; }
+  .panel > .pane { overflow-y: auto; flex: 1 1 auto; min-height: 0; touch-action: pan-y; padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+  .panel[data-sheet="peek"] > .pane { overflow: hidden; }
+  .grab { display: block; flex: none; width: 100%; height: 22px; border: 0; background: none; cursor: grab; position: relative; touch-action: none; }
+  .grab::before { content: ""; position: absolute; left: 50%; top: 8px; width: 40px; height: 5px; margin-left: -20px; border-radius: 3px; background: var(--rule); }
+  .tabs { position: static; top: auto; overflow-x: auto; scrollbar-width: none; flex: none; touch-action: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .player { top: 0; }
+  .keycard { max-height: calc(100% - 60px); }
+}
 </style>
 
 <div class="app">
@@ -393,7 +426,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
     </select>
   </div>
 
-  <aside class="panel" id="panel">
+  <aside class="panel" id="panel" data-sheet="peek">
+    <button class="grab" id="grab" type="button" aria-label="Show more of the panel"></button>
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" data-tab="guide" aria-selected="true">Ask</button>
       <button class="tab" role="tab" data-tab="now" aria-selected="false">This year</button>
@@ -728,6 +762,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   });
   svg.call(zoom).on("dblclick.zoom", null);
 
+  // zoom.transform skips the zoom's limits; fitT applies them (no empty sky past the world's edge on a phone).
+  let kMin = 1;
+  const fitT = t => zoom.constrain()(t, [[0, 0], [W, H]], zoom.translateExtent());
   function layout() {
     const r = mapEl.getBoundingClientRect();
     // Keep the same place in the middle when the map changes size.
@@ -740,17 +777,22 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     gLand.attr("d", path(land));
     for (const k in featCache) delete featCache[k];
     projV++;
-    zoom.translateExtent([[-W, -H], [W * 2, H * 2]]);
+    // A tall map (a phone held upright) would show the whole world as a thin band with empty sky above and below it,
+    // so there the smallest zoom fills the height and the view stops at the world's edges.
+    const sb = path.bounds({ type: "Sphere" }), worldH = sb[1][1] - sb[0][1];
+    kMin = worldH < H * 0.75 ? Math.min(6, H / worldH) : 1;
+    zoom.scaleExtent([kMin, 80]).translateExtent(kMin > 1 ? sb : [[-W, -H], [W * 2, H * 2]]);
     drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(true); drawOverlay(); drawSel(); renderBasemap();
-    if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had); svg.call(zoom.transform, d3.zoomIdentity.translate(W / 2 - t0.k * x, H / 2 - t0.k * y).scale(t0.k)); }
+    if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had), k = Math.max(kMin, t0.k); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k))); }
+    else if (kMin > 1) { const [x, y] = projection([30, 25]); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - kMin * x, H / 2 - kMin * y).scale(kMin))); }
     else if (t0.k > 1 || t0.x || t0.y) svg.call(zoom.transform, d3.zoomIdentity);
   }
   function flyTo(v, ms = 1400) {
     if (!v || !isFinite(v.lon) || !isFinite(v.lat)) return;
     const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]);
-    const k = Math.max(1, Math.min(80, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
+    const k = Math.max(kMin, Math.min(80, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
     const [x, y] = projection([v.lon, v.lat]);
-    const t = d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k);
+    const t = fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
     svg.interrupt().transition().duration(reduceMotion() ? 0 : ms).call(zoom.transform, t);
   }
   // Pan only if the point is off screen; keep the zoom the person chose.
@@ -2370,6 +2412,56 @@ Where the specialists disagree, say who the evidence favours.`;
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
   syncChips();
+  // ---------- phone: the panel is a bottom sheet over a full-screen map ----------
+  // Three heights: peek (tabs only), half, full. Drag the handle or the tabs; tap the handle to step up; picking
+  // something on the map, or a tab, opens it to half so the answer shows without covering the whole map.
+  (function sheet() {
+    const panel = document.getElementById("panel"), grab = document.getElementById("grab"), phone = matchMedia("(max-width: 700px)");
+    const ORDER = ["peek", "half", "full"];
+    const set = v => { panel.dataset.sheet = v; grab.setAttribute("aria-label", v === "full" ? "Show less of the panel" : "Show more of the panel"); };
+    const at = () => panel.dataset.sheet || "peek";
+    grab.addEventListener("click", () => { if (dragged) return; const i = ORDER.indexOf(at()); set(i >= 2 ? "peek" : ORDER[i + 1]); });
+    // Anything that switches tab (a click on the map selects Here, the guide, a tour) lifts a peeking sheet.
+    // Only after a tap or key press: startup and timed tours switch tabs without lifting the sheet.
+    let touched = -1e9; for (const t of ["pointerdown", "keydown"]) addEventListener(t, () => { touched = performance.now(); }, true);
+    new MutationObserver(() => { if (phone.matches && at() === "peek" && performance.now() - touched < 1500) set("half"); })
+      .observe(panel.querySelector(".tabs"), { subtree: true, attributes: true, attributeFilter: ["aria-selected"] });
+    panel.querySelector(".tabs").addEventListener("click", () => { if (phone.matches && at() === "peek") set("half"); });
+    let y0 = 0, t0 = 0, base = 0, dragged = false, id = null;
+    const offset = () => { const m = new DOMMatrix(getComputedStyle(panel).transform); return m.m42; };
+    const start = ev => {
+      if (!phone.matches || (ev.pointerType === "mouse" && ev.button !== 0)) return;
+      id = ev.pointerId; y0 = ev.clientY; t0 = performance.now(); base = offset(); dragged = false;
+    };
+    const move = ev => {
+      if (id !== ev.pointerId) return;
+      const dy = ev.clientY - y0;
+      if (!dragged && Math.abs(dy) < 6) return;
+      if (!dragged) { dragged = true; panel.classList.add("dragging"); try { ev.target.setPointerCapture(id); } catch (e) {} }
+      panel.style.transform = `translateY(${Math.max(0, base + dy)}px)`;
+    };
+    const end = ev => {
+      if (id !== ev.pointerId) return;
+      id = null;
+      if (!dragged) return;
+      const H = panel.getBoundingClientRect().height, y = offset(), v = (ev.clientY - y0) / Math.max(1, performance.now() - t0);
+      panel.classList.remove("dragging"); panel.style.transform = "";
+      // A flick goes one step in its direction; otherwise snap to the nearest height.
+      const cur = { full: 0, half: H - innerHeight * 0.5, peek: H - 92 };
+      let next = Object.keys(cur).reduce((a, b) => Math.abs(cur[b] - y) < Math.abs(cur[a] - y) ? b : a);
+      if (Math.abs(v) > 0.5) { const i = ORDER.indexOf(at()); next = ORDER[Math.max(0, Math.min(2, i + (v < 0 ? 1 : -1)))]; }
+      set(next);
+      setTimeout(() => { dragged = false; }, 0);
+    };
+    for (const el of [grab, panel.querySelector(".tabs")]) {
+      el.addEventListener("pointerdown", start); el.addEventListener("pointermove", move);
+      el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end);
+    }
+    // A drag on the tabs must not also count as a tab tap.
+    panel.querySelector(".tabs").addEventListener("click", ev => { if (dragged) { ev.stopPropagation(); ev.preventDefault(); } }, true);
+    set(at());
+  })();
+
   // ---------- late data: what the first paint does not need loads from files beside the page ----------
   // build.py writes the big blobs (plugin lens data, the Wikidata battles) to atlas-files/ and lists them in LATE_FILES;
   // they are fetched once the map has painted, then the map, strip and panel redraw.
