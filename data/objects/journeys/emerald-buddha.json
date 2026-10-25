@@ -1,0 +1,25 @@
+{
+  "id": "emerald_buddha",
+  "name": "Emerald Buddha",
+  "type": "single",
+  "sprite": "obj_buddha",
+  "what": "A 66 cm seated Buddha carved from green jade or jasper, the palladium of Thailand. Its maker and age are unknown.",
+  "why": "Kingdoms fought over it because whoever held it held legitimacy: it moved from Lanna to Laos to Siam with the rise and fall of each, and its last move was as war loot.",
+  "now": "Wat Phra Kaew, in the Grand Palace, Bangkok. The king changes its robes for each of the three seasons.",
+  "dispute": "Many in Laos regard it as taken from Vientiane in 1779.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Notton, C. (trans.) (1932). The Chronicle of the Emerald Buddha. Bangkok."},
+    {"cite": "Reynolds, F. E. (1978). The Holy Emerald Jewel. In B. L. Smith (ed.), Religion and Legitimation of Power in Thailand, Laos, and Burma."},
+    {"cite": "Wikipedia: Emerald Buddha", "url": "https://en.wikipedia.org/wiki/Emerald_Buddha"}
+  ],
+  "stops": [
+    {"y": 1434, "at": [99.83, 19.91], "place": "Chiang Rai", "owner": "Kingdom of Lanna", "by": "found", "conf": "likely", "note": "The northern chronicles say lightning split a chedi in Chiang Rai in 1434, uncovering a plaster Buddha; when the plaster flaked off, the abbot saw green stone underneath. Legends trace it back to India and Sri Lanka.", "meet": "a monk of the Chiang Rai monastery"},
+    {"y": 1436, "approx": true, "at": [99.49, 18.29], "place": "Wat Phra Kaew Don Tao, Lampang", "owner": "Kingdom of Lanna", "by": "carried", "conf": "likely", "via": "land", "note": "The king sent for it, but the elephant carrying it turned three times toward Lampang, so it stayed there for 32 years. The elephant is legend; the stay in Lampang is in the chronicles."},
+    {"y": 1468, "at": [98.99, 18.79], "place": "Wat Chedi Luang, Chiang Mai", "owner": "King Tilokaraj of Lanna", "by": "carried", "conf": "likely", "via": "land", "note": "King Tilokaraj brought it to his capital, Chiang Mai, and housed it in the great chedi of Wat Chedi Luang."},
+    {"y": 1552, "at": [102.13, 19.89], "place": "Luang Prabang", "owner": "King Setthathirath of Lan Xang", "by": "carried", "conf": "sure", "via": "land", "note": "Setthathirath, a Lao prince who had briefly been king of Lanna, went home to take the Lao throne and took the Buddha with him."},
+    {"y": 1564, "at": [102.61, 17.97], "place": "Haw Phra Kaew, Vientiane", "owner": "Kingdom of Lan Xang", "by": "carried", "conf": "sure", "via": "river", "note": "Moving his capital south away from the Burmese, Setthathirath built Vientiane's Haw Phra Kaew for it. It stayed for over two centuries."},
+    {"y": 1779, "at": [100.489, 13.744], "place": "Wat Arun, Thonburi", "owner": "King Taksin of Siam", "by": "looted", "conf": "sure", "via": "land", "path": [[102.61, 17.97], [102.8, 17.4], [102.1, 15.0], [101.0, 14.3], [100.489, 13.744]], "note": "General Chao Phraya Chakri took Vientiane for Taksin in 1779 and brought the Buddha back as a trophy, with the Phra Bang and much of the Lao court.", "meet": "a Lao captive taken to Siam in 1779"},
+    {"y": 1784, "at": [100.4925, 13.7516], "place": "Wat Phra Kaew, Bangkok", "owner": "Chakri kings of Siam", "by": "carried", "conf": "sure", "via": "river", "note": "Chakri, now King Rama I, moved the capital across the river to Bangkok and installed the Buddha in the royal temple of his new palace in March 1784. It has not moved since.", "meet": "anyone at the robe-changing ceremony"}
+  ]
+}

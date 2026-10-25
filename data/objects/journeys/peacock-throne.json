@@ -1,0 +1,23 @@
+{
+  "id": "peacock_throne",
+  "name": "Peacock Throne",
+  "type": "single",
+  "sprite": "obj_throne",
+  "what": "Shah Jahan's jewelled throne, the Takht-i Murassa: a gold platform under a canopy on emerald columns, topped by peacocks, set with rubies, emeralds, pearls and, by tradition, the Koh-i-Noor.",
+  "why": "Perhaps the costliest object ever made, it took seven years to build and lasted barely a century: carried off as loot, then broken up for its stones. Its name outlived it, passed on to the Qajar and Pahlavi thrones of Iran.",
+  "now": "Lost. Parts may survive in other jewels; the Naderi throne in Tehran is sometimes wrongly called the Peacock Throne.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Tavernier, J.-B. (1676). Les six voyages de Jean-Baptiste Tavernier. Paris. (Ball, V., trans. 1889, Travels in India.)"},
+    {"cite": "Dalrymple, W. & Anand, A. (2017). Koh-i-Noor: The History of the World's Most Infamous Diamond. Bloomsbury."},
+    {"cite": "Axworthy, M. (2006). The Sword of Persia: Nader Shah. I. B. Tauris."},
+    {"cite": "Wikipedia: Peacock Throne", "url": "https://en.wikipedia.org/wiki/Peacock_Throne"}
+  ],
+  "stops": [
+    {"y": 1635, "at": [78.02, 27.18], "place": "Agra Fort", "owner": "Shah Jahan, Mughal emperor", "by": "made", "conf": "sure", "note": "Begun in 1628 and finished after seven years under the goldsmith Bebadal Khan, the throne was first used at Agra on Nowruz in March 1635. The court chroniclers say it cost twice as much as the Taj Mahal.", "meet": "a courtier at the Nowruz darbar of 1635"},
+    {"y": 1648, "at": [77.241, 28.656], "place": "Diwan-i-Khas, Red Fort, Delhi", "owner": "Mughal emperors", "by": "carried", "conf": "likely", "via": "land", "note": "When the court moved to the new city of Shahjahanabad, the throne went to the hall of private audience in the Red Fort. The French jeweller Tavernier was shown it there in 1665 and described the peacocks and the stones.", "meet": "Jean-Baptiste Tavernier, who saw it in 1665"},
+    {"y": 1739, "at": [77.241, 28.656], "place": "Red Fort, Delhi", "owner": "Nader Shah of Persia", "by": "looted", "conf": "sure", "note": "Nader Shah beat the Mughal army at Karnal in February 1739 and occupied Delhi. After a massacre in the city he took the treasury of the Mughals: the throne, the Koh-i-Noor and so much gold that Persia stopped taxes for three years.", "meet": "a Delhi merchant in the spring of 1739"},
+    {"y": 1740, "at": [59.6, 36.3], "place": "Mashhad and Kalat, Khorasan", "owner": "Nader Shah", "by": "carried", "conf": "likely", "via": "land", "path": [[77.241, 28.656], [74.35, 31.55], [71.57, 34.01], [69.17, 34.53], [65.7, 31.6], [62.2, 34.35], [59.6, 36.3]], "note": "The loot went back with the army by way of Lahore, the Khyber and Kabul to Khorasan, where Nader kept his treasure at Mashhad and in the mountain fortress of Kalat. The exact route of the throne is not recorded."},
+    {"y": 1747, "at": [58.51, 37.11], "place": "Fathabad, near Quchan", "owner": "Unknown", "by": "lost", "conf": "likely", "via": "land", "end": true, "note": "Nader was murdered by his own officers in his camp near Quchan in June 1747. In the plunder that followed the throne vanished, almost certainly broken up for its gold and stones. The Koh-i-Noor went east with the Afghan Ahmad Shah Durrani.", "meet": "a soldier of Nader's camp in June 1747"}
+  ]
+}

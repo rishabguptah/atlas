@@ -24,7 +24,7 @@ Pick the one your lens belongs to:
 | `wealth`  | Trade & migration, Technology, food & energy, Object journeys |
 | `peoples` | People, Peoples & languages                                  |
 | `mind`    | Ideas & faith, Art & architecture                            |
-| `shocks`  | Plague & climate                                             |
+| `shocks`  | Plague & climate, Epidemics, Eruptions, famine & cold          |
 
 A lens is precise (one question, one kind of record); a family is a group you switch on together.
 
