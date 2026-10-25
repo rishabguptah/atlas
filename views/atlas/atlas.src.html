@@ -159,7 +159,12 @@ a { color: var(--accent); text-underline-offset: 2px; }
   padding-block: 6px 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; }
 .time .playbtn { grid-row: 1 / 3; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; font-size: 13px; }
 .strip { height: 22px; display: block; width: 100%; cursor: pointer; will-change: transform; } /* own layer: the slider thumb moving must not repaint thousands of ticks */
-.strip line { stroke-width: 1; vector-effect: non-scaling-stroke; }
+.strip rect { shape-rendering: crispEdges; opacity: .85; }
+.strip:hover rect { opacity: 1; }
+.stripwrap { position: relative; grid-column: 2; min-width: 0; }
+.striptip { position: absolute; bottom: calc(100% + 4px); width: 260px; z-index: 6; background: var(--card); border: 1px solid var(--rule); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  padding: 5px 8px; font-size: 12px; line-height: 1.35; pointer-events: none; }
+.striptip .h { display: block; color: var(--ink-soft); font-size: 11px; }
 .time input { width: 100%; min-width: 0; accent-color: var(--ink); margin: 0; }
 .time output { grid-row: 1; grid-column: 3; font-family: var(--mono); font-size: 13px; min-width: 76px; text-align: right; }
 .time .speed { grid-row: 2; grid-column: 3; justify-self: end; max-width: 84px; font-family: var(--mono); font-size: 11.5px; border: 1px solid var(--rule); background: var(--card); border-radius: 4px; padding: 1px 4px; cursor: pointer; }
@@ -168,6 +173,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .tabs { position: sticky; top: 0; z-index: 3; background: var(--paper); display: flex; flex-wrap: wrap; gap: 0 2px; border-bottom: 1px solid var(--rule); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 12px; }
 .tab { border: 0; background: none; padding: 9px 10px 8px; cursor: pointer; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); border-bottom: 2px solid transparent; }
 .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.tabs { flex-direction: column; gap: 0; padding-top: 4px; }
+.tabs .tg { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 2px; }
+.tabs .tg + .tg { border-top: 1px dashed var(--rule); }
+.tabs .tgl { flex: none; width: 74px; font-family: var(--mono); font-size: 9.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); opacity: .75; }
+.tabs .tab { padding: 6px 7px 5px; font-size: 11.5px; white-space: nowrap; }
 .pane { padding: 14px max(16px, env(safe-area-inset-right, 0px)) 40px 16px; display: flex; flex-direction: column; gap: 14px; }
 .kick { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 0; }
 .ttl { font-family: var(--display); font-size: 26px; line-height: 1.1; margin: 2px 0 0; font-weight: 400; }
@@ -388,6 +398,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .grab { display: block; flex: none; width: 100%; height: 22px; border: 0; background: none; cursor: grab; position: relative; touch-action: none; }
   .grab::before { content: ""; position: absolute; left: 50%; top: 8px; width: 40px; height: 5px; margin-left: -20px; border-radius: 3px; background: var(--rule); }
   .tabs { position: static; top: auto; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; flex: none; touch-action: none; }
+  .tabs { flex-direction: row; padding-top: 0; } .tabs .tg { flex-wrap: nowrap; } .tabs .tgl { display: none; } .tabs .tg + .tg { border-top: 0; }
   .tabs::-webkit-scrollbar { display: none; }
   .player { top: 0; }
   .keycard { max-height: calc(100% - 60px); }
@@ -430,7 +441,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
   <div class="time">
     <button class="playbtn" id="playyear" aria-label="Play through time">▶</button>
-    <svg class="strip" id="strip" viewBox="0 0 1000 22" preserveAspectRatio="none" aria-hidden="true"></svg>
+    <div class="stripwrap"><svg class="strip" id="strip" viewBox="0 0 1000 22" preserveAspectRatio="none" aria-label="How much the atlas records over time, by lens family"></svg><div class="striptip" id="striptip" hidden></div></div>
     <input type="range" id="year" min="0" max="1000" step="1" aria-label="Year">
     <output id="yout"></output>
     <div class="eras" id="eras" role="group" aria-label="Eras: tap one to jump there"></div>
@@ -1790,6 +1801,22 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const el = document.createElement("div"); el.className = "pane"; el.id = "pane-" + d.id; el.hidden = true;
     document.getElementById("panel").appendChild(el);
   }
+  // Fourteen tabs don't fit one row, so they sit in three labelled groups that wrap: no sideways scrolling.
+  // Tabs not named here join Explore.
+  const TAB_GROUPS = [["Learn", ["guide", "now", "here", "why", "stories", "travels"]], ["Explore", ["upclose", "life", "objects", "shrink", "compare"]], ["Play", ["whatif", "guess", "codex"]]];
+  (function groupTabs() {
+    const bar = document.querySelector(".tabs"), all = [...bar.querySelectorAll(".tab")], used = new Set();
+    const groups = TAB_GROUPS.map(([n, ids]) => [n, ids.map(id => all.find(b => b.dataset.tab === id)).filter(Boolean)]);
+    groups[1][1].push(...all.filter(b => !TAB_GROUPS.some(g => g[1].includes(b.dataset.tab))));
+    bar.textContent = "";
+    for (const [n, tabs] of groups) {
+      if (!tabs.length) continue;
+      const g = document.createElement("div"); g.className = "tg"; g.setAttribute("role", "presentation");
+      g.innerHTML = `<span class="tgl">${esc(n)}</span>`;
+      for (const b of tabs) if (!used.has(b)) { used.add(b); g.appendChild(b); }
+      bar.appendChild(g);
+    }
+  })();
   document.querySelectorAll(".tab").forEach(b => b.onclick = () => setTab(b.dataset.tab));
   // With many plugin tabs the bar wraps onto more rows; sticky bars below it follow its height.
   { const tb = document.querySelector(".tabs"); new ResizeObserver(() => document.documentElement.style.setProperty("--tabs-h", tb.offsetHeight + "px")).observe(tb); }
@@ -1916,17 +1943,30 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ["war", BATTLES.map(b => b.start)],
     ];
     for (const d of PLUG) if (typeof d.strip === "function" && lensReady(d)) try { rows.push([d.id, (d.strip((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}) || []).filter(Number.isFinite)]); } catch (err) { console.error("lens " + d.id, err); }
-    const rh = 21 / rows.length;
-    rows.forEach(([k, ys], i) => {
-      // One tick per strip column (a thousand at most), not one per record: 11k battles would be 11k nodes.
-      const xs = [...new Set(ys.filter(y => y >= MIN && y <= NOW).map(y => Math.round(yearToT(y) * 1000)))];
-      const g = st.append("g");
-      g.append("title").text(`${NAME[k] || k}: a tick for each year this lens has something. Click the strip to jump there.`);
-      g.selectAll("line").data(xs).join("line")
-        .attr("x1", x => x).attr("x2", x => x).attr("y1", 1 + i * rh).attr("y2", Math.max(1.6, rh - 1.3) + 1 + i * rh)
-        .style("stroke", `var(--y-${k})`).style("stroke-opacity", k === "order" ? 0.35 : 0.7);
+    // One band, not a hairline row per lens: how much the atlas records in each stretch of time, stacked by lens family
+    // (Land, Power, Wealth, Peoples, Mind, Shocks) in the family colours. Height is the square root of the count, so a
+    // quiet century still shows. Hover says what is there; tap jumps.
+    const NB = 200, fams = FAMILIES.map(f => f.id), bins = Array.from({ length: NB }, () => Object.fromEntries(fams.map(f => [f, 0])));
+    for (const [k, ys] of rows) {
+      const f = FAM_OF[k] || (PLUG.find(d => d.id === k) || {}).family; if (!fams.includes(f)) continue;
+      for (const y of ys) if (y >= MIN && y <= NOW) bins[Math.min(NB - 1, Math.floor(yearToT(y) * NB))][f]++;
+    }
+    const tot = b => fams.reduce((a, f) => a + b[f], 0), mx = Math.sqrt(Math.max(1, ...bins.map(tot)));
+    const g = st.append("g");
+    bins.forEach((b, i) => {
+      const t = tot(b); if (!t) return;
+      let y0 = 22; const h = 21 * Math.sqrt(t) / mx;
+      for (const f of fams) if (b[f]) { const hh = h * b[f] / t; y0 -= hh; g.append("rect").attr("x", i * 1000 / NB).attr("width", 1000 / NB - 0.6).attr("y", y0).attr("height", hh).style("fill", FAMILIES.find(x => x.id === f).c); }
     });
+    const tip = document.getElementById("striptip");
     st.on("click", ev => { const r = st.node().getBoundingClientRect(); stopTime(); animateYear(tToYear((ev.clientX - r.left) / r.width), 700); });
+    st.on("mousemove", ev => {
+      const r = st.node().getBoundingClientRect(), u = Math.max(0, Math.min(0.999, (ev.clientX - r.left) / r.width)), b = bins[Math.floor(u * NB)];
+      const a = tToYear(Math.floor(u * NB) / NB), z = tToYear((Math.floor(u * NB) + 1) / NB);
+      const parts = FAMILIES.filter(f => b[f.id]).map(f => `<span style="color:${f.c}">●</span> ${esc(f.n)} ${b[f.id]}`);
+      tip.innerHTML = `<b>${esc(fmtYear(a))}${z > a ? "–" + esc(fmtYear(z)) : ""}</b> ${parts.length ? parts.join(" · ") : "nothing recorded yet"}<span class="h">How much the atlas records here, by lens family. Tap to go.</span>`;
+      tip.hidden = false; tip.style.left = Math.max(0, Math.min(r.width - 260, ev.clientX - r.left - 130)) + "px";
+    }).on("mouseleave", () => { tip.hidden = true; });
   }
   drawStrip();
 
