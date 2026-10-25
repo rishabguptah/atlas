@@ -13,7 +13,7 @@ python3 ingest/city/tiles.py             # terrain patch -> /mnt/project-files/a
 python3 ingest/city/plan.py <id>         # dated plan -> data/cities/plans/<id>.json
 ```
 
-`views/pixel/tiles.py` copies the patches beside the page (`tiles/l3.json`, `tiles/l3_<id>.png`), and
+`views/pixel/tiles.py` copies the patches beside the page packed into one image (`tiles/l3.json`, `tiles/l3.png`), and
 `views/atlas/world/build_index.py` bundles the plans into `atlas-files/world/cities.json`.
 
 ## Plans

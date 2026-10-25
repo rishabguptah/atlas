@@ -17,7 +17,7 @@
 //                                            each pass; view() reads this frame's buffers; ownWater(false) leaves water shimmer to it
 //
 // levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine;
-// the finest may be {cell, patches: [{box: [w, s, e, n], url}]} (city-scale terrain around a few cities).
+// the finest may be {cell, patches: [{box: [w, s, e, n], url, crop}]} (city-scale terrain around a few cities).
 // land: GeoJSON land (coasts come from it, so they stay sharp at any zoom). rivers: [{rank, line: [[lon,lat],...]}].
 // realms: [{id, name, color, feature}] political polygons for the year; drawn as flat tints with crisp 1-px borders.
 (function (global) {
@@ -41,8 +41,10 @@
 
   function decode(r) {
     if (r.data) return r;
-    const c = document.createElement("canvas"); c.width = r.w = r.img.naturalWidth || r.img.width; c.height = r.h = r.img.naturalHeight || r.img.height;
-    const x = c.getContext("2d"); x.drawImage(r.img, 0, 0);
+    // A tile may be one cell of a packed image (crop [x, y, w, h]), as the city patches are.
+    const q = r.crop, c = document.createElement("canvas");
+    c.width = r.w = q ? q[2] : r.img.naturalWidth || r.img.width; c.height = r.h = q ? q[3] : r.img.naturalHeight || r.img.height;
+    const x = c.getContext("2d"); x.drawImage(r.img, q ? -q[0] : 0, q ? -q[1] : 0);
     r.data = x.getImageData(0, 0, r.w, r.h).data;
     return r;
   }
@@ -64,12 +66,12 @@
     const levels = opts.levels || [], tiles = {};
     let pending = 0, onTile = null;
     // A level may instead be a set of patches, {cell, patches: [{box: [w, s, e, n], url}]}: the city-scale terrain
-    // (ingest/city/tiles.py) exists only around a few cities, one image each. tile(L, li, -1, i) loads patch i.
+    // (ingest/city/tiles.py) exists only around a few cities, packed into one image (P.crop). tile(L, li, -1, i) loads patch i.
     function tile(L, li, col, row) {
       const key = li * 100000 + col * 100 + row, t = tiles[key];
       if (t) return t.data ? t : null;
       const P = col < 0 ? L.patches[row] : null;
-      const rec = tiles[key] = P ? { x0: P.box[0], y0: P.box[3], cell: L.cell, patch: true } : { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
+      const rec = tiles[key] = P ? { x0: P.box[0], y0: P.box[3], cell: L.cell, patch: true, crop: P.crop } : { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
       const img = new Image(); pending++;
       img.onload = () => { rec.img = img; decode(rec); pending--; tileVer++; clearTimeout(onTile); onTile = setTimeout(() => last && render(last), 60); };
       img.onerror = () => { pending--; rec.data = null; rec.failed = true; };
