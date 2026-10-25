@@ -100,7 +100,7 @@ button, input, select { font: inherit; color: inherit; }
 .tile { padding: 4px 8px 6px; display: grid; gap: 2px; }
 .tile b { font-family: var(--f-head); font-size: 24px; line-height: 24px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .quest { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 2px 8px; align-items: center; padding: 6px 8px; }
-.quest .meter { grid-column: 2 / 4; }
+.quest .pxmeter { grid-column: 2 / 4; }
 .quest b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 18px; }
 .qa { display: grid; gap: 8px; }
 .qa .well { display: grid; gap: 8px; padding: 6px 8px; }
@@ -362,10 +362,10 @@ button, input, select { font: inherit; color: inherit; }
     <div class="tiles"><div class="tile fr fr-card"><span class="kick">Discoveries</span><b>14<small class="kick"> /250</small></b></div><div class="tile fr fr-card"><span class="kick">Quests</span><b>2<small class="kick"> /12</small></b></div><div class="tile fr fr-card"><span class="kick">Streak</span><b>4</b></div></div>
     <article class="riddle fr fr-card-gold"><span class="kick" style="color: var(--gold-2)">Today's riddle</span><b>I am a battle, fought in the 7th century, that decided who would rule Persia.</b><div><button class="pbtn" type="button">${ico("star")}Solve it</button></div></article>
     <section class="sec"><h3 class="sech">Quests</h3>
-      <div class="quest fr fr-card" style="--t: var(--t-shocks)">${ico("shocks")}<b>Outrun the plague</b><span class="kick">3/7</span><div class="meter"><i style="width: 43%"></i></div></div>
-      <div class="quest fr fr-card" style="--t: var(--t-wealth)">${ico("wealth")}<b>Every hub from Dilmun to New York</b><span class="kick">5/18</span><div class="meter"><i style="width: 28%"></i></div></div>
-      <div class="quest fr fr-card" style="--t: var(--t-land)">${ico("land")}<b>Lost cities of the Bronze Age</b><span class="kick">1/9</span><div class="meter"><i style="width: 11%"></i></div></div></section>`;
-  const wi = (q, y, p, toy) => `<button class="wi fr fr-card row-it" type="button" style="display:grid;grid-template-columns:1fr"><b>${q}</b><span class="m"><span class="kick">turns in ${y}</span><span class="meter" style="--t: var(--t-shocks)"><i style="width:${p}%"></i></span><span class="kick">${p}%${toy ? " · model" : ""}</span></span></button>`;
+      <div class="quest fr fr-card" style="--t: var(--t-shocks)">${ico("shocks")}<b>Outrun the plague</b><span class="kick">3/7</span><div class="pxmeter"><i style="width: 43%"></i></div></div>
+      <div class="quest fr fr-card" style="--t: var(--t-wealth)">${ico("wealth")}<b>Every hub from Dilmun to New York</b><span class="kick">5/18</span><div class="pxmeter"><i style="width: 28%"></i></div></div>
+      <div class="quest fr fr-card" style="--t: var(--t-land)">${ico("land")}<b>Lost cities of the Bronze Age</b><span class="kick">1/9</span><div class="pxmeter"><i style="width: 11%"></i></div></div></section>`;
+  const wi = (q, y, p, toy) => `<button class="wi fr fr-card row-it" type="button" style="display:grid;grid-template-columns:1fr"><b>${q}</b><span class="m"><span class="kick">turns in ${y}</span><span class="pxmeter" style="--t: var(--t-shocks)"><i style="width:${p}%"></i></span><span class="kick">${p}%${toy ? " · model" : ""}</span></span></button>`;
   $("#pane-whatif").innerHTML = `
     <div class="lead"><p class="kick">What if</p><h2 class="h2">Pick a turning point</h2><p class="prose">The map plays real history up to the moment it changes, then the branch. Branch steps are dashed and marked speculative.</p></div>
     ${wi("What if the Black Death never reached Europe?", "1347", 25, 1)}${wi("What if the Mongols had kept riding west in 1242?", "1241", 45)}${wi("What if Ming China had kept sailing after 1433?", "1433", 35)}${wi("What if the Plague of Justinian never happened?", "541", 40, 1)}`;
