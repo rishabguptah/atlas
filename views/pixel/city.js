@@ -117,6 +117,8 @@
         B[q] = c; occ[q] = 1;
       };
       const put = mkPut(false), putWet = mkPut(true);
+      // The built-up texture lies under the buildings: it must not count as taken when they look for space.
+      const putArea = (i, j, c) => { if (i < 0 || j < 0 || i >= w || j >= h || c == null) return; const q = j * w + i, cl = cls[q]; if (cl !== 255 && cl > 3) B[q] = c; };
       const line = (pts, fn) => {
         let pi = null, pj = null, n = 0;
         for (const [lon, lat] of pts) {
@@ -135,7 +137,7 @@
         const F = c.features.filter(f => alive(f, year) && (!f.bb || overlaps(f.bb, box)) && (!f.at || (f.at[0] >= box[0] && f.at[0] <= box[2] && f.at[1] >= box[1] && f.at[1] <= box[3])));
         // Built-up areas first (roof texture), then streets and water lines, walls, then buildings on top.
         for (const f of F) if (f.area && f.k === "water") fillWater(G, f, toPx);
-        for (const f of F) if (f.area && (f.k === "extent" || f.k === "district")) fillArea(G, f, toPx, put, occ, year);
+        for (const f of F) if (f.area && (f.k === "extent" || f.k === "district")) fillArea(G, f, toPx, putArea, occ, year);
         for (const f of F) if (f.line && f.k !== "wall") {
           const art = ART["line:" + f.k];  // a line kind's art, per pixel along it (put, i, j, f, year, n)
           if (art) { line(f.line, (i, j, n) => art(f.k === "chain" ? putWet : put, i, j, f, year, n)); continue; }
@@ -173,6 +175,8 @@
 
     // Water that is now land (a filled harbour, a drained lake, a shore before reclamation): flat water over the terrain.
     function fillWater(G, f, toPx) {
+      const art = ART["area:water"];
+      if (art) return scan(G, f, toPx, (i, j) => { const q = j * G.w + i; if (G.cls[q] !== 255) art((ii, jj, c) => { G.base[jj * G.w + ii] = c; }, i, j, i + G.U0, j + G.V0, f); });
       scan(G, f, toPx, (i, j) => { const q = j * G.w + i; if (G.cls[q] !== 255) G.base[q] = ((i + j + G.U0 + G.V0) % 9 === 0) ? C.white : C.water; });
     }
     function scan(G, f, toPx, fn) {
@@ -191,8 +195,9 @@
       }
     }
     // A built-up area: a roof texture with lanes, on land only, under everything else.
-    function fillArea(G, f, toPx, put) {
-      const sparse = (f.conf || 0) >= 2;
+    function fillArea(G, f, toPx, put, occ, year) {
+      const sparse = (f.conf || 0) >= 2, art = ART["area:" + f.k];
+      if (art) return scan(G, f, toPx, (i, j) => art(put, i, j, i + G.U0, j + G.V0, f, year, sparse));
       scan(G, f, toPx, (i, j) => {
         const u = i + G.U0, v = j + G.V0;
         if (v % 4 === 0 || u % 5 === 0) return put(i, j, C.street);              // lanes
