@@ -5,6 +5,7 @@
 //   pm.move(transform)                       on every zoom frame: shifts the last frame with CSS until render
 //   pm.sprites(list, {max, pad}?)           [{lon, lat, sprite, frame?, team?, flip?, pri?, grp?}] drawn into the pixel grid; with pri, decluttered
 //   pm.tick()                                advance sprite and water animation by one frame (call ~4 fps)
+//   pm.overlay(fn) / pm.repaint()            fn(g) paints last, into the same grid (lens marks, see marks.js); repaint redraws
 //
 // levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
 // land: GeoJSON land (coasts come from it, so they stay sharp at any zoom). rivers: [{rank, line: [[lon,lat],...]}].
@@ -331,7 +332,7 @@
     }
     // Declutter: when sprites carry a priority (pri), keep the most important ones that fit without touching,
     // up to max; sprites sharing a grp (a battle's two armies and clash) are kept or dropped together.
-    let spriteOpts = {};
+    let spriteOpts = {}, spriteMask = null, overlay = null;
     function declutter(src, t) {
       if (!src.some(s => s.pri != null)) return src;
       const pad = spriteOpts.pad == null ? 2 : spriteOpts.pad, max = spriteOpts.max || Infinity, groups = new Map();
@@ -384,15 +385,22 @@
           }
         }
       }
+      // spriteMask marks the pixels sprites cover, so an overlay can skip a mark a sprite already stands for.
+      if (!spriteMask || spriteMask.length !== w * h) spriteMask = new Uint8Array(w * h); else spriteMask.fill(0);
       for (const s of list) {
         const p = projection([s.lon, s.lat]); if (!p) continue;
         const i0 = Math.floor((p[0] * t.k) / PX) - U0 + (s.dx || 0), j0 = Math.floor((p[1] * t.k) / PX) - V0 + (s.dy || 0);
         const px = spritePixels(s.sprite, s.team, (s.frame || 0) + frame, night, s.flip); if (!px) continue;
         for (let q = 0; q < px.length; q += 3) {
           const i = i0 + px[q], j = j0 + px[q + 1];
-          if (i >= 0 && j >= 0 && i < w && j < h) out[j * w + i] = px[q + 2];
+          if (i >= 0 && j >= 0 && i < w && j < h) { out[j * w + i] = px[q + 2]; spriteMask[j * w + i] = 1; }
         }
       }
+      if (overlay) try {
+        overlay({ out, w, h, px: PX, frame, night, sprite: spriteMask, cls,
+          // Projected (pre-zoom) coordinates to this frame's art pixel, as floats.
+          at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] });
+      } catch (err) { console.error("pixel overlay", err); }
       ctx.putImageData(img, 0, 0);
     }
 
@@ -407,6 +415,8 @@
       same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === container.clientWidth && lastH === container.clientHeight; },
       setMood(m) { const re = (m === "winter") !== (mood === "winter"); mood = m; if (re && last) render(last); else paint(); },
       tick() { frame++; paint(); },
+      overlay(fn) { overlay = fn; },
+      repaint() { paint(); },
       setFrame(f) { frame = f; },
       // Is this lon/lat drawn as water right now (from the last render)?
       isWater(lon, lat) { if (!cls || !last) return false; const q = this.toPixel(lon, lat); if (!q || q[0] < 0 || q[1] < 0 || q[0] >= w || q[1] >= h) return false; return cls[q[1] * w + q[0]] <= 2; },

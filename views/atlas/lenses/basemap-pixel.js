@@ -1,6 +1,7 @@
 // Pixel map basemap for the one-page Atlas: a top-down 16-bit world, re-drawn from terrain data at every zoom.
 // Renderer, palette and sprites live in views/pixel/ (see SPEC.md); this file wires them to the page.
 // Data: PIXEL.tile0 (terrain L0 as a data URI), PIXEL.rivers; finer tiles load from tiles/ next to the page when published.
+// Lens marks are painted into the pixel grid (views/pixel/marks.js) and a pixel HUD sits in the corners (views/pixel/hud.js).
 (function () {
   if (typeof PixelMap !== "function" || typeof PixelBorders !== "function" || typeof PIXEL === "undefined" || !PIXEL.tile0) return;
   const STYLE = `@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Silkscreen&display=swap");
@@ -8,6 +9,8 @@
 .basemap-on .pt.city .dot, .basemap-on .pt.city .ring, .basemap-on .pt.battle circle, .basemap-on .pt.battle path { opacity: 0; }
 .basemap-on svg text { font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace !important; font-style: normal !important; letter-spacing: .02em; }
 .basemap-on .pt.city text, .basemap-on .pt.battle text { font-weight: 600; fill: #f6f0dc; stroke: #221f1a; stroke-width: 3px; paint-order: stroke; }
+/* Marks drawn in the pixel grid: the SVG shapes stay as invisible click and hover targets, their labels stay visible. */
+.pxmarks #svg .pt > :not(text):not(title):not(image), .pxmarks #svg path.line, .pxmarks #svg path.route, .pxmarks #svg .selring { opacity: 0 !important; }
 `;
   const ERA = typeof PixelEra !== "undefined" ? PixelEra : null;
   const isOn = k => !window.ATLAS.isOn || ATLAS.isOn(k);
@@ -29,6 +32,7 @@
   const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(borders.realms(year, T.k)); else pm.render(T, { realms: borders.realms(year, T.k) }); } } });
   let geo = null, geoKey = "", el0 = null;
   let pm = null, proj = null, T = null, year = null, snap = null, timer = 0, frame = 0, statics = [], movers = [];
+  let marks = null, hud = null, watch = null, markTimer = 0;
   const realmCache = {};
   function realmsFor(y) {
     if (typeof POLITIES === "undefined") return [];
@@ -93,8 +97,29 @@
     pm.sprites(list, ERA && T ? ERA.budget(T.k) : undefined);
   }
 
+  // Lens marks: the page's own records once it offers them (ATLAS.marks), else what its SVG layers drew.
+  const svgEl = () => document.getElementById("svg");
+  const mapOf = el => el && el.closest(".map") || (el && el.parentElement);
+  function marksChanged() {
+    if (markTimer || !pm || !T) return;
+    markTimer = setTimeout(() => { markTimer = 0; if (!pm || mapOf(el0).classList.contains("moving")) return; pm.repaint(); }, 50);
+  }
+  function mountMarks(el, projection) {
+    marks = PixelMarks(svgEl(), projection);
+    pm.overlay(marks.paint);
+    mapOf(el).classList.add("pxmarks");
+    if (typeof ATLAS.marks === "function") {
+      marks.set(ATLAS.marks());
+      if (typeof ATLAS.onMarks === "function") ATLAS.onMarks(r => { if (marks) { marks.set(r); marksChanged(); } });
+      return;
+    }
+    // Any change to what the SVG layers drew (not the per-frame zoom transforms) marks the list stale.
+    watch = new MutationObserver(recs => { if (recs.some(r => r.target !== svgEl())) { marks.markDirty(); marksChanged(); } });
+    watch.observe(svgEl(), { subtree: true, childList: true, attributes: true, attributeFilter: ["class", "style", "d", "r"] });
+  }
+
   ATLAS.basemap({
-    id: "pixel", name: "Pixel map",
+    id: "pixel", name: "Pixel map", paintsMarks: typeof PixelMarks === "function",
     mount(el, projection) {
       proj = projection; el0 = el;
       if (!document.getElementById("pixel-basemap-style")) { const st = document.createElement("style"); st.id = "pixel-basemap-style"; st.textContent = STYLE; document.head.appendChild(st); }
@@ -102,11 +127,15 @@
       pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers });
       // Names of seas, rivers, ranges and deserts in the pixel font, under the Land lens's terrain toggle.
       if (typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
+      if (typeof PixelMarks === "function" && svgEl()) mountMarks(el, projection);
+      if (typeof PixelHUD === "function") hud = PixelHUD(mapOf(el), projection, { px: 3, tile: PIXEL.tile0, fly: (v, ms) => ATLAS.api && ATLAS.api.fly(v, ms ?? 600) });
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => { if (document.hidden || !T) return; frame++; pm.setFrame(frame); draw(); }, 260);
     },
     render(t, y) {
       if (!pm) return;
       T = t; year = y;
+      if (marks && !watch && typeof ATLAS.marks === "function") marks.set(ATLAS.marks()); else if (marks) marks.markDirty();
+      if (hud) hud.update(t);
       const realms = isOn("borders") ? (borders.realms(y, t.k) || realmsFor(y)) : [];
       if (pm.same(t)) pm.setRealms(realms); else pm.render(t, { realms });
       if (geo) {
@@ -115,8 +144,14 @@
       }
       collect(y, t.k); draw();
     },
-    move(t) { if (pm) pm.move(t); if (geo) geo.move(t); },
-    unmount() { clearInterval(timer); pm = null; if (geo) geo.remove(); geo = null; },
+    move(t) { if (pm) pm.move(t); if (geo) geo.move(t); if (hud) hud.update(t); },
+    unmount() {
+      clearInterval(timer); clearTimeout(markTimer); markTimer = 0;
+      if (watch) watch.disconnect(); watch = null; marks = null;
+      if (el0) mapOf(el0).classList.remove("pxmarks");
+      if (hud) hud.remove(); hud = null;
+      pm = null; if (geo) geo.remove(); geo = null;
+    },
     setMood(m) { if (pm) pm.setMood(m); if (geo) geo.setMood(m); },
   });
 })();
