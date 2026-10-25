@@ -10,6 +10,7 @@
 //   pm.setDetail(fn)                         fn(G, phase) draws zoom detail into the grid: "under" before realm tints, "over" after; "key" names the under pass (see detail.js)
 //   pm.labelGrid()                           realm id and terrain class per art pixel of the last frame (for realm names)
 //   pm.spriteBoxes()                         screen boxes of the prioritised sprites last painted (labels keep off them)
+//   pm.underlay(fn)                          fn(g) paints after the terrain and realms, before the sprites (choropleths, grammar.js)
 //
 // levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
 // land: GeoJSON land (coasts come from it, so they stay sharp at any zoom). rivers: [{rank, line: [[lon,lat],...]}].
@@ -384,7 +385,7 @@
     }
     // Declutter: when sprites carry a priority (pri), keep the most important ones that fit without touching,
     // up to max; sprites sharing a grp (a battle's two armies and clash) are kept or dropped together.
-    let spriteOpts = {}, spriteMask = null, overlay = null, shown = [], lastOut = null;
+    let spriteOpts = {}, spriteMask = null, overlay = null, underlay = null, shown = [], lastOut = null;
     const GLINT = pack(rgb("#8ab8c4"));
     function declutter(src, t) {
       if (!src.some(s => s.pri != null)) return src;
@@ -439,6 +440,11 @@
           }
         }
       }
+      // Data passes (views/pixel/grammar.js): a choropleth sits under the sprites, the marks and compare go over them.
+      const frameInfo = () => ({ out, w, h, px: PX, frame, night, sprite: spriteMask, cls, ids, realms: realmsNow, U0, V0, k: t.k,
+        // Projected (pre-zoom) coordinates to this frame's art pixel, as floats.
+        at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] });
+      if (underlay) try { underlay(frameInfo()); } catch (err) { console.error("pixel underlay", err); }
       // spriteMask marks the pixels sprites cover, so an overlay can skip a mark a sprite already stands for.
       if (!spriteMask || spriteMask.length !== w * h) spriteMask = new Uint8Array(w * h); else spriteMask.fill(0);
       for (const s of list) {
@@ -452,11 +458,7 @@
       }
       // The frame before lens marks, so era ornaments can keep clear of marks.
       const pre = era && era.over ? out.slice() : null;
-      if (overlay) try {
-        overlay({ out, w, h, px: PX, frame, night, sprite: spriteMask, cls,
-          // Projected (pre-zoom) coordinates to this frame's art pixel, as floats.
-          at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] });
-      } catch (err) { console.error("pixel overlay", err); }
+      if (overlay) try { overlay(frameInfo()); } catch (err) { console.error("pixel overlay", err); }
       const vis = [Math.ceil(-parseFloat(canvas.style.left) / PX), Math.ceil(-parseFloat(canvas.style.top) / PX), Math.floor((lastW - parseFloat(canvas.style.left)) / PX) - 1, Math.floor((lastH - parseFloat(canvas.style.top)) / PX) - 1];
       if (era && era.over) try { era.over({ out, pre, w, h, px: PX, frame, vis, cls, sprite: spriteMask, U0, V0, k: t.k, projection, at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] }); } catch (err) { console.error("pixel era", err); }
       // Era crossfade: the old frame dissolves into the new one through an ordered-dither mask, in a few steps.
@@ -494,6 +496,7 @@
       setMood(m) { const re = (m === "winter") !== (mood === "winter"); mood = m; if (re && last) render(last); else paint(); },
       tick() { frame++; paint(); },
       overlay(fn) { overlay = fn; },
+      underlay(fn) { underlay = fn; },
       repaint() { paint(); },
       setDetail(fn) { detailFn = fn; },
       setFrame(f) { frame = f; },

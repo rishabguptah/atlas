@@ -127,7 +127,7 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
             if not pts or pts[-1] != q: pts.append(q)
         if r['rank'] <= 4 and len(pts) > 1: rv.append({'rank': r['rank'], 'line': pts})
     data += 'const PIXEL = ' + J({'tile0': tile0, 'rivers': rv}) + ';\n'
-    for f in ('palette.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js'):
+    for f in ('palette.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 # The label engine (one queue for every layer's names) goes first, with or without the pixel map.

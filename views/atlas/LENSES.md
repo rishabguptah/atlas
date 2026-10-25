@@ -138,6 +138,12 @@ A lens can put its marks into the pixel grid (house rule: one world, one grid). 
 returns, `[{lon, lat, sprite, pri, grp, dy, team}]`, decluttered with everything else. Call `ATLAS.pixelRefresh()`
 when your marks change without a year change (a month cursor). `lenses/e19.js` is the example.
 
+## Data charts and the visual grammar
+
+How data is drawn (confidence hatching, flow widths, city tiers, ramps, panel charts) is specified in `VIZ.md`. To
+add a chart to a record's card push a function onto `ATLAS.cardViz`; for a tile in "This year" use `ATLAS.nowViz`.
+Give records a `conf` (attested, estimated, approximate, unknown) and the map draws it.
+
 ## Deep regions (time by the month)
 
 `lenses/e19.*` is the first deep-zoom region, Europe 1789-1914. The pattern for the next one:
