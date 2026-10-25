@@ -11,111 +11,111 @@
 <text x="10" y="55">Europe</text>
 <rect x="190" y="40" width="20" height="20" fill="hsl(204,51%,57%)"><title>Europe -1500: 68</title></rect>
 <rect x="212" y="40" width="20" height="20" fill="hsl(205,50%,59%)"><title>Europe -1400: 54</title></rect>
-<rect x="234" y="40" width="20" height="20" fill="hsl(205,50%,58%)"><title>Europe -1300: 63</title></rect>
-<rect x="256" y="40" width="20" height="20" fill="hsl(204,51%,57%)"><title>Europe -1200: 72</title></rect>
-<rect x="278" y="40" width="20" height="20" fill="hsl(205,50%,60%)"><title>Europe -1100: 51</title></rect>
+<rect x="234" y="40" width="20" height="20" fill="hsl(205,51%,58%)"><title>Europe -1300: 65</title></rect>
+<rect x="256" y="40" width="20" height="20" fill="hsl(204,51%,57%)"><title>Europe -1200: 74</title></rect>
+<rect x="278" y="40" width="20" height="20" fill="hsl(205,50%,59%)"><title>Europe -1100: 53</title></rect>
 <rect x="300" y="40" width="20" height="20" fill="hsl(205,50%,59%)"><title>Europe -1000: 58</title></rect>
 <rect x="322" y="40" width="20" height="20" fill="hsl(205,49%,60%)"><title>Europe -900: 47</title></rect>
-<rect x="344" y="40" width="20" height="20" fill="hsl(198,60%,38%)"><title>Europe -800: 887</title></rect>
-<rect x="366" y="40" width="20" height="20" fill="hsl(204,52%,55%)"><title>Europe -700: 97</title></rect>
+<rect x="344" y="40" width="20" height="20" fill="hsl(198,60%,38%)"><title>Europe -800: 889</title></rect>
+<rect x="366" y="40" width="20" height="20" fill="hsl(204,52%,55%)"><title>Europe -700: 98</title></rect>
 <rect x="388" y="40" width="20" height="20" fill="hsl(199,60%,39%)"><title>Europe -600: 721</title></rect>
-<rect x="410" y="40" width="20" height="20" fill="hsl(203,53%,52%)"><title>Europe -500: 134</title></rect>
-<rect x="432" y="40" width="20" height="20" fill="hsl(198,60%,38%)"><title>Europe -400: 825</title></rect>
-<rect x="454" y="40" width="20" height="20" fill="hsl(200,58%,43%)"><title>Europe -300: 442</title></rect>
-<rect x="476" y="40" width="20" height="20" fill="hsl(203,52%,54%)"><title>Europe -200: 106</title></rect>
-<rect x="498" y="40" width="20" height="20" fill="hsl(198,61%,36%)"><title>Europe -100: 1084</title></rect>
+<rect x="410" y="40" width="20" height="20" fill="hsl(203,53%,52%)"><title>Europe -500: 135</title></rect>
+<rect x="432" y="40" width="20" height="20" fill="hsl(198,60%,38%)"><title>Europe -400: 826</title></rect>
+<rect x="454" y="40" width="20" height="20" fill="hsl(200,58%,43%)"><title>Europe -300: 443</title></rect>
+<rect x="476" y="40" width="20" height="20" fill="hsl(203,52%,54%)"><title>Europe -200: 108</title></rect>
+<rect x="498" y="40" width="20" height="20" fill="hsl(198,61%,36%)"><title>Europe -100: 1085</title></rect>
 <rect x="520" y="40" width="20" height="20" fill="hsl(203,53%,52%)"><title>Europe 0: 130</title></rect>
-<rect x="542" y="40" width="20" height="20" fill="hsl(203,53%,53%)"><title>Europe 100: 118</title></rect>
-<rect x="564" y="40" width="20" height="20" fill="hsl(203,54%,52%)"><title>Europe 200: 145</title></rect>
-<rect x="586" y="40" width="20" height="20" fill="hsl(202,54%,50%)"><title>Europe 300: 187</title></rect>
-<rect x="608" y="40" width="20" height="20" fill="hsl(202,55%,49%)"><title>Europe 400: 218</title></rect>
-<rect x="630" y="40" width="20" height="20" fill="hsl(201,56%,47%)"><title>Europe 500: 276</title></rect>
-<rect x="652" y="40" width="20" height="20" fill="hsl(201,56%,47%)"><title>Europe 600: 264</title></rect>
-<rect x="674" y="40" width="20" height="20" fill="hsl(200,57%,44%)"><title>Europe 700: 405</title></rect>
-<rect x="696" y="40" width="20" height="20" fill="hsl(201,56%,46%)"><title>Europe 800: 319</title></rect>
-<rect x="718" y="40" width="20" height="20" fill="hsl(199,59%,40%)"><title>Europe 900: 623</title></rect>
-<rect x="740" y="40" width="20" height="20" fill="hsl(199,59%,41%)"><title>Europe 1000: 617</title></rect>
-<rect x="762" y="40" width="20" height="20" fill="hsl(200,58%,42%)"><title>Europe 1100: 490</title></rect>
-<rect x="784" y="40" width="20" height="20" fill="hsl(199,60%,39%)"><title>Europe 1200: 727</title></rect>
-<rect x="806" y="40" width="20" height="20" fill="hsl(199,59%,41%)"><title>Europe 1300: 621</title></rect>
-<rect x="828" y="40" width="20" height="20" fill="hsl(198,60%,39%)"><title>Europe 1400: 793</title></rect>
-<rect x="850" y="40" width="20" height="20" fill="hsl(198,60%,38%)"><title>Europe 1500: 909</title></rect>
-<rect x="872" y="40" width="20" height="20" fill="hsl(197,62%,35%)"><title>Europe 1600: 1270</title></rect>
-<rect x="894" y="40" width="20" height="20" fill="hsl(196,63%,31%)"><title>Europe 1700: 2008</title></rect>
-<rect x="916" y="40" width="20" height="20" fill="hsl(195,65%,28%)"><title>Europe 1800: 3697</title></rect>
-<rect x="938" y="40" width="20" height="20" fill="hsl(196,64%,30%)"><title>Europe 1900: 2450</title></rect>
+<rect x="542" y="40" width="20" height="20" fill="hsl(203,53%,53%)"><title>Europe 100: 121</title></rect>
+<rect x="564" y="40" width="20" height="20" fill="hsl(203,54%,52%)"><title>Europe 200: 147</title></rect>
+<rect x="586" y="40" width="20" height="20" fill="hsl(202,55%,50%)"><title>Europe 300: 191</title></rect>
+<rect x="608" y="40" width="20" height="20" fill="hsl(202,55%,48%)"><title>Europe 400: 224</title></rect>
+<rect x="630" y="40" width="20" height="20" fill="hsl(201,56%,47%)"><title>Europe 500: 278</title></rect>
+<rect x="652" y="40" width="20" height="20" fill="hsl(201,56%,47%)"><title>Europe 600: 266</title></rect>
+<rect x="674" y="40" width="20" height="20" fill="hsl(200,57%,44%)"><title>Europe 700: 407</title></rect>
+<rect x="696" y="40" width="20" height="20" fill="hsl(201,56%,46%)"><title>Europe 800: 320</title></rect>
+<rect x="718" y="40" width="20" height="20" fill="hsl(199,59%,40%)"><title>Europe 900: 625</title></rect>
+<rect x="740" y="40" width="20" height="20" fill="hsl(199,59%,40%)"><title>Europe 1000: 622</title></rect>
+<rect x="762" y="40" width="20" height="20" fill="hsl(200,58%,42%)"><title>Europe 1100: 491</title></rect>
+<rect x="784" y="40" width="20" height="20" fill="hsl(199,60%,39%)"><title>Europe 1200: 736</title></rect>
+<rect x="806" y="40" width="20" height="20" fill="hsl(199,59%,40%)"><title>Europe 1300: 644</title></rect>
+<rect x="828" y="40" width="20" height="20" fill="hsl(198,60%,39%)"><title>Europe 1400: 804</title></rect>
+<rect x="850" y="40" width="20" height="20" fill="hsl(198,60%,37%)"><title>Europe 1500: 943</title></rect>
+<rect x="872" y="40" width="20" height="20" fill="hsl(197,62%,35%)"><title>Europe 1600: 1295</title></rect>
+<rect x="894" y="40" width="20" height="20" fill="hsl(196,63%,31%)"><title>Europe 1700: 2041</title></rect>
+<rect x="916" y="40" width="20" height="20" fill="hsl(195,65%,28%)"><title>Europe 1800: 3721</title></rect>
+<rect x="938" y="40" width="20" height="20" fill="hsl(196,64%,30%)"><title>Europe 1900: 2485</title></rect>
 <text x="10" y="77">West Asia</text>
 <rect x="190" y="62" width="20" height="20" fill="hsl(205,49%,61%)"><title>West Asia -1500: 45</title></rect>
-<rect x="212" y="62" width="20" height="20" fill="hsl(204,52%,56%)"><title>West Asia -1400: 85</title></rect>
-<rect x="234" y="62" width="20" height="20" fill="hsl(205,49%,60%)"><title>West Asia -1300: 48</title></rect>
-<rect x="256" y="62" width="20" height="20" fill="hsl(204,52%,55%)"><title>West Asia -1200: 90</title></rect>
-<rect x="278" y="62" width="20" height="20" fill="hsl(205,49%,60%)"><title>West Asia -1100: 46</title></rect>
-<rect x="300" y="62" width="20" height="20" fill="hsl(204,52%,56%)"><title>West Asia -1000: 85</title></rect>
+<rect x="212" y="62" width="20" height="20" fill="hsl(204,52%,56%)"><title>West Asia -1400: 87</title></rect>
+<rect x="234" y="62" width="20" height="20" fill="hsl(205,50%,60%)"><title>West Asia -1300: 51</title></rect>
+<rect x="256" y="62" width="20" height="20" fill="hsl(204,52%,55%)"><title>West Asia -1200: 93</title></rect>
+<rect x="278" y="62" width="20" height="20" fill="hsl(205,49%,60%)"><title>West Asia -1100: 47</title></rect>
+<rect x="300" y="62" width="20" height="20" fill="hsl(204,52%,55%)"><title>West Asia -1000: 88</title></rect>
 <rect x="322" y="62" width="20" height="20" fill="hsl(205,51%,58%)"><title>West Asia -900: 67</title></rect>
 <rect x="344" y="62" width="20" height="20" fill="hsl(202,55%,49%)"><title>West Asia -800: 205</title></rect>
 <rect x="366" y="62" width="20" height="20" fill="hsl(203,53%,53%)"><title>West Asia -700: 114</title></rect>
-<rect x="388" y="62" width="20" height="20" fill="hsl(201,56%,47%)"><title>West Asia -600: 282</title></rect>
+<rect x="388" y="62" width="20" height="20" fill="hsl(201,56%,46%)"><title>West Asia -600: 287</title></rect>
 <rect x="410" y="62" width="20" height="20" fill="hsl(204,51%,56%)"><title>West Asia -500: 81</title></rect>
-<rect x="432" y="62" width="20" height="20" fill="hsl(200,58%,43%)"><title>West Asia -400: 431</title></rect>
+<rect x="432" y="62" width="20" height="20" fill="hsl(200,58%,43%)"><title>West Asia -400: 438</title></rect>
 <rect x="454" y="62" width="20" height="20" fill="hsl(204,51%,57%)"><title>West Asia -300: 73</title></rect>
-<rect x="476" y="62" width="20" height="20" fill="hsl(203,52%,54%)"><title>West Asia -200: 106</title></rect>
+<rect x="476" y="62" width="20" height="20" fill="hsl(203,52%,54%)"><title>West Asia -200: 107</title></rect>
 <rect x="498" y="62" width="20" height="20" fill="hsl(199,58%,42%)"><title>West Asia -100: 536</title></rect>
-<rect x="520" y="62" width="20" height="20" fill="hsl(203,52%,54%)"><title>West Asia 0: 102</title></rect>
+<rect x="520" y="62" width="20" height="20" fill="hsl(203,52%,54%)"><title>West Asia 0: 104</title></rect>
 <rect x="542" y="62" width="20" height="20" fill="hsl(203,52%,54%)"><title>West Asia 100: 106</title></rect>
-<rect x="564" y="62" width="20" height="20" fill="hsl(203,53%,53%)"><title>West Asia 200: 120</title></rect>
-<rect x="586" y="62" width="20" height="20" fill="hsl(201,56%,48%)"><title>West Asia 300: 246</title></rect>
-<rect x="608" y="62" width="20" height="20" fill="hsl(203,53%,52%)"><title>West Asia 400: 139</title></rect>
-<rect x="630" y="62" width="20" height="20" fill="hsl(202,55%,49%)"><title>West Asia 500: 217</title></rect>
-<rect x="652" y="62" width="20" height="20" fill="hsl(201,56%,46%)"><title>West Asia 600: 319</title></rect>
+<rect x="564" y="62" width="20" height="20" fill="hsl(203,53%,53%)"><title>West Asia 200: 121</title></rect>
+<rect x="586" y="62" width="20" height="20" fill="hsl(201,56%,48%)"><title>West Asia 300: 248</title></rect>
+<rect x="608" y="62" width="20" height="20" fill="hsl(203,53%,52%)"><title>West Asia 400: 142</title></rect>
+<rect x="630" y="62" width="20" height="20" fill="hsl(202,55%,49%)"><title>West Asia 500: 218</title></rect>
+<rect x="652" y="62" width="20" height="20" fill="hsl(201,56%,46%)"><title>West Asia 600: 321</title></rect>
 <rect x="674" y="62" width="20" height="20" fill="hsl(202,54%,50%)"><title>West Asia 700: 174</title></rect>
-<rect x="696" y="62" width="20" height="20" fill="hsl(202,54%,51%)"><title>West Asia 800: 162</title></rect>
-<rect x="718" y="62" width="20" height="20" fill="hsl(197,61%,36%)"><title>West Asia 900: 1168</title></rect>
-<rect x="740" y="62" width="20" height="20" fill="hsl(202,55%,49%)"><title>West Asia 1000: 218</title></rect>
-<rect x="762" y="62" width="20" height="20" fill="hsl(201,57%,45%)"><title>West Asia 1100: 326</title></rect>
-<rect x="784" y="62" width="20" height="20" fill="hsl(201,57%,45%)"><title>West Asia 1200: 340</title></rect>
+<rect x="696" y="62" width="20" height="20" fill="hsl(202,54%,51%)"><title>West Asia 800: 165</title></rect>
+<rect x="718" y="62" width="20" height="20" fill="hsl(197,61%,36%)"><title>West Asia 900: 1172</title></rect>
+<rect x="740" y="62" width="20" height="20" fill="hsl(202,55%,49%)"><title>West Asia 1000: 219</title></rect>
+<rect x="762" y="62" width="20" height="20" fill="hsl(201,57%,45%)"><title>West Asia 1100: 327</title></rect>
+<rect x="784" y="62" width="20" height="20" fill="hsl(201,57%,45%)"><title>West Asia 1200: 341</title></rect>
 <rect x="806" y="62" width="20" height="20" fill="hsl(201,56%,48%)"><title>West Asia 1300: 248</title></rect>
-<rect x="828" y="62" width="20" height="20" fill="hsl(202,55%,49%)"><title>West Asia 1400: 212</title></rect>
-<rect x="850" y="62" width="20" height="20" fill="hsl(201,56%,46%)"><title>West Asia 1500: 309</title></rect>
-<rect x="872" y="62" width="20" height="20" fill="hsl(202,55%,49%)"><title>West Asia 1600: 209</title></rect>
-<rect x="894" y="62" width="20" height="20" fill="hsl(200,57%,45%)"><title>West Asia 1700: 369</title></rect>
-<rect x="916" y="62" width="20" height="20" fill="hsl(198,60%,38%)"><title>West Asia 1800: 845</title></rect>
-<rect x="938" y="62" width="20" height="20" fill="hsl(196,63%,32%)"><title>West Asia 1900: 1937</title></rect>
+<rect x="828" y="62" width="20" height="20" fill="hsl(202,55%,49%)"><title>West Asia 1400: 215</title></rect>
+<rect x="850" y="62" width="20" height="20" fill="hsl(201,57%,46%)"><title>West Asia 1500: 323</title></rect>
+<rect x="872" y="62" width="20" height="20" fill="hsl(202,55%,49%)"><title>West Asia 1600: 217</title></rect>
+<rect x="894" y="62" width="20" height="20" fill="hsl(200,57%,44%)"><title>West Asia 1700: 373</title></rect>
+<rect x="916" y="62" width="20" height="20" fill="hsl(198,60%,38%)"><title>West Asia 1800: 849</title></rect>
+<rect x="938" y="62" width="20" height="20" fill="hsl(196,63%,32%)"><title>West Asia 1900: 1936</title></rect>
 <text x="10" y="99">North Africa</text>
 <rect x="190" y="84" width="20" height="20" fill="hsl(207,47%,64%)"><title>North Africa -1500: 27</title></rect>
-<rect x="212" y="84" width="20" height="20" fill="hsl(206,49%,61%)"><title>North Africa -1400: 43</title></rect>
+<rect x="212" y="84" width="20" height="20" fill="hsl(206,49%,61%)"><title>North Africa -1400: 44</title></rect>
 <rect x="234" y="84" width="20" height="20" fill="hsl(206,48%,63%)"><title>North Africa -1300: 31</title></rect>
-<rect x="256" y="84" width="20" height="20" fill="hsl(208,46%,67%)"><title>North Africa -1200: 19</title></rect>
+<rect x="256" y="84" width="20" height="20" fill="hsl(207,47%,66%)"><title>North Africa -1200: 21</title></rect>
 <rect x="278" y="84" width="20" height="20" fill="hsl(208,45%,69%)"><title>North Africa -1100: 15</title></rect>
 <rect x="300" y="84" width="20" height="20" fill="hsl(208,46%,68%)"><title>North Africa -1000: 16</title></rect>
-<rect x="322" y="84" width="20" height="20" fill="hsl(208,46%,67%)"><title>North Africa -900: 19</title></rect>
+<rect x="322" y="84" width="20" height="20" fill="hsl(207,46%,67%)"><title>North Africa -900: 20</title></rect>
 <rect x="344" y="84" width="20" height="20" fill="hsl(205,50%,58%)"><title>North Africa -800: 60</title></rect>
-<rect x="366" y="84" width="20" height="20" fill="hsl(207,47%,65%)"><title>North Africa -700: 26</title></rect>
+<rect x="366" y="84" width="20" height="20" fill="hsl(207,47%,64%)"><title>North Africa -700: 27</title></rect>
 <rect x="388" y="84" width="20" height="20" fill="hsl(205,49%,60%)"><title>North Africa -600: 47</title></rect>
 <rect x="410" y="84" width="20" height="20" fill="hsl(206,48%,63%)"><title>North Africa -500: 31</title></rect>
-<rect x="432" y="84" width="20" height="20" fill="hsl(202,55%,49%)"><title>North Africa -400: 200</title></rect>
-<rect x="454" y="84" width="20" height="20" fill="hsl(204,51%,57%)"><title>North Africa -300: 69</title></rect>
+<rect x="432" y="84" width="20" height="20" fill="hsl(202,55%,49%)"><title>North Africa -400: 201</title></rect>
+<rect x="454" y="84" width="20" height="20" fill="hsl(204,51%,57%)"><title>North Africa -300: 71</title></rect>
 <rect x="476" y="84" width="20" height="20" fill="hsl(205,50%,59%)"><title>North Africa -200: 59</title></rect>
-<rect x="498" y="84" width="20" height="20" fill="hsl(202,55%,49%)"><title>North Africa -100: 202</title></rect>
+<rect x="498" y="84" width="20" height="20" fill="hsl(202,55%,49%)"><title>North Africa -100: 204</title></rect>
 <rect x="520" y="84" width="20" height="20" fill="hsl(207,46%,67%)"><title>North Africa 0: 20</title></rect>
 <rect x="542" y="84" width="20" height="20" fill="hsl(206,49%,61%)"><title>North Africa 100: 42</title></rect>
 <rect x="564" y="84" width="20" height="20" fill="hsl(205,50%,60%)"><title>North Africa 200: 50</title></rect>
-<rect x="586" y="84" width="20" height="20" fill="hsl(204,51%,57%)"><title>North Africa 300: 71</title></rect>
-<rect x="608" y="84" width="20" height="20" fill="hsl(205,50%,59%)"><title>North Africa 400: 53</title></rect>
+<rect x="586" y="84" width="20" height="20" fill="hsl(204,51%,57%)"><title>North Africa 300: 75</title></rect>
+<rect x="608" y="84" width="20" height="20" fill="hsl(205,50%,59%)"><title>North Africa 400: 54</title></rect>
 <rect x="630" y="84" width="20" height="20" fill="hsl(205,50%,59%)"><title>North Africa 500: 57</title></rect>
-<rect x="652" y="84" width="20" height="20" fill="hsl(205,50%,60%)"><title>North Africa 600: 49</title></rect>
-<rect x="674" y="84" width="20" height="20" fill="hsl(205,51%,58%)"><title>North Africa 700: 66</title></rect>
+<rect x="652" y="84" width="20" height="20" fill="hsl(205,50%,60%)"><title>North Africa 600: 50</title></rect>
+<rect x="674" y="84" width="20" height="20" fill="hsl(205,51%,58%)"><title>North Africa 700: 67</title></rect>
 <rect x="696" y="84" width="20" height="20" fill="hsl(203,53%,53%)"><title>North Africa 800: 118</title></rect>
 <rect x="718" y="84" width="20" height="20" fill="hsl(201,56%,46%)"><title>North Africa 900: 320</title></rect>
 <rect x="740" y="84" width="20" height="20" fill="hsl(205,51%,58%)"><title>North Africa 1000: 67</title></rect>
 <rect x="762" y="84" width="20" height="20" fill="hsl(204,51%,56%)"><title>North Africa 1100: 79</title></rect>
-<rect x="784" y="84" width="20" height="20" fill="hsl(204,51%,57%)"><title>North Africa 1200: 74</title></rect>
-<rect x="806" y="84" width="20" height="20" fill="hsl(204,52%,55%)"><title>North Africa 1300: 93</title></rect>
-<rect x="828" y="84" width="20" height="20" fill="hsl(204,52%,55%)"><title>North Africa 1400: 90</title></rect>
-<rect x="850" y="84" width="20" height="20" fill="hsl(202,54%,50%)"><title>North Africa 1500: 174</title></rect>
-<rect x="872" y="84" width="20" height="20" fill="hsl(203,53%,52%)"><title>North Africa 1600: 133</title></rect>
-<rect x="894" y="84" width="20" height="20" fill="hsl(202,54%,50%)" stroke="#c0392b" stroke-width="1.5"><title>North Africa 1700: 179</title></rect>
-<rect x="916" y="84" width="20" height="20" fill="hsl(200,58%,43%)"><title>North Africa 1800: 460</title></rect>
-<rect x="938" y="84" width="20" height="20" fill="hsl(198,60%,38%)"><title>North Africa 1900: 840</title></rect>
+<rect x="784" y="84" width="20" height="20" fill="hsl(204,51%,57%)"><title>North Africa 1200: 75</title></rect>
+<rect x="806" y="84" width="20" height="20" fill="hsl(204,52%,55%)"><title>North Africa 1300: 97</title></rect>
+<rect x="828" y="84" width="20" height="20" fill="hsl(204,52%,55%)"><title>North Africa 1400: 91</title></rect>
+<rect x="850" y="84" width="20" height="20" fill="hsl(202,54%,50%)"><title>North Africa 1500: 176</title></rect>
+<rect x="872" y="84" width="20" height="20" fill="hsl(203,53%,52%)"><title>North Africa 1600: 134</title></rect>
+<rect x="894" y="84" width="20" height="20" fill="hsl(202,54%,50%)" stroke="#c0392b" stroke-width="1.5"><title>North Africa 1700: 182</title></rect>
+<rect x="916" y="84" width="20" height="20" fill="hsl(200,58%,43%)"><title>North Africa 1800: 468</title></rect>
+<rect x="938" y="84" width="20" height="20" fill="hsl(198,60%,38%)"><title>North Africa 1900: 851</title></rect>
 <text x="10" y="121">West Africa</text>
 <rect x="190" y="106" width="20" height="20" fill="#eee8dc"><title>West Africa -1500: 0</title></rect>
 <rect x="212" y="106" width="20" height="20" fill="#eee8dc"><title>West Africa -1400: 0</title></rect>
@@ -129,7 +129,7 @@
 <rect x="388" y="106" width="20" height="20" fill="#eee8dc"><title>West Africa -600: 0</title></rect>
 <rect x="410" y="106" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>West Africa -500: 0</title></rect>
 <rect x="432" y="106" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>West Africa -400: 0</title></rect>
-<rect x="454" y="106" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>West Africa -300: 0</title></rect>
+<rect x="454" y="106" width="20" height="20" fill="hsl(213,38%,85%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa -300: 1</title></rect>
 <rect x="476" y="106" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>West Africa -200: 0</title></rect>
 <rect x="498" y="106" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>West Africa -100: 0</title></rect>
 <rect x="520" y="106" width="20" height="20" fill="hsl(211,41%,78%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 0: 4</title></rect>
@@ -139,74 +139,74 @@
 <rect x="608" y="106" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>West Africa 400: 0</title></rect>
 <rect x="630" y="106" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>West Africa 500: 0</title></rect>
 <rect x="652" y="106" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>West Africa 600: 0</title></rect>
-<rect x="674" y="106" width="20" height="20" fill="hsl(213,38%,85%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 700: 1</title></rect>
-<rect x="696" y="106" width="20" height="20" fill="hsl(212,40%,79%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 800: 3</title></rect>
-<rect x="718" y="106" width="20" height="20" fill="hsl(213,38%,85%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 900: 1</title></rect>
+<rect x="674" y="106" width="20" height="20" fill="hsl(212,39%,82%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 700: 2</title></rect>
+<rect x="696" y="106" width="20" height="20" fill="hsl(211,41%,78%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 800: 4</title></rect>
+<rect x="718" y="106" width="20" height="20" fill="hsl(212,39%,82%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 900: 2</title></rect>
 <rect x="740" y="106" width="20" height="20" fill="hsl(209,44%,72%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1000: 10</title></rect>
-<rect x="762" y="106" width="20" height="20" fill="hsl(211,42%,76%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1100: 5</title></rect>
-<rect x="784" y="106" width="20" height="20" fill="hsl(207,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1200: 20</title></rect>
-<rect x="806" y="106" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1300: 21</title></rect>
-<rect x="828" y="106" width="20" height="20" fill="hsl(207,47%,65%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1400: 25</title></rect>
-<rect x="850" y="106" width="20" height="20" fill="hsl(206,48%,63%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1500: 31</title></rect>
-<rect x="872" y="106" width="20" height="20" fill="hsl(205,49%,61%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1600: 45</title></rect>
-<rect x="894" y="106" width="20" height="20" fill="hsl(204,52%,56%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1700: 84</title></rect>
-<rect x="916" y="106" width="20" height="20" fill="hsl(201,57%,45%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1800: 340</title></rect>
-<rect x="938" y="106" width="20" height="20" fill="hsl(199,60%,39%)"><title>West Africa 1900: 756</title></rect>
+<rect x="762" y="106" width="20" height="20" fill="hsl(210,42%,75%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1100: 6</title></rect>
+<rect x="784" y="106" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1200: 21</title></rect>
+<rect x="806" y="106" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1300: 22</title></rect>
+<rect x="828" y="106" width="20" height="20" fill="hsl(207,47%,65%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1400: 26</title></rect>
+<rect x="850" y="106" width="20" height="20" fill="hsl(206,48%,63%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1500: 33</title></rect>
+<rect x="872" y="106" width="20" height="20" fill="hsl(205,49%,60%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1600: 48</title></rect>
+<rect x="894" y="106" width="20" height="20" fill="hsl(204,52%,55%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1700: 89</title></rect>
+<rect x="916" y="106" width="20" height="20" fill="hsl(200,57%,45%)" stroke="#c0392b" stroke-width="1.5"><title>West Africa 1800: 344</title></rect>
+<rect x="938" y="106" width="20" height="20" fill="hsl(199,60%,39%)"><title>West Africa 1900: 768</title></rect>
 <text x="10" y="143">East Africa &amp; Horn</text>
 <rect x="190" y="128" width="20" height="20" fill="#eee8dc"><title>East Africa &amp; Horn -1500: 0</title></rect>
 <rect x="212" y="128" width="20" height="20" fill="#eee8dc"><title>East Africa &amp; Horn -1400: 0</title></rect>
 <rect x="234" y="128" width="20" height="20" fill="hsl(213,38%,85%)"><title>East Africa &amp; Horn -1300: 1</title></rect>
 <rect x="256" y="128" width="20" height="20" fill="#eee8dc"><title>East Africa &amp; Horn -1200: 0</title></rect>
 <rect x="278" y="128" width="20" height="20" fill="hsl(212,40%,79%)"><title>East Africa &amp; Horn -1100: 3</title></rect>
-<rect x="300" y="128" width="20" height="20" fill="hsl(213,38%,85%)"><title>East Africa &amp; Horn -1000: 1</title></rect>
+<rect x="300" y="128" width="20" height="20" fill="hsl(212,39%,82%)"><title>East Africa &amp; Horn -1000: 2</title></rect>
 <rect x="322" y="128" width="20" height="20" fill="hsl(213,38%,85%)"><title>East Africa &amp; Horn -900: 1</title></rect>
 <rect x="344" y="128" width="20" height="20" fill="hsl(213,38%,85%)"><title>East Africa &amp; Horn -800: 1</title></rect>
 <rect x="366" y="128" width="20" height="20" fill="hsl(212,40%,79%)"><title>East Africa &amp; Horn -700: 3</title></rect>
-<rect x="388" y="128" width="20" height="20" fill="hsl(209,44%,71%)"><title>East Africa &amp; Horn -600: 11</title></rect>
+<rect x="388" y="128" width="20" height="20" fill="hsl(209,45%,70%)"><title>East Africa &amp; Horn -600: 12</title></rect>
 <rect x="410" y="128" width="20" height="20" fill="hsl(212,40%,79%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn -500: 3</title></rect>
 <rect x="432" y="128" width="20" height="20" fill="hsl(211,41%,78%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn -400: 4</title></rect>
-<rect x="454" y="128" width="20" height="20" fill="hsl(211,41%,78%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn -300: 4</title></rect>
+<rect x="454" y="128" width="20" height="20" fill="hsl(211,42%,76%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn -300: 5</title></rect>
 <rect x="476" y="128" width="20" height="20" fill="hsl(212,40%,79%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn -200: 3</title></rect>
-<rect x="498" y="128" width="20" height="20" fill="hsl(209,44%,71%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn -100: 11</title></rect>
-<rect x="520" y="128" width="20" height="20" fill="hsl(212,40%,79%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 0: 3</title></rect>
+<rect x="498" y="128" width="20" height="20" fill="hsl(209,45%,70%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn -100: 12</title></rect>
+<rect x="520" y="128" width="20" height="20" fill="hsl(211,41%,78%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 0: 4</title></rect>
 <rect x="542" y="128" width="20" height="20" fill="hsl(212,40%,79%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 100: 3</title></rect>
-<rect x="564" y="128" width="20" height="20" fill="hsl(210,43%,74%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 200: 7</title></rect>
+<rect x="564" y="128" width="20" height="20" fill="hsl(210,43%,73%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 200: 8</title></rect>
 <rect x="586" y="128" width="20" height="20" fill="hsl(209,44%,72%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 300: 10</title></rect>
 <rect x="608" y="128" width="20" height="20" fill="hsl(210,43%,74%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 400: 7</title></rect>
-<rect x="630" y="128" width="20" height="20" fill="hsl(209,45%,70%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 500: 12</title></rect>
-<rect x="652" y="128" width="20" height="20" fill="hsl(209,44%,72%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 600: 9</title></rect>
+<rect x="630" y="128" width="20" height="20" fill="hsl(208,45%,70%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 500: 13</title></rect>
+<rect x="652" y="128" width="20" height="20" fill="hsl(209,44%,72%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 600: 10</title></rect>
 <rect x="674" y="128" width="20" height="20" fill="hsl(213,38%,85%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 700: 1</title></rect>
 <rect x="696" y="128" width="20" height="20" fill="hsl(212,39%,82%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 800: 2</title></rect>
 <rect x="718" y="128" width="20" height="20" fill="hsl(209,44%,72%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 900: 10</title></rect>
-<rect x="740" y="128" width="20" height="20" fill="hsl(211,42%,76%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1000: 5</title></rect>
+<rect x="740" y="128" width="20" height="20" fill="hsl(210,42%,75%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1000: 6</title></rect>
 <rect x="762" y="128" width="20" height="20" fill="hsl(209,44%,72%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1100: 9</title></rect>
-<rect x="784" y="128" width="20" height="20" fill="hsl(208,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1200: 18</title></rect>
-<rect x="806" y="128" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1300: 22</title></rect>
-<rect x="828" y="128" width="20" height="20" fill="hsl(207,48%,64%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1400: 28</title></rect>
+<rect x="784" y="128" width="20" height="20" fill="hsl(208,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1200: 19</title></rect>
+<rect x="806" y="128" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1300: 23</title></rect>
+<rect x="828" y="128" width="20" height="20" fill="hsl(206,48%,63%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1400: 32</title></rect>
 <rect x="850" y="128" width="20" height="20" fill="hsl(205,50%,59%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1500: 56</title></rect>
 <rect x="872" y="128" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1600: 23</title></rect>
 <rect x="894" y="128" width="20" height="20" fill="hsl(204,51%,57%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1700: 74</title></rect>
-<rect x="916" y="128" width="20" height="20" fill="hsl(200,57%,45%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1800: 353</title></rect>
-<rect x="938" y="128" width="20" height="20" fill="hsl(199,59%,39%)"><title>East Africa &amp; Horn 1900: 719</title></rect>
+<rect x="916" y="128" width="20" height="20" fill="hsl(200,57%,45%)" stroke="#c0392b" stroke-width="1.5"><title>East Africa &amp; Horn 1800: 358</title></rect>
+<rect x="938" y="128" width="20" height="20" fill="hsl(199,60%,39%)"><title>East Africa &amp; Horn 1900: 728</title></rect>
 <text x="10" y="165">Central &amp; Southern Africa</text>
 <rect x="190" y="150" width="20" height="20" fill="#eee8dc"><title>Central &amp; Southern Africa -1500: 0</title></rect>
 <rect x="212" y="150" width="20" height="20" fill="#eee8dc"><title>Central &amp; Southern Africa -1400: 0</title></rect>
 <rect x="234" y="150" width="20" height="20" fill="#eee8dc"><title>Central &amp; Southern Africa -1300: 0</title></rect>
 <rect x="256" y="150" width="20" height="20" fill="hsl(211,41%,78%)"><title>Central &amp; Southern Africa -1200: 4</title></rect>
 <rect x="278" y="150" width="20" height="20" fill="#eee8dc"><title>Central &amp; Southern Africa -1100: 0</title></rect>
-<rect x="300" y="150" width="20" height="20" fill="#eee8dc"><title>Central &amp; Southern Africa -1000: 0</title></rect>
+<rect x="300" y="150" width="20" height="20" fill="hsl(213,38%,85%)"><title>Central &amp; Southern Africa -1000: 1</title></rect>
 <rect x="322" y="150" width="20" height="20" fill="#eee8dc"><title>Central &amp; Southern Africa -900: 0</title></rect>
 <rect x="344" y="150" width="20" height="20" fill="#eee8dc"><title>Central &amp; Southern Africa -800: 0</title></rect>
 <rect x="366" y="150" width="20" height="20" fill="#eee8dc"><title>Central &amp; Southern Africa -700: 0</title></rect>
-<rect x="388" y="150" width="20" height="20" fill="#eee8dc"><title>Central &amp; Southern Africa -600: 0</title></rect>
-<rect x="410" y="150" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa -500: 0</title></rect>
+<rect x="388" y="150" width="20" height="20" fill="hsl(213,38%,85%)"><title>Central &amp; Southern Africa -600: 1</title></rect>
+<rect x="410" y="150" width="20" height="20" fill="hsl(212,39%,82%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa -500: 2</title></rect>
 <rect x="432" y="150" width="20" height="20" fill="hsl(213,38%,85%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa -400: 1</title></rect>
 <rect x="454" y="150" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa -300: 0</title></rect>
 <rect x="476" y="150" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa -200: 0</title></rect>
 <rect x="498" y="150" width="20" height="20" fill="hsl(212,39%,82%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa -100: 2</title></rect>
 <rect x="520" y="150" width="20" height="20" fill="hsl(212,40%,79%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 0: 3</title></rect>
 <rect x="542" y="150" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 100: 0</title></rect>
-<rect x="564" y="150" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 200: 0</title></rect>
+<rect x="564" y="150" width="20" height="20" fill="hsl(213,38%,85%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 200: 1</title></rect>
 <rect x="586" y="150" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 300: 0</title></rect>
 <rect x="608" y="150" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 400: 0</title></rect>
 <rect x="630" y="150" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 500: 0</title></rect>
@@ -219,11 +219,11 @@
 <rect x="784" y="150" width="20" height="20" fill="#eee8dc" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 1200: 0</title></rect>
 <rect x="806" y="150" width="20" height="20" fill="hsl(213,38%,85%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 1300: 1</title></rect>
 <rect x="828" y="150" width="20" height="20" fill="hsl(209,44%,71%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 1400: 11</title></rect>
-<rect x="850" y="150" width="20" height="20" fill="hsl(207,48%,64%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 1500: 29</title></rect>
-<rect x="872" y="150" width="20" height="20" fill="hsl(206,49%,61%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 1600: 43</title></rect>
-<rect x="894" y="150" width="20" height="20" fill="hsl(204,52%,55%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 1700: 88</title></rect>
-<rect x="916" y="150" width="20" height="20" fill="hsl(200,58%,43%)"><title>Central &amp; Southern Africa 1800: 445</title></rect>
-<rect x="938" y="150" width="20" height="20" fill="hsl(199,59%,41%)"><title>Central &amp; Southern Africa 1900: 602</title></rect>
+<rect x="850" y="150" width="20" height="20" fill="hsl(206,48%,64%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 1500: 30</title></rect>
+<rect x="872" y="150" width="20" height="20" fill="hsl(206,49%,61%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 1600: 44</title></rect>
+<rect x="894" y="150" width="20" height="20" fill="hsl(204,52%,55%)" stroke="#c0392b" stroke-width="1.5"><title>Central &amp; Southern Africa 1700: 91</title></rect>
+<rect x="916" y="150" width="20" height="20" fill="hsl(200,58%,43%)"><title>Central &amp; Southern Africa 1800: 456</title></rect>
+<rect x="938" y="150" width="20" height="20" fill="hsl(199,59%,41%)"><title>Central &amp; Southern Africa 1900: 605</title></rect>
 <text x="10" y="187">South Asia</text>
 <rect x="190" y="172" width="20" height="20" fill="hsl(213,38%,85%)"><title>South Asia -1500: 1</title></rect>
 <rect x="212" y="172" width="20" height="20" fill="#eee8dc"><title>South Asia -1400: 0</title></rect>
@@ -232,9 +232,9 @@
 <rect x="278" y="172" width="20" height="20" fill="hsl(211,41%,78%)"><title>South Asia -1100: 4</title></rect>
 <rect x="300" y="172" width="20" height="20" fill="hsl(208,46%,67%)"><title>South Asia -1000: 18</title></rect>
 <rect x="322" y="172" width="20" height="20" fill="hsl(204,51%,57%)"><title>South Asia -900: 71</title></rect>
-<rect x="344" y="172" width="20" height="20" fill="hsl(210,42%,75%)"><title>South Asia -800: 6</title></rect>
+<rect x="344" y="172" width="20" height="20" fill="hsl(210,43%,74%)"><title>South Asia -800: 7</title></rect>
 <rect x="366" y="172" width="20" height="20" fill="hsl(210,42%,75%)"><title>South Asia -700: 6</title></rect>
-<rect x="388" y="172" width="20" height="20" fill="hsl(207,47%,65%)"><title>South Asia -600: 26</title></rect>
+<rect x="388" y="172" width="20" height="20" fill="hsl(207,48%,64%)"><title>South Asia -600: 28</title></rect>
 <rect x="410" y="172" width="20" height="20" fill="hsl(208,46%,68%)"><title>South Asia -500: 17</title></rect>
 <rect x="432" y="172" width="20" height="20" fill="hsl(205,50%,58%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia -400: 63</title></rect>
 <rect x="454" y="172" width="20" height="20" fill="hsl(206,49%,61%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia -300: 41</title></rect>
@@ -243,23 +243,23 @@
 <rect x="520" y="172" width="20" height="20" fill="hsl(208,46%,68%)"><title>South Asia 0: 16</title></rect>
 <rect x="542" y="172" width="20" height="20" fill="hsl(212,40%,79%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia 100: 3</title></rect>
 <rect x="564" y="172" width="20" height="20" fill="hsl(209,45%,70%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia 200: 12</title></rect>
-<rect x="586" y="172" width="20" height="20" fill="hsl(207,47%,65%)"><title>South Asia 300: 24</title></rect>
-<rect x="608" y="172" width="20" height="20" fill="hsl(207,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia 400: 20</title></rect>
-<rect x="630" y="172" width="20" height="20" fill="hsl(207,47%,64%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia 500: 27</title></rect>
-<rect x="652" y="172" width="20" height="20" fill="hsl(207,48%,64%)"><title>South Asia 600: 28</title></rect>
-<rect x="674" y="172" width="20" height="20" fill="hsl(206,48%,63%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia 700: 32</title></rect>
-<rect x="696" y="172" width="20" height="20" fill="hsl(206,49%,62%)"><title>South Asia 800: 37</title></rect>
-<rect x="718" y="172" width="20" height="20" fill="hsl(204,51%,57%)"><title>South Asia 900: 75</title></rect>
-<rect x="740" y="172" width="20" height="20" fill="hsl(205,50%,60%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia 1000: 49</title></rect>
+<rect x="586" y="172" width="20" height="20" fill="hsl(207,47%,65%)"><title>South Asia 300: 25</title></rect>
+<rect x="608" y="172" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia 400: 22</title></rect>
+<rect x="630" y="172" width="20" height="20" fill="hsl(207,48%,64%)"><title>South Asia 500: 29</title></rect>
+<rect x="652" y="172" width="20" height="20" fill="hsl(206,48%,64%)"><title>South Asia 600: 30</title></rect>
+<rect x="674" y="172" width="20" height="20" fill="hsl(206,48%,63%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia 700: 34</title></rect>
+<rect x="696" y="172" width="20" height="20" fill="hsl(206,49%,62%)"><title>South Asia 800: 38</title></rect>
+<rect x="718" y="172" width="20" height="20" fill="hsl(204,51%,57%)"><title>South Asia 900: 76</title></rect>
+<rect x="740" y="172" width="20" height="20" fill="hsl(205,50%,60%)" stroke="#c0392b" stroke-width="1.5"><title>South Asia 1000: 51</title></rect>
 <rect x="762" y="172" width="20" height="20" fill="hsl(204,51%,57%)"><title>South Asia 1100: 75</title></rect>
-<rect x="784" y="172" width="20" height="20" fill="hsl(204,51%,57%)"><title>South Asia 1200: 75</title></rect>
-<rect x="806" y="172" width="20" height="20" fill="hsl(204,52%,55%)"><title>South Asia 1300: 98</title></rect>
-<rect x="828" y="172" width="20" height="20" fill="hsl(203,52%,54%)"><title>South Asia 1400: 109</title></rect>
-<rect x="850" y="172" width="20" height="20" fill="hsl(201,55%,48%)"><title>South Asia 1500: 240</title></rect>
-<rect x="872" y="172" width="20" height="20" fill="hsl(201,55%,48%)"><title>South Asia 1600: 241</title></rect>
-<rect x="894" y="172" width="20" height="20" fill="hsl(200,57%,44%)"><title>South Asia 1700: 390</title></rect>
-<rect x="916" y="172" width="20" height="20" fill="hsl(199,58%,42%)"><title>South Asia 1800: 542</title></rect>
-<rect x="938" y="172" width="20" height="20" fill="hsl(198,60%,38%)"><title>South Asia 1900: 871</title></rect>
+<rect x="784" y="172" width="20" height="20" fill="hsl(204,51%,56%)"><title>South Asia 1200: 77</title></rect>
+<rect x="806" y="172" width="20" height="20" fill="hsl(204,52%,54%)"><title>South Asia 1300: 100</title></rect>
+<rect x="828" y="172" width="20" height="20" fill="hsl(203,53%,54%)"><title>South Asia 1400: 112</title></rect>
+<rect x="850" y="172" width="20" height="20" fill="hsl(201,56%,47%)"><title>South Asia 1500: 251</title></rect>
+<rect x="872" y="172" width="20" height="20" fill="hsl(201,56%,47%)"><title>South Asia 1600: 251</title></rect>
+<rect x="894" y="172" width="20" height="20" fill="hsl(200,57%,44%)"><title>South Asia 1700: 406</title></rect>
+<rect x="916" y="172" width="20" height="20" fill="hsl(199,59%,41%)"><title>South Asia 1800: 564</title></rect>
+<rect x="938" y="172" width="20" height="20" fill="hsl(198,60%,38%)"><title>South Asia 1900: 882</title></rect>
 <text x="10" y="209">Central Asia &amp; steppe</text>
 <rect x="190" y="194" width="20" height="20" fill="hsl(207,47%,65%)"><title>Central Asia &amp; steppe -1500: 24</title></rect>
 <rect x="212" y="194" width="20" height="20" fill="hsl(207,47%,66%)"><title>Central Asia &amp; steppe -1400: 23</title></rect>
@@ -271,7 +271,7 @@
 <rect x="344" y="194" width="20" height="20" fill="hsl(209,44%,72%)"><title>Central Asia &amp; steppe -800: 9</title></rect>
 <rect x="366" y="194" width="20" height="20" fill="hsl(207,47%,65%)"><title>Central Asia &amp; steppe -700: 24</title></rect>
 <rect x="388" y="194" width="20" height="20" fill="hsl(207,48%,64%)"><title>Central Asia &amp; steppe -600: 29</title></rect>
-<rect x="410" y="194" width="20" height="20" fill="hsl(208,46%,67%)"><title>Central Asia &amp; steppe -500: 18</title></rect>
+<rect x="410" y="194" width="20" height="20" fill="hsl(208,46%,67%)"><title>Central Asia &amp; steppe -500: 19</title></rect>
 <rect x="432" y="194" width="20" height="20" fill="hsl(205,50%,59%)" stroke="#c0392b" stroke-width="1.5"><title>Central Asia &amp; steppe -400: 57</title></rect>
 <rect x="454" y="194" width="20" height="20" fill="hsl(205,50%,59%)"><title>Central Asia &amp; steppe -300: 59</title></rect>
 <rect x="476" y="194" width="20" height="20" fill="hsl(205,50%,59%)"><title>Central Asia &amp; steppe -200: 53</title></rect>
@@ -283,23 +283,23 @@
 <rect x="608" y="194" width="20" height="20" fill="hsl(207,47%,66%)"><title>Central Asia &amp; steppe 400: 23</title></rect>
 <rect x="630" y="194" width="20" height="20" fill="hsl(206,48%,63%)"><title>Central Asia &amp; steppe 500: 34</title></rect>
 <rect x="652" y="194" width="20" height="20" fill="hsl(206,48%,62%)"><title>Central Asia &amp; steppe 600: 35</title></rect>
-<rect x="674" y="194" width="20" height="20" fill="hsl(205,51%,58%)"><title>Central Asia &amp; steppe 700: 64</title></rect>
+<rect x="674" y="194" width="20" height="20" fill="hsl(205,51%,58%)"><title>Central Asia &amp; steppe 700: 66</title></rect>
 <rect x="696" y="194" width="20" height="20" fill="hsl(205,51%,58%)"><title>Central Asia &amp; steppe 800: 65</title></rect>
 <rect x="718" y="194" width="20" height="20" fill="hsl(200,57%,45%)"><title>Central Asia &amp; steppe 900: 369</title></rect>
 <rect x="740" y="194" width="20" height="20" fill="hsl(205,50%,58%)" stroke="#c0392b" stroke-width="1.5"><title>Central Asia &amp; steppe 1000: 60</title></rect>
-<rect x="762" y="194" width="20" height="20" fill="hsl(205,50%,58%)"><title>Central Asia &amp; steppe 1100: 61</title></rect>
-<rect x="784" y="194" width="20" height="20" fill="hsl(203,53%,52%)"><title>Central Asia &amp; steppe 1200: 132</title></rect>
-<rect x="806" y="194" width="20" height="20" fill="hsl(205,50%,58%)" stroke="#c0392b" stroke-width="1.5"><title>Central Asia &amp; steppe 1300: 62</title></rect>
-<rect x="828" y="194" width="20" height="20" fill="hsl(204,52%,55%)"><title>Central Asia &amp; steppe 1400: 93</title></rect>
-<rect x="850" y="194" width="20" height="20" fill="hsl(204,52%,55%)"><title>Central Asia &amp; steppe 1500: 98</title></rect>
-<rect x="872" y="194" width="20" height="20" fill="hsl(202,54%,51%)"><title>Central Asia &amp; steppe 1600: 162</title></rect>
-<rect x="894" y="194" width="20" height="20" fill="hsl(200,57%,44%)"><title>Central Asia &amp; steppe 1700: 375</title></rect>
-<rect x="916" y="194" width="20" height="20" fill="hsl(200,58%,43%)"><title>Central Asia &amp; steppe 1800: 428</title></rect>
-<rect x="938" y="194" width="20" height="20" fill="hsl(198,60%,39%)"><title>Central Asia &amp; steppe 1900: 781</title></rect>
+<rect x="762" y="194" width="20" height="20" fill="hsl(205,50%,58%)"><title>Central Asia &amp; steppe 1100: 62</title></rect>
+<rect x="784" y="194" width="20" height="20" fill="hsl(203,53%,52%)"><title>Central Asia &amp; steppe 1200: 138</title></rect>
+<rect x="806" y="194" width="20" height="20" fill="hsl(205,50%,58%)" stroke="#c0392b" stroke-width="1.5"><title>Central Asia &amp; steppe 1300: 63</title></rect>
+<rect x="828" y="194" width="20" height="20" fill="hsl(204,52%,55%)"><title>Central Asia &amp; steppe 1400: 94</title></rect>
+<rect x="850" y="194" width="20" height="20" fill="hsl(204,52%,54%)"><title>Central Asia &amp; steppe 1500: 101</title></rect>
+<rect x="872" y="194" width="20" height="20" fill="hsl(202,54%,51%)"><title>Central Asia &amp; steppe 1600: 161</title></rect>
+<rect x="894" y="194" width="20" height="20" fill="hsl(200,57%,44%)"><title>Central Asia &amp; steppe 1700: 378</title></rect>
+<rect x="916" y="194" width="20" height="20" fill="hsl(200,58%,43%)"><title>Central Asia &amp; steppe 1800: 433</title></rect>
+<rect x="938" y="194" width="20" height="20" fill="hsl(198,60%,39%)"><title>Central Asia &amp; steppe 1900: 782</title></rect>
 <text x="10" y="231">East Asia</text>
 <rect x="190" y="216" width="20" height="20" fill="hsl(210,42%,75%)"><title>East Asia -1500: 6</title></rect>
 <rect x="212" y="216" width="20" height="20" fill="hsl(210,42%,75%)"><title>East Asia -1400: 6</title></rect>
-<rect x="234" y="216" width="20" height="20" fill="hsl(209,44%,72%)"><title>East Asia -1300: 9</title></rect>
+<rect x="234" y="216" width="20" height="20" fill="hsl(209,44%,72%)"><title>East Asia -1300: 10</title></rect>
 <rect x="256" y="216" width="20" height="20" fill="hsl(210,43%,73%)"><title>East Asia -1200: 8</title></rect>
 <rect x="278" y="216" width="20" height="20" fill="hsl(208,45%,70%)"><title>East Asia -1100: 13</title></rect>
 <rect x="300" y="216" width="20" height="20" fill="hsl(209,44%,72%)"><title>East Asia -1000: 10</title></rect>
@@ -307,31 +307,31 @@
 <rect x="344" y="216" width="20" height="20" fill="hsl(206,48%,63%)"><title>East Asia -800: 32</title></rect>
 <rect x="366" y="216" width="20" height="20" fill="hsl(206,49%,62%)"><title>East Asia -700: 37</title></rect>
 <rect x="388" y="216" width="20" height="20" fill="hsl(205,50%,59%)"><title>East Asia -600: 53</title></rect>
-<rect x="410" y="216" width="20" height="20" fill="hsl(205,50%,58%)"><title>East Asia -500: 60</title></rect>
-<rect x="432" y="216" width="20" height="20" fill="hsl(204,51%,56%)" stroke="#c0392b" stroke-width="1.5"><title>East Asia -400: 82</title></rect>
+<rect x="410" y="216" width="20" height="20" fill="hsl(205,50%,58%)"><title>East Asia -500: 61</title></rect>
+<rect x="432" y="216" width="20" height="20" fill="hsl(204,51%,56%)"><title>East Asia -400: 83</title></rect>
 <rect x="454" y="216" width="20" height="20" fill="hsl(199,59%,39%)"><title>East Asia -300: 719</title></rect>
 <rect x="476" y="216" width="20" height="20" fill="hsl(200,57%,45%)"><title>East Asia -200: 360</title></rect>
 <rect x="498" y="216" width="20" height="20" fill="hsl(203,54%,52%)"><title>East Asia -100: 143</title></rect>
-<rect x="520" y="216" width="20" height="20" fill="hsl(203,53%,54%)"><title>East Asia 0: 113</title></rect>
-<rect x="542" y="216" width="20" height="20" fill="hsl(202,54%,51%)"><title>East Asia 100: 155</title></rect>
-<rect x="564" y="216" width="20" height="20" fill="hsl(201,56%,46%)"><title>East Asia 200: 304</title></rect>
-<rect x="586" y="216" width="20" height="20" fill="hsl(202,55%,50%)"><title>East Asia 300: 191</title></rect>
-<rect x="608" y="216" width="20" height="20" fill="hsl(200,58%,43%)"><title>East Asia 400: 454</title></rect>
+<rect x="520" y="216" width="20" height="20" fill="hsl(203,53%,53%)"><title>East Asia 0: 114</title></rect>
+<rect x="542" y="216" width="20" height="20" fill="hsl(202,54%,51%)"><title>East Asia 100: 164</title></rect>
+<rect x="564" y="216" width="20" height="20" fill="hsl(201,56%,46%)"><title>East Asia 200: 307</title></rect>
+<rect x="586" y="216" width="20" height="20" fill="hsl(202,55%,50%)"><title>East Asia 300: 192</title></rect>
+<rect x="608" y="216" width="20" height="20" fill="hsl(200,58%,43%)"><title>East Asia 400: 452</title></rect>
 <rect x="630" y="216" width="20" height="20" fill="hsl(198,60%,39%)"><title>East Asia 500: 791</title></rect>
-<rect x="652" y="216" width="20" height="20" fill="hsl(199,60%,39%)"><title>East Asia 600: 763</title></rect>
-<rect x="674" y="216" width="20" height="20" fill="hsl(201,56%,46%)"><title>East Asia 700: 303</title></rect>
-<rect x="696" y="216" width="20" height="20" fill="hsl(203,53%,52%)"><title>East Asia 800: 137</title></rect>
-<rect x="718" y="216" width="20" height="20" fill="hsl(201,56%,47%)"><title>East Asia 900: 273</title></rect>
-<rect x="740" y="216" width="20" height="20" fill="hsl(203,54%,52%)"><title>East Asia 1000: 143</title></rect>
-<rect x="762" y="216" width="20" height="20" fill="hsl(201,55%,48%)"><title>East Asia 1100: 245</title></rect>
-<rect x="784" y="216" width="20" height="20" fill="hsl(200,57%,44%)"><title>East Asia 1200: 399</title></rect>
-<rect x="806" y="216" width="20" height="20" fill="hsl(200,57%,45%)"><title>East Asia 1300: 351</title></rect>
-<rect x="828" y="216" width="20" height="20" fill="hsl(201,55%,48%)"><title>East Asia 1400: 241</title></rect>
-<rect x="850" y="216" width="20" height="20" fill="hsl(199,58%,42%)"><title>East Asia 1500: 537</title></rect>
-<rect x="872" y="216" width="20" height="20" fill="hsl(201,57%,45%)"><title>East Asia 1600: 336</title></rect>
-<rect x="894" y="216" width="20" height="20" fill="hsl(201,56%,46%)"><title>East Asia 1700: 294</title></rect>
-<rect x="916" y="216" width="20" height="20" fill="hsl(198,60%,38%)"><title>East Asia 1800: 821</title></rect>
-<rect x="938" y="216" width="20" height="20" fill="hsl(197,62%,35%)"><title>East Asia 1900: 1345</title></rect>
+<rect x="652" y="216" width="20" height="20" fill="hsl(199,60%,39%)"><title>East Asia 600: 760</title></rect>
+<rect x="674" y="216" width="20" height="20" fill="hsl(201,56%,46%)"><title>East Asia 700: 308</title></rect>
+<rect x="696" y="216" width="20" height="20" fill="hsl(203,53%,52%)"><title>East Asia 800: 140</title></rect>
+<rect x="718" y="216" width="20" height="20" fill="hsl(201,56%,47%)"><title>East Asia 900: 275</title></rect>
+<rect x="740" y="216" width="20" height="20" fill="hsl(203,54%,52%)"><title>East Asia 1000: 146</title></rect>
+<rect x="762" y="216" width="20" height="20" fill="hsl(201,56%,48%)"><title>East Asia 1100: 246</title></rect>
+<rect x="784" y="216" width="20" height="20" fill="hsl(200,57%,44%)"><title>East Asia 1200: 401</title></rect>
+<rect x="806" y="216" width="20" height="20" fill="hsl(200,57%,45%)"><title>East Asia 1300: 356</title></rect>
+<rect x="828" y="216" width="20" height="20" fill="hsl(201,55%,48%)"><title>East Asia 1400: 245</title></rect>
+<rect x="850" y="216" width="20" height="20" fill="hsl(199,58%,42%)"><title>East Asia 1500: 543</title></rect>
+<rect x="872" y="216" width="20" height="20" fill="hsl(200,57%,45%)"><title>East Asia 1600: 348</title></rect>
+<rect x="894" y="216" width="20" height="20" fill="hsl(201,56%,46%)"><title>East Asia 1700: 303</title></rect>
+<rect x="916" y="216" width="20" height="20" fill="hsl(198,60%,38%)"><title>East Asia 1800: 843</title></rect>
+<rect x="938" y="216" width="20" height="20" fill="hsl(197,62%,35%)"><title>East Asia 1900: 1353</title></rect>
 <text x="10" y="253">Southeast Asia</text>
 <rect x="190" y="238" width="20" height="20" fill="#eee8dc"><title>Southeast Asia -1500: 0</title></rect>
 <rect x="212" y="238" width="20" height="20" fill="#eee8dc"><title>Southeast Asia -1400: 0</title></rect>
@@ -356,18 +356,18 @@
 <rect x="630" y="238" width="20" height="20" fill="hsl(209,44%,71%)" stroke="#c0392b" stroke-width="1.5"><title>Southeast Asia 500: 11</title></rect>
 <rect x="652" y="238" width="20" height="20" fill="hsl(208,45%,70%)" stroke="#c0392b" stroke-width="1.5"><title>Southeast Asia 600: 13</title></rect>
 <rect x="674" y="238" width="20" height="20" fill="hsl(208,45%,69%)" stroke="#c0392b" stroke-width="1.5"><title>Southeast Asia 700: 14</title></rect>
-<rect x="696" y="238" width="20" height="20" fill="hsl(206,48%,63%)"><title>Southeast Asia 800: 33</title></rect>
+<rect x="696" y="238" width="20" height="20" fill="hsl(206,48%,63%)"><title>Southeast Asia 800: 34</title></rect>
 <rect x="718" y="238" width="20" height="20" fill="hsl(206,49%,61%)" stroke="#c0392b" stroke-width="1.5"><title>Southeast Asia 900: 42</title></rect>
-<rect x="740" y="238" width="20" height="20" fill="hsl(205,50%,60%)" stroke="#c0392b" stroke-width="1.5"><title>Southeast Asia 1000: 49</title></rect>
-<rect x="762" y="238" width="20" height="20" fill="hsl(205,50%,60%)"><title>Southeast Asia 1100: 49</title></rect>
-<rect x="784" y="238" width="20" height="20" fill="hsl(204,51%,56%)"><title>Southeast Asia 1200: 79</title></rect>
-<rect x="806" y="238" width="20" height="20" fill="hsl(204,51%,57%)"><title>Southeast Asia 1300: 70</title></rect>
-<rect x="828" y="238" width="20" height="20" fill="hsl(204,52%,55%)"><title>Southeast Asia 1400: 90</title></rect>
-<rect x="850" y="238" width="20" height="20" fill="hsl(202,54%,50%)"><title>Southeast Asia 1500: 169</title></rect>
-<rect x="872" y="238" width="20" height="20" fill="hsl(202,55%,50%)"><title>Southeast Asia 1600: 189</title></rect>
-<rect x="894" y="238" width="20" height="20" fill="hsl(201,56%,47%)"><title>Southeast Asia 1700: 284</title></rect>
-<rect x="916" y="238" width="20" height="20" fill="hsl(199,59%,41%)"><title>Southeast Asia 1800: 576</title></rect>
-<rect x="938" y="238" width="20" height="20" fill="hsl(198,60%,38%)"><title>Southeast Asia 1900: 901</title></rect>
+<rect x="740" y="238" width="20" height="20" fill="hsl(205,50%,60%)" stroke="#c0392b" stroke-width="1.5"><title>Southeast Asia 1000: 50</title></rect>
+<rect x="762" y="238" width="20" height="20" fill="hsl(205,50%,59%)"><title>Southeast Asia 1100: 52</title></rect>
+<rect x="784" y="238" width="20" height="20" fill="hsl(204,51%,56%)"><title>Southeast Asia 1200: 80</title></rect>
+<rect x="806" y="238" width="20" height="20" fill="hsl(204,51%,57%)"><title>Southeast Asia 1300: 74</title></rect>
+<rect x="828" y="238" width="20" height="20" fill="hsl(204,52%,55%)"><title>Southeast Asia 1400: 96</title></rect>
+<rect x="850" y="238" width="20" height="20" fill="hsl(202,54%,50%)"><title>Southeast Asia 1500: 175</title></rect>
+<rect x="872" y="238" width="20" height="20" fill="hsl(202,55%,49%)"><title>Southeast Asia 1600: 193</title></rect>
+<rect x="894" y="238" width="20" height="20" fill="hsl(201,56%,46%)"><title>Southeast Asia 1700: 287</title></rect>
+<rect x="916" y="238" width="20" height="20" fill="hsl(199,59%,41%)"><title>Southeast Asia 1800: 581</title></rect>
+<rect x="938" y="238" width="20" height="20" fill="hsl(198,60%,38%)"><title>Southeast Asia 1900: 902</title></rect>
 <text x="10" y="275">North America</text>
 <rect x="190" y="260" width="20" height="20" fill="#eee8dc"><title>North America -1500: 0</title></rect>
 <rect x="212" y="260" width="20" height="20" fill="#eee8dc"><title>North America -1400: 0</title></rect>
@@ -390,20 +390,20 @@
 <rect x="586" y="260" width="20" height="20" fill="hsl(212,39%,82%)" stroke="#c0392b" stroke-width="1.5"><title>North America 300: 2</title></rect>
 <rect x="608" y="260" width="20" height="20" fill="hsl(208,45%,69%)" stroke="#c0392b" stroke-width="1.5"><title>North America 400: 15</title></rect>
 <rect x="630" y="260" width="20" height="20" fill="hsl(213,38%,85%)" stroke="#c0392b" stroke-width="1.5"><title>North America 500: 1</title></rect>
-<rect x="652" y="260" width="20" height="20" fill="hsl(210,42%,75%)" stroke="#c0392b" stroke-width="1.5"><title>North America 600: 6</title></rect>
+<rect x="652" y="260" width="20" height="20" fill="hsl(210,43%,74%)" stroke="#c0392b" stroke-width="1.5"><title>North America 600: 7</title></rect>
 <rect x="674" y="260" width="20" height="20" fill="hsl(213,38%,85%)" stroke="#c0392b" stroke-width="1.5"><title>North America 700: 1</title></rect>
 <rect x="696" y="260" width="20" height="20" fill="hsl(210,43%,73%)" stroke="#c0392b" stroke-width="1.5"><title>North America 800: 8</title></rect>
-<rect x="718" y="260" width="20" height="20" fill="hsl(210,43%,74%)" stroke="#c0392b" stroke-width="1.5"><title>North America 900: 7</title></rect>
+<rect x="718" y="260" width="20" height="20" fill="hsl(210,43%,73%)" stroke="#c0392b" stroke-width="1.5"><title>North America 900: 8</title></rect>
 <rect x="740" y="260" width="20" height="20" fill="hsl(207,48%,64%)" stroke="#c0392b" stroke-width="1.5"><title>North America 1000: 28</title></rect>
-<rect x="762" y="260" width="20" height="20" fill="hsl(208,45%,69%)" stroke="#c0392b" stroke-width="1.5"><title>North America 1100: 14</title></rect>
-<rect x="784" y="260" width="20" height="20" fill="hsl(209,44%,71%)" stroke="#c0392b" stroke-width="1.5"><title>North America 1200: 11</title></rect>
+<rect x="762" y="260" width="20" height="20" fill="hsl(208,46%,68%)" stroke="#c0392b" stroke-width="1.5"><title>North America 1100: 16</title></rect>
+<rect x="784" y="260" width="20" height="20" fill="hsl(208,45%,69%)" stroke="#c0392b" stroke-width="1.5"><title>North America 1200: 14</title></rect>
 <rect x="806" y="260" width="20" height="20" fill="hsl(208,46%,68%)" stroke="#c0392b" stroke-width="1.5"><title>North America 1300: 17</title></rect>
 <rect x="828" y="260" width="20" height="20" fill="hsl(208,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>North America 1400: 18</title></rect>
-<rect x="850" y="260" width="20" height="20" fill="hsl(204,52%,55%)"><title>North America 1500: 97</title></rect>
-<rect x="872" y="260" width="20" height="20" fill="hsl(200,58%,43%)"><title>North America 1600: 428</title></rect>
-<rect x="894" y="260" width="20" height="20" fill="hsl(196,63%,32%)"><title>North America 1700: 1800</title></rect>
-<rect x="916" y="260" width="20" height="20" fill="hsl(195,65%,28%)"><title>North America 1800: 4489</title></rect>
-<rect x="938" y="260" width="20" height="20" fill="hsl(197,62%,34%)"><title>North America 1900: 1392</title></rect>
+<rect x="850" y="260" width="20" height="20" fill="hsl(203,52%,54%)"><title>North America 1500: 102</title></rect>
+<rect x="872" y="260" width="20" height="20" fill="hsl(200,58%,43%)"><title>North America 1600: 430</title></rect>
+<rect x="894" y="260" width="20" height="20" fill="hsl(196,63%,32%)"><title>North America 1700: 1805</title></rect>
+<rect x="916" y="260" width="20" height="20" fill="hsl(195,65%,28%)"><title>North America 1800: 4474</title></rect>
+<rect x="938" y="260" width="20" height="20" fill="hsl(197,62%,34%)"><title>North America 1900: 1402</title></rect>
 <text x="10" y="297">Mesoamerica &amp; Caribbean</text>
 <rect x="190" y="282" width="20" height="20" fill="hsl(213,38%,85%)"><title>Mesoamerica &amp; Caribbean -1500: 1</title></rect>
 <rect x="212" y="282" width="20" height="20" fill="#eee8dc"><title>Mesoamerica &amp; Caribbean -1400: 0</title></rect>
@@ -415,31 +415,31 @@
 <rect x="344" y="282" width="20" height="20" fill="hsl(211,42%,76%)"><title>Mesoamerica &amp; Caribbean -800: 5</title></rect>
 <rect x="366" y="282" width="20" height="20" fill="#eee8dc"><title>Mesoamerica &amp; Caribbean -700: 0</title></rect>
 <rect x="388" y="282" width="20" height="20" fill="hsl(212,40%,79%)"><title>Mesoamerica &amp; Caribbean -600: 3</title></rect>
-<rect x="410" y="282" width="20" height="20" fill="hsl(212,40%,79%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean -500: 3</title></rect>
+<rect x="410" y="282" width="20" height="20" fill="hsl(211,41%,78%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean -500: 4</title></rect>
 <rect x="432" y="282" width="20" height="20" fill="hsl(212,39%,82%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean -400: 2</title></rect>
 <rect x="454" y="282" width="20" height="20" fill="hsl(210,42%,75%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean -300: 6</title></rect>
 <rect x="476" y="282" width="20" height="20" fill="hsl(211,41%,78%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean -200: 4</title></rect>
 <rect x="498" y="282" width="20" height="20" fill="hsl(209,45%,70%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean -100: 12</title></rect>
 <rect x="520" y="282" width="20" height="20" fill="hsl(210,43%,73%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 0: 8</title></rect>
 <rect x="542" y="282" width="20" height="20" fill="hsl(211,42%,76%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 100: 5</title></rect>
-<rect x="564" y="282" width="20" height="20" fill="hsl(211,42%,76%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 200: 5</title></rect>
+<rect x="564" y="282" width="20" height="20" fill="hsl(210,42%,75%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 200: 6</title></rect>
 <rect x="586" y="282" width="20" height="20" fill="hsl(209,44%,72%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 300: 9</title></rect>
-<rect x="608" y="282" width="20" height="20" fill="hsl(208,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 400: 18</title></rect>
+<rect x="608" y="282" width="20" height="20" fill="hsl(208,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 400: 19</title></rect>
 <rect x="630" y="282" width="20" height="20" fill="hsl(207,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 500: 20</title></rect>
-<rect x="652" y="282" width="20" height="20" fill="hsl(206,49%,62%)"><title>Mesoamerica &amp; Caribbean 600: 38</title></rect>
-<rect x="674" y="282" width="20" height="20" fill="hsl(207,48%,64%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 700: 29</title></rect>
-<rect x="696" y="282" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 800: 22</title></rect>
-<rect x="718" y="282" width="20" height="20" fill="hsl(208,46%,68%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 900: 17</title></rect>
+<rect x="652" y="282" width="20" height="20" fill="hsl(206,49%,61%)"><title>Mesoamerica &amp; Caribbean 600: 40</title></rect>
+<rect x="674" y="282" width="20" height="20" fill="hsl(206,48%,63%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 700: 33</title></rect>
+<rect x="696" y="282" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 800: 23</title></rect>
+<rect x="718" y="282" width="20" height="20" fill="hsl(208,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 900: 18</title></rect>
 <rect x="740" y="282" width="20" height="20" fill="hsl(206,49%,61%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 1000: 43</title></rect>
 <rect x="762" y="282" width="20" height="20" fill="hsl(206,48%,62%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 1100: 36</title></rect>
 <rect x="784" y="282" width="20" height="20" fill="hsl(206,48%,62%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 1200: 35</title></rect>
 <rect x="806" y="282" width="20" height="20" fill="hsl(205,50%,59%)" stroke="#c0392b" stroke-width="1.5"><title>Mesoamerica &amp; Caribbean 1300: 58</title></rect>
-<rect x="828" y="282" width="20" height="20" fill="hsl(204,52%,55%)"><title>Mesoamerica &amp; Caribbean 1400: 96</title></rect>
-<rect x="850" y="282" width="20" height="20" fill="hsl(201,55%,48%)"><title>Mesoamerica &amp; Caribbean 1500: 240</title></rect>
-<rect x="872" y="282" width="20" height="20" fill="hsl(203,54%,51%)"><title>Mesoamerica &amp; Caribbean 1600: 151</title></rect>
-<rect x="894" y="282" width="20" height="20" fill="hsl(201,56%,46%)"><title>Mesoamerica &amp; Caribbean 1700: 310</title></rect>
-<rect x="916" y="282" width="20" height="20" fill="hsl(198,60%,39%)"><title>Mesoamerica &amp; Caribbean 1800: 803</title></rect>
-<rect x="938" y="282" width="20" height="20" fill="hsl(199,60%,39%)"><title>Mesoamerica &amp; Caribbean 1900: 725</title></rect>
+<rect x="828" y="282" width="20" height="20" fill="hsl(204,52%,55%)"><title>Mesoamerica &amp; Caribbean 1400: 99</title></rect>
+<rect x="850" y="282" width="20" height="20" fill="hsl(201,56%,47%)"><title>Mesoamerica &amp; Caribbean 1500: 250</title></rect>
+<rect x="872" y="282" width="20" height="20" fill="hsl(202,54%,51%)"><title>Mesoamerica &amp; Caribbean 1600: 154</title></rect>
+<rect x="894" y="282" width="20" height="20" fill="hsl(201,56%,46%)"><title>Mesoamerica &amp; Caribbean 1700: 319</title></rect>
+<rect x="916" y="282" width="20" height="20" fill="hsl(198,60%,38%)"><title>Mesoamerica &amp; Caribbean 1800: 813</title></rect>
+<rect x="938" y="282" width="20" height="20" fill="hsl(199,60%,39%)"><title>Mesoamerica &amp; Caribbean 1900: 726</title></rect>
 <text x="10" y="319">South America</text>
 <rect x="190" y="304" width="20" height="20" fill="#eee8dc"><title>South America -1500: 0</title></rect>
 <rect x="212" y="304" width="20" height="20" fill="hsl(212,39%,82%)"><title>South America -1400: 2</title></rect>
@@ -467,15 +467,15 @@
 <rect x="696" y="304" width="20" height="20" fill="hsl(208,46%,68%)" stroke="#c0392b" stroke-width="1.5"><title>South America 800: 16</title></rect>
 <rect x="718" y="304" width="20" height="20" fill="hsl(209,45%,70%)" stroke="#c0392b" stroke-width="1.5"><title>South America 900: 12</title></rect>
 <rect x="740" y="304" width="20" height="20" fill="hsl(208,46%,67%)" stroke="#c0392b" stroke-width="1.5"><title>South America 1000: 19</title></rect>
-<rect x="762" y="304" width="20" height="20" fill="hsl(209,45%,70%)" stroke="#c0392b" stroke-width="1.5"><title>South America 1100: 12</title></rect>
-<rect x="784" y="304" width="20" height="20" fill="hsl(207,47%,66%)" stroke="#c0392b" stroke-width="1.5"><title>South America 1200: 23</title></rect>
-<rect x="806" y="304" width="20" height="20" fill="hsl(207,48%,64%)" stroke="#c0392b" stroke-width="1.5"><title>South America 1300: 29</title></rect>
-<rect x="828" y="304" width="20" height="20" fill="hsl(204,51%,56%)" stroke="#c0392b" stroke-width="1.5"><title>South America 1400: 77</title></rect>
-<rect x="850" y="304" width="20" height="20" fill="hsl(200,58%,43%)"><title>South America 1500: 447</title></rect>
-<rect x="872" y="304" width="20" height="20" fill="hsl(201,56%,46%)"><title>South America 1600: 291</title></rect>
-<rect x="894" y="304" width="20" height="20" fill="hsl(200,58%,42%)"><title>South America 1700: 499</title></rect>
-<rect x="916" y="304" width="20" height="20" fill="hsl(197,62%,35%)"><title>South America 1800: 1286</title></rect>
-<rect x="938" y="304" width="20" height="20" fill="hsl(198,61%,37%)"><title>South America 1900: 952</title></rect>
+<rect x="762" y="304" width="20" height="20" fill="hsl(208,45%,70%)" stroke="#c0392b" stroke-width="1.5"><title>South America 1100: 13</title></rect>
+<rect x="784" y="304" width="20" height="20" fill="hsl(207,47%,65%)" stroke="#c0392b" stroke-width="1.5"><title>South America 1200: 25</title></rect>
+<rect x="806" y="304" width="20" height="20" fill="hsl(206,48%,64%)" stroke="#c0392b" stroke-width="1.5"><title>South America 1300: 30</title></rect>
+<rect x="828" y="304" width="20" height="20" fill="hsl(204,51%,56%)" stroke="#c0392b" stroke-width="1.5"><title>South America 1400: 78</title></rect>
+<rect x="850" y="304" width="20" height="20" fill="hsl(200,58%,43%)"><title>South America 1500: 462</title></rect>
+<rect x="872" y="304" width="20" height="20" fill="hsl(201,56%,46%)"><title>South America 1600: 292</title></rect>
+<rect x="894" y="304" width="20" height="20" fill="hsl(200,58%,42%)"><title>South America 1700: 501</title></rect>
+<rect x="916" y="304" width="20" height="20" fill="hsl(197,62%,35%)"><title>South America 1800: 1291</title></rect>
+<rect x="938" y="304" width="20" height="20" fill="hsl(198,61%,37%)"><title>South America 1900: 964</title></rect>
 <text x="10" y="341">Oceania</text>
 <rect x="190" y="326" width="20" height="20" fill="hsl(213,38%,85%)"><title>Oceania -1500: 1</title></rect>
 <rect x="212" y="326" width="20" height="20" fill="hsl(213,38%,85%)"><title>Oceania -1400: 1</title></rect>
@@ -509,7 +509,7 @@
 <rect x="828" y="326" width="20" height="20" fill="hsl(204,51%,57%)" stroke="#c0392b" stroke-width="1.5"><title>Oceania 1400: 73</title></rect>
 <rect x="850" y="326" width="20" height="20" fill="hsl(206,49%,61%)" stroke="#c0392b" stroke-width="1.5"><title>Oceania 1500: 43</title></rect>
 <rect x="872" y="326" width="20" height="20" fill="hsl(210,43%,73%)" stroke="#c0392b" stroke-width="1.5"><title>Oceania 1600: 8</title></rect>
-<rect x="894" y="326" width="20" height="20" fill="hsl(203,53%,52%)" stroke="#c0392b" stroke-width="1.5"><title>Oceania 1700: 130</title></rect>
-<rect x="916" y="326" width="20" height="20" fill="hsl(200,58%,43%)"><title>Oceania 1800: 439</title></rect>
+<rect x="894" y="326" width="20" height="20" fill="hsl(203,53%,52%)" stroke="#c0392b" stroke-width="1.5"><title>Oceania 1700: 133</title></rect>
+<rect x="916" y="326" width="20" height="20" fill="hsl(200,58%,43%)"><title>Oceania 1800: 445</title></rect>
 <rect x="938" y="326" width="20" height="20" fill="hsl(199,59%,40%)"><title>Oceania 1900: 633</title></rect>
-<text x="10" y="394" fill="#555">located 93892 records; 181 region-centuries after 500 BCE below 10% of Europe</text></svg>
+<text x="10" y="394" fill="#555">located 95537 records; 179 region-centuries after 500 BCE below 10% of Europe</text></svg>

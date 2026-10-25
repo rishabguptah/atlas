@@ -1,15 +1,15 @@
-existing: 82496 records, 34704 with Wikidata ids
+existing: 111626 records, 35163 with Wikidata ids
 pantheon: 9130 people added (of 18545 non-European candidates)
 wikidata people pool: 166167
 person candidates outside Europe: 126934
-fetching labels for 27 places
-people: 8016 from Wikidata, 5 from CBDB only
-chgis: 4495 seats added
+fetching labels for 33 places
+people: 8108 from Wikidata, 5 from CBDB only
+chgis: 4486 seats added
 al-thurayya: 1724 places added
-wikidata things: {'site': 2638, 'city': 4795} added from 19240 rows
-events: 8351 added from 18533 non-European candidates in the deep dump
-curated: 29 records
-wrote data/coverage/people.jsonl: 17151
-wrote data/coverage/places.jsonl: 19848
-wrote data/coverage/events.jsonl: 8351
-wrote data/coverage/curated.jsonl: 29
+wikidata things: {'site': 2617, 'city': 4782} added from 19202 rows
+events: 8360 added from 18529 non-European candidates in the deep dump
+curated: 28 records
+wrote data/coverage/people.jsonl: 17243
+wrote data/coverage/places.jsonl: 19772
+wrote data/coverage/events.jsonl: 8360
+wrote data/coverage/curated.jsonl: 28
