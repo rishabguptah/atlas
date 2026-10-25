@@ -102,8 +102,8 @@ def frames():
     f['card-gold'] = _frame(['.kk', 'kgg', 'kgF'], 'kg', 'w')
     # Chip: an octagon, ink line, the middle is clear so CSS can tint it.
     f['chip'] = _frame(['..k', '.k.', 'k..'], 'k', '.')
-    # Button: ink face with a gold rule.
-    f['button'] = _frame(['..k', '.kG', 'kGK'], 'kG', 'K')
+    # Button: dark ink face with a gold rule (the same in the night theme, so its vellum text always reads).
+    f['button'] = _frame(['..k', '.kG', 'kGd'], 'kG', 'd')
     # Quiet button: vellum face, ink line, bevel.
     f['button-q'] = _frame(['..k', '.kh', 'khF'], 'kh', 'w')
     # Plate (year cartouche): ink, gold, ink, vellum, with rounded scroll corners.
@@ -177,22 +177,25 @@ def icons():
 def css():
     light, dark, tint = tokens()
     fr = frames()
-    def block(t):
+    def block(t, frames_as=None):
         lines = [f'--{k}: {v};' for k, v in t.items() if k != 'line']
         cm = _cmap(t)
         for name, (c, rows) in fr.items():
-            lines.append(f'--f-{name}: {_png(rows, cm)};')
+            lines.append(f'--f-{name}: var(--{frames_as}-{name});' if frames_as else f'--f-{name}: {_png(rows, cm)};')
         return ' '.join(lines)
+    # The night frames are written once (--fd-*) and both dark blocks point at them.
+    dcm = _cmap(dark)
+    night = ' '.join(f'--fd-{name}: {_png(rows, dcm)};' for name, (c, rows) in fr.items())
     hand = ['............', '...kkkk.....', '..kwwwwkkkk.', '.kwwwwwwwwwk', 'kwwwwwkkkkk.', 'kwwwwwwwk...',
             'kwwwwwkkk...', 'kwwwwwwwk...', '.kWwwwkkk...', '..kkkkk.....', '............', '............']
     knob = ['.kkkkkk.', 'kyyyyyGk', 'kyggggGk', 'kyggggGk', 'kygkkgGk', 'kygkkgGk', 'kyggggGk', 'kyggggGk',
             'kGGGGGGk', '.kGGGGk.', '..kGGk..', '...kk...']
     hand_css = '--hand: ' + _png(hand, _cmap(light)) + '; --knob: ' + _png(knob, _cmap(light)) + ';'
-    slices = hand_css + ' ' + ' '.join(f'--s-{n}: {c};' for n, (c, _) in fr.items())
+    slices = hand_css + ' ' + night
     tints = ' '.join(f'--{k}: {v};' for k, v in tint.items())
     return (':root { ' + block(light) + ' ' + slices + ' ' + tints + ' }\n'
-            '@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { ' + block(dark) + ' color-scheme: dark; } }\n'
-            ':root[data-theme="dark"] { ' + block(dark) + ' color-scheme: dark; }\n')
+            '@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { ' + block(dark, 'fd') + ' color-scheme: dark; } }\n'
+            ':root[data-theme="dark"] { ' + block(dark, 'fd') + ' color-scheme: dark; }\n')
 
 
 if __name__ == '__main__':

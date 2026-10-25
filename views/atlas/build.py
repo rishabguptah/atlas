@@ -6,7 +6,7 @@
 # ATLAS_DIR holds the Living Atlas files (entries*.js, empires.js, borders/); default /mnt/project-files/atlas.
 # LAYERS_DIR holds people/money/plague/ideas.json from extract_layers.py; default ATLAS_DIR/unified/layers.
 # Order and Chaos (data/order-chaos/lab.json) and the guide tours come from this repo.
-import sys, json, glob, os
+import sys, json, glob, os, re
 
 args = sys.argv[1:]
 local = None
@@ -127,7 +127,7 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
             if not pts or pts[-1] != q: pts.append(q)
         if r['rank'] <= 4 and len(pts) > 1: rv.append({'rank': r['rank'], 'line': pts})
     data += 'const PIXEL = ' + J({'tile0': tile0, 'rivers': rv}) + ';\n'
-    for f in ('palette.js', 'icons.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'pixelmap.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js'):
+    for f in ('palette.js', 'icons.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 # The label engine (one queue for every layer's names) goes first, with or without the pixel map.
@@ -143,9 +143,11 @@ data += f'const LATE_FILES = {J(late)};\n'
 sys.path.insert(0, os.path.join(here, 'chrome'))
 import kit
 chrome_css = kit.css() + '\n'.join(open(os.path.join(here, 'chrome', f), encoding='utf-8').read() for f in ('chrome.css', 'atlas.css'))
+# The chrome's comments are for its source; the page gets it without them.
+chrome_css = re.sub(r';}', '}', re.sub(r':\s+', ':', re.sub(r'\s*([{};,>])\s*', r'\1', re.sub(r'/\*.*?\*/', '', chrome_css, flags=re.S))))
 if 'PIXEL_ICONS' not in '\n'.join(scripts):
     scripts.insert(0, '<script>\n' + open(os.path.join(repo, 'views/pixel/icons.js'), encoding='utf-8').read() + '\n</script>')
-chrome_js = '<script>\n' + open(os.path.join(here, 'chrome', 'chrome.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>'
+chrome_js = '<script>\n' + re.sub(r'(?m)^\s*//.*\n', '', open(os.path.join(here, 'chrome', 'chrome.js'), encoding='utf-8').read()).replace('</script', '<\\/script') + '\n</script>'
 
 land = J(json.load(open(atlas + 'borders/land-50m.json')))
 tours = [json.load(open(f)) for f in sorted(glob.glob(os.path.join(repo, 'data/guide/tours/*.json')))]
