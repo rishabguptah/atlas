@@ -77,8 +77,11 @@
     // A level may instead be a set of patches, {cell, patches: [{box: [w, s, e, n], url}]}: the city-scale terrain
     // (ingest/city/tiles.py) exists only around a few cities, packed into one image (P.crop). tile(L, li, -1, i) loads patch i.
     function tile(L, li, col, row) {
-      const key = li * 100000 + col * 100 + row, t = tiles[key];
-      if (t) return t.data ? t : null;
+      const key = li * 100000 + col * 100 + row;
+      // Neighbouring pixels nearly always hit the same tile as the last call on this level.
+      if (L._key === key) return L._tile;
+      const t = tiles[key];
+      if (t) { if (t.data) { L._key = key; L._tile = t; } return t.data ? t : null; }
       const P = col < 0 ? L.patches[row] : null;
       const rec = tiles[key] = P ? { x0: P.box[0], y0: P.box[3], cell: L.cell, patch: true, crop: P.crop } : { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
       const img = new Image(); pending++;
@@ -87,10 +90,16 @@
       img.src = P ? P.url : L.url(col, row);
       return null;
     }
+    // Patches in view (L.live, set by terrainPass) are the only ones tested per pixel; no closure, last hit first.
     function patchAt(L, lon, lat) {
-      const ps = L.patches, h = L.hit || 0, inside = b => lon >= b[0] && lon < b[2] && lat > b[1] && lat <= b[3];
-      if (ps[h] && inside(ps[h].box)) return h;
-      for (let i = 0; i < ps.length; i++) if (inside(ps[i].box)) return (L.hit = i);
+      const ps = L.patches, live = L.live, h = L.hit || 0;
+      let b = ps[h] && ps[h].box;
+      if (b && lon >= b[0] && lon < b[2] && lat > b[1] && lat <= b[3]) return h;
+      const n = live ? live.length : ps.length;
+      for (let q = 0; q < n; q++) {
+        const i = live ? live[q] : q; b = ps[i].box;
+        if (lon >= b[0] && lon < b[2] && lat > b[1] && lat <= b[3]) return (L.hit = i);
+      }
       return -1;
     }
     const OUT3 = [0, 0, 0, 0, 0];
@@ -110,7 +119,7 @@
         // City patches are worth sampling well before their own cell size: 45 m data beats a 3.7 km cell even 12x coarse.
         if (li > 0 && L.cell * (L.patches ? 12 : 1.6) < need && r) break;
         let t;
-        if (L.patches) { const pi = patchAt(L, lon, lat); if (pi < 0) continue; t = tile(L, li, -1, pi); }
+        if (L.patches) { if (L.live && !L.live.length) continue; const pi = patchAt(L, lon, lat); if (pi < 0) continue; t = tile(L, li, -1, pi); }
         else t = tile(L, li, Math.floor((lon + 180) / L.tdeg), Math.floor((90 - lat) / L.tdeg));
         if (t) r = t;
         if (L.cell <= need) break;
@@ -310,6 +319,15 @@
         let any = 0;
         for (let y = -1; y <= 2 && !any; y++) for (let x = -1; x <= 2; x++) if (gok[(gj + y) * gw + gi + x]) { any = 1; break; }
         paper[gj * gw + gi] = !any;
+      }
+      // Which city patches this view can touch (from the grid's corners, padded a cell): most views touch none, and
+      // then the patch level costs nothing per pixel.
+      let vw = 180, vs = 90, ve = -180, vn = -90, any = 0;
+      for (let q = 0; q < gw * gh; q++) if (gok[q]) { any = 1; vw = Math.min(vw, gl[q * 2]); ve = Math.max(ve, gl[q * 2]); vs = Math.min(vs, gl[q * 2 + 1]); vn = Math.max(vn, gl[q * 2 + 1]); }
+      const wide = !any || ve - vw > 180;
+      for (const L of levels) if (L.patches) {
+        const pad = 0.05;
+        L.live = wide ? null : L.patches.map((P, i) => (P.box[0] <= ve + pad && P.box[2] >= vw - pad && P.box[1] <= vn + pad && P.box[3] >= vs - pad ? i : -1)).filter(i => i >= 0);
       }
       const ll = [0, 0];
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
