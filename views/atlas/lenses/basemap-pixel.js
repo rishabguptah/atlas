@@ -235,7 +235,7 @@
       const realms = isOn("borders") ? (bordersOf().realms(y, t.k) || realmsFor(y)) : NO_REALMS;
       const same = pm.same(t);
       eraFor(t, y, !same);
-      if (same) pm.setRealms(realms); else pm.render(t, { realms });
+      if (same) pm.setRealms(realms, { paint: false }); else pm.render(t, { realms });
       // Warm the outlines of every frame in this chunk while the browser is idle, so scrubbing on stays cheap.
       // Then the chunks either side (already prefetched by the border loader).
       const B = bordersOf(), all = isOn("borders") && B.chunkRealms && B.chunkRealms(y, t.k);
