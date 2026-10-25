@@ -29,11 +29,15 @@
   const MIN_K = { city_metropolis: 1.4, city_city: 3, wonder_pyramid: 3, wonder_temple: 3, ruin: 4.5, city_town: 5, city_village: 8 };
 
   // Precise borders from borders/l0|l1|l2 next to the page; the page's own simplified borders until they arrive.
-  const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(borders.realms(year, T.k)); else pm.render(T, { realms: borders.realms(year, T.k) }); } } });
+  // The page shares its own border loader (ATLAS.borders) so each chunk is fetched and parsed once; it re-renders the
+  // basemap when a chunk arrives. Standalone, the basemap keeps its own.
+  let own = null;
+  const bordersOf = () => window.ATLAS.borders || own || (own = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(own.realms(year, T.k)); else pm.render(T, { realms: own.realms(year, T.k) }); } } }));
   let geo = null, geoKey = "", el0 = null;
   let pm = null, proj = null, T = null, year = null, snap = null, timer = 0, frame = 0, statics = [], movers = [];
   let marks = null, hud = null, watch = null, markTimer = 0;
-  const realmCache = {};
+  const realmCache = {}, NO_REALMS = [];
+  let warmed = null;
   function realmsFor(y) {
     if (typeof POLITIES === "undefined") return [];
     const snaps = Object.keys(POLITIES).map(Number).sort((a, b) => a - b);
@@ -146,8 +150,17 @@
       T = t; year = y;
       if (marks && !watch && typeof ATLAS.marks === "function") marks.set(ATLAS.marks()); else if (marks) marks.markDirty();
       if (hud) hud.update(t);
-      const realms = isOn("borders") ? (borders.realms(y, t.k) || realmsFor(y)) : [];
+      const realms = isOn("borders") ? (bordersOf().realms(y, t.k) || realmsFor(y)) : NO_REALMS;
       if (pm.same(t)) pm.setRealms(realms); else pm.render(t, { realms });
+      // Warm the outlines of every frame in this chunk while the browser is idle, so scrubbing on stays cheap.
+      // Then the chunks either side (already prefetched by the border loader).
+      const B = bordersOf(), all = isOn("borders") && B.chunkRealms && B.chunkRealms(y, t.k);
+      if (all && all !== warmed && pm.warm) {
+        warmed = all;
+        const ix = B.timeline(), ci = ix ? ix.chunks.findIndex(c => c[0] <= y && y <= c[1]) : -1, near = ci >= 0 ? [ix.chunks[ci + 1], ix.chunks[ci - 1]] : [];
+        const more = near.filter(Boolean).map(c => B.chunkRealms(c[0], t.k)).filter(Boolean);
+        pm.warm([...more.flat(), ...all].map(r => r.feature));
+      }
       if (geo) {
         const on = isOn("terrain"), key = on ? [t.k, t.x, t.y, el0.clientWidth, el0.clientHeight].join() : "off";
         if (key !== geoKey) { geoKey = key; if (on) geo.render(t, el0.clientWidth, el0.clientHeight); else geo.clear(); }
