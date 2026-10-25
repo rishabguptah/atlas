@@ -3,7 +3,8 @@
 import json, os
 
 FAM_COLORS = ['#c9604d', '#4f8fc0', '#d19a2e', '#5aa36b', '#9b6bb8', '#c77aa0', '#3fa3a0', '#a7a14a',
-              '#e08a5a', '#6f7fd0', '#b5865e', '#7fb04f', '#d46a8a', '#5e9db8', '#c2a46e', '#8f6fa0']
+              '#e08a5a', '#6f7fd0', '#b5865e', '#7fb04f', '#d46a8a', '#5e9db8', '#c2a46e', '#8f6fa0',
+              '#a0563f', '#4d7a9e', '#b88a2a', '#6a8f5a']
 AES = {'not endangered': 0, 'threatened': 1, 'shifting': 2, 'moribund': 3, 'nearly extinct': 4, 'extinct': 5}
 
 
@@ -12,7 +13,9 @@ def build(repo):
     rows = lambda f: [json.loads(l) for l in open(os.path.join(d, f), encoding='utf-8') if l.strip()]
     r2 = lambda v: round(v, 2)
     langs = rows('languages.jsonl')
-    fams = sorted((r for r in langs if r['subtype'] == 'family'), key=lambda r: -r['n_languages'])
+    # Families with a spread story get colours first, then the biggest of the rest.
+    told = {json.loads(l)['language'] for l in open(os.path.join(d, 'spread.jsonl'), encoding='utf-8') if l.strip()}
+    fams = sorted((r for r in langs if r['subtype'] == 'family'), key=lambda r: (r['id'] not in told, -r['n_languages']))
     fi = {r['id']: i for i, r in enumerate(fams)}
     out = {'fams': [[r['id'], r['name'], r['n_languages'], FAM_COLORS[i] if i < len(FAM_COLORS) else None] for i, r in enumerate(fams)]}
     br = [r for r in langs if r['subtype'] == 'branch']

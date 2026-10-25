@@ -96,13 +96,13 @@
       // Dense dots: one path per colour, so 8,000 languages cost about twenty DOM nodes.
       let dots = ctx.g.select("g.pl-dots");
       if (dots.empty()) dots = ctx.g.insert("g", ":first-child").attr("class", "pl-dots").style("pointer-events", "none");
-      const r = 1.7 / Math.sqrt(k) / Math.sqrt(Math.max(1, k / 4)), byColor = new Map();
+      const r = 1.6 / Math.pow(k, 0.75), byColor = new Map();
       const circle = (p, rr) => `M${(p[0] - rr).toFixed(2)},${p[1].toFixed(2)}a${rr},${rr} 0 1,0 ${2 * rr},0a${rr},${rr} 0 1,0 ${-2 * rr},0`;
       for (const l of P.langs) {
         if (!langOn(l, y)) continue;
         const p = proj([l.lon, l.lat]); if (!p) continue;
         const c = l.aes === 5 ? "dead" : (P.fams[l.f] || {}).color || OTHER;
-        (byColor.get(c) || byColor.set(c, []).get(c)).push(circle(p, (l.s != null ? 1.8 : 1) * r * 1.6));
+        (byColor.get(c) || byColor.set(c, []).get(c)).push(circle(p, (l.s != null ? 2 : 1.15) * r));
       }
       const dd = [...byColor].map(([c, ds]) => ({ c, d: ds.join("") }));
       dots.selectAll("path.pl-lang").data(dd, d => d.c).join("path").attr("class", "pl-lang").attr("d", d => d.d)
@@ -116,9 +116,11 @@
         .attr("fill", "none").attr("stroke", "#1f5f73").attr("stroke-width", rd * 0.7).attr("opacity", d => d.o);
 
       // Family spreads: homeland, then each stage reached by this year.
-      const sps = P.spread.filter(s => spreadOn(s, y));
+      // After 1500 the language dots show where families ended up, so only draw a spread while it is still moving.
+      const sps = P.spread.filter(s => spreadOn(s, y) && (y < 1500 || stagesBy(s, y).some(st => y - st.year < 300)));
       ctx.paths(sps.map(sp => ({ sp, pts: [[sp.lon, sp.lat], ...stagesBy(sp, y).map(s => [s.lon, s.lat])] })), {
-        key: o => o.sp.id, coords: o => o.pts, cls: "pl-spread", title: o => o.sp.name, card: o => spreadCard(o.sp, P, y) });
+        key: o => o.sp.id, coords: o => o.pts, cls: "pl-spread", title: o => o.sp.name, card: o => spreadCard(o.sp, P, y) })
+        .style("--c", r => famColor(P, r.x.sp.language));
       const fronts = sps.map(sp => { const st = stagesBy(sp, y), last = st[st.length - 1]; return { sp, id: sp.id, lon: (last || sp).lon, lat: (last || sp).lat, fresh: last && y - last.year < 150 }; });
       ctx.pins(fronts, { key: o => o.id, shape: "circle", always: true, label: o => o.sp.name.replace(/ spread$/, ""), cls: "pl-front",
         title: o => `${o.sp.name}: ${stagesBy(o.sp, y).map(s => s.name).pop() || "homeland"}`, card: o => spreadCard(o.sp, P, y) })
