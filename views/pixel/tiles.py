@@ -24,7 +24,7 @@ for f in glob.glob(src + 'z2_*.png'):
     if not os.path.exists(t):
         shutil.copy(f, t)
 # Precise borders (ingest/geography/precise_borders.py) go to OUT_DIR/borders/l0|l1|l2/ for views/pixel/borders.js.
-bsrc = os.path.join(os.path.dirname(os.path.dirname(src)), 'borders-precise')
+bsrc = os.path.normpath(os.path.join(src, '..', '..', 'borders-precise'))
 if os.path.isdir(bsrc):
     for lv in ('l0', 'l1', 'l2'):
         os.makedirs(os.path.join(out, '..', 'borders', lv), exist_ok=True)
