@@ -33,6 +33,31 @@ def build(repo):
             'stops': [{k: (_r(s[k]) if k in ('lon', 'lat') else s[k]) for k in ('place', 'lon', 'lat', 'date', 'until', 'mode', 'note', 'conf', 'via') if s.get(k) is not None}
                       for s in j['stops'] if s.get('lon') is not None and s.get('lat') is not None],
             'sources': _src(j.get('sources')), 'status': j.get('status', 'draft')})
+    # Real lives from the life RPG (data/life/lives/*.json): each chapter is a dated place; chapters at the same place
+    # make a stay, and the chapter's `via` is the road there.
+    for f in sorted(glob.glob(os.path.join(repo, 'data', 'life', 'lives', '*.json'))):
+        L = _load(f, None)
+        if not L or not L.get('chapters') or any(j['id'] == L['id'] for j in journeys):
+            continue
+        stops = []
+        for c in L['chapters']:
+            at = c.get('at') or {}
+            if at.get('lon') is None or c.get('y') is None:
+                continue
+            date = f"{c['y']}-{int(c['m']):02d}" if c.get('m') else str(c['y'])
+            if stops and stops[-1]['place'] == at.get('n'):
+                stops[-1]['until'] = date
+                continue
+            took = (c.get('took') or '').lower()
+            mode = 'sea' if any(w in took for w in ('sail', 'ship', 'sea', 'junk', 'dhow', 'boat', 'monsoon', 'fleet', 'voyage')) else 'land'
+            s_ = {'place': at.get('n'), 'lon': _r(at['lon']), 'lat': _r(at['lat']), 'date': date, 'mode': mode if stops else 'start',
+                  'note': c.get('title', ''), 'conf': 'documented' if not c.get('approx') else 'likely'}
+            if c.get('via') and len(c['via']) > 2:
+                s_['via'] = [[_r(x), _r(y)] for x, y in c['via'][1:-1]]
+            stops.append(s_)
+        if len(stops) >= 2:
+            journeys.append({'id': L['id'], 'name': L['name'], 'person': None, 'kind': (L.get('role') or 'traveller').split()[0].lower(), 'summary': (L.get('intro') or '').replace('You are ', '')[:300],
+                             'stops': stops, 'sources': _src(L.get('sources')), 'status': 'draft', 'from': 'life'})
     flows = []
     for f in (_load(os.path.join(d, 'flows.json'), {}) or {}).get('flows', []):
         if not f.get('stops') or f.get('start') is None:

@@ -1,0 +1,344 @@
+{
+ "id": "mozart_grand_tour",
+ "name": "The Mozart family grand tour",
+ "person": "person:wolfgang_amadeus_mozart",
+ "kind": "artist",
+ "summary": "Leopold Mozart takes his prodigy children Nannerl and Wolfgang on a three-and-a-half-year concert tour through the German courts, Paris, London and the Dutch Republic, returning home via Switzerland.",
+ "start": 1763,
+ "end": 1766,
+ "stops": [
+  {
+   "place": "Salzburg",
+   "lon": 13.04,
+   "lat": 47.8,
+   "date": "1763-06-09",
+   "until": "1763-06-09",
+   "mode": "start",
+   "note": "Sets out by carriage; a wheel breaks on the first day near Wasserburg, where Wolfgang plays the church organ.",
+   "conf": "documented"
+  },
+  {
+   "place": "Munich",
+   "lon": 11.58,
+   "lat": 48.14,
+   "date": "1763-06-12",
+   "until": "1763-06-22",
+   "mode": "land",
+   "note": "The children play before Elector Maximilian III.",
+   "conf": "documented"
+  },
+  {
+   "place": "Augsburg",
+   "lon": 10.9,
+   "lat": 48.37,
+   "date": "1763-06-22",
+   "until": "1763-07-06",
+   "mode": "land",
+   "note": "Three concerts in Leopold's home town; his mother stays away.",
+   "conf": "documented"
+  },
+  {
+   "place": "Schwetzingen",
+   "lon": 8.57,
+   "lat": 49.38,
+   "date": "1763-07-13",
+   "until": "1763-07-20",
+   "mode": "land",
+   "note": "Amaze Elector Palatine Karl Theodor at his summer court.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mainz",
+   "lon": 8.27,
+   "lat": 50.0,
+   "date": "1763-08",
+   "until": "1763-08",
+   "mode": "land",
+   "note": "Three concerts earn 200 florins.",
+   "conf": "documented"
+  },
+  {
+   "place": "Frankfurt",
+   "lon": 8.68,
+   "lat": 50.11,
+   "date": "1763-08-12",
+   "until": "1763-08-31",
+   "mode": "river",
+   "note": "Public concerts attended by the young Goethe.",
+   "conf": "documented"
+  },
+  {
+   "place": "Koblenz",
+   "lon": 7.59,
+   "lat": 50.36,
+   "date": "1763-09",
+   "until": "1763-09",
+   "mode": "river",
+   "note": "Travel down the Rhine by riverboat.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cologne",
+   "lon": 6.96,
+   "lat": 50.94,
+   "date": "1763-09",
+   "until": "1763-09",
+   "mode": "river",
+   "note": "Continue via Bonn.",
+   "conf": "documented"
+  },
+  {
+   "place": "Aachen",
+   "lon": 6.08,
+   "lat": 50.78,
+   "date": "1763-09",
+   "until": "1763-09",
+   "mode": "land",
+   "note": "Play for Princess Anna Amalia of Prussia, who pays in kisses.",
+   "conf": "documented"
+  },
+  {
+   "place": "Brussels",
+   "lon": 4.35,
+   "lat": 50.85,
+   "date": "1763-10-05",
+   "until": "1763-11-15",
+   "mode": "land",
+   "note": "Wait weeks for Prince Charles of Lorraine; grand concert on 7 November.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1763-11-18",
+   "until": "1763-12-23",
+   "mode": "land",
+   "note": "Lodge with the Bavarian ambassador; Grimm promotes the children.",
+   "conf": "documented"
+  },
+  {
+   "place": "Versailles",
+   "lon": 2.12,
+   "lat": 48.8,
+   "date": "1763-12-24",
+   "until": "1764-01-08",
+   "mode": "land",
+   "note": "Attend a royal dinner at court.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1764-01-08",
+   "until": "1764-04-10",
+   "mode": "land",
+   "note": "Publish Wolfgang's first sonatas and give concerts.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1764-04-23",
+   "until": "1764-08-05",
+   "mode": "sea",
+   "note": "Play for George III and Queen Charlotte four days after arriving.",
+   "conf": "documented"
+  },
+  {
+   "place": "Chelsea",
+   "lon": -0.17,
+   "lat": 51.49,
+   "date": "1764-08-06",
+   "until": "1764-09-25",
+   "mode": "land",
+   "note": "Leopold convalesces; Wolfgang writes his first symphony.",
+   "conf": "documented"
+  },
+  {
+   "place": "London (Frith Street, Soho)",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1764-09-25",
+   "until": "1765-07-24",
+   "mode": "land",
+   "note": "Befriends J. C. Bach and is examined by Daines Barrington.",
+   "conf": "documented"
+  },
+  {
+   "place": "Lille",
+   "lon": 3.06,
+   "lat": 50.63,
+   "date": "1765-08",
+   "until": "1765-09",
+   "mode": "sea",
+   "note": "Wolfgang's tonsillitis and Leopold's dizziness delay them a month.",
+   "conf": "documented"
+  },
+  {
+   "place": "Ghent",
+   "lon": 3.72,
+   "lat": 51.05,
+   "date": "1765-09",
+   "until": "1765-09",
+   "mode": "land",
+   "note": "Wolfgang plays the new organ at the Bernardine chapel.",
+   "conf": "documented"
+  },
+  {
+   "place": "Antwerp",
+   "lon": 4.4,
+   "lat": 51.22,
+   "date": "1765-09",
+   "until": "1765-09",
+   "mode": "land",
+   "note": "Wolfgang plays the cathedral organ.",
+   "conf": "documented"
+  },
+  {
+   "place": "The Hague",
+   "lon": 4.3,
+   "lat": 52.08,
+   "date": "1765-09-11",
+   "until": "1766-01",
+   "mode": "land",
+   "note": "Guests of Princess Carolina; Nannerl nearly dies of typhoid.",
+   "conf": "documented"
+  },
+  {
+   "place": "Amsterdam",
+   "lon": 4.9,
+   "lat": 52.37,
+   "date": "1766-01-26",
+   "until": "1766-02",
+   "mode": "land",
+   "note": "Public concerts.",
+   "conf": "documented"
+  },
+  {
+   "place": "The Hague",
+   "lon": 4.3,
+   "lat": 52.08,
+   "date": "1766-03",
+   "until": "1766-03",
+   "mode": "land",
+   "note": "Celebrate the installation of William V of Orange on 11 March.",
+   "conf": "documented"
+  },
+  {
+   "place": "Utrecht",
+   "lon": 5.12,
+   "lat": 52.09,
+   "date": "1766-04-21",
+   "until": "1766-04-21",
+   "mode": "land",
+   "note": "Concert before leaving the Netherlands.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1766-05-10",
+   "until": "1766-07-09",
+   "mode": "land",
+   "note": "Second stay; Grimm notes Wolfgang's growth as composer.",
+   "conf": "documented"
+  },
+  {
+   "place": "Dijon",
+   "lon": 5.04,
+   "lat": 47.32,
+   "date": "1766-07",
+   "until": "1766-07-19",
+   "mode": "land",
+   "note": "Concert for the Prince of Conti with a 'very mediocre' local orchestra.",
+   "conf": "documented"
+  },
+  {
+   "place": "Lyon",
+   "lon": 4.84,
+   "lat": 45.76,
+   "date": "1766-07",
+   "until": "1766-08",
+   "mode": "land",
+   "note": "Concerts before heading to Switzerland.",
+   "conf": "documented"
+  },
+  {
+   "place": "Geneva",
+   "lon": 6.15,
+   "lat": 46.2,
+   "date": "1766-08-20",
+   "until": "1766-09",
+   "mode": "land",
+   "note": "Two concerts; meet the composer Gretry.",
+   "conf": "documented"
+  },
+  {
+   "place": "Lausanne",
+   "lon": 6.63,
+   "lat": 46.52,
+   "date": "1766-09",
+   "until": "1766-09",
+   "mode": "land",
+   "note": "Perform for local nobility.",
+   "conf": "documented"
+  },
+  {
+   "place": "Zurich",
+   "lon": 8.54,
+   "lat": 47.37,
+   "date": "1766-10",
+   "until": "1766-10",
+   "mode": "land",
+   "note": "Concerts at the Collegium Musicum.",
+   "conf": "documented"
+  },
+  {
+   "place": "Donaueschingen",
+   "lon": 8.5,
+   "lat": 47.95,
+   "date": "1766-10-20",
+   "until": "1766-11-01",
+   "mode": "land",
+   "note": "Twelve days with Prince Fuerstenberg.",
+   "conf": "documented"
+  },
+  {
+   "place": "Munich",
+   "lon": 11.58,
+   "lat": 48.14,
+   "date": "1766-11-08",
+   "until": "1766-11-24",
+   "mode": "land",
+   "note": "Wolfgang falls ill, then plays for the Elector on 22 November.",
+   "conf": "documented"
+  },
+  {
+   "place": "Salzburg",
+   "lon": 13.04,
+   "lat": 47.8,
+   "date": "1766-11-29",
+   "until": "1766-11-29",
+   "mode": "land",
+   "note": "Home to the Getreidegasse.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Otto Erich Deutsch, Mozart: A Documentary Biography, London 1965"
+  },
+  {
+   "cite": "Stanley Sadie, Mozart: The Early Years 1756-1781, Oxford 2006"
+  },
+  {
+   "cite": "Wikipedia, Mozart family grand tour",
+   "url": "https://en.wikipedia.org/wiki/Mozart_family_grand_tour"
+  }
+ ],
+ "status": "draft"
+}

@@ -38,7 +38,7 @@
     const t = of(y); return { t, prec: "y", end: t + 0.999 };
   }
   function monthDay(t) {
-    const doy = Math.max(0, Math.min(364, Math.floor((t - Math.floor(t)) * 365)));
+    const doy = Math.max(0, Math.min(364, Math.floor((t - Math.floor(t)) * 365 + 1e-6)));
     let m = 0; while (m < 11 && CUM[m + 1] <= doy) m++;
     return [m, doy - CUM[m] + 1];
   }
@@ -113,7 +113,7 @@
     if (stops.length < 2 || f.start == null) return null;
     let pts = [];
     for (let k = 1; k < stops.length; k++) {
-      const seg = f.mode === "sea" || f.mode === "river" ? arc([stops[k - 1].lon, stops[k - 1].lat], [stops[k].lon, stops[k].lat]) : [[stops[k - 1].lon, stops[k - 1].lat], [stops[k].lon, stops[k].lat]];
+      const seg = f.mode !== "land" ? arc([stops[k - 1].lon, stops[k - 1].lat], [stops[k].lon, stops[k].lat]) : [[stops[k - 1].lon, stops[k - 1].lat], [stops[k].lon, stops[k].lat]];
       pts = pts.concat(k > 1 ? seg.slice(1) : seg);
     }
     const geo = f.path && f.path.length > 1 ? f.path : pts;
@@ -122,7 +122,16 @@
     const at = stops.map(s => { let best = 0, bd = 1e9; for (let k = 0; k < geo.length; k++) { const d = km(geo[k], [s.lon, s.lat]); if (d < bd) { bd = d; best = k; } } return L.c[best] / (L.km || 1); });
     for (let k = 1; k < at.length; k++) at[k] = Math.max(at[k], at[k - 1]);
     const days = f.days || Math.max(3, L.km / ((f.mode === "sea" ? 110 : 30)));
-    return { ...f, i, stops, L, at, days, end: f.end ?? 2025, per: Math.max(0, f.per_year ?? 2), kind: f.kind || f.role || "traveller" };
+    let R = null;
+    const rs = (f.return_stops || []).filter(s => s && s.lon != null);
+    if (rs.length > 1) {
+      let rp = [];
+      for (let k = 1; k < rs.length; k++) { const seg = f.mode === "land" ? [[rs[k - 1].lon, rs[k - 1].lat], [rs[k].lon, rs[k].lat]] : arc([rs[k - 1].lon, rs[k - 1].lat], [rs[k].lon, rs[k].lat]); rp = rp.concat(k > 1 ? seg.slice(1) : seg); }
+      const RL = line(rp), rat = rs.map(s => { let b = 0, bd = 1e9; rp.forEach((q, k) => { const d = km(q, [s.lon, s.lat]); if (d < bd) { bd = d; b = k; } }); return RL.c[b] / (RL.km || 1); });
+      for (let k = 1; k < rat.length; k++) rat[k] = Math.max(rat[k], rat[k - 1]);
+      R = { L: RL, at: rat, stops: rs };
+    }
+    return { ...f, i, stops, L, at, R, days, end: f.end ?? 2025, per: Math.max(0, f.per_year ?? 2), kind: f.kind || f.role || "traveller" };
   }
 
   // A documented journey: dated stops. Missing dates are filled in by distance between the dates we have, and a
@@ -182,7 +191,7 @@
       // takes about as long as the road does (30 km a day on land, 100 at sea, until the shared router says better).
       const mode = S[i + 1].mode, v = mode === "sea" ? 100 : mode === "river" ? 60 : mode === "rail" ? 500 : mode === "air" ? 5000 : 30;
       const need = (cum[i + 1] - cum[i]) / v * DAY * 1.2;
-      if (next - dep[i] > need * 1.5 && dep[i] !== (S[i]._q && S[i]._q.prec !== "y" ? S[i]._q.t : -1)) dep[i] = Math.max(dep[i], next - need);
+      if (next - dep[i] > need * 3 && dep[i] !== (S[i]._q && S[i]._q.prec !== "y" ? S[i]._q.t : -1)) dep[i] = Math.max(dep[i], next - need * 1.5);
     }
     dep[n - 1] = S[n - 1]._q ? Math.max(anchor[n - 1], S[n - 1]._q.end) : anchor[n - 1];
     const CONF = { documented: "attested", attested: "attested", likely: "estimated", estimated: "estimated", approximate: "approximate", guess: "approximate", unknown: "unknown" };
@@ -211,6 +220,8 @@
       }
     }
     if (!best && id) best = CULT.find(c => c.id === id || (c.id && (c.id.startsWith(id) || id.startsWith(c.id))));
+    // Nothing for this era here: the nearest era's list for the place, so a group still has a plausible name.
+    if (!best) { let gap = Infinity; for (const c of CULT) for (const b of c.regions || []) if (lon >= b[0] && lon <= b[2] && lat >= b[1] && lat <= b[3]) { const g = Math.max(0, (c.start ?? 0) - year, year - (c.end ?? 3000)); if (g < gap && g <= 300) { gap = g; best = c; } } }
     return best;
   }
   function personName(r, c, sex, home) {
@@ -260,17 +271,18 @@
       const sex = f.role === "pilgrim" || f.role === "migrant" || f.role === "enslaved" ? (r() < 0.4 ? "f" : "m") : (r() < 0.04 ? "f" : "m");
       const leader = personName(r, c, sex, home);
       const id = `g:${f.id}:${y}:${k}`;
-      const trip = { id, gen: true, real: false, flow: f, name: leader || `${f.name} group`, sex, culture: c && c.name, role: f.role || "traveller", kind: f.kind, party: f.party || 1,
+      if (f.dignity) { /* the people named here were enslaved: they are the story, never the cargo */ }
+      const trip = { id, gen: true, real: false, flow: f, name: leader || `A ${f.role || "travelling"} party, unnamed`, sex, culture: c && c.name, role: f.role || "traveller", kind: f.kind, party: f.party || 1,
         legs: [{ t0, t1, from: home, to: f.stops[f.stops.length - 1].name, mode: f.mode || "land", L: f.L, at: f.at, stops: f.stops, conf: "estimated", out: true }],
-        carry: f.goods_out || f.goods || [], t0, t1, sprite: f.sprite || KIND_SPRITE[f.kind] || SPRITE[f.role] || "person_merchant", sources: f.sources || [], status: "generated" };
+        carry: f.goods_out || f.goods || [], dignity: f.dignity || null, t0, t1, sprite: f.sprite || KIND_SPRITE[f.kind] || SPRITE[f.role] || "person_merchant", sources: f.sources || [], status: "generated" };
       if (f.return) {
         const rm = f.return_months && f.return_months.length ? pick(r, f.return_months) : null;
         let b0 = t1 + (20 + 40 * r()) * DAY;
         if (rm) { const [m] = monthDay(t1); let yy = yearOf(t1); if (rm - 1 < m) yy = yy === -1 ? 1 : yy + 1; b0 = Math.max(b0, of(yy, rm, 1 + Math.floor(r() * 28))); }
-        const rev = { pts: f.L.pts.slice().reverse(), c: f.L.c.map(v => f.L.km - v).reverse(), km: f.L.km };
-        trip.legs.push({ t0: b0, t1: b0 + dur, from: trip.legs[0].to, to: home, mode: f.mode || "land", L: rev, at: f.at.map(v => 1 - v).reverse(), stops: f.stops.slice().reverse(), conf: "estimated", out: false });
+        const R = f.R || { L: { pts: f.L.pts.slice().reverse(), c: f.L.c.map(v => f.L.km - v).reverse(), km: f.L.km }, at: f.at.map(v => 1 - v).reverse(), stops: f.stops.slice().reverse() };
+        trip.legs.push({ t0: b0, t1: b0 + dur * (R.L.km / (f.L.km || 1)), from: trip.legs[0].to, to: R.stops[R.stops.length - 1].name, mode: f.mode || "land", L: R.L, at: R.at, stops: R.stops, conf: "estimated", out: false });
         trip.back = f.goods_back || [];
-        trip.t1 = b0 + dur;
+        trip.t1 = trip.legs[1].t1;
       }
       out.push(trip);
     }
@@ -415,11 +427,15 @@
   function describe(r) {
     const a = r.a || W.agent(r.id) || r, f = a.flow;
     if (!a.gen) return a.name;
+    if (a.role === "enslaved") return `${a.name}, one of about ${a.party} enslaved people forced aboard${f ? " (" + f.name.replace(/\s*\(.*\)$/, "") + ")" : ""}${r.to ? ", bound for " + r.to : ""}`;
     const n = a.party > 1 ? `${a.party > 20 ? "a party of " + a.party : "a group of " + a.party} ` : "";
     const who = f && f.name ? f.name.replace(/\s*\(.*\)$/, "") : a.role;
     return `${n ? n : ""}${n ? "" : "a "}${(f && f.role) || a.role || "traveller"}${a.party > 1 ? "s" : ""} led by ${a.name} (${who}${r.to ? ", bound for " + r.to : ""})`;
   }
   W.describe = describe;
+  // Goods lists sometimes name people (pilgrims, emigrants, the enslaved): they travel with the group, they are not cargo.
+  const PEOPLE = /enslaved|captive|slave|pilgrim|people|workers|migrant|emigrant|official|missionar|soldier|knight|settler|troop|passenger/i;
+  W.splitGoods = list => ({ goods: (list || []).filter(g => !PEOPLE.test(g)), people: (list || []).filter(g => PEOPLE.test(g)) });
 
   // ---------- step: a deterministic simulation clock ----------
   // state = {t, seed, follow?: id, bbox?, news?: {id: {t, lon, lat, what, heard: {agentId: t}}}}. Returns new state and
@@ -467,7 +483,7 @@
     const near = (lon, lat, t, r = 160) => (opts.context || W.context || (() => []))(lon, lat, t, r);
     const sc = (o) => scenes.push({ id: `${a.id}:${scenes.length}`, kind: "simulation", actors: [a.person || a.id], sources: src, conf: "estimated", ...o, date: o.date || fmtT(o.t), year: yearOf(o.t) });
     const first = a.legs[0], start = along(first.L, 0);
-    sc({ t: a.t0, view: { lon: start[0], lat: start[1], span: 10 }, caption: a.gen ? `${a.name} sets out from ${first.from}` : `${a.name} sets out from ${first.from}`, text: a.gen ? `${describe({ a, to: first.to })}. Carrying ${(a.carry || []).join(", ") || "goods"}. A generated traveller: the trip follows a real system (${a.flow.name}), the person is invented.` : a.summary, conf: first.conf, pins: [{ lon: start[0], lat: start[1], label: first.from }] });
+    sc({ t: a.t0, view: { lon: start[0], lat: start[1], span: 10 }, caption: a.role === "enslaved" ? `${a.name} is forced aboard at ${first.from}` : `${a.name} sets out from ${first.from}`, text: a.role === "enslaved" ? `${describe({ a, to: first.to })}. ${a.name} is a generated person standing for the real people taken on this route (${a.flow.name}); the route, season and numbers follow the sources, and most of their names were never recorded.` : a.gen ? `${describe({ a, to: first.to })}. ${(() => { const g = W.splitGoods(a.carry); return (g.goods.length ? "Carrying " + g.goods.join(", ") + ". " : "") + (g.people.length ? "With " + g.people.join(", ") + ". " : ""); })()}A generated traveller: the trip follows a real system (${a.flow.name}), the person is invented.` : a.summary, conf: first.conf, pins: [{ lon: start[0], lat: start[1], label: first.from }] });
     a.legs.forEach((g, i) => {
       const p0 = along(g.L, 0), p1 = along(g.L, 1), route = { coords: g.L.pts, conf: g.conf, mode: g.mode };
       // Sample the leg every ~5 days for people and events near the road.

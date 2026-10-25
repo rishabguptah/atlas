@@ -1,0 +1,274 @@
+{
+ "id": "lewis_and_clark",
+ "name": "Lewis and Clark Expedition",
+ "kind": "explorer",
+ "summary": "The Corps of Discovery under Meriwether Lewis and William Clark ascends the Missouri, winters with the Mandan, crosses the Rockies with Sacagawea's help, reaches the Pacific and returns to St Louis.",
+ "start": 1804,
+ "end": 1806,
+ "stops": [
+  {
+   "place": "Camp Dubois",
+   "lon": -90.12,
+   "lat": 38.8,
+   "date": "1804-05-14",
+   "until": "1804-05-14",
+   "mode": "start",
+   "note": "Clark leads the keelboat and two pirogues up the Missouri.",
+   "conf": "documented"
+  },
+  {
+   "place": "St. Charles",
+   "lon": -90.48,
+   "lat": 38.78,
+   "date": "1804-05-16",
+   "until": "1804-05-21",
+   "mode": "river",
+   "note": "Lewis joins from St Louis.",
+   "conf": "documented"
+  },
+  {
+   "place": "Kansas River mouth",
+   "lon": -94.61,
+   "lat": 39.11,
+   "date": "1804-06-26",
+   "until": "1804-06-29",
+   "mode": "river",
+   "note": "Camps at the site of Kansas City.",
+   "conf": "documented"
+  },
+  {
+   "place": "Council Bluff",
+   "lon": -96.03,
+   "lat": 41.45,
+   "date": "1804-08-03",
+   "until": "1804-08-03",
+   "mode": "river",
+   "note": "First council with Oto and Missouria leaders.",
+   "conf": "documented"
+  },
+  {
+   "place": "Floyd's Bluff",
+   "lon": -96.38,
+   "lat": 42.45,
+   "date": "1804-08-20",
+   "until": "1804-08-20",
+   "mode": "river",
+   "note": "Sergeant Charles Floyd dies, probably of appendicitis.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bad River (Teton Sioux)",
+   "lon": -100.37,
+   "lat": 44.36,
+   "date": "1804-09-25",
+   "until": "1804-09-28",
+   "mode": "river",
+   "note": "A tense standoff with the Lakota.",
+   "conf": "documented"
+  },
+  {
+   "place": "Fort Mandan",
+   "lon": -101.38,
+   "lat": 47.3,
+   "date": "1804-11-02",
+   "until": "1805-04-07",
+   "mode": "river",
+   "note": "Winters with the Mandan and Hidatsa; hires Charbonneau and Sacagawea.",
+   "conf": "documented"
+  },
+  {
+   "place": "Yellowstone confluence",
+   "lon": -104.03,
+   "lat": 47.98,
+   "date": "1805-04-25",
+   "until": "1805-04-27",
+   "mode": "river",
+   "note": "Reaches the mouth of the Yellowstone.",
+   "conf": "documented"
+  },
+  {
+   "place": "Great Falls",
+   "lon": -111.2,
+   "lat": 47.53,
+   "date": "1805-06-13",
+   "until": "1805-07-15",
+   "mode": "river",
+   "note": "Portages eighteen miles round five waterfalls.",
+   "conf": "documented"
+  },
+  {
+   "place": "Three Forks",
+   "lon": -111.5,
+   "lat": 45.93,
+   "date": "1805-07-27",
+   "until": "1805-07-30",
+   "mode": "river",
+   "note": "Names the Jefferson, Madison and Gallatin rivers; Sacagawea recognises her childhood homeland.",
+   "conf": "documented"
+  },
+  {
+   "place": "Lemhi Pass",
+   "lon": -113.44,
+   "lat": 44.97,
+   "date": "1805-08-12",
+   "until": "1805-08-12",
+   "mode": "land",
+   "note": "Lewis crosses the Continental Divide.",
+   "conf": "documented"
+  },
+  {
+   "place": "Camp Fortunate",
+   "lon": -112.86,
+   "lat": 44.99,
+   "date": "1805-08-17",
+   "until": "1805-08-24",
+   "mode": "river",
+   "note": "Sacagawea finds her brother Cameahwait is the Shoshone chief; buys horses.",
+   "conf": "documented"
+  },
+  {
+   "place": "Travelers' Rest",
+   "lon": -114.09,
+   "lat": 46.75,
+   "date": "1805-09-09",
+   "until": "1805-09-11",
+   "mode": "land",
+   "note": "Prepares to cross the Bitterroots on the Lolo Trail.",
+   "conf": "documented"
+  },
+  {
+   "place": "Weippe Prairie",
+   "lon": -115.94,
+   "lat": 46.38,
+   "date": "1805-09-20",
+   "until": "1805-09-22",
+   "mode": "land",
+   "note": "Starving, the party is fed by the Nez Perce.",
+   "conf": "documented"
+  },
+  {
+   "place": "Canoe Camp (Clearwater)",
+   "lon": -116.33,
+   "lat": 46.5,
+   "date": "1805-09-26",
+   "until": "1805-10-07",
+   "mode": "land",
+   "note": "Builds dugout canoes.",
+   "conf": "documented"
+  },
+  {
+   "place": "Celilo Falls",
+   "lon": -120.98,
+   "lat": 45.65,
+   "date": "1805-10-22",
+   "until": "1805-10-24",
+   "mode": "river",
+   "note": "Portages the great fishing falls of the Columbia.",
+   "conf": "documented"
+  },
+  {
+   "place": "Station Camp (Columbia estuary)",
+   "lon": -123.92,
+   "lat": 46.25,
+   "date": "1805-11-15",
+   "until": "1805-11-25",
+   "mode": "river",
+   "note": "Reaches the Pacific; the whole party, including York and Sacagawea, votes on where to winter.",
+   "conf": "documented"
+  },
+  {
+   "place": "Fort Clatsop",
+   "lon": -123.88,
+   "lat": 46.13,
+   "date": "1805-12-07",
+   "until": "1806-03-23",
+   "mode": "river",
+   "note": "A wet winter of elk meat and map-making.",
+   "conf": "documented"
+  },
+  {
+   "place": "Camp Chopunnish",
+   "lon": -116.03,
+   "lat": 46.23,
+   "date": "1806-05-14",
+   "until": "1806-06-10",
+   "mode": "river",
+   "note": "Waits with the Nez Perce for snow to melt.",
+   "conf": "documented"
+  },
+  {
+   "place": "Travelers' Rest",
+   "lon": -114.09,
+   "lat": 46.75,
+   "date": "1806-06-30",
+   "until": "1806-07-03",
+   "mode": "land",
+   "note": "The captains split to explore separately.",
+   "conf": "documented"
+  },
+  {
+   "place": "Pompeys Pillar",
+   "lon": -108.0,
+   "lat": 45.99,
+   "date": "1806-07-25",
+   "until": "1806-07-25",
+   "mode": "land",
+   "note": "Clark carves his name on the sandstone butte.",
+   "conf": "documented"
+  },
+  {
+   "place": "Two Medicine River",
+   "lon": -112.8,
+   "lat": 48.44,
+   "date": "1806-07-27",
+   "until": "1806-07-27",
+   "mode": "land",
+   "note": "Lewis's party kills two Blackfeet in the expedition's only deadly fight.",
+   "conf": "documented"
+  },
+  {
+   "place": "Missouri below the Yellowstone",
+   "lon": -103.3,
+   "lat": 48.1,
+   "date": "1806-08-12",
+   "until": "1806-08-12",
+   "mode": "river",
+   "note": "The two parties reunite.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mandan villages",
+   "lon": -101.38,
+   "lat": 47.3,
+   "date": "1806-08-14",
+   "until": "1806-08-17",
+   "mode": "river",
+   "note": "Leaves Charbonneau, Sacagawea and their son.",
+   "conf": "documented"
+  },
+  {
+   "place": "St. Louis",
+   "lon": -90.2,
+   "lat": 38.63,
+   "date": "1806-09-23",
+   "until": "1806-09-23",
+   "mode": "river",
+   "note": "Returns after two years and four months, long given up for dead.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "The Journals of the Lewis and Clark Expedition, ed. Gary E. Moulton, 13 vols, Lincoln 1983-2001",
+   "url": "https://lewisandclarkjournals.unl.edu/"
+  },
+  {
+   "cite": "Stephen E. Ambrose, Undaunted Courage, New York 1996"
+  },
+  {
+   "cite": "Wikipedia, Lewis and Clark Expedition",
+   "url": "https://en.wikipedia.org/wiki/Lewis_and_Clark_Expedition"
+  }
+ ],
+ "status": "draft"
+}

@@ -1,0 +1,273 @@
+{
+ "id": "olaudah_equiano",
+ "name": "Olaudah Equiano",
+ "kind": "merchant",
+ "summary": "Kidnapped as a child from Igboland, Equiano is enslaved in Virginia, at sea in the Seven Years' War and in the Caribbean, buys his freedom, sails to the Arctic and the Mosquito Coast, and becomes Britain's leading Black abolitionist author.",
+ "start": 1754,
+ "end": 1797,
+ "stops": [
+  {
+   "place": "Essaka (Igboland)",
+   "lon": 6.95,
+   "lat": 6.1,
+   "date": "1754",
+   "until": "1754",
+   "mode": "start",
+   "note": "Seized with his sister at about eleven; Carretta questions his African birth.",
+   "conf": "guess"
+  },
+  {
+   "place": "Bight of Biafra coast",
+   "lon": 7.17,
+   "lat": 4.45,
+   "date": "1754",
+   "until": "1754",
+   "mode": "land",
+   "note": "After six months and several owners, is put aboard a slave ship.",
+   "conf": "guess"
+  },
+  {
+   "place": "Barbados",
+   "lon": -59.62,
+   "lat": 13.1,
+   "date": "1754",
+   "until": "1754",
+   "mode": "sea",
+   "note": "Survives the Middle Passage with 244 other captives.",
+   "conf": "likely"
+  },
+  {
+   "place": "Virginia",
+   "lon": -76.75,
+   "lat": 37.25,
+   "date": "1754",
+   "until": "1754",
+   "mode": "sea",
+   "note": "Sold to a planter, then bought by the naval officer Michael Pascal, who names him Gustavus Vassa.",
+   "conf": "likely"
+  },
+  {
+   "place": "Falmouth",
+   "lon": -5.07,
+   "lat": 50.15,
+   "date": "1754-12",
+   "until": "1755",
+   "mode": "sea",
+   "note": "Sees snow for the first time in England.",
+   "conf": "likely"
+  },
+  {
+   "place": "Louisbourg",
+   "lon": -59.97,
+   "lat": 45.92,
+   "date": "1758-06",
+   "until": "1758-07",
+   "mode": "sea",
+   "note": "Serves with Pascal at the siege on HMS Namur.",
+   "conf": "documented"
+  },
+  {
+   "place": "London (Westminster)",
+   "lon": -0.13,
+   "lat": 51.5,
+   "date": "1759-02",
+   "until": "1759-02",
+   "mode": "sea",
+   "note": "Baptised at St Margaret's, Westminster.",
+   "conf": "documented"
+  },
+  {
+   "place": "Gibraltar",
+   "lon": -5.35,
+   "lat": 36.14,
+   "date": "1759-05",
+   "until": "1759-07",
+   "mode": "sea",
+   "note": "With Boscawen's fleet in the Mediterranean.",
+   "conf": "likely"
+  },
+  {
+   "place": "Lagos Bay",
+   "lon": -8.67,
+   "lat": 37.1,
+   "date": "1759-08-18",
+   "until": "1759-08-18",
+   "mode": "sea",
+   "note": "Fights in the battle of Lagos against the French.",
+   "conf": "documented"
+  },
+  {
+   "place": "Gravesend",
+   "lon": 0.37,
+   "lat": 51.44,
+   "date": "1762-12",
+   "until": "1762-12",
+   "mode": "sea",
+   "note": "Pascal sells him to Captain James Doran of the Charming Sally.",
+   "conf": "documented"
+  },
+  {
+   "place": "Montserrat",
+   "lon": -62.21,
+   "lat": 16.7,
+   "date": "1763-05",
+   "until": "1766-07-10",
+   "mode": "sea",
+   "note": "Bought by the Quaker merchant Robert King; trades on his own account and buys his freedom for 40 pounds.",
+   "conf": "documented"
+  },
+  {
+   "place": "Savannah",
+   "lon": -81.09,
+   "lat": 32.08,
+   "date": "1766-10",
+   "until": "1767",
+   "mode": "sea",
+   "note": "Nearly kidnapped back into slavery while loading a ship.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bahama Banks",
+   "lon": -77.5,
+   "lat": 26.5,
+   "date": "1767-01",
+   "until": "1767-01",
+   "mode": "sea",
+   "note": "Wrecked on the Nancy.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1767",
+   "until": "1768",
+   "mode": "sea",
+   "note": "Settles in England and works as a hairdresser and seaman.",
+   "conf": "documented"
+  },
+  {
+   "place": "Smyrna",
+   "lon": 27.14,
+   "lat": 38.42,
+   "date": "1768",
+   "until": "1769",
+   "mode": "sea",
+   "note": "Voyages to the Levant.",
+   "conf": "documented"
+  },
+  {
+   "place": "Spitsbergen",
+   "lon": 11.0,
+   "lat": 79.8,
+   "date": "1773-07",
+   "until": "1773-08",
+   "mode": "sea",
+   "note": "Sails with the Phipps Arctic expedition on HMS Racehorse, working with Dr Charles Irving.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mosquito Coast",
+   "lon": -83.6,
+   "lat": 13.0,
+   "date": "1776-02",
+   "until": "1776-06",
+   "mode": "sea",
+   "note": "Manages enslaved labourers on Irving's failed plantation.",
+   "conf": "documented"
+  },
+  {
+   "place": "Plymouth",
+   "lon": -4.14,
+   "lat": 50.37,
+   "date": "1777-01-07",
+   "until": "1777-01-07",
+   "mode": "sea",
+   "note": "Returns to England.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1777",
+   "until": "1786",
+   "mode": "land",
+   "note": "Joins the abolitionist movement and tells Granville Sharp of the Zong massacre in 1783.",
+   "conf": "documented"
+  },
+  {
+   "place": "Plymouth",
+   "lon": -4.14,
+   "lat": 50.37,
+   "date": "1787-01",
+   "until": "1787-03",
+   "mode": "land",
+   "note": "Commissary for the Sierra Leone resettlement ships; dismissed after exposing fraud.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1789",
+   "until": "1789",
+   "mode": "land",
+   "note": "Publishes The Interesting Narrative by subscription.",
+   "conf": "documented"
+  },
+  {
+   "place": "Belfast",
+   "lon": -5.93,
+   "lat": 54.6,
+   "date": "1791-12",
+   "until": "1792-01",
+   "mode": "sea",
+   "note": "Sells nearly two thousand copies on a book tour of Ireland.",
+   "conf": "documented"
+  },
+  {
+   "place": "Soham",
+   "lon": 0.34,
+   "lat": 52.33,
+   "date": "1792-04-07",
+   "until": "1792-04-07",
+   "mode": "land",
+   "note": "Marries Susannah Cullen.",
+   "conf": "documented"
+  },
+  {
+   "place": "Edinburgh",
+   "lon": -3.19,
+   "lat": 55.95,
+   "date": "1792-05",
+   "until": "1792-06",
+   "mode": "land",
+   "note": "Promotes a new edition in Scotland.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1797-03-31",
+   "until": "1797-03-31",
+   "mode": "land",
+   "note": "Dies in Westminster.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Olaudah Equiano, The Interesting Narrative of the Life of Olaudah Equiano, London 1789"
+  },
+  {
+   "cite": "Vincent Carretta, Equiano, the African: Biography of a Self-Made Man, Athens GA 2005"
+  },
+  {
+   "cite": "Wikipedia, Olaudah Equiano",
+   "url": "https://en.wikipedia.org/wiki/Olaudah_Equiano"
+  }
+ ],
+ "status": "draft"
+}

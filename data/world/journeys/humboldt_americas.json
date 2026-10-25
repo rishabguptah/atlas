@@ -1,0 +1,324 @@
+{
+ "id": "humboldt_americas",
+ "name": "Humboldt and Bonpland in the Americas",
+ "person": "person:alexander_von_humboldt",
+ "kind": "naturalist",
+ "summary": "The Prussian naturalist Alexander von Humboldt and botanist Aime Bonpland spend five years measuring, collecting and climbing in Venezuela, the Orinoco, Cuba, the Andes and New Spain, ending with a visit to Jefferson.",
+ "start": 1799,
+ "end": 1804,
+ "stops": [
+  {
+   "place": "A Coruna",
+   "lon": -8.4,
+   "lat": 43.37,
+   "date": "1799-06-05",
+   "until": "1799-06-05",
+   "mode": "start",
+   "note": "Sails on the Pizarro with Bonpland and a royal Spanish passport.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tenerife",
+   "lon": -16.64,
+   "lat": 28.29,
+   "date": "1799-06-19",
+   "until": "1799-06-25",
+   "mode": "sea",
+   "note": "Climbs the Pico del Teide and notes vegetation zones.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cumana",
+   "lon": -64.17,
+   "lat": 10.45,
+   "date": "1799-07-16",
+   "until": "1799-11-18",
+   "mode": "sea",
+   "note": "Lands in Venezuela because of a typhoid outbreak aboard; sees the Leonid meteor shower.",
+   "conf": "documented"
+  },
+  {
+   "place": "Caracas",
+   "lon": -66.88,
+   "lat": 10.49,
+   "date": "1799-11-21",
+   "until": "1800-02-07",
+   "mode": "sea",
+   "note": "Climbs the Silla de Caracas.",
+   "conf": "documented"
+  },
+  {
+   "place": "Lake Valencia",
+   "lon": -67.75,
+   "lat": 10.18,
+   "date": "1800-02",
+   "until": "1800-02",
+   "mode": "land",
+   "note": "Concludes that deforestation is lowering the lake.",
+   "conf": "documented"
+  },
+  {
+   "place": "Calabozo",
+   "lon": -67.43,
+   "lat": 8.93,
+   "date": "1800-03",
+   "until": "1800-03",
+   "mode": "land",
+   "note": "Experiments with electric eels caught by driving horses into a pool.",
+   "conf": "documented"
+  },
+  {
+   "place": "San Fernando de Apure",
+   "lon": -67.47,
+   "lat": 7.89,
+   "date": "1800-03-27",
+   "until": "1800-03-30",
+   "mode": "land",
+   "note": "Takes to the rivers by canoe.",
+   "conf": "documented"
+  },
+  {
+   "place": "Atures rapids (Orinoco)",
+   "lon": -67.62,
+   "lat": 5.65,
+   "date": "1800-04",
+   "until": "1800-04",
+   "mode": "river",
+   "note": "Plagued by mosquitoes at the great cataracts.",
+   "conf": "documented"
+  },
+  {
+   "place": "San Carlos de Rio Negro",
+   "lon": -67.07,
+   "lat": 1.92,
+   "date": "1800-05-07",
+   "until": "1800-05-10",
+   "mode": "river",
+   "note": "Reaches the Portuguese frontier.",
+   "conf": "documented"
+  },
+  {
+   "place": "Casiquiare (Esmeralda)",
+   "lon": -65.55,
+   "lat": 3.17,
+   "date": "1800-05-21",
+   "until": "1800-05-23",
+   "mode": "river",
+   "note": "Confirms the channel linking the Orinoco and Amazon basins.",
+   "conf": "documented"
+  },
+  {
+   "place": "Angostura",
+   "lon": -63.55,
+   "lat": 8.12,
+   "date": "1800-06-13",
+   "until": "1800-07-10",
+   "mode": "river",
+   "note": "Both men fall ill with fever.",
+   "conf": "documented"
+  },
+  {
+   "place": "Havana",
+   "lon": -82.36,
+   "lat": 23.14,
+   "date": "1800-12-19",
+   "until": "1801-03-05",
+   "mode": "sea",
+   "note": "Studies Cuba's sugar economy and slavery.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cartagena",
+   "lon": -75.51,
+   "lat": 10.39,
+   "date": "1801-03-30",
+   "until": "1801-04-19",
+   "mode": "sea",
+   "note": "Changes plans to follow the Andes south.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bogota",
+   "lon": -74.07,
+   "lat": 4.71,
+   "date": "1801-07-06",
+   "until": "1801-09-08",
+   "mode": "river",
+   "note": "Ascends the Magdalena and meets the botanist Jose Celestino Mutis.",
+   "conf": "documented"
+  },
+  {
+   "place": "Popayan",
+   "lon": -76.61,
+   "lat": 2.44,
+   "date": "1801-11",
+   "until": "1801-11",
+   "mode": "land",
+   "note": "Crosses the Quindio pass carried partly by porters.",
+   "conf": "documented"
+  },
+  {
+   "place": "Quito",
+   "lon": -78.47,
+   "lat": -0.18,
+   "date": "1802-01-06",
+   "until": "1802-06-09",
+   "mode": "land",
+   "note": "Climbs Pichincha twice.",
+   "conf": "documented"
+  },
+  {
+   "place": "Chimborazo",
+   "lon": -78.82,
+   "lat": -1.47,
+   "date": "1802-06-23",
+   "until": "1802-06-23",
+   "mode": "land",
+   "note": "Reaches about 5,900 m, then a world altitude record, and later draws his Naturgemalde.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cajamarca",
+   "lon": -78.51,
+   "lat": -7.16,
+   "date": "1802-08",
+   "until": "1802-08",
+   "mode": "land",
+   "note": "Sees the ruins of Atahualpa's palace.",
+   "conf": "documented"
+  },
+  {
+   "place": "Lima",
+   "lon": -77.04,
+   "lat": -12.05,
+   "date": "1802-10-23",
+   "until": "1802-12-24",
+   "mode": "land",
+   "note": "Observes the transit of Mercury at Callao and studies guano and the cold coastal current.",
+   "conf": "documented"
+  },
+  {
+   "place": "Guayaquil",
+   "lon": -79.89,
+   "lat": -2.19,
+   "date": "1803-01-04",
+   "until": "1803-02-17",
+   "mode": "sea",
+   "note": "Watches Cotopaxi erupting from afar.",
+   "conf": "documented"
+  },
+  {
+   "place": "Acapulco",
+   "lon": -99.88,
+   "lat": 16.85,
+   "date": "1803-03-22",
+   "until": "1803-03-28",
+   "mode": "sea",
+   "note": "Lands in New Spain.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mexico City",
+   "lon": -99.13,
+   "lat": 19.43,
+   "date": "1803-04-12",
+   "until": "1803-07",
+   "mode": "land",
+   "note": "Works in the archives and mining school for his Political Essay on New Spain.",
+   "conf": "documented"
+  },
+  {
+   "place": "Guanajuato",
+   "lon": -101.26,
+   "lat": 21.02,
+   "date": "1803-08",
+   "until": "1803-09",
+   "mode": "land",
+   "note": "Studies the silver mines.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mexico City",
+   "lon": -99.13,
+   "lat": 19.43,
+   "date": "1803-10",
+   "until": "1804-01-20",
+   "mode": "land",
+   "note": "Completes his statistics.",
+   "conf": "documented"
+  },
+  {
+   "place": "Veracruz",
+   "lon": -96.13,
+   "lat": 19.17,
+   "date": "1804-02",
+   "until": "1804-03-07",
+   "mode": "land",
+   "note": "Sails for Cuba.",
+   "conf": "documented"
+  },
+  {
+   "place": "Havana",
+   "lon": -82.36,
+   "lat": 23.14,
+   "date": "1804-03-19",
+   "until": "1804-04-29",
+   "mode": "sea",
+   "note": "Second stay before sailing north.",
+   "conf": "documented"
+  },
+  {
+   "place": "Philadelphia",
+   "lon": -75.17,
+   "lat": 39.95,
+   "date": "1804-05-24",
+   "until": "1804-05-30",
+   "mode": "sea",
+   "note": "Meets members of the American Philosophical Society.",
+   "conf": "documented"
+  },
+  {
+   "place": "Washington",
+   "lon": -77.04,
+   "lat": 38.9,
+   "date": "1804-06-01",
+   "until": "1804-06-13",
+   "mode": "land",
+   "note": "Spends days with President Jefferson discussing natural history and Mexico.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bordeaux",
+   "lon": -0.58,
+   "lat": 44.84,
+   "date": "1804-08-03",
+   "until": "1804-08-03",
+   "mode": "sea",
+   "note": "Lands in France with 60,000 specimens.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1804-08-27",
+   "until": "1804-08-27",
+   "mode": "land",
+   "note": "Celebrated on his return.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Alexander von Humboldt, Personal Narrative of Travels to the Equinoctial Regions of the New Continent, trans. Helen Maria Williams, London 1814-29"
+  },
+  {
+   "cite": "Andrea Wulf, The Invention of Nature, London 2015"
+  },
+  {
+   "cite": "Wikipedia, Alexander von Humboldt",
+   "url": "https://en.wikipedia.org/wiki/Alexander_von_Humboldt"
+  }
+ ],
+ "status": "draft"
+}

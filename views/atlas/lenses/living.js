@@ -72,9 +72,12 @@
     const a = r.a || W.agent(r.id) || {};
     if (r.gen || a.gen) {
       const f = a.flow || {};
+      const sg = W.splitGoods(r.carry);
       return { kick: "Generated traveller · " + (f.name || r.role), title: r.name, year: T.year(S.t ?? a.t0), lon: r.lon, lat: r.lat,
-        meta: [r.moving ? `on the road to ${r.to}` : `at ${r.at}`, a.party > 1 ? `party of ${a.party}` : null, r.carry && r.carry.length ? "carrying " + r.carry.join(", ") : null].filter(Boolean).join(" · "),
-        body: `${f.note || ""} The person is invented, from a name list for ${a.culture || "this culture"}; when the group set out, how long it took and what it carried follow the sources for ${f.name || "this system"} (${f.conf || "estimated"}).`,
+        meta: [r.moving ? `on the road to ${r.to}` : `at ${r.at}`, a.role === "enslaved" ? `one of about ${a.party} enslaved people on this voyage` : a.party > 1 ? `party of ${a.party}` : null,
+          sg.people.length ? "with " + sg.people.join(", ") : null, sg.goods.length ? "carrying " + sg.goods.join(", ") : null].filter(Boolean).join(" · "),
+        body: a.role === "enslaved" ? `${f.note || ""} ${r.name} is a generated person standing for the real people taken on this route: the name comes from a list for ${a.culture || "their homeland"}; the route, season, numbers and deaths at sea follow ${f.name}. Most of their names were never recorded.`
+          : `${f.note || ""} The person is invented, from a name list for ${a.culture || "this culture"}; when the group set out, how long it took and what it carried follow the sources for ${f.name || "this system"} (${f.conf || "estimated"}).`,
         why: "Generated from base rates, so you can see who was on the roads. Not a real individual.", sources: a.sources || [] };
     }
     return { kick: "Traveller · " + (a.kind || r.kind || ""), title: r.name, year: T.year(S.t ?? a.t0), lon: r.lon, lat: r.lat,

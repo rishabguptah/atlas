@@ -1,0 +1,234 @@
+{
+ "id": "napoleon_russia",
+ "name": "Napoleon's Russian campaign",
+ "person": "person:napoleon",
+ "kind": "army",
+ "summary": "Napoleon leads the Grande Armee of some 600,000 men across the Niemen to Moscow and back, losing most of it to battle, hunger, cold and the crossing of the Berezina, then races ahead by sledge to Paris.",
+ "start": 1812,
+ "end": 1812,
+ "stops": [
+  {
+   "place": "Saint-Cloud (Paris)",
+   "lon": 2.22,
+   "lat": 48.84,
+   "date": "1812-05-09",
+   "until": "1812-05-09",
+   "mode": "start",
+   "note": "Leaves for the army with Marie-Louise.",
+   "conf": "documented"
+  },
+  {
+   "place": "Dresden",
+   "lon": 13.74,
+   "lat": 51.05,
+   "date": "1812-05-16",
+   "until": "1812-05-29",
+   "mode": "land",
+   "note": "Holds court for the allied German kings and the Austrian emperor.",
+   "conf": "documented"
+  },
+  {
+   "place": "Poznan",
+   "lon": 16.93,
+   "lat": 52.41,
+   "date": "1812-05-30",
+   "until": "1812-06-01",
+   "mode": "land",
+   "note": "Passes through Poland.",
+   "conf": "documented"
+  },
+  {
+   "place": "Thorn (Torun)",
+   "lon": 18.6,
+   "lat": 53.01,
+   "date": "1812-06-02",
+   "until": "1812-06-06",
+   "mode": "land",
+   "note": "Inspects the assembling corps.",
+   "conf": "documented"
+  },
+  {
+   "place": "Konigsberg",
+   "lon": 20.51,
+   "lat": 54.71,
+   "date": "1812-06-12",
+   "until": "1812-06-16",
+   "mode": "land",
+   "note": "Oversees supply depots for the invasion.",
+   "conf": "documented"
+  },
+  {
+   "place": "Kovno (Niemen crossing)",
+   "lon": 23.89,
+   "lat": 54.9,
+   "date": "1812-06-24",
+   "until": "1812-06-24",
+   "mode": "land",
+   "note": "The army crosses into Russia on pontoon bridges without a declaration.",
+   "conf": "documented"
+  },
+  {
+   "place": "Vilna",
+   "lon": 25.28,
+   "lat": 54.69,
+   "date": "1812-06-28",
+   "until": "1812-07-16",
+   "mode": "land",
+   "note": "Enters the city abandoned by Alexander I; heat and dysentery thin the ranks.",
+   "conf": "documented"
+  },
+  {
+   "place": "Vitebsk",
+   "lon": 30.2,
+   "lat": 55.19,
+   "date": "1812-07-28",
+   "until": "1812-08-13",
+   "mode": "land",
+   "note": "Pauses, debating whether to go on.",
+   "conf": "documented"
+  },
+  {
+   "place": "Smolensk",
+   "lon": 32.05,
+   "lat": 54.78,
+   "date": "1812-08-17",
+   "until": "1812-08-24",
+   "mode": "land",
+   "note": "Storms the burning city as the Russians retreat.",
+   "conf": "documented"
+  },
+  {
+   "place": "Borodino",
+   "lon": 35.82,
+   "lat": 55.52,
+   "date": "1812-09-07",
+   "until": "1812-09-07",
+   "mode": "land",
+   "note": "Wins the bloodiest day of the war at a cost of some 30,000 men.",
+   "conf": "documented"
+  },
+  {
+   "place": "Moscow (Kremlin)",
+   "lon": 37.62,
+   "lat": 55.75,
+   "date": "1812-09-14",
+   "until": "1812-10-19",
+   "mode": "land",
+   "note": "Enters an empty city that is set on fire; waits in vain for peace terms.",
+   "conf": "documented"
+  },
+  {
+   "place": "Maloyaroslavets",
+   "lon": 36.46,
+   "lat": 55.01,
+   "date": "1812-10-24",
+   "until": "1812-10-25",
+   "mode": "land",
+   "note": "Kutuzov blocks the southern route, forcing a retreat along the devastated road.",
+   "conf": "documented"
+  },
+  {
+   "place": "Vyazma",
+   "lon": 34.29,
+   "lat": 55.21,
+   "date": "1812-11-01",
+   "until": "1812-11-01",
+   "mode": "land",
+   "note": "The rearguard is mauled as snow begins.",
+   "conf": "documented"
+  },
+  {
+   "place": "Smolensk",
+   "lon": 32.05,
+   "lat": 54.78,
+   "date": "1812-11-09",
+   "until": "1812-11-14",
+   "mode": "land",
+   "note": "Finds the depots looted; frost reaches minus 20.",
+   "conf": "documented"
+  },
+  {
+   "place": "Krasnoi",
+   "lon": 31.43,
+   "lat": 54.56,
+   "date": "1812-11-17",
+   "until": "1812-11-17",
+   "mode": "land",
+   "note": "Fights through Russian blocking forces.",
+   "conf": "documented"
+  },
+  {
+   "place": "Orsha",
+   "lon": 30.42,
+   "lat": 54.51,
+   "date": "1812-11-20",
+   "until": "1812-11-21",
+   "mode": "land",
+   "note": "Burns surplus baggage and the pontoon train to move faster.",
+   "conf": "documented"
+  },
+  {
+   "place": "Studzianka (Berezina)",
+   "lon": 28.35,
+   "lat": 54.32,
+   "date": "1812-11-26",
+   "until": "1812-11-29",
+   "mode": "land",
+   "note": "Dutch pontonniers build bridges in icy water; tens of thousands are lost in the crossing.",
+   "conf": "documented"
+  },
+  {
+   "place": "Smorgon",
+   "lon": 26.4,
+   "lat": 54.48,
+   "date": "1812-12-05",
+   "until": "1812-12-05",
+   "mode": "land",
+   "note": "Hands command to Murat and leaves by sledge.",
+   "conf": "documented"
+  },
+  {
+   "place": "Warsaw",
+   "lon": 21.01,
+   "lat": 52.23,
+   "date": "1812-12-10",
+   "until": "1812-12-10",
+   "mode": "land",
+   "note": "Tells the Abbe de Pradt there is only one step from the sublime to the ridiculous.",
+   "conf": "documented"
+  },
+  {
+   "place": "Dresden",
+   "lon": 13.74,
+   "lat": 51.05,
+   "date": "1812-12-14",
+   "until": "1812-12-14",
+   "mode": "land",
+   "note": "Passes through incognito.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris (Tuileries)",
+   "lon": 2.33,
+   "lat": 48.86,
+   "date": "1812-12-18",
+   "until": "1812-12-18",
+   "mode": "land",
+   "note": "Arrives near midnight to shore up his rule.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Adam Zamoyski, 1812: Napoleon's Fatal March on Moscow, London 2004"
+  },
+  {
+   "cite": "Armand de Caulaincourt, With Napoleon in Russia, ed. Jean Hanoteau, New York 1935"
+  },
+  {
+   "cite": "Wikipedia, French invasion of Russia",
+   "url": "https://en.wikipedia.org/wiki/French_invasion_of_Russia"
+  }
+ ],
+ "status": "draft"
+}
