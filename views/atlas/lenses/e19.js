@@ -442,7 +442,7 @@
       ${T.quieted && T.quieted.length ? `<p class="note">${T.quieted.length} world-scale lenses are quiet while you study up close. <button class="quiet" data-a="restore">Bring them back</button></p>` : ""}
       <h3>Storylines</h3>
       <div class="stories">${D.stories.map((s, i) => `<button data-story="${i}" aria-pressed="${i === T.story}">${esc(s.title)}</button>`).join("")}</div>
-      <p class="lede">${esc(S.blurb)} <span class="note">(${S.start}–${S.end}, ${S.steps.length} steps)</span></p>
+      <p class="lede">${esc(S.blurb)} <span class="note">(${S.start}–${S.end}, ${S.steps.length} steps)</span>${ATLAS.world && ATLAS.world.director ? ` <button class="btn" data-play="${esc(S.id)}">▶ Play on the map</button>` : ""}</p>
       ${nextStep ? `<button class="next" data-ev="${nextStep.i}" data-next="1"><span>Next in ${esc(S.title)} · ${esc(fmtDate(nextStep.d))}</span><b>${esc(nextStep.n)}</b></button>` : `<button class="next" data-ev="${EV[S.steps[0]].i}" data-next="1"><span>Start ${esc(S.title)} · ${esc(fmtDate(EV[S.steps[0]].d))}</span><b>${esc(EV[S.steps[0]].n)}</b></button>`}
       <div class="steps">${S.steps.map(i => EV[i]).map(e => row(e, e.m === m ? " on" : e.m < m ? " past" : "")).join("")}</div>
       <h3>This month<span class="n">${thisMonth.length}</span></h3>
@@ -468,6 +468,7 @@
         if (b.dataset.speed) { T.speed = +b.dataset.speed; return renderSoon(true); }
         if (b.dataset.lens) { api.setOn(b.dataset.lens, !ATLAS.isOn(b.dataset.lens)); pixelRefresh(); return renderSoon(true); }
         if (!ok()) return;
+        if (b.dataset.play) { stop(); return ATLAS.world.director.play("storyline:e19:" + b.dataset.play); }
         if (b.dataset.story) { T.story = +b.dataset.story; const s = D.stories[T.story]; stop(); return go(EV[s.steps[0]]); }
         if (b.dataset.ev) return go(EV[+b.dataset.ev]);
       });

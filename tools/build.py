@@ -18,11 +18,19 @@ KINDS = {  # kind -> (id prefix, owning workstream folder or None)
     'route': ('route', 'economy-trade'), 'relation': ('rel', None), 'measure': ('m', None),
     'language': ('lang', 'peoples-languages'), 'script': ('script', 'peoples-languages'),
     'sample': ('dna', 'peoples-languages'),
+    'source': ('src', 'scholarship'), 'debate': ('debate', 'scholarship'), 'quote': ('quote', 'scholarship'),
+    'chain': ('chain', 'scholarship'),
 }
+SRC_TYPES = {'book', 'article', 'chapter', 'primary', 'dataset', 'thesis', 'web'}
+STANDINGS = {'leading', 'strong', 'contested', 'minority', 'discredited'}
+DOI_RE = re.compile(r'^10\.\d{4,9}/\S+$')
 LENSES = {'geography', 'military', 'economy', 'population', 'disease', 'religion', 'ideas', 'literature', 'people', 'order', 'art', 'law', 'language'}
 REL_TYPES = {'controls', 'capital_of', 'part_of', 'located_in', 'born_in', 'died_in', 'ruled', 'participant_in',
              'fought', 'allied_with', 'trades_with', 'founded', 'destroyed', 'succeeded', 'influenced', 'teacher_of',
-             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented', 'governed_as', 'derived_from'}
+             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented', 'governed_as', 'derived_from',
+             'present_at'}
+CONF = {'attested', 'estimated', 'approximate', 'unknown'}
+MODES = {'land', 'river', 'sea', 'caravan', 'rail', 'air', 'road', 'foot', 'horse'}
 CAUSAL = {'caused', 'contributed_to', 'prevented'}
 CAUSES = {'war', 'fire', 'earthquake', 'river', 'sea', 'climate', 'trade', 'capital', 'quarried', 'volcano',
           'silt', 'faith', 'disease', 'unknown'}
@@ -52,8 +60,41 @@ def check(r):
     if r.get('status') not in STATUS:
         errs.append('status must be sourced or draft')
     src = r.get('sources')
-    if not r.get('stub') and (not isinstance(src, list) or not src or not all(isinstance(s, dict) and s.get('cite') for s in src)):
+    if kind != 'source' and not r.get('stub') and (not isinstance(src, list) or not src or not all(isinstance(s, dict) and s.get('cite') for s in src)):
         errs.append('sources must be a non-empty list of {cite, url?}')
+    if isinstance(src, list):
+        for s in src:
+            if isinstance(s, dict) and 'src' in s and not (isinstance(s['src'], str) and s['src'].startswith('src:')):
+                errs.append('a sources entry\'s src must be a src: id')
+    if kind == 'source':
+        if r.get('type') not in SRC_TYPES:
+            errs.append(f'source type must be one of {sorted(SRC_TYPES)}')
+        if not r.get('title') or not isinstance(r.get('authors'), list):
+            errs.append('source needs title and authors (a list; [] for anonymous)')
+        if not year(r.get('year')):
+            errs.append('source needs year (of the edition cited, or of writing for a primary source)')
+        if r.get('doi') and not DOI_RE.match(r['doi']):
+            errs.append('doi must look like 10.xxxx/... (no https://doi.org/ prefix)')
+    if kind == 'debate':
+        pos = r.get('positions')
+        if not isinstance(pos, list) or len(pos) < 2:
+            errs.append('debate needs at least two positions')
+        else:
+            for i, p in enumerate(pos):
+                if not isinstance(p, dict) or not p.get('school') or not p.get('claim') or not p.get('works'):
+                    errs.append(f'position {i} needs school, claim and works (src ids)')
+                elif p.get('standing') not in STANDINGS:
+                    errs.append(f'position {i} standing must be one of {sorted(STANDINGS)}')
+        if not r.get('state'):
+            errs.append('debate needs state (where the field stands now)')
+    if kind == 'quote':
+        if not r.get('text') or not r.get('src') or not r.get('author'):
+            errs.append('quote needs text, author and src')
+        elif len(r['text']) > 900:
+            errs.append('quote text must stay under 900 characters')
+    if kind == 'chain':
+        if not isinstance(r.get('links'), list) or len(r['links']) < 2:
+            errs.append('chain needs at least two links (rel ids, in order)')
     for f in ('start', 'end'):
         if f in r and r[f] is not None and not year(r[f]):
             errs.append(f'{f} must be a non-zero integer year')
@@ -73,6 +114,24 @@ def check(r):
         lat, lon = r.get('lat'), r.get('lon')
         if not (isinstance(lat, (int, float)) and isinstance(lon, (int, float)) and -90 <= lat <= 90 and -180 <= lon <= 180):
             errs.append('lat/lon out of range')
+    if 'conf' in r and r['conf'] not in CONF:
+        errs.append(f'conf must be one of {sorted(CONF)}')
+    if kind == 'route' and r.get('subtype') == 'journey':
+        legs = r['legs']
+        if not isinstance(legs, list) or not legs:
+            errs.append('legs must be a non-empty list')
+        else:
+            for i, g in enumerate(legs):
+                if not isinstance(g, dict) or not (g.get('from') or g.get('at')) or not g.get('to'):
+                    errs.append(f'leg {i} needs from and to (place ids or [lon, lat])')
+                    continue
+                for f in ('start_date', 'end_date'):
+                    if f in g and not (isinstance(g[f], str) and DATE_RE.match(g[f].lstrip('-'))):
+                        errs.append(f'leg {i} {f} must be YYYY, YYYY-MM or YYYY-MM-DD (a leading - for BCE)')
+                if 'mode' in g and g['mode'] not in MODES:
+                    errs.append(f'leg {i} mode must be one of {sorted(MODES)}')
+                if 'conf' in g and g['conf'] not in CONF:
+                    errs.append(f'leg {i} conf must be one of {sorted(CONF)}')
     if 'causes' in r and (not isinstance(r['causes'], list) or set(r['causes']) - CAUSES):
         errs.append(f'causes must come from {sorted(CAUSES)}')
     if kind == 'relation':
@@ -108,6 +167,20 @@ def refs(r):
         if isinstance(r.get(f), dict) and isinstance(r[f].get('place'), str):
             out.append(r[f]['place'])
     out += [s for s in r.get('stops') or [] if isinstance(s, str)]
+    for g in (r.get('legs') or []) if r.get('subtype') == 'journey' else []:
+        if isinstance(g, dict):
+            out += [g[f] for f in ('from', 'to') if isinstance(g.get(f), str)]
+    if isinstance(r.get('carrier'), str) and ':' in r['carrier']:
+        out.append(r['carrier'])
+    out += [s['src'] for s in r.get('sources') or [] if isinstance(s, dict) and isinstance(s.get('src'), str)]
+    if isinstance(r.get('src'), str):
+        out.append(r['src'])
+    if r.get('kind') in ('debate', 'quote', 'chain'):
+        for f in ('links', 'about', 'quotes', 'series', 'debates'):
+            out += [x for x in r.get(f) or [] if isinstance(x, str)]
+    for p in r.get('positions') or []:
+        if isinstance(p, dict):
+            out += [x for x in (p.get('works') or []) + (p.get('rels') or []) if isinstance(x, str)]
     return out
 
 
