@@ -109,6 +109,8 @@ def build(repo):
                 row['f'] = fr_leg
                 path = s.get('path') or [stops[fr_leg]['at'], s['at']]
                 row['L'] = [[round(x, 2), round(y, 2)] for x, y in path]
+                if not s.get('path'):
+                    row['r'] = 1  # only the endpoints are known: the page may ask ATLAS.world.route for a likely path
             if s.get('sources'):
                 row['s'] = S(s['sources'])
             st.append(row)

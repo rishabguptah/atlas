@@ -1,0 +1,22 @@
+{
+  "id": "black_stone",
+  "name": "Black Stone of the Kaaba",
+  "type": "single",
+  "sprite": "obj_blackstone",
+  "what": "A dark stone, now in fragments bound by a silver frame, set in the eastern corner of the Kaaba in Mecca, which pilgrims try to kiss or touch.",
+  "why": "The holiest stone in Islam left Mecca only once, carried off for twenty years by the Qarmatians, a radical Ismaili sect that had attacked the Hajj itself.",
+  "now": "The eastern corner of the Kaaba, Mecca, in a silver frame.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Daftary, F. (2007). The Isma'ilis: Their History and Doctrines. 2nd ed. Cambridge University Press."},
+    {"cite": "Peters, F. E. (1994). Mecca: A Literary History of the Muslim Holy Land. Princeton University Press."},
+    {"cite": "Wikipedia: Black Stone", "url": "https://en.wikipedia.org/wiki/Black_Stone"}
+  ],
+  "stops": [
+    {"y": 605, "approx": true, "at": [39.8262, 21.4225], "place": "Kaaba, Mecca", "owner": "Quraysh of Mecca", "by": "set", "conf": "likely", "note": "Islamic tradition says Abraham set the stone in the Kaaba. When the Quraysh rebuilt the Kaaba around 605, the story goes, the clans quarrelled over who would lift it back, and the young Muhammad settled it by placing it on a cloak that all of them carried.", "meet": "a Meccan at the rebuilding of the Kaaba"},
+    {"y": 683, "at": [39.8262, 21.4225], "place": "Kaaba, Mecca", "owner": "Ibn al-Zubayr", "by": "damaged", "conf": "likely", "note": "During the Umayyad siege of Mecca in 683 fire swept the Kaaba and the stone cracked into pieces."},
+    {"y": 930, "at": [49.58, 25.38], "place": "Hajar (al-Ahsa)", "owner": "Qarmatians of Bahrayn", "by": "looted", "conf": "sure", "via": "caravan", "path": [[39.8262, 21.4225], [42.5, 23.5], [46.7, 24.6], [49.58, 25.38]], "note": "During the Hajj of January 930 the Qarmatian leader Abu Tahir al-Jannabi stormed Mecca, killed thousands of pilgrims, threw bodies into the Zamzam well and carried the stone off to his capital in eastern Arabia.", "meet": "a pilgrim who survived the Hajj of 930"},
+    {"y": 951, "at": [44.4, 32.03], "place": "Great Mosque of Kufa", "owner": "Qarmatians", "by": "returned", "conf": "likely", "via": "caravan", "note": "After two decades and many offers of ransom the Qarmatians returned it, some sources say hung for a time in the mosque at Kufa on the way."},
+    {"y": 952, "at": [39.8262, 21.4225], "place": "Kaaba, Mecca", "owner": "Guardians of the Kaaba", "by": "returned", "conf": "sure", "via": "caravan", "note": "Back in Mecca, broken, it was set in the Kaaba again. The silver frame that now holds the fragments was renewed several times, by Ottoman sultans among others.", "meet": "any pilgrim at the Kaaba since"}
+  ]
+}

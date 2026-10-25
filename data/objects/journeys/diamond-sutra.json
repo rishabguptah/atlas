@@ -1,0 +1,25 @@
+{
+  "id": "diamond_sutra",
+  "name": "Diamond Sutra of Dunhuang",
+  "type": "single",
+  "sprite": "obj_paper",
+  "what": "A five-metre scroll of the Buddhist Diamond Sutra, printed from woodblocks and dated the 15th day of the 4th month of the 9th year of Xiantong: 11 May 868. It is the oldest dated printed book known.",
+  "why": "A book printed six centuries before Gutenberg, sealed in a cave for nine centuries, and sold to a British explorer by a Daoist caretaker who needed money to restore his temple.",
+  "now": "British Library, London (Or.8210/P.2). Digitised by the International Dunhuang Project.",
+  "dispute": "Many in China regard Stein's purchases at Dunhuang as theft.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Wood, F. & Barnard, M. (2010). The Diamond Sutra: The Story of the World's Earliest Dated Printed Book. British Library."},
+    {"cite": "Hansen, V. (2012). The Silk Road: A New History. Oxford University Press."},
+    {"cite": "International Dunhuang Project", "url": "https://idp.bl.uk/"},
+    {"cite": "Wikipedia: Diamond Sutra", "url": "https://en.wikipedia.org/wiki/Diamond_Sutra"}
+  ],
+  "stops": [
+    {"y": 868, "at": [94.81, 40.04], "place": "Dunhuang", "owner": "Wang Jie, its donor", "by": "made", "conf": "likely", "note": "The colophon says Wang Jie had it made \"for universal free distribution, on behalf of his two parents\". The date is sure; where it was printed is not, perhaps Dunhuang itself, perhaps Chang'an or Sichuan.", "meet": "a monk copying sutras at the Mogao caves"},
+    {"y": 1002, "approx": true, "at": [94.81, 40.04], "place": "Library Cave (Cave 17), Mogao", "owner": "Monks of Mogao", "by": "hidden", "conf": "likely", "note": "Around the year 1000 tens of thousands of manuscripts were walled up in a side chamber of Cave 16. Why is still argued: fear of invaders, or a store for worn-out scriptures."},
+    {"y": 1900, "at": [94.81, 40.04], "place": "Mogao Caves", "owner": "Wang Yuanlu", "by": "found", "conf": "sure", "note": "In June 1900 the self-appointed Daoist guardian of the caves, Wang Yuanlu, found the walled-up door while clearing sand."},
+    {"y": 1907, "at": [94.81, 40.04], "place": "Mogao Caves", "owner": "Aurel Stein", "by": "bought", "conf": "sure", "note": "The Hungarian-British explorer Aurel Stein bought the scroll with thousands of manuscripts for a small donation to Wang's restoration fund. Paul Pelliot took more the next year.", "meet": "Wang Yuanlu, bargaining with Stein"},
+    {"y": 1909, "approx": true, "at": [-0.127, 51.519], "place": "British Museum, London", "owner": "British Museum", "by": "carried", "conf": "likely", "via": "land", "note": "The crates went west by camel and ship and reached London around 1909."},
+    {"y": 1997, "at": [-0.1276, 51.5299], "place": "British Library, St Pancras", "owner": "British Library", "by": "carried", "conf": "sure", "via": "land", "note": "The British Library, split from the Museum in 1973, moved to its new building at St Pancras in 1997."}
+  ]
+}

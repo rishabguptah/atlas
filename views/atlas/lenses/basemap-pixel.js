@@ -32,7 +32,7 @@
   // The page shares its own border loader (ATLAS.borders) so each chunk is fetched and parsed once; it re-renders the
   // basemap when a chunk arrives. Standalone, the basemap keeps its own.
   let own = null;
-  const bordersOf = () => window.ATLAS.borders || own || (own = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(own.realms(year, T.k)); else pm.render(T, { realms: own.realms(year, T.k) }); } } }));
+  const bordersOf = () => window.ATLAS.borders || own || (own = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(own.realms(year, T.k)); else pm.render(T, { realms: own.realms(year, T.k) }); nameRealms(); } } }));
   let geo = null, geoKey = "", el0 = null;
   // Zoom detail (roads, walls, fields, villages, ports, castles, province names) from detail/ next to the page.
   const detail = typeof PixelDetail === "function" ? PixelDetail({ base: "detail/", onLoad: () => {
@@ -60,6 +60,26 @@
       t.setAttribute("style", `font: 500 ${it.size}px "Pixelify Sans", "Silkscreen", monospace; letter-spacing: .16em; fill: #3a2a1c; stroke: rgba(246,238,214,.8); stroke-width: 2.6px; paint-order: stroke;`);
       t.textContent = txt; provSvg.appendChild(t);
     }
+  }
+  // Names go to the page's one label engine (views/pixel/labels.js): realm names curved across what you can see of
+  // each realm, and the terrain names; both step back when a lens has focus.
+  const LBL = window.ATLAS && ATLAS.labels;
+  let realmItems = [];
+  // Finding the curves takes a few ms, so it waits for an idle moment instead of sitting in a year step's frame.
+  let nameJob = 0;
+  const idle = window.requestIdleCallback ? fn => requestIdleCallback(fn, { timeout: 150 }) : fn => setTimeout(fn, 30);
+  function nameRealms() {
+    if (nameJob) return;
+    nameJob = idle(() => {
+      nameJob = 0;
+      realmItems = pm && typeof PixelRealmNames === "function" && isOn("borders") ? PixelRealmNames(pm.labelGrid()) : [];
+      if (LBL) LBL.refresh();
+    });
+  }
+  if (LBL) {
+    LBL.add("realms", () => pm && isOn("borders") ? realmItems : [], { base: true });
+    LBL.add("sprites", () => pm ? pm.spriteBoxes().map(block => ({ block })) : [], { base: true });
+    if (typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) LBL.add("geo", () => pm && isOn("terrain") ? PixelGeoLabels.items(TERRAIN) : [], { base: true });
   }
   let pm = null, proj = null, T = null, year = null, snap = null, timer = 0, frame = 0, statics = [], movers = [];
   let marks = null, hud = null, watch = null, markTimer = 0;
@@ -163,6 +183,30 @@
   };
 
   // Lenses whose marks change within a year (the month cursor of a deep region) re-collect sprites without a re-render.
+  // Era map styles (views/pixel/eras.js): "auto" follows the year, and once a pan settles over al-Idrisi's or the silk
+  // scroll's world (zoomed in), that regional style. ATLAS.setEraStyle("auto" | style id | "now") picks one by hand;
+  // the choice is remembered in this browser only. ATLAS.eraStyles lists them for the interface.
+  const ERAS = typeof PixelEras !== "undefined" ? PixelEras : null;
+  let eraChoice = "auto", eraId = null;
+  try { eraChoice = localStorage.getItem("atlas.era.v1") || "auto"; } catch (e) { /* storage blocked */ }
+  function eraFor(t, y, quiet) {
+    if (!ERAS || !pm || !proj || y == null) return;
+    const c = proj.invert(t.invert([el0.clientWidth / 2, el0.clientHeight / 2])) || [0, 0];
+    const id = eraChoice === "auto" ? ERAS.pick(y, { lon: c[0], lat: c[1], k: t.k }) : eraChoice;
+    ERAS.setYear(y);
+    if (id === eraId) return;
+    eraId = id; ERAS.chrome(document.documentElement, id);
+    pm.setEra(ERAS.style(id), { quiet });
+  }
+  if (ERAS) {
+    ATLAS.eraStyles = [{ id: "auto", name: "By year" }, ...ERAS.LIST.map(s => ({ id: s.id, name: s.name, family: s.family, from: s.from, to: s.to, region: !!s.region })), { id: "now", name: "Today" }];
+    ATLAS.setEraStyle = id => {
+      eraChoice = id || "auto";
+      try { localStorage.setItem("atlas.era.v1", eraChoice); } catch (e) { /* storage blocked */ }
+      if (T) eraFor(T, year, false);
+    };
+    ATLAS.eraStyle = () => ({ choice: eraChoice, id: eraId });
+  }
   ATLAS.pixelRefresh = () => { if (pm && T && year != null) { collect(year, T.k); draw(); } };
   ATLAS.basemap({
     id: "pixel", name: "Pixel map", paintsMarks: typeof PixelMarks === "function",
@@ -173,10 +217,10 @@
       pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers });
       if (detail) {
         pm.setDetail((G, phase) => detail.draw(G, phase, window.ATLAS.deep && ATLAS.deep.m != null ? Math.floor(ATLAS.deep.m / 12) : year, proj));
-        if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("provinces", view => detail.names(view));
+        if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("provinces", view => detail.names(view), { base: true });
       }
       // Names of seas, rivers, ranges and deserts in the pixel font, under the Land lens's terrain toggle.
-      if (typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
+      if (!LBL && typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
       if (typeof PixelMarks === "function" && svgEl()) mountMarks(el, projection);
       if (typeof PixelHUD === "function") hud = PixelHUD(mapOf(el), projection, { px: 3, tile: PIXEL.tile0, fly: (v, ms) => ATLAS.api && ATLAS.api.fly(v, ms ?? 600) });
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => { if (document.hidden || !T) return; frame++; pm.setFrame(frame); draw(); }, 260);
@@ -187,7 +231,9 @@
       if (marks && !watch && typeof ATLAS.marks === "function") marks.set(ATLAS.marks()); else if (marks) marks.markDirty();
       if (hud) hud.update(t);
       const realms = isOn("borders") ? (bordersOf().realms(y, t.k) || realmsFor(y)) : NO_REALMS;
-      if (pm.same(t)) pm.setRealms(realms); else pm.render(t, { realms });
+      const same = pm.same(t);
+      eraFor(t, y, !same);
+      if (same) pm.setRealms(realms); else pm.render(t, { realms });
       // Warm the outlines of every frame in this chunk while the browser is idle, so scrubbing on stays cheap.
       // Then the chunks either side (already prefetched by the border loader).
       const B = bordersOf(), all = isOn("borders") && B.chunkRealms && B.chunkRealms(y, t.k);
@@ -197,6 +243,7 @@
         const more = near.filter(Boolean).map(c => B.chunkRealms(c[0], t.k)).filter(Boolean);
         pm.warm([...more.flat(), ...all].map(r => r.feature));
       }
+      nameRealms();
       if (geo) {
         const on = isOn("terrain"), key = on ? [t.k, t.x, t.y, el0.clientWidth, el0.clientHeight].join() : "off";
         if (key !== geoKey) { geoKey = key; if (on) geo.render(t, el0.clientWidth, el0.clientHeight); else geo.clear(); }
@@ -212,7 +259,8 @@
       if (hud) hud.remove(); hud = null;
       pm = null; if (geo) geo.remove(); geo = null;
       if (provSvg) provSvg.remove(); provSvg = null;
+      realmItems = []; if (LBL) LBL.refresh();
     },
-    setMood(m) { if (pm) pm.setMood(m); if (geo) geo.setMood(m); },
+    setMood(m) { if (pm) pm.setMood(m); if (geo) geo.setMood(m); if (LBL && LBL.engine) LBL.engine.setMood(m); },
   });
 })();

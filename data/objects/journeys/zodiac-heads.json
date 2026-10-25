@@ -1,0 +1,25 @@
+{
+  "id": "zodiac_heads",
+  "name": "Bronze zodiac heads of the Old Summer Palace",
+  "type": "single",
+  "sprite": "obj_bronze",
+  "what": "Twelve bronze animal heads on human bodies that spouted water in turn, each for two hours, round the fountain of the Haiyantang in Beijing's Yuanmingyuan: a water clock in the shape of the Chinese zodiac.",
+  "why": "A Jesuit design for a Qing emperor, looted in 1860, and now the most charged objects in China's campaign to get its lost heritage back. Each head that comes home is national news.",
+  "now": "Seven are back in China (ox, tiger, monkey, pig, rat, rabbit and horse); the dragon, snake, goat, rooster and dog are missing.",
+  "dispute": "China treats the heads as stolen property and protests every sale.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Hevia, J. L. (2003). English Lessons: The Pedagogy of Imperialism in Nineteenth-Century China. Duke University Press."},
+    {"cite": "Wong, Y.-t. (2001). A Paradise Lost: The Imperial Garden Yuanming Yuan. University of Hawaii Press."},
+    {"cite": "Wikipedia: Twelve bronze heads", "url": "https://en.wikipedia.org/wiki/Old_Summer_Palace#Bronze_heads"}
+  ],
+  "stops": [
+    {"y": 1759, "at": [116.304, 40.008], "place": "Haiyantang, Old Summer Palace", "owner": "Qianlong Emperor", "by": "made", "conf": "sure", "note": "The Jesuits Giuseppe Castiglione and Michel Benoist designed the European palaces of the Yuanmingyuan for the Qianlong Emperor. The zodiac fountain stood in front of the Haiyantang, the Hall of the Calm Sea.", "meet": "a eunuch gardener of the Yuanmingyuan"},
+    {"y": 1860, "at": [116.304, 40.008], "place": "Old Summer Palace", "owner": "British and French troops", "by": "looted", "conf": "sure", "note": "In October 1860, at the end of the Second Opium War, British and French troops looted the palace and Lord Elgin had it burned in revenge for the torture of envoys. The heads were scattered.", "meet": "a soldier at the sack of the Yuanmingyuan"},
+    {"y": 2000, "at": [114.17, 22.28], "place": "Hong Kong auction rooms", "owner": "Poly Group", "by": "bought", "conf": "sure", "split": true, "via": "sea", "note": "The state-owned Poly Group bought the ox, tiger and monkey heads at Christie's and Sotheby's in Hong Kong in 2000. Stanley Ho bought the pig in 2003 and gave it to Poly."},
+    {"y": 2000, "at": [116.43, 39.93], "place": "Poly Art Museum, Beijing", "owner": "Poly Group", "by": "returned", "conf": "sure", "split": true, "via": "land", "from": 2, "note": "Back in Beijing, in the Poly Art Museum."},
+    {"y": 2009, "at": [2.33, 48.87], "place": "Christie's, Paris", "owner": "Yves Saint Laurent and Pierre Bergé estate", "by": "sold", "conf": "sure", "split": true, "via": "sea", "note": "The rat and rabbit came up for sale with Saint Laurent's collection. The winning bidder, the Chinese collector Cai Mingchao, refused to pay as a protest."},
+    {"y": 2013, "at": [116.401, 39.905], "place": "National Museum of China, Beijing", "owner": "Chinese state", "by": "gift", "conf": "sure", "split": true, "via": "air", "from": 4, "note": "The Pinault family, owners of Christie's, bought the rat and rabbit and gave them to China."},
+    {"y": 2020, "at": [116.304, 40.008], "place": "Old Summer Palace", "owner": "Yuanmingyuan", "by": "returned", "conf": "sure", "split": true, "via": "land", "from": 2, "note": "Stanley Ho, who had bought the horse head in Hong Kong in 2007, gave it to China in 2019; in 2020 it went back to the Yuanmingyuan, the first head to return to the site."}
+  ]
+}

@@ -345,6 +345,20 @@ a { color: var(--accent); text-underline-offset: 2px; }
 @media (max-width: 600px) { .eras button:not([aria-current="true"]) { color: transparent; } .eras button[aria-current="true"] { overflow: visible; z-index: 1; } }
 .map canvas.marks { position: absolute; left: 0; top: 0; pointer-events: none; }
 .maptip { position: absolute; z-index: 5; max-width: 280px; pointer-events: none; background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 8px; font-size: 12.5px; line-height: 1.35; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
+/* One label engine (views/pixel/labels.js): every label is a candidate at every zoom; the queue hides losers with .lx.
+   Art direction D5: colour lives on the glyph, never on the text; settlements are vellum on ink, notes ink on vellum. */
+.map.lq .pt text { display: block; }
+.map.lq .pt text, .map.lq text.linelab { fill: #221f1a; stroke: #f6f0dc; stroke-width: 3px; font-style: normal; font-weight: 600; font-size: 12px; }
+.map.lq .pt.city text, .map.lq .pt.hub text, .map.lq .pt.reached text { fill: #f6f0dc; stroke: #221f1a; }
+.map.lq .pt.hi text { fill: var(--ink); stroke: var(--paper); font-size: 16px; }
+.map.lq text.linelab { fill: #221f1a !important; }
+.map.lq .pt text.lx, .map.lq text.linelab.lx, .map.lq text.routelab.lx, .map.lq.moving text { display: none; }
+/* A lens with focus: the basemap goes quiet and layers outside the focused family fade (g[data-layer].dim). */
+.basemap canvas { transition: filter .35s; }
+.map.lens-focus .basemap canvas { filter: saturate(.35) brightness(1.06) contrast(.86); }
+.map.lens-focus .g-relief { filter: saturate(.4); }
+.map g[data-layer] { transition: opacity .3s; }
+.map g[data-layer].dim { opacity: .28; }
 
 /* Phone: the map fills the screen; the panel is a bottom sheet (peek, half, full) you drag or tap the handle of. */
 .grab { display: none; }
@@ -750,6 +764,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (state.k !== zoomK0) mapEl.classList.add("moving");
     if (!zoomRaf) zoomRaf = requestAnimationFrame(zoomFrame);
     if (BASEMAP && BASEMAP.move) try { BASEMAP.move(ev.transform); } catch (err) { console.error(err); }
+    if (LQ) LQ.move(ev.transform);
   });
   const viewWatch = [];  // plugin tabs listening for pans and zooms (ATLAS.api.onView)
   zoom.on("end", () => {
@@ -936,7 +951,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     c.globalAlpha = 1; c.textAlign = "left";
     return boxes.length;
   }
-  let paintRaf = 0, lastPaint = { labels: [] };
+  let paintRaf = 0, lastPaint = { labels: [] }, labelsReady = false;
+  // The label queue and the focused family, once the sections below that define them have run.
+  const queueState = () => labelsReady ? { lq: !!LQ, f: focusFam() } : { lq: false, f: null };
   const paintSoon = () => { if (!paintRaf) paintRaf = requestAnimationFrame(() => { paintRaf = 0; paintMarks(); }); };
   // Paint every layer's records for the current zoom transform.
   function paintMarks() {
@@ -948,14 +965,14 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const selfPaint = !!(BASEMAP && BASEMAP.paintsMarks), hideKinds = (BASEMAP && BASEMAP.hideMarks) || [];
     const pixel = !!BASEMAP, moving = mapEl.classList.contains("moving"), zoomed = k >= 4;
     const paper = cssColor("var(--paper)"), soft = cssColor("var(--ink-soft)"), ink = cssColor("var(--ink)");
-    const labels = [];
+    const labels = [], Q = queueState(), dimOf = key => Q.f && famOfLayer(key) !== Q.f ? .28 : 1;
     // Lines first (all layers), in world coordinates through the zoom transform.
     if (!selfPaint) {
       c.setTransform(dpr * k, 0, 0, dpr * k, dpr * t.x, dpr * t.y);
       c.lineCap = "round"; c.lineJoin = "round";
       for (const key of LAYER_ORDER) for (const l of MK[key].lines) {
         const lp = linePath(l.pts);
-        c.globalAlpha = l.alpha ?? .75; c.strokeStyle = cssColor(l.color); c.lineWidth = (l.width || 2) / k;
+        c.globalAlpha = (l.alpha ?? .75) * (Q.f ? dimOf(key) : 1); c.strokeStyle = cssColor(l.color); c.lineWidth = (l.width || 2) / k;
         c.setLineDash(l.dash ? l.dash.map(v => v / k) : []);
         c.stroke(lp.p);
         if (l.arrow && lp.a && lp.b) {
@@ -970,17 +987,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     // Points, in screen pixels (they keep their size while the map zooms).
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
     for (const key of LAYER_ORDER) {
-      const L = MK[key];
+      const L = MK[key], dim = Q.f ? dimOf(key) : 1, fam = Q.lq ? famOfLayer(key) : null;
       if (!moving) for (const l of L.lines) if (l.label) {
         const lp = linePath(l.pts); if (!lp.m) continue;
-        labels.push({ text: l.label, x: lp.m[0] * k + t.x + 4, y: lp.m[1] * k + t.y - 5, px: 12, font: `italic 12px ${pixel ? FONT.pixel : FONT.fell}`, fill: cssColor(l.color), halo: paper, haloW: 3, alpha: 1, pri: 3 });
+        labels.push({ fam, note: true, kind: "line", text: l.label, x: lp.m[0] * k + t.x + 4, y: lp.m[1] * k + t.y - 5, px: 12, font: `italic 12px ${pixel ? FONT.pixel : FONT.fell}`, fill: cssColor(l.color), halo: paper, haloW: 3, alpha: 1, pri: 3 });
       }
       for (const r of L.points) {
         const p = proj(r); if (!p) continue;
         const x = p[0] * k + t.x, y = p[1] * k + t.y;
         r._x = x; r._y = y;
         if (x < -40 || y < -40 || x > W + 40 || y > H + 40) continue;
-        const a = r.fade ?? 1;
+        const a = (r.fade ?? 1) * dim;
         if (!selfPaint && !hideKinds.includes(r.kind)) {
           const img = r.sprite && spriteOf(r.sprite);
           c.setTransform(dpr, 0, 0, dpr, dpr * x, dpr * y);
@@ -988,7 +1005,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
           else paintShape(c, r, a);
         }
         if (moving || !r.label) continue;
-        const show = r.hi || r.always || (r.lbl && zoomed);
+        // With the label queue every label is a candidate; the queue picks by priority and room.
+        const show = Q.lq || r.hi || r.always || (r.lbl && zoomed);
         if (!show) continue;
         const K = KIND[r.kind] || KIND.lens, off = r.lblAt || K.lbl || [7, 4];
         const big = r.kind === "city" && r.hi, pxs = r.fontPx || (big ? 13.5 : 11);
@@ -999,11 +1017,13 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
           font: `${!pixel && (K.italic || r.ghost) ? "italic " : ""}${big || K.bold || onArt ? 600 : 400} ${pxs}px ${fam}`,
           fill: onArt ? "#f6f0dc" : big ? ink : r.lblColor ? cssColor(r.lblColor) : K.bold || K.italic || K.mono || r.kind === "stop" ? cssColor(r.color) : r.kind === "order" ? ink : soft,
           halo: onArt ? "#221f1a" : paper, haloW: 3, pri: (r.hi ? 100 : 0) + (r.always ? 20 : 0) + (r.pri || 0), force: r.hi,
+          r, fam, kind: r.kind,
         });
       }
     }
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
-    placeLabels(c, labels, W, H);
+    if (Q.lq) { if (!moving) queueLabels(c, labels, t, Q.f, pixel); }
+    else placeLabels(c, labels, W, H);
     lastPaint = { labels };
   }
   // Which record is under a screen point: points first (top layer down), then lines within 5 px.
@@ -1279,6 +1299,89 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); paintMarks(); marksChanged(); if (BASEMAP && bmYear !== state.year) renderBasemapSoon(); };
     if (now) { cancelAnimationFrame(rafAll); run(); } else if (!rafAll) rafAll = requestAnimationFrame(run);
   }
+
+  // ---------- labels: one queue for every layer's names (views/pixel/labels.js) ----------
+  // The basemap's realm and terrain names come in as sources; the SVG labels of lens marks join as extras, each with
+  // a priority from what it is, so at any zoom the most important names show and none overlap.
+  const LQ = ATLAS.labels ? ATLAS.labels.mount(mapEl, projection, svg.node()) : null;
+  if (LQ) mapEl.classList.add("lq");
+  const LABEL_PRI = { city: 46, hub: 58, battle: 44, choke: 46, shock: 52, school: 38, work: 36, stop: 40, order: 44, broke: 54, reached: 34, person: 22, lp: 42, pin: 95 };
+  const fontPx = {}, SETTLEMENT = new Set(["city", "hub", "pin", "reached"]);
+  function lensLabels(t) {
+    const out = [], f = focusFam(), M = 40;
+    const add = (tx, pri, x, y, mid, note) => {
+      const anchor = mid ? "middle" : tx.getAttribute("text-anchor"), cls = tx.getAttribute("class") || tx.parentNode.getAttribute("class") || "";
+      const fs = fontPx[cls] || (fontPx[cls] = parseFloat(getComputedStyle(tx).fontSize) || 11);
+      const w = ATLAS.labels.measure(tx.textContent, fs, 600), dx = +tx.getAttribute("x") || 0, dy = +tx.getAttribute("y") || 0;
+      const x0 = anchor === "middle" ? x + dx - w / 2 : x + dx;
+      if (x0 + w < -M || x0 > W + M || y + dy < -M || y + dy > H + M) { tx.classList.add("lx"); return; }
+      out.push({ pri, note, text: tx.textContent, box: [x0, y + dy - fs * 0.85, x0 + w, y + dy + fs * 0.25], show: on => tx.classList.toggle("lx", !on) });
+    };
+    const scan = (g, fam) => g.selectAll(":scope > .pt, :scope > g > .pt").each(function (d) {
+      const tx = this.querySelector(":scope > text"); if (!tx || !d || d.lon == null || !tx.textContent) return;
+      const p = projection([d.lon, d.lat]); if (!p) return;
+      const cl = this.classList, kind = cl[1];
+      let pri = LABEL_PRI[kind] ?? 40;
+      if (kind === "city") { const pop = popAt(d, state.year); pri += pop ? Math.min(14, Math.max(0, Math.log10(pop) - 3) * 4.5) : 0; if (d.layer === "wonders") pri += 3; }
+      else if (kind === "person") pri += Math.max(0, (d.hpi || 0) - 50) / 4;
+      else if (kind === "order") pri += Math.min(12, Math.sqrt(d._a || 0) * 8);
+      if (cl.contains("hi")) pri = 100;
+      else if (cl.contains("always") || cl.contains("now")) pri = Math.max(pri, 72);
+      if (pri < 100 && f) pri += fam === f ? 30 : -10;
+      add(tx, pri, p[0] * t.k + t.x, p[1] * t.k + t.y, false, !SETTLEMENT.has(kind));
+    });
+    root.selectAll("g[data-layer]").each(function () {
+      const k = this.dataset.layer, fam = famOfLayer(k), g = d3.select(this);
+      scan(g, fam);
+      g.selectAll("text.linelab").each(function (d) { if (d && d.lx != null) add(this, 50 + (f ? (fam === f ? 30 : -10) : 0), d.lx * t.k + t.x, d.ly * t.k + t.y, false, true); });
+    });
+    scan(gPins, null);
+    gRoutes.selectAll("text.routelab").each(function (d) { if (d) add(this, 96, d.lx * t.k + t.x, d.ly * t.k + t.y); });
+    gPolyLab.selectAll("text").each(function (d) { if (d && d.c) add(this, 100, d.c[0] * t.k + t.x, d.c[1] * t.k + t.y, true); });
+    return out;
+  }
+  // The canvas mark layer's labels (paintMarks) join the queue too: each gets a priority from what it is, the queue
+  // answers which ones fit, and only those are painted, in the D5 label tiers (ink on vellum; settlements vellum on ink).
+  function queueLabels(c, labels, t, f, pixel) {
+    const extra = lensLabels(t), INK = "#221f1a", VELLUM = "#f6f0dc", fam = pixel ? FONT.pixel : FONT.serif;
+    for (const L of labels) {
+      const r = L.r, kind = L.kind;
+      let pri = kind === "line" ? 50 : LABEL_PRI[kind] ?? 40;
+      if (r) {
+        pri += Math.min(14, r.pri || 0);
+        if (r.hi) pri = 100; else if (r.always) pri = Math.max(pri, 72);
+      }
+      if (pri < 100 && f) pri += L.fam === f ? 30 : -10;
+      // Only a highlighted city steps up a size (D2: 12 and 16); other highlights win on priority alone.
+      const hi = r && r.hi, settle = SETTLEMENT.has(kind), px = hi && kind === "city" ? 16 : 12;
+      L.font = `${hi || settle ? 600 : 500} ${px}px ${fam}`; L.px = px; L.fill = settle && !hi ? VELLUM : INK; L.halo = settle && !hi ? INK : VELLUM;
+      c.font = L.font;
+      const w = c.measureText(L.text).width, x0 = L.center ? L.x - w / 2 : L.x, y1 = L.y + px * .25, y0 = y1 - px;
+      L.on = false;
+      if (x0 < 0 || x0 + w > W || y0 < 0 || y1 > H) continue;  // whole labels only, never cut by the frame
+      extra.push({ pri, note: L.note || !settle, text: L.text, box: [x0 - 1, y0, x0 + w + 1, y1], show: on => { L.on = on; } });
+    }
+    try { LQ.layout(t, W, H, { year: state.year, focus: f, extra, avoid: chromeRects() }); } catch (err) { console.error("labels", err); }
+    c.lineJoin = "round";
+    for (const L of labels) if (L.on) {
+      c.font = L.font; c.globalAlpha = L.alpha; c.textAlign = L.center ? "center" : "left";
+      c.strokeStyle = L.halo; c.lineWidth = L.haloW; c.strokeText(L.text, L.x, L.y);
+      c.fillStyle = L.fill; c.fillText(L.text, L.x, L.y);
+    }
+    c.globalAlpha = 1; c.textAlign = "left";
+  }
+  // The map's own chrome (controls, hint, minimap, compass), in map coordinates: labels keep out from under it.
+  // ATLAS.chromeRects() when the interface provides it, else the elements we know.
+  function chromeRects() {
+    const m = mapEl.getBoundingClientRect(), rel = r => [r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top];
+    if (typeof ATLAS.chromeRects === "function") try { return ATLAS.chromeRects().map(r => Array.isArray(r) ? r : rel(r)); } catch (err) { console.error(err); }
+    const out = [];
+    for (const el of mapEl.querySelectorAll(".mapctl, .maphint, .keycard, .pxhud .hit, .pxhud .scale")) if (el.offsetParent) out.push(rel(el.getBoundingClientRect()));
+    return out;
+  }
+  // Every label change (a source refreshes, a pin, the focus) repaints the mark layer, which runs the queue.
+  function layoutLabels() { if (labelsReady && LQ) paintSoon(); }
+  if (ATLAS.labels) ATLAS.labels.onRefresh = layoutLabels;
 
   // ---------- selection: one place, every lens ----------
   function drawSel() {
@@ -1630,6 +1733,18 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       for (const k of MEMBERS[f.id]) chip(subEl, k, NAME[k], COLOR(k)).setAttribute("aria-pressed", isOn(k));
     }
     mapEl.classList.toggle("war-on", state.on.war);
+    syncFocus();
+  }
+  // A lens has focus while a family other than Land is open and on: the basemap desaturates, layers of other
+  // families fade (class dim, which the pixel lens painter reads too) and the focused family's labels win the queue.
+  const focusFam = () => state.fam && state.fam !== "land" && MEMBERS[state.fam].some(isOn) ? state.fam : null;
+  const famOfLayer = k => FAM_OF[k] || (PLUG.find(d => "lens:" + d.id === k) || {}).family || null;
+  labelsReady = true;
+  function syncFocus() {
+    const f = focusFam();
+    mapEl.classList.toggle("lens-focus", !!f);
+    root.selectAll("g[data-layer]").classed("dim", function () { return !!f && famOfLayer(this.dataset.layer) !== f; });
+    layoutLabels();
   }
   ATLAS.isOn = k => isOn(k);
   // A lens toggle also re-renders the basemap so anything it draws for a lens (sprites) follows the chip.
@@ -1754,6 +1869,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       return g;
     });
     placeScaled();
+    layoutLabels();
   }
   const caption = document.getElementById("caption");
   function showCaption(s) {
@@ -1880,11 +1996,14 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function updatePlayer() {
     const n = state.answer?.steps?.length || 0;
     const c = document.getElementById("count"); if (c) c.textContent = n ? `${state.active + 1 || "–"} of ${n}${state.answer.loading ? "+" : ""}` : "";
-    const p = document.getElementById("play"); if (p) p.textContent = state.playing ? "Pause" : "Play tour";
+    const p = document.getElementById("play"); if (p) p.textContent = state.playing ? "Pause" : ATLAS.world && ATLAS.world.director ? "▶ Play on the map" : "Play tour";
   }
   let playTimer;
   const STEP_MS = 9000;
   function startPlay() {
+    // With the Director on the page, a tour or answer plays as a Story on the map (views/atlas/world/director.js).
+    const dir = ATLAS.world && ATLAS.world.director;
+    if (dir && dir.play(ATLAS.world.stories.from.answer(state.answer), { at: Math.max(0, state.active) })) return;
     state.playing = true; updatePlayer();
     if (state.active < 0 || state.active >= (state.answer.steps.length - 1)) state.active = -1;
     const advance = () => { if (!step(1)) { if (!state.answer.loading) return stopPlay(); } runProgress(); playTimer = setTimeout(advance, STEP_MS); };
@@ -2284,6 +2403,9 @@ Where the specialists disagree, say who the evidence favours.`;
     },
     onView: fn => viewWatch.push(fn),  // called when a pan or zoom settles
     select: card => select(card, { fly: true }),
+    // The guide, for the Director's "Why?" and "Go deeper": ask the panel (or open a curated tour), and the answer on screen.
+    ask: q => { document.getElementById("qbox").value = q; setTab("guide"); document.getElementById("ask").requestSubmit(); },
+    get answer() { return state.answer; },
   };
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 
