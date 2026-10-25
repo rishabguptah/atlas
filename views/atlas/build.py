@@ -132,7 +132,7 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 # The label engine (one queue for every layer's names) goes first, with or without the pixel map.
 scripts.insert(0, '<script>\n' + open(os.path.join(pixel_dir, 'labels.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
-# The world engine (views/atlas/world/*.js, see WORLD.md) loads before the lenses that use it.
+# The world engine (views/atlas/world/*.js, see WORLD.md) loads before the lenses so they can use ATLAS.world.
 for f in sorted(glob.glob(os.path.join(here, 'world', '*.js'))) + sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
     scripts.append('<script>\n' + open(f, encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 
