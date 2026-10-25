@@ -32,6 +32,13 @@ order = {
     'polities': [{k: p.get(k) for k in ('id', 'n', 's', 'e', 'pk', 'c', 'b', 'st', 'wiki', 'a', 'f')} for p in lab['polities']],
 }
 L = {name: json.load(open(layers + name + '.json')) for name in ('people', 'money', 'plague', 'ideas')}
+# Trade routes snapped to passes, rivers and coasts (ingest/geography/snap_routes.py); the curated points stay as stops.
+tp = os.path.join(repo, 'data/economy-trade/geo/trade-paths.json')
+if os.path.exists(tp):
+    snapped = json.load(open(tp))
+    for t in L['money']['trade']:
+        if t['name'] in snapped:
+            t['stops'], t['line'] = t['line'], snapped[t['name']]['line']
 
 # States & war straight from the kernel records: battles, chokepoints and who held them.
 rows = lambda f: [json.loads(l) for l in open(os.path.join(repo, 'data/states-war', f)) if l.strip()]
@@ -100,9 +107,11 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
             if not pts or pts[-1] != q: pts.append(q)
         if r['rank'] <= 4 and len(pts) > 1: rv.append({'rank': r['rank'], 'line': pts})
     data += 'const PIXEL = ' + J({'tile0': tile0, 'rivers': rv}) + ';\n'
-    for f in ('palette.js', 'sprites-library.js', 'sprites.js', 'era.js', 'pixelmap.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js'):
+    for f in ('palette.js', 'sprites-library.js', 'sprites.js', 'era.js', 'pixelmap.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
+# The label engine (one queue for every layer's names) goes first, with or without the pixel map.
+scripts.insert(0, '<script>\n' + open(os.path.join(pixel_dir, 'labels.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 for f in sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
     scripts.append('<script>\n' + open(f, encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 
