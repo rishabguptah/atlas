@@ -84,7 +84,7 @@
   }
   let pm = null, proj = null, T = null, year = null, snap = null, statics = [], movers = [], motion = null, lastRender = 0;
   let marks = null, hud = null, watch = null, markTimer = 0;
-  const realmCache = {}, NO_REALMS = [], DEEP_REALMS = -4000;
+  const realmCache = {}, NO_REALMS = [], DEEP_REALMS = -4000, DEEP_ERA = -5500;
   let paleoKey = "", paleoAt = 0, paleoTimer = 0;
   let warmed = null;
   function realmsFor(y) {
@@ -234,7 +234,8 @@
   function eraFor(t, y, quiet) {
     if (!ERAS || !pm || !proj || y == null) return;
     const c = proj.invert(t.invert([el0.clientWidth / 2, el0.clientHeight / 2])) || [0, 0];
-    const id = eraChoice === "auto" ? ERAS.pick(y, { lon: c[0], lat: c[1], k: t.k }) : eraChoice;
+    // Before writing the ice-age world shows in its own colours (ice, exposed shelves, steppe), not on a clay tablet.
+    const id = eraChoice === "auto" ? (y < DEEP_ERA ? "now" : ERAS.pick(y, { lon: c[0], lat: c[1], k: t.k })) : eraChoice;
     ERAS.setYear(y);
     if (id === eraId) return;
     eraId = id; ERAS.chrome(document.documentElement, id);
