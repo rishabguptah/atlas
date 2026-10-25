@@ -42,6 +42,30 @@
     if (pm.same(T)) pm.setRealms(realms); else pm.render(T, { realms });
     if (window.ATLAS.labels && ATLAS.labels.refresh) ATLAS.labels.refresh(); else provLabels();
   } }) : null;
+  // City plans (walls, gates, buildings by year) past about 3 degrees across, from atlas-files/world/cities.json.
+  // The layer's code (views/pixel/city.js) sits beside the page too and loads the first time the map zooms that far.
+  let city = null, cityAsked = false;
+  const cityRedraw = () => {
+    if (!pm || !T) return;
+    const realms = isOn("borders") && year >= DEEP_REALMS ? (bordersOf().realms(year, T.k) || realmsFor(year)) : NO_REALMS;
+    pm.render(T, { realms });
+    if (window.ATLAS.labels && ATLAS.labels.refresh) ATLAS.labels.refresh();
+  };
+  function cityLayer(k) {
+    if (city || k < 100) return city;
+    if (typeof PixelCity === "function") {
+      city = window.ATLAS.city = PixelCity({ url: "atlas-files/world/cities.json", onLoad: cityRedraw });
+      if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("city", view => city.names(view), { base: true });
+      return city;
+    }
+    if (!cityAsked) {
+      cityAsked = true;
+      const sc = document.createElement("script"); sc.src = "atlas-files/city.js";
+      sc.onload = () => { if (cityLayer(T ? T.k : 0)) cityRedraw(); };
+      document.head.appendChild(sc);
+    }
+    return null;
+  }
   let provSvg = null;
   // Province names: through the shared label engine when the page has one, else a small layer of our own.
   function provLabels() {
@@ -260,8 +284,20 @@
       if (!document.getElementById("pixel-basemap-style")) { const st = document.createElement("style"); st.id = "pixel-basemap-style"; st.textContent = STYLE; document.head.appendChild(st); }
       const levels = [{ cell: 1 / 6, tdeg: 360, url: () => PIXEL.tile0 }, { cell: 1 / 15, tdeg: 30, url: (c, r) => `tiles/l1_${c}_${r}.png` }, { cell: 1 / 30, tdeg: 30, url: (c, r) => `tiles/l2_${c}_${r}.png` }];
       pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers });
+      // City-scale terrain (about 45 m a pixel) around the story cities: tiles/l3.json lists one patch per city.
+      fetch("tiles/l3.json").then(r => (r.ok ? r.json() : null)).then(ix => {
+        if (!ix || !ix.patches || !ix.patches.length) return;
+        levels.push({ cell: ix.cell, patches: ix.patches.map(p => ({ id: p.id, box: p.box, url: "tiles/" + p.f })) });
+        window.ATLAS.cityPatches = ix.patches;
+        if (pm && T && T.k > 60) pm.render(T, {});
+      }).catch(() => {});
       if (detail) {
-        pm.setDetail((G, phase) => detail.draw(G, phase, window.ATLAS.deep && ATLAS.deep.m != null ? Math.floor(ATLAS.deep.m / 12) : year, proj));
+        pm.setDetail((G, phase) => {
+          const y = window.ATLAS.deep && ATLAS.deep.m != null ? Math.floor(ATLAS.deep.m / 12) : year;
+          const r = detail.draw(G, phase, y, proj);
+          const c = cityLayer(G.k); if (c) c.draw(G, phase, y, proj);
+          return r;
+        });
         if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("provinces", view => detail.names(view), { base: true });
       }
       // Data grammar (views/pixel/grammar.js): a choropleth under the sprites; compare overlay with the marks.

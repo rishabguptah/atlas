@@ -1,0 +1,23 @@
+{
+  "note": "Cities that get city-scale terrain (L3 tiles, 1/2400 degree) and dated city plans. bbox = [west, south, east, north]; the L3 tiles cover every 0.5 degree tile it touches. Add a line and run ingest/city/fetch.py then ingest/city/tiles.py and ingest/city/plan.py.",
+  "cities": [
+    {"id": "constantinople", "name": "Constantinople / Istanbul", "bbox": [28.85, 40.97, 29.10, 41.12], "t0": -660, "t1": 2025},
+    {"id": "rome", "name": "Rome", "bbox": [12.38, 41.82, 12.62, 41.98], "t0": -753, "t1": 2025},
+    {"id": "athens", "name": "Athens and Piraeus", "bbox": [23.60, 37.92, 23.78, 38.02], "t0": -1400, "t1": 2025},
+    {"id": "alexandria", "name": "Alexandria", "bbox": [29.82, 31.15, 29.98, 31.25], "t0": -331, "t1": 2025},
+    {"id": "jerusalem", "name": "Jerusalem", "bbox": [35.18, 31.74, 35.28, 31.82], "t0": -1000, "t1": 2025},
+    {"id": "baghdad", "name": "Baghdad", "bbox": [44.28, 33.22, 44.50, 33.42], "t0": 762, "t1": 2025},
+    {"id": "cairo", "name": "Cairo and Fustat", "bbox": [31.18, 29.98, 31.32, 30.10], "t0": 641, "t1": 2025},
+    {"id": "venice", "name": "Venice", "bbox": [12.25, 45.38, 12.42, 45.48], "t0": 697, "t1": 2025},
+    {"id": "paris", "name": "Paris", "bbox": [2.22, 48.80, 2.45, 48.92], "t0": -250, "t1": 2025},
+    {"id": "london", "name": "London", "bbox": [-0.25, 51.44, 0.05, 51.56], "t0": 47, "t1": 2025},
+    {"id": "vienna", "name": "Vienna", "bbox": [16.28, 48.15, 16.45, 48.26], "t0": 100, "t1": 2025},
+    {"id": "delhi", "name": "Delhi (Shahjahanabad)", "bbox": [77.15, 28.55, 77.30, 28.72], "t0": 1192, "t1": 2025},
+    {"id": "agra", "name": "Agra", "bbox": [77.95, 27.13, 78.08, 27.22], "t0": 1504, "t1": 2025},
+    {"id": "kaifeng", "name": "Kaifeng (Bianjing)", "bbox": [114.25, 34.72, 114.45, 34.88], "t0": 960, "t1": 2025},
+    {"id": "xian", "name": "Chang'an / Xi'an", "bbox": [108.85, 34.18, 109.05, 34.34], "t0": -202, "t1": 2025},
+    {"id": "beijing", "name": "Beijing (Dadu, Peking)", "bbox": [116.30, 39.82, 116.48, 39.98], "t0": 1267, "t1": 2025},
+    {"id": "edo", "name": "Edo / Tokyo", "bbox": [139.65, 35.60, 139.85, 35.75], "t0": 1457, "t1": 2025},
+    {"id": "tenochtitlan", "name": "Tenochtitlan / Mexico City", "bbox": [-99.25, 19.30, -99.00, 19.55], "t0": 1325, "t1": 2025}
+  ]
+}

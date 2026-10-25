@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Lay out the pixel map's terrain tiles and precise borders for publishing next to a page: OUT_DIR/tiles/l0_0_0.png,
-l1_<col>_<row>.png (L1 cut into 30-degree tiles), l2_<col>_<row>.png OUT_DIR/borders/l0|l1|l2/world_<year>.json
+l1_<col>_<row>.png (L1 cut into 30-degree tiles), l2_<col>_<row>.png, l3.json + l3_<city>.png (city-scale patches), OUT_DIR/borders/l0|l1|l2/world_<year>.json
 and OUT_DIR/detail/ (zoom detail tiles).
 Skips work already done.
 
@@ -23,6 +23,11 @@ if not os.path.exists(out + 'l1_11_5.png'):
 for f in glob.glob(src + 'z2_*.png'):
     t = out + 'l2_' + os.path.basename(f)[3:]
     if not os.path.exists(t):
+        shutil.copy(f, t)
+# City-scale terrain patches (ingest/city/tiles.py): tiles/l3.json and one tiles/l3_<city>.png per city.
+for f in glob.glob(src + 'l3/l3*'):
+    t = out + os.path.basename(f)
+    if not os.path.exists(t) or os.path.getmtime(t) < os.path.getmtime(f):
         shutil.copy(f, t)
 FFFD_FIXES = {'Arag\ufffdn': 'Arag\u00f3n', 'Teotihuac\ufffdn': 'Teotihuac\u00e1n', 'Monte Alb\ufffdn': 'Monte Alb\u00e1n'}
 # Precise borders (ingest/geography/precise_borders.py) go to OUT_DIR/borders/l0|l1|l2/ for views/pixel/borders.js.
