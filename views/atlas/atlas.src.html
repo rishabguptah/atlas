@@ -553,7 +553,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
 
   const PPL = PEOPLE.people.map((r, i) => {
     const bp = PEOPLE.places[r[3]], dp = PEOPLE.places[r[4]];
-    return { i, name: r[0], b: r[1], d: r[2], occ: r[5], grp: r[6], hpi: r[7], wiki: r[8], place: bp ? bp[0] : "", country: bp ? bp[3] : "", lat: bp ? bp[1] : null, lon: bp ? bp[2] : null, dplace: dp ? dp[0] : "" };
+    return { i, name: r[0], b: r[1], d: r[2], occ: r[5], grp: r[6], hpi: r[7], wiki: r[8], rg: r[9] ?? -1, place: bp ? bp[0] : "", country: bp ? bp[3] : "", lat: bp ? bp[1] : null, lon: bp ? bp[2] : null, dplace: dp ? dp[0] : "" };
   }).filter(p => p.lat != null).sort((a, b) => b.hpi - a.hpi);
   const adult = (p, y) => y >= p.b + 15 && y <= (p.d ?? p.b + 80);
   // People born within 60 km of a spot, from the world index (ATLAS.world.near), in the page's person shape; null
@@ -571,6 +571,31 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
         dplace: "", hpi: r.rank, wiki: null, wd: typeof r.ref === "number" && r.ref ? "Q" + r.ref : null }, d: r.dist });
     }
     return out.sort((a, b) => b.x.hpi - a.x.hpi);
+  }
+  // People outside Europe (data/coverage: Pantheon, Wikidata, CBDB), loaded after the first paint as "people:world".
+  // Row: [name, born, died, occupation, group, fame, wikipedia, lat, lon, place, death place, region, what, wikidata or cbdb:id, place kind (0 born, 1 lived or from, 2 served the state there)].
+  const REGIONS = PEOPLE.regions || [];
+  function addPeople(rows) {
+    for (const r of rows) {
+      const id = r[13] || "", src = id.startsWith("cbdb:") ? [{ cite: "China Biographical Database, person " + id.slice(5), url: "https://projects.iq.harvard.edu/cbdb" }]
+        : id ? [{ cite: "Wikidata " + id, url: "https://www.wikidata.org/wiki/" + id }] : [];
+      PPL.push({ i: -1, name: r[0], b: r[1], d: r[2], occ: r[3], grp: r[4], hpi: r[5], wiki: r[6], lat: r[7], lon: r[8], place: r[9], dplace: r[10],
+        rg: r[11], what: r[12], src, pk: r[14] || 0, country: REGIONS[r[11]] || "" });
+    }
+    PPL.sort((a, b) => b.hpi - a.hpi);
+  }
+  if (PEOPLE.world) addPeople(PEOPLE.world);
+  // The n people to show: the most remembered of each region in turn, so a world view is not just Europe's famous.
+  function balanced(list, n) {
+    const by = new Map();
+    for (const p of list) { let b = by.get(p.rg); if (!b) by.set(p.rg, b = []); b.push(p); }
+    const bs = [...by.values()], out = [];
+    for (let i = 0; out.length < n; i++) {
+      let any = false;
+      for (const b of bs) { if (i < b.length) { any = true; out.push(b[i]); if (out.length >= n) break; } }
+      if (!any) break;
+    }
+    return out;
   }
 
   // Flows: the economy-trade kernel records (lenses/flows.py: 75 routes, people as [low, high]) when built in, else the extracted layer.
@@ -1141,7 +1166,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function drawPeople() {
     const y = state.year, out = MK.people.points = [];
     const n = Math.min(450, Math.round(14 + 22 * Math.pow(state.k, 1.25)));
-    const list = state.on.people ? PPL.filter(p => adult(p, y)).slice(0, n) : [];
+    const list = state.on.people ? balanced(PPL.filter(p => adult(p, y)), n) : [];
     list.forEach((d, i) => out.push(P(d, { kind: "person", shape: "circle", color: "var(--y-people)", fill: .8, size: 2 + Math.max(0, d.hpi - 60) / 9,
       label: d.name, lbl: true, always: i < 6, pri: d.hpi / 20, title: () => `${d.name} · ${d.occ} · ${fmtSpan(d.b, d.d)} · born ${d.place}`, card: cardFn(personCard, d) })));
   }
@@ -1498,8 +1523,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   function personCard(p) {
     return { kind: "person", c: "var(--y-people)", lon: p.lon, lat: p.lat, name: p.place, kick: `Person · ${p.occ}`, title: p.name, year: p.b + 30,
-      meta: `${fmtSpan(p.b, p.d)} · born in ${p.place}${p.country ? ", " + p.country : ""}${p.dplace && p.dplace !== p.place ? ` · died in ${p.dplace}` : ""}`,
-      sources: p.wd ? [{ cite: `Wikidata ${p.wd} (CC0) via the world index`, url: "https://www.wikidata.org/wiki/" + p.wd }] : wiki(p.wiki) };
+      meta: `${fmtSpan(p.b, p.d)} · ${["born in", "of", "served"][p.pk || 0]} ${p.place}${p.country ? ", " + p.country : ""}${p.dplace && p.dplace !== p.place ? ` · died in ${p.dplace}` : ""}`,
+      body: p.what || "", sources: p.wd ? [{ cite: `Wikidata ${p.wd} (CC0) via the world index`, url: "https://www.wikidata.org/wiki/" + p.wd }] : p.wiki ? wiki(p.wiki) : p.src || [] };
   }
   function tradeCard(t) {
     const m = t.pts[Math.floor(t.pts.length / 2)];
@@ -1612,7 +1637,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     for (const e of ENTRIES) for (const [yy, t, bad] of (EVENTS[e.id] || [])) if (Math.abs(yy - y) <= 25) evs.push({ e, yy, t, bad });
     evs.sort((a, b) => Math.abs(a.yy - y) - Math.abs(b.yy - y));
     const cities = ENTRIES.filter(e => alive(e, y)).map(e => ({ e, p: popAt(e, y) })).filter(o => o.p).sort((a, b) => b.p - a.p).slice(0, 6);
-    const ppl = PPL.filter(p => adult(p, y)).slice(0, 8);
+    const ppl = balanced(PPL.filter(p => adult(p, y)), 8);
     const tr = TRADE.filter(t => y >= t.start && y <= t.end), mg = MIGS.filter(m => y >= m.start && y <= m.end);
     const hubs = HUBS.filter(h => y >= h.start && y <= h.end);
     const sh = SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 5 && y <= (e.end ?? NOW) + 10).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y)).slice(0, 6);
@@ -2664,6 +2689,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     const got = (key, v) => {
       const [kind, id] = key.split(":");
       if (kind === "lens") LENS_DATA[id] = v;
+      else if (key === "people:world") addPeople(v);
       else if (key === "war:wd") { for (const r of v) BATTLES.push(wdBattle(r)); BAT_BY_YEAR = d3.group(BATTLES, b => b.start); }
     };
     let timer = 0;

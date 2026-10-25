@@ -119,6 +119,14 @@ redraws all the terrain, so while the year moves it swaps at most every 400 ms. 
 other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
 hearths, land-bridge and ice-sheet names, and climate shocks. Sources and rebuild: `ingest/deep-time/README.md`.
 
+## The whole world (People lens)
+
+People outside Europe come from `data/coverage/` (Pantheon, Wikidata, CBDB; see its README) and load after the first
+paint from `atlas-files/people-world.json` (about 2.3 MB, publish it beside the page). Every person carries a region,
+and the map and This year pick the most remembered person of each region in turn, so a world view at 1200 shows
+Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead of Europe's top 450.
+`views/atlas/world_people.py` builds the rows.
+
 ## Lens families and plugins
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
@@ -150,3 +158,19 @@ the motion model's own estimate for the same trip, then your calibration) with W
 calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five with streaks and a copyable
 result, Endless and About here modes, and finds; each reveal also visits the spot for the Codex. Progress stays in
 localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `calibration` and `play(id)`.
+
+## Travel time: watch the world shrink
+
+The Travel time lens (Land family, `lenses/shrink.*`) paints travel-time rings from a city into the pixel map, after
+Galton's isochronic passage chart (1881) and Bartholomew's 1914 one: red within a week, rose two weeks, ochre a month,
+green two months, blue a season, dusk beyond. The rings are worked out live by the shared router (`ATLAS.world.reach`,
+plus flights from the 1950s), once per city and decade after the slider settles (30 to 160 ms, on idle), then cached per
+view, so a year step pays only a cheap repaint. The lens also draws news on its way (dated arrivals from
+`data/world/news.json` and `data/tech-food-energy/news.jsonl`) and three wandering centres of the world (cities, trade,
+ideas, one point a century since 3000 BCE). The Travel tab picks the city (seven hubs or the map centre), shows a month's
+reach for the seven benchmark years, the days to the other hubs, and checks the router against documented journeys
+(`data/world/speeds.json`). The Story `story:world_shrinks` plays it all in eleven scenes.
+
+Hooks it added for everyone: `ATLAS.pixelUnder` (functions painting into the pixel frame under the sprites, after the
+choropleth), a Scene's `set: {<plugin>: value}` (handed to `ATLAS.sceneSet[plugin]` when the scene plays),
+`ATLAS.world.director.onLeave(fn)`, and `ATLAS.shrink` (`rings`, `origin()`, `compute(o, y)`).

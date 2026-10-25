@@ -46,6 +46,19 @@
     return { sea, ferry };
   }
   const inBox = (b, lon, lat) => lon >= b[0] && lat >= b[1] && lon <= b[2] && lat <= b[3];
+  // Open ocean nobody crossed as a route yet (rules.open_ocean): a mask of sea cells closed in year y, cached by which boxes apply.
+  const oceanCache = new Map();
+  function closedSea(y) {
+    const boxes = ((D().rules.open_ocean || {}).boxes || []).filter(b => y < b.until), key = boxes.map(b => b.n).join("|");
+    if (!boxes.length) return null;
+    if (!oceanCache.has(key)) {
+      const m = new Uint8Array(N);
+      for (const b of boxes) for (let r = Math.max(0, Math.floor((90 - b.box[3]) * 2)); r < Math.min(ROWS, Math.ceil((90 - b.box[1]) * 2)); r++)
+        for (let c = Math.max(0, Math.floor((b.box[0] + 180) * 2)); c < Math.min(COLS, Math.ceil((b.box[2] + 180) * 2)); c++) if (isWater(r * COLS + c)) m[r * COLS + c] = 1;
+      oceanCache.set(key, m);
+    }
+    return oceanCache.get(key);
+  }
 
   // ---------- who rules where: a coarse cache, since polityAt is slow ----------
   const polCache = new Map();
@@ -56,7 +69,15 @@
   }
 
   // ---------- travel: time-dependent A* over land and water ----------
-  function modesFor(y) { return D().rules.modes.filter(m => y >= m.from && (m.to == null || y < m.to)); }
+  // Modes in use in year y; a mode with kmd_by ([[year, km a day], ...]) gets that year's speed (steamers and clippers got faster).
+  const modeCache = new Map();
+  function modesFor(y) {
+    if (modeCache.has(y)) return modeCache.get(y);
+    const ms = D().rules.modes.filter(m => y >= m.from && (m.to == null || y < m.to)).map(m => m.kmd_by ? { ...m, kmd: interp(m.kmd_by, y) } : m);
+    if (modeCache.size > 400) modeCache.clear();
+    modeCache.set(y, ms);
+    return ms;
+  }
   function tradeCells(y) {
     const s = new Set();
     for (const t of (typeof MONEY !== "undefined" && MONEY.trade) || []) {
@@ -110,11 +131,34 @@
   const DIST = (() => { const d = new Float32Array(ROWS * 8); for (let r = 0; r < ROWS; r++) { const lat = 90 - r / 2 - 0.25; NB.forEach(([dr, dc], k) => { d[r * 8 + k] = km({ lon: 0, lat }, { lon: dc / 2, lat: lat - dr / 2 }); }); } return d; })();
   // Roads that belong to an empire (Roman, Persian, Inca, Mongol): who rules each 3-degree cell, asked once per year.
   const roadCache = new Map();
+  // Asking who rules a spot (polityAt) tests every realm, which is slow over thousands of cells. Roads only need the few
+  // realms named for a road-building empire that year, so test just those: a bounding box first, then the polygon.
+  const roadRealmCache = new Map();
+  function roadRealms(roads, y) {
+    if (roadRealmCache.has(y)) return roadRealmCache.get(y);
+    let out = null;
+    try {
+      const rs = window.ATLAS.realms ? ATLAS.realms(y, 1) : null;
+      if (rs && rs.length && typeof d3 !== "undefined") out = rs.filter(r => r.name && r.feature && roads.some(x => r.name.includes(x.polity))).map(r => {
+        const b = d3.geoBounds(r.feature), x = Math.max(...roads.filter(q => r.name.includes(q.polity)).map(q => q.x));
+        return { f: r.feature, x, box: b[0][0] > b[1][0] ? [-180, b[0][1], 180, b[1][1]] : [b[0][0], b[0][1], b[1][0], b[1][1]] };
+      });
+    } catch { out = null; }
+    if (roadRealmCache.size > 200) roadRealmCache.clear();
+    roadRealmCache.set(y, out);
+    return out;
+  }
   function roadAt(roads, lon, lat, y) {
     if (!roads.length) return 1;
     const key = y + ":" + Math.floor(lon / 3) + ":" + Math.floor(lat / 3);
     let v = roadCache.get(key);
-    if (v === undefined) { const p = polity(Math.floor(lon / 3) * 3 + 1.5, Math.floor(lat / 3) * 3 + 1.5, y); v = 1; for (const r of roads) if (p && p.includes(r.polity)) v = Math.max(v, r.x); roadCache.set(key, v); if (roadCache.size > 60000) roadCache.clear(); }
+    if (v === undefined) {
+      const cx = Math.floor(lon / 3) * 3 + 1.5, cy = Math.floor(lat / 3) * 3 + 1.5, rr = roadRealms(roads, y);
+      v = 1;
+      if (rr) { for (const r of rr) if (r.x > v && cx >= r.box[0] && cx <= r.box[2] && cy >= r.box[1] && cy <= r.box[3] && d3.geoContains(r.f, [cx, cy])) v = r.x; }
+      else { const p = polity(cx, cy, y); for (const r of roads) if (p && p.includes(r.polity)) v = Math.max(v, r.x); }
+      roadCache.set(key, v); if (roadCache.size > 60000) roadCache.clear();
+    }
     return v;
   }
   // pref: "fast" | "land" | "sea". Returns the path, legs by mode, days, cost in day-wages and what you will meet.
@@ -126,7 +170,7 @@
     const rails = rules.rail_regions.filter(r => y >= r.from);
     const roads = rules.roads.filter(r => r.polity && y >= r.from && y <= r.to);
     const SS = seasonsFor(y), seaS = steam ? [] : SS.sea, landS = SS.land;
-    const water = i => isWater(i) || ch.sea.has(i), dry = i => !isWater(i) || ch.ferry.has(i), onWaterCell = i => water(i);
+    const shut = closedSea(y), water = shut ? i => (isWater(i) || ch.sea.has(i)) && !shut[i] : i => isWater(i) || ch.sea.has(i), dry = i => !isWater(i) || ch.ferry.has(i), onWaterCell = i => water(i);
     const snap = p => { const i = cellOf(p.lon, p.lat); if (dry(i)) return i; let best = i, bd = 1e9; for (let dr = -4; dr <= 4; dr++) for (let dc = -4; dc <= 4; dc++) { const j = i + dr * COLS + dc; if (j >= 0 && j < N && dry(j) && dr * dr + dc * dc < bd) { bd = dr * dr + dc * dc; best = j; } } return best; };
     const s0 = snap(a), t0 = snap(b);
     // Best land speed per cell (km per elapsed day, rest days included), worked out once per cell.
@@ -137,6 +181,7 @@
       const c = cls(i), lon = lonOf(i), lat = latOf(i); let best = 0, mode = -1;
       for (const m of land) {
         if (m.rail && !rails.some(r => inBox(r.box, lon, lat))) continue;
+        if (m.regions && !m.regions.some(r => y >= r.from && inBox(r.box, lon, lat))) continue;
         const v = m.kmd * ((T[m.id] || T.foot)[c] ?? 0.5);
         if (v > best) { best = v; mode = MODE.indexOf(m.id); }
       }
@@ -156,9 +201,12 @@
     g[s0] = 0; H.push(heur(s0), s0);
     const seaPen = pref === "land" ? 4 : 1, landPen = pref === "sea" ? 1.8 : 1;
     let found = -1, n = 0;
-    while (H.size && n < (pref === "fast" ? 450000 : 200000)) {
-      const s = H.pop(), onW = s >= N, i = onW ? s - N : s, gs = g[s]; n++;
-      if (!onW && i === t0) { found = s; break; }
+    // n counts settled states only: an entry whose cost has since improved is skipped without counting.
+    while (H.size && n < (pref === "fast" ? 600000 : 300000)) {
+      const k0 = H.k[0], s = H.pop(), onW = s >= N, i = onW ? s - N : s, gs = g[s];
+      if (k0 > gs + heur(i) + 1e-3) continue;   // heur is cached as Float32, so allow for its rounding
+      n++;
+      if (i === t0 && (!onW || !dry(t0))) { found = s; break; }   // a speck of an island the grid draws as sea: arriving by ship counts
       const r = Math.floor(i / COLS), c = i % COLS;
       const mo = ((month - 1 + Math.floor(gs / 30.4)) % 12) + 1;
       if (sea) {
@@ -292,20 +340,21 @@
     const land = ms.filter(m => m.medium === "land"), sea = ms.filter(m => m.medium === "sea").sort((p, q) => q.kmd - p.kmd)[0] || null, riverM = ms.find(m => m.medium === "river");
     const ch = channels(y), trade = tradeCells(y), port = ports(y, [{ ...a, always: 1 }]), rails = rules.rail_regions.filter(r => y >= r.from);
     const roads = rules.roads.filter(r => r.polity && y >= r.from && y <= r.to), SS = seasonsFor(y), seaS = sea && sea.id === "steam" ? [] : SS.sea;
-    const water = i => isWater(i) || ch.sea.has(i), dry = i => !isWater(i) || ch.ferry.has(i);
+    const shut = closedSea(y), water = shut ? i => (isWater(i) || ch.sea.has(i)) && !shut[i] : i => isWater(i) || ch.sea.has(i), dry = i => !isWater(i) || ch.ferry.has(i);
     const LV = new Float32Array(N).fill(-1);
     const landSpeed = i => {
       if (LV[i] >= 0) return LV[i];
       const c = cls(i), lon = lonOf(i), lat = latOf(i); let best = 0, rail = false;
-      for (const m of land) { if (m.rail && !rails.some(r => inBox(r.box, lon, lat))) continue; const v = m.kmd * ((T[m.id] || T.foot)[c] ?? 0.5); if (v > best) { best = v; rail = !!m.rail; } }
+      for (const m of land) { if (m.rail && !rails.some(r => inBox(r.box, lon, lat))) continue; if (m.regions && !m.regions.some(r => y >= r.from && inBox(r.box, lon, lat))) continue; const v = m.kmd * ((T[m.id] || T.foot)[c] ?? 0.5); if (v > best) { best = v; rail = !!m.rail; } }
       const road = Math.max(trade.has(i) ? 1.2 : 1, rail ? 1 : roadAt(roads, lon, lat, y));
       return LV[i] = best * road * pace.land;
     };
-    const g = new Float32Array(2 * N).fill(Infinity), H = new Heap(), s0 = cellOf(a.lon, a.lat);
+    // Float64: a Float32 store rounds t up past itself, so the same cell would be pushed forever.
+    const g = new Float64Array(2 * N).fill(Infinity), H = new Heap(), s0 = cellOf(a.lon, a.lat);
     g[s0] = 0; H.push(0, s0);
     const waitPort = sea && sea.id === "steam" ? (rules.ports.steam_wait_days || 2) : rules.ports.wait_days;
     while (H.size) {
-      const s = H.pop(), onW = s >= N, i = onW ? s - N : s, gs = g[s]; if (gs > maxDays) break;
+      const k0 = H.k[0], s = H.pop(), onW = s >= N, i = onW ? s - N : s, gs = g[s]; if (gs > maxDays) break; if (k0 > gs) continue;
       const r = Math.floor(i / COLS), c = i % COLS, mo = ((month - 1 + Math.floor(gs / 30.4)) % 12) + 1;
       const relax = (j, t) => { if (t < g[j] && t <= maxDays) { g[j] = t; H.push(t, j); } };
       if (sea && !onW && dry(i) && port.has(i)) relax(i + N, gs + waitPort);
@@ -350,7 +399,11 @@
     if (!M()) return null;
     const A = pt(a), B = pt(b), T = when(t), pref = opts.pref || (opts.mode === "air" ? "air" : opts.mode === "land" ? "land" : opts.mode === "sea" ? "sea" : "fast");
     if (!A || !B) return null;
-    return shape(pref === "air" ? flight(A, B, T.y) : route(A, B, T.y, T.m, pref));
+    if (pref === "air") return shape(flight(A, B, T.y));
+    // A strong preference (sea, land) searches greedily and can give up on long voyages; then take the fastest way, and say so.
+    let r = route(A, B, T.y, T.m, pref);
+    if (!r && pref !== "fast") { r = route(A, B, T.y, T.m, "fast"); if (r) r.fallback = "fast"; }
+    return shape(r);
   };
   W.reach = (a, t, maxDays, opts) => { const A = pt(a), T = when(t); return A ? reach(A, T.y, T.m, maxDays, opts) : null; };
   W.motionReady = () => !!M();
