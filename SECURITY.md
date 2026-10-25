@@ -1,7 +1,8 @@
 # Security
 
-The repository is public. Report a problem by opening an issue (leave secrets out of it) or by contacting the owner
-on GitHub.
+The repository is public. Report a vulnerability privately through GitHub's private vulnerability reporting
+(the repository's **Security** tab, then **Report a vulnerability**). Do not put an unpatched vulnerability or exploit
+details in a public issue, pull request or comment. Public issues are for problems that are safe to disclose.
 
 ## Security review guidelines
 
