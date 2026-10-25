@@ -1,4 +1,7 @@
-# Usage: python3 views/atlas/build.py OUT.html [ATLAS_DIR] [LAYERS_DIR] [--local D3_DIR]
+# Usage: python3 views/atlas/build.py OUT.html [ATLAS_DIR] [LAYERS_DIR] [--local D3_DIR] [--inline]
+# Big blobs the first paint does not need go to atlas-files/ next to OUT.html (publish them with the page):
+# relief images, the terrain L0 tile, plugin lens data over 40 KB and the Wikidata battles. The old border snapshots
+# are not inlined (the page reads borders/l0 beside it). --inline keeps everything in one file (for opening locally).
 # One page, one map, one year: every workstream's layer on the same map, the guide on top.
 # ATLAS_DIR holds the Living Atlas files (entries*.js, empires.js, borders/); default /mnt/project-files/atlas.
 # LAYERS_DIR holds people/money/plague/ideas.json from extract_layers.py; default ATLAS_DIR/unified/layers.
@@ -7,6 +10,8 @@ import sys, json, glob, os
 
 args = sys.argv[1:]
 local = None
+inline = '--inline' in args
+if inline: args.remove('--inline')
 if '--local' in args:
     i = args.index('--local'); local = args[i + 1]; del args[i:i + 2]
 out = args[0]
@@ -15,6 +20,14 @@ layers = (args[2] if len(args) > 2 else atlas + 'unified/layers').rstrip('/') + 
 here = os.path.dirname(os.path.abspath(__file__))
 repo = os.path.dirname(os.path.dirname(here))
 J = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':'))
+side_dir = os.path.join(os.path.dirname(os.path.abspath(out)), 'atlas-files')
+late = {}  # key -> url, fetched by the page after the first paint
+def side(name, data):
+    '''Write bytes or a JSON-able object to atlas-files/NAME; return its URL relative to the page.'''
+    os.makedirs(side_dir, exist_ok=True)
+    with open(os.path.join(side_dir, name), 'wb') as f:
+        f.write(data if isinstance(data, bytes) else J(data).encode('utf-8'))
+    return 'atlas-files/' + name
 
 s = open(os.path.join(here, 'atlas.src.html'), encoding='utf-8').read()
 ent = '\n'.join(open(atlas + f, encoding='utf-8').read() for f in ['entries.js', 'entries-time.js', 'entries-more.js', 'empires.js'])
@@ -22,7 +35,7 @@ pol = {}
 for f in sorted(glob.glob(atlas + 'borders/world_*.json')):
     y = os.path.basename(f)[6:-5]
     y = -int(y[2:]) if y.startswith('bc') else int(y)
-    if y >= -4000: pol[y] = json.load(open(f))
+    if y >= -4000: pol[y] = json.load(open(f)) if inline else None
 ent += '\nconst POLITIES = ' + J(pol) + ';\n'
 
 lab = json.load(open(os.path.join(repo, 'data/order-chaos/lab.json')))
@@ -60,9 +73,13 @@ if os.path.exists(layers + 'terrain.json'):
     import base64
     L['terrain'] = json.load(open(layers + 'terrain.json'))
     terrain_js = open(layers + 'terrain.js', encoding='utf-8').read()
-    relief = 'data:image/webp;base64,' + base64.b64encode(open(layers + 'terrain-relief.webp', 'rb').read()).decode()
+    rb = open(layers + 'terrain-relief.webp', 'rb').read()
+    relief = 'data:image/webp;base64,' + base64.b64encode(rb).decode() if inline else side('terrain-relief.webp', rb)
     if os.path.exists(layers + 'terrain-political.webp'):  # the Paradox-style texture that sits under flat realm colours
-        relief_pol = 'data:image/webp;base64,' + base64.b64encode(open(layers + 'terrain-political.webp', 'rb').read()).decode()
+        rb = open(layers + 'terrain-political.webp', 'rb').read()
+        relief_pol = 'data:image/webp;base64,' + base64.b64encode(rb).decode() if inline else side('terrain-political.webp', rb)
+if not inline and L['war'].get('wd'):
+    late['war:wd'] = side('battles-wd.json', L['war'].pop('wd'))
 data = '\n'.join(f'const {k.upper()} = {J(v)};' for k, v in L.items()) + f'\nconst ORDER = {J(order)};\nconst RELIEF = {J(relief)};\nconst RELIEF_POL = {J(relief_pol)};\n'
 if 'terrain' not in L: data += 'const TERRAIN = null;\n'
 
@@ -78,6 +95,9 @@ for f in sorted(glob.glob(os.path.join(lens_dir, '*.py'))):
     mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
     lens_data[lid] = mod.build(repo)
     print('lens', lid, len(J(lens_data[lid])), 'bytes', file=sys.stderr)
+if not inline:
+    for lid in list(lens_data):
+        if len(J(lens_data[lid])) > 40000: late['lens:' + lid] = side(f'lens-{lid}.json', lens_data.pop(lid))
 data += f'const LENS_DATA = {J(lens_data)};\n'
 # Pixel map basemap (views/pixel/): renderer and sprites, plus terrain L0 and rivers when the terrain rasters exist.
 pixel_dir = os.path.join(repo, 'views/pixel')
@@ -89,7 +109,7 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
         import io
         from PIL import Image
         buf = io.BytesIO(); Image.open(pixel_src + 'terrain/terrain_l0.png').save(buf, 'WEBP', lossless=True, quality=100, method=6)
-        tile0 = 'data:image/webp;base64,' + base64.b64encode(buf.getvalue()).decode()
+        tile0 = 'data:image/webp;base64,' + base64.b64encode(buf.getvalue()).decode() if inline else side('terrain-l0.webp', buf.getvalue())
     except ImportError:
         tile0 = 'data:image/png;base64,' + base64.b64encode(open(pixel_src + 'terrain/terrain_l0.png', 'rb').read()).decode()
     rv = []
@@ -106,6 +126,7 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
 for f in sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
     scripts.append('<script>\n' + open(f, encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 
+data += f'const LATE_FILES = {J(late)};\n'
 land = J(json.load(open(atlas + 'borders/land-50m.json')))
 tours = [json.load(open(f)) for f in sorted(glob.glob(os.path.join(repo, 'data/guide/tours/*.json')))]
 s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours)).replace('/*__TERRAIN_JS__*/', terrain_js).replace('<!--__LENS_SCRIPTS__-->', '\n'.join(scripts))
@@ -115,3 +136,5 @@ if local:
     s = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0">' + s + '</body></html>'
 open(out, 'w', encoding='utf-8').write(s)
 print(out, len(s))
+if os.path.isdir(side_dir) and not inline:
+    for f in sorted(os.listdir(side_dir)): print('  atlas-files/' + f, os.path.getsize(os.path.join(side_dir, f)))

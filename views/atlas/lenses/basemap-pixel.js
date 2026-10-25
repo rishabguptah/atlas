@@ -71,7 +71,8 @@
     let s = snaps[0]; for (const v of snaps) if (v <= y) s = v;
     snap = s;
     if (realmCache[s]) return realmCache[s];
-    const t = POLITIES[s], fc = topojson.feature(t, Object.values(t.objects)[0]).features;
+    const t = POLITIES[s]; if (!t) return [];  // snapshot not inlined (it loads from borders/ beside the page)
+    const fc = topojson.feature(t, Object.values(t.objects)[0]).features;
     return realmCache[s] = fc.map((f, i) => {
       const p = f.properties || {}, name = (p.NAME || p.SUBJECTO || "").trim(), subj = (p.SUBJECTO || "").trim();
       const emp = typeof EMPIRES !== "undefined" && EMPIRES.find(e => s >= e.start && s <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj)));

@@ -63,7 +63,7 @@
       if (t) return t.data ? t : null;
       const rec = tiles[key] = { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
       const img = new Image(); pending++;
-      img.onload = () => { rec.img = img; decode(rec); pending--; clearTimeout(onTile); onTile = setTimeout(() => last && render(last), 60); };
+      img.onload = () => { rec.img = img; decode(rec); pending--; tileVer++; clearTimeout(onTile); onTile = setTimeout(() => last && render(last), 60); };
       img.onerror = () => { pending--; rec.data = null; rec.failed = true; };
       img.src = L.url(col, row);
       return null;
@@ -122,23 +122,17 @@
       idle(step);
     }
 
-    function render(t, o = {}) {
-      const W = container.clientWidth, H = container.clientHeight; lastW = W; lastH = H;
-      last = t; realmsNow = o.realms || realmsNow; if (o.mood) mood = o.mood;
-      // Art pixel (i, j) covers screen x in [ox + i*PX, ox + (i+1)*PX); U0 + i is its column in the zoomed world grid.
-      const ox = ((t.x % PX) + PX) % PX - PX, oy = ((t.y % PX) + PX) % PX - PX;
-      U0 = Math.round((ox - t.x) / PX); V0 = Math.round((oy - t.y) / PX);
-      w = Math.ceil((W - ox) / PX) + 1; h = Math.ceil((H - oy) / PX) + 1;
-      canvas.width = off.width = w; canvas.height = off.height = h;
-      Object.assign(canvas.style, { left: ox + "px", top: oy + "px", width: w * PX + "px", height: h * PX + "px", transform: "" });
-      const sw = Math.abs(projection([180, 0])[0] - projection([-180, 0])[0]);
-      const need = 360 / (sw * t.k / PX);
+    // The terrain of the current region (U0, V0, w, h): classes, base colours, shores, rim, rivers and stamps.
+    function terrainPass(t, need) {
       const landM = maskFor([opts.land], () => "#fff");
       base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255);
       hs = new Uint8Array(w * h); band = new Uint8Array(w * h); NEED = need; lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h); lonA = new Float32Array(w * h);
       // Inverse projection on a coarse grid, interpolated inside cells whose corners are all on the globe and do not
       // straddle the antimeridian; exact per pixel elsewhere (near the rim). Much cheaper than inverting every pixel.
-      const G = 4, gw = Math.ceil(w / G) + 1, gh = Math.ceil(h / G) + 1, gl = new Float64Array(gw * gh * 2), gok = new Uint8Array(gw * gh);
+      // The grid is anchored to the world (every G-th art column and row), so any region of the same view interpolates
+      // exactly the same longitude and latitude for a given art pixel.
+      const G = 4, gU = Math.floor(U0 / G), gV = Math.floor(V0 / G), gw = Math.floor((U0 + w - 1) / G) - gU + 2, gh = Math.floor((V0 + h - 1) / G) - gV + 2;
+      const gl = new Float64Array(gw * gh * 2), gok = new Uint8Array(gw * gh);
       const inv = (i, j, outA, o) => {
         const px = ((U0 + i + 0.5) * PX) / t.k, py = ((V0 + j + 0.5) * PX) / t.k;
         const ll = projection.invert([px, py]);
@@ -147,13 +141,13 @@
         if (!back || Math.abs(back[0] - px) > 0.5 || Math.abs(back[1] - py) > 0.5) return 0;
         outA[o] = ll[0]; outA[o + 1] = ll[1]; return 1;
       };
-      for (let gj = 0; gj < gh; gj++) for (let gi = 0; gi < gw; gi++) gok[gj * gw + gi] = inv(gi * G, gj * G, gl, (gj * gw + gi) * 2);
+      for (let gj = 0; gj < gh; gj++) for (let gi = 0; gi < gw; gi++) gok[gj * gw + gi] = inv((gU + gi) * G - U0, (gV + gj) * G - V0, gl, (gj * gw + gi) * 2);
       const ll = [0, 0];
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, u = U0 + i, v = V0 + j;
-        const gi = (i / G) | 0, gj = (j / G) | 0, a = gj * gw + gi, b = a + 1, c2 = a + gw, d2 = c2 + 1;
+        const gi = Math.floor(u / G) - gU, gj = Math.floor(v / G) - gV, a = gj * gw + gi, b = a + 1, c2 = a + gw, d2 = c2 + 1;
         if (gok[a] && gok[b] && gok[c2] && gok[d2] && Math.abs(gl[a * 2] - gl[b * 2]) < 90 && Math.abs(gl[a * 2] - gl[d2 * 2]) < 90) {
-          const fx = (i - gi * G) / G, fy = (j - gj * G) / G;
+          const fx = (u - (gU + gi) * G) / G, fy = (v - (gV + gj) * G) / G;
           for (let q = 0; q < 2; q++) {
             const top = gl[a * 2 + q] + (gl[b * 2 + q] - gl[a * 2 + q]) * fx, bot = gl[c2 * 2 + q] + (gl[d2 * 2 + q] - gl[c2 * 2 + q]) * fx;
             ll[q] = top + (bot - top) * fy;
@@ -205,6 +199,66 @@
       }
       drawRivers(t, need);
       stamps();
+    }
+    // Run terrainPass on another region of the world grid and hand back its buffers (the view's are left as they were).
+    const SEAM = 14;
+    let prevView = null, tileVer = 0;
+    function region(t, need, ru, rv, rw, rh) {
+      const sv = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA };
+      U0 = ru; V0 = rv; w = rw; h = rh; off.width = rw; off.height = rh;
+      terrainPass(t, need);
+      const out = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA };
+      ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA } = sv);
+      return out;
+    }
+    // Copy the world-grid rectangle [u0, u1) x [v0, v1) from one region's buffers into another's.
+    function blit(src, dst, u0, v0, u1, v1) {
+      if (u1 <= u0 || v1 <= v0) return;
+      for (const key of ["base", "cls", "hs", "band", "lowNoise", "latA"]) {
+        const S = src[key], D = dst[key];
+        for (let v = v0; v < v1; v++) {
+          const so = (v - src.V0) * src.w + (u0 - src.U0), dO = (v - dst.V0) * dst.w + (u0 - dst.U0);
+          D.set(S.subarray(so, so + (u1 - u0)), dO);
+        }
+      }
+    }
+
+    function render(t, o = {}) {
+      const W = container.clientWidth, H = container.clientHeight; lastW = W; lastH = H;
+      last = t; realmsNow = o.realms || realmsNow; if (o.mood) mood = o.mood;
+      // Art pixel (i, j) covers screen x in [ox + i*PX, ox + (i+1)*PX); U0 + i is its column in the zoomed world grid.
+      const ox = ((t.x % PX) + PX) % PX - PX, oy = ((t.y % PX) + PX) % PX - PX;
+      U0 = Math.round((ox - t.x) / PX); V0 = Math.round((oy - t.y) / PX);
+      w = Math.ceil((W - ox) / PX) + 1; h = Math.ceil((H - oy) / PX) + 1;
+      canvas.width = w; canvas.height = h;
+      Object.assign(canvas.style, { left: ox + "px", top: oy + "px", width: w * PX + "px", height: h * PX + "px", transform: "" });
+      const sw = Math.abs(projection([180, 0])[0] - projection([-180, 0])[0]);
+      const need = 360 / (sw * t.k / PX);
+      // A pan at the same zoom keeps every art pixel it already drew (they are anchored to the world grid) and only
+      // draws the newly exposed bands, each with a margin so trees, peaks and shorelines join up across the seam.
+      const P = prevView, reuse = P && P.k === t.k && P.need === need && P.mood === mood && P.ver === tileVer && !o.full &&
+        Math.abs(U0 - P.U0) < w && Math.abs(V0 - P.V0) < h;
+      if (!reuse) { off.width = w; off.height = h; terrainPass(t, need); }
+      else {
+        base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255); hs = new Uint8Array(w * h); band = new Uint8Array(w * h);
+        lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h);
+        const view = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA };
+        // The old frame's interior (its edge band may lack art anchored just outside it).
+        const iu0 = P.U0 + SEAM, iv0 = P.V0 + SEAM, iu1 = P.U0 + P.w - SEAM, iv1 = P.V0 + P.h - SEAM;
+        blit(P, view, Math.max(U0, iu0), Math.max(V0, iv0), Math.min(U0 + w, iu1), Math.min(V0 + h, iv1));
+        // New view minus that interior: up to four bands.
+        const bands = [[U0, V0, U0 + w, Math.max(V0, Math.min(V0 + h, iv0))], [U0, Math.min(V0 + h, Math.max(V0, iv1)), U0 + w, V0 + h]];
+        const my0 = Math.max(V0, iv0), my1 = Math.min(V0 + h, iv1);
+        if (my1 > my0) bands.push([U0, my0, Math.max(U0, Math.min(U0 + w, iu0)), my1], [Math.min(U0 + w, Math.max(U0, iu1)), my0, U0 + w, my1]);
+        for (const [u0, v0, u1, v1] of bands) {
+          if (u1 <= u0 || v1 <= v0) continue;
+          const r = region(t, need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM);
+          blit(r, view, u0, v0, u1, v1);
+        }
+        ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA } = view);
+        off.width = w; off.height = h;
+      }
+      prevView = { k: t.k, need, mood, ver: tileVer, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA };
       terrain = base.slice();
       realmRaster.clear();
       applyRealms();
@@ -224,18 +278,23 @@
         const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; }
       }
     }
-    // Rivers as 1-pixel lines (2 for the great rivers when zoomed in), more of them as you zoom.
+    // Rivers as 1-pixel lines (2 for the great rivers when zoomed in), more of them as you zoom. They are projected to the
+    // zoomed world grid once per zoom (pans and region passes reuse that), and segments off the region are skipped.
+    let riverGrid = null;
     function drawRivers(t, need) {
       const maxRank = need > 0.35 ? 3 : need > 0.15 ? 5 : need > 0.06 ? 7 : 9;
-      for (const r of opts.rivers || []) {
+      const pk = t.k + "|" + projection.scale() + "|" + projection.translate().join();
+      if (!riverGrid || riverGrid.pk !== pk) riverGrid = { pk, lines: (opts.rivers || []).map(r => ({ rank: r.rank, pts: r.line.map(ll => { const p = projection(ll); return p ? [Math.floor((p[0] * t.k) / PX), Math.floor((p[1] * t.k) / PX)] : null; }) })) };
+      for (const r of riverGrid.lines) {
         if (r.rank > maxRank) continue;
+        const wide = r.rank <= 2 && need < 0.05;
         let prev = null;
-        for (const ll of r.line) {
-          const p = projection(ll); if (!p) { prev = null; continue; }
-          const q = [Math.floor((p[0] * t.k) / PX) - U0, Math.floor((p[1] * t.k) / PX) - V0];
-          if (prev) {
+        for (const g of r.pts) {
+          if (!g) { prev = null; continue; }
+          const q = [g[0] - U0, g[1] - V0];
+          if (prev && !((prev[0] < -1 && q[0] < -1) || (prev[1] < 0 && q[1] < 0) || (prev[0] > w && q[0] > w) || (prev[1] >= h && q[1] >= h))) {
             line(prev[0], prev[1], q[0], q[1], RIVER[0], true);
-            if (r.rank <= 2 && need < 0.05) line(prev[0] + 1, prev[1], q[0] + 1, q[1], RIVER[1], true);
+            if (wide) line(prev[0] + 1, prev[1], q[0] + 1, q[1], RIVER[1], true);
           }
           prev = q;
         }
