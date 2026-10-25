@@ -2431,6 +2431,8 @@ Where the specialists disagree, say who the evidence favours.`;
     // The guide, for the Director's "Why?" and "Go deeper": ask the panel (or open a curated tour), and the answer on screen.
     ask: q => { document.getElementById("qbox").value = q; setTab("guide"); document.getElementById("ask").requestSubmit(); },
     get answer() { return state.answer; },
+    // The benchmark (ingest/judge/bench) always wants the live panel, even for a question a curated tour answers.
+    askLive: q => ask(q, false),
   };
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 

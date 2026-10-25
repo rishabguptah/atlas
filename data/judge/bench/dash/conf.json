@@ -1,0 +1,93 @@
+[
+ {
+  "kind": "event",
+  "attested": 14581,
+  "approximate": 1355,
+  "estimated": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "group",
+  "estimated": 43,
+  "attested": 0,
+  "approximate": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "idea",
+  "approximate": 181,
+  "attested": 0,
+  "estimated": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "language",
+  "attested": 8418,
+  "estimated": 0,
+  "approximate": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "measure",
+  "estimated": 12742,
+  "attested": 828,
+  "approximate": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "person",
+  "attested": 3656,
+  "approximate": 593,
+  "estimated": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "place",
+  "attested": 9080,
+  "approximate": 7613,
+  "estimated": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "polity",
+  "attested": 1574,
+  "approximate": 18,
+  "estimated": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "relation",
+  "attested": 6796,
+  "approximate": 1259,
+  "estimated": 11,
+  "unknown": 13
+ },
+ {
+  "kind": "route",
+  "approximate": 95,
+  "attested": 0,
+  "estimated": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "sample",
+  "estimated": 9344,
+  "attested": 0,
+  "approximate": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "script",
+  "approximate": 51,
+  "attested": 0,
+  "estimated": 0,
+  "unknown": 0
+ },
+ {
+  "kind": "work",
+  "approximate": 331,
+  "attested": 3914,
+  "estimated": 0,
+  "unknown": 0
+ }
+]
