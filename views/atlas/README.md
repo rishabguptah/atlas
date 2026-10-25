@@ -147,6 +147,20 @@ twelve hours away; `#story=<id>` plays any story on load and `#nostory` skips it
 them with `ATLAS.world.stories.add(story)` or a provider `{kind, list()}`; `ATLAS.world.director.play(story, {at, auto})`
 plays one.
 
+## Living world (travellers, meetings, stories of the road)
+
+The Travellers lens (Peoples) and the Living world tab show who was on the road, day by day. Engine:
+`views/atlas/world/agents.js` (L3 in WORLD.md: `ATLAS.world.agents / meetings / step / story / passing / add`), data
+from `views/atlas/lenses/living.py` (late file `atlas-files/lens-living.json`). Named travellers follow documented
+journeys (the travels kernel via `lenses/travels.py:journeys_as_stops`, and the life RPG's `data/life/lives/`); dates between known stops are spread by
+distance, legs take road time and the rest is a stay. The crowd is generated from 138 recurring travel systems in
+`data/world/flows.json` (season, trips a year, party size, trip time, goods, sources), with names from
+`data/world/names.json` by culture and era, and is always labelled generated. On slave-trade routes the generated
+people are the enslaved, named, never cargo. Meetings: `data/world/meetings.json` (documented, disputed, legend)
+plus co-presence at the moment. Follow a traveller to get a story of scenes; "Play as scenes" hands it to the
+Director; "Tell this story" asks Claude (needs `sample`). Keys in the tab: `,` and `.` step a day.
+`data/world/news.json` and `speeds.json` are ground truth for backtesting the motion model.
+
 ## Guess the past
 
 The Guess tab (`lenses/guess.*`) is a calibration game. The map flies to a moment and asks for a number the kernel

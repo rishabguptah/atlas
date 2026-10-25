@@ -1,0 +1,1998 @@
+[
+ {
+  "id": "marathon_490bc",
+  "event": "Battle of Marathon",
+  "date": "-490-09",
+  "place": "Marathon",
+  "lon": 23.98,
+  "lat": 38.12,
+  "date_precision": "month",
+  "arrivals": [
+   {
+    "place": "Athens",
+    "lon": 23.73,
+    "lat": 37.98,
+    "date": "-490-09",
+    "how": "runner, c. 40 km (Plutarch names Thersippus or Eucles; the 'Pheidippides' version is Lucian's)",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Plutarch, De gloria Atheniensium 347c",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Moralia/De_gloria_Atheniensium*.html"
+     },
+     {
+      "cite": "Wikipedia: Marathon run legend",
+      "url": "https://en.wikipedia.org/wiki/Pheidippides"
+     }
+    ],
+    "date_precision": "month",
+    "lag_days": 0
+   }
+  ],
+  "note": "Same-day arrival is legend, not Herodotus (who instead has Pheidippides run Athens to Sparta before the battle, arriving the next day: see speeds.json). Month follows Boeckh's dating (August/September 490 BC is debated)."
+ },
+ {
+  "id": "cannae_216bc",
+  "event": "Battle of Cannae",
+  "date": "-216-08-02",
+  "place": "Cannae",
+  "lon": 16.13,
+  "lat": 41.31,
+  "date_precision": "day",
+  "arrivals": [
+   {
+    "place": "Rome",
+    "lon": 12.48,
+    "lat": 41.89,
+    "date": "-216-08",
+    "how": "survivors and rumour, then consul Varro's letter from Canusium",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Livy 22.54-56",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.02.0152:book=22:chapter=54"
+     },
+     {
+      "cite": "Wikipedia: Battle of Cannae",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Cannae"
+     }
+    ],
+    "date_precision": "approx"
+   },
+   {
+    "place": "Carthage",
+    "lon": 10.32,
+    "lat": 36.85,
+    "date": "-216",
+    "how": "Mago sailed home and poured the rings of dead Roman knights onto the senate-house floor",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Livy 23.11-12",
+      "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.02.0153:book=23:chapter=12"
+     }
+    ],
+    "date_precision": "year"
+   }
+  ],
+  "note": "Date is in the pre-Julian Roman calendar ('ante diem IV Nonas Sextiles'), which had drifted from the solar year. Livy gives no day count for the news; ~350 km by road suggests 3-5 days for a rider."
+ },
+ {
+  "id": "death_of_alexander_323bc",
+  "event": "Death of Alexander the Great",
+  "date": "-323-06-11",
+  "place": "Babylon",
+  "lon": 44.42,
+  "lat": 32.54,
+  "date_precision": "day",
+  "arrivals": [
+   {
+    "place": "Athens",
+    "lon": 23.73,
+    "lat": 37.98,
+    "date": "-323-07",
+    "how": "travellers and messengers via Asia Minor; first doubted (Demades: 'if he were dead the whole world would smell the corpse')",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Plutarch, Phocion 22",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Phocion*.html"
+     },
+     {
+      "cite": "Diodorus Siculus 18.8-9",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Diodorus_Siculus/18A*.html"
+     },
+     {
+      "cite": "Wikipedia: Lamian War",
+      "url": "https://en.wikipedia.org/wiki/Lamian_War"
+     }
+    ],
+    "date_precision": "approx"
+   }
+  ],
+  "note": "Arrival date is an estimate (summer 323; the Lamian War was under way by autumn). Babylon-Athens is ~2,500 km by land; Persian-road couriers could do it in under a month."
+ },
+ {
+  "id": "assassination_of_caesar_44bc",
+  "event": "Assassination of Julius Caesar",
+  "date": "-44-03-15",
+  "place": "Rome (Curia of Pompey)",
+  "lon": 12.475,
+  "lat": 41.895,
+  "date_precision": "day",
+  "arrivals": [
+   {
+    "place": "Apollonia (Illyria)",
+    "lon": 19.47,
+    "lat": 40.72,
+    "date": "-44-03",
+    "how": "letter from his mother Atia carried by a freedman, across the Adriatic",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Nicolaus of Damascus, Life of Augustus 16-17",
+      "url": "https://www.livius.org/sources/content/nicolaus-life-of-augustus/"
+     },
+     {
+      "cite": "Wikipedia: Augustus",
+      "url": "https://en.wikipedia.org/wiki/Augustus"
+     }
+    ],
+    "date_precision": "approx"
+   }
+  ],
+  "note": "Octavian heard at Apollonia, where he was studying; Nicolaus implies within days to a couple of weeks. Day not recorded."
+ },
+ {
+  "id": "death_of_nero_68",
+  "event": "Death of Nero",
+  "date": "68-06-09",
+  "place": "Rome",
+  "lon": 12.48,
+  "lat": 41.89,
+  "arrivals": [
+   {
+    "place": "Clunia (Hispania)",
+    "lon": -3.37,
+    "lat": 41.79,
+    "date": "68-06-16",
+    "how": "the freedman Icelus, riding, in seven days",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Plutarch, Galba 7",
+      "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Galba*.html"
+     },
+     {
+      "cite": "Suetonius, Galba 11"
+     }
+    ],
+    "lag_days": 7
+   },
+   {
+    "place": "Alexandria",
+    "lon": 29.92,
+    "lat": 31.2,
+    "date": "68-07-06",
+    "how": "official dispatch; the prefect Ti. Julius Alexander's edict of this date is already in Galba's name",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Edict of Tiberius Julius Alexander, OGIS 669",
+      "url": "https://en.wikipedia.org/wiki/Tiberius_Julius_Alexander"
+     }
+    ],
+    "date_precision": "terminus_ante_quem"
+   }
+  ],
+  "note": "Rome-Clunia is ~2,000 km by road and sea crossing: ~280 km/day, the best-attested fast Roman courier run."
+ },
+ {
+  "id": "an_lushan_rebellion_755",
+  "event": "An Lushan raises rebellion at Fanyang",
+  "date": "755-12-16",
+  "place": "Fanyang (Youzhou, modern Beijing)",
+  "lon": 116.4,
+  "lat": 39.9,
+  "date_precision": "day",
+  "arrivals": [
+   {
+    "place": "Huaqing Palace, Lintong (near Chang'an)",
+    "lon": 109.21,
+    "lat": 34.36,
+    "date": "755-12-22",
+    "how": "Tang relay post (yi) riders; Xuanzong first disbelieved it",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Sima Guang, Zizhi tongjian ch. 217 (Tianbao 14, 11th month)"
+     },
+     {
+      "cite": "Wikipedia: An Lushan rebellion",
+      "url": "https://en.wikipedia.org/wiki/An_Lushan_rebellion"
+     }
+    ],
+    "days_range": [
+     6,
+     8
+    ]
+   }
+  ],
+  "note": "About 1,000 km in 6-8 days (~140 km/day). Exact cyclical day of the emperor's notification should be checked against the Tongjian; Julian conversion from Tianbao 14/11/jiazi."
+ },
+ {
+  "id": "death_of_ogedei_1241",
+  "event": "Death of Ogedei Khan",
+  "date": "1241-12-11",
+  "place": "near Karakorum",
+  "lon": 102.83,
+  "lat": 47.2,
+  "date_precision": "day",
+  "arrivals": [
+   {
+    "place": "Mongol army in Hungary/Croatia (Batu, Kadan)",
+    "lon": 19.0,
+    "lat": 47.5,
+    "date": "1242-03",
+    "how": "yam relay riders across the steppe, ~6,500 km",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Peter Jackson, The Mongols and the West 1221-1410 (2005), ch. 3"
+     },
+     {
+      "cite": "Thomas of Split, Historia Salonitana ch. 39"
+     },
+     {
+      "cite": "Wikipedia: Mongol invasion of Europe",
+      "url": "https://en.wikipedia.org/wiki/Mongol_invasion_of_Europe"
+     }
+    ],
+    "date_precision": "approx"
+   }
+  ],
+  "note": "Whether the news caused the withdrawal is debated (Jackson argues it may not have arrived in time); Kadan's force left Dalmatia in March-April 1242. Implies ~90 days or less over ~6,500 km."
+ },
+ {
+  "id": "death_of_mongke_1259",
+  "event": "Death of Mongke Khan at the siege of Diaoyu",
+  "date": "1259-08-11",
+  "place": "Diaoyu Fortress, Hechuan",
+  "lon": 106.28,
+  "lat": 30.0,
+  "date_precision": "day",
+  "arrivals": [
+   {
+    "place": "Kublai's army near Ezhou (Wuchang)",
+    "lon": 114.3,
+    "lat": 30.55,
+    "date": "1259-09",
+    "how": "messenger from his half-brother Mugge; Kublai kept the siege going",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Morris Rossabi, Khubilai Khan (1988), pp. 46-49"
+     },
+     {
+      "cite": "Wikipedia: Kublai Khan",
+      "url": "https://en.wikipedia.org/wiki/Kublai_Khan"
+     }
+    ],
+    "date_precision": "month"
+   },
+   {
+    "place": "Hulegu in Syria",
+    "lon": 37.16,
+    "lat": 36.2,
+    "date": "1260-02",
+    "how": "yam relay across Asia, ~6,000 km; Hulegu withdrew most of his army east",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Reuven Amitai-Preiss, Mongols and Mamluks (1995), pp. 26-27"
+     },
+     {
+      "cite": "Wikipedia: Hulagu Khan",
+      "url": "https://en.wikipedia.org/wiki/Hulagu_Khan"
+     }
+    ],
+    "date_precision": "approx"
+   }
+  ],
+  "note": "Hulegu's withdrawal after taking Aleppo (Jan 1260) and Damascus is traditionally linked to this news, which led to Ain Jalut."
+ },
+ {
+  "id": "black_death_messina_1347",
+  "event": "Plague galleys from Caffa reach Messina",
+  "date": "1347-10",
+  "place": "Messina",
+  "lon": 15.55,
+  "lat": 38.19,
+  "date_precision": "month",
+  "kind": "disease",
+  "arrivals": [
+   {
+    "place": "Marseille",
+    "lon": 5.37,
+    "lat": 43.3,
+    "date": "1347-11",
+    "how": "the disease itself, by Genoese ships",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Ole J. Benedictow, The Black Death 1346-1353 (2004)"
+     },
+     {
+      "cite": "Wikipedia: Black Death",
+      "url": "https://en.wikipedia.org/wiki/Black_Death"
+     }
+    ],
+    "date_precision": "month"
+   },
+   {
+    "place": "Pisa",
+    "lon": 10.4,
+    "lat": 43.72,
+    "date": "1348-01",
+    "how": "by ship",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Benedictow 2004"
+     }
+    ],
+    "date_precision": "month"
+   },
+   {
+    "place": "Florence",
+    "lon": 11.25,
+    "lat": 43.77,
+    "date": "1348-03",
+    "how": "overland from Pisa",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Giovanni Villani / Boccaccio, Decameron intro"
+     },
+     {
+      "cite": "Benedictow 2004"
+     }
+    ],
+    "date_precision": "month"
+   },
+   {
+    "place": "Paris",
+    "lon": 2.35,
+    "lat": 48.86,
+    "date": "1348-06",
+    "how": "overland and by river",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Benedictow 2004"
+     }
+    ],
+    "date_precision": "month"
+   },
+   {
+    "place": "Melcombe (Weymouth)",
+    "lon": -2.46,
+    "lat": 50.61,
+    "date": "1348-06",
+    "how": "by ship from Gascony; chronicles give 24 June or 7 July",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Grey Friars' Chronicle, Lynn; Benedictow 2004"
+     },
+     {
+      "cite": "Wikipedia: Black Death in England",
+      "url": "https://en.wikipedia.org/wiki/Black_Death_in_England"
+     }
+    ],
+    "date_precision": "month"
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1348-11",
+    "how": "overland and coastal shipping",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Benedictow 2004"
+     }
+    ],
+    "date_precision": "month"
+   }
+  ],
+  "note": "Not news but an object travelling: the plague itself (kind=disease). Spread rates (~1.5-6 km/day overland, far faster by sea) are a separate benchmark from courier speeds."
+ },
+ {
+  "id": "battle_of_hattin_1187",
+  "event": "Battle of Hattin",
+  "date": "1187-07-04",
+  "place": "Horns of Hattin",
+  "lon": 35.44,
+  "lat": 32.8,
+  "arrivals": [
+   {
+    "place": "Papal curia at Ferrara",
+    "lon": 11.62,
+    "lat": 44.84,
+    "date": "1187-10-29",
+    "how": "letters via the Italian maritime cities; Gregory VIII's crusade bull Audita tremendi is dated this day",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Audita tremendi (29 Oct 1187)",
+      "url": "https://en.wikipedia.org/wiki/Audita_tremendi"
+     },
+     {
+      "cite": "Wikipedia: Battle of Hattin",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Hattin"
+     }
+    ],
+    "date_precision": "terminus_ante_quem"
+   }
+  ],
+  "note": "Chroniclers say Urban III died of grief on hearing (20 Oct 1187); that is legend, but news had certainly reached the curia by mid/late October, ~3.5 months."
+ },
+ {
+  "id": "fall_of_constantinople_1453",
+  "event": "Fall of Constantinople",
+  "date": "1453-05-29",
+  "place": "Constantinople",
+  "lon": 28.95,
+  "lat": 41.01,
+  "arrivals": [
+   {
+    "place": "Candia (Crete)",
+    "lon": 25.13,
+    "lat": 35.34,
+    "date": "1453-06",
+    "how": "Venetian and Genoese ships that escaped the Golden Horn",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Steven Runciman, The Fall of Constantinople 1453 (1965), ch. 11"
+     }
+    ],
+    "date_precision": "month"
+   },
+   {
+    "place": "Venice",
+    "lon": 12.34,
+    "lat": 45.44,
+    "date": "1453-06-29",
+    "how": "ship from the Levant; read in the Senate",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Runciman 1965, ch. 11"
+     },
+     {
+      "cite": "Franz Babinger, Mehmed the Conqueror (1978)"
+     }
+    ],
+    "lag_days": 31
+   },
+   {
+    "place": "Rome",
+    "lon": 12.48,
+    "lat": 41.89,
+    "date": "1453-07-08",
+    "how": "from Venice",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Runciman 1965, ch. 11"
+     },
+     {
+      "cite": "Wikipedia: Fall of Constantinople",
+      "url": "https://en.wikipedia.org/wiki/Fall_of_Constantinople"
+     }
+    ],
+    "lag_days": 40
+   }
+  ],
+  "note": "Classic pre-print benchmark: a month to Venice by sea, ten more days overland to Rome."
+ },
+ {
+  "id": "columbus_return_1493",
+  "event": "Columbus returns from the first voyage (lands at Lisbon)",
+  "date": "1493-03-04",
+  "place": "Lisbon",
+  "lon": -9.14,
+  "lat": 38.71,
+  "arrivals": [
+   {
+    "place": "Palos de la Frontera",
+    "lon": -6.89,
+    "lat": 37.23,
+    "date": "1493-03-15",
+    "how": "Columbus himself, on the Nina",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Voyages of Christopher Columbus",
+      "url": "https://en.wikipedia.org/wiki/Voyages_of_Christopher_Columbus"
+     }
+    ]
+   },
+   {
+    "place": "Barcelona (royal court)",
+    "lon": 2.17,
+    "lat": 41.39,
+    "date": "1493-03-30",
+    "how": "Columbus's letter sent overland; the Catholic Monarchs' reply is dated 30 March",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Columbus's letter on the first voyage",
+      "url": "https://en.wikipedia.org/wiki/Columbus%27s_letter_on_the_first_voyage"
+     }
+    ],
+    "date_precision": "terminus_ante_quem"
+   },
+   {
+    "place": "Rome",
+    "lon": 12.48,
+    "lat": 41.89,
+    "date": "1493-05-03",
+    "how": "letters from Spain; Alexander VI's bull Inter caetera is dated 3 May",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Inter caetera",
+      "url": "https://en.wikipedia.org/wiki/Inter_caetera"
+     },
+     {
+      "cite": "Columbus's letter: Latin translation (Cosco, dated 29 April) printed in Rome c. May 1493"
+     }
+    ],
+    "date_precision": "terminus_ante_quem"
+   }
+  ],
+  "note": "Columbus's letter was printed in Barcelona in April and in Latin at Rome about a month later: news and print travelling together."
+ },
+ {
+  "id": "battle_of_pavia_1525",
+  "event": "Battle of Pavia (Francis I captured)",
+  "date": "1525-02-24",
+  "place": "Pavia",
+  "lon": 9.16,
+  "lat": 45.19,
+  "arrivals": [
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1525-03-09",
+    "how": "courier via the Netherlands; Henry VIII told in bed",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "J. J. Scarisbrick, Henry VIII (1968), p. 136"
+     }
+    ]
+   },
+   {
+    "place": "Madrid",
+    "lon": -3.7,
+    "lat": 40.42,
+    "date": "1525-03-10",
+    "how": "courier via Genoa and Barcelona",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Karl Brandi, The Emperor Charles V (1939), p. 222"
+     },
+     {
+      "cite": "Wikipedia: Battle of Pavia",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Pavia"
+     }
+    ]
+   }
+  ],
+  "note": "~14 days to both courts; London (~1,200 km) heard no later than Madrid (~1,500 km via sea legs)."
+ },
+ {
+  "id": "battle_of_lepanto_1571",
+  "event": "Battle of Lepanto",
+  "date": "1571-10-07",
+  "place": "Gulf of Patras, off the Echinades",
+  "lon": 21.1,
+  "lat": 38.25,
+  "arrivals": [
+   {
+    "place": "Venice",
+    "lon": 12.34,
+    "lat": 45.44,
+    "date": "1571-10-19",
+    "how": "galley of Onfre Giustinian, trailing captured Turkish banners",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Fernand Braudel, The Mediterranean (1949; Eng. tr. 1972), vol. 2, pp. 1102-1104"
+     },
+     {
+      "cite": "Wikipedia: Battle of Lepanto",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Lepanto"
+     }
+    ],
+    "lag_days": 12
+   },
+   {
+    "place": "Rome",
+    "lon": 12.48,
+    "lat": 41.89,
+    "date": "1571-10-22",
+    "how": "courier from Venice",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Braudel 1972, vol. 2"
+     },
+     {
+      "cite": "Ludwig von Pastor, History of the Popes vol. 18"
+     }
+    ],
+    "days_range": [
+     14,
+     16
+    ]
+   },
+   {
+    "place": "Madrid / El Escorial",
+    "lon": -4.15,
+    "lat": 40.59,
+    "date": "1571-10-31",
+    "how": "courier via Italy and Barcelona; Philip II told at vespers",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Braudel 1972, vol. 2"
+     },
+     {
+      "cite": "Geoffrey Parker, Imprudent King (2014)"
+     }
+    ],
+    "days_range": [
+     24,
+     25
+    ]
+   }
+  ],
+  "note": "Braudel uses Lepanto to show how a fixed event spread through the Mediterranean news network."
+ },
+ {
+  "id": "st_bartholomew_1572",
+  "event": "St Bartholomew's Day massacre",
+  "date": "1572-08-24",
+  "place": "Paris",
+  "lon": 2.35,
+  "lat": 48.86,
+  "arrivals": [
+   {
+    "place": "Rome",
+    "lon": 12.48,
+    "lat": 41.89,
+    "date": "1572-09",
+    "how": "courier from the nuncio Salviati and the Cardinal of Lorraine; Te Deum and commemorative medal followed",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Ludwig von Pastor, History of the Popes vol. 19"
+     },
+     {
+      "cite": "Wikipedia: St. Bartholomew's Day massacre",
+      "url": "https://en.wikipedia.org/wiki/St._Bartholomew%27s_Day_massacre"
+     }
+    ],
+    "date_precision": "approx",
+    "days_range": [
+     9,
+     14
+    ]
+   },
+   {
+    "place": "Madrid",
+    "lon": -3.7,
+    "lat": 40.42,
+    "date": "1572-09-07",
+    "how": "courier; the French ambassador reported Philip II laughed",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Geoffrey Parker, Philip II (1978)"
+     }
+    ]
+   }
+  ],
+  "note": "Days are uncertain to +-3; Rome is ~1,400 km, Madrid ~1,250 km from Paris."
+ },
+ {
+  "id": "death_of_elizabeth_1603",
+  "event": "Death of Elizabeth I",
+  "date": "1603-03-24",
+  "place": "Richmond Palace",
+  "lon": -0.31,
+  "lat": 51.46,
+  "arrivals": [
+   {
+    "place": "Edinburgh (Holyrood)",
+    "lon": -3.17,
+    "lat": 55.95,
+    "date": "1603-03-26",
+    "how": "Sir Robert Carey on relays of post horses, ~640 km in about 60 hours",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Memoirs of Robert Carey, Earl of Monmouth (1759)"
+     },
+     {
+      "cite": "Wikipedia: Robert Carey, 1st Earl of Monmouth",
+      "url": "https://en.wikipedia.org/wiki/Robert_Carey,_1st_Earl_of_Monmouth"
+     }
+    ],
+    "lag_days": 2.5
+   }
+  ],
+  "note": "Old Style (Julian) dates as used in England and Scotland. ~250 km/day: near the limit for a single relay rider."
+ },
+ {
+  "id": "fall_of_beijing_1644",
+  "event": "Fall of Beijing to Li Zicheng; Chongzhen emperor's suicide",
+  "date": "1644-04-25",
+  "place": "Beijing",
+  "lon": 116.39,
+  "lat": 39.91,
+  "arrivals": [
+   {
+    "place": "Nanjing",
+    "lon": 118.78,
+    "lat": 32.06,
+    "date": "1644-05",
+    "how": "fugitives and official couriers down the Grand Canal road",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Lynn Struve, The Southern Ming 1644-1662 (1984), ch. 1"
+     },
+     {
+      "cite": "Wikipedia: Southern Ming",
+      "url": "https://en.wikipedia.org/wiki/Southern_Ming"
+     }
+    ],
+    "date_precision": "month"
+   },
+   {
+    "place": "Shenyang (Qing court)",
+    "lon": 123.43,
+    "lat": 41.8,
+    "date": "1644-05",
+    "how": "via Wu Sangui at Shanhai Pass",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Frederic Wakeman, The Great Enterprise (1985), vol. 1"
+     },
+     {
+      "cite": "Wikipedia: Battle of Shanhai Pass",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Shanhai_Pass"
+     }
+    ],
+    "date_precision": "month"
+   }
+  ],
+  "note": "Day-level dates for the Nanjing arrival vary in the literature (mid-May); treat as ~2-3 weeks for ~1,000 km."
+ },
+ {
+  "id": "ako_incident_1701",
+  "event": "Asano Naganori attacks Kira in Edo Castle (Ako incident)",
+  "date": "1701-04-21",
+  "place": "Edo Castle",
+  "lon": 139.75,
+  "lat": 35.69,
+  "arrivals": [
+   {
+    "place": "Ako",
+    "lon": 134.39,
+    "lat": 34.75,
+    "date": "1701-04-26",
+    "how": "hayakago (relay palanquin): retainers Hayami Tozaemon and Kayano Sanpei, ~620 km in about 4.5 days",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Forty-seven ronin",
+      "url": "https://en.wikipedia.org/wiki/Forty-seven_r%C5%8Dnin"
+     },
+     {
+      "cite": "Henry D. Smith II, 'The Trouble with Terasaka', Monumenta Nipponica 59 (2004)"
+     }
+    ],
+    "lag_days": 4.5
+   }
+  ],
+  "note": "Japanese dates Genroku 14/3/14 to 3/19, converted to Gregorian. ~140 km/day by human-carried palanquin on the Tokaido/San'yodo."
+ },
+ {
+  "id": "death_of_aurangzeb_1707",
+  "event": "Death of Aurangzeb",
+  "date": "1707-03-03",
+  "place": "Ahmednagar (Bhingar camp)",
+  "lon": 74.74,
+  "lat": 19.09,
+  "arrivals": [
+   {
+    "place": "Jamrud near Peshawar (prince Muazzam)",
+    "lon": 71.38,
+    "lat": 34.0,
+    "date": "1707-03-22",
+    "how": "Mughal dak (relay runners and riders) via Burhanpur, Agra and Lahore, ~2,000 km",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "William Irvine, Later Mughals (1922), vol. 1, ch. 1"
+     },
+     {
+      "cite": "Wikipedia: Bahadur Shah I",
+      "url": "https://en.wikipedia.org/wiki/Bahadur_Shah_I"
+     }
+    ],
+    "days_range": [
+     18,
+     22
+    ]
+   }
+  ],
+  "note": "~100 km/day. Irvine's day should be checked; arrival is placed around 20 March to early April in secondary works."
+ },
+ {
+  "id": "lisbon_earthquake_1755",
+  "event": "Lisbon earthquake and tsunami",
+  "date": "1755-11-01",
+  "place": "Lisbon",
+  "lon": -9.14,
+  "lat": 38.71,
+  "arrivals": [
+   {
+    "place": "Mount's Bay, Cornwall",
+    "lon": -5.5,
+    "lat": 50.1,
+    "date": "1755-11-01",
+    "how": "the tsunami itself, about 4-5 hours later",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: 1755 Lisbon earthquake",
+      "url": "https://en.wikipedia.org/wiki/1755_Lisbon_earthquake"
+     }
+    ],
+    "kind": "wave"
+   },
+   {
+    "place": "Barbados",
+    "lon": -59.6,
+    "lat": 13.1,
+    "date": "1755-11-01",
+    "how": "the tsunami itself, crossing the Atlantic in under 10 hours",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: 1755 Lisbon earthquake",
+      "url": "https://en.wikipedia.org/wiki/1755_Lisbon_earthquake"
+     }
+    ],
+    "kind": "wave"
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1755-11",
+    "how": "post and packet via Spain/Falmouth; first letters printed in late November",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "T. D. Kendrick, The Lisbon Earthquake (1956)"
+     }
+    ],
+    "date_precision": "approx"
+   }
+  ],
+  "note": "Mixes a physical wave (hours) with written news (weeks): a useful contrast for the model."
+ },
+ {
+  "id": "fall_of_quebec_1759",
+  "event": "Battle of the Plains of Abraham (Wolfe killed)",
+  "date": "1759-09-13",
+  "place": "Quebec",
+  "lon": -71.22,
+  "lat": 46.8,
+  "arrivals": [
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1759-10-16",
+    "how": "Townshend's dispatch by ship across the Atlantic",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Battle of the Plains of Abraham",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_the_Plains_of_Abraham"
+     },
+     {
+      "cite": "Horace Walpole, letters of Oct 1759"
+     }
+    ]
+   }
+  ],
+  "note": "London had read a gloomy Wolfe dispatch two days earlier; ~33 days eastbound across the Atlantic."
+ },
+ {
+  "id": "lexington_concord_1775",
+  "event": "Battles of Lexington and Concord",
+  "date": "1775-04-19",
+  "place": "Lexington",
+  "lon": -71.23,
+  "lat": 42.45,
+  "arrivals": [
+   {
+    "place": "Worcester",
+    "lon": -71.8,
+    "lat": 42.26,
+    "date": "1775-04-19",
+    "how": "express rider Israel Bissell (the 'Lexington Alarm' letter)",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "David Hackett Fischer, Paul Revere's Ride (1994), pp. 270-271, appendix"
+     }
+    ]
+   },
+   {
+    "place": "New York",
+    "lon": -74.01,
+    "lat": 40.71,
+    "date": "1775-04-23",
+    "how": "relay of express riders down the Post Road",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Fischer 1994, p. 271"
+     },
+     {
+      "cite": "Wikipedia: Lexington Alarm",
+      "url": "https://en.wikipedia.org/wiki/Israel_Bissell"
+     }
+    ]
+   },
+   {
+    "place": "Philadelphia",
+    "lon": -75.16,
+    "lat": 39.95,
+    "date": "1775-04-24",
+    "how": "express riders",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Fischer 1994, p. 271"
+     }
+    ]
+   },
+   {
+    "place": "Williamsburg",
+    "lon": -76.71,
+    "lat": 37.27,
+    "date": "1775-04-28",
+    "how": "express riders",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Fischer 1994, appendix"
+     },
+     {
+      "cite": "Virginia Gazette, 29 April 1775"
+     }
+    ]
+   },
+   {
+    "place": "Charleston",
+    "lon": -79.93,
+    "lat": 32.78,
+    "date": "1775-05-08",
+    "how": "express riders and coastal vessel",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Fischer 1994, appendix"
+     }
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1775-05-28",
+    "how": "Capt. John Derby on the schooner Quero, carrying the Provincial Congress's depositions, beat Gage's official dispatch by ~2 weeks",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Fischer 1994, pp. 275-276"
+     },
+     {
+      "cite": "Wikipedia: Battles of Lexington and Concord",
+      "url": "https://en.wikipedia.org/wiki/Battles_of_Lexington_and_Concord"
+     }
+    ],
+    "lag_days": 39
+   }
+  ],
+  "note": "The best-documented colonial express relay; the Quero's ~29-day crossing was deliberately fast and light."
+ },
+ {
+  "id": "declaration_of_independence_1776",
+  "event": "Declaration of Independence adopted",
+  "date": "1776-07-04",
+  "place": "Philadelphia",
+  "lon": -75.15,
+  "lat": 39.95,
+  "arrivals": [
+   {
+    "place": "New York",
+    "lon": -74.01,
+    "lat": 40.71,
+    "date": "1776-07-09",
+    "how": "express rider; read to Washington's troops",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: United States Declaration of Independence",
+      "url": "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence"
+     }
+    ]
+   },
+   {
+    "place": "Boston",
+    "lon": -71.06,
+    "lat": 42.36,
+    "date": "1776-07-18",
+    "how": "post rider; read from the State House balcony",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: United States Declaration of Independence",
+      "url": "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence"
+     }
+    ],
+    "date_precision": "terminus_ante_quem"
+   },
+   {
+    "place": "Charleston",
+    "lon": -79.93,
+    "lat": 32.78,
+    "date": "1776-08-02",
+    "how": "express and ship",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Pauline Maier, American Scripture (1997)"
+     }
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1776-08-10",
+    "how": "ship (news); full text printed in London papers in mid-August",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Maier 1997"
+     },
+     {
+      "cite": "Wikipedia: Publication of the Declaration",
+      "url": "https://en.wikipedia.org/wiki/United_States_Declaration_of_Independence"
+     }
+    ],
+    "date_precision": "approx"
+   }
+  ],
+  "note": "Public readings are termini ante quem for arrival; Boston likely had it a few days before 18 July."
+ },
+ {
+  "id": "yorktown_1781",
+  "event": "British surrender at Yorktown",
+  "date": "1781-10-19",
+  "place": "Yorktown",
+  "lon": -76.51,
+  "lat": 37.24,
+  "arrivals": [
+   {
+    "place": "Philadelphia",
+    "lon": -75.16,
+    "lat": 39.95,
+    "date": "1781-10-24",
+    "how": "Lt. Col. Tench Tilghman by boat and horse, arriving ~3 a.m.",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Tench Tilghman",
+      "url": "https://en.wikipedia.org/wiki/Tench_Tilghman"
+     }
+    ]
+   },
+   {
+    "place": "Versailles",
+    "lon": 2.13,
+    "lat": 48.8,
+    "date": "1781-11-19",
+    "how": "the duc de Lauzun on the frigate Surveillante",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Siege of Yorktown",
+      "url": "https://en.wikipedia.org/wiki/Siege_of_Yorktown"
+     }
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1781-11-25",
+    "how": "dispatch via ship to Falmouth; Lord North: 'O God! it is all over!'",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "N. W. Wraxall, Historical Memoirs; Wikipedia: Siege of Yorktown",
+      "url": "https://en.wikipedia.org/wiki/Siege_of_Yorktown"
+     }
+    ],
+    "lag_days": 37
+   }
+  ],
+  "note": "France heard about a week before Britain."
+ },
+ {
+  "id": "storming_of_bastille_1789",
+  "event": "Storming of the Bastille",
+  "date": "1789-07-14",
+  "place": "Paris",
+  "lon": 2.37,
+  "lat": 48.853,
+  "arrivals": [
+   {
+    "place": "Versailles",
+    "lon": 2.13,
+    "lat": 48.8,
+    "date": "1789-07-14",
+    "how": "the duc de Liancourt woke Louis XVI that night ('No, sire, it is a revolution')",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Simon Schama, Citizens (1989)"
+     }
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1789-07-17",
+    "how": "courier/packet via Calais-Dover",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Hans-Jurgen Lusebrink & Rolf Reichardt, The Bastille: A History of a Symbol (1997)"
+     }
+    ],
+    "days_range": [
+     3,
+     5
+    ]
+   }
+  ],
+  "note": "Bastille diffusion across Europe is studied by Lusebrink & Reichardt; more arrival cities (Vienna, Madrid, St Petersburg) should be added from that book."
+ },
+ {
+  "id": "battle_of_the_nile_1798",
+  "event": "Battle of the Nile",
+  "date": "1798-08-01",
+  "place": "Aboukir Bay",
+  "lon": 30.1,
+  "lat": 31.35,
+  "arrivals": [
+   {
+    "place": "Naples",
+    "lon": 14.25,
+    "lat": 40.85,
+    "date": "1798-09-03",
+    "how": "Capel on the brig Mutine",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Battle of the Nile",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_the_Nile"
+     }
+    ],
+    "days_range": [
+     30,
+     34
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1798-10-02",
+    "how": "Lt Thomas Capel overland from Naples (Berry's earlier dispatch was captured with HMS Leander on 18 Aug)",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Battle of the Nile",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_the_Nile"
+     },
+     {
+      "cite": "Wikipedia: Thomas Bladen Capel",
+      "url": "https://en.wikipedia.org/wiki/Thomas_Bladen_Capel"
+     }
+    ],
+    "lag_days": 62
+   }
+  ],
+  "note": "Rumours reached Britain from the continent in late September before the official dispatch."
+ },
+ {
+  "id": "battle_of_trafalgar_1805",
+  "event": "Battle of Trafalgar",
+  "date": "1805-10-21",
+  "place": "Cape Trafalgar",
+  "lon": -6.03,
+  "lat": 36.18,
+  "arrivals": [
+   {
+    "place": "Gibraltar",
+    "lon": -5.35,
+    "lat": 36.14,
+    "date": "1805-10-23",
+    "how": "first printed account in the Gibraltar Chronicle",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Gibraltar Chronicle (published 23 Oct with Collingwood letter)",
+      "url": "https://en.wikipedia.org/wiki/Gibraltar_Chronicle"
+     }
+    ]
+   },
+   {
+    "place": "Falmouth",
+    "lon": -5.07,
+    "lat": 50.15,
+    "date": "1805-11-04",
+    "how": "Lt John Lapenotiere on the schooner HMS Pickle",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: John Richards Lapenotiere",
+      "url": "https://en.wikipedia.org/wiki/John_Richards_Lapenoti%C3%A8re"
+     }
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1805-11-06",
+    "how": "Lapenotiere by post-chaise, ~430 km in 37 hours, reaching the Admiralty ~1 a.m.",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Battle of Trafalgar",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Trafalgar"
+     },
+     {
+      "cite": "Derek Allen & Peter Hore, News of Nelson (2005)"
+     }
+    ],
+    "lag_days": 16
+   }
+  ],
+  "note": "Commemorated as 'The Trafalgar Way'."
+ },
+ {
+  "id": "battle_of_waterloo_1815",
+  "event": "Battle of Waterloo",
+  "date": "1815-06-18",
+  "place": "Waterloo (Mont-Saint-Jean)",
+  "lon": 4.4,
+  "lat": 50.68,
+  "arrivals": [
+   {
+    "place": "Brussels",
+    "lon": 4.35,
+    "lat": 50.85,
+    "date": "1815-06-19",
+    "how": "Wellington's dispatch written there; wounded and fugitives overnight",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Waterloo Dispatch",
+      "url": "https://en.wikipedia.org/wiki/Waterloo_Dispatch"
+     }
+    ]
+   },
+   {
+    "place": "Paris",
+    "lon": 2.35,
+    "lat": 48.86,
+    "date": "1815-06-21",
+    "how": "Napoleon himself, arriving at the Elysee in the morning; bulletins from 20 June",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Hundred Days",
+      "url": "https://en.wikipedia.org/wiki/Hundred_Days"
+     }
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1815-06-21",
+    "how": "Major Henry Percy by chaise and the sloop HMS Peruvian, bringing the dispatch and two eagles at ~11 p.m.",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Waterloo Dispatch",
+      "url": "https://en.wikipedia.org/wiki/Waterloo_Dispatch"
+     },
+     {
+      "cite": "Brian Cathcart, The News from Waterloo (2015)"
+     }
+    ],
+    "lag_days": 3
+   }
+  ],
+  "note": "The Rothschild 'early news' story is a later myth (Cathcart)."
+ },
+ {
+  "id": "treaty_of_ghent_1814",
+  "event": "Treaty of Ghent signed (end of War of 1812)",
+  "date": "1814-12-24",
+  "place": "Ghent",
+  "lon": 3.72,
+  "lat": 51.05,
+  "arrivals": [
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1814-12-26",
+    "how": "courier via Ostend",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Treaty of Ghent",
+      "url": "https://en.wikipedia.org/wiki/Treaty_of_Ghent"
+     }
+    ]
+   },
+   {
+    "place": "New York",
+    "lon": -74.01,
+    "lat": 40.71,
+    "date": "1815-02-11",
+    "how": "Henry Carroll on the sloop HMS Favourite from Plymouth (sailed 2 Jan)",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Treaty of Ghent",
+      "url": "https://en.wikipedia.org/wiki/Treaty_of_Ghent"
+     }
+    ],
+    "lag_days": 49
+   },
+   {
+    "place": "Washington",
+    "lon": -77.04,
+    "lat": 38.9,
+    "date": "1815-02-14",
+    "how": "express rider from New York",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Treaty of Ghent",
+      "url": "https://en.wikipedia.org/wiki/Treaty_of_Ghent"
+     }
+    ]
+   },
+   {
+    "place": "New Orleans",
+    "lon": -90.07,
+    "lat": 29.95,
+    "date": "1815-03-13",
+    "how": "official confirmation reached Andrew Jackson",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Robert V. Remini, The Battle of New Orleans (1999)"
+     }
+    ]
+   }
+  ],
+  "note": "The famous delay: the Battle of New Orleans (8 Jan 1815) was fought two weeks after signing."
+ },
+ {
+  "id": "battle_of_new_orleans_1815",
+  "event": "Battle of New Orleans",
+  "date": "1815-01-08",
+  "place": "Chalmette",
+  "lon": -89.99,
+  "lat": 29.94,
+  "arrivals": [
+   {
+    "place": "Washington",
+    "lon": -77.04,
+    "lat": 38.9,
+    "date": "1815-02-04",
+    "how": "express riders overland",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Battle of New Orleans",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_New_Orleans"
+     },
+     {
+      "cite": "Remini 1999"
+     }
+    ],
+    "lag_days": 27
+   },
+   {
+    "place": "New York",
+    "lon": -74.01,
+    "lat": 40.71,
+    "date": "1815-02-06",
+    "how": "express from Washington",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Remini 1999"
+     }
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1815-03-08",
+    "how": "ship",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Battle of New Orleans",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_New_Orleans"
+     }
+    ],
+    "date_precision": "approx"
+   }
+  ],
+  "note": "Washington heard of the victory ten days before the peace treaty arrived (see treaty_of_ghent_1814)."
+ },
+ {
+  "id": "death_of_napoleon_1821",
+  "event": "Death of Napoleon",
+  "date": "1821-05-05",
+  "place": "Longwood, St Helena",
+  "lon": -5.68,
+  "lat": -15.96,
+  "arrivals": [
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1821-07-04",
+    "how": "ship to Britain",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Death of Napoleon",
+      "url": "https://en.wikipedia.org/wiki/Death_of_Napoleon"
+     }
+    ],
+    "lag_days": 60
+   },
+   {
+    "place": "Paris",
+    "lon": 2.35,
+    "lat": 48.86,
+    "date": "1821-07-06",
+    "how": "from London",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Death of Napoleon",
+      "url": "https://en.wikipedia.org/wiki/Death_of_Napoleon"
+     }
+    ],
+    "date_precision": "approx"
+   }
+  ],
+  "note": "~60 days by sail from the South Atlantic."
+ },
+ {
+  "id": "polk_nomination_1844",
+  "event": "James K. Polk nominated at the Democratic convention",
+  "date": "1844-05-29",
+  "place": "Baltimore",
+  "lon": -76.61,
+  "lat": 39.29,
+  "arrivals": [
+   {
+    "place": "Washington",
+    "lon": -77.04,
+    "lat": 38.9,
+    "date": "1844-05-29",
+    "how": "Morse telegraph, Alfred Vail at Baltimore to Morse in the Capitol",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Samuel Morse",
+      "url": "https://en.wikipedia.org/wiki/Samuel_Morse"
+     },
+     {
+      "cite": "Wikipedia: 1844 Democratic National Convention",
+      "url": "https://en.wikipedia.org/wiki/1844_Democratic_National_Convention"
+     }
+    ],
+    "lag_days": 0
+   }
+  ],
+  "note": "First political news sent by electric telegraph (the Whig ticket on 1 May had been telegraphed from Annapolis Junction an hour before the train arrived). Polk himself in Tennessee learned by mail days later."
+ },
+ {
+  "id": "california_gold_1848",
+  "event": "Gold discovered at Sutter's Mill",
+  "date": "1848-01-24",
+  "place": "Coloma",
+  "lon": -120.89,
+  "lat": 38.8,
+  "arrivals": [
+   {
+    "place": "San Francisco",
+    "lon": -122.42,
+    "lat": 37.77,
+    "date": "1848-03-15",
+    "how": "printed in The Californian",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: California gold rush",
+      "url": "https://en.wikipedia.org/wiki/California_gold_rush"
+     }
+    ]
+   },
+   {
+    "place": "Honolulu",
+    "lon": -157.86,
+    "lat": 21.31,
+    "date": "1848-06",
+    "how": "ships from San Francisco",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "H. W. Brands, The Age of Gold (2002)"
+     }
+    ],
+    "date_precision": "month"
+   },
+   {
+    "place": "New York",
+    "lon": -74.01,
+    "lat": 40.71,
+    "date": "1848-08-19",
+    "how": "New York Herald report",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: California gold rush",
+      "url": "https://en.wikipedia.org/wiki/California_gold_rush"
+     }
+    ],
+    "lag_days": 208
+   },
+   {
+    "place": "Washington",
+    "lon": -77.04,
+    "lat": 38.9,
+    "date": "1848-12-05",
+    "how": "President Polk confirms it to Congress after army couriers brought gold samples",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: California gold rush",
+      "url": "https://en.wikipedia.org/wiki/California_gold_rush"
+     }
+    ]
+   }
+  ],
+  "note": "Local news was slow to spread because it was not believed; the long lag is partly credibility, not transport."
+ },
+ {
+  "id": "indian_rebellion_meerut_1857",
+  "event": "Meerut mutiny (start of the Indian Rebellion)",
+  "date": "1857-05-10",
+  "place": "Meerut",
+  "lon": 77.71,
+  "lat": 28.98,
+  "arrivals": [
+   {
+    "place": "Delhi",
+    "lon": 77.21,
+    "lat": 28.65,
+    "date": "1857-05-11",
+    "how": "the mutinous sowars themselves; Delhi telegraph office signalled Ambala the same day",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Indian Rebellion of 1857",
+      "url": "https://en.wikipedia.org/wiki/Indian_Rebellion_of_1857"
+     }
+    ]
+   },
+   {
+    "place": "Calcutta",
+    "lon": 88.36,
+    "lat": 22.57,
+    "date": "1857-05",
+    "how": "electric telegraph via Agra",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Indian Rebellion of 1857",
+      "url": "https://en.wikipedia.org/wiki/Indian_Rebellion_of_1857"
+     }
+    ],
+    "date_precision": "approx"
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1857-06-26",
+    "how": "steamer to Suez, overland, Mediterranean steamer, then telegraph from Trieste/Marseille",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Saul David, The Indian Mutiny (2002)"
+     }
+    ],
+    "days_range": [
+     45,
+     48
+    ]
+   }
+  ],
+  "note": "No telegraph to Europe until 1865; ~6-7 weeks to London."
+ },
+ {
+  "id": "lincoln_assassination_1865",
+  "event": "Assassination of Abraham Lincoln",
+  "date": "1865-04-14",
+  "place": "Ford's Theatre, Washington",
+  "lon": -77.03,
+  "lat": 38.9,
+  "arrivals": [
+   {
+    "place": "New York",
+    "lon": -74.01,
+    "lat": 40.71,
+    "date": "1865-04-15",
+    "how": "telegraph overnight",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Assassination of Abraham Lincoln",
+      "url": "https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln"
+     }
+    ],
+    "lag_days": 0
+   },
+   {
+    "place": "San Francisco",
+    "lon": -122.42,
+    "lat": 37.77,
+    "date": "1865-04-15",
+    "how": "transcontinental telegraph (1861)",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: First transcontinental telegraph",
+      "url": "https://en.wikipedia.org/wiki/First_transcontinental_telegraph"
+     }
+    ],
+    "lag_days": 0
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1865-04-26",
+    "how": "steamer Nova Scotian from Portland, Maine, to Londonderry, then telegraph",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Assassination of Abraham Lincoln",
+      "url": "https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln"
+     }
+    ],
+    "lag_days": 12
+   },
+   {
+    "place": "Paris",
+    "lon": 2.35,
+    "lat": 48.86,
+    "date": "1865-04-26",
+    "how": "telegraph from Britain",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Assassination of Abraham Lincoln",
+      "url": "https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln"
+     }
+    ],
+    "date_precision": "approx"
+   }
+  ],
+  "note": "Last great news event before a working transatlantic cable (July 1866): instant on land, 12 days at sea."
+ },
+ {
+  "id": "krakatoa_1883",
+  "event": "Krakatoa's climactic explosion",
+  "date": "1883-08-27",
+  "place": "Krakatoa",
+  "lon": 105.42,
+  "lat": -6.1,
+  "arrivals": [
+   {
+    "place": "Batavia",
+    "lon": 106.83,
+    "lat": -6.18,
+    "date": "1883-08-27",
+    "how": "heard directly; telegraphed onward",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "G. J. Symons (ed.), The Eruption of Krakatoa and Subsequent Phenomena (Royal Society, 1888)"
+     }
+    ]
+   },
+   {
+    "place": "Rodrigues Island",
+    "lon": 63.42,
+    "lat": -19.7,
+    "date": "1883-08-27",
+    "how": "the sound itself, ~4,800 km away, ~4 hours later",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Symons 1888"
+     },
+     {
+      "cite": "Wikipedia: 1883 eruption of Krakatoa",
+      "url": "https://en.wikipedia.org/wiki/1883_eruption_of_Krakatoa"
+     }
+    ],
+    "kind": "sound"
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1883-08-28",
+    "how": "submarine telegraph; reported in The Times",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Simon Winchester, Krakatoa (2003)"
+     }
+    ],
+    "lag_days": 1
+   }
+  ],
+  "note": "Winchester calls it the first global news event of the telegraph age."
+ },
+ {
+  "id": "fall_of_khartoum_1885",
+  "event": "Fall of Khartoum (Gordon killed)",
+  "date": "1885-01-26",
+  "place": "Khartoum",
+  "lon": 32.53,
+  "lat": 15.6,
+  "arrivals": [
+   {
+    "place": "Korti (Wolseley's HQ)",
+    "lon": 31.6,
+    "lat": 18.1,
+    "date": "1885-02-04",
+    "how": "Wilson's steamers saw the city fallen on 28 Jan; messengers back down the Nile",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "Wikipedia: Siege of Khartoum",
+      "url": "https://en.wikipedia.org/wiki/Siege_of_Khartoum"
+     }
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1885-02-05",
+    "how": "telegraph from Korti via Cairo",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Siege of Khartoum",
+      "url": "https://en.wikipedia.org/wiki/Siege_of_Khartoum"
+     }
+    ],
+    "lag_days": 10
+   }
+  ],
+  "note": "Desert gap of days, then telegraph overnight."
+ },
+ {
+  "id": "titanic_1912",
+  "event": "Sinking of the Titanic",
+  "date": "1912-04-15",
+  "place": "North Atlantic",
+  "lon": -49.95,
+  "lat": 41.73,
+  "arrivals": [
+   {
+    "place": "Cape Race",
+    "lon": -53.07,
+    "lat": 46.66,
+    "date": "1912-04-15",
+    "how": "wireless distress calls relayed shore-side",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Sinking of the Titanic",
+      "url": "https://en.wikipedia.org/wiki/Sinking_of_the_Titanic"
+     }
+    ]
+   },
+   {
+    "place": "New York",
+    "lon": -74.01,
+    "lat": 40.71,
+    "date": "1912-04-15",
+    "how": "wireless and wire services; New York Times morning edition",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Sinking of the Titanic",
+      "url": "https://en.wikipedia.org/wiki/Sinking_of_the_Titanic"
+     }
+    ],
+    "lag_days": 0
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1912-04-15",
+    "how": "transatlantic cable; evening papers (early reports wrongly said all saved)",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Sinking of the Titanic",
+      "url": "https://en.wikipedia.org/wiki/Sinking_of_the_Titanic"
+     }
+    ],
+    "lag_days": 0
+   },
+   {
+    "place": "New York (survivors on Carpathia)",
+    "lon": -74.01,
+    "lat": 40.71,
+    "date": "1912-04-18",
+    "how": "the survivors themselves",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: RMS Carpathia",
+      "url": "https://en.wikipedia.org/wiki/RMS_Carpathia"
+     }
+    ]
+   }
+  ],
+  "note": "Radio age: news within hours, people in days."
+ },
+ {
+  "id": "sarajevo_1914",
+  "event": "Assassination of Archduke Franz Ferdinand",
+  "date": "1914-06-28",
+  "place": "Sarajevo",
+  "lon": 18.43,
+  "lat": 43.86,
+  "arrivals": [
+   {
+    "place": "Vienna",
+    "lon": 16.37,
+    "lat": 48.21,
+    "date": "1914-06-28",
+    "how": "telegraph",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Wikipedia: Assassination of Archduke Franz Ferdinand",
+      "url": "https://en.wikipedia.org/wiki/Assassination_of_Archduke_Franz_Ferdinand"
+     }
+    ]
+   },
+   {
+    "place": "Bad Ischl (Franz Joseph)",
+    "lon": 13.62,
+    "lat": 47.71,
+    "date": "1914-06-28",
+    "how": "telegraph to the imperial villa",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Christopher Clark, The Sleepwalkers (2012)"
+     }
+    ]
+   },
+   {
+    "place": "Kiel (Wilhelm II at the regatta)",
+    "lon": 10.14,
+    "lat": 54.32,
+    "date": "1914-06-28",
+    "how": "telegraph; message brought out by launch",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Clark 2012"
+     }
+    ]
+   },
+   {
+    "place": "London",
+    "lon": -0.13,
+    "lat": 51.51,
+    "date": "1914-06-28",
+    "how": "telegraph; George V's diary that day",
+    "conf": "documented",
+    "sources": [
+     {
+      "cite": "Clark 2012"
+     }
+    ]
+   },
+   {
+    "place": "New York",
+    "lon": -74.01,
+    "lat": 40.71,
+    "date": "1914-06-28",
+    "how": "cable; front page next morning",
+    "conf": "likely",
+    "sources": [
+     {
+      "cite": "New York Times, 29 June 1914"
+     }
+    ]
+   }
+  ],
+  "note": "Same-day everywhere connected by wire."
+ }
+]

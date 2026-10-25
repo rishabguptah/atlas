@@ -1,0 +1,5223 @@
+[
+ {
+  "id": "wenamun_tjekerbaal",
+  "a": "Wenamun",
+  "b": "Tjekerbaal",
+  "date": "-1075",
+  "date_approx": true,
+  "place": "Byblos",
+  "lon": 35.65,
+  "lat": 34.12,
+  "what": "The Egyptian priest Wenamun, sent to buy cedar for the barque of Amun, haggled for timber with Tjekerbaal, prince of Byblos, who demanded payment and reminded him Egypt no longer commanded the coast.",
+  "why": "The papyrus account is the classic witness to Egypt's collapse of prestige in the Levant at the end of the New Kingdom; whether it is a report or a literary tale is debated.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "Story of Wenamun (Moscow Papyrus 120); summarised in Wikipedia, 'Story of Wenamun'",
+    "url": "https://en.wikipedia.org/wiki/Story_of_Wenamun"
+   }
+  ]
+ },
+ {
+  "id": "solomon_sheba",
+  "a": "Solomon",
+  "b": "Queen of Sheba",
+  "a_person": "person:solomon",
+  "date": "-950",
+  "date_approx": true,
+  "place": "Jerusalem",
+  "lon": 35.23,
+  "lat": 31.78,
+  "what": "The Queen of Sheba came to Jerusalem with spices, gold and precious stones to test Solomon with hard questions.",
+  "why": "The story, told in 1 Kings 10 and retold in the Quran and the Ethiopian Kebra Nagast, became the founding legend of the Solomonic dynasty of Ethiopia; no historical evidence of the visit exists.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "1 Kings 10; 2 Chronicles 9; Kebra Nagast; summarised in Wikipedia, 'Queen of Sheba'",
+    "url": "https://en.wikipedia.org/wiki/Queen_of_Sheba"
+   }
+  ]
+ },
+ {
+  "id": "solon_croesus",
+  "a": "Solon",
+  "b": "Croesus",
+  "a_person": "person:solon",
+  "b_person": "person:croesus",
+  "date": "-560",
+  "date_approx": true,
+  "place": "Sardis",
+  "lon": 28.04,
+  "lat": 38.49,
+  "what": "Shown the treasures of Sardis, Solon refused to call Croesus the happiest of men and told him to count no man happy until he was dead.",
+  "why": "Herodotus' tale became a model of Greek wisdom about fortune, though chronology makes a meeting unlikely (Plutarch already noted the objection).",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Herodotus, Histories 1.29-33; Plutarch, Solon 27; summarised in Wikipedia, 'Croesus'",
+    "url": "https://en.wikipedia.org/wiki/Croesus"
+   }
+  ]
+ },
+ {
+  "id": "buddha_bimbisara",
+  "a": "Gautama Buddha",
+  "b": "Bimbisara",
+  "a_person": "person:gautama_buddha",
+  "date": "-530",
+  "date_approx": true,
+  "place": "Rajagriha",
+  "lon": 85.42,
+  "lat": 25.03,
+  "what": "King Bimbisara of Magadha met the wandering ascetic Siddhartha at Rajagriha and offered him a share of his kingdom; after his awakening the Buddha returned and the king became a lay follower, giving the Bamboo Grove.",
+  "why": "Magadha's royal patronage gave the early sangha its first monastery and anchored Buddhism in the Ganges heartland; the episode survives only in Buddhist texts.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Pali Canon, Sutta Nipata 3.1 (Pabbajja Sutta); Vinaya Mahavagga; summarised in Wikipedia, 'Bimbisara'",
+    "url": "https://en.wikipedia.org/wiki/Bimbisara"
+   }
+  ]
+ },
+ {
+  "id": "confucius_laozi",
+  "a": "Confucius",
+  "b": "Laozi",
+  "a_person": "person:confucius",
+  "b_person": "person:laozi",
+  "date": "-518",
+  "date_approx": true,
+  "place": "Luoyang (Zhou royal capital)",
+  "lon": 112.45,
+  "lat": 34.62,
+  "what": "Confucius visited the Zhou court to ask the archivist Laozi about ritual, and was told to put away his pride and ambition.",
+  "why": "Sima Qian's Shiji made the encounter the emblematic meeting of the Confucian and Daoist traditions, but Laozi's historicity and the meeting are both doubted.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Sima Qian, Shiji 63; Zhuangzi; summarised in Wikipedia, 'Laozi'",
+    "url": "https://en.wikipedia.org/wiki/Laozi"
+   }
+  ]
+ },
+ {
+  "id": "themistocles_artaxerxes",
+  "a": "Themistocles",
+  "b": "Artaxerxes I",
+  "a_person": "person:themistocles",
+  "date": "-464",
+  "date_approx": true,
+  "place": "Susa",
+  "lon": 48.25,
+  "lat": 32.19,
+  "what": "Ostracised and condemned at Athens, the victor of Salamis fled to Persia and, after a year learning Persian, presented himself at the court of the new king Artaxerxes.",
+  "why": "The king made the man who had defeated his father governor of Magnesia; Thucydides tells the story as the strangest reversal of the age.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Thucydides 1.137-138; Plutarch, Themistocles 27-29; summarised in Wikipedia, 'Themistocles'",
+    "url": "https://en.wikipedia.org/wiki/Themistocles"
+   }
+  ]
+ },
+ {
+  "id": "xenophon_cyrus_younger",
+  "a": "Xenophon",
+  "b": "Cyrus the Younger",
+  "a_person": "person:xenophon",
+  "date": "-401",
+  "date_approx": true,
+  "place": "Sardis",
+  "lon": 28.04,
+  "lat": 38.49,
+  "what": "Brought by his friend Proxenus, the young Athenian Xenophon joined Cyrus' army at Sardis, believing it was bound against the Pisidians rather than against the Persian king.",
+  "why": "The campaign ended at Cunaxa and produced the Anabasis, Xenophon's account of leading the Ten Thousand home.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Xenophon, Anabasis 3.1; summarised in Wikipedia, 'Anabasis (Xenophon)'",
+    "url": "https://en.wikipedia.org/wiki/Anabasis_(Xenophon)"
+   }
+  ]
+ },
+ {
+  "id": "plato_dionysius",
+  "a": "Plato",
+  "b": "Dionysius I of Syracuse",
+  "a_person": "person:plato",
+  "date": "-388",
+  "date_approx": true,
+  "place": "Syracuse",
+  "lon": 15.29,
+  "lat": 37.08,
+  "what": "Plato visited the tyrant Dionysius I and spoke so freely against tyranny that, by later tradition, he was handed to a Spartan envoy and sold as a slave on Aegina.",
+  "why": "Plato's three Sicilian visits became the cautionary tale of the philosopher at a tyrant's court; the slave-sale story is late and uncertain.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "Diogenes Laertius 3.18-21; Plato, Seventh Letter; summarised in Wikipedia, 'Plato'",
+    "url": "https://en.wikipedia.org/wiki/Plato"
+   }
+  ]
+ },
+ {
+  "id": "aristotle_alexander",
+  "a": "Aristotle",
+  "b": "Alexander the Great",
+  "a_person": "person:aristotle",
+  "b_person": "person:alexander_the_great",
+  "date": "-343",
+  "date_approx": true,
+  "place": "Mieza",
+  "lon": 22.09,
+  "lat": 40.64,
+  "what": "Philip II summoned Aristotle to Macedon and gave him the Temple of the Nymphs at Mieza as a school for the thirteen-year-old Alexander.",
+  "why": "The most famous teacher-student pair of antiquity: Alexander carried Homer annotated by Aristotle on campaign and sent him specimens from Asia, by later report.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Plutarch, Life of Alexander 7-8; summarised in Wikipedia, 'Aristotle'",
+    "url": "https://en.wikipedia.org/wiki/Aristotle"
+   }
+  ]
+ },
+ {
+  "id": "alexander_diogenes",
+  "a": "Alexander the Great",
+  "b": "Diogenes",
+  "a_person": "person:alexander_the_great",
+  "b_person": "person:diogenes",
+  "date": "-336",
+  "date_approx": true,
+  "place": "Corinth",
+  "lon": 22.88,
+  "lat": 37.91,
+  "what": "Finding Diogenes sunning himself, Alexander asked what he could do for him; Diogenes asked him to stand out of his light.",
+  "why": "Plutarch and Diogenes Laertius made it the archetype of philosophy facing power; Alexander was in Corinth in 336 but the exchange is anecdote.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Plutarch, Life of Alexander 14; Diogenes Laertius 6.38; summarised in Wikipedia, 'Diogenes'",
+    "url": "https://en.wikipedia.org/wiki/Diogenes"
+   }
+  ]
+ },
+ {
+  "id": "alexander_kalanos",
+  "a": "Alexander the Great",
+  "b": "Kalanos",
+  "a_person": "person:alexander_the_great",
+  "date": "-326",
+  "date_approx": true,
+  "place": "Taxila",
+  "lon": 72.83,
+  "lat": 33.75,
+  "what": "Alexander's envoy Onesicritus found naked ascetics outside Taxila; one of them, Kalanos, agreed to join Alexander's court.",
+  "why": "Kalanos travelled with the army to Persia and burned himself alive at Pasargadae, the most vivid Greek encounter with Indian asceticism.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Arrian, Anabasis 7.2-3; Strabo 15.1.63-68; summarised in Wikipedia, 'Kalanos'",
+    "url": "https://en.wikipedia.org/wiki/Kalanos"
+   }
+  ]
+ },
+ {
+  "id": "alexander_porus",
+  "a": "Alexander the Great",
+  "b": "Porus",
+  "a_person": "person:alexander_the_great",
+  "b_person": "person:porus",
+  "date": "-326-05",
+  "date_approx": true,
+  "place": "Hydaspes (Jhelum) River",
+  "lon": 73.5,
+  "lat": 32.95,
+  "what": "After the Battle of the Hydaspes the wounded Porus, asked how he wished to be treated, answered 'like a king', and Alexander restored and enlarged his kingdom.",
+  "why": "Porus became Alexander's ally on the eastern frontier; the battle marked the furthest high tide of Macedonian conquest into India.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Arrian, Anabasis 5.19; summarised in Wikipedia, 'Porus'",
+    "url": "https://en.wikipedia.org/wiki/Porus"
+   }
+  ]
+ },
+ {
+  "id": "megasthenes_chandragupta",
+  "a": "Megasthenes",
+  "b": "Chandragupta Maurya",
+  "b_person": "person:chandragupta_maurya",
+  "date": "-303",
+  "date_approx": true,
+  "place": "Pataliputra",
+  "lon": 85.14,
+  "lat": 25.6,
+  "what": "Megasthenes went as Seleucus I's ambassador to the Mauryan court at Pataliputra and described the city, its palisade and its king.",
+  "why": "His Indica, preserved in fragments by Arrian and Strabo, was the West's main picture of India for centuries.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Arrian, Indica; Strabo 15.1; summarised in Wikipedia, 'Megasthenes'",
+    "url": "https://en.wikipedia.org/wiki/Megasthenes"
+   }
+  ]
+ },
+ {
+  "id": "hannibal_scipio_zama",
+  "a": "Hannibal",
+  "b": "Scipio Africanus",
+  "a_person": "person:hannibal",
+  "b_person": "person:scipio_africanus",
+  "date": "-202-10",
+  "date_approx": true,
+  "place": "Near Zama",
+  "lon": 9.37,
+  "lat": 36.08,
+  "what": "On the eve of battle Hannibal asked for a parley and met Scipio between the two armies with only interpreters; Scipio rejected his peace terms.",
+  "why": "The next day Scipio won at Zama, ending the Second Punic War and Carthage's power.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Polybius 15.6-8; Livy 30.29-31; summarised in Wikipedia, 'Battle of Zama'",
+    "url": "https://en.wikipedia.org/wiki/Battle_of_Zama"
+   }
+  ]
+ },
+ {
+  "id": "hannibal_antiochus",
+  "a": "Hannibal",
+  "b": "Antiochus III the Great",
+  "a_person": "person:hannibal",
+  "b_person": "person:antiochus_iii_the_great",
+  "date": "-195",
+  "date_approx": true,
+  "place": "Ephesus",
+  "lon": 27.34,
+  "lat": 37.94,
+  "what": "Fleeing Carthage, Hannibal reached Antiochus III at Ephesus and offered his services against Rome.",
+  "why": "Antiochus kept him as adviser but ignored his plans; defeat at Magnesia forced the king to agree to surrender Hannibal, who fled again.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Livy 33.49; Appian, Syriaca 4; summarised in Wikipedia, 'Hannibal'",
+    "url": "https://en.wikipedia.org/wiki/Hannibal"
+   }
+  ]
+ },
+ {
+  "id": "hannibal_scipio_ephesus",
+  "a": "Hannibal",
+  "b": "Scipio Africanus",
+  "a_person": "person:hannibal",
+  "b_person": "person:scipio_africanus",
+  "date": "-193",
+  "date_approx": true,
+  "place": "Ephesus",
+  "lon": 27.34,
+  "lat": 37.94,
+  "what": "Asked by Scipio who was the greatest general, Hannibal named Alexander, Pyrrhus and himself, and said that had he beaten Scipio he would have put himself first.",
+  "why": "Livy reports the conversation from Claudius Quadrigarius and doubts it; it survives as the classic exchange between great rivals.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Livy 35.14; Plutarch, Flamininus 21; summarised in Wikipedia, 'Scipio Africanus'",
+    "url": "https://en.wikipedia.org/wiki/Scipio_Africanus"
+   }
+  ]
+ },
+ {
+  "id": "menander_nagasena",
+  "a": "Menander I",
+  "b": "Nagasena",
+  "date": "-150",
+  "date_approx": true,
+  "place": "Sagala",
+  "lon": 74.53,
+  "lat": 32.49,
+  "what": "The Indo-Greek king Menander questioned the monk Nagasena on the self, rebirth and karma until, by the text's account, he was converted.",
+  "why": "The Milindapanha records the dialogue; Menander is real, but the conversation is a literary framing of Buddhist doctrine.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "Milindapanha; summarised in Wikipedia, 'Milinda Panha'",
+    "url": "https://en.wikipedia.org/wiki/Milinda_Panha"
+   }
+  ]
+ },
+ {
+  "id": "zhang_qian_yuezhi",
+  "a": "Zhang Qian",
+  "b": "King of the Da Yuezhi",
+  "date": "-128",
+  "date_approx": true,
+  "place": "Yuezhi court north of the Oxus",
+  "lon": 67.3,
+  "lat": 37.4,
+  "what": "After ten years as a Xiongnu captive, the Han envoy Zhang Qian reached the Yuezhi in Bactria and asked them to return east as allies against the Xiongnu; the king, settled and prosperous, declined.",
+  "why": "The mission failed diplomatically but Zhang Qian's report on Ferghana, Bactria and Parthia opened Han interest in the routes later called the Silk Road.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Sima Qian, Shiji 123; summarised in Wikipedia, 'Zhang Qian'",
+    "url": "https://en.wikipedia.org/wiki/Zhang_Qian"
+   }
+  ]
+ },
+ {
+  "id": "su_wu_li_ling",
+  "a": "Su Wu",
+  "b": "Li Ling",
+  "date": "-81",
+  "date_approx": true,
+  "place": "Beihai (Lake Baikal)",
+  "lon": 106.0,
+  "lat": 52.5,
+  "what": "Li Ling, the Han general who had surrendered to the Xiongnu, visited the captive envoy Su Wu at his sheep-herding exile by the 'North Sea' to urge him to submit; Su Wu refused.",
+  "why": "Su Wu's nineteen years of loyalty made him a Chinese byword for fidelity; he returned to Chang'an in 81 BCE.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ban Gu, Hanshu 54; summarised in Wikipedia, 'Su Wu'",
+    "url": "https://en.wikipedia.org/wiki/Su_Wu"
+   }
+  ]
+ },
+ {
+  "id": "pompey_tigranes",
+  "a": "Pompey",
+  "b": "Tigranes the Great",
+  "a_person": "person:pompey",
+  "b_person": "person:tigranes_the_great",
+  "date": "-66",
+  "date_approx": true,
+  "place": "Near Artaxata",
+  "lon": 44.55,
+  "lat": 39.88,
+  "what": "The aged king Tigranes came to Pompey's camp, laid his diadem at his feet and was raised up and crowned again as a client of Rome.",
+  "why": "The submission ended Armenia's brief empire and set the Roman-Armenian frontier for generations.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Plutarch, Pompey 33; Cassius Dio 36.52; summarised in Wikipedia, 'Tigranes the Great'",
+    "url": "https://en.wikipedia.org/wiki/Tigranes_the_Great"
+   }
+  ]
+ },
+ {
+  "id": "caesar_cleopatra",
+  "a": "Julius Caesar",
+  "b": "Cleopatra",
+  "a_person": "person:julius_caesar",
+  "b_person": "person:cleopatra",
+  "date": "-48-10",
+  "date_approx": true,
+  "place": "Alexandria",
+  "lon": 29.92,
+  "lat": 31.2,
+  "what": "Cleopatra, in conflict with her brother Ptolemy XIII, had herself smuggled into the palace at Alexandria to meet Caesar, who had arrived pursuing Pompey.",
+  "why": "Caesar backed her in the Alexandrian war and the alliance produced Caesarion; Plutarch's bedding-sack detail is the famous part of the story.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Plutarch, Caesar 49; Cassius Dio 42.34; summarised in Wikipedia, 'Cleopatra'",
+    "url": "https://en.wikipedia.org/wiki/Cleopatra"
+   }
+  ]
+ },
+ {
+  "id": "antony_cleopatra_tarsus",
+  "a": "Mark Antony",
+  "b": "Cleopatra",
+  "a_person": "person:mark_antony",
+  "b_person": "person:cleopatra",
+  "date": "-41",
+  "date_approx": true,
+  "place": "Tarsus",
+  "lon": 34.9,
+  "lat": 36.92,
+  "what": "Summoned by Antony to answer for her conduct, Cleopatra sailed up the Cydnus to Tarsus in a gilded barge and entertained him on board.",
+  "why": "Their political and personal partnership ended at Actium in 31 BCE and with Egypt's annexation by Rome.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Plutarch, Antony 26; summarised in Wikipedia, 'Antony and Cleopatra'",
+    "url": "https://en.wikipedia.org/wiki/Antony_and_Cleopatra"
+   }
+  ]
+ },
+ {
+  "id": "wang_zhaojun_huhanye",
+  "a": "Wang Zhaojun",
+  "b": "Huhanye",
+  "date": "-33",
+  "date_approx": true,
+  "place": "Chang'an",
+  "lon": 108.94,
+  "lat": 34.26,
+  "what": "Visiting the Han court, the Xiongnu chanyu Huhanye asked for a consort, and the palace lady Wang Zhaojun was given to him in marriage.",
+  "why": "The heqin match sealed decades of peace on the northern frontier, and Zhaojun became one of the Four Beauties of Chinese legend.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Hanshu 94; Hou Hanshu 89; summarised in Wikipedia, 'Wang Zhaojun'",
+    "url": "https://en.wikipedia.org/wiki/Wang_Zhaojun"
+   }
+  ]
+ },
+ {
+  "id": "jesus_john_baptist",
+  "a": "Jesus",
+  "b": "John the Baptist",
+  "a_person": "person:jesus",
+  "b_person": "person:john_the_baptist",
+  "date": "28",
+  "date_approx": true,
+  "place": "Bethany beyond the Jordan",
+  "lon": 35.55,
+  "lat": 31.84,
+  "what": "Jesus came to John at the Jordan and was baptised by him.",
+  "why": "Attested in all four gospels and accepted by most historians, the baptism marks the start of Jesus' public ministry.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Mark 1:9-11; Matthew 3; Luke 3; John 1; summarised in Wikipedia, 'Baptism of Jesus'",
+    "url": "https://en.wikipedia.org/wiki/Baptism_of_Jesus"
+   }
+  ]
+ },
+ {
+  "id": "paul_peter_jerusalem",
+  "a": "Paul the Apostle",
+  "b": "Saint Peter",
+  "a_person": "person:paul_the_apostle",
+  "b_person": "person:saint_peter",
+  "date": "36",
+  "date_approx": true,
+  "place": "Jerusalem",
+  "lon": 35.23,
+  "lat": 31.78,
+  "what": "Three years after his conversion Paul went up to Jerusalem to visit Cephas (Peter) and stayed with him fifteen days.",
+  "why": "Paul's own letter is the earliest first-hand testimony of contact between the apostles; their later quarrel at Antioch shaped the gentile mission.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Paul, Galatians 1:18; summarised in Wikipedia, 'Paul the Apostle'",
+    "url": "https://en.wikipedia.org/wiki/Paul_the_Apostle"
+   }
+  ]
+ },
+ {
+  "id": "liu_bei_zhuge_liang",
+  "a": "Liu Bei",
+  "b": "Zhuge Liang",
+  "a_person": "person:liu_bei",
+  "b_person": "person:zhuge_liang",
+  "date": "207",
+  "date_approx": true,
+  "place": "Longzhong, near Xiangyang",
+  "lon": 112.08,
+  "lat": 32.0,
+  "what": "After calling three times at his thatched cottage, Liu Bei met the young recluse Zhuge Liang, who laid out the Longzhong Plan for dividing the realm into three.",
+  "why": "Zhuge Liang became Liu Bei's chancellor and the plan foreshadowed the Three Kingdoms; Zhuge's own memorial recalls the three visits.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Chen Shou, Records of the Three Kingdoms; Zhuge Liang, Chu Shi Biao; summarised in Wikipedia, 'Zhuge Liang'",
+    "url": "https://en.wikipedia.org/wiki/Zhuge_Liang"
+   }
+  ]
+ },
+ {
+  "id": "shapur_valerian",
+  "a": "Shapur I",
+  "b": "Valerian",
+  "a_person": "person:shapur_i",
+  "b_person": "person:valerian",
+  "date": "260",
+  "date_approx": true,
+  "place": "Near Edessa",
+  "lon": 38.79,
+  "lat": 37.16,
+  "what": "Valerian went to negotiate with Shapur near Edessa and was seized, the first Roman emperor taken prisoner by a foreign enemy.",
+  "why": "Shapur carved the scene into the cliffs at Naqsh-e Rostam; Valerian died in Persian captivity.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Shapur I, Res Gestae Divi Saporis (ŠKZ); Zosimus 1.36; summarised in Wikipedia, 'Valerian (emperor)'",
+    "url": "https://en.wikipedia.org/wiki/Valerian_(emperor)"
+   }
+  ]
+ },
+ {
+  "id": "augustine_ambrose",
+  "a": "Augustine of Hippo",
+  "b": "Ambrose",
+  "b_person": "person:ambrose",
+  "date": "384",
+  "date_approx": true,
+  "place": "Milan",
+  "lon": 9.19,
+  "lat": 45.46,
+  "what": "The young rhetoric professor Augustine arrived in Milan and went to hear Bishop Ambrose preach, at first for his style.",
+  "why": "Ambrose's allegorical reading of scripture dissolved Augustine's objections; Ambrose baptised him at Easter 387.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Augustine, Confessions 5.13-14; summarised in Wikipedia, 'Augustine of Hippo'",
+    "url": "https://en.wikipedia.org/wiki/Augustine_of_Hippo"
+   }
+  ]
+ },
+ {
+  "id": "attila_priscus",
+  "a": "Priscus",
+  "b": "Attila",
+  "b_person": "person:attila",
+  "date": "449",
+  "date_approx": true,
+  "place": "Attila's court, Pannonian plain",
+  "lon": 20.0,
+  "lat": 46.9,
+  "what": "The Byzantine embassy of Maximinus, with the historian Priscus, reached Attila's wooden palace and dined at his table.",
+  "why": "Priscus' eyewitness account is the only close description of Attila and his court.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Priscus, fragments in Constantine VII's Excerpta de legationibus; summarised in Wikipedia, 'Priscus'",
+    "url": "https://en.wikipedia.org/wiki/Priscus"
+   }
+  ]
+ },
+ {
+  "id": "attila_leo",
+  "a": "Pope Leo I",
+  "b": "Attila",
+  "a_person": "person:pope_leo_i",
+  "b_person": "person:attila",
+  "date": "452",
+  "date_approx": true,
+  "place": "Near Mantua, on the Mincio",
+  "lon": 10.79,
+  "lat": 45.16,
+  "what": "Pope Leo, with two senators, met Attila in northern Italy and persuaded him to withdraw.",
+  "why": "The Huns turned back; Leo's credit for it grew into legend (Raphael painted Peter and Paul in the sky), though plague and supply also mattered.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Prosper of Aquitaine, Chronicle; summarised in Wikipedia, 'Pope Leo I'",
+    "url": "https://en.wikipedia.org/wiki/Pope_Leo_I"
+   }
+  ]
+ },
+ {
+  "id": "bodhidharma_wu_liang",
+  "a": "Bodhidharma",
+  "b": "Emperor Wu of Liang",
+  "a_person": "person:bodhidharma",
+  "date": "527",
+  "date_approx": true,
+  "place": "Jiankang",
+  "lon": 118.78,
+  "lat": 32.06,
+  "what": "Emperor Wu asked how much merit his temple-building had earned; Bodhidharma answered 'none at all', and left for the north.",
+  "why": "A founding story of Chan (Zen); it first appears centuries after the fact and is regarded as legend.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Blue Cliff Record, case 1; Anthology of the Patriarchal Hall (952); summarised in Wikipedia, 'Bodhidharma'",
+    "url": "https://en.wikipedia.org/wiki/Bodhidharma"
+   }
+  ]
+ },
+ {
+  "id": "muhammad_bahira",
+  "a": "Muhammad",
+  "b": "Bahira",
+  "a_person": "person:muhammad",
+  "date": "582",
+  "date_approx": true,
+  "place": "Bosra",
+  "lon": 36.48,
+  "lat": 32.52,
+  "what": "Travelling with his uncle's caravan to Syria, the boy Muhammad was recognised by the Christian monk Bahira as a future prophet.",
+  "why": "Told in the early Sira and in Christian polemic alike, the story is regarded as legend.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Ibn Ishaq, Sirat Rasul Allah; summarised in Wikipedia, 'Bahira'",
+    "url": "https://en.wikipedia.org/wiki/Bahira"
+   }
+  ]
+ },
+ {
+  "id": "ono_no_imoko_yang",
+  "a": "Ono no Imoko",
+  "b": "Emperor Yang of Sui",
+  "date": "607",
+  "date_approx": true,
+  "place": "Luoyang",
+  "lon": 112.45,
+  "lat": 34.62,
+  "what": "Ono no Imoko presented a letter from Prince Shotoku addressed 'from the Son of Heaven where the sun rises to the Son of Heaven where the sun sets', which displeased Emperor Yang.",
+  "why": "Japan's first well-recorded embassy to China opened the flow of Chinese learning, Buddhism and statecraft to Asuka Japan.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Book of Sui 81; Nihon Shoki; summarised in Wikipedia, 'Ono no Imoko'",
+    "url": "https://en.wikipedia.org/wiki/Ono_no_Imoko"
+   }
+  ]
+ },
+ {
+  "id": "najashi_jafar",
+  "a": "Ja'far ibn Abi Talib",
+  "b": "Armah (al-Najashi)",
+  "date": "615",
+  "date_approx": true,
+  "place": "Aksum",
+  "lon": 38.72,
+  "lat": 14.13,
+  "what": "Muslim refugees from Mecca, led by Ja'far ibn Abi Talib, were received by the Christian king (Najashi) of Aksum, who refused Quraysh demands to hand them back after hearing Ja'far recite the Quran.",
+  "why": "The First Hijra gave the early Muslim community its first refuge; the dialogue is preserved in early Islamic biography.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Ishaq, Sirat Rasul Allah; summarised in Wikipedia, 'Migration to Abyssinia'",
+    "url": "https://en.wikipedia.org/wiki/Migration_to_Abyssinia"
+   }
+  ]
+ },
+ {
+  "id": "xuanzang_qu_wentai",
+  "a": "Xuanzang",
+  "b": "Qu Wentai",
+  "a_person": "person:xuanzang",
+  "date": "630",
+  "date_approx": true,
+  "place": "Gaochang (Turfan)",
+  "lon": 89.53,
+  "lat": 42.85,
+  "what": "The king of Gaochang detained the pilgrim Xuanzang, begging him to stay as his teacher, and released him only after a hunger strike, with letters and escorts for the road west.",
+  "why": "Qu Wentai's support carried Xuanzang across Central Asia to India.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Huili, Biography of the Tripitaka Master; summarised in Wikipedia, 'Xuanzang'",
+    "url": "https://en.wikipedia.org/wiki/Xuanzang"
+   }
+  ]
+ },
+ {
+  "id": "umar_sophronius",
+  "a": "Umar",
+  "b": "Sophronius of Jerusalem",
+  "a_person": "person:umar",
+  "date": "637",
+  "date_approx": true,
+  "place": "Jerusalem",
+  "lon": 35.23,
+  "lat": 31.78,
+  "what": "Patriarch Sophronius surrendered Jerusalem to the caliph Umar in person; tradition says he showed him the Temple Mount and Umar declined to pray in the Church of the Holy Sepulchre.",
+  "why": "Jerusalem passed to Muslim rule; the meeting is reported by later Byzantine and Arab chroniclers, and many details (the 'Covenant of Umar') are later embellishment.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Theophanes the Confessor, Chronographia; al-Tabari; summarised in Wikipedia, 'First Muslim conquest of Jerusalem'",
+    "url": "https://en.wikipedia.org/wiki/First_Muslim_conquest_of_Jerusalem"
+   }
+  ]
+ },
+ {
+  "id": "xuanzang_harsha",
+  "a": "Xuanzang",
+  "b": "Harsha",
+  "a_person": "person:xuanzang",
+  "date": "643",
+  "date_approx": true,
+  "place": "Kannauj",
+  "lon": 79.92,
+  "lat": 27.05,
+  "what": "King Harsha received the Chinese pilgrim at Kannauj and convened a great assembly where Xuanzang defended Mahayana doctrine.",
+  "why": "Xuanzang's record is the main outside description of Harsha's empire; Harsha then opened diplomatic relations with Tang China.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Xuanzang, Great Tang Records on the Western Regions; summarised in Wikipedia, 'Harsha'",
+    "url": "https://en.wikipedia.org/wiki/Harsha"
+   }
+  ]
+ },
+ {
+  "id": "xuanzang_taizong",
+  "a": "Xuanzang",
+  "b": "Emperor Taizong of Tang",
+  "a_person": "person:xuanzang",
+  "b_person": "person:emperor_taizong_of_tang",
+  "date": "645",
+  "date_approx": true,
+  "place": "Luoyang",
+  "lon": 112.45,
+  "lat": 34.62,
+  "what": "On his return after sixteen years, the pilgrim who had left China illegally was received by Taizong, who pressed him to take office and asked him to write an account of the West.",
+  "why": "Xuanzang declined office and translated scriptures; his Records on the Western Regions was the result of the emperor's request.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Huili, Biography of the Tripitaka Master; summarised in Wikipedia, 'Xuanzang'",
+    "url": "https://en.wikipedia.org/wiki/Xuanzang"
+   }
+  ]
+ },
+ {
+  "id": "li_bai_du_fu",
+  "a": "Li Bai",
+  "b": "Du Fu",
+  "a_person": "person:li_bai",
+  "b_person": "person:du_fu",
+  "date": "744",
+  "date_approx": true,
+  "place": "Luoyang",
+  "lon": 112.45,
+  "lat": 34.62,
+  "what": "The two greatest Tang poets met in Luoyang and travelled together for a time in Henan and Shandong.",
+  "why": "Du Fu wrote at least a dozen poems to or about Li Bai; the friendship became a symbol of literary kinship.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Du Fu, poems to Li Bai; summarised in Wikipedia, 'Li Bai'",
+    "url": "https://en.wikipedia.org/wiki/Li_Bai"
+   }
+  ]
+ },
+ {
+  "id": "charlemagne_leo_iii",
+  "a": "Charlemagne",
+  "b": "Pope Leo III",
+  "a_person": "person:charlemagne",
+  "b_person": "person:pope_leo_iii",
+  "date": "799",
+  "date_approx": true,
+  "place": "Paderborn",
+  "lon": 8.75,
+  "lat": 51.72,
+  "what": "Attacked and driven from Rome, Pope Leo III fled to Charlemagne at Paderborn to seek protection.",
+  "why": "Charlemagne restored him; on Christmas Day 800 Leo crowned him emperor in St Peter's.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Royal Frankish Annals; Paderborn Epic; summarised in Wikipedia, 'Pope Leo III'",
+    "url": "https://en.wikipedia.org/wiki/Pope_Leo_III"
+   }
+  ]
+ },
+ {
+  "id": "kukai_huiguo",
+  "a": "Kūkai",
+  "b": "Huiguo",
+  "date": "805",
+  "date_approx": true,
+  "place": "Qinglong Temple, Chang'an",
+  "lon": 108.98,
+  "lat": 34.25,
+  "what": "The Japanese monk Kukai went to the esoteric master Huiguo, who greeted him as long awaited and initiated him into both mandala lineages within months, shortly before dying.",
+  "why": "Kukai carried the teaching home and founded Shingon Buddhism.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Kukai, Memorial Presenting a List of Newly Imported Sutras; summarised in Wikipedia, 'Kūkai'",
+    "url": "https://en.wikipedia.org/wiki/Kūkai"
+   }
+  ]
+ },
+ {
+  "id": "ibn_fadlan_almish",
+  "a": "Ahmad ibn Fadlan",
+  "b": "Almış",
+  "date": "922-05",
+  "date_approx": true,
+  "place": "Bolghar, Volga",
+  "lon": 49.08,
+  "lat": 54.98,
+  "what": "The Abbasid embassy with Ibn Fadlan reached the Volga Bulgar ruler Almış, who had asked the caliph for teachers of Islam and a fortress.",
+  "why": "Ibn Fadlan's report is the earliest detailed account of the Volga peoples and of the Rus.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Fadlan, Risala; summarised in Wikipedia, 'Ahmad ibn Fadlan'",
+    "url": "https://en.wikipedia.org/wiki/Ahmad_ibn_Fadlan"
+   }
+  ]
+ },
+ {
+  "id": "olga_constantine_vii",
+  "a": "Olga of Kiev",
+  "b": "Constantine VII",
+  "b_person": "person:constantine_vii",
+  "date": "957",
+  "date_approx": true,
+  "place": "Constantinople",
+  "lon": 28.98,
+  "lat": 41.01,
+  "what": "Princess Olga of Kiev was received at the Great Palace by Constantine VII, who recorded the ceremonies in his book of court protocol.",
+  "why": "Olga's baptism and visit foreshadowed the Christianisation of the Rus under her grandson Vladimir.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Constantine VII, De Ceremoniis 2.15; summarised in Wikipedia, 'Olga of Kiev'",
+    "url": "https://en.wikipedia.org/wiki/Olga_of_Kiev"
+   }
+  ]
+ },
+ {
+  "id": "liutprand_nikephoros",
+  "a": "Liutprand of Cremona",
+  "b": "Nikephoros II Phokas",
+  "date": "968-06",
+  "date_approx": true,
+  "place": "Constantinople",
+  "lon": 28.98,
+  "lat": 41.01,
+  "what": "Otto I's envoy Liutprand came to arrange a Byzantine bride for Otto's son and was insulted, confined, and refused.",
+  "why": "His bitter Relatio de legatione Constantinopolitana is a famous portrait of the rivalry between the two empires.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Liutprand, Relatio de legatione Constantinopolitana; summarised in Wikipedia, 'Liutprand of Cremona'",
+    "url": "https://en.wikipedia.org/wiki/Liutprand_of_Cremona"
+   }
+  ]
+ },
+ {
+  "id": "henry_iv_gregory_vii",
+  "a": "Henry IV, Holy Roman Emperor",
+  "b": "Pope Gregory VII",
+  "a_person": "person:henry_iv_holy_roman_emperor",
+  "b_person": "person:pope_gregory_vii",
+  "date": "1077-01-28",
+  "date_approx": false,
+  "place": "Canossa",
+  "lon": 10.46,
+  "lat": 44.58,
+  "what": "Excommunicated, Henry IV stood three days in the snow outside Canossa as a penitent until Gregory lifted the ban.",
+  "why": "'Going to Canossa' became the byword for submission in the struggle between papacy and empire.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Lampert of Hersfeld, Annals; Gregory VII, Register 4.12; summarised in Wikipedia, 'Road to Canossa'",
+    "url": "https://en.wikipedia.org/wiki/Road_to_Canossa"
+   }
+  ]
+ },
+ {
+  "id": "zhu_xi_lu_jiuyuan",
+  "a": "Zhu Xi",
+  "b": "Lu Jiuyuan",
+  "a_person": "person:zhu_xi",
+  "date": "1175",
+  "date_approx": true,
+  "place": "Goose Lake Temple, Yanshan",
+  "lon": 117.75,
+  "lat": 28.3,
+  "what": "Brought together by Lü Zuqian, Zhu Xi and Lu Jiuyuan debated whether the Way is found by studying things or by searching the mind.",
+  "why": "The Goose Lake Meeting fixed the split between the Cheng-Zhu and Lu-Wang schools of Neo-Confucianism.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Lu Jiuyuan, Collected Works; summarised in Wikipedia, 'Lu Jiuyuan'",
+    "url": "https://en.wikipedia.org/wiki/Lu_Jiuyuan"
+   }
+  ]
+ },
+ {
+  "id": "barbarossa_alexander_iii",
+  "a": "Frederick I, Holy Roman Emperor",
+  "b": "Pope Alexander III",
+  "a_person": "person:frederick_i_holy_roman_emperor",
+  "b_person": "person:pope_alexander_iii",
+  "date": "1177-07-24",
+  "date_approx": false,
+  "place": "Venice",
+  "lon": 12.34,
+  "lat": 45.43,
+  "what": "Frederick Barbarossa knelt before Pope Alexander III at San Marco and received the kiss of peace.",
+  "why": "The Peace of Venice ended an eighteen-year schism and Frederick's attempt to rule Italy by force.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Romuald of Salerno, Chronicon; summarised in Wikipedia, 'Treaty of Venice'",
+    "url": "https://en.wikipedia.org/wiki/Treaty_of_Venice"
+   }
+  ]
+ },
+ {
+  "id": "ibn_rushd_ibn_arabi",
+  "a": "Averroes",
+  "b": "Ibn Arabi",
+  "a_person": "person:averroes",
+  "b_person": "person:ibn_arabi",
+  "date": "1180",
+  "date_approx": true,
+  "place": "Córdoba",
+  "lon": -4.78,
+  "lat": 37.89,
+  "what": "The aged philosopher Ibn Rushd asked to meet the teenage mystic Ibn Arabi, asked him whether illumination agreed with reason, and was answered 'yes and no'.",
+  "why": "Ibn Arabi tells the story himself in the Futuhat; it stands for the meeting of falsafa and Sufism.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Arabi, al-Futuhat al-Makkiyya; summarised in Wikipedia, 'Ibn Arabi'",
+    "url": "https://en.wikipedia.org/wiki/Ibn_Arabi"
+   }
+  ]
+ },
+ {
+  "id": "saladin_balian",
+  "a": "Saladin",
+  "b": "Balian of Ibelin",
+  "a_person": "person:saladin",
+  "date": "1187-09-30",
+  "date_approx": true,
+  "place": "Jerusalem",
+  "lon": 35.23,
+  "lat": 31.78,
+  "what": "Balian came out to Saladin's camp and, threatening to destroy the city and its holy places, negotiated the surrender of Jerusalem with ransom for its people.",
+  "why": "Jerusalem passed to Saladin on 2 October 1187 without a massacre, which triggered the Third Crusade.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ernoul; Imad ad-Din al-Isfahani; summarised in Wikipedia, 'Siege of Jerusalem (1187)'",
+    "url": "https://en.wikipedia.org/wiki/Siege_of_Jerusalem_(1187)"
+   }
+  ]
+ },
+ {
+  "id": "richard_al_adil",
+  "a": "Richard I of England",
+  "b": "Al-Adil I",
+  "a_person": "person:richard_i_of_england",
+  "date": "1191-11-08",
+  "date_approx": true,
+  "place": "Near Lydda",
+  "lon": 34.89,
+  "lat": 31.95,
+  "what": "Saladin's brother al-Adil met Richard in his tent near Lydda, where they ate together and discussed Richard's proposal that al-Adil marry Richard's sister Joan.",
+  "why": "Richard never met Saladin; talks through al-Adil eventually produced the Treaty of Jaffa (1192) and pilgrim access to Jerusalem.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Baha ad-Din ibn Shaddad, al-Nawadir al-Sultaniyya; summarised in Wikipedia, 'Al-Adil I'",
+    "url": "https://en.wikipedia.org/wiki/Al-Adil_I"
+   }
+  ]
+ },
+ {
+  "id": "rumi_attar",
+  "a": "Rumi",
+  "b": "Attar of Nishapur",
+  "a_person": "person:rumi",
+  "date": "1219",
+  "date_approx": true,
+  "place": "Nishapur",
+  "lon": 58.8,
+  "lat": 36.21,
+  "what": "Passing through Nishapur with his family, the boy Rumi met the aged Attar, who gave him his Asrarnama and said he would set fire to the world's lovers.",
+  "why": "Told in later hagiography; the meeting is doubtful but expresses Rumi's debt to Attar.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Dawlatshah Samarqandi, Tadhkirat al-Shu'ara; summarised in Wikipedia, 'Attar of Nishapur'",
+    "url": "https://en.wikipedia.org/wiki/Attar_of_Nishapur"
+   }
+  ]
+ },
+ {
+  "id": "francis_al_kamil",
+  "a": "Francis of Assisi",
+  "b": "Al-Kamil",
+  "a_person": "person:francis_of_assisi",
+  "date": "1219-09",
+  "date_approx": true,
+  "place": "Damietta",
+  "lon": 31.81,
+  "lat": 31.42,
+  "what": "During the Fifth Crusade Francis crossed the lines at Damietta to preach before Sultan al-Kamil, who received him courteously and let him go.",
+  "why": "Attested by Jacques de Vitry, the visit became a lasting emblem of Christian-Muslim encounter.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Jacques de Vitry, Letters; Historia Occidentalis; summarised in Wikipedia, 'Francis of Assisi'",
+    "url": "https://en.wikipedia.org/wiki/Francis_of_Assisi"
+   }
+  ]
+ },
+ {
+  "id": "genghis_changchun",
+  "a": "Genghis Khan",
+  "b": "Qiu Chuji",
+  "a_person": "person:genghis_khan",
+  "date": "1222-05",
+  "date_approx": true,
+  "place": "Parwan, Hindu Kush",
+  "lon": 69.2,
+  "lat": 35.0,
+  "what": "The Daoist master Changchun, summoned across Asia, met Genghis Khan in the Hindu Kush and was asked for the medicine of immortality; he answered there was none, only means of preserving life.",
+  "why": "Genghis exempted the Quanzhen Daoists from taxes; the journey was recorded by the disciple Li Zhichang.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Li Zhichang, Travels to the West of Qiu Chang Chun; summarised in Wikipedia, 'Qiu Chuji'",
+    "url": "https://en.wikipedia.org/wiki/Qiu_Chuji"
+   }
+  ]
+ },
+ {
+  "id": "rumi_shams",
+  "a": "Rumi",
+  "b": "Shams Tabrizi",
+  "a_person": "person:rumi",
+  "b_person": "person:shams_tabrizi",
+  "date": "1244-11",
+  "date_approx": true,
+  "place": "Konya",
+  "lon": 32.48,
+  "lat": 37.87,
+  "what": "The wandering dervish Shams of Tabriz met the respected scholar Jalal al-Din Rumi in Konya, and the two withdrew into intense companionship for months.",
+  "why": "Shams' disappearance turned Rumi into a poet: the Divan-e Shams and the Masnavi followed.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Aflaki, Manaqib al-Arifin; Sultan Walad; summarised in Wikipedia, 'Shams Tabrizi'",
+    "url": "https://en.wikipedia.org/wiki/Shams_Tabrizi"
+   }
+  ]
+ },
+ {
+  "id": "carpine_guyuk",
+  "a": "Giovanni da Pian del Carpine",
+  "b": "Güyük Khan",
+  "date": "1246-08",
+  "date_approx": true,
+  "place": "Sira Ordo, near Karakorum",
+  "lon": 102.8,
+  "lat": 47.2,
+  "what": "The papal envoy Carpine witnessed Güyük's enthronement and was given a reply demanding that the Pope and the princes of Europe come to submit.",
+  "why": "The first European embassy to the Mongols brought back a sober account of them and a letter (still in the Vatican) rejecting Christian claims.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Carpine, Ystoria Mongalorum; summarised in Wikipedia, 'Giovanni da Pian del Carpine'",
+    "url": "https://en.wikipedia.org/wiki/Giovanni_da_Pian_del_Carpine"
+   }
+  ]
+ },
+ {
+  "id": "sakya_pandita_koden",
+  "a": "Sakya Pandita",
+  "b": "Köden",
+  "date": "1247",
+  "date_approx": true,
+  "place": "Liangzhou",
+  "lon": 102.64,
+  "lat": 37.93,
+  "what": "The Tibetan lama Sakya Pandita, summoned by the Mongol prince Köden, met him at Liangzhou and agreed to Tibet's submission.",
+  "why": "The meeting began the priest-patron relationship between Tibetan lamas and Mongol rulers.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Sakya Pandita's letter to the Tibetans; summarised in Wikipedia, 'Sakya Pandita'",
+    "url": "https://en.wikipedia.org/wiki/Sakya_Pandita"
+   }
+  ]
+ },
+ {
+  "id": "rubruck_mongke",
+  "a": "William of Rubruck",
+  "b": "Möngke Khan",
+  "date": "1254-01-04",
+  "date_approx": false,
+  "place": "Möngke's camp near Karakorum",
+  "lon": 102.83,
+  "lat": 47.2,
+  "what": "The Flemish friar was received by the Great Khan Möngke, and in May took part in a debate before him between Christians, Muslims and Buddhists.",
+  "why": "Rubruck's report is the fullest medieval European account of the Mongol court.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "William of Rubruck, Itinerarium; summarised in Wikipedia, 'William of Rubruck'",
+    "url": "https://en.wikipedia.org/wiki/William_of_Rubruck"
+   }
+  ]
+ },
+ {
+  "id": "hulagu_tusi",
+  "a": "Hulagu Khan",
+  "b": "Nasir al-Din al-Tusi",
+  "a_person": "person:hulagu_khan",
+  "b_person": "person:nasir_al_din_al_tusi",
+  "date": "1256-11",
+  "date_approx": true,
+  "place": "Maymun-Diz, near Alamut",
+  "lon": 50.59,
+  "lat": 36.44,
+  "what": "When the Nizari imam surrendered Maymun-Diz to Hulagu, the astronomer al-Tusi, who had served the Ismailis for decades, came over to the Mongols.",
+  "why": "Hulagu made him adviser and built him the Maragheh observatory, a high point of medieval astronomy.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Rashid al-Din, Jami al-Tawarikh; summarised in Wikipedia, 'Nasir al-Din al-Tusi'",
+    "url": "https://en.wikipedia.org/wiki/Nasir_al-Din_al-Tusi"
+   }
+  ]
+ },
+ {
+  "id": "hulagu_mustasim",
+  "a": "Hulagu Khan",
+  "b": "Al-Musta'sim",
+  "a_person": "person:hulagu_khan",
+  "date": "1258-02-10",
+  "date_approx": true,
+  "place": "Baghdad",
+  "lon": 44.37,
+  "lat": 33.31,
+  "what": "The last Abbasid caliph came out to surrender to Hulagu and was made to reveal his treasure; he was executed days later.",
+  "why": "The sack of Baghdad ended the Abbasid caliphate in Iraq.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Rashid al-Din, Jami al-Tawarikh; summarised in Wikipedia, 'Siege of Baghdad'",
+    "url": "https://en.wikipedia.org/wiki/Siege_of_Baghdad"
+   }
+  ]
+ },
+ {
+  "id": "marco_polo_kublai",
+  "a": "Marco Polo",
+  "b": "Kublai Khan",
+  "a_person": "person:marco_polo",
+  "date": "1275",
+  "date_approx": true,
+  "place": "Shangdu",
+  "lon": 116.18,
+  "lat": 42.36,
+  "what": "Marco Polo, with his father and uncle, reached Kublai's summer capital and entered his service for some seventeen years.",
+  "why": "His book shaped European ideas of Asia; a minority of scholars doubt how much of it he saw himself.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Marco Polo, Il Milione; summarised in Wikipedia, 'Marco Polo'",
+    "url": "https://en.wikipedia.org/wiki/Marco_Polo"
+   }
+  ]
+ },
+ {
+  "id": "bar_sauma_edward_i",
+  "a": "Rabban Bar Sauma",
+  "b": "Edward I of England",
+  "b_person": "person:edward_i_of_england",
+  "date": "1287-11",
+  "date_approx": true,
+  "place": "Gascony",
+  "lon": -0.58,
+  "lat": 44.84,
+  "what": "The Nestorian monk sent west by the Ilkhan Arghun met Edward I in Gascony and gave him communion, proposing a joint crusade against the Mamluks.",
+  "why": "Bar Sauma also met Philip IV and Pope Nicholas IV; the alliance never materialised.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "History of Mar Yahballaha and Rabban Sauma; summarised in Wikipedia, 'Rabban Bar Sauma'",
+    "url": "https://en.wikipedia.org/wiki/Rabban_Bar_Sauma"
+   }
+  ]
+ },
+ {
+  "id": "zhou_daguan_indravarman",
+  "a": "Zhou Daguan",
+  "b": "Indravarman III",
+  "date": "1296",
+  "date_approx": true,
+  "place": "Angkor",
+  "lon": 103.86,
+  "lat": 13.41,
+  "what": "Zhou Daguan, with a Yuan embassy, spent a year at Angkor and watched the king ride out in procession with his white parasols and armed women.",
+  "why": "His Customs of Cambodia is the only eyewitness account of daily life in Angkor.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Zhou Daguan, The Customs of Cambodia; summarised in Wikipedia, 'Zhou Daguan'",
+    "url": "https://en.wikipedia.org/wiki/Zhou_Daguan"
+   }
+  ]
+ },
+ {
+  "id": "mansa_musa_al_nasir",
+  "a": "Mansa Musa",
+  "b": "Al-Nasir Muhammad",
+  "a_person": "person:musa_i_of_mali",
+  "date": "1324-07",
+  "date_approx": true,
+  "place": "Cairo",
+  "lon": 31.24,
+  "lat": 30.04,
+  "what": "On pilgrimage, Mansa Musa reluctantly met the Mamluk sultan, refusing at first to kiss the ground before him, and spent so much gold that its value in Cairo fell.",
+  "why": "The visit, recorded by al-Umari, put Mali on European maps such as the Catalan Atlas.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "al-Umari, Masalik al-Absar; summarised in Wikipedia, 'Mansa Musa'",
+    "url": "https://en.wikipedia.org/wiki/Mansa_Musa"
+   }
+  ]
+ },
+ {
+  "id": "ibn_battuta_kilwa",
+  "a": "Ibn Battuta",
+  "b": "Al-Hasan ibn Sulaiman",
+  "a_person": "person:ibn_battuta",
+  "date": "1331",
+  "date_approx": true,
+  "place": "Kilwa",
+  "lon": 39.51,
+  "lat": -8.96,
+  "what": "Ibn Battuta visited Kilwa and saw its sultan, Abu al-Muzaffar Hasan, give away his own clothes to a beggar.",
+  "why": "He called Kilwa one of the most beautiful cities; the account documents Swahili coast trade.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Battuta, Rihla; summarised in Wikipedia, 'Kilwa Kisiwani'",
+    "url": "https://en.wikipedia.org/wiki/Kilwa_Kisiwani"
+   }
+  ]
+ },
+ {
+  "id": "ibn_battuta_tughluq",
+  "a": "Ibn Battuta",
+  "b": "Muhammad bin Tughluq",
+  "a_person": "person:ibn_battuta",
+  "date": "1334",
+  "date_approx": true,
+  "place": "Delhi",
+  "lon": 77.21,
+  "lat": 28.61,
+  "what": "The Moroccan traveller was received by the sultan of Delhi, who showered him with gifts and appointed him a qadi.",
+  "why": "He served eight years before being sent as envoy to China, a mission that went awry.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Battuta, Rihla; summarised in Wikipedia, 'Ibn Battuta'",
+    "url": "https://en.wikipedia.org/wiki/Ibn_Battuta"
+   }
+  ]
+ },
+ {
+  "id": "petrarch_boccaccio",
+  "a": "Petrarch",
+  "b": "Giovanni Boccaccio",
+  "a_person": "person:petrarch",
+  "b_person": "person:giovanni_boccaccio",
+  "date": "1350-10",
+  "date_approx": true,
+  "place": "Florence",
+  "lon": 11.26,
+  "lat": 43.77,
+  "what": "On his way to Rome for the Jubilee, Petrarch was welcomed in Florence by Boccaccio, his long-time admirer.",
+  "why": "The friendship joined the two founders of humanism and led Boccaccio toward classical scholarship.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Petrarch, Familiares 11.1; summarised in Wikipedia, 'Giovanni Boccaccio'",
+    "url": "https://en.wikipedia.org/wiki/Giovanni_Boccaccio"
+   }
+  ]
+ },
+ {
+  "id": "ibn_battuta_sulayman",
+  "a": "Ibn Battuta",
+  "b": "Mansa Sulayman",
+  "a_person": "person:ibn_battuta",
+  "date": "1352",
+  "date_approx": true,
+  "place": "Capital of Mali (Niani?)",
+  "lon": -8.4,
+  "lat": 11.4,
+  "what": "Ibn Battuta reached the capital of Mali and was received by Mansa Sulayman, complaining of the meagre welcome gift.",
+  "why": "His account is the main eyewitness description of the Mali court; the capital's site is uncertain.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Battuta, Rihla; summarised in Wikipedia, 'Sulayman of Mali'",
+    "url": "https://en.wikipedia.org/wiki/Sulayman_of_Mali"
+   }
+  ]
+ },
+ {
+  "id": "ibn_battuta_abu_inan",
+  "a": "Ibn Battuta",
+  "b": "Abu Inan Faris",
+  "a_person": "person:ibn_battuta",
+  "date": "1354",
+  "date_approx": true,
+  "place": "Fez",
+  "lon": -4.98,
+  "lat": 34.06,
+  "what": "Back in Morocco, Ibn Battuta was received by the Marinid sultan Abu Inan, who ordered his secretary Ibn Juzayy to write down his travels.",
+  "why": "The result was the Rihla, the great travel book of the medieval world.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Battuta and Ibn Juzayy, Rihla; summarised in Wikipedia, 'Ibn Battuta'",
+    "url": "https://en.wikipedia.org/wiki/Ibn_Battuta"
+   }
+  ]
+ },
+ {
+  "id": "chaucer_petrarch",
+  "a": "Geoffrey Chaucer",
+  "b": "Petrarch",
+  "a_person": "person:geoffrey_chaucer",
+  "b_person": "person:petrarch",
+  "date": "1373",
+  "date_approx": true,
+  "place": "Padua",
+  "lon": 11.88,
+  "lat": 45.41,
+  "what": "On an embassy to Italy in 1373, Chaucer may have met Petrarch at Padua, as his Clerk claims to have learned the Griselda tale from him.",
+  "why": "No document confirms the meeting; it remains a favourite literary speculation.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "Chaucer, Canterbury Tales, Clerk's Prologue; summarised in Wikipedia, 'Geoffrey Chaucer'",
+    "url": "https://en.wikipedia.org/wiki/Geoffrey_Chaucer"
+   }
+  ]
+ },
+ {
+  "id": "hafez_timur",
+  "a": "Hafez",
+  "b": "Timur",
+  "a_person": "person:hafez",
+  "b_person": "person:timur",
+  "date": "1387",
+  "date_approx": true,
+  "place": "Shiraz",
+  "lon": 52.53,
+  "lat": 29.61,
+  "what": "Timur reproached Hafez for offering Samarkand and Bukhara for a Shirazi beauty's mole; the poet replied that such generosity was why he was so poor.",
+  "why": "The anecdote appears in Dawlatshah over a century later and is legend.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Dawlatshah Samarqandi, Tadhkirat al-Shu'ara; summarised in Wikipedia, 'Hafez'",
+    "url": "https://en.wikipedia.org/wiki/Hafez"
+   }
+  ]
+ },
+ {
+  "id": "ibn_khaldun_timur",
+  "a": "Ibn Khaldun",
+  "b": "Timur",
+  "a_person": "person:ibn_khaldun",
+  "b_person": "person:timur",
+  "date": "1401-01",
+  "date_approx": true,
+  "place": "Damascus",
+  "lon": 36.29,
+  "lat": 33.51,
+  "what": "Lowered over the walls of besieged Damascus, the historian Ibn Khaldun spent weeks in Timur's camp, discussing history and writing him a description of the Maghreb.",
+  "why": "Ibn Khaldun's autobiography records one of history's great conversations between a conqueror and a theorist of conquest.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Khaldun, al-Ta'rif; summarised in Wikipedia, 'Ibn Khaldun'",
+    "url": "https://en.wikipedia.org/wiki/Ibn_Khaldun"
+   }
+  ]
+ },
+ {
+  "id": "timur_bayezid",
+  "a": "Timur",
+  "b": "Bayezid I",
+  "a_person": "person:timur",
+  "b_person": "person:bayezid_i",
+  "date": "1402-07",
+  "date_approx": true,
+  "place": "Near Ankara",
+  "lon": 32.86,
+  "lat": 39.93,
+  "what": "After the Battle of Ankara the captured Ottoman sultan was brought before Timur, who treated him at first with courtesy.",
+  "why": "Bayezid died in captivity in 1403 and the Ottoman state fell into a decade of civil war; the 'iron cage' story is later embellishment.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Arabshah; Sharaf al-Din Yazdi, Zafarnama; summarised in Wikipedia, 'Battle of Ankara'",
+    "url": "https://en.wikipedia.org/wiki/Battle_of_Ankara"
+   }
+  ]
+ },
+ {
+  "id": "clavijo_timur",
+  "a": "Ruy González de Clavijo",
+  "b": "Timur",
+  "b_person": "person:timur",
+  "date": "1404-09-08",
+  "date_approx": false,
+  "place": "Samarkand",
+  "lon": 66.96,
+  "lat": 39.65,
+  "what": "The Castilian ambassador was received by the aged Timur in a garden palace outside Samarkand.",
+  "why": "Clavijo's Embajada a Tamorlán is the fullest European picture of Timur's capital, months before the conqueror's death.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Clavijo, Embajada a Tamorlán; summarised in Wikipedia, 'Ruy González de Clavijo'",
+    "url": "https://en.wikipedia.org/wiki/Ruy_González_de_Clavijo"
+   }
+  ]
+ },
+ {
+  "id": "yongle_deshin_shekpa",
+  "a": "Yongle Emperor",
+  "b": "Deshin Shekpa",
+  "a_person": "person:yongle_emperor",
+  "date": "1407",
+  "date_approx": true,
+  "place": "Nanjing",
+  "lon": 118.78,
+  "lat": 32.06,
+  "what": "The fifth Karmapa came to Nanjing at the emperor's invitation and performed rites for the emperor's late parents; Yongle gave him the title of Dharma King.",
+  "why": "The visit set the pattern of Ming patronage of Tibetan lamas.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ming Shilu; Tibetan accounts; summarised in Wikipedia, '5th Karmapa, Deshin Shekpa'",
+    "url": "https://en.wikipedia.org/wiki/5th_Karmapa,_Deshin_Shekpa"
+   }
+  ]
+ },
+ {
+  "id": "zheng_he_alakeshvara",
+  "a": "Zheng He",
+  "b": "Vira Alakeshvara",
+  "a_person": "person:zheng_he",
+  "date": "1411",
+  "date_approx": true,
+  "place": "Kotte, Ceylon",
+  "lon": 79.9,
+  "lat": 6.89,
+  "what": "Returning from his third voyage, Zheng He fought the Sinhalese ruler Alakeshvara and carried him captive to Nanjing.",
+  "why": "The Yongle Emperor released him but installed a new ruler, one of the few times the treasure fleets made war.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ming Shilu; Mingshi 304; summarised in Wikipedia, 'Zheng He'",
+    "url": "https://en.wikipedia.org/wiki/Zheng_He"
+   }
+  ]
+ },
+ {
+  "id": "mehmed_ii_gennadios",
+  "a": "Mehmed the Conqueror",
+  "b": "Gennadios Scholarios",
+  "a_person": "person:mehmed_the_conqueror",
+  "date": "1454-01",
+  "date_approx": true,
+  "place": "Constantinople",
+  "lon": 28.98,
+  "lat": 41.01,
+  "what": "Months after the conquest, Mehmed II received the monk Gennadios, had him elected patriarch and handed him his staff of office.",
+  "why": "The investiture set the template for Ottoman rule over Orthodox Christians through their patriarch.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Sphrantzes; Kritoboulos; summarised in Wikipedia, 'Gennadius Scholarius'",
+    "url": "https://en.wikipedia.org/wiki/Gennadius_Scholarius"
+   }
+  ]
+ },
+ {
+  "id": "mehmed_ii_bellini",
+  "a": "Mehmed the Conqueror",
+  "b": "Gentile Bellini",
+  "a_person": "person:mehmed_the_conqueror",
+  "date": "1479-09",
+  "date_approx": true,
+  "place": "Constantinople",
+  "lon": 28.98,
+  "lat": 41.01,
+  "what": "Sent by Venice at the sultan's request for a good painter, Gentile Bellini spent over a year at Mehmed's court and painted his portrait.",
+  "why": "The portrait (National Gallery, London) is the most famous Western image of an Ottoman sultan.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Angiolello; Vasari; summarised in Wikipedia, 'Gentile Bellini'",
+    "url": "https://en.wikipedia.org/wiki/Gentile_Bellini"
+   }
+  ]
+ },
+ {
+  "id": "columbus_ferdinand_isabella",
+  "a": "Christopher Columbus",
+  "b": "Isabella I of Castile",
+  "a_person": "person:christopher_columbus",
+  "b_person": "person:isabella_i_of_castile",
+  "date": "1486-01-20",
+  "date_approx": false,
+  "place": "Alcalá de Henares",
+  "lon": -3.36,
+  "lat": 40.48,
+  "what": "Columbus first put his plan of sailing west to the Indies before Isabella and Ferdinand.",
+  "why": "A commission rejected it, but after years of lobbying the monarchs backed him at Santa Fe in 1492.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Las Casas, Historia de las Indias; summarised in Wikipedia, 'Christopher Columbus'",
+    "url": "https://en.wikipedia.org/wiki/Christopher_Columbus"
+   }
+  ]
+ },
+ {
+  "id": "nzinga_nkuwu_rui_de_sousa",
+  "a": "Nzinga a Nkuwu",
+  "b": "Rui de Sousa",
+  "date": "1491-05-03",
+  "date_approx": true,
+  "place": "Mbanza Kongo",
+  "lon": 14.25,
+  "lat": -6.27,
+  "what": "The Portuguese embassy under Rui de Sousa reached the king of Kongo, who was baptised as João I.",
+  "why": "The baptism began the long Kongo-Portugal relationship and the Christian kingdom of Afonso I.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Rui de Pina, Crónica de D. João II; summarised in Wikipedia, 'João I of Kongo'",
+    "url": "https://en.wikipedia.org/wiki/João_I_of_Kongo"
+   }
+  ]
+ },
+ {
+  "id": "columbus_guacanagari",
+  "a": "Christopher Columbus",
+  "b": "Guacanagarí",
+  "a_person": "person:christopher_columbus",
+  "date": "1492-12-22",
+  "date_approx": true,
+  "place": "Northern Hispaniola",
+  "lon": -72.1,
+  "lat": 19.75,
+  "what": "The Taíno cacique Guacanagarí sent gifts to Columbus and, when the Santa María wrecked on Christmas Day, helped salvage its cargo.",
+  "why": "Columbus left 39 men at La Navidad in his territory; all were dead when he returned in 1493.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Columbus, Diario (via Las Casas); summarised in Wikipedia, 'Guacanagaríx'",
+    "url": "https://en.wikipedia.org/wiki/Guacanagaríx"
+   }
+  ]
+ },
+ {
+  "id": "askia_al_maghili",
+  "a": "Askia Muhammad I",
+  "b": "Muhammad al-Maghili",
+  "date": "1498",
+  "date_approx": true,
+  "place": "Gao",
+  "lon": 0.04,
+  "lat": 16.27,
+  "what": "The North African jurist al-Maghili came to Gao and answered Askia Muhammad's questions on how a Muslim ruler should govern.",
+  "why": "His 'Replies' were used by Songhay and later West African reformers, including Usman dan Fodio, to justify jihad against 'mixing' rulers.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "al-Maghili, Replies to the Questions of Askia; summarised in Wikipedia, 'Al-Maghili'",
+    "url": "https://en.wikipedia.org/wiki/Al-Maghili"
+   }
+  ]
+ },
+ {
+  "id": "vasco_malindi",
+  "a": "Vasco da Gama",
+  "b": "Sultan of Malindi",
+  "a_person": "person:vasco_da_gama",
+  "date": "1498-04",
+  "date_approx": true,
+  "place": "Malindi",
+  "lon": 40.12,
+  "lat": -3.22,
+  "what": "After hostility at Mombasa, da Gama found a friendly ruler at Malindi who gave him a pilot for the crossing to India.",
+  "why": "With the pilot's help the fleet crossed the Arabian Sea in 23 days; Malindi became Portugal's ally on the Swahili coast.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Álvaro Velho, Roteiro; summarised in Wikipedia, 'Vasco da Gama'",
+    "url": "https://en.wikipedia.org/wiki/Vasco_da_Gama"
+   }
+  ]
+ },
+ {
+  "id": "vasco_zamorin",
+  "a": "Vasco da Gama",
+  "b": "Zamorin of Calicut",
+  "a_person": "person:vasco_da_gama",
+  "date": "1498-05-28",
+  "date_approx": false,
+  "place": "Calicut",
+  "lon": 75.78,
+  "lat": 11.25,
+  "what": "Da Gama was received by the Zamorin, who was unimpressed by his gifts of cloth, hats and honey.",
+  "why": "Trade talks failed but the voyage proved the sea route to India, and Portuguese violence soon followed.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Álvaro Velho, Roteiro; summarised in Wikipedia, 'Vasco da Gama'",
+    "url": "https://en.wikipedia.org/wiki/Vasco_da_Gama"
+   }
+  ]
+ },
+ {
+  "id": "erasmus_more",
+  "a": "Erasmus",
+  "b": "Thomas More",
+  "a_person": "person:erasmus",
+  "b_person": "person:thomas_more",
+  "date": "1499",
+  "date_approx": true,
+  "place": "Greenwich / Eltham",
+  "lon": 0.05,
+  "lat": 51.45,
+  "what": "On Erasmus' first visit to England, Thomas More took him to Eltham Palace to meet the eight-year-old Prince Henry.",
+  "why": "The friendship lasted until More's execution; Erasmus wrote The Praise of Folly in More's house.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Erasmus, letter to Johann von Botzheim (1523); summarised in Wikipedia, 'Erasmus'",
+    "url": "https://en.wikipedia.org/wiki/Erasmus"
+   }
+  ]
+ },
+ {
+  "id": "cortes_malinche",
+  "a": "Hernán Cortés",
+  "b": "La Malinche",
+  "a_person": "person:hernan_cortes",
+  "date": "1519-03",
+  "date_approx": true,
+  "place": "Potonchán, Tabasco",
+  "lon": -92.6,
+  "lat": 18.5,
+  "what": "After defeating the Chontal Maya, Cortés received twenty enslaved women; one, Malintzin, spoke Nahuatl and Maya and became his interpreter.",
+  "why": "Her translation made the conquest of Mexico possible; she became the most contested figure in Mexican memory.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Bernal Díaz, Historia verdadera; summarised in Wikipedia, 'La Malinche'",
+    "url": "https://en.wikipedia.org/wiki/La_Malinche"
+   }
+  ]
+ },
+ {
+  "id": "cortes_moctezuma",
+  "a": "Hernán Cortés",
+  "b": "Moctezuma II",
+  "a_person": "person:hernan_cortes",
+  "b_person": "person:moctezuma_ii",
+  "date": "1519-11-08",
+  "date_approx": false,
+  "place": "Tenochtitlan",
+  "lon": -99.13,
+  "lat": 19.43,
+  "what": "Moctezuma came out on the causeway to greet Cortés, gave him a necklace and housed the Spaniards in his father's palace.",
+  "why": "Within a week Cortés took him hostage; the Aztec empire fell in 1521.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Cortés, Second Letter; Bernal Díaz; Florentine Codex; summarised in Wikipedia, 'Hernán Cortés'",
+    "url": "https://en.wikipedia.org/wiki/Hernán_Cortés"
+   }
+  ]
+ },
+ {
+  "id": "leo_africanus_leo_x",
+  "a": "Leo Africanus",
+  "b": "Pope Leo X",
+  "b_person": "person:pope_leo_x",
+  "date": "1520-01-06",
+  "date_approx": false,
+  "place": "Rome",
+  "lon": 12.45,
+  "lat": 41.9,
+  "what": "The captured Andalusi-Moroccan diplomat al-Hasan al-Wazzan was baptised by Pope Leo X in St Peter's, taking the pope's name.",
+  "why": "His Description of Africa (1526) was Europe's main source on Africa for centuries.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Paris de Grassis, Diarium; summarised in Wikipedia, 'Leo Africanus'",
+    "url": "https://en.wikipedia.org/wiki/Leo_Africanus"
+   }
+  ]
+ },
+ {
+  "id": "henry_viii_francis_i",
+  "a": "Henry VIII",
+  "b": "Francis I of France",
+  "a_person": "person:henry_viii_of_england",
+  "b_person": "person:francis_i_of_france",
+  "date": "1520-06-07",
+  "date_approx": false,
+  "place": "Field of the Cloth of Gold, Balinghem",
+  "lon": 1.94,
+  "lat": 50.85,
+  "what": "The kings of England and France met in a valley near Calais amid tents of gold cloth, jousted and even wrestled.",
+  "why": "The spectacular summit produced no lasting alliance; Henry soon sided with Charles V.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Contemporary accounts; summarised in Wikipedia, 'Field of the Cloth of Gold'",
+    "url": "https://en.wikipedia.org/wiki/Field_of_the_Cloth_of_Gold"
+   }
+  ]
+ },
+ {
+  "id": "francisco_alvares_lebna_dengel",
+  "a": "Francisco Álvares",
+  "b": "Lebna Dengel",
+  "date": "1520-10",
+  "date_approx": true,
+  "place": "Royal camp, Ethiopian highlands",
+  "lon": 39.5,
+  "lat": 10.6,
+  "what": "The Portuguese embassy with the priest Francisco Álvares reached the camp of Emperor Lebna Dengel and stayed six years.",
+  "why": "Álvares' book was Europe's first detailed account of Ethiopia; the embassy led to Portuguese aid against Adal in 1541.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Francisco Álvares, Verdadeira Informação das Terras do Preste João; summarised in Wikipedia, 'Francisco Álvares'",
+    "url": "https://en.wikipedia.org/wiki/Francisco_Álvares"
+   }
+  ]
+ },
+ {
+  "id": "guru_nanak_babur",
+  "a": "Guru Nanak",
+  "b": "Babur",
+  "a_person": "person:guru_nanak",
+  "b_person": "person:babur",
+  "date": "1521",
+  "date_approx": true,
+  "place": "Saidpur (Eminabad)",
+  "lon": 74.26,
+  "lat": 32.04,
+  "what": "Sikh tradition holds that Guru Nanak was taken prisoner when Babur sacked Saidpur and, singing his hymns, moved Babur to free him.",
+  "why": "Nanak's Babarvani hymns lament the sack; the face-to-face meeting comes from later janamsakhis.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Janamsakhis; Guru Granth Sahib (Babarvani); summarised in Wikipedia, 'Guru Nanak'",
+    "url": "https://en.wikipedia.org/wiki/Guru_Nanak"
+   }
+  ]
+ },
+ {
+  "id": "magellan_humabon",
+  "a": "Ferdinand Magellan",
+  "b": "Rajah Humabon",
+  "a_person": "person:ferdinand_magellan",
+  "date": "1521-04-07",
+  "date_approx": true,
+  "place": "Cebu",
+  "lon": 123.9,
+  "lat": 10.3,
+  "what": "Magellan's fleet reached Cebu, made a blood compact with Rajah Humabon and on 14 April baptised him and hundreds of his people.",
+  "why": "The alliance drew Magellan into Humabon's quarrel with Lapulapu of Mactan.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Antonio Pigafetta, Relazione; summarised in Wikipedia, 'Rajah Humabon'",
+    "url": "https://en.wikipedia.org/wiki/Rajah_Humabon"
+   }
+  ]
+ },
+ {
+  "id": "luther_charles_v",
+  "a": "Martin Luther",
+  "b": "Charles V, Holy Roman Emperor",
+  "a_person": "person:martin_luther",
+  "b_person": "person:charles_v_holy_roman_emperor",
+  "date": "1521-04-18",
+  "date_approx": false,
+  "place": "Worms",
+  "lon": 8.36,
+  "lat": 49.63,
+  "what": "Before the Diet of Worms and the young emperor, Luther refused to recant his writings unless convinced by scripture and reason.",
+  "why": "The Edict of Worms outlawed him, but Saxony protected him and the Reformation spread.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Acts of the Diet of Worms; summarised in Wikipedia, 'Diet of Worms'",
+    "url": "https://en.wikipedia.org/wiki/Diet_of_Worms"
+   }
+  ]
+ },
+ {
+  "id": "magellan_lapulapu",
+  "a": "Ferdinand Magellan",
+  "b": "Lapulapu",
+  "a_person": "person:ferdinand_magellan",
+  "b_person": "person:lapu_lapu",
+  "date": "1521-04-27",
+  "date_approx": false,
+  "place": "Mactan",
+  "lon": 124.0,
+  "lat": 10.3,
+  "what": "Magellan attacked the chief Lapulapu, who had refused to submit, and was killed in the shallows at Mactan.",
+  "why": "Lapulapu is honoured in the Philippines as the first to resist European rule; Elcano completed the circumnavigation.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Antonio Pigafetta, Relazione; summarised in Wikipedia, 'Battle of Mactan'",
+    "url": "https://en.wikipedia.org/wiki/Battle_of_Mactan"
+   }
+  ]
+ },
+ {
+  "id": "luther_zwingli",
+  "a": "Martin Luther",
+  "b": "Huldrych Zwingli",
+  "a_person": "person:martin_luther",
+  "b_person": "person:huldrych_zwingli",
+  "date": "1529-10-01",
+  "date_approx": true,
+  "place": "Marburg",
+  "lon": 8.77,
+  "lat": 50.81,
+  "what": "At the Marburg Colloquy the two reformers agreed on fourteen articles but not on whether Christ was really present in the Eucharist.",
+  "why": "The split kept Lutheran and Reformed Protestantism apart.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Marburg Articles; summarised in Wikipedia, 'Marburg Colloquy'",
+    "url": "https://en.wikipedia.org/wiki/Marburg_Colloquy"
+   }
+  ]
+ },
+ {
+  "id": "juan_diego_zumarraga",
+  "a": "Juan Diego",
+  "b": "Juan de Zumárraga",
+  "date": "1531-12-12",
+  "date_approx": false,
+  "place": "Mexico City",
+  "lon": -99.13,
+  "lat": 19.43,
+  "what": "Juan Diego opened his cloak before Bishop Zumárraga, spilling roses and revealing the image of the Virgin of Guadalupe.",
+  "why": "The story first appears in print in 1648; Juan Diego's historicity is debated, though he was canonised in 2002.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Nican Mopohua (1649); summarised in Wikipedia, 'Juan Diego'",
+    "url": "https://en.wikipedia.org/wiki/Juan_Diego"
+   }
+  ]
+ },
+ {
+  "id": "pizarro_atahualpa",
+  "a": "Francisco Pizarro",
+  "b": "Atahualpa",
+  "a_person": "person:francisco_pizarro",
+  "b_person": "person:atahualpa",
+  "date": "1532-11-16",
+  "date_approx": false,
+  "place": "Cajamarca",
+  "lon": -78.51,
+  "lat": -7.16,
+  "what": "Atahualpa entered Cajamarca's square with thousands of unarmed attendants; after Valverde's demand of submission, Pizarro's men attacked and seized him.",
+  "why": "Held for a room of gold and executed in 1533, Atahualpa's capture decapitated the Inca state.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Francisco de Xerez, Verdadera relación; summarised in Wikipedia, 'Battle of Cajamarca'",
+    "url": "https://en.wikipedia.org/wiki/Battle_of_Cajamarca"
+   }
+  ]
+ },
+ {
+  "id": "cartier_donnacona",
+  "a": "Jacques Cartier",
+  "b": "Donnacona",
+  "a_person": "person:jacques_cartier",
+  "date": "1534-07",
+  "date_approx": true,
+  "place": "Gaspé",
+  "lon": -64.48,
+  "lat": 48.83,
+  "what": "Cartier planted a cross at Gaspé; the Stadaconan chief Donnacona protested, and Cartier carried off his two sons.",
+  "why": "The sons guided Cartier up the St Lawrence in 1535; Donnacona himself died in France.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Cartier, Relations; summarised in Wikipedia, 'Donnacona'",
+    "url": "https://en.wikipedia.org/wiki/Donnacona"
+   }
+  ]
+ },
+ {
+  "id": "de_soto_tuskaloosa",
+  "a": "Hernando de Soto",
+  "b": "Tuskaloosa",
+  "date": "1540-10",
+  "date_approx": true,
+  "place": "Atahachi",
+  "lon": -86.6,
+  "lat": 32.3,
+  "what": "The paramount chief Tuskaloosa received de Soto seated on cushions and was taken hostage; days later his warriors fought the Spaniards at Mabila.",
+  "why": "The Battle of Mabila was among the bloodiest in North American history and crippled the expedition.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Rodrigo Rangel; Gentleman of Elvas; summarised in Wikipedia, 'Tuskaloosa'",
+    "url": "https://en.wikipedia.org/wiki/Tuskaloosa"
+   }
+  ]
+ },
+ {
+  "id": "humayun_tahmasp",
+  "a": "Humayun",
+  "b": "Tahmasp I",
+  "b_person": "person:tahmasp_i",
+  "date": "1544-07",
+  "date_approx": true,
+  "place": "Near Qazvin",
+  "lon": 50.0,
+  "lat": 36.27,
+  "what": "The exiled Mughal emperor Humayun was received by Shah Tahmasp, who demanded he adopt Shi'ism and then lent him an army.",
+  "why": "Persian troops helped Humayun retake Kandahar and Kabul; Persian art and officials followed him to India.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Jauhar Aftabchi, Tadhkirat al-Waqiat; Abu'l-Fazl, Akbarnama; summarised in Wikipedia, 'Humayun'",
+    "url": "https://en.wikipedia.org/wiki/Humayun"
+   }
+  ]
+ },
+ {
+  "id": "xavier_ouchi",
+  "a": "Francis Xavier",
+  "b": "Ōuchi Yoshitaka",
+  "a_person": "person:francis_xavier",
+  "date": "1551",
+  "date_approx": true,
+  "place": "Yamaguchi",
+  "lon": 131.47,
+  "lat": 34.18,
+  "what": "Having failed to see the emperor in Kyoto, Xavier returned to Yamaguchi in finery with gifts, and the daimyo Ōuchi Yoshitaka granted permission to preach and a disused temple.",
+  "why": "Yamaguchi became one of the first Christian communities in Japan.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Jesuit letters; summarised in Wikipedia, 'Francis Xavier'",
+    "url": "https://en.wikipedia.org/wiki/Francis_Xavier"
+   }
+  ]
+ },
+ {
+  "id": "valdivia_lautaro",
+  "a": "Pedro de Valdivia",
+  "b": "Lautaro",
+  "date": "1553-12-25",
+  "date_approx": false,
+  "place": "Tucapel",
+  "lon": -73.0,
+  "lat": -37.6,
+  "what": "Valdivia was defeated and captured at Tucapel by Mapuche forces led by Lautaro, who had earlier served as his groom and learned Spanish horsemanship.",
+  "why": "Valdivia was killed; the Mapuche resistance stopped the Spanish conquest at the Biobío for three centuries.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Jerónimo de Vivar; Alonso de Góngora Marmolejo; summarised in Wikipedia, 'Battle of Tucapel'",
+    "url": "https://en.wikipedia.org/wiki/Battle_of_Tucapel"
+   }
+  ]
+ },
+ {
+  "id": "nobunaga_frois",
+  "a": "Oda Nobunaga",
+  "b": "Luís Fróis",
+  "a_person": "person:oda_nobunaga",
+  "date": "1569-04",
+  "date_approx": true,
+  "place": "Nijō construction site, Kyoto",
+  "lon": 135.76,
+  "lat": 35.01,
+  "what": "Nobunaga received the Jesuit Fróis at the building site of Nijō castle and granted him permission to live and preach in Kyoto.",
+  "why": "Fróis' letters and History of Japan are a main source on Nobunaga.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Luís Fróis, Historia de Japam; summarised in Wikipedia, 'Luís Fróis'",
+    "url": "https://en.wikipedia.org/wiki/Luís_Fróis"
+   }
+  ]
+ },
+ {
+  "id": "altan_khan_sonam_gyatso",
+  "a": "Altan Khan",
+  "b": "Sonam Gyatso, 3rd Dalai Lama",
+  "date": "1578",
+  "date_approx": true,
+  "place": "Thegchen Chonkhor, near Qinghai Lake",
+  "lon": 100.4,
+  "lat": 36.6,
+  "what": "The Mongol ruler Altan Khan met the Gelug lama Sonam Gyatso and gave him the title Dalai Lama, 'ocean' of wisdom.",
+  "why": "The title was applied retroactively to his predecessors; the alliance spread Gelug Buddhism through Mongolia.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Biography of the Third Dalai Lama; summarised in Wikipedia, '3rd Dalai Lama'",
+    "url": "https://en.wikipedia.org/wiki/3rd_Dalai_Lama"
+   }
+  ]
+ },
+ {
+  "id": "akbar_jesuits",
+  "a": "Akbar",
+  "b": "Rodolfo Acquaviva",
+  "a_person": "person:akbar",
+  "date": "1580-02-28",
+  "date_approx": true,
+  "place": "Fatehpur Sikri",
+  "lon": 77.66,
+  "lat": 27.09,
+  "what": "The first Jesuit mission from Goa, led by Rodolfo Acquaviva with Antonio Monserrate, arrived at Akbar's court and joined debates in the Ibadat Khana.",
+  "why": "Akbar never converted, but the encounter fed his syncretic Din-i Ilahi and Monserrate's account of Mughal India.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Antonio Monserrate, Commentarius; summarised in Wikipedia, 'Rodolfo Acquaviva'",
+    "url": "https://en.wikipedia.org/wiki/Rodolfo_Acquaviva"
+   }
+  ]
+ },
+ {
+  "id": "nobunaga_yasuke",
+  "a": "Oda Nobunaga",
+  "b": "Yasuke",
+  "a_person": "person:oda_nobunaga",
+  "date": "1581-03",
+  "date_approx": true,
+  "place": "Kyoto",
+  "lon": 135.76,
+  "lat": 35.01,
+  "what": "The Jesuit Valignano's African servant was brought before Nobunaga, who had him scrub his skin to check the colour was real, then took him into service.",
+  "why": "Yasuke became the first known African to serve a Japanese lord as retainer; he fought at Honnō-ji in 1582.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Luís Fróis, letters; Shinchō Kōki; summarised in Wikipedia, 'Yasuke'",
+    "url": "https://en.wikipedia.org/wiki/Yasuke"
+   }
+  ]
+ },
+ {
+  "id": "hideyoshi_shen_weijing",
+  "a": "Toyotomi Hideyoshi",
+  "b": "Shen Weijing",
+  "a_person": "person:toyotomi_hideyoshi",
+  "date": "1596-10",
+  "date_approx": true,
+  "place": "Osaka Castle",
+  "lon": 135.53,
+  "lat": 34.69,
+  "what": "Hideyoshi received the Ming peace embassy, learned that it offered only to invest him as 'King of Japan', and broke off talks.",
+  "why": "The failed embassy led to the second invasion of Korea in 1597; Shen Weijing was executed in China for deceit.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Japanese and Ming records; summarised in Wikipedia, 'Imjin War'",
+    "url": "https://en.wikipedia.org/wiki/Imjin_War"
+   }
+  ]
+ },
+ {
+  "id": "shah_abbas_sherley",
+  "a": "Abbas the Great",
+  "b": "Robert Shirley",
+  "a_person": "person:abbas_the_great",
+  "date": "1598-12",
+  "date_approx": true,
+  "place": "Qazvin",
+  "lon": 50.0,
+  "lat": 36.27,
+  "what": "The English adventurers Anthony and Robert Sherley reached Shah Abbas at Qazvin and offered to help modernise his army.",
+  "why": "Anthony went west as Abbas' envoy; Robert stayed and later represented Persia in Europe.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Anthony Sherley, Relation; summarised in Wikipedia, 'Robert Shirley'",
+    "url": "https://en.wikipedia.org/wiki/Robert_Shirley"
+   }
+  ]
+ },
+ {
+  "id": "ricci_xu_guangqi",
+  "a": "Matteo Ricci",
+  "b": "Xu Guangqi",
+  "a_person": "person:matteo_ricci",
+  "date": "1600",
+  "date_approx": true,
+  "place": "Nanjing",
+  "lon": 118.78,
+  "lat": 32.06,
+  "what": "The scholar-official Xu Guangqi met the Jesuit Matteo Ricci in Nanjing; he was baptised in 1603.",
+  "why": "Together they translated the first six books of Euclid into Chinese (1607), coining mathematical terms still used.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ricci, Della entrata della Compagnia di Giesù; summarised in Wikipedia, 'Xu Guangqi'",
+    "url": "https://en.wikipedia.org/wiki/Xu_Guangqi"
+   }
+  ]
+ },
+ {
+  "id": "tycho_kepler",
+  "a": "Tycho Brahe",
+  "b": "Johannes Kepler",
+  "a_person": "person:tycho_brahe",
+  "b_person": "person:johannes_kepler",
+  "date": "1600-02-04",
+  "date_approx": false,
+  "place": "Benátky nad Jizerou",
+  "lon": 14.82,
+  "lat": 50.29,
+  "what": "Kepler arrived at Tycho's castle observatory near Prague and began an uneasy collaboration over the Mars data.",
+  "why": "Tycho died in 1601; with his observations Kepler found the laws of planetary motion.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Kepler, letters; Astronomia Nova; summarised in Wikipedia, 'Johannes Kepler'",
+    "url": "https://en.wikipedia.org/wiki/Johannes_Kepler"
+   }
+  ]
+ },
+ {
+  "id": "ieyasu_adams",
+  "a": "Tokugawa Ieyasu",
+  "b": "William Adams",
+  "a_person": "person:tokugawa_ieyasu",
+  "b_person": "person:william_adams",
+  "date": "1600-05-12",
+  "date_approx": false,
+  "place": "Osaka Castle",
+  "lon": 135.53,
+  "lat": 34.69,
+  "what": "The English pilot of the stranded Dutch ship Liefde was brought before Ieyasu, who questioned him at length about Europe's wars and religion.",
+  "why": "Adams became Ieyasu's adviser and shipwright, a samurai, and the model for Blackthorne in Shōgun.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "William Adams, letters; summarised in Wikipedia, 'William Adams (samurai)'",
+    "url": "https://en.wikipedia.org/wiki/William_Adams_(samurai)"
+   }
+  ]
+ },
+ {
+  "id": "ricci_wanli_court",
+  "a": "Matteo Ricci",
+  "b": "Wanli Emperor (via court eunuchs)",
+  "a_person": "person:matteo_ricci",
+  "date": "1601-01-24",
+  "date_approx": true,
+  "place": "Beijing",
+  "lon": 116.39,
+  "lat": 39.91,
+  "what": "Ricci entered Beijing and presented clocks, a clavichord and religious paintings to the Wanli court; he never saw the reclusive emperor but was allowed to stay.",
+  "why": "His residence in the capital, until his death in 1610, made the Jesuits a fixture of the late Ming and Qing courts.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ricci, Della entrata della Compagnia di Giesù; summarised in Wikipedia, 'Matteo Ricci'",
+    "url": "https://en.wikipedia.org/wiki/Matteo_Ricci"
+   }
+  ]
+ },
+ {
+  "id": "champlain_anadabijou",
+  "a": "Samuel de Champlain",
+  "b": "Anadabijou",
+  "date": "1603-05-27",
+  "date_approx": false,
+  "place": "Pointe Saint-Mathieu, Tadoussac",
+  "lon": -69.72,
+  "lat": 48.14,
+  "what": "Champlain and François Gravé joined the Montagnais chief Anadabijou's tabagie, a feast celebrating victory over the Iroquois, and agreed alliance.",
+  "why": "The pact set French-Innu-Algonquin alliance and enmity with the Iroquois for a century.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Champlain, Des Sauvages (1603); summarised in Wikipedia, 'François Gravé Du Pont'",
+    "url": "https://en.wikipedia.org/wiki/François_Gravé_Du_Pont"
+   }
+  ]
+ },
+ {
+  "id": "pocahontas_john_smith",
+  "a": "Pocahontas",
+  "b": "John Smith",
+  "a_person": "person:pocahontas",
+  "date": "1607-12",
+  "date_approx": true,
+  "place": "Werowocomoco",
+  "lon": -76.66,
+  "lat": 37.42,
+  "what": "Captured by Powhatan's men, John Smith was brought before Powhatan at Werowocomoco, where, he later wrote, the girl Pocahontas saved him from execution.",
+  "why": "Smith told the rescue story only in 1624; many historians think it was misunderstood ritual or invention.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "John Smith, Generall Historie of Virginia (1624); summarised in Wikipedia, 'Pocahontas'",
+    "url": "https://en.wikipedia.org/wiki/Pocahontas"
+   }
+  ]
+ },
+ {
+  "id": "musashi_kojiro",
+  "a": "Miyamoto Musashi",
+  "b": "Sasaki Kojirō",
+  "a_person": "person:miyamoto_musashi",
+  "date": "1612-04-13",
+  "date_approx": true,
+  "place": "Ganryūjima, Kanmon Strait",
+  "lon": 130.93,
+  "lat": 33.94,
+  "what": "Arriving late with a wooden sword carved from an oar, Musashi killed Sasaki Kojirō on an island in the strait.",
+  "why": "The most famous duel in Japanese history is known mostly from accounts written decades later; the date is traditional.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "Nitenki (1755); Kokura monument (1654); summarised in Wikipedia, 'Sasaki Kojirō'",
+    "url": "https://en.wikipedia.org/wiki/Sasaki_Kojirō"
+   }
+  ]
+ },
+ {
+  "id": "hasekura_philip_iii",
+  "a": "Hasekura Tsunenaga",
+  "b": "Philip III of Spain",
+  "b_person": "person:philip_iii_of_spain",
+  "date": "1615-01-30",
+  "date_approx": false,
+  "place": "Madrid",
+  "lon": -3.7,
+  "lat": 40.42,
+  "what": "The samurai envoy of Date Masamune delivered his lord's letter to Philip III and was baptised in the king's presence weeks later.",
+  "why": "Spain would not grant a trade treaty while Japan persecuted Christians.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Scipione Amati, Historia del Regno di Voxu; summarised in Wikipedia, 'Hasekura Tsunenaga'",
+    "url": "https://en.wikipedia.org/wiki/Hasekura_Tsunenaga"
+   }
+  ]
+ },
+ {
+  "id": "hasekura_paul_v",
+  "a": "Hasekura Tsunenaga",
+  "b": "Pope Paul V",
+  "b_person": "person:pope_paul_v",
+  "date": "1615-11-03",
+  "date_approx": false,
+  "place": "Rome",
+  "lon": 12.45,
+  "lat": 41.9,
+  "what": "Hasekura was received in public audience by Pope Paul V and was made an honorary citizen of Rome.",
+  "why": "The embassy failed; Hasekura returned in 1620 to a Japan closing itself to Christianity.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Scipione Amati, Historia del Regno di Voxu; summarised in Wikipedia, 'Hasekura Tsunenaga'",
+    "url": "https://en.wikipedia.org/wiki/Hasekura_Tsunenaga"
+   }
+  ]
+ },
+ {
+  "id": "jahangir_roe",
+  "a": "Jahangir",
+  "b": "Thomas Roe",
+  "date": "1616-01-10",
+  "date_approx": false,
+  "place": "Ajmer",
+  "lon": 74.64,
+  "lat": 26.45,
+  "what": "James I's ambassador Sir Thomas Roe was first received by Jahangir in the evening durbar at Ajmer.",
+  "why": "Over three years Roe won trading privileges for the East India Company at Surat.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Thomas Roe, Journal; summarised in Wikipedia, 'Thomas Roe'",
+    "url": "https://en.wikipedia.org/wiki/Thomas_Roe"
+   }
+  ]
+ },
+ {
+  "id": "pocahontas_james_i",
+  "a": "Pocahontas",
+  "b": "James I of England",
+  "a_person": "person:pocahontas",
+  "b_person": "person:james_vi_and_i",
+  "date": "1617-01-06",
+  "date_approx": false,
+  "place": "Whitehall Palace, London",
+  "lon": -0.13,
+  "lat": 51.5,
+  "what": "Pocahontas, now Rebecca Rolfe, was presented to James I and Queen Anne at Ben Jonson's Twelfth Night masque.",
+  "why": "She died at Gravesend weeks later, starting home to Virginia.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "John Chamberlain, letters; summarised in Wikipedia, 'Pocahontas'",
+    "url": "https://en.wikipedia.org/wiki/Pocahontas"
+   }
+  ]
+ },
+ {
+  "id": "descartes_beeckman",
+  "a": "René Descartes",
+  "b": "Isaac Beeckman",
+  "a_person": "person:rene_descartes",
+  "date": "1618-11-10",
+  "date_approx": false,
+  "place": "Breda",
+  "lon": 4.78,
+  "lat": 51.59,
+  "what": "The soldier Descartes met the schoolmaster Beeckman in Breda, reportedly over a mathematical puzzle posted in the street.",
+  "why": "Beeckman turned Descartes toward mathematical physics; Descartes dedicated his Compendium musicae to him.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Beeckman, Journal; summarised in Wikipedia, 'Isaac Beeckman'",
+    "url": "https://en.wikipedia.org/wiki/Isaac_Beeckman"
+   }
+  ]
+ },
+ {
+  "id": "massasoit_carver",
+  "a": "Massasoit",
+  "b": "John Carver",
+  "date": "1621-03-22",
+  "date_approx": false,
+  "place": "Plymouth",
+  "lon": -70.67,
+  "lat": 41.96,
+  "what": "Introduced by Samoset and interpreted by Squanto, the Wampanoag sachem Massasoit met Governor Carver and made a pact of mutual defence.",
+  "why": "The alliance kept peace for over fifty years until King Philip's War under Massasoit's son.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Mourt's Relation (1622); summarised in Wikipedia, 'Massasoit'",
+    "url": "https://en.wikipedia.org/wiki/Massasoit"
+   }
+  ]
+ },
+ {
+  "id": "nzinga_correia_de_sousa",
+  "a": "Nzinga of Ndongo and Matamba",
+  "b": "João Correia de Sousa",
+  "date": "1622",
+  "date_approx": true,
+  "place": "Luanda",
+  "lon": 13.23,
+  "lat": -8.84,
+  "what": "Sent as envoy by her brother, Nzinga negotiated with the Portuguese governor; offered no chair, she is said to have sat on an attendant's back.",
+  "why": "She won a treaty and was baptised, later becoming queen and resisting Portugal for decades; the seat story comes from Cavazzi.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Cavazzi, Istorica descrizione; Cadornega; summarised in Wikipedia, 'Nzinga of Ndongo and Matamba'",
+    "url": "https://en.wikipedia.org/wiki/Nzinga_of_Ndongo_and_Matamba"
+   }
+  ]
+ },
+ {
+  "id": "hobbes_galileo",
+  "a": "Thomas Hobbes",
+  "b": "Galileo Galilei",
+  "a_person": "person:thomas_hobbes",
+  "b_person": "person:galileo_galilei",
+  "date": "1636",
+  "date_approx": true,
+  "place": "Arcetri, near Florence",
+  "lon": 11.25,
+  "lat": 43.75,
+  "what": "Touring with his pupil, Hobbes is said to have visited the elderly Galileo under house arrest.",
+  "why": "Galileo's mechanics shaped Hobbes' project of a science of politics; the visit is widely repeated but thinly documented.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "Aubrey, Brief Lives; summarised in Wikipedia, 'Thomas Hobbes'",
+    "url": "https://en.wikipedia.org/wiki/Thomas_Hobbes"
+   }
+  ]
+ },
+ {
+  "id": "milton_galileo",
+  "a": "John Milton",
+  "b": "Galileo Galilei",
+  "a_person": "person:john_milton",
+  "b_person": "person:galileo_galilei",
+  "date": "1638",
+  "date_approx": true,
+  "place": "Arcetri, near Florence",
+  "lon": 11.25,
+  "lat": 43.75,
+  "what": "On his Italian tour, the young Milton visited 'the famous Galileo, grown old, a prisoner to the Inquisition'.",
+  "why": "Milton recalled it in Areopagitica, and Galileo is the only contemporary named in Paradise Lost.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Milton, Areopagitica (1644); summarised in Wikipedia, 'John Milton'",
+    "url": "https://en.wikipedia.org/wiki/John_Milton"
+   }
+  ]
+ },
+ {
+  "id": "descartes_pascal",
+  "a": "René Descartes",
+  "b": "Blaise Pascal",
+  "a_person": "person:rene_descartes",
+  "b_person": "person:blaise_pascal",
+  "date": "1647-09-23",
+  "date_approx": false,
+  "place": "Paris",
+  "lon": 2.35,
+  "lat": 48.86,
+  "what": "Descartes visited the young Pascal on two days, discussing the vacuum and Pascal's calculating machine; they disagreed.",
+  "why": "The only meeting of the two thinkers; Pascal's vacuum experiments soon followed.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Jacqueline Pascal, letter to Gilberte; summarised in Wikipedia, 'Blaise Pascal'",
+    "url": "https://en.wikipedia.org/wiki/Blaise_Pascal"
+   }
+  ]
+ },
+ {
+  "id": "krotoa_van_riebeeck",
+  "a": "Krotoa",
+  "b": "Jan van Riebeeck",
+  "date": "1652",
+  "date_approx": true,
+  "place": "Fort de Goede Hoop, Cape Town",
+  "lon": 18.42,
+  "lat": -33.93,
+  "what": "The Khoekhoe girl Krotoa joined the household of the VOC commander Jan van Riebeeck at the new Cape settlement.",
+  "why": "She became the colony's chief interpreter, and her life traced the first collisions of the Cape colonial frontier.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Van Riebeeck, Journal; summarised in Wikipedia, 'Krotoa'",
+    "url": "https://en.wikipedia.org/wiki/Krotoa"
+   }
+  ]
+ },
+ {
+  "id": "aurangzeb_shivaji",
+  "a": "Aurangzeb",
+  "b": "Shivaji",
+  "date": "1666-05-12",
+  "date_approx": false,
+  "place": "Agra",
+  "lon": 78.02,
+  "lat": 27.18,
+  "what": "At Aurangzeb's birthday durbar Shivaji, placed among lesser nobles, walked out in anger and was put under house arrest.",
+  "why": "His escape in August, reputedly in fruit baskets, made him a legend and renewed Maratha war against the Mughals.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Rajasthani letters from Agra (1666); summarised in Wikipedia, 'Shivaji'",
+    "url": "https://en.wikipedia.org/wiki/Shivaji"
+   }
+  ]
+ },
+ {
+  "id": "leibniz_spinoza",
+  "a": "Gottfried Wilhelm Leibniz",
+  "b": "Baruch Spinoza",
+  "a_person": "person:gottfried_wilhelm_leibniz",
+  "b_person": "person:baruch_spinoza",
+  "date": "1676-11",
+  "date_approx": true,
+  "place": "The Hague",
+  "lon": 4.3,
+  "lat": 52.08,
+  "what": "Leibniz visited Spinoza several times, discussing the Ethics and showing him a proof of God's existence.",
+  "why": "Leibniz later played down the visits, but Spinoza's system shaped his own metaphysics.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Leibniz, notes and letters; summarised in Wikipedia, 'Gottfried Wilhelm Leibniz'",
+    "url": "https://en.wikipedia.org/wiki/Gottfried_Wilhelm_Leibniz"
+   }
+  ]
+ },
+ {
+  "id": "newton_halley",
+  "a": "Isaac Newton",
+  "b": "Edmond Halley",
+  "a_person": "person:isaac_newton",
+  "b_person": "person:edmond_halley",
+  "date": "1684-08",
+  "date_approx": true,
+  "place": "Cambridge",
+  "lon": 0.12,
+  "lat": 52.2,
+  "what": "Halley asked Newton what curve a planet would follow under an inverse-square force; Newton said an ellipse, which he had calculated.",
+  "why": "Halley urged him to publish, and paid for it: the Principia appeared in 1687.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Abraham de Moivre, memorandum; summarised in Wikipedia, 'Edmond Halley'",
+    "url": "https://en.wikipedia.org/wiki/Edmond_Halley"
+   }
+  ]
+ },
+ {
+  "id": "golovin_songgotu",
+  "a": "Fyodor Golovin",
+  "b": "Songgotu",
+  "date": "1689-08-27",
+  "date_approx": true,
+  "place": "Nerchinsk",
+  "lon": 116.51,
+  "lat": 51.98,
+  "what": "Russian and Qing envoys, with Jesuits Gerbillon and Pereira interpreting in Latin, negotiated outside Nerchinsk and signed a border treaty.",
+  "why": "The Treaty of Nerchinsk was China's first treaty with a European power and fixed the Amur border for 170 years.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Gerbillon, Journal; treaty text; summarised in Wikipedia, 'Treaty of Nerchinsk'",
+    "url": "https://en.wikipedia.org/wiki/Treaty_of_Nerchinsk"
+   }
+  ]
+ },
+ {
+  "id": "kaempfer_tsunayoshi",
+  "a": "Engelbert Kaempfer",
+  "b": "Tokugawa Tsunayoshi",
+  "date": "1691",
+  "date_approx": true,
+  "place": "Edo Castle",
+  "lon": 139.75,
+  "lat": 35.69,
+  "what": "Accompanying the Dutch court journey to Edo, Kaempfer was made to sing, dance and act drunk for the shogun hidden behind a screen.",
+  "why": "His History of Japan shaped European knowledge of Japan and gave the word 'sakoku'.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Kaempfer, History of Japan; summarised in Wikipedia, 'Engelbert Kaempfer'",
+    "url": "https://en.wikipedia.org/wiki/Engelbert_Kaempfer"
+   }
+  ]
+ },
+ {
+  "id": "peter_william_iii",
+  "a": "Peter the Great",
+  "b": "William III of England",
+  "a_person": "person:peter_the_great",
+  "b_person": "person:william_iii_of_england",
+  "date": "1697-09",
+  "date_approx": true,
+  "place": "Utrecht",
+  "lon": 5.12,
+  "lat": 52.09,
+  "what": "Travelling incognito with the Grand Embassy, Tsar Peter met William III, who invited him to England to study shipbuilding.",
+  "why": "Peter spent early 1698 at Deptford; western shipbuilding and administration followed him home.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Grand Embassy records; summarised in Wikipedia, 'Grand Embassy of Peter the Great'",
+    "url": "https://en.wikipedia.org/wiki/Grand_Embassy_of_Peter_the_Great"
+   }
+  ]
+ },
+ {
+  "id": "kangxi_tournon",
+  "a": "Kangxi Emperor",
+  "b": "Charles-Thomas Maillard de Tournon",
+  "a_person": "person:kangxi_emperor",
+  "date": "1705-12-31",
+  "date_approx": false,
+  "place": "Beijing",
+  "lon": 116.39,
+  "lat": 39.91,
+  "what": "The papal legate Tournon was received by Kangxi, who grew angry as it became clear the Pope meant to ban Chinese rites for Christians.",
+  "why": "The Rites Controversy ended with Kangxi restricting missionaries, and the Yongzheng Emperor banning Christianity.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Jesuit accounts; summarised in Wikipedia, 'Chinese Rites controversy'",
+    "url": "https://en.wikipedia.org/wiki/Chinese_Rites_controversy"
+   }
+  ]
+ },
+ {
+  "id": "guru_gobind_bahadur_shah",
+  "a": "Guru Gobind Singh",
+  "b": "Bahadur Shah I",
+  "date": "1707-07",
+  "date_approx": true,
+  "place": "Agra",
+  "lon": 78.02,
+  "lat": 27.18,
+  "what": "After Aurangzeb's death, Guru Gobind Singh met the new emperor Bahadur Shah at Agra and was given a robe of honour.",
+  "why": "The Guru accompanied the emperor south and was assassinated at Nanded in 1708.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Bahadur Shah's court news; Sikh sources; summarised in Wikipedia, 'Guru Gobind Singh'",
+    "url": "https://en.wikipedia.org/wiki/Guru_Gobind_Singh"
+   }
+  ]
+ },
+ {
+  "id": "handel_scarlatti",
+  "a": "George Frideric Handel",
+  "b": "Domenico Scarlatti",
+  "a_person": "person:george_frideric_handel",
+  "b_person": "person:domenico_scarlatti",
+  "date": "1709",
+  "date_approx": true,
+  "place": "Rome (Palazzo Ottoboni)",
+  "lon": 12.47,
+  "lat": 41.9,
+  "what": "Cardinal Ottoboni arranged a keyboard contest: Scarlatti and Handel were judged equal on harpsichord, Handel the better on organ.",
+  "why": "Known only from Mainwaring's 1760 biography of Handel.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "John Mainwaring, Memoirs of Handel (1760); summarised in Wikipedia, 'Domenico Scarlatti'",
+    "url": "https://en.wikipedia.org/wiki/Domenico_Scarlatti"
+   }
+  ]
+ },
+ {
+  "id": "nader_shah_muhammad_shah",
+  "a": "Nader Shah",
+  "b": "Muhammad Shah",
+  "a_person": "person:nader_shah",
+  "date": "1739-02",
+  "date_approx": true,
+  "place": "Karnal",
+  "lon": 76.98,
+  "lat": 29.69,
+  "what": "After defeating the Mughal army at Karnal, Nader Shah received the emperor Muhammad Shah in his camp, then marched to Delhi.",
+  "why": "The sack of Delhi carried off the Peacock Throne and Koh-i-Noor and broke Mughal power.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Anand Ram Mukhlis; Mirza Mahdi Astarabadi; summarised in Wikipedia, 'Nader Shah's invasion of India'",
+    "url": "https://en.wikipedia.org/wiki/Nader_Shah%27s_invasion_of_India"
+   }
+  ]
+ },
+ {
+  "id": "voltaire_frederick",
+  "a": "Voltaire",
+  "b": "Frederick the Great",
+  "a_person": "person:voltaire",
+  "b_person": "person:frederick_the_great",
+  "date": "1740-09-11",
+  "date_approx": false,
+  "place": "Moyland Castle, near Cleves",
+  "lon": 6.26,
+  "lat": 51.75,
+  "what": "After four years of correspondence, the new king of Prussia met Voltaire for the first time at a castle near Cleves.",
+  "why": "Voltaire lived at Potsdam 1750-1753 before a bitter quarrel; they reconciled by letter.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Voltaire, Mémoires; summarised in Wikipedia, 'Voltaire'",
+    "url": "https://en.wikipedia.org/wiki/Voltaire"
+   }
+  ]
+ },
+ {
+  "id": "ibn_abd_al_wahhab_ibn_saud",
+  "a": "Muhammad ibn Abd al-Wahhab",
+  "b": "Muhammad bin Saud",
+  "a_person": "person:muhammad_ibn_abd_al_wahhab",
+  "date": "1744",
+  "date_approx": true,
+  "place": "Diriyah",
+  "lon": 46.57,
+  "lat": 24.73,
+  "what": "The preacher Ibn Abd al-Wahhab, expelled from Uyaynah, took refuge in Diriyah and made a pact with its emir Muhammad bin Saud.",
+  "why": "The alliance of religious reform and Saudi rule founded the first Saudi state and the modern kingdom.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Bishr, Unwan al-Majd; summarised in Wikipedia, 'Muhammad bin Saud Al Muqrin'",
+    "url": "https://en.wikipedia.org/wiki/Muhammad_bin_Saud_Al_Muqrin"
+   }
+  ]
+ },
+ {
+  "id": "bach_frederick",
+  "a": "Johann Sebastian Bach",
+  "b": "Frederick the Great",
+  "a_person": "person:johann_sebastian_bach",
+  "b_person": "person:frederick_the_great",
+  "date": "1747-05-07",
+  "date_approx": false,
+  "place": "Potsdam",
+  "lon": 13.06,
+  "lat": 52.4,
+  "what": "Arriving to visit his son, Bach was called at once before the king, who gave him a theme on which he improvised a fugue.",
+  "why": "Bach developed it into The Musical Offering.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Spenersche Zeitung, 11 May 1747; summarised in Wikipedia, 'The Musical Offering'",
+    "url": "https://en.wikipedia.org/wiki/The_Musical_Offering"
+   }
+  ]
+ },
+ {
+  "id": "clive_mir_jafar",
+  "a": "Robert Clive",
+  "b": "Mir Jafar",
+  "a_person": "person:robert_clive",
+  "date": "1757-06-24",
+  "date_approx": true,
+  "place": "Near Plassey / Murshidabad",
+  "lon": 88.27,
+  "lat": 24.18,
+  "what": "After Plassey, where his defection decided the battle, Mir Jafar met Clive, who saluted him as nawab of Bengal.",
+  "why": "The deal began the East India Company's rule in Bengal.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Clive's correspondence; summarised in Wikipedia, 'Battle of Plassey'",
+    "url": "https://en.wikipedia.org/wiki/Battle_of_Plassey"
+   }
+  ]
+ },
+ {
+  "id": "boswell_johnson",
+  "a": "James Boswell",
+  "b": "Samuel Johnson",
+  "date": "1763-05-16",
+  "date_approx": false,
+  "place": "Tom Davies' bookshop, Russell Street, London",
+  "lon": -0.12,
+  "lat": 51.51,
+  "what": "Boswell was introduced to Johnson at Davies' bookshop and began with an apology for being Scottish.",
+  "why": "The meeting led to the Life of Samuel Johnson (1791).",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Boswell, Life of Johnson; summarised in Wikipedia, 'James Boswell'",
+    "url": "https://en.wikipedia.org/wiki/James_Boswell"
+   }
+  ]
+ },
+ {
+  "id": "cook_tupaia",
+  "a": "James Cook",
+  "b": "Tupaia",
+  "a_person": "person:james_cook",
+  "date": "1769-07",
+  "date_approx": true,
+  "place": "Matavai Bay, Tahiti",
+  "lon": -149.5,
+  "lat": -17.5,
+  "what": "The Ra'iatean navigator-priest Tupaia joined the Endeavour, drew Cook a chart of over 70 islands and later interpreted with the Māori.",
+  "why": "Tupaia's map is a key document of Polynesian navigation; he died in Batavia in 1770.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Cook, Journal; Joseph Banks, Journal; summarised in Wikipedia, 'Tupaia (navigator)'",
+    "url": "https://en.wikipedia.org/wiki/Tupaia_(navigator)"
+   }
+  ]
+ },
+ {
+  "id": "catherine_diderot",
+  "a": "Catherine the Great",
+  "b": "Denis Diderot",
+  "a_person": "person:catherine_the_great",
+  "b_person": "person:denis_diderot",
+  "date": "1773-10",
+  "date_approx": true,
+  "place": "Saint Petersburg",
+  "lon": 30.31,
+  "lat": 59.94,
+  "what": "Diderot spent five months at Catherine's court, meeting her almost daily and urging reforms she did not adopt.",
+  "why": "Catherine had bought his library to support him; the visit showed the limits of enlightened absolutism.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Diderot, Mémoires pour Catherine II; summarised in Wikipedia, 'Denis Diderot'",
+    "url": "https://en.wikipedia.org/wiki/Denis_Diderot"
+   }
+  ]
+ },
+ {
+  "id": "lavoisier_priestley",
+  "a": "Antoine Lavoisier",
+  "b": "Joseph Priestley",
+  "a_person": "person:antoine_lavoisier",
+  "b_person": "person:joseph_priestley",
+  "date": "1774-10",
+  "date_approx": true,
+  "place": "Paris",
+  "lon": 2.35,
+  "lat": 48.86,
+  "what": "Visiting Paris, Priestley told Lavoisier over dinner about the 'dephlogisticated air' he had made by heating mercuric oxide.",
+  "why": "Lavoisier repeated the experiment and named the gas oxygen, overthrowing phlogiston theory.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Priestley, Experiments and Observations; summarised in Wikipedia, 'Joseph Priestley'",
+    "url": "https://en.wikipedia.org/wiki/Joseph_Priestley"
+   }
+  ]
+ },
+ {
+  "id": "washington_lafayette",
+  "a": "George Washington",
+  "b": "Gilbert du Motier, Marquis de Lafayette",
+  "a_person": "person:george_washington",
+  "b_person": "person:gilbert_du_motier_marquis_de_lafayette",
+  "date": "1777-08-05",
+  "date_approx": true,
+  "place": "Philadelphia",
+  "lon": -75.16,
+  "lat": 39.95,
+  "what": "The nineteen-year-old volunteer major general Lafayette met Washington at a dinner in Philadelphia.",
+  "why": "Washington became his patron and near-father; Lafayette helped secure French aid and fought at Yorktown.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Lafayette, Memoirs; summarised in Wikipedia, 'Marquis de Lafayette'",
+    "url": "https://en.wikipedia.org/wiki/Marquis_de_Lafayette"
+   }
+  ]
+ },
+ {
+  "id": "franklin_voltaire",
+  "a": "Benjamin Franklin",
+  "b": "Voltaire",
+  "a_person": "person:benjamin_franklin",
+  "b_person": "person:voltaire",
+  "date": "1778-04-29",
+  "date_approx": false,
+  "place": "Académie des Sciences, Paris",
+  "lon": 2.35,
+  "lat": 48.86,
+  "what": "At a meeting of the Academy the two old men embraced and kissed, to cheers that the whole of Europe had embraced.",
+  "why": "Voltaire had also blessed Franklin's grandson with 'God and Liberty'; he died a month later.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "John Adams, Diary; summarised in Wikipedia, 'Benjamin Franklin'",
+    "url": "https://en.wikipedia.org/wiki/Benjamin_Franklin"
+   }
+  ]
+ },
+ {
+  "id": "cook_kalaniopuu",
+  "a": "James Cook",
+  "b": "Kalaniʻōpuʻu",
+  "a_person": "person:james_cook",
+  "date": "1779-01-26",
+  "date_approx": false,
+  "place": "Kealakekua Bay, Hawaii",
+  "lon": -155.92,
+  "lat": 19.48,
+  "what": "The aliʻi nui Kalaniʻōpuʻu came out to the Resolution in state, placed his feathered cloak on Cook and exchanged names.",
+  "why": "Cook's attempt to take him hostage on 14 February led to Cook's death on the shore.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Cook and King, Voyage to the Pacific Ocean; summarised in Wikipedia, 'Kalaniʻōpuʻu'",
+    "url": "https://en.wikipedia.org/wiki/Kalaniʻōpuʻu"
+   }
+  ]
+ },
+ {
+  "id": "qianlong_panchen_lama",
+  "a": "Qianlong Emperor",
+  "b": "Lobsang Palden Yeshe, 6th Panchen Lama",
+  "a_person": "person:qianlong_emperor",
+  "date": "1780-08",
+  "date_approx": true,
+  "place": "Chengde",
+  "lon": 117.94,
+  "lat": 40.99,
+  "what": "The Sixth Panchen Lama travelled to Chengde for Qianlong's seventieth birthday and was received with great honour.",
+  "why": "He died of smallpox in Beijing that November; his visit marked the height of Qing-Tibetan ceremonial ties.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Qing court records; summarised in Wikipedia, 'Lobsang Palden Yeshe, 6th Panchen Lama'",
+    "url": "https://en.wikipedia.org/wiki/Lobsang_Palden_Yeshe,_6th_Panchen_Lama"
+   }
+  ]
+ },
+ {
+  "id": "mozart_clementi",
+  "a": "Wolfgang Amadeus Mozart",
+  "b": "Muzio Clementi",
+  "a_person": "person:wolfgang_amadeus_mozart",
+  "date": "1781-12-24",
+  "date_approx": false,
+  "place": "Hofburg, Vienna",
+  "lon": 16.37,
+  "lat": 48.21,
+  "what": "Joseph II set Mozart and Clementi a piano contest, each improvising and sight-reading for the Russian grand duke's party.",
+  "why": "Mozart wrote that Clementi was 'a mere mechanicus'; Clementi admired Mozart.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Mozart, letter of 16 January 1782; summarised in Wikipedia, 'Muzio Clementi'",
+    "url": "https://en.wikipedia.org/wiki/Muzio_Clementi"
+   }
+  ]
+ },
+ {
+  "id": "mozart_haydn",
+  "a": "Joseph Haydn",
+  "b": "Wolfgang Amadeus Mozart",
+  "a_person": "person:joseph_haydn",
+  "b_person": "person:wolfgang_amadeus_mozart",
+  "date": "1785-02-12",
+  "date_approx": false,
+  "place": "Vienna",
+  "lon": 16.37,
+  "lat": 48.21,
+  "what": "After hearing Mozart's new quartets, Haydn told Leopold Mozart that his son was the greatest composer he knew.",
+  "why": "The friends often played quartets together; Mozart dedicated the six 'Haydn' quartets to him.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Leopold Mozart, letter of 16 February 1785; summarised in Wikipedia, 'Joseph Haydn'",
+    "url": "https://en.wikipedia.org/wiki/Joseph_Haydn"
+   }
+  ]
+ },
+ {
+  "id": "beethoven_mozart",
+  "a": "Ludwig van Beethoven",
+  "b": "Wolfgang Amadeus Mozart",
+  "a_person": "person:ludwig_van_beethoven",
+  "b_person": "person:wolfgang_amadeus_mozart",
+  "date": "1787-04",
+  "date_approx": true,
+  "place": "Vienna",
+  "lon": 16.37,
+  "lat": 48.21,
+  "what": "On his first visit to Vienna the sixteen-year-old Beethoven may have played for Mozart, who is said to have predicted he would make a noise in the world.",
+  "why": "The meeting rests on later anecdote; Beethoven left after two weeks when his mother fell ill.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "Otto Jahn (1856), from anecdote; summarised in Wikipedia, 'Ludwig van Beethoven'",
+    "url": "https://en.wikipedia.org/wiki/Ludwig_van_Beethoven"
+   }
+  ]
+ },
+ {
+  "id": "bennelong_phillip",
+  "a": "Bennelong",
+  "b": "Arthur Phillip",
+  "date": "1789-11-25",
+  "date_approx": false,
+  "place": "Manly Cove, Sydney",
+  "lon": 151.29,
+  "lat": -33.8,
+  "what": "On Governor Phillip's orders, the Wangal man Bennelong was seized at Manly Cove to serve as an intermediary.",
+  "why": "Bennelong became Phillip's interlocutor and travelled with him to England in 1792.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Watkin Tench; David Collins; summarised in Wikipedia, 'Bennelong'",
+    "url": "https://en.wikipedia.org/wiki/Bennelong"
+   }
+  ]
+ },
+ {
+  "id": "haydn_beethoven",
+  "a": "Joseph Haydn",
+  "b": "Ludwig van Beethoven",
+  "a_person": "person:joseph_haydn",
+  "b_person": "person:ludwig_van_beethoven",
+  "date": "1792-07",
+  "date_approx": true,
+  "place": "Bonn",
+  "lon": 7.1,
+  "lat": 50.73,
+  "what": "Passing through Bonn on his way back from London, Haydn saw a cantata by Beethoven and agreed to take him as a pupil in Vienna.",
+  "why": "Count Waldstein sent Beethoven off to 'receive Mozart's spirit from Haydn's hands'.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wegeler and Ries, Notizen; summarised in Wikipedia, 'Ludwig van Beethoven'",
+    "url": "https://en.wikipedia.org/wiki/Ludwig_van_Beethoven"
+   }
+  ]
+ },
+ {
+  "id": "vancouver_kamehameha",
+  "a": "George Vancouver",
+  "b": "Kamehameha I",
+  "date": "1793-02",
+  "date_approx": true,
+  "place": "Kealakekua Bay, Hawaii",
+  "lon": -155.92,
+  "lat": 19.48,
+  "what": "Vancouver, who had been with Cook, met Kamehameha, brought him cattle and advised him on ship-building.",
+  "why": "In 1794 Kamehameha ceded Hawaii to Britain in a gesture never ratified; he went on to unify the islands.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Vancouver, A Voyage of Discovery; summarised in Wikipedia, 'Kamehameha I'",
+    "url": "https://en.wikipedia.org/wiki/Kamehameha_I"
+   }
+  ]
+ },
+ {
+  "id": "macartney_qianlong",
+  "a": "George Macartney",
+  "b": "Qianlong Emperor",
+  "b_person": "person:qianlong_emperor",
+  "date": "1793-09-14",
+  "date_approx": false,
+  "place": "Chengde",
+  "lon": 117.94,
+  "lat": 40.99,
+  "what": "Macartney presented George III's letter to Qianlong in a tent at Jehol, kneeling on one knee rather than kowtowing.",
+  "why": "Qianlong rejected every request, saying China had no need of British manufactures.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Macartney, Journal; summarised in Wikipedia, 'Macartney Embassy'",
+    "url": "https://en.wikipedia.org/wiki/Macartney_Embassy"
+   }
+  ]
+ },
+ {
+  "id": "goethe_schiller",
+  "a": "Johann Wolfgang von Goethe",
+  "b": "Friedrich Schiller",
+  "a_person": "person:johann_wolfgang_von_goethe",
+  "b_person": "person:friedrich_schiller",
+  "date": "1794-07-20",
+  "date_approx": false,
+  "place": "Jena",
+  "lon": 11.59,
+  "lat": 50.93,
+  "what": "Leaving a meeting of the Natural History Society, Goethe and Schiller fell into a discussion of the 'primal plant' that turned old coolness into friendship.",
+  "why": "Their alliance became Weimar Classicism.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Goethe, Glückliches Ereignis (1817); summarised in Wikipedia, 'Friedrich Schiller'",
+    "url": "https://en.wikipedia.org/wiki/Friedrich_Schiller"
+   }
+  ]
+ },
+ {
+  "id": "humboldt_mutis",
+  "a": "Alexander von Humboldt",
+  "b": "José Celestino Mutis",
+  "a_person": "person:alexander_von_humboldt",
+  "date": "1801-07",
+  "date_approx": true,
+  "place": "Bogotá",
+  "lon": -74.07,
+  "lat": 4.6,
+  "what": "Humboldt and Bonpland detoured to Santa Fe de Bogotá to meet the botanist Mutis and study his great collection of plant drawings.",
+  "why": "Humboldt dedicated a genus to him; Mutis' Botanical Expedition was the scientific school of New Granada's independence generation.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Humboldt, letters and diaries; summarised in Wikipedia, 'José Celestino Mutis'",
+    "url": "https://en.wikipedia.org/wiki/José_Celestino_Mutis"
+   }
+  ]
+ },
+ {
+  "id": "bolivar_humboldt",
+  "a": "Simón Bolívar",
+  "b": "Alexander von Humboldt",
+  "a_person": "person:simon_bolivar",
+  "b_person": "person:alexander_von_humboldt",
+  "date": "1804",
+  "date_approx": true,
+  "place": "Paris",
+  "lon": 2.35,
+  "lat": 48.86,
+  "what": "The young Bolívar met Humboldt in Paris, newly back from the Americas.",
+  "why": "Bolívar later called Humboldt the true discoverer of South America.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Bolívar, letters; summarised in Wikipedia, 'Simón Bolívar'",
+    "url": "https://en.wikipedia.org/wiki/Simón_Bolívar"
+   }
+  ]
+ },
+ {
+  "id": "humboldt_jefferson",
+  "a": "Alexander von Humboldt",
+  "b": "Thomas Jefferson",
+  "a_person": "person:alexander_von_humboldt",
+  "b_person": "person:thomas_jefferson",
+  "date": "1804-06",
+  "date_approx": true,
+  "place": "Washington, D.C.",
+  "lon": -77.04,
+  "lat": 38.9,
+  "what": "Fresh from Spanish America, Humboldt spent three weeks in Washington and talked with Jefferson about Mexico, maps and science.",
+  "why": "Humboldt's data on New Spain informed Jefferson after the Louisiana Purchase; they corresponded for life.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Jefferson Papers; summarised in Wikipedia, 'Alexander von Humboldt'",
+    "url": "https://en.wikipedia.org/wiki/Alexander_von_Humboldt"
+   }
+  ]
+ },
+ {
+  "id": "burr_hamilton",
+  "a": "Aaron Burr",
+  "b": "Alexander Hamilton",
+  "date": "1804-07-11",
+  "date_approx": false,
+  "place": "Weehawken, New Jersey",
+  "lon": -74.02,
+  "lat": 40.77,
+  "what": "Vice President Burr shot Hamilton in a duel on the Palisades ledge; Hamilton died the next day.",
+  "why": "Burr's career collapsed and Hamilton became a martyr of the Federalists.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Joint statement of the seconds; summarised in Wikipedia, 'Burr–Hamilton duel'",
+    "url": "https://en.wikipedia.org/wiki/Burr–Hamilton_duel"
+   }
+  ]
+ },
+ {
+  "id": "lewis_clark_sacagawea",
+  "a": "Meriwether Lewis",
+  "b": "Sacagawea",
+  "date": "1804-11-04",
+  "date_approx": true,
+  "place": "Fort Mandan / Knife River villages",
+  "lon": -101.27,
+  "lat": 47.3,
+  "what": "Lewis and Clark hired the trader Charbonneau as interpreter, with his young Shoshone wife Sacagawea.",
+  "why": "Sacagawea's presence and knowledge helped the expedition cross Shoshone country in 1805.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Clark, Journal, 4 November 1804; summarised in Wikipedia, 'Sacagawea'",
+    "url": "https://en.wikipedia.org/wiki/Sacagawea"
+   }
+  ]
+ },
+ {
+  "id": "bolivar_rodriguez_monte_sacro",
+  "a": "Simón Bolívar",
+  "b": "Simón Rodríguez",
+  "a_person": "person:simon_bolivar",
+  "date": "1805-08-15",
+  "date_approx": false,
+  "place": "Monte Sacro, Rome",
+  "lon": 12.53,
+  "lat": 41.94,
+  "what": "On the Monte Sacro, with his old tutor Rodríguez as witness, Bolívar swore to free South America from Spain.",
+  "why": "The oath became a founding scene of Spanish American independence; Rodríguez's later account is the main source.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Simón Rodríguez's recollection; summarised in Wikipedia, 'Simón Rodríguez'",
+    "url": "https://en.wikipedia.org/wiki/Simón_Rodríguez"
+   }
+  ]
+ },
+ {
+  "id": "wellington_nelson",
+  "a": "Arthur Wellesley, 1st Duke of Wellington",
+  "b": "Horatio Nelson",
+  "b_person": "person:horatio_nelson_1st_viscount_nelson",
+  "date": "1805-09-12",
+  "date_approx": false,
+  "place": "Colonial Office, Downing Street, London",
+  "lon": -0.13,
+  "lat": 51.5,
+  "what": "Waiting to see Lord Castlereagh, the two met by chance; Nelson talked boastfully until he discovered who Wellesley was, then spoke like a statesman.",
+  "why": "Their only meeting: Nelson left for Trafalgar and was killed five weeks later.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "J. W. Croker, Correspondence and Diaries; summarised in Wikipedia, 'Horatio Nelson, 1st Viscount Nelson'",
+    "url": "https://en.wikipedia.org/wiki/Horatio_Nelson,_1st_Viscount_Nelson"
+   }
+  ]
+ },
+ {
+  "id": "napoleon_alexander_tilsit",
+  "a": "Napoleon",
+  "b": "Alexander I of Russia",
+  "a_person": "person:napoleon",
+  "b_person": "person:alexander_i_of_russia",
+  "date": "1807-06-25",
+  "date_approx": false,
+  "place": "Raft on the Neman, Tilsit",
+  "lon": 21.88,
+  "lat": 55.08,
+  "what": "The two emperors met on a raft in the middle of the Neman and talked alone for over an hour.",
+  "why": "The Treaties of Tilsit divided Europe between them for five years.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Contemporary accounts; summarised in Wikipedia, 'Treaties of Tilsit'",
+    "url": "https://en.wikipedia.org/wiki/Treaties_of_Tilsit"
+   }
+  ]
+ },
+ {
+  "id": "napoleon_goethe",
+  "a": "Napoleon",
+  "b": "Johann Wolfgang von Goethe",
+  "a_person": "person:napoleon",
+  "b_person": "person:johann_wolfgang_von_goethe",
+  "date": "1808-10-02",
+  "date_approx": false,
+  "place": "Erfurt",
+  "lon": 11.03,
+  "lat": 50.98,
+  "what": "During the Congress of Erfurt Napoleon received Goethe at breakfast, discussed Werther, and greeted him with 'Vous êtes un homme!'.",
+  "why": "Goethe wore the Legion of Honour Napoleon gave him and refused to join the anti-French patriots.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Goethe, Unterredung mit Napoleon; summarised in Wikipedia, 'Johann Wolfgang von Goethe'",
+    "url": "https://en.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe"
+   }
+  ]
+ },
+ {
+  "id": "beethoven_goethe",
+  "a": "Ludwig van Beethoven",
+  "b": "Johann Wolfgang von Goethe",
+  "a_person": "person:ludwig_van_beethoven",
+  "b_person": "person:johann_wolfgang_von_goethe",
+  "date": "1812-07-19",
+  "date_approx": false,
+  "place": "Teplitz",
+  "lon": 13.82,
+  "lat": 50.64,
+  "what": "The two met several times at the spa; Goethe found Beethoven an 'utterly untamed personality'.",
+  "why": "The meeting of the age's greatest poet and composer produced mutual respect but no friendship.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Goethe, letter to Zelter, 2 September 1812; summarised in Wikipedia, 'Ludwig van Beethoven'",
+    "url": "https://en.wikipedia.org/wiki/Ludwig_van_Beethoven"
+   }
+  ]
+ },
+ {
+  "id": "faraday_davy",
+  "a": "Michael Faraday",
+  "b": "Humphry Davy",
+  "a_person": "person:michael_faraday",
+  "b_person": "person:humphry_davy",
+  "date": "1813-03-01",
+  "date_approx": true,
+  "place": "Royal Institution, London",
+  "lon": -0.14,
+  "lat": 51.51,
+  "what": "Having sent Davy his bound notes of Davy's lectures, the bookbinder's apprentice Faraday was hired as his laboratory assistant.",
+  "why": "Faraday soon surpassed his master in electromagnetism.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Bence Jones, Life of Faraday; summarised in Wikipedia, 'Michael Faraday'",
+    "url": "https://en.wikipedia.org/wiki/Michael_Faraday"
+   }
+  ]
+ },
+ {
+  "id": "marsden_ruatara",
+  "a": "Samuel Marsden",
+  "b": "Ruatara",
+  "date": "1814-12-25",
+  "date_approx": false,
+  "place": "Rangihoua, Bay of Islands",
+  "lon": 174.08,
+  "lat": -35.21,
+  "what": "Under the protection of the Ngāpuhi chief Ruatara, whom he had befriended on a ship in 1809, Marsden preached the first Christian sermon in New Zealand.",
+  "why": "The mission at Rangihoua began sustained European settlement in New Zealand.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Marsden, Journal; summarised in Wikipedia, 'Ruatara (chief)'",
+    "url": "https://en.wikipedia.org/wiki/Ruatara_(chief)"
+   }
+  ]
+ },
+ {
+  "id": "raffles_hussein",
+  "a": "Stamford Raffles",
+  "b": "Hussein Shah of Johor",
+  "date": "1819-02-06",
+  "date_approx": false,
+  "place": "Singapore",
+  "lon": 103.85,
+  "lat": 1.29,
+  "what": "Raffles signed a treaty with Hussein, whom he recognised as sultan of Johor, and the Temenggong, giving the East India Company a trading post.",
+  "why": "Singapore grew into the great entrepôt of the region.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Treaty of Singapore; summarised in Wikipedia, '1819 Singapore Treaty'",
+    "url": "https://en.wikipedia.org/wiki/1819_Singapore_Treaty"
+   }
+  ]
+ },
+ {
+  "id": "bolivar_saenz",
+  "a": "Simón Bolívar",
+  "b": "Manuela Sáenz",
+  "a_person": "person:simon_bolivar",
+  "date": "1822-06-16",
+  "date_approx": true,
+  "place": "Quito",
+  "lon": -78.51,
+  "lat": -0.22,
+  "what": "At a ball after the victory of Pichincha, Bolívar met Manuela Sáenz.",
+  "why": "She became his companion and in 1828 saved his life from assassins in Bogotá.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Bolívar, letters; summarised in Wikipedia, 'Manuela Sáenz'",
+    "url": "https://en.wikipedia.org/wiki/Manuela_Sáenz"
+   }
+  ]
+ },
+ {
+  "id": "bolivar_san_martin",
+  "a": "Simón Bolívar",
+  "b": "José de San Martín",
+  "a_person": "person:simon_bolivar",
+  "b_person": "person:jose_de_san_martin",
+  "date": "1822-07-26",
+  "date_approx": false,
+  "place": "Guayaquil",
+  "lon": -79.89,
+  "lat": -2.19,
+  "what": "The two liberators met privately in Guayaquil; no record of their talks survives.",
+  "why": "San Martín withdrew and left Bolívar to finish the liberation of Peru; why remains debated.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "San Martín, letters; summarised in Wikipedia, 'Guayaquil Conference'",
+    "url": "https://en.wikipedia.org/wiki/Guayaquil_Conference"
+   }
+  ]
+ },
+ {
+  "id": "liszt_beethoven",
+  "a": "Franz Liszt",
+  "b": "Ludwig van Beethoven",
+  "a_person": "person:franz_liszt",
+  "b_person": "person:ludwig_van_beethoven",
+  "date": "1823-04-13",
+  "date_approx": true,
+  "place": "Vienna",
+  "lon": 16.37,
+  "lat": 48.21,
+  "what": "Liszt later told that the deaf Beethoven came on stage after his concert and kissed him on the forehead.",
+  "why": "The 'Weihekuss' became Liszt's consecration story; modern scholars doubt Beethoven attended.",
+  "conf": "disputed",
+  "sources": [
+   {
+    "cite": "Liszt's later recollection; Ilka Horowitz-Barnay; summarised in Wikipedia, 'Franz Liszt'",
+    "url": "https://en.wikipedia.org/wiki/Franz_Liszt"
+   }
+  ]
+ },
+ {
+  "id": "clapperton_bello",
+  "a": "Hugh Clapperton",
+  "b": "Muhammad Bello",
+  "date": "1824-03",
+  "date_approx": true,
+  "place": "Sokoto",
+  "lon": 5.24,
+  "lat": 13.06,
+  "what": "Clapperton reached the caliph of Sokoto and discussed with him the Bible, the Niger's course and British trade.",
+  "why": "Bello sketched the Niger for him; Clapperton returned and died at Sokoto in 1827.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Denham and Clapperton, Narrative; summarised in Wikipedia, 'Muhammed Bello'",
+    "url": "https://en.wikipedia.org/wiki/Muhammed_Bello"
+   }
+  ]
+ },
+ {
+  "id": "shaka_fynn",
+  "a": "Shaka",
+  "b": "Henry Francis Fynn",
+  "date": "1824-07",
+  "date_approx": true,
+  "place": "KwaBulawayo",
+  "lon": 31.4,
+  "lat": -28.85,
+  "what": "The trader Fynn reached Shaka's royal kraal and later claimed to have treated his stab wound.",
+  "why": "Shaka granted the Port Natal traders land, the seed of colonial Durban; Fynn's diary was rewritten later.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Fynn, Diary; summarised in Wikipedia, 'Henry Francis Fynn'",
+    "url": "https://en.wikipedia.org/wiki/Henry_Francis_Fynn"
+   }
+  ]
+ },
+ {
+  "id": "truganini_robinson",
+  "a": "Truganini",
+  "b": "George Augustus Robinson",
+  "date": "1829-03",
+  "date_approx": true,
+  "place": "Bruny Island, Tasmania",
+  "lon": 147.33,
+  "lat": -43.28,
+  "what": "The young Nuenonne woman Truganini met George Augustus Robinson at his ration station on Bruny Island and became guide on his 'Friendly Mission'.",
+  "why": "Robinson's mission ended with the removal of surviving Aboriginal Tasmanians to Flinders Island; Truganini's life became a symbol of colonial dispossession.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Robinson, Friendly Mission journals (ed. Plomley); summarised in Wikipedia, 'Truganini'",
+    "url": "https://en.wikipedia.org/wiki/Truganini"
+   }
+  ]
+ },
+ {
+  "id": "diponegoro_de_kock",
+  "a": "Diponegoro",
+  "b": "Hendrik Merkus de Kock",
+  "date": "1830-03-28",
+  "date_approx": false,
+  "place": "Magelang",
+  "lon": 110.22,
+  "lat": -7.47,
+  "what": "Diponegoro came to negotiate with General de Kock at the Residency and was arrested.",
+  "why": "The Java War ended; Diponegoro died in exile at Makassar and became a national hero.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Diponegoro, Babad Dipanegara; Raden Saleh's painting; summarised in Wikipedia, 'Diponegoro'",
+    "url": "https://en.wikipedia.org/wiki/Diponegoro"
+   }
+  ]
+ },
+ {
+  "id": "ranjit_bentinck",
+  "a": "Ranjit Singh",
+  "b": "Lord William Bentinck",
+  "date": "1831-10-26",
+  "date_approx": false,
+  "place": "Rupar",
+  "lon": 76.52,
+  "lat": 30.97,
+  "what": "The Sikh maharaja and the governor-general met on the Sutlej with weeks of reviews and festivities.",
+  "why": "The meeting confirmed the British-Sikh peace that lasted until Ranjit's death.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Rupar meeting accounts; summarised in Wikipedia, 'Ranjit Singh'",
+    "url": "https://en.wikipedia.org/wiki/Ranjit_Singh"
+   }
+  ]
+ },
+ {
+  "id": "moshoeshoe_casalis",
+  "a": "Moshoeshoe I",
+  "b": "Eugène Casalis",
+  "date": "1833",
+  "date_approx": true,
+  "place": "Thaba Bosiu",
+  "lon": 27.68,
+  "lat": -29.37,
+  "what": "The Basotho king Moshoeshoe welcomed the French Protestant missionaries Casalis, Arbousset and Gosselin.",
+  "why": "Casalis became his adviser and diplomat; the alliance helped Lesotho survive Boer and British pressure.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Casalis, Les Bassoutos; summarised in Wikipedia, 'Moshoeshoe I'",
+    "url": "https://en.wikipedia.org/wiki/Moshoeshoe_I"
+   }
+  ]
+ },
+ {
+  "id": "darwin_rosas",
+  "a": "Charles Darwin",
+  "b": "Juan Manuel de Rosas",
+  "a_person": "person:charles_darwin",
+  "date": "1833-08",
+  "date_approx": true,
+  "place": "Rosas' camp on the Río Colorado",
+  "lon": -62.8,
+  "lat": -39.4,
+  "what": "Darwin rode to the camp of General Rosas during his desert campaign, got a passport and judged him 'a man of extraordinary character'.",
+  "why": "Rosas soon ruled Argentina as dictator; Darwin's ride inland yielded fossil finds.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Darwin, Journal of Researches; summarised in Wikipedia, 'Juan Manuel de Rosas'",
+    "url": "https://en.wikipedia.org/wiki/Juan_Manuel_de_Rosas"
+   }
+  ]
+ },
+ {
+  "id": "darwin_jemmy_button",
+  "a": "Charles Darwin",
+  "b": "Jemmy Button",
+  "a_person": "person:charles_darwin",
+  "date": "1834-03-05",
+  "date_approx": false,
+  "place": "Wulaia, Tierra del Fuego",
+  "lon": -68.0,
+  "lat": -55.0,
+  "what": "The Beagle returned to find Jemmy Button, the Yaghan man who had sailed with them to England, naked and thin but content to stay.",
+  "why": "Darwin was struck by how fast 'civilisation' had been shed; the episode coloured his thinking on human races.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Darwin, Journal of Researches; summarised in Wikipedia, 'Jemmy Button'",
+    "url": "https://en.wikipedia.org/wiki/Jemmy_Button"
+   }
+  ]
+ },
+ {
+  "id": "batman_wurundjeri",
+  "a": "John Batman",
+  "b": "Wurundjeri elders (Jika Jika)",
+  "date": "1835-06-06",
+  "date_approx": false,
+  "place": "Merri Creek",
+  "lon": 145.0,
+  "lat": -37.75,
+  "what": "Batman claimed to have bought 600,000 acres around Port Phillip from eight Wurundjeri elders for blankets, knives and goods.",
+  "why": "The colonial government voided the 'Batman Treaty', but Melbourne grew on the land.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Batman Deed; summarised in Wikipedia, 'Batman's Treaty'",
+    "url": "https://en.wikipedia.org/wiki/Batman's_Treaty"
+   }
+  ]
+ },
+ {
+  "id": "pushkin_dantes",
+  "a": "Alexander Pushkin",
+  "b": "Georges-Charles de Heeckeren d'Anthès",
+  "a_person": "person:alexander_pushkin",
+  "date": "1837-02-08",
+  "date_approx": false,
+  "place": "Chornaya Rechka, Saint Petersburg",
+  "lon": 30.3,
+  "lat": 59.99,
+  "what": "Pushkin fought a duel with d'Anthès, whom he accused of courting his wife, and was mortally wounded.",
+  "why": "Russia lost its national poet at 37.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Danzas' account; summarised in Wikipedia, 'Alexander Pushkin'",
+    "url": "https://en.wikipedia.org/wiki/Alexander_Pushkin"
+   }
+  ]
+ },
+ {
+  "id": "garibaldi_anita",
+  "a": "Giuseppe Garibaldi",
+  "b": "Anita Garibaldi",
+  "a_person": "person:giuseppe_garibaldi",
+  "date": "1839-07",
+  "date_approx": true,
+  "place": "Laguna, Brazil",
+  "lon": -48.78,
+  "lat": -28.48,
+  "what": "Fighting for the Riograndense Republic, Garibaldi spotted Ana Maria de Jesus through a telescope and told her 'you must be mine'.",
+  "why": "Anita fought beside him in Brazil, Uruguay and Italy, and died in his arms in 1849.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Garibaldi, Memoirs; summarised in Wikipedia, 'Anita Garibaldi'",
+    "url": "https://en.wikipedia.org/wiki/Anita_Garibaldi"
+   }
+  ]
+ },
+ {
+  "id": "hobson_hone_heke",
+  "a": "William Hobson",
+  "b": "Hōne Heke",
+  "date": "1840-02-06",
+  "date_approx": true,
+  "place": "Waitangi",
+  "lon": 174.07,
+  "lat": -35.27,
+  "what": "Hōne Heke signed the Treaty of Waitangi with Captain Hobson, by some accounts the first chief to do so.",
+  "why": "The treaty founded British New Zealand; in 1844 Heke cut down the flagstaff at Kororāreka in protest.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Treaty of Waitangi; summarised in Wikipedia, 'Hōne Heke'",
+    "url": "https://en.wikipedia.org/wiki/Hōne_Heke"
+   }
+  ]
+ },
+ {
+  "id": "marx_engels",
+  "a": "Karl Marx",
+  "b": "Friedrich Engels",
+  "a_person": "person:karl_marx",
+  "b_person": "person:friedrich_engels",
+  "date": "1844-08-28",
+  "date_approx": false,
+  "place": "Café de la Régence, Paris",
+  "lon": 2.34,
+  "lat": 48.86,
+  "what": "Marx and Engels met in Paris and found themselves in complete agreement over ten days of talk.",
+  "why": "Their partnership produced The Communist Manifesto (1848) and Capital.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Engels, 1885 recollection; summarised in Wikipedia, 'Friedrich Engels'",
+    "url": "https://en.wikipedia.org/wiki/Friedrich_Engels"
+   }
+  ]
+ },
+ {
+  "id": "hong_xiuquan_roberts",
+  "a": "Hong Xiuquan",
+  "b": "Issachar Jacox Roberts",
+  "date": "1847",
+  "date_approx": true,
+  "place": "Guangzhou",
+  "lon": 113.26,
+  "lat": 23.13,
+  "what": "Hong Xiuquan studied the Bible for two months with the American Baptist missionary Roberts, who declined to baptise him.",
+  "why": "Hong went on to lead the Taiping Rebellion; Roberts briefly served his Heavenly Kingdom in 1860.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Roberts, letters; summarised in Wikipedia, 'Issachar Jacox Roberts'",
+    "url": "https://en.wikipedia.org/wiki/Issachar_Jacox_Roberts"
+   }
+  ]
+ },
+ {
+  "id": "livingstone_sebetwane",
+  "a": "David Livingstone",
+  "b": "Sebetwane",
+  "a_person": "person:david_livingstone",
+  "date": "1851-06",
+  "date_approx": true,
+  "place": "Linyanti",
+  "lon": 23.8,
+  "lat": -18.07,
+  "what": "Livingstone reached the Makololo chief Sebetwane, who welcomed him warmly and died a few weeks later.",
+  "why": "Livingstone first saw the upper Zambezi on this journey and began his transcontinental ambition.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Livingstone, Missionary Travels; summarised in Wikipedia, 'Sebetwane'",
+    "url": "https://en.wikipedia.org/wiki/Sebetwane"
+   }
+  ]
+ },
+ {
+  "id": "perry_toda_ido",
+  "a": "Matthew C. Perry",
+  "b": "Toda Ujiyoshi",
+  "date": "1853-07-14",
+  "date_approx": false,
+  "place": "Kurihama",
+  "lon": 139.71,
+  "lat": 35.22,
+  "what": "Perry landed with 250 men and delivered President Fillmore's letter to the shogun's officials Toda Ujiyoshi and Ido Hiromichi.",
+  "why": "He returned in 1854 for the Convention of Kanagawa, ending Japan's seclusion.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Perry, Narrative of the Expedition; summarised in Wikipedia, 'Perry Expedition'",
+    "url": "https://en.wikipedia.org/wiki/Perry_Expedition"
+   }
+  ]
+ },
+ {
+  "id": "schumann_brahms",
+  "a": "Robert Schumann",
+  "b": "Johannes Brahms",
+  "a_person": "person:robert_schumann",
+  "b_person": "person:johannes_brahms",
+  "date": "1853-09-30",
+  "date_approx": false,
+  "place": "Düsseldorf",
+  "lon": 6.78,
+  "lat": 51.23,
+  "what": "The twenty-year-old Brahms knocked at the Schumanns' door and played them his sonata.",
+  "why": "Schumann hailed him as the coming genius in 'Neue Bahnen'; Brahms' bond with Clara lasted for life.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Clara Schumann, Diary; summarised in Wikipedia, 'Johannes Brahms'",
+    "url": "https://en.wikipedia.org/wiki/Johannes_Brahms"
+   }
+  ]
+ },
+ {
+  "id": "harris_iesada",
+  "a": "Townsend Harris",
+  "b": "Tokugawa Iesada",
+  "date": "1857-12-07",
+  "date_approx": false,
+  "place": "Edo Castle",
+  "lon": 139.75,
+  "lat": 35.69,
+  "what": "The American consul Harris became the first Western envoy received by the shogun in Edo.",
+  "why": "Harris negotiated the 1858 Treaty of Amity and Commerce, opening Japanese ports.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Harris, Journal; summarised in Wikipedia, 'Townsend Harris'",
+    "url": "https://en.wikipedia.org/wiki/Townsend_Harris"
+   }
+  ]
+ },
+ {
+  "id": "leonowens_mongkut",
+  "a": "Anna Leonowens",
+  "b": "Mongkut",
+  "date": "1862-03",
+  "date_approx": true,
+  "place": "Grand Palace, Bangkok",
+  "lon": 100.49,
+  "lat": 13.75,
+  "what": "Anna Leonowens arrived to teach the royal children and was received by King Mongkut.",
+  "why": "Her romanticised memoir became The King and I, much resented in Thailand.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Leonowens, The English Governess at the Siamese Court; summarised in Wikipedia, 'Anna Leonowens'",
+    "url": "https://en.wikipedia.org/wiki/Anna_Leonowens"
+   }
+  ]
+ },
+ {
+  "id": "dickens_dostoevsky",
+  "a": "Charles Dickens",
+  "b": "Fyodor Dostoevsky",
+  "a_person": "person:charles_dickens",
+  "b_person": "person:fyodor_dostoevsky",
+  "date": "1862-07",
+  "date_approx": true,
+  "place": "London",
+  "lon": -0.13,
+  "lat": 51.5,
+  "what": "A letter claiming that Dostoevsky visited Dickens in 1862 and heard him describe his split personality circulated from 2002.",
+  "why": "It was a fabrication by the critic A. D. Harvey; there is no evidence they met.",
+  "conf": "legend",
+  "sources": [
+   {
+    "cite": "Eric Naiman, TLS (2013); summarised in Wikipedia, 'A. D. Harvey'",
+    "url": "https://en.wikipedia.org/wiki/A._D._Harvey"
+   }
+  ]
+ },
+ {
+  "id": "lincoln_douglass",
+  "a": "Abraham Lincoln",
+  "b": "Frederick Douglass",
+  "a_person": "person:abraham_lincoln",
+  "date": "1863-08-10",
+  "date_approx": false,
+  "place": "White House",
+  "lon": -77.04,
+  "lat": 38.9,
+  "what": "Douglass went uninvited to the White House to protest unequal pay for Black soldiers and was received at once.",
+  "why": "The first of three meetings; Douglass came to respect Lincoln as a statesman.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Douglass, Life and Times; summarised in Wikipedia, 'Frederick Douglass'",
+    "url": "https://en.wikipedia.org/wiki/Frederick_Douglass"
+   }
+  ]
+ },
+ {
+  "id": "wagner_ludwig",
+  "a": "Richard Wagner",
+  "b": "Ludwig II of Bavaria",
+  "a_person": "person:richard_wagner",
+  "b_person": "person:ludwig_ii_of_bavaria",
+  "date": "1864-05-04",
+  "date_approx": false,
+  "place": "Munich Residenz",
+  "lon": 11.58,
+  "lat": 48.14,
+  "what": "The eighteen-year-old king summoned the debt-ridden Wagner and offered to pay his debts.",
+  "why": "Ludwig's patronage made possible Tristan, the Ring and Bayreuth.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wagner, letters; summarised in Wikipedia, 'Ludwig II of Bavaria'",
+    "url": "https://en.wikipedia.org/wiki/Ludwig_II_of_Bavaria"
+   }
+  ]
+ },
+ {
+  "id": "wagner_nietzsche",
+  "a": "Richard Wagner",
+  "b": "Friedrich Nietzsche",
+  "a_person": "person:richard_wagner",
+  "b_person": "person:friedrich_nietzsche",
+  "date": "1868-11-08",
+  "date_approx": false,
+  "place": "Leipzig",
+  "lon": 12.37,
+  "lat": 51.34,
+  "what": "At the Brockhaus house the young philologist Nietzsche met Wagner, who talked of Schopenhauer.",
+  "why": "The friendship shaped The Birth of Tragedy and ended in a bitter break.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Nietzsche, letter to Rohde; summarised in Wikipedia, 'Friedrich Nietzsche'",
+    "url": "https://en.wikipedia.org/wiki/Friedrich_Nietzsche"
+   }
+  ]
+ },
+ {
+  "id": "stanley_livingstone",
+  "a": "Henry Morton Stanley",
+  "b": "David Livingstone",
+  "b_person": "person:david_livingstone",
+  "date": "1871-11-10",
+  "date_approx": true,
+  "place": "Ujiji",
+  "lon": 29.68,
+  "lat": -4.88,
+  "what": "Stanley found Livingstone at Ujiji and, by his account, greeted him 'Dr. Livingstone, I presume?'.",
+  "why": "The date comes from Stanley; Livingstone's diary suggests late October; the famous line may be Stanley's later invention.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Stanley, How I Found Livingstone; summarised in Wikipedia, 'Henry Morton Stanley'",
+    "url": "https://en.wikipedia.org/wiki/Henry_Morton_Stanley"
+   }
+  ]
+ },
+ {
+  "id": "stanley_mutesa",
+  "a": "Henry Morton Stanley",
+  "b": "Mutesa I of Buganda",
+  "date": "1875-04",
+  "date_approx": true,
+  "place": "Rubaga, Buganda",
+  "lon": 32.55,
+  "lat": 0.3,
+  "what": "Stanley visited Kabaka Mutesa and discussed Christianity with him; he wrote to the Daily Telegraph appealing for missionaries.",
+  "why": "The letter brought Anglican (1877) and Catholic (1879) missions to Buganda.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Stanley, Through the Dark Continent; summarised in Wikipedia, 'Muteesa I of Buganda'",
+    "url": "https://en.wikipedia.org/wiki/Muteesa_I_of_Buganda"
+   }
+  ]
+ },
+ {
+  "id": "pedro_ii_bell",
+  "a": "Pedro II of Brazil",
+  "b": "Alexander Graham Bell",
+  "a_person": "person:pedro_ii_of_brazil",
+  "b_person": "person:alexander_graham_bell",
+  "date": "1876-06-25",
+  "date_approx": false,
+  "place": "Centennial Exposition, Philadelphia",
+  "lon": -75.2,
+  "lat": 39.98,
+  "what": "The Brazilian emperor listened to Bell's telephone and exclaimed 'My God, it talks!'.",
+  "why": "Pedro's interest drew the judges and press to the invention.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Contemporary press accounts; summarised in Wikipedia, 'Pedro II of Brazil'",
+    "url": "https://en.wikipedia.org/wiki/Pedro_II_of_Brazil"
+   }
+  ]
+ },
+ {
+  "id": "grant_li_hongzhang",
+  "a": "Ulysses S. Grant",
+  "b": "Li Hongzhang",
+  "a_person": "person:ulysses_s_grant",
+  "date": "1879-06",
+  "date_approx": true,
+  "place": "Tianjin",
+  "lon": 117.2,
+  "lat": 39.13,
+  "what": "On his world tour, Grant met the viceroy Li Hongzhang, who asked him to mediate the Ryukyu dispute with Japan.",
+  "why": "Grant's mediation failed, but it began Li's friendship with the United States.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "John Russell Young, Around the World with General Grant; summarised in Wikipedia, 'Ulysses S. Grant'",
+    "url": "https://en.wikipedia.org/wiki/Ulysses_S._Grant"
+   }
+  ]
+ },
+ {
+  "id": "vivekananda_ramakrishna",
+  "a": "Swami Vivekananda",
+  "b": "Ramakrishna",
+  "a_person": "person:swami_vivekananda",
+  "b_person": "person:ramakrishna",
+  "date": "1881-11",
+  "date_approx": true,
+  "place": "Dakshineswar",
+  "lon": 88.36,
+  "lat": 22.65,
+  "what": "The student Narendranath Datta asked Ramakrishna whether he had seen God, and was told yes, more clearly than he saw Narendra.",
+  "why": "Narendra became Swami Vivekananda, Ramakrishna's leading disciple.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "The Gospel of Sri Ramakrishna; summarised in Wikipedia, 'Swami Vivekananda'",
+    "url": "https://en.wikipedia.org/wiki/Swami_Vivekananda"
+   }
+  ]
+ },
+ {
+  "id": "wilde_whitman",
+  "a": "Oscar Wilde",
+  "b": "Walt Whitman",
+  "a_person": "person:oscar_wilde",
+  "b_person": "person:walt_whitman",
+  "date": "1882-01-18",
+  "date_approx": false,
+  "place": "Camden, New Jersey",
+  "lon": -75.12,
+  "lat": 39.93,
+  "what": "On his lecture tour, Wilde visited Whitman, who gave him elderberry wine.",
+  "why": "Wilde called him 'the grandest man I have ever seen'.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Philadelphia Press interview; summarised in Wikipedia, 'Oscar Wilde'",
+    "url": "https://en.wikipedia.org/wiki/Oscar_Wilde"
+   }
+  ]
+ },
+ {
+  "id": "tesla_edison",
+  "a": "Nikola Tesla",
+  "b": "Thomas Edison",
+  "a_person": "person:nikola_tesla",
+  "b_person": "person:thomas_edison",
+  "date": "1884-06",
+  "date_approx": true,
+  "place": "New York",
+  "lon": -74.0,
+  "lat": 40.71,
+  "what": "Tesla, carrying a letter of introduction from Charles Batchelor, was hired by Edison in New York.",
+  "why": "Tesla quit within months over pay; the two became rivals in the 'War of the Currents'.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Tesla, My Inventions; summarised in Wikipedia, 'Nikola Tesla'",
+    "url": "https://en.wikipedia.org/wiki/Nikola_Tesla"
+   }
+  ]
+ },
+ {
+  "id": "keller_sullivan",
+  "a": "Helen Keller",
+  "b": "Anne Sullivan",
+  "a_person": "person:helen_keller",
+  "date": "1887-03-03",
+  "date_approx": false,
+  "place": "Ivy Green, Tuscumbia, Alabama",
+  "lon": -87.7,
+  "lat": 34.73,
+  "what": "The twenty-year-old teacher Anne Sullivan arrived at the Kellers' home; within a month Helen understood the word 'water' spelled into her hand.",
+  "why": "Sullivan was Keller's companion for 49 years.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Keller, The Story of My Life; summarised in Wikipedia, 'Anne Sullivan'",
+    "url": "https://en.wikipedia.org/wiki/Anne_Sullivan"
+   }
+  ]
+ },
+ {
+  "id": "van_gogh_gauguin",
+  "a": "Vincent van Gogh",
+  "b": "Paul Gauguin",
+  "a_person": "person:vincent_van_gogh",
+  "b_person": "person:paul_gauguin",
+  "date": "1888-10-23",
+  "date_approx": false,
+  "place": "Yellow House, Arles",
+  "lon": 4.63,
+  "lat": 43.68,
+  "what": "Gauguin arrived to join van Gogh's 'studio of the south'.",
+  "why": "Nine weeks of work and quarrels ended on 23 December with van Gogh cutting off his ear.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Van Gogh, letters; summarised in Wikipedia, 'Paul Gauguin'",
+    "url": "https://en.wikipedia.org/wiki/Paul_Gauguin"
+   }
+  ]
+ },
+ {
+  "id": "twain_kipling",
+  "a": "Mark Twain",
+  "b": "Rudyard Kipling",
+  "a_person": "person:mark_twain",
+  "b_person": "person:rudyard_kipling",
+  "date": "1889-08",
+  "date_approx": true,
+  "place": "Elmira, New York",
+  "lon": -76.81,
+  "lat": 42.09,
+  "what": "The young Kipling tracked Twain to Elmira and interviewed him on the porch.",
+  "why": "Kipling wrote it up in From Sea to Sea.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Kipling, From Sea to Sea; summarised in Wikipedia, 'Rudyard Kipling'",
+    "url": "https://en.wikipedia.org/wiki/Rudyard_Kipling"
+   }
+  ]
+ },
+ {
+  "id": "li_hongzhang_ito",
+  "a": "Li Hongzhang",
+  "b": "Itō Hirobumi",
+  "date": "1895-03-20",
+  "date_approx": false,
+  "place": "Shimonoseki",
+  "lon": 130.94,
+  "lat": 33.96,
+  "what": "Li negotiated with Itō to end the First Sino-Japanese War; on 24 March a Japanese nationalist shot Li in the face.",
+  "why": "The Treaty of Shimonoseki ceded Taiwan to Japan.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Treaty records; summarised in Wikipedia, 'Treaty of Shimonoseki'",
+    "url": "https://en.wikipedia.org/wiki/Treaty_of_Shimonoseki"
+   }
+  ]
+ },
+ {
+  "id": "vivekananda_tesla",
+  "a": "Swami Vivekananda",
+  "b": "Nikola Tesla",
+  "a_person": "person:swami_vivekananda",
+  "b_person": "person:nikola_tesla",
+  "date": "1896-02",
+  "date_approx": true,
+  "place": "New York",
+  "lon": -74.0,
+  "lat": 40.71,
+  "what": "Vivekananda met Tesla and wrote that Tesla thought he could show that matter and force reduce to potential energy.",
+  "why": "The meeting is recorded in Vivekananda's letter.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Vivekananda, letter of 13 February 1896; summarised in Wikipedia, 'Swami Vivekananda'",
+    "url": "https://en.wikipedia.org/wiki/Swami_Vivekananda"
+   }
+  ]
+ },
+ {
+  "id": "kang_youwei_guangxu",
+  "a": "Kang Youwei",
+  "b": "Guangxu Emperor",
+  "date": "1898-06-16",
+  "date_approx": false,
+  "place": "Summer Palace, Beijing",
+  "lon": 116.27,
+  "lat": 40.0,
+  "what": "In his only audience, Kang Youwei talked with the emperor about reform.",
+  "why": "The Hundred Days' Reform followed; the empress dowager crushed it in September.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Kang Youwei, autobiography; summarised in Wikipedia, 'Hundred Days' Reform'",
+    "url": "https://en.wikipedia.org/wiki/Hundred_Days%27_Reform"
+   }
+  ]
+ },
+ {
+  "id": "herzl_wilhelm",
+  "a": "Theodor Herzl",
+  "b": "Wilhelm II",
+  "a_person": "person:theodor_herzl",
+  "b_person": "person:wilhelm_ii_german_emperor",
+  "date": "1898-10-29",
+  "date_approx": false,
+  "place": "Mikveh Israel",
+  "lon": 34.79,
+  "lat": 32.03,
+  "what": "Herzl waited by the road at the Mikveh Israel agricultural school; the Kaiser stopped, shook his hand and talked briefly.",
+  "why": "The formal audience in Jerusalem days later brought no German support for Zionism.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Herzl, Diaries; summarised in Wikipedia, 'Theodor Herzl'",
+    "url": "https://en.wikipedia.org/wiki/Theodor_Herzl"
+   }
+  ]
+ },
+ {
+  "id": "lenin_stalin",
+  "a": "Vladimir Lenin",
+  "b": "Joseph Stalin",
+  "a_person": "person:vladimir_lenin",
+  "b_person": "person:joseph_stalin",
+  "date": "1905-12",
+  "date_approx": true,
+  "place": "Tampere",
+  "lon": 23.76,
+  "lat": 61.5,
+  "what": "Stalin first met Lenin at the Bolshevik conference in Tampere, and was disappointed to find him an ordinary-looking man.",
+  "why": "Stalin rose as Lenin's loyal organiser and succeeded him.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Stalin, speech of 1924; summarised in Wikipedia, 'Tampere conference of 1905'",
+    "url": "https://en.wikipedia.org/wiki/Tampere_conference_of_1905"
+   }
+  ]
+ },
+ {
+  "id": "picasso_matisse",
+  "a": "Pablo Picasso",
+  "b": "Henri Matisse",
+  "a_person": "person:pablo_picasso",
+  "b_person": "person:henri_matisse",
+  "date": "1906",
+  "date_approx": true,
+  "place": "Gertrude Stein's salon, 27 rue de Fleurus, Paris",
+  "lon": 2.33,
+  "lat": 48.85,
+  "what": "Gertrude and Leo Stein introduced Picasso to Matisse.",
+  "why": "Their rivalry drove modern painting: Les Demoiselles d'Avignon answered Matisse's Bonheur de vivre.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Gertrude Stein, Autobiography of Alice B. Toklas; summarised in Wikipedia, 'Henri Matisse'",
+    "url": "https://en.wikipedia.org/wiki/Henri_Matisse"
+   }
+  ]
+ },
+ {
+  "id": "freud_jung",
+  "a": "Sigmund Freud",
+  "b": "Carl Jung",
+  "a_person": "person:sigmund_freud",
+  "b_person": "person:carl_jung",
+  "date": "1907-03-03",
+  "date_approx": false,
+  "place": "Berggasse 19, Vienna",
+  "lon": 16.36,
+  "lat": 48.22,
+  "what": "At their first meeting Freud and Jung talked for some thirteen hours without a break.",
+  "why": "Freud named Jung his heir; their break in 1913 split psychoanalysis.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Jung, Memories, Dreams, Reflections; summarised in Wikipedia, 'Carl Jung'",
+    "url": "https://en.wikipedia.org/wiki/Carl_Jung"
+   }
+  ]
+ },
+ {
+  "id": "freud_mahler",
+  "a": "Gustav Mahler",
+  "b": "Sigmund Freud",
+  "a_person": "person:gustav_mahler",
+  "b_person": "person:sigmund_freud",
+  "date": "1910-08-26",
+  "date_approx": true,
+  "place": "Leiden",
+  "lon": 4.49,
+  "lat": 52.16,
+  "what": "Distraught over his wife Alma's affair, Mahler walked the streets of Leiden with Freud for four hours in a single session of analysis.",
+  "why": "Mahler said it helped; he died the following May.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ernest Jones, Life of Freud; summarised in Wikipedia, 'Gustav Mahler'",
+    "url": "https://en.wikipedia.org/wiki/Gustav_Mahler"
+   }
+  ]
+ },
+ {
+  "id": "gandhi_smuts",
+  "a": "Mahatma Gandhi",
+  "b": "Jan Smuts",
+  "a_person": "person:mahatma_gandhi",
+  "date": "1914-01",
+  "date_approx": true,
+  "place": "Pretoria",
+  "lon": 28.19,
+  "lat": -25.75,
+  "what": "After the 1913 satyagraha strikes and marches, Gandhi and General Smuts negotiated a settlement in Pretoria, abolishing the £3 tax on former indentured Indians and recognising Indian marriages.",
+  "why": "The Indian Relief Act of 1914 vindicated satyagraha; Gandhi left South Africa that July, and Smuts remarked that the saint had left our shores, I sincerely hope for ever.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Gandhi, Satyagraha in South Africa; summarised in Wikipedia, 'Mahatma Gandhi'",
+    "url": "https://en.wikipedia.org/wiki/Mahatma_Gandhi"
+   }
+  ]
+ },
+ {
+  "id": "ramanujan_hardy",
+  "a": "Srinivasa Ramanujan",
+  "b": "G. H. Hardy",
+  "a_person": "person:srinivasa_ramanujan",
+  "date": "1914-04",
+  "date_approx": true,
+  "place": "Cambridge",
+  "lon": 0.12,
+  "lat": 52.2,
+  "what": "A year after receiving his letter of theorems, Hardy welcomed Ramanujan to Trinity College.",
+  "why": "Five years of collaboration produced landmark papers on partitions and highly composite numbers before Ramanujan's illness and death in 1920.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Hardy, Ramanujan (1940); summarised in Wikipedia, 'Srinivasa Ramanujan'",
+    "url": "https://en.wikipedia.org/wiki/Srinivasa_Ramanujan"
+   }
+  ]
+ },
+ {
+  "id": "gandhi_tagore",
+  "a": "Mahatma Gandhi",
+  "b": "Rabindranath Tagore",
+  "a_person": "person:mahatma_gandhi",
+  "b_person": "person:rabindranath_tagore",
+  "date": "1915-03-06",
+  "date_approx": false,
+  "place": "Santiniketan",
+  "lon": 87.68,
+  "lat": 23.68,
+  "what": "Newly back from South Africa, Gandhi visited Tagore's school at Santiniketan, where his Phoenix Settlement boys were staying, and set the pupils to cooking and cleaning for themselves.",
+  "why": "Tagore is credited with calling him Mahatma; their friendship survived public disagreements over non-cooperation and the burning of foreign cloth.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Gandhi, Autobiography; summarised in Wikipedia, 'Rabindranath Tagore'",
+    "url": "https://en.wikipedia.org/wiki/Rabindranath_Tagore"
+   }
+  ]
+ },
+ {
+  "id": "lawrence_faisal",
+  "a": "T. E. Lawrence",
+  "b": "Faisal I of Iraq",
+  "a_person": "person:t_e_lawrence",
+  "b_person": "person:faisal_i_of_iraq",
+  "date": "1916-10-23",
+  "date_approx": true,
+  "place": "Hamra, Wadi Safra",
+  "lon": 39.4,
+  "lat": 24.0,
+  "what": "Lawrence, a junior intelligence officer, met Faisal at his camp in Wadi Safra and judged him the leader to bring the Arab Revolt to full glory.",
+  "why": "Lawrence became Faisal's liaison officer, and the partnership carried the revolt to Aqaba and Damascus.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Lawrence, Seven Pillars of Wisdom; summarised in Wikipedia, 'T. E. Lawrence'",
+    "url": "https://en.wikipedia.org/wiki/T._E._Lawrence"
+   }
+  ]
+ },
+ {
+  "id": "faisal_weizmann",
+  "a": "Faisal I of Iraq",
+  "b": "Chaim Weizmann",
+  "a_person": "person:faisal_i_of_iraq",
+  "date": "1918-06-04",
+  "date_approx": true,
+  "place": "Near Aqaba",
+  "lon": 35.0,
+  "lat": 29.53,
+  "what": "Chaim Weizmann travelled from Palestine to Faisal's camp near Aqaba to seek Arab acceptance of Jewish settlement in Palestine.",
+  "why": "Their talks led to the Faisal-Weizmann Agreement of January 1919, which Faisal made conditional on Arab independence and which lapsed when that was not granted.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Weizmann, Trial and Error; summarised in Wikipedia, 'Faisal–Weizmann agreement'",
+    "url": "https://en.wikipedia.org/wiki/Faisal–Weizmann_agreement"
+   }
+  ]
+ },
+ {
+  "id": "puyi_johnston",
+  "a": "Puyi",
+  "b": "Reginald Johnston",
+  "a_person": "person:puyi",
+  "date": "1919-03",
+  "date_approx": true,
+  "place": "Forbidden City, Beijing",
+  "lon": 116.39,
+  "lat": 39.92,
+  "what": "The Scottish colonial official Reginald Johnston took up his post as English tutor to the thirteen-year-old deposed emperor inside the Forbidden City.",
+  "why": "Johnston gave Puyi his window on the outside world and the name Henry, and later wrote Twilight in the Forbidden City (1934), a sympathetic portrait of his pupil.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Johnston, Twilight in the Forbidden City; summarised in Wikipedia, 'Reginald Johnston'",
+    "url": "https://en.wikipedia.org/wiki/Reginald_Johnston"
+   }
+  ]
+ },
+ {
+  "id": "einstein_bohr",
+  "a": "Albert Einstein",
+  "b": "Niels Bohr",
+  "a_person": "person:albert_einstein",
+  "b_person": "person:niels_bohr",
+  "date": "1920-04",
+  "date_approx": true,
+  "place": "Berlin",
+  "lon": 13.4,
+  "lat": 52.52,
+  "what": "Bohr visited Einstein in Berlin, bringing Danish butter and cheese; both wrote afterwards how much the meeting moved them.",
+  "why": "Their long debate about quantum mechanics began.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Einstein, letter to Bohr, May 1920; summarised in Wikipedia, 'Bohr–Einstein debates'",
+    "url": "https://en.wikipedia.org/wiki/Bohr–Einstein_debates"
+   }
+  ]
+ },
+ {
+  "id": "joyce_proust",
+  "a": "James Joyce",
+  "b": "Marcel Proust",
+  "a_person": "person:james_joyce",
+  "b_person": "person:marcel_proust",
+  "date": "1922-05-18",
+  "date_approx": false,
+  "place": "Hotel Majestic, Paris",
+  "lon": 2.29,
+  "lat": 48.87,
+  "what": "At the supper for Stravinsky's Renard, the two novelists met and spoke only of their ailments and of truffles.",
+  "why": "A famous non-conversation: Proust died six months later.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Richard Ellmann, James Joyce; summarised in Wikipedia, 'Marcel Proust'",
+    "url": "https://en.wikipedia.org/wiki/Marcel_Proust"
+   }
+  ]
+ },
+ {
+  "id": "sun_joffe",
+  "a": "Sun Yat-sen",
+  "b": "Adolph Joffe",
+  "a_person": "person:sun_yat_sen",
+  "date": "1923-01-26",
+  "date_approx": false,
+  "place": "Shanghai",
+  "lon": 121.47,
+  "lat": 31.23,
+  "what": "Sun and the Soviet envoy Joffe issued a joint statement that Soviet communism did not suit China, but pledged Soviet support.",
+  "why": "The Sun-Joffe Manifesto began the First United Front between the Kuomintang and Communists.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Sun–Joffe Manifesto; summarised in Wikipedia, 'Sun–Joffe Manifesto'",
+    "url": "https://en.wikipedia.org/wiki/Sun–Joffe_Manifesto"
+   }
+  ]
+ },
+ {
+  "id": "hemingway_fitzgerald",
+  "a": "Ernest Hemingway",
+  "b": "F. Scott Fitzgerald",
+  "a_person": "person:ernest_hemingway",
+  "b_person": "person:f_scott_fitzgerald",
+  "date": "1925-04",
+  "date_approx": true,
+  "place": "Dingo Bar, Paris",
+  "lon": 2.33,
+  "lat": 48.84,
+  "what": "Weeks after Gatsby, Fitzgerald introduced himself to the unknown Hemingway.",
+  "why": "Fitzgerald introduced him to his editor Maxwell Perkins; their friendship soured.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Hemingway, A Moveable Feast; summarised in Wikipedia, 'Ernest Hemingway'",
+    "url": "https://en.wikipedia.org/wiki/Ernest_Hemingway"
+   }
+  ]
+ },
+ {
+  "id": "einstein_tagore",
+  "a": "Albert Einstein",
+  "b": "Rabindranath Tagore",
+  "a_person": "person:albert_einstein",
+  "b_person": "person:rabindranath_tagore",
+  "date": "1930-07-14",
+  "date_approx": false,
+  "place": "Caputh, near Berlin",
+  "lon": 13.0,
+  "lat": 52.35,
+  "what": "Tagore visited Einstein at his summer house and they debated whether truth exists independent of humanity.",
+  "why": "Their published conversation became a classic exchange between science and mysticism.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "The Nature of Reality, published in The American Hebrew (1930); summarised in Wikipedia, 'Rabindranath Tagore'",
+    "url": "https://en.wikipedia.org/wiki/Rabindranath_Tagore"
+   }
+  ]
+ },
+ {
+  "id": "gandhi_ambedkar",
+  "a": "Mahatma Gandhi",
+  "b": "B. R. Ambedkar",
+  "a_person": "person:mahatma_gandhi",
+  "b_person": "person:b_r_ambedkar",
+  "date": "1931-08-14",
+  "date_approx": false,
+  "place": "Mani Bhavan, Bombay",
+  "lon": 72.81,
+  "lat": 18.96,
+  "what": "At their first meeting Ambedkar told Gandhi: 'Gandhiji, I have no homeland.'",
+  "why": "Their clash over separate electorates for Dalits led to the Poona Pact of 1932.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Dhananjay Keer, Ambedkar; summarised in Wikipedia, 'B. R. Ambedkar'",
+    "url": "https://en.wikipedia.org/wiki/B._R._Ambedkar"
+   }
+  ]
+ },
+ {
+  "id": "gandhi_chaplin",
+  "a": "Mahatma Gandhi",
+  "b": "Charlie Chaplin",
+  "a_person": "person:mahatma_gandhi",
+  "b_person": "person:charlie_chaplin",
+  "date": "1931-09-22",
+  "date_approx": false,
+  "place": "Canning Town, London",
+  "lon": 0.01,
+  "lat": 51.51,
+  "what": "At the Round Table Conference, Gandhi met Chaplin, who asked about his dislike of machines.",
+  "why": "Gandhi's reply has been seen as one influence on Modern Times (1936).",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Chaplin, My Autobiography; summarised in Wikipedia, 'Charlie Chaplin'",
+    "url": "https://en.wikipedia.org/wiki/Charlie_Chaplin"
+   }
+  ]
+ },
+ {
+  "id": "gandhi_mussolini",
+  "a": "Mahatma Gandhi",
+  "b": "Benito Mussolini",
+  "a_person": "person:mahatma_gandhi",
+  "b_person": "person:benito_mussolini",
+  "date": "1931-12-12",
+  "date_approx": true,
+  "place": "Palazzo Venezia, Rome",
+  "lon": 12.48,
+  "lat": 41.9,
+  "what": "Returning from the Round Table Conference, Gandhi was received by Mussolini at the Palazzo Venezia for a short conversation.",
+  "why": "Gandhi found him a riddle with 'the heart of a butcher'; Fascist propaganda used the visit, and it was held against Gandhi in Britain.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Contemporary press; summarised in Wikipedia, 'Mahatma Gandhi'",
+    "url": "https://en.wikipedia.org/wiki/Mahatma_Gandhi"
+   }
+  ]
+ },
+ {
+  "id": "borges_bioy",
+  "a": "Jorge Luis Borges",
+  "b": "Adolfo Bioy Casares",
+  "a_person": "person:jorge_luis_borges",
+  "date": "1932",
+  "date_approx": true,
+  "place": "Villa Ocampo, San Isidro",
+  "lon": -58.5,
+  "lat": -34.47,
+  "what": "Victoria Ocampo introduced the eighteen-year-old Adolfo Bioy Casares to Borges at her house in San Isidro, and the two left the party to talk together.",
+  "why": "The friendship lasted half a century and produced joint works under the pseudonym H. Bustos Domecq and the Anthology of Fantastic Literature (1940).",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Bioy Casares, Borges (diary); summarised in Wikipedia, 'Adolfo Bioy Casares'",
+    "url": "https://en.wikipedia.org/wiki/Adolfo_Bioy_Casares"
+   }
+  ]
+ },
+ {
+  "id": "lorca_neruda",
+  "a": "Federico García Lorca",
+  "b": "Pablo Neruda",
+  "a_person": "person:federico_garcia_lorca",
+  "b_person": "person:pablo_neruda",
+  "date": "1933-10-13",
+  "date_approx": true,
+  "place": "Buenos Aires",
+  "lon": -58.38,
+  "lat": -34.6,
+  "what": "During Lorca's triumphant stay in Buenos Aires, he and Neruda, then Chilean consul, met at a party at the house of Pablo Rojas Paz.",
+  "why": "They became close friends and delivered a joint speech 'al alimón' in homage to Rubén Darío; Lorca was murdered in 1936, and Neruda's politics hardened in response.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Neruda, Memoirs; summarised in Wikipedia, 'Pablo Neruda'",
+    "url": "https://en.wikipedia.org/wiki/Pablo_Neruda"
+   }
+  ]
+ },
+ {
+  "id": "mao_snow",
+  "a": "Mao Zedong",
+  "b": "Edgar Snow",
+  "a_person": "person:mao_zedong",
+  "date": "1936-07",
+  "date_approx": true,
+  "place": "Bao'an, Shaanxi",
+  "lon": 108.77,
+  "lat": 36.82,
+  "what": "The American journalist Edgar Snow reached the Communist base at Bao'an and spent nights interviewing Mao about his life and the Long March.",
+  "why": "Red Star Over China (1937) introduced Mao and the Chinese Communists to the outside world and to many Chinese readers.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Snow, Red Star Over China; summarised in Wikipedia, 'Edgar Snow'",
+    "url": "https://en.wikipedia.org/wiki/Edgar_Snow"
+   }
+  ]
+ },
+ {
+  "id": "trotsky_kahlo",
+  "a": "Leon Trotsky",
+  "b": "Frida Kahlo",
+  "b_person": "person:frida_kahlo",
+  "date": "1937-01-09",
+  "date_approx": false,
+  "place": "Tampico",
+  "lon": -97.86,
+  "lat": 22.25,
+  "what": "Granted asylum by Cárdenas, Trotsky landed from a Norwegian tanker at Tampico, met by Frida Kahlo, who took him to live at her Casa Azul in Coyoacán.",
+  "why": "Trotsky and Kahlo had a brief affair; he was murdered by a Stalinist agent in Coyoacán in 1940.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Contemporary press; summarised in Wikipedia, 'Leon Trotsky'",
+    "url": "https://en.wikipedia.org/wiki/Leon_Trotsky"
+   }
+  ]
+ },
+ {
+  "id": "hitler_franco",
+  "a": "Adolf Hitler",
+  "b": "Francisco Franco",
+  "a_person": "person:adolf_hitler",
+  "b_person": "person:francisco_franco",
+  "date": "1940-10-23",
+  "date_approx": false,
+  "place": "Hendaye station",
+  "lon": -1.78,
+  "lat": 43.36,
+  "what": "Hitler and Franco met in Hitler's train for hours; Franco asked a high price for entering the war.",
+  "why": "Hitler said he would rather have three or four teeth pulled than go through it again; Spain stayed out.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Paul Schmidt, Statist auf diplomatischer Bühne; summarised in Wikipedia, 'Meeting at Hendaye'",
+    "url": "https://en.wikipedia.org/wiki/Meeting_at_Hendaye"
+   }
+  ]
+ },
+ {
+  "id": "churchill_roosevelt_placentia",
+  "a": "Winston Churchill",
+  "b": "Franklin D. Roosevelt",
+  "a_person": "person:winston_churchill",
+  "b_person": "person:franklin_d_roosevelt",
+  "date": "1941-08-09",
+  "date_approx": false,
+  "place": "Placentia Bay, Newfoundland",
+  "lon": -54.0,
+  "lat": 47.25,
+  "what": "Churchill crossed the Atlantic on HMS Prince of Wales and met Roosevelt aboard USS Augusta, their first wartime meeting, and they drafted a joint statement of aims.",
+  "why": "The Atlantic Charter set out Allied war aims and became a basis of the United Nations, though the US was not yet at war.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Atlantic Charter; summarised in Wikipedia, 'Atlantic Charter'",
+    "url": "https://en.wikipedia.org/wiki/Atlantic_Charter"
+   }
+  ]
+ },
+ {
+  "id": "oppenheimer_groves",
+  "a": "J. Robert Oppenheimer",
+  "b": "Leslie Groves",
+  "a_person": "person:j_robert_oppenheimer",
+  "date": "1942-10-08",
+  "date_approx": true,
+  "place": "Berkeley",
+  "lon": -122.26,
+  "lat": 37.87,
+  "what": "The new head of the Manhattan Project, General Groves, met Oppenheimer at Berkeley and was impressed by his grasp of the whole problem of building a bomb.",
+  "why": "Groves chose him, over security objections, to direct the Los Alamos laboratory, which produced the first atomic bombs in 1945.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Groves, Now It Can Be Told; summarised in Wikipedia, 'J. Robert Oppenheimer'",
+    "url": "https://en.wikipedia.org/wiki/J._Robert_Oppenheimer"
+   }
+  ]
+ },
+ {
+  "id": "roosevelt_stalin_tehran",
+  "a": "Franklin D. Roosevelt",
+  "b": "Joseph Stalin",
+  "a_person": "person:franklin_d_roosevelt",
+  "b_person": "person:joseph_stalin",
+  "date": "1943-11-28",
+  "date_approx": false,
+  "place": "Soviet embassy, Tehran",
+  "lon": 51.42,
+  "lat": 35.69,
+  "what": "Roosevelt, lodged in the Soviet compound, had his first meeting with Stalin there before the conference opened.",
+  "why": "The Tehran Conference committed the Allies to a second front in France in 1944 and began the bargaining over postwar Europe.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "FRUS: Conferences at Cairo and Tehran; summarised in Wikipedia, 'Tehran Conference'",
+    "url": "https://en.wikipedia.org/wiki/Tehran_Conference"
+   }
+  ]
+ },
+ {
+  "id": "gandhi_jinnah",
+  "a": "Mahatma Gandhi",
+  "b": "Muhammad Ali Jinnah",
+  "a_person": "person:mahatma_gandhi",
+  "b_person": "person:muhammad_ali_jinnah",
+  "date": "1944-09-09",
+  "date_approx": false,
+  "place": "Jinnah House, Malabar Hill, Bombay",
+  "lon": 72.8,
+  "lat": 18.95,
+  "what": "Gandhi walked to Jinnah's house for the first of eighteen days of talks on whether India should be partitioned.",
+  "why": "The talks failed over Jinnah's two-nation theory, and partition came in 1947.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Gandhi-Jinnah correspondence; summarised in Wikipedia, 'Muhammad Ali Jinnah'",
+    "url": "https://en.wikipedia.org/wiki/Muhammad_Ali_Jinnah"
+   }
+  ]
+ },
+ {
+  "id": "roosevelt_ibn_saud",
+  "a": "Franklin D. Roosevelt",
+  "b": "Ibn Saud",
+  "a_person": "person:franklin_d_roosevelt",
+  "b_person": "person:ibn_saud",
+  "date": "1945-02-14",
+  "date_approx": false,
+  "place": "USS Quincy, Great Bitter Lake",
+  "lon": 32.37,
+  "lat": 30.32,
+  "what": "Returning from Yalta, Roosevelt received King Abdulaziz aboard the cruiser USS Quincy in the Suez Canal; the king had never left his realm by sea before.",
+  "why": "The meeting began the US-Saudi relationship of oil and security.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "William Eddy, FDR Meets Ibn Saud; summarised in Wikipedia, 'Ibn Saud'",
+    "url": "https://en.wikipedia.org/wiki/Ibn_Saud"
+   }
+  ]
+ },
+ {
+  "id": "mao_chiang",
+  "a": "Mao Zedong",
+  "b": "Chiang Kai-shek",
+  "a_person": "person:mao_zedong",
+  "b_person": "person:chiang_kai_shek",
+  "date": "1945-08-28",
+  "date_approx": true,
+  "place": "Chongqing",
+  "lon": 106.55,
+  "lat": 29.56,
+  "what": "Escorted by the US ambassador Patrick Hurley, Mao flew to Chongqing for six weeks of negotiation with Chiang Kai-shek on postwar China.",
+  "why": "The Double Tenth Agreement soon collapsed into civil war.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Double Tenth Agreement; summarised in Wikipedia, 'Chongqing Negotiations'",
+    "url": "https://en.wikipedia.org/wiki/Chongqing_Negotiations"
+   }
+  ]
+ },
+ {
+  "id": "macarthur_hirohito",
+  "a": "Douglas MacArthur",
+  "b": "Hirohito",
+  "a_person": "person:douglas_macarthur",
+  "b_person": "person:hirohito",
+  "date": "1945-09-27",
+  "date_approx": false,
+  "place": "US Embassy, Tokyo",
+  "lon": 139.74,
+  "lat": 35.67,
+  "what": "Hirohito called on MacArthur at the US ambassador's residence; the photograph of the tall, casual general beside the stiff emperor shocked Japan.",
+  "why": "MacArthur kept the emperor on the throne as a symbol and shielded him from war-crimes prosecution, shaping postwar Japan.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "MacArthur, Reminiscences; summarised in Wikipedia, 'Hirohito'",
+    "url": "https://en.wikipedia.org/wiki/Hirohito"
+   }
+  ]
+ },
+ {
+  "id": "nkrumah_du_bois",
+  "a": "Kwame Nkrumah",
+  "b": "W. E. B. Du Bois",
+  "b_person": "person:w_e_b_du_bois",
+  "date": "1945-10-15",
+  "date_approx": true,
+  "place": "Chorlton-on-Medlock Town Hall, Manchester",
+  "lon": -2.23,
+  "lat": 53.47,
+  "what": "At the Fifth Pan-African Congress, the young organiser Nkrumah worked alongside its president Du Bois.",
+  "why": "The congress made independence its goal; Du Bois died in Ghana in 1963.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Congress records; summarised in Wikipedia, 'Pan-African Congress'",
+    "url": "https://en.wikipedia.org/wiki/Pan-African_Congress"
+   }
+  ]
+ },
+ {
+  "id": "mao_stalin",
+  "a": "Mao Zedong",
+  "b": "Joseph Stalin",
+  "a_person": "person:mao_zedong",
+  "b_person": "person:joseph_stalin",
+  "date": "1949-12-16",
+  "date_approx": false,
+  "place": "Kremlin, Moscow",
+  "lon": 37.62,
+  "lat": 55.75,
+  "what": "On his first trip abroad, Mao met Stalin on the day of his arrival, then was left waiting at a dacha for weeks before negotiations began.",
+  "why": "The Sino-Soviet Treaty followed in February 1950.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Soviet records; summarised in Wikipedia, 'Sino-Soviet Treaty of Friendship, Alliance and Mutual Assistance'",
+    "url": "https://en.wikipedia.org/wiki/Sino-Soviet_Treaty_of_Friendship,_Alliance_and_Mutual_Assistance"
+   }
+  ]
+ },
+ {
+  "id": "watson_crick",
+  "a": "James Watson",
+  "b": "Francis Crick",
+  "date": "1951-10",
+  "date_approx": true,
+  "place": "Cavendish Laboratory, Cambridge",
+  "lon": 0.12,
+  "lat": 52.2,
+  "what": "The 23-year-old American Watson arrived at the Cavendish and found in Crick, a physicist turned biologist, someone equally sure that DNA was the key.",
+  "why": "Using Rosalind Franklin's data, they published the double-helix structure in April 1953.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Watson, The Double Helix; summarised in Wikipedia, 'Francis Crick'",
+    "url": "https://en.wikipedia.org/wiki/Francis_Crick"
+   }
+  ]
+ },
+ {
+  "id": "nehru_zhou",
+  "a": "Jawaharlal Nehru",
+  "b": "Zhou Enlai",
+  "a_person": "person:jawaharlal_nehru",
+  "b_person": "person:zhou_enlai",
+  "date": "1954-06-25",
+  "date_approx": false,
+  "place": "New Delhi",
+  "lon": 77.21,
+  "lat": 28.61,
+  "what": "Zhou Enlai visited Nehru in New Delhi and their joint statement endorsed the Five Principles of Peaceful Coexistence (Panchsheel).",
+  "why": "The 'Hindi-Chini bhai bhai' era ended in the war of 1962.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Joint statement; summarised in Wikipedia, 'Five Principles of Peaceful Coexistence'",
+    "url": "https://en.wikipedia.org/wiki/Five_Principles_of_Peaceful_Coexistence"
+   }
+  ]
+ },
+ {
+  "id": "dalai_lama_mao",
+  "a": "14th Dalai Lama",
+  "b": "Mao Zedong",
+  "b_person": "person:mao_zedong",
+  "date": "1954-09",
+  "date_approx": true,
+  "place": "Beijing",
+  "lon": 116.39,
+  "lat": 39.91,
+  "what": "The nineteen-year-old Dalai Lama spent months in Beijing and met Mao several times; at their last meeting Mao told him religion was poison.",
+  "why": "The 1959 uprising drove the Dalai Lama into exile.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Dalai Lama, My Land and My People; summarised in Wikipedia, '14th Dalai Lama'",
+    "url": "https://en.wikipedia.org/wiki/14th_Dalai_Lama"
+   }
+  ]
+ },
+ {
+  "id": "castro_guevara",
+  "a": "Fidel Castro",
+  "b": "Che Guevara",
+  "a_person": "person:fidel_castro",
+  "b_person": "person:che_guevara",
+  "date": "1955-07",
+  "date_approx": true,
+  "place": "Mexico City",
+  "lon": -99.16,
+  "lat": 19.43,
+  "what": "Raúl Castro introduced the Argentine doctor to his brother in Mexico City, and the two talked through the night.",
+  "why": "Guevara joined the Granma expedition of 1956.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Guevara, Reminiscences of the Cuban Revolutionary War; summarised in Wikipedia, 'Che Guevara'",
+    "url": "https://en.wikipedia.org/wiki/Che_Guevara"
+   }
+  ]
+ },
+ {
+  "id": "castro_khrushchev",
+  "a": "Fidel Castro",
+  "b": "Nikita Khrushchev",
+  "a_person": "person:fidel_castro",
+  "b_person": "person:nikita_khrushchev",
+  "date": "1960-09-20",
+  "date_approx": false,
+  "place": "Hotel Theresa, Harlem",
+  "lon": -73.95,
+  "lat": 40.81,
+  "what": "At the UN General Assembly, Khrushchev went to Harlem to visit Castro, who had moved to the Hotel Theresa, and embraced him in public.",
+  "why": "The embrace advertised the new Soviet-Cuban alliance that led to the missile crisis of 1962.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Contemporary press; summarised in Wikipedia, 'Hotel Theresa'",
+    "url": "https://en.wikipedia.org/wiki/Hotel_Theresa"
+   }
+  ]
+ },
+ {
+  "id": "kennedy_khrushchev",
+  "a": "John F. Kennedy",
+  "b": "Nikita Khrushchev",
+  "a_person": "person:john_f_kennedy",
+  "b_person": "person:nikita_khrushchev",
+  "date": "1961-06-03",
+  "date_approx": false,
+  "place": "Vienna",
+  "lon": 16.37,
+  "lat": 48.21,
+  "what": "At their two-day summit in Vienna, Khrushchev threatened Kennedy over Berlin; Kennedy called it the worst thing in my life.",
+  "why": "Khrushchev judged Kennedy weak; the Berlin Wall went up that August and missiles went to Cuba the next year.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "FRUS; summarised in Wikipedia, 'Vienna Summit'",
+    "url": "https://en.wikipedia.org/wiki/Vienna_Summit"
+   }
+  ]
+ },
+ {
+  "id": "malcolm_x_king",
+  "a": "Malcolm X",
+  "b": "Martin Luther King Jr.",
+  "a_person": "person:malcolm_x",
+  "b_person": "person:martin_luther_king_jr",
+  "date": "1964-03-26",
+  "date_approx": false,
+  "place": "US Capitol",
+  "lon": -77.01,
+  "lat": 38.89,
+  "what": "Both attending the Senate debate on the Civil Rights Act, Malcolm X and King shook hands in a corridor of the Capitol and talked for about a minute.",
+  "why": "It was their only meeting; the photograph became an icon of the two strands of the Black freedom struggle.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Contemporary press; summarised in Wikipedia, 'Malcolm X'",
+    "url": "https://en.wikipedia.org/wiki/Malcolm_X"
+   }
+  ]
+ },
+ {
+  "id": "nkrumah_malcolm_x",
+  "a": "Kwame Nkrumah",
+  "b": "Malcolm X",
+  "b_person": "person:malcolm_x",
+  "date": "1964-05",
+  "date_approx": true,
+  "place": "Accra",
+  "lon": -0.19,
+  "lat": 5.6,
+  "what": "After his pilgrimage to Mecca, Malcolm X visited Ghana and was received by President Nkrumah.",
+  "why": "The visit fed his turn to pan-Africanism; he founded the Organization of Afro-American Unity in June 1964.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Autobiography of Malcolm X; summarised in Wikipedia, 'Malcolm X'",
+    "url": "https://en.wikipedia.org/wiki/Malcolm_X"
+   }
+  ]
+ },
+ {
+  "id": "haile_selassie_jamaica",
+  "a": "Haile Selassie",
+  "b": "Mortimer Planno",
+  "a_person": "person:haile_selassie",
+  "date": "1966-04-21",
+  "date_approx": false,
+  "place": "Palisadoes Airport, Kingston",
+  "lon": -76.79,
+  "lat": 17.94,
+  "what": "When a vast crowd of Rastafari overran the airfield, the emperor stayed aboard his plane until the elder Mortimer Planno was brought up the steps to calm the crowd.",
+  "why": "The visit, celebrated by Rastafari as Grounation Day, gave the movement new standing in Jamaica.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Contemporary press; summarised in Wikipedia, 'Grounation Day'",
+    "url": "https://en.wikipedia.org/wiki/Grounation_Day"
+   }
+  ]
+ },
+ {
+  "id": "elvis_nixon",
+  "a": "Elvis Presley",
+  "b": "Richard Nixon",
+  "a_person": "person:elvis_presley",
+  "b_person": "person:richard_nixon",
+  "date": "1970-12-21",
+  "date_approx": false,
+  "place": "Oval Office",
+  "lon": -77.04,
+  "lat": 38.9,
+  "what": "Elvis Presley turned up at the White House gate with a letter and was received by Nixon, asking for a badge of the Bureau of Narcotics and Dangerous Drugs.",
+  "why": "He got the badge; the photograph of the handshake is the most requested image in the US National Archives.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "National Archives; summarised in Wikipedia, 'Elvis Presley'",
+    "url": "https://en.wikipedia.org/wiki/Elvis_Presley"
+   }
+  ]
+ },
+ {
+  "id": "zhou_kissinger",
+  "a": "Zhou Enlai",
+  "b": "Henry Kissinger",
+  "a_person": "person:zhou_enlai",
+  "b_person": "person:henry_kissinger",
+  "date": "1971-07-09",
+  "date_approx": false,
+  "place": "Diaoyutai, Beijing",
+  "lon": 116.31,
+  "lat": 39.92,
+  "what": "Feigning illness in Pakistan, Kissinger flew secretly to Beijing and spent two days in talks with Zhou Enlai.",
+  "why": "The talks arranged Nixon's visit to China and the rapprochement that reshaped the Cold War.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "FRUS; summarised in Wikipedia, 'Henry Kissinger'",
+    "url": "https://en.wikipedia.org/wiki/Henry_Kissinger"
+   }
+  ]
+ },
+ {
+  "id": "nixon_mao",
+  "a": "Richard Nixon",
+  "b": "Mao Zedong",
+  "a_person": "person:richard_nixon",
+  "b_person": "person:mao_zedong",
+  "date": "1972-02-21",
+  "date_approx": false,
+  "place": "Zhongnanhai, Beijing",
+  "lon": 116.38,
+  "lat": 39.91,
+  "what": "Hours after landing, Nixon was taken to meet the ailing Mao in his study for an hour of talk about philosophy rather than policy.",
+  "why": "The visit ended with the Shanghai Communiqué and the opening of US-China relations.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "FRUS; summarised in Wikipedia, '1972 visit by Richard Nixon to China'",
+    "url": "https://en.wikipedia.org/wiki/1972_visit_by_Richard_Nixon_to_China"
+   }
+  ]
+ },
+ {
+  "id": "sadat_begin",
+  "a": "Anwar Sadat",
+  "b": "Menachem Begin",
+  "a_person": "person:anwar_sadat",
+  "b_person": "person:menachem_begin",
+  "date": "1977-11-19",
+  "date_approx": false,
+  "place": "Jerusalem",
+  "lon": 35.23,
+  "lat": 31.78,
+  "what": "Sadat became the first Arab head of state to visit Israel, met by Begin at Ben Gurion airport, and addressed the Knesset the next day.",
+  "why": "The visit led to the Camp David Accords (1978) and the Egypt-Israel peace treaty (1979).",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Knesset records; summarised in Wikipedia, 'Anwar Sadat'",
+    "url": "https://en.wikipedia.org/wiki/Anwar_Sadat"
+   }
+  ]
+ },
+ {
+  "id": "deng_thatcher",
+  "a": "Deng Xiaoping",
+  "b": "Margaret Thatcher",
+  "a_person": "person:deng_xiaoping",
+  "b_person": "person:margaret_thatcher",
+  "date": "1982-09-24",
+  "date_approx": false,
+  "place": "Great Hall of the People, Beijing",
+  "lon": 116.39,
+  "lat": 39.9,
+  "what": "Thatcher, flushed from the Falklands, met Deng in Beijing; he told her China would take back Hong Kong, by force if necessary.",
+  "why": "Negotiations led to the 1984 Joint Declaration returning Hong Kong to China in 1997 under one country, two systems.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Thatcher Foundation archive; summarised in Wikipedia, 'Sino-British Joint Declaration'",
+    "url": "https://en.wikipedia.org/wiki/Sino-British_Joint_Declaration"
+   }
+  ]
+ },
+ {
+  "id": "reagan_gorbachev_geneva",
+  "a": "Ronald Reagan",
+  "b": "Mikhail Gorbachev",
+  "a_person": "person:ronald_reagan",
+  "b_person": "person:mikhail_gorbachev",
+  "date": "1985-11-19",
+  "date_approx": false,
+  "place": "Château Fleur d'Eau, Geneva",
+  "lon": 6.17,
+  "lat": 46.24,
+  "what": "At their first meeting Reagan and Gorbachev broke away for a fireside talk in a pool house.",
+  "why": "They agreed that a nuclear war cannot be won and must never be fought, opening the way to the INF Treaty.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "FRUS; summarised in Wikipedia, 'Geneva Summit (1985)'",
+    "url": "https://en.wikipedia.org/wiki/Geneva_Summit_(1985)"
+   }
+  ]
+ },
+ {
+  "id": "mandela_de_klerk",
+  "a": "Nelson Mandela",
+  "b": "F. W. de Klerk",
+  "a_person": "person:nelson_mandela",
+  "date": "1989-12-13",
+  "date_approx": false,
+  "place": "Tuynhuys, Cape Town",
+  "lon": 18.42,
+  "lat": -33.93,
+  "what": "The imprisoned Mandela was brought to meet the new president de Klerk at the Tuynhuys, and judged him a man he could do business with.",
+  "why": "De Klerk unbanned the ANC in February 1990 and released Mandela days later; the two shared the 1993 Nobel Peace Prize.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Mandela, Long Walk to Freedom; summarised in Wikipedia, 'F. W. de Klerk'",
+    "url": "https://en.wikipedia.org/wiki/F._W._de_Klerk"
+   }
+  ]
+ },
+ {
+  "id": "rabin_arafat",
+  "a": "Yitzhak Rabin",
+  "b": "Yasser Arafat",
+  "a_person": "person:yitzhak_rabin",
+  "b_person": "person:yasser_arafat",
+  "date": "1993-09-13",
+  "date_approx": false,
+  "place": "White House",
+  "lon": -77.04,
+  "lat": 38.9,
+  "what": "After the signing of the Oslo Declaration of Principles on the South Lawn, Rabin, prompted by Clinton, shook Arafat's hand.",
+  "why": "The handshake sealed mutual recognition between Israel and the PLO; Rabin was assassinated in 1995.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Oslo I Accord; summarised in Wikipedia, 'Oslo I Accord'",
+    "url": "https://en.wikipedia.org/wiki/Oslo_I_Accord"
+   }
+  ]
+ },
+ {
+  "id": "kim_dae_jung_kim_jong_il",
+  "a": "Kim Dae-jung",
+  "b": "Kim Jong Il",
+  "a_person": "person:kim_dae_jung",
+  "b_person": "person:kim_jong_il",
+  "date": "2000-06-13",
+  "date_approx": false,
+  "place": "Pyongyang",
+  "lon": 125.74,
+  "lat": 39.04,
+  "what": "Kim Jong Il met Kim Dae-jung on the tarmac at Pyongyang airport for the first summit between the leaders of the two Koreas.",
+  "why": "The June 15 Declaration led to family reunions and economic ties; Kim Dae-jung won the Nobel Peace Prize that year.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "June 15th North-South Joint Declaration; summarised in Wikipedia, '2000 inter-Korean summit'",
+    "url": "https://en.wikipedia.org/wiki/2000_inter-Korean_summit"
+   }
+  ]
+ }
+]
