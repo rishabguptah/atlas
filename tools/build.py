@@ -16,11 +16,13 @@ KINDS = {  # kind -> (id prefix, owning workstream folder or None)
     'person': ('person', 'places-people'), 'group': ('group', 'economy-trade'),
     'event': ('event', None), 'idea': ('idea', 'religion-ideas'), 'work': ('work', 'religion-ideas'),
     'route': ('route', 'economy-trade'), 'relation': ('rel', None), 'measure': ('m', None),
+    'language': ('lang', 'peoples-languages'), 'script': ('script', 'peoples-languages'),
+    'sample': ('dna', 'peoples-languages'),
 }
-LENSES = {'geography', 'military', 'economy', 'population', 'disease', 'religion', 'ideas', 'literature', 'people', 'order', 'art', 'law'}
+LENSES = {'geography', 'military', 'economy', 'population', 'disease', 'religion', 'ideas', 'literature', 'people', 'order', 'art', 'law', 'language'}
 REL_TYPES = {'controls', 'capital_of', 'part_of', 'located_in', 'born_in', 'died_in', 'ruled', 'participant_in',
              'fought', 'allied_with', 'trades_with', 'founded', 'destroyed', 'succeeded', 'influenced', 'teacher_of',
-             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented', 'governed_as'}
+             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented', 'governed_as', 'derived_from'}
 CAUSAL = {'caused', 'contributed_to', 'prevented'}
 CAUSES = {'war', 'fire', 'earthquake', 'river', 'sea', 'climate', 'trade', 'capital', 'quarried', 'volcano',
           'silt', 'faith', 'disease', 'unknown'}
@@ -97,9 +99,11 @@ def check(r):
 def refs(r):
     """Ids this record points at."""
     out = []
-    for f in ('place', 'from', 'to', 'of', 'capital', 'author', 'by', 'policy'):
+    for f in ('place', 'from', 'to', 'of', 'capital', 'author', 'by', 'policy', 'language'):
         if isinstance(r.get(f), str):
             out.append(r[f])
+    if r.get('kind') == 'language':  # elsewhere `family` is a plain label (europe-19c event families)
+        out += [r[f] for f in ('family', 'branch') if isinstance(r.get(f), str)]
     for f in ('born', 'died'):
         if isinstance(r.get(f), dict) and isinstance(r[f].get('place'), str):
             out.append(r[f]['place'])

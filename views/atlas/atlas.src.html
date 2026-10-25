@@ -1149,6 +1149,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     };
     return s;
   }
+  // Confidence grammar for lines (house rule 5): documented is solid, likely is dashed, legend or unknown route is dotted.
+  const CONF_DASH = { sure: null, likely: [6, 4], legend: [1.5, 4.5] };
   function lensCtx(d) {
     const g = G["lens:" + d.id], L = MK["lens:" + d.id];
     const ok = x => x && isFinite(x.lon) && isFinite(x.lat);
@@ -1160,12 +1162,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       pins(list, o = {}) {
         const lb = o.label, tt = o.title || lb, cls = " " + (o.cls || "") + " ";
         const color = o.color || `var(--y-${d.id})`, ghost = cls.includes(" ghost "), always = !!o.always || cls.includes(" always ");
-        // Per-record options take a value or a function of the record: color, size, fade (0-1), always, hi, pri, fill, stroke,
+        // Per-record options take a value or a function of the record: shape (a shape or sprite name), color, size, fade (0-1), always, hi, pri, fill, stroke,
         // fontPx, lblColor, lblAt ([dx, dy] of the label).
         const per = (v, x) => typeof v === "function" ? v(x) : v;
         const recs = list.filter(ok).map(x => {
-          const sprite = o.shape && !SHAPE_PATH[o.shape] ? o.shape : null, al = o.always != null ? !!per(o.always, x) : always;
-          const r = { src: x, x, lon: x.lon, lat: x.lat, kind: "lens", lens: d.id, shape: SHAPE_PATH[o.shape] ? o.shape : "circle", sprite, color: o.color ? per(o.color, x) : color, ghost: o.ghost != null ? !!per(o.ghost, x) : ghost, always: al, lbl: !!lb, heavy: cls.includes(" wf-hit "),
+          const shp = per(o.shape, x), sprite = shp && !SHAPE_PATH[shp] ? shp : null, al = o.always != null ? !!per(o.always, x) : always;
+          const r = { src: x, x, lon: x.lon, lat: x.lat, kind: "lens", lens: d.id, shape: SHAPE_PATH[shp] ? shp : "circle", sprite, color: o.color ? per(o.color, x) : color, ghost: o.ghost != null ? !!per(o.ghost, x) : ghost, always: al, lbl: !!lb, heavy: cls.includes(" wf-hit "),
             label: lb ? lb(x) : null, pri: o.pri != null ? per(o.pri, x) : al ? 7 : 3, title: tt ? () => tt(x) : null, card: o.card ? () => lensCard(d, o.card(x)) : null };
           for (const f of ["size", "fade", "hi", "fill", "stroke", "fontPx", "lblColor", "lblAt"]) if (o[f] != null) r[f] = per(o[f], x);
           return r;
@@ -1176,7 +1178,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       paths(list, o = {}) {
         const key = o.key || (x => x.id), co = o.coords || (x => x.pts), cls = " " + (o.cls || "") + " ", ghost = cls.includes(" ghost ");
         const recs = list.map(x => ({ x, id: key(x), pts: co(x) })).filter(r => Array.isArray(r.pts) && r.pts.length > 1).map(r => ({
-          src: r.x, x: r.x, id: r.id, pts: r.pts, kind: "lens", lens: d.id, color: o.color || `var(--y-${d.id})`, ghost, width: ghost ? 2.4 : 2, alpha: ghost ? .9 : .75, dash: ghost ? [7, 5] : null,
+          src: r.x, x: r.x, id: r.id, pts: r.pts, kind: "lens", lens: d.id, color: o.color || `var(--y-${d.id})`, ghost, width: o.width ?? (ghost ? 2.4 : 2), alpha: o.alpha ?? (ghost ? .9 : .75),
+          dash: o.dash !== undefined ? o.dash : CONF_DASH[o.conf] !== undefined ? CONF_DASH[o.conf] : ghost ? [7, 5] : null, arrow: !!o.arrow, conf: o.conf || null,
           title: o.title ? () => o.title(r.x) : null,
           card: o.card ? () => lensCard(d, { line: r.pts, lon: r.pts[Math.floor(r.pts.length / 2)][0], lat: r.pts[Math.floor(r.pts.length / 2)][1], ...o.card(r.x) }) : null }));
         L.lines.push(...recs);

@@ -1,0 +1,27 @@
+{
+  "id": "lindisfarne_gospels",
+  "name": "Lindisfarne Gospels",
+  "type": "single",
+  "sprite": "obj_codex",
+  "what": "An illuminated Latin gospel book made on the island of Lindisfarne around 715-720, with an Old English translation written between its lines about 950-970.",
+  "why": "It shows how a monastic treasure survived Vikings, a centuries-long retreat of its community, Henry VIII's Dissolution and a collector's library, and it holds the oldest surviving English version of the gospels.",
+  "now": "British Library, London (Cotton MS Nero D IV). Lent to the North East for exhibitions in 1996, 2013 and 2022.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Brown, M. P. (2003). The Lindisfarne Gospels: Society, Spirituality and the Scribe. British Library."},
+    {"cite": "British Library: Lindisfarne Gospels", "url": "https://www.bl.uk/collection-items/lindisfarne-gospels"},
+    {"cite": "Wikipedia: Lindisfarne Gospels", "url": "https://en.wikipedia.org/wiki/Lindisfarne_Gospels"}
+  ],
+  "stops": [
+    {"y": 717, "approx": true, "at": [-1.8, 55.67], "place": "Lindisfarne (Holy Island)", "owner": "Community of St Cuthbert", "by": "made", "conf": "likely", "note": "The later colophon says Eadfrith, bishop of Lindisfarne (698-721), wrote it for God and St Cuthbert. Michelle Brown's study dates it to about 715-720 and suggests one artist-scribe did nearly all of it.", "meet": "a monk at Lindisfarne"},
+    {"y": 793, "at": [-1.8, 55.67], "place": "Lindisfarne", "owner": "Community of St Cuthbert", "by": "survived", "conf": "likely", "note": "Vikings raided Lindisfarne on 8 June 793, the attack that opens the Viking Age in English history. The book is not mentioned, but it survived."},
+    {"y": 878, "approx": true, "at": [-4.42, 54.73], "place": "Whithorn", "owner": "Community of St Cuthbert", "by": "carried", "conf": "legend", "via": "land", "note": "In 875 the monks left the island with Cuthbert's coffin and their treasures and wandered for seven years. Symeon of Durham (about 1100) tells of a gospel book lost overboard trying to sail to Ireland and found unharmed on the sand at Whithorn; it may be this book."},
+    {"y": 960, "approx": true, "at": [-1.57, 54.86], "place": "Chester-le-Street", "owner": "Community of St Cuthbert", "by": "glossed", "conf": "sure", "via": "land", "note": "The community settled at Chester-le-Street in 883. There the priest Aldred wrote a word-by-word Old English translation between the Latin lines, the oldest surviving gospels in any form of English, and added the colophon naming the makers.", "meet": "Aldred the priest, or a member of the community at Chester-le-Street"},
+    {"y": 995, "at": [-1.576, 54.773], "place": "Durham", "owner": "Durham Cathedral priory", "by": "carried", "conf": "likely", "via": "land", "note": "The community moved with Cuthbert's body to Durham in 995, where the cathedral was later built over his shrine. Durham inventories list gospel books of St Cuthbert."},
+    {"y": 1539, "approx": true, "at": [-1.576, 54.773], "place": "Durham", "owner": "Henry VIII's commissioners", "by": "seized", "conf": "likely", "note": "At the Dissolution the priory was closed and its treasures taken; the jewelled cover was stripped for its metal and lost. The book itself left Durham."},
+    {"y": 1605, "approx": true, "at": [-0.125, 51.5], "place": "Westminster", "owner": "Sir Robert Cotton", "by": "sold", "conf": "likely", "via": "land", "note": "The antiquary Robert Cotton acquired it from Robert Bowyer, clerk of the parliaments, early in the 1600s. Cotton's library shelved books under busts of emperors, hence its shelfmark Nero D IV."},
+    {"y": 1753, "at": [-0.127, 51.519], "place": "British Museum, London", "owner": "British Museum", "by": "gift", "conf": "sure", "via": "land", "note": "Cotton's library, given to the nation in 1702, became a founding collection of the British Museum in 1753. It passed to the new British Library in 1973 and moved to St Pancras in 1997."},
+    {"y": 2022, "at": [-1.61, 54.97], "place": "Laing Art Gallery, Newcastle", "owner": "British Library (on loan)", "by": "displayed", "conf": "sure", "via": "land", "note": "Lent home to the North East for an exhibition in Newcastle from September to December 2022, after loans to Newcastle in 1996 and Durham in 2013. Calls to return it for good continue.", "meet": "a visitor to the Laing in 2022"},
+    {"y": 2023, "at": [-0.127, 51.53], "place": "British Library, London", "owner": "British Library", "by": "returned", "conf": "sure", "via": "land", "note": "Back at the British Library at St Pancras after the Newcastle exhibition, on show in the Treasures gallery."}
+  ]
+}
