@@ -32,6 +32,17 @@ python3 views/atlas/build.py atlas.html                 # ATLAS_DIR defaults to 
 Order & chaos reads `data/order-chaos/lab.json`, War & chokepoints reads `data/states-war/` (curated plus Wikidata battles); Terrain reads terrain.json, terrain.js and terrain-relief.webp from LAYERS_DIR when present; tours come from `data/guide/tours/`. Next step: read
 `dist/kernel.json` for every layer once each workstream's records are merged.
 
+## Flow (keyboard, key, focus, resume)
+
+Keys: ←/→ step the year (Shift for bigger steps), Space plays time, / jumps to the question box, 1–6 switch lens families,
+S is Surprise me (a random curated battle, shock, idea journey or city event, flown to and captioned, with Here filled in),
+F is focus (map only), K or ? opens the key, Esc closes. The key lists exactly the marks drawn for the lenses that are on;
+a plugin lens can describe its own marks with `key: [[glyph, text], ...]` (glyphs: dot, small, line, arrow, diamond, square,
+halo, ring, cross, battle, hourglass, border, sprite). Eras sit under the slider and jump on tap. Here and This year lead with
+rows from the current time; rows from other centuries fold under "from other times". The page reopens on the last year,
+view and lenses (localStorage `atlas.resume.v1`, this browser only). The header question box steps aside while the Ask tab is open.
+Roadmap and critique: https://claude.ai/artifact/6saKUD2YsaVezRGC9M3z6o
+
 ## Lens families and plugins
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses

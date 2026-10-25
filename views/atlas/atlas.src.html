@@ -310,6 +310,38 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .pt.lp image { image-rendering: pixelated; }
 .pt.lp.lbl text { fill: var(--c); font-weight: 600; }
 .line.lpath { stroke: var(--c); stroke-width: 2px; vector-effect: non-scaling-stroke; stroke-opacity: .75; }
+
+/* Flow: map controls, the key, focus mode, eras under the slider, deep time folded away. */
+.maphint { background: var(--card); color: var(--ink-soft); text-shadow: none; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--rule); }
+.mapctl { position: absolute; top: 10px; right: calc(10px + env(safe-area-inset-right, 0px)); display: flex; gap: 6px; z-index: 5; }
+.mapctl .btn { font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; padding: 4px 9px; box-shadow: 0 2px 6px rgba(0,0,0,.18); }
+.mapctl .btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.mapctl kbd, .keycard kbd { font-family: var(--mono); font-size: 10px; border: 1px solid var(--rule); border-radius: 3px; padding: 0 4px; margin-left: 5px; opacity: .75; }
+.keycard { position: absolute; top: 44px; right: calc(10px + env(safe-area-inset-right, 0px)); z-index: 5; width: min(300px, calc(100% - 20px)); max-height: calc(100% - 60px); overflow-y: auto;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 8px 22px rgba(0,0,0,.18); padding: 10px 12px; display: grid; gap: 8px; font-size: 13.5px; }
+.keycard h4 { margin: 0; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); font-weight: 400; }
+.keycard .kg { display: grid; gap: 3px; }
+.keycard .kg b { font-weight: 600; color: var(--c); font-size: 13px; }
+.keycard .kr { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: center; line-height: 1.3; }
+.keycard .kr svg { position: static; width: 22px; height: 16px; overflow: visible; cursor: default; }
+.keycard .keys { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 10px; font-size: 12.5px; color: var(--ink-soft); }
+.keycard .keys kbd { margin: 0; justify-self: start; }
+.app.focus { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; grid-template-areas: "map" "time"; }
+.app.focus .top, .app.focus .panel { display: none; }
+.eras { grid-column: 2; position: relative; height: 16px; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+.eras button { all: unset; box-sizing: border-box; position: absolute; top: 0; height: 16px; padding: 1px 3px 0; overflow: hidden; white-space: nowrap; text-overflow: clip; cursor: pointer;
+  color: var(--ink-soft); border-left: 1px solid var(--rule); }
+.eras button:hover, .eras button:focus-visible { color: var(--ink); background: var(--wash); }
+.eras button[aria-current="true"] { color: var(--ink); background: var(--wash); font-weight: 500; }
+.sec details.deep { margin-top: 2px; }
+.sec details.deep summary { cursor: pointer; font-size: 12.5px; color: var(--ink-soft); padding: 3px 6px; list-style: none; }
+.sec details.deep summary::-webkit-details-marker { display: none; }
+.sec details.deep summary::before { content: "+ "; font-family: var(--mono); }
+.sec details.deep[open] summary::before { content: "− "; }
+.sec .items.only-deep { display: none; }
+.app.asking #qbox, .app.asking #go { visibility: hidden; }
+@media (max-width: 860px) { .mapctl kbd { display: none; } .app.focus .map { height: 80vh; } .app.asking #qbox, .app.asking #go { display: none; } }
+@media (max-width: 600px) { .eras button:not([aria-current="true"]) { color: transparent; } .eras button[aria-current="true"] { overflow: visible; z-index: 1; } }
 </style>
 
 <div class="app">
@@ -334,6 +366,12 @@ a { color: var(--accent); text-underline-offset: 2px; }
     <div class="yearplate" id="yp"></div>
     <div class="maphint" id="maphint">Click anywhere to see every lens there</div>
     <div class="caption" id="caption" hidden></div>
+    <div class="mapctl" role="toolbar" aria-label="Map controls">
+      <button class="btn" id="surprise" type="button" title="Jump to a random moment worth seeing (S)">Surprise me<kbd>S</kbd></button>
+      <button class="btn" id="keybtn" type="button" aria-pressed="false" aria-controls="keycard" title="What's on the map, and keyboard shortcuts (K)">Key<kbd>K</kbd></button>
+      <button class="btn" id="focusbtn" type="button" aria-pressed="false" title="Map only (F)">Focus<kbd>F</kbd></button>
+    </div>
+    <div class="keycard" id="keycard" hidden></div>
   </section>
 
   <div class="time">
@@ -341,6 +379,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
     <svg class="strip" id="strip" viewBox="0 0 1000 22" preserveAspectRatio="none" aria-hidden="true"></svg>
     <input type="range" id="year" min="0" max="1000" step="1" aria-label="Year">
     <output id="yout"></output>
+    <div class="eras" id="eras" role="group" aria-label="Eras: tap one to jump there"></div>
   </div>
 
   <aside class="panel" id="panel">
@@ -836,7 +875,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     sources: (c.sources || []).map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c || x.url, url: x.url || x.u }) });
   const lensGo = (d, c, at) => () => { const card = lensCard(d, c, at); if (isFinite(card.lon) && isFinite(card.lat)) select(card, { fly: !at, setYear: card.year != null && !at }); else if (card.year != null) animateYear(card.year); };
   const lensItem = (d, r, at) => item(`<b>${esc(r.title)}</b>${r.tag ? ` <span class="tag">${esc(r.tag)}</span>` : ""}`, typeof r.year === "number" ? fmtYear(r.year) : r.year ?? "", r.why || "",
-    r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim);
+    r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim || (typeof r.year === "number" && Math.abs(r.year - state.year) > 150));
   function lensCtx(d) {
     const g = G["lens:" + d.id]; let n = 0;
     const sub = () => { const id = "s" + n++; let s = g.select(`g[data-s="${id}"]`); if (s.empty()) s = g.append("g").attr("data-s", id); return s; };
@@ -1061,7 +1100,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const sourceRow = (s, live) => `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite || s.url)}</a>` : esc(s.cite)}${live ? '<span class="unchecked">unchecked</span>' : ""}</li>`;
   const srcList = (arr, live) => arr && arr.length ? `<ul class="srcs">${arr.map(s => sourceRow(s, live)).join("")}</ul>` : "";
   const item = (title, y, w, fn, dim) => `<button class="it${dim ? " dim" : ""}" data-a="${act(fn)}"><span>${title}</span><span class="y">${esc(y ?? "")}</span>${w ? `<span class="w">${esc(w)}</span>` : ""}</button>`;
-  const sec = (layer, title, items, n) => items.length ? `<div class="sec${state.on[layer] === false ? " off" : ""}" style="--c:var(--y-${layer})"><h3><i></i>${esc(title)}${n != null ? `<span class="n">${esc(n)}</span>` : ""}</h3><div class="items">${items.join("")}</div></div>` : "";
+  // Rows from this time lead; rows from other centuries (faded) fold into "other times" so the present reads first.
+  const sec = (layer, title, items, n) => {
+    if (!items.length) return "";
+    const now = items.filter(x => !x.startsWith('<button class="it dim')), deep = items.filter(x => x.startsWith('<button class="it dim'));
+    return `<div class="sec${state.on[layer] === false ? " off" : ""}" style="--c:var(--y-${layer})"><h3><i></i>${esc(title)}${n != null ? `<span class="n">${esc(n)}</span>` : ""}</h3><div class="items${now.length ? "" : " only-deep"}">${now.join("")}</div>${deep.length ? `<details class="deep"><summary>${deep.length} from other times</summary><div class="items">${deep.join("")}</div></details>` : ""}</div>`;
+  };
   const goCard = (c, setYear) => () => { select(c, { fly: true, setYear }); };
   const nearby = (list, lon, lat, r) => list.map(x => ({ x, d: km([lon, lat], [x.lon, x.lat]) })).filter(o => o.d <= r).sort((a, b) => a.d - b.d);
   const nearLine = (pts, lon, lat) => d3.min(pts, p => km([lon, lat], p));
@@ -1202,7 +1246,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ${sec("war", "War & chokepoints", wItems)}${P("power")}
       ${sec("disease", "Plague & climate", dItems)}${P("shocks")}
       ${sec("ideas", "Ideas & faith", iItems)}${P("mind")}
-      <p class="note">Within about ${R_KM} km of the marked spot (people: born within 60 km). Faded rows belong to other centuries; tap one to jump there.</p>
+      <p class="note">Within about ${R_KM} km of the marked spot (people: born within 60 km). Rows from other centuries fold under "from other times"; tap one to jump there.</p>
       <div class="row"><button class="btn primary" data-a="${act(() => askAbout({ title: name, year: y, here: true }))}">Ask the guide about ${esc(name)} in ${esc(fmtYear(y))}</button></div>`;
   }
 
@@ -1212,6 +1256,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === t));
     for (const k of ["now", "here", "guide", ...TABS.map(d => d.id)]) document.getElementById("pane-" + k).hidden = k !== t;
     if (t === "now") renderNow(); else if (t === "here") renderHere();
+    // One question box at a time: the header box steps aside (keeping its space, so the map does not jump) while the Ask tab, with its big box, is open.
+    document.querySelector(".app").classList.toggle("asking", t === "guide");
     const pt = TABS.find(d => d.id === t); if (pt && pt.show) try { pt.show(); } catch (err) { console.error("tab " + t, err); }
   }
   // Plugin tabs (ATLAS.tab) sit after Here, each with its own pane; mount() runs once the page is up.
@@ -1887,13 +1933,139 @@ Where the specialists disagree, say who the evidence favours.`;
   };
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 
-  // ---------- start: 1348, the Black Death year, where five lenses overlap ----------
+  // ---------- eras under the slider: where you are in time, one tap to jump ----------
+  const ERAS = [[MIN, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
+    [1450, 1800, "Early modern"], [1800, 1914, "Industrial"], [1914, 1945, "World wars"], [1945, NOW, "Since 1945"]];
+  const erasEl = document.getElementById("eras");
+  erasEl.innerHTML = ERAS.map(([a, b, n], i) => `<button type="button" data-i="${i}" style="left:${(yearToT(a) * 100).toFixed(2)}%;width:${((yearToT(b) - yearToT(a)) * 100).toFixed(2)}%" title="${esc(n)}, ${esc(fmtYear(a))} to ${esc(fmtYear(b))}">${esc(n)}</button>`).join("");
+  erasEl.addEventListener("click", ev => { const b = ev.target.closest("button"); if (!b) return; const [a, z] = ERAS[+b.dataset.i]; stopTime(); animateYear(Math.round(a + (z - a) / 2), 900); });
+  const syncEra = y => erasEl.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-current", y >= ERAS[i][0] && (y < ERAS[i][1] || i === ERAS.length - 1)));
+  yearWatch.push(syncEra);
+
+  // ---------- the key: exactly what is drawn right now ----------
+  const G_ = {
+    dot: '<circle cx="11" cy="8" r="5" fill="var(--c)" fill-opacity=".6"/>', small: '<circle cx="11" cy="8" r="3" fill="var(--c)"/>',
+    line: '<path d="M1 12 Q11 2 21 9" fill="none" stroke="var(--c)" stroke-width="2"/>', arrow: '<path d="M1 12 L18 5" stroke="var(--c)" stroke-width="2"/><path d="M15 2 L21 4 L17 9z" fill="var(--c)"/>',
+    diamond: '<path d="M11 2 L17 8 L11 14 L5 8z" fill="var(--c)"/>', square: '<rect x="6" y="3" width="10" height="10" fill="var(--c)"/>',
+    halo: '<circle cx="11" cy="8" r="7" fill="var(--c)" fill-opacity=".25" stroke="var(--c)"/><circle cx="11" cy="8" r="2.5" fill="var(--c)"/>',
+    ring: '<circle cx="11" cy="8" r="6" fill="var(--c)" fill-opacity=".3" stroke="var(--c)" stroke-width="1.5"/>', cross: '<path d="M6 3 L16 13 M16 3 L6 13" stroke="var(--c)" stroke-width="2.4"/>',
+    battle: '<circle cx="11" cy="8" r="6" fill="none" stroke="var(--c)" stroke-width="1.5"/><path d="M7 4 L15 12 M15 4 L7 12" stroke="var(--c)" stroke-width="1.5"/>',
+    hourglass: '<path d="M6 2 L16 2 L11 8 L16 14 L6 14 L11 8z" fill="var(--c)"/>', border: '<path d="M1 12 L7 6 L12 9 L21 3" fill="none" stroke="var(--c)" stroke-width="2"/>',
+    sprite: '<rect x="5" y="4" width="4" height="4" fill="var(--c)"/><rect x="9" y="8" width="4" height="4" fill="var(--c)"/><rect x="13" y="4" width="4" height="4" fill="var(--c)"/><rect x="9" y="0" width="4" height="4" fill="var(--c)" fill-opacity=".5"/>',
+  };
+  const KEY = {
+    basemap: [["sprite", "Pixel sprites: the armies, fleets, caravans and towns of the era"]], borders: [["border", "Borders on this year's map"]],
+    places: [["dot", "City or wonder; a bigger dot means more people"]], people: [["small", "Famous person alive and grown up this year"]],
+    money: [["line", "Trade route running this year"], ["arrow", "Migration under way"], ["diamond", "Trade hub"]],
+    disease: [["halo", "Plague, famine or disaster; a bigger ring means more deaths"]],
+    ideas: [["arrow", "An idea, faith or text on the move"], ["square", "School, temple or library open now"], ["diamond", "Book written in the last century"]],
+    order: [["ring", "State; size is territory, colour is its risk of breaking"], ["cross", "A state that just broke apart"]],
+    war: [["battle", "Battle or siege, fading over a dozen years"], ["hourglass", "Strait or mountain pass that armies and trade must cross"]],
+  };
+  const keyEl = document.getElementById("keycard"), keyBtn = document.getElementById("keybtn");
+  function renderKey() {
+    if (keyEl.hidden) return;
+    const groups = FAMILIES.map(f => {
+      const rows = MEMBERS[f.id].filter(k => isOn(k) && k !== "terrain" && k !== "political").flatMap(k => {
+        const d = PLUG.find(x => x.id === k);
+        const rs = KEY[k] || (d ? (Array.isArray(d.key) ? d.key : [["dot", d.desc || d.name || k]]) : []);
+        return rs.map(([g, t]) => `<div class="kr" style="--c:${COLOR(k)}"><svg viewBox="0 0 22 16" aria-hidden="true">${G_[g] || G_.dot}</svg><span>${d && !KEY[k] && !Array.isArray(d.key) ? "<b>" + esc(d.name) + "</b> " : ""}${esc(t)}</span></div>`);
+      });
+      return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${esc(f.n)}</b>${rows.join("")}</div>` : "";
+    }).join("");
+    keyEl.innerHTML = `<h4>On the map in ${esc(fmtYear(state.year))}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
+      <h4>Keys</h4><div class="keys"><kbd>← →</kbd><span>Step through time (Shift for bigger steps)</span><kbd>Space</kbd><span>Play or pause time</span><kbd>/</kbd><span>Ask a question</span>
+      <kbd>1–6</kbd><span>Switch a lens family on or off</span><kbd>S</kbd><span>Surprise me</span><kbd>F</kbd><span>Focus: map only</span><kbd>K</kbd><span>This key</span><kbd>Esc</kbd><span>Close, clear the caption</span></div>`;
+  }
+  function toggleKey(v = keyEl.hidden) { keyEl.hidden = !v; keyBtn.setAttribute("aria-pressed", v); renderKey(); }
+  keyBtn.onclick = () => toggleKey();
+  yearWatch.push(() => { if (!keyEl.hidden) renderKey(); });
+  layersEl.addEventListener("click", () => setTimeout(renderKey)); subEl.addEventListener("click", () => setTimeout(renderKey));
+
+  // ---------- focus: the map alone ----------
+  const appEl = document.querySelector(".app"), focusBtn = document.getElementById("focusbtn");
+  function toggleFocus(v = !appEl.classList.contains("focus")) { appEl.classList.toggle("focus", v); focusBtn.setAttribute("aria-pressed", v); }
+  focusBtn.onclick = () => toggleFocus();
+
+  // ---------- surprise me: a random moment worth seeing, framed and explained ----------
+  const SURPRISES = [
+    BATTLES.filter(b => b.cur && isFinite(b.lon)).map(b => ({ y: b.start, lens: "military", make: () => battleCard(b) })),
+    SHOCKS.filter(e => isFinite(e.lon) && e.start >= MIN).map(e => ({ y: e.start, lens: "disease", make: () => shockCard(e) })),
+    JOURNEYS.flatMap(j => j.steps.filter(s => s.at && isFinite(s.at.lon)).map(s => ({ y: s.y, lens: "ideas", make: () => journeyCard(j, s) }))),
+    ENTRIES.flatMap(e => (EVENTS[e.id] || []).map(([yy, t]) => ({ y: yy, lens: "geography", make: () => ({ ...cityCard(e), title: `${nameAt(e, yy)}: ${t}`, year: yy }) }))),
+  ].filter(p => p.length);
+  const seen = [];
+  function surprise() {
+    if (!SURPRISES.length) return;
+    let pick;
+    for (let n = 0; n < 12; n++) { const pool = SURPRISES[Math.floor(Math.random() * SURPRISES.length)]; pick = pool[Math.floor(Math.random() * pool.length)]; if (!seen.includes(pick)) break; }
+    seen.push(pick); if (seen.length > 40) seen.shift();
+    stopTime(); stopPlay(); cancelAnimationFrame(yearAnim);
+    setYear(pick.y);
+    const card = pick.make(); if (!card) return;
+    ensureLayers([LENS_LAYER[pick.lens]]);
+    flyTo({ lon: card.lon, lat: card.lat, span: 28 }, 1300);
+    showCaption({ title: card.title, year: pick.y, lens: pick.lens });
+    select(card);
+  }
+  document.getElementById("surprise").onclick = () => surprise();
+
+  // ---------- keyboard: time, play, ask, lenses, focus ----------
+  function stepYear(dir, big) {
+    stopTime(); cancelAnimationFrame(yearAnim);
+    const t = Math.max(0, Math.min(1, yearToT(state.year) + dir * (big ? 0.01 : 0.001)));
+    let y = tToYear(t); if (y === state.year) y += dir;
+    setYear(y);
+  }
+  document.addEventListener("keydown", ev => {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey || ev.defaultPrevented) return;
+    const t = ev.target;
+    if (t.closest && t.closest("input, textarea, select, [contenteditable]")) { if (ev.key === "Escape" && t.blur) t.blur(); return; }
+    if (t.closest && t.closest("button, a, summary") && (ev.key === " " || ev.key === "Enter")) return;
+    const k = ev.key.length === 1 ? ev.key.toLowerCase() : ev.key;
+    if (k === "ArrowLeft" || k === "ArrowRight") stepYear(k === "ArrowLeft" ? -1 : 1, ev.shiftKey);
+    else if (k === " ") playBtn.click();
+    else if (k === "/") { if (appEl.classList.contains("focus")) toggleFocus(false); const q = state.tab === "guide" ? q2 : document.getElementById("qbox"); q.focus(); }
+    else if (k === "s") surprise();
+    else if (k === "f") toggleFocus();
+    else if (k === "k" || k === "?") toggleKey();
+    else if (k === "Escape") { if (!keyEl.hidden) toggleKey(false); else if (appEl.classList.contains("focus")) toggleFocus(false); else showCaption(null); }
+    else if (/^[1-6]$/.test(k) && FAMILIES[+k - 1]) famChips[FAMILIES[+k - 1].id].click();
+    else return;
+    ev.preventDefault();
+  });
+
+  // ---------- resume: reopen on the last year, place and lenses (this browser only) ----------
+  const SAVE_KEY = "atlas.resume.v1";
+  function saveView() {
+    try {
+      const tr = d3.zoomTransform(svg.node()), c = projection.invert(tr.invert([W / 2, H / 2]));
+      localStorage.setItem(SAVE_KEY, JSON.stringify({ year: state.year, lon: c[0], lat: c[1], k: tr.k, on: state.on, basemap: state.basemap, terrain: state.terrain, borders: state.borders, political: state.political }));
+    } catch (err) { /* storage may be blocked; resuming is a convenience */ }
+  }
+  function loadView() {
+    try { const r = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); return r && isFinite(r.year) && isFinite(r.lon) && isFinite(r.lat) ? r : null; } catch (err) { return null; }
+  }
+  setInterval(saveView, 4000);
+  addEventListener("pagehide", saveView);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) saveView(); });
+
+  // ---------- start: where you left off, or 1348, the Black Death year, where five lenses overlap ----------
+  const RESUME = loadView();
+  if (RESUME) {
+    for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k];
+    for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
+  }
   syncChips();
   setBasemap();
   new ResizeObserver(() => layout()).observe(mapEl);
   layout();
-  setYear(1348);
+  setYear(RESUME ? RESUME.year : 1348);
+  syncEra(state.year);
   setTab("guide");
-  flyTo({ lon: 45, lat: 35, span: 140 }, 0);
+  if (RESUME) {
+    flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(1, Math.min(80, +RESUME.k || 1)) }, 0);
+    document.getElementById("maphint").textContent = `Picked up where you left off, in ${fmtYear(state.year)}. Press S for a surprise.`;
+  } else flyTo({ lon: 45, lat: 35, span: 140 }, 0);
 })();
 </script>
