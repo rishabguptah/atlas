@@ -200,7 +200,7 @@
     }
     // Run terrainPass on another region of the world grid and hand back its buffers (the view's are left as they were).
     // Wide enough for the terrain art's largest world-anchored pieces (mountain cells, landmark peaks, blur, coast distance).
-    const SEAM = 26;
+    const SEAM = 16;
     let prevView = null, tileVer = 0;
     function region(t, need, ru, rv, rw, rh) {
       const sv = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
