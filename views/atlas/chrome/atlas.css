@@ -113,7 +113,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .chip.fam[data-k="land"] { --t: var(--t-land); } .app .chip.fam[data-k="power"] { --t: var(--t-power); } .app .chip.fam[data-k="wealth"] { --t: var(--t-wealth); }
 .app .chip.fam[data-k="peoples"] { --t: var(--t-peoples); } .app .chip.fam[data-k="mind"] { --t: var(--t-mind); } .app .chip.fam[data-k="shocks"] { --t: var(--t-shocks); }
 .app .chip.fam > i { display: none; }
-.app #sublayers { position: absolute; z-index: 6; left: calc(var(--rail) + var(--g) + 16px); top: 176px; width: 236px; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: stretch;
+.app #sublayers { position: absolute; z-index: 8; left: calc(var(--rail-open) + var(--g) + 10px); top: 176px; width: 236px; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: stretch;
   border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); padding: 2px 4px 6px; }
 .app #sublayers:empty, .app.sub-shut #sublayers { display: none; }
 .app #sublayers .lab { font-family: var(--f-tiny); font-size: 8px; line-height: 16px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding: 0 4px; }
@@ -417,7 +417,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 @media (max-width: 700px) {
   .app .nextcard { top: 84px; }
   .app #layers { left: max(8px, env(safe-area-inset-left, 0px)); right: auto; top: 128px; width: 40px; flex-direction: column; overflow: visible; padding: 0; gap: 4px; }
-  .app #layers .chip.fam { width: 40px; padding: 2px; justify-content: center; }
+  .app #layers .chip.fam, .app #layers:hover .chip.fam, .app #layers:focus-within .chip.fam { width: 40px; padding: 2px; justify-content: center; }
   .app #layers .chip.fam .nm { display: none; }
   .app #sublayers { left: 56px; right: 8px; top: 128px; }
 }
