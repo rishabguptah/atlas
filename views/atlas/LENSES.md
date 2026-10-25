@@ -106,4 +106,9 @@ ATLAS.tab({
 `api` gives: `year`, `k`, `setYear(y, animate = true, ms)`, `scene({year, view: {lon, lat, span}, lens, layers,
 highlight, pins, routes, title})` (the guide's own scene: flies, sets the year, draws pins and routes, shows a
 caption), `clearScene()`, `fly(view, ms)`, `setOn(lensId, on = true)`, `redraw()`, `setTab(id)`, `fmtYear`,
-and `onYear(fn)` (called on every year change, so debounce anything heavy).
+`onYear(fn)` (called on every year change, so debounce anything heavy), `view()` (`{lon, lat, k, w, h}`: the map's
+centre, zoom and about how many degrees fit across and down), `onView(fn)` (called when a pan or zoom settles) and
+`select(card)` (opens a card in Here, panning to it if it is off screen).
+
+The Codex tab (`lenses/codex.js`) is the example of a plugin that keeps the viewer's progress: it uses `localStorage`
+(wrapped in try/catch, so the page works without it) and never sends it anywhere.
