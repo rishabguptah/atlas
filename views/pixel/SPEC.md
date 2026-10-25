@@ -65,3 +65,26 @@ SPRITES.ship = { w: 11, h: 9, ax: 5, ay: 8, frames: [[
 - One dark outline (`k`) on the outside, light from the top-left, at most 6 colours per sprite.
 - Up to 4 frames; frames play at 3 to 4 fps. Motion respects `prefers-reduced-motion`.
 - Character keys come from `palette.js` (`k` ink, `w` paper, `s` skin, `r` red, `b` blue, `g` gold, ...).
+
+## Zoom detail (detail.js)
+
+Past about 5x the map gains authored, dated detail instead of magnified terrain (house rule 4). One art pixel is
+about 180 / k km, so even at 20x detail is chosen and symbolised, not traced.
+
+| from | what | source |
+|---|---|---|
+| 2.5x | long walls (Hadrian's, Antonine, Limes, Gorgan, Great Walls, Danevirke, Berlin...) | hand-traced through known forts, approximate ones dashed |
+| 5x | main Roman roads, main railways, fields | Itiner-e; Natural Earth; HYDE country population over arable terrain |
+| 6x / 14x / 24x | modern highways / secondary highways / roads | Natural Earth, dated by country |
+| 10x | hamlets where farmland is densely peopled | HYDE density, roofs by region and era |
+| 12x | castles, forts, lighthouses, ports with jetties | Wikidata (dated only), Pleiades |
+| 22x | secondary Roman roads | Itiner-e |
+| 24x / 36x | mapped ancient villages / villas and city walls | Pleiades, Wikidata |
+| 4x to 24x by rank | province names | Pleiades, AWMC 200 CE, Wikidata (inception to dissolution), Natural Earth admin-1 from 1994 |
+
+Roman roads appear when Rome takes the province (not before 312 BCE) and fade for 400 years after Roman or
+Byzantine upkeep ends there. Conjectured routes are dashed, hypothetical ones dotted. Field styles follow place and
+time: open-field strips in medieval Europe, paddies in monsoon Asia, survey squares on 19th-century frontiers,
+centuriation near Roman colonies. Data: `ingest/pixel/detail.py` writes `detail/d_<col>_<row>.json` (30-degree
+tiles), `pop.json` and `countries.png`; `views/pixel/tiles.py` copies them beside the page. Both passes are cached
+per view, so a year step replays pixels unless the decade or the set of standing things changed.

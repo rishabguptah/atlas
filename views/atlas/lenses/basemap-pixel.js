@@ -34,6 +34,33 @@
   let own = null;
   const bordersOf = () => window.ATLAS.borders || own || (own = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(own.realms(year, T.k)); else pm.render(T, { realms: own.realms(year, T.k) }); } } }));
   let geo = null, geoKey = "", el0 = null;
+  // Zoom detail (roads, walls, fields, villages, ports, castles, province names) from detail/ next to the page.
+  const detail = typeof PixelDetail === "function" ? PixelDetail({ base: "detail/", onLoad: () => {
+    if (!pm || !T) return;
+    const realms = isOn("borders") ? (bordersOf().realms(year, T.k) || realmsFor(year)) : NO_REALMS;
+    if (pm.same(T)) pm.setRealms(realms); else pm.render(T, { realms });
+    if (window.ATLAS.labels && ATLAS.labels.refresh) ATLAS.labels.refresh(); else provLabels();
+  } }) : null;
+  let provSvg = null;
+  // Province names: through the shared label engine when the page has one, else a small layer of our own.
+  function provLabels() {
+    if (!detail || !el0 || (window.ATLAS.labels && ATLAS.labels.add)) return;
+    if (!provSvg) { provSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); provSvg.setAttribute("class", "pixel-prov"); Object.assign(provSvg.style, { position: "absolute", left: 0, top: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "visible", transformOrigin: "0 0" }); el0.insertBefore(provSvg, el0.querySelector(":scope > svg")); }
+    provSvg.style.transform = ""; provSvg.innerHTML = "";
+    if (!T) return;
+    const W = el0.clientWidth, H = el0.clientHeight, boxes = [];
+    const items = detail.names({ k: T.k, year, W, H, project: (lon, lat) => { const p = proj([lon, lat]); return p && [p[0] * T.k + T.x, p[1] * T.k + T.y]; } }).sort((a, b) => b.pri - a.pri);
+    for (const it of items.slice(0, 40)) {
+      const p = proj(it.at); if (!p) continue;
+      const x = p[0] * T.k + T.x, y = p[1] * T.k + T.y, txt = it.text.toUpperCase(), bw = txt.length * it.size * 0.72 + 8, b = [x - bw / 2, y - it.size, x + bw / 2, y + 4];
+      if (boxes.some(o => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1])) continue;
+      boxes.push(b);
+      const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      t.setAttribute("x", x); t.setAttribute("y", y); t.setAttribute("text-anchor", "middle");
+      t.setAttribute("style", `font: 500 ${it.size}px "Pixelify Sans", "Silkscreen", monospace; letter-spacing: .16em; fill: #3a2a1c; stroke: rgba(246,238,214,.8); stroke-width: 2.6px; paint-order: stroke;`);
+      t.textContent = txt; provSvg.appendChild(t);
+    }
+  }
   let pm = null, proj = null, T = null, year = null, snap = null, timer = 0, frame = 0, statics = [], movers = [];
   let marks = null, hud = null, watch = null, markTimer = 0;
   const realmCache = {}, NO_REALMS = [];
@@ -143,6 +170,10 @@
       if (!document.getElementById("pixel-basemap-style")) { const st = document.createElement("style"); st.id = "pixel-basemap-style"; st.textContent = STYLE; document.head.appendChild(st); }
       const levels = [{ cell: 1 / 6, tdeg: 360, url: () => PIXEL.tile0 }, { cell: 1 / 15, tdeg: 30, url: (c, r) => `tiles/l1_${c}_${r}.png` }, { cell: 1 / 30, tdeg: 30, url: (c, r) => `tiles/l2_${c}_${r}.png` }];
       pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers });
+      if (detail) {
+        pm.setDetail((G, phase) => detail.draw(G, phase, year, proj));
+        if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("provinces", view => detail.names(view));
+      }
       // Names of seas, rivers, ranges and deserts in the pixel font, under the Land lens's terrain toggle.
       if (typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
       if (typeof PixelMarks === "function" && svgEl()) mountMarks(el, projection);
@@ -170,14 +201,16 @@
         if (key !== geoKey) { geoKey = key; if (on) geo.render(t, el0.clientWidth, el0.clientHeight); else geo.clear(); }
       }
       collect(y, t.k); draw();
+      provLabels();
     },
-    move(t) { if (pm) pm.move(t); if (geo) geo.move(t); if (hud) hud.update(t); },
+    move(t) { if (pm) pm.move(t); if (geo) geo.move(t); if (hud) hud.update(t); if (provSvg && T) { const s = t.k / T.k; provSvg.style.transform = `translate(${t.x - T.x * s}px,${t.y - T.y * s}px) scale(${s})`; } },
     unmount() {
       clearInterval(timer); clearTimeout(markTimer); markTimer = 0;
       if (watch) watch.disconnect(); watch = null; marks = null;
       if (el0) mapOf(el0).classList.remove("pxmarks");
       if (hud) hud.remove(); hud = null;
       pm = null; if (geo) geo.remove(); geo = null;
+      if (provSvg) provSvg.remove(); provSvg = null;
     },
     setMood(m) { if (pm) pm.setMood(m); if (geo) geo.setMood(m); },
   });
