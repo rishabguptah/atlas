@@ -85,7 +85,9 @@
     if (M && M.D === D) return M;
     const src = i => ({ cite: D.src[i][0], url: D.src[i][1] || undefined });
     const objs = (D.objects || []).map(mk);
-    return M = { D, src, objs, byId: Object.fromEntries(objs.map(o => [o.id, o])) };
+    M = { D, src, objs, byId: Object.fromEntries(objs.map(o => [o.id, o])) };
+    if (objs.length) loadTraced();  // journeys this viewer traced live, once the curated data has arrived
+    return M;
   }
   function mk(o) {
     const ob = { ...o, stops: [] };
@@ -301,7 +303,8 @@
 `;
   let pane = null, api = null, openId = null;
   const thumb = name => { const n = sprite(name), S = n && ATLAS.sprites[n]; return S ? `<img src="${S.frames[0]}" alt="">` : ""; };
-  const C0 = () => prep((typeof LENS_DATA !== "undefined" && LENS_DATA[ID]) || { objects: [], src: [] });
+  const EMPTY = { objects: [], src: [] };
+  const C0 = () => prep((typeof LENS_DATA !== "undefined" && LENS_DATA[ID]) || EMPTY);
 
   function renderList() {
     const C = C0(), row = o => `<button type="button" class="row" data-id="${esc(o.id)}">${thumb(o.sp)}<div><b>${esc(o.n)}</b><span>${esc(first(o.w))}</span></div><span class="yr">${esc(fmtY(o.y0))} – ${esc(fmtY(o.y1))}</span></button>`;
@@ -480,7 +483,6 @@
         }
       });
       el.addEventListener("submit", ev => { if (ev.target.id !== "obj-trace") return; ev.preventDefault(); const q = el.querySelector("#obj-q").value.trim(); if (q) trace(q); });
-      loadTraced();
       // Stop following if the person drags time away from the journey.
       document.addEventListener("keydown", ev => { if (ev.key === "Escape" && follow.id) stop(); });
       render();
