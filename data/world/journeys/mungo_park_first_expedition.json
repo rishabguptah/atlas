@@ -1,0 +1,184 @@
+{
+ "id": "mungo_park_first_expedition",
+ "name": "Mungo Park's first expedition",
+ "kind": "explorer",
+ "summary": "A young Scottish surgeon sent by the African Association walks from the Gambia to the Niger at Segou, survives captivity by the Moors and fever, and returns on a slave ship after two and a half years.",
+ "start": 1795,
+ "end": 1797,
+ "stops": [
+  {
+   "place": "Portsmouth",
+   "lon": -1.09,
+   "lat": 50.8,
+   "date": "1795-05-22",
+   "until": "1795-05-22",
+   "mode": "start",
+   "note": "Sails on the Endeavour, an African trader.",
+   "conf": "documented"
+  },
+  {
+   "place": "Jillifree (Gambia mouth)",
+   "lon": -16.38,
+   "lat": 13.32,
+   "date": "1795-06-21",
+   "until": "1795-06-21",
+   "mode": "sea",
+   "note": "Reaches the Gambia river.",
+   "conf": "documented"
+  },
+  {
+   "place": "Pisania (Karantaba)",
+   "lon": -14.67,
+   "lat": 13.64,
+   "date": "1795-07-05",
+   "until": "1795-12-02",
+   "mode": "river",
+   "note": "Learns Mandinka at Dr Laidley's trading post and survives fever.",
+   "conf": "documented"
+  },
+  {
+   "place": "Medina (Wuli)",
+   "lon": -14.0,
+   "lat": 13.6,
+   "date": "1795-12-05",
+   "until": "1795-12-06",
+   "mode": "land",
+   "note": "Received by the king of Wuli.",
+   "conf": "documented"
+  },
+  {
+   "place": "Fatteconda (Bondou)",
+   "lon": -12.5,
+   "lat": 14.3,
+   "date": "1795-12-21",
+   "until": "1795-12-23",
+   "mode": "land",
+   "note": "The almami takes his best coat.",
+   "conf": "documented"
+  },
+  {
+   "place": "Kemmoo (Kaarta)",
+   "lon": -9.6,
+   "lat": 14.7,
+   "date": "1796-02-12",
+   "until": "1796-02-13",
+   "mode": "land",
+   "note": "The king of Kaarta advises him to go through Ludamar.",
+   "conf": "documented"
+  },
+  {
+   "place": "Benowm (Ludamar)",
+   "lon": -7.6,
+   "lat": 15.4,
+   "date": "1796-03-12",
+   "until": "1796-06-01",
+   "mode": "land",
+   "note": "Held prisoner by the Moorish chief Ali and mocked by his court.",
+   "conf": "documented"
+  },
+  {
+   "place": "Jarra",
+   "lon": -9.4,
+   "lat": 15.2,
+   "date": "1796-06",
+   "until": "1796-07-01",
+   "mode": "land",
+   "note": "Escapes from Ali's camp with only his horse and compass.",
+   "conf": "documented"
+  },
+  {
+   "place": "Segou",
+   "lon": -6.26,
+   "lat": 13.43,
+   "date": "1796-07-21",
+   "until": "1796-07-21",
+   "mode": "land",
+   "note": "Sees the Niger 'glittering to the morning sun' flowing eastward.",
+   "conf": "documented"
+  },
+  {
+   "place": "Silla",
+   "lon": -5.1,
+   "lat": 13.7,
+   "date": "1796-07-29",
+   "until": "1796-07-30",
+   "mode": "land",
+   "note": "Exhausted and penniless, turns back.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bamako",
+   "lon": -8.0,
+   "lat": 12.64,
+   "date": "1796-08-23",
+   "until": "1796-08-24",
+   "mode": "land",
+   "note": "Follows the Niger upstream.",
+   "conf": "documented"
+  },
+  {
+   "place": "Kamalia",
+   "lon": -9.3,
+   "lat": 12.65,
+   "date": "1796-09-16",
+   "until": "1797-04-19",
+   "mode": "land",
+   "note": "Nursed through fever by the slave trader Karfa Taura and waits out the rains.",
+   "conf": "documented"
+  },
+  {
+   "place": "Pisania (Karantaba)",
+   "lon": -14.67,
+   "lat": 13.64,
+   "date": "1797-06-10",
+   "until": "1797-06-15",
+   "mode": "land",
+   "note": "Walks back with Karfa's slave coffle and is greeted as one risen from the dead.",
+   "conf": "documented"
+  },
+  {
+   "place": "Antigua",
+   "lon": -61.85,
+   "lat": 17.12,
+   "date": "1797-10",
+   "until": "1797-11-24",
+   "mode": "sea",
+   "note": "The American slaver Charlestown, leaking, puts in at the West Indies.",
+   "conf": "documented"
+  },
+  {
+   "place": "Falmouth",
+   "lon": -5.07,
+   "lat": 50.15,
+   "date": "1797-12-22",
+   "until": "1797-12-22",
+   "mode": "sea",
+   "note": "Lands in England.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1797-12-25",
+   "until": "1797-12-25",
+   "mode": "land",
+   "note": "Reaches London on Christmas morning.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Mungo Park, Travels in the Interior Districts of Africa, London 1799",
+   "url": "https://www.gutenberg.org/ebooks/5305"
+  },
+  {
+   "cite": "Kenneth Lupton, Mungo Park the African Traveler, Oxford 1979"
+  },
+  {
+   "cite": "Wikipedia, Mungo Park (explorer)",
+   "url": "https://en.wikipedia.org/wiki/Mungo_Park_(explorer)"
+  }
+ ],
+ "status": "draft"
+}

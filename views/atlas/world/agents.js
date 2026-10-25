@@ -226,12 +226,16 @@
   }
   function personName(r, c, sex, home) {
     if (!c) return null;
-    const given = pick(r, (sex === "f" ? c.female : c.male) || c.male || ["(unnamed)"]);
-    const fam = c.family && c.family.length ? pick(r, c.family) : "";
-    const fatherName = c.male && c.male.length ? pick(r, c.male) : "";
-    let pat = c.pattern || (fam ? "{given} {family}" : "{given}");
-    if (c.bynames && c.bynames.length && r() < 0.5 && !/\{family\}/.test(pat)) pat = "{given} " + pick(r, c.bynames);
-    return pat.replace("{given}", given).replace("{family}", fam).replace("{father}", fatherName).replace("{place}", home || "").replace(/\s+/g, " ").trim();
+    const list = (sex === "f" ? c.female : c.male) || c.male;
+    if (!list || !list.length) return null;
+    let pat = c.pattern || (c.family && c.family.length ? "{given} {family}" : "{given}");
+    const by = c.bynames && c.bynames.length ? pick(r, c.bynames) : "";
+    if (/\{byname\}/.test(pat)) pat = pat.replace("{byname}", by);
+    else if (by && r() < 0.4 && !/\{family\}/.test(pat)) pat += " " + by;
+    const place = String(home || "").split(/[\/(,]/)[0].trim();
+    const one = { given: () => pick(r, list), family: () => c.family && c.family.length ? pick(r, c.family) : "", father: () => c.male && c.male.length ? pick(r, c.male) : "", place: () => place };
+    return pat.replace(/\{(given|family|father|place)\}/g, (_, k) => one[k]())
+      .replace(/\{\w+\}/g, "").replace(/\s+/g, " ").replace(/\s+([,)])/g, "$1").trim();
   }
 
   // ---------- generated trips from a flow ----------
@@ -501,10 +505,37 @@
       }
       const stay = (a.stops && a.stops[i + 1]) || null;
       sc({ t: g.t1, view: { lon: p1[0], lat: p1[1], span: span_(p0, p1) }, caption: `${g.mode === "sea" ? "Lands at" : "Reaches"} ${g.to}`, text: g.note || (stay && stay.note) || "", conf: g.conf, routes: [route], pins: [{ lon: p1[0], lat: p1[1], label: g.to }] });
+      // While a real traveller stays somewhere, the groups that pass through that town (a caravan setting out, a fleet in port).
+      if (!a.gen && stay) {
+        let n = 0;
+        for (const ps of W.passing(p1[0], p1[1], g.t1, Math.min(stay.until ?? g.t1, g.t1 + 0.5))) {
+          if (n++ >= 2) break;
+          sc({ t: ps.t, view: { lon: p1[0], lat: p1[1], span: 6 }, caption: `In ${g.to}, ${a.name} could have seen ${describe({ a: ps.a, to: ps.to })}`, text: ps.a.flow.note || "", conf: "approximate", kind: "crossed", sources: ps.a.flow.sources || [] });
+        }
+      }
     });
     scenes.sort((x, y) => x.t - y.t);
     scenes.forEach((s, i) => { s.next = scenes[i + 1] ? [scenes[i + 1].id] : []; });
     return { id: "story:" + a.id, title: a.gen ? `${a.name}, ${a.flow.name}` : a.name, kind: "simulation", gen: !!a.gen, scenes };
+  };
+  // Generated groups that stop at (within km of) a place between t0 and t1: [{a, t, at, to}], biggest groups first.
+  W.passing = function (lon, lat, t0, t1, kmMax = 30) {
+    const out = [], y0 = yearOf(t0), y1 = yearOf(t1);
+    for (const f of FLOWS) {
+      if (y1 < f.start || y0 > f.end + span(f)) continue;
+      const idx = f.stops.findIndex(s => km([s.lon, s.lat], [lon, lat]) < kmMax);
+      if (idx < 0) continue;
+      for (let yy = y0 - span(f); yy <= y1; yy++) {
+        if (yy === 0) continue;
+        for (const a of trips(f, yy)) for (const g of a.legs) {
+          const k = g.stops.findIndex(s => km([s.lon, s.lat], [lon, lat]) < kmMax);
+          if (k < 0) continue;
+          const t = g.t0 + (g.t1 - g.t0) * (k === 0 ? 0 : k === g.stops.length - 1 ? 1 : g.at[k] * 0.8 + 0.1);
+          if (t >= t0 && t <= t1) out.push({ a, t, at: g.stops[k].name, to: g.to });
+        }
+      }
+    }
+    return out.sort((x, y) => (y.a.party || 1) - (x.a.party || 1));
   };
   // Pages can hand the story builder a context finder (battles, plague, rulers near a point and time).
   W.context = null;
