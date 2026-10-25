@@ -94,6 +94,10 @@ if os.path.exists(layers + 'terrain.json'):
         relief_pol = 'data:image/webp;base64,' + base64.b64encode(rb).decode() if inline else side('terrain-political.webp', rb)
 if not inline and L['war'].get('wd'):
     late['war:wd'] = side('battles-wd.json', L['war'].pop('wd'))
+# The fragility and area series of every polity (about 0.5 MB) load after the first paint; the map needs only the rest.
+if not inline and order.get('polities'):
+    series = {p['id']: [p.pop('a', None), p.pop('f', None)] for p in order['polities'] if 'id' in p}
+    late['order:series'] = side('order-series.json', series)
 data = '\n'.join(f'const {k.upper()} = {J(v)};' for k, v in L.items()) + f'\nconst ORDER = {J(order)};\nconst RELIEF = {J(relief)};\nconst RELIEF_POL = {J(relief_pol)};\n'
 if 'terrain' not in L: data += 'const TERRAIN = null;\n'
 

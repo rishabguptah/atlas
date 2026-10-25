@@ -375,8 +375,8 @@
       const same = pm.same(t) && !paleoNew;
       eraFor(t, y, !same);
       // A padded frame (see padSoon) is about twice the pixels: drop the pad for year steps and new views, so they
-      // stay cheap, and draw it again once things are quiet.
-      if (same && !pm.pad) pm.setRealms(realms); else pm.render(t, { realms, pad: 0 });
+      // stay cheap, and draw it again once things are quiet. A year step only swaps realms; the paint comes once per step.
+      if (same && !pm.pad) pm.setRealms(realms, { paint: false }); else pm.render(t, { realms, pad: 0 });
       lastRealms = realms; padSoon();
       // Warm the outlines of every frame in this chunk while the browser is idle, so scrubbing on stays cheap.
       // Then the chunks either side (already prefetched by the border loader).
