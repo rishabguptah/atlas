@@ -8,6 +8,9 @@ Standard library only, so it runs anywhere.
 import json, os, re, sys, glob
 from collections import Counter, defaultdict
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from conf import ORDER, conf_of  # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA, DIST = os.path.join(ROOT, 'data'), os.path.join(ROOT, 'dist')
 
@@ -40,7 +43,7 @@ DATE_RE = re.compile(r'^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$')
 
 
 def year(v):
-    return isinstance(v, int) and not isinstance(v, bool) and v != 0 and -100000 < v < 2100
+    return isinstance(v, int) and not isinstance(v, bool) and v != 0 and -3000000 < v < 2100
 
 
 def check(r):
@@ -52,7 +55,7 @@ def check(r):
     m = ID_RE.match(rid or '')
     if not m or m.group(1) != KINDS[kind][0]:
         errs.append(f'id {rid!r} must look like {KINDS[kind][0]}:lowercase_slug')
-    if kind not in ('relation', 'measure') and not r.get('name'):
+    if kind not in ('relation', 'measure', 'source') and not r.get('name'):
         errs.append('missing name')
     lenses = r.get('lenses')
     if not lenses or not isinstance(lenses, list) or set(lenses) - LENSES:
@@ -159,7 +162,7 @@ def refs(r):
     """Ids this record points at."""
     out = []
     for f in ('place', 'from', 'to', 'of', 'capital', 'author', 'by', 'policy', 'language'):
-        if isinstance(r.get(f), str):
+        if isinstance(r.get(f), str) and (r.get('kind') != 'quote' or ':' in r[f]):   # a quote's author may be a plain name
             out.append(r[f])
     if r.get('kind') == 'language':  # elsewhere `family` is a plain label (europe-19c event families)
         out += [r[f] for f in ('family', 'branch') if isinstance(r.get(f), str)]
@@ -236,6 +239,16 @@ def main():
             if t not in merged:
                 missing[t] += 1
                 errors.append(f'{rid}: points at {t}, which no record defines (add it, or a stub)')
+    # Confidence class on every record (tools/conf.py): its own `conf`, else the workstream mapping.
+    origin = {}
+    for ws, _, _, r in recs:
+        if r.get('stub'):
+            origin.setdefault(r.get('id'), ws)
+        else:
+            origin[r.get('id')] = ws
+    for rid, r in merged.items():
+        r['conf'] = conf_of(r, origin.get(rid))
+    confs = Counter(r['conf'] for r in merged.values())
     kinds = Counter(r['kind'] for r in merged.values() if r.get('kind') in KINDS)
     lenses = Counter(l for r in merged.values() for l in r.get('lenses') or [])
     report = [f'{len(merged)} records from {len(recs)} lines', '',
@@ -243,6 +256,7 @@ def main():
               'by lens: ' + ', '.join(f'{k} {v}' for k, v in sorted(lenses.items())),
               f'stubs without an owner record: {sum(1 for r in merged.values() if r.get("stub"))}',
               f'draft records: {sum(1 for r in merged.values() if r.get("status") == "draft")}',
+              'confidence: ' + ', '.join(f'{c} {confs[c]}' for c in ORDER),
               f'errors: {len(errors)}']
     print('\n'.join(report))
     for e in errors[:200]:

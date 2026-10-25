@@ -109,5 +109,18 @@ never on a year step. pixelmap.js marks rivers first (`cls` 4, `riv` 1 river / 2
 - Pans redraw bands with a `SEAM` margin wide enough for the largest anchored piece; keep it if pieces grow.
 
 ### Wave glyphs and regional towns (follow-up)
-- Wave glyphs are one tone above the water under them, placed per world cell with jitter and thinned by slow noise; at world zoom (tier 0) about a third as many. Era styles with wave strokes (Catalan, al-Idrisi) also drop strokes at random and thin out below 2x.
+- Wave glyphs are one tone above the water under them, placed per world cell with jitter and thinned by slow noise; at world zoom (tier 0) about a third as many. Era styles with wave strokes (Catalan, al-Idrisi) thin out below 2x and drop strokes at random.
 - `PixelEra.culture(lon, lat, year)` names a city's building tradition (islamic from 650, near_east before, sahel, africa, east_asia, steppe, south_asia/deccan, meso and andes until the conquest; generic European sprites elsewhere). The library has a settlement for each at sizes 3 and 4 (and yurts at 1 and 2); a missing size borrows the nearest local one.
+
+## Motion (views/pixel/motion.js)
+
+Everything that moves lives on small canvases above the map (season, fx, sky, dissolve), at the same art-pixel grid; the
+map raster is never repainted for animation. Steps at 10 fps in whole art pixels; pauses while scrubbing, zooming,
+panning, hidden or off screen; one still frame under reduced motion (or Motion off in the sky control). Water shimmer,
+surf and river flow are palette cycling on pixel lists; snow line, sea ice and autumn follow the month per hemisphere;
+the night is the real sun's terminator with city lights from Reba et al. (fire before 1800, gas to 1900, electric after).
+Meaning first: borders that changed ink in over three stepped frames when the year settles, the Black Death front
+crawls its routes month by month, armies march between consecutive battles of a war, ships and caravans travel active
+trade routes, smoke rises from battles and eruptions, a big instant year jump dissolves through a Bayer threshold.
+Hooks for other layers: `ATLAS.motion.layer(id, fn)`, `.onStep(fn)`, `.frame`, `.pulse(lon, lat, {color, r, repeat})`.
+City lights data: `python3 ingest/pixel/city_lights.py historical_urban_population.csv /mnt/project-files/atlas/pixel/city-lights.json`.

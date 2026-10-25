@@ -1,0 +1,2124 @@
+{
+ "stories": [
+  {
+   "id": "first_cities_sumer",
+   "title": "The first cities of Sumer",
+   "region": "Mesopotamia",
+   "start": -3500,
+   "end": -2004,
+   "view": {
+    "lon": 45.5,
+    "lat": 32.5,
+    "span": 12
+   },
+   "blurb": "How did farming villages in southern Iraq become the first cities, with writing, kings and empires?",
+   "steps": [
+    {
+     "date": "-3500",
+     "name": "Uruk period",
+     "place_name": "Uruk",
+     "lat": 31.32,
+     "lon": 45.64,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "Uruk grows into a city of perhaps tens of thousands of people around the Eanna and Anu temple precincts.",
+     "why": "It is usually taken as the first true city, the model for everything that follows.",
+     "wikipedia": "Uruk period",
+     "date_note": "c.",
+     "wikidata": "Q731494"
+    },
+    {
+     "date": "-3200",
+     "name": "Proto-cuneiform",
+     "place_name": "Uruk",
+     "lat": 31.32,
+     "lon": 45.64,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [],
+     "what": "Temple scribes at Uruk press signs into clay tablets to record rations, livestock and workers.",
+     "why": "Writing begins as bookkeeping for a large urban economy, not as literature.",
+     "wikipedia": "Proto-cuneiform",
+     "date_note": "c.",
+     "wikidata": "Q1650699"
+    },
+    {
+     "date": "-3100",
+     "name": "Jemdet Nasr period",
+     "place_name": "Jemdet Nasr",
+     "lat": 32.72,
+     "lon": 44.78,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Administrative tablets at Jemdet Nasr list goods from several cities, sealed with shared city seals.",
+     "why": "It shows the cities of the plain already tied together by trade and common institutions.",
+     "wikipedia": "Jemdet Nasr period",
+     "date_note": "c.",
+     "wikidata": "Q428101"
+    },
+    {
+     "date": "-2600",
+     "name": "Royal Cemetery at Ur",
+     "place_name": "Ur",
+     "lat": 30.96,
+     "lon": 46.1,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Puabi"
+     ],
+     "what": "Queen Puabi is buried at Ur with gold, lapis lazuli from Afghanistan and dozens of attendants.",
+     "why": "The wealth and far-traveled goods show how much surplus and long-distance trade the city-states commanded.",
+     "wikipedia": "Royal Cemetery at Ur",
+     "date_note": "c.",
+     "wikidata": "Q1796355"
+    },
+    {
+     "date": "-2450",
+     "name": "Stele of the Vultures",
+     "place_name": "Girsu",
+     "lat": 31.58,
+     "lon": 46.13,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Eannatum"
+     ],
+     "what": "Eannatum of Lagash records his victory over neighbouring Umma in a long dispute over border fields and canals.",
+     "why": "City-states fought over water and farmland; this is among the earliest recorded wars.",
+     "wikipedia": "Stele of the Vultures",
+     "date_note": "c.",
+     "wikidata": "Q1088425"
+    },
+    {
+     "date": "-2350",
+     "name": "Ebla tablets",
+     "place_name": "Ebla",
+     "lat": 35.8,
+     "lon": 36.8,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "The palace archive of Ebla in Syria, about 17,000 tablet pieces, records textiles, metals and diplomacy in cuneiform.",
+     "why": "Sumerian writing and bureaucracy had spread far up the Euphrates trade routes.",
+     "wikipedia": "Ebla tablets",
+     "date_note": "c.",
+     "wikidata": "Q2918565"
+    },
+    {
+     "date": "-2350",
+     "name": "Reforms of Urukagina",
+     "place_name": "Girsu",
+     "lat": 31.58,
+     "lon": 46.13,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Urukagina"
+     ],
+     "what": "Urukagina of Lagash claims to cut taxes and fees and protect widows and orphans from the powerful.",
+     "why": "It is the first known attempt by a ruler to justify power through social reform.",
+     "wikipedia": "Urukagina",
+     "date_note": "c.",
+     "wikidata": "Q315698"
+    },
+    {
+     "date": "-2334",
+     "name": "Sargon conquers Sumer",
+     "place_name": "Uruk",
+     "lat": 31.32,
+     "lon": 45.64,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Sargon of Akkad"
+     ],
+     "what": "Sargon of Akkad defeats Lugal-zage-si of Uruk and brings the Sumerian cities under one king.",
+     "why": "The Akkadian Empire is the first state to rule many cities from one capital.",
+     "wikipedia": "Sargon of Akkad",
+     "date_note": "c. (middle chronology)",
+     "wikidata": "Q199461"
+    },
+    {
+     "date": "-2285",
+     "name": "Enheduanna at Ur",
+     "place_name": "Ur",
+     "lat": 30.96,
+     "lon": 46.1,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Enheduanna"
+     ],
+     "what": "Sargon's daughter Enheduanna serves as high priestess of the moon god at Ur and composes temple hymns.",
+     "why": "She is the first author known by name, and her post tied the conquered south to the dynasty.",
+     "wikipedia": "Enheduanna",
+     "date_note": "c.",
+     "wikidata": "Q232505"
+    },
+    {
+     "date": "-2250",
+     "name": "Naram-Sin and Nippur",
+     "place_name": "Nippur",
+     "lat": 32.13,
+     "lon": 45.23,
+     "family": "war",
+     "subtype": "reign",
+     "who": [
+      "Naram-Sin of Akkad"
+     ],
+     "what": "Naram-Sin, Sargon's grandson, calls himself god and king of the four quarters; later tradition blamed him for desecrating Nippur's temple.",
+     "why": "Empire brought new claims of divine kingship, and later Sumerians remembered it as overreach.",
+     "wikipedia": "Naram-Sin of Akkad",
+     "date_note": "c.",
+     "wikidata": "Q297506"
+    },
+    {
+     "date": "-2150",
+     "name": "Gutian rule",
+     "place_name": "Adab",
+     "lat": 31.95,
+     "lon": 45.77,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "After Akkad weakens, Gutians from the Zagros mountains take power over parts of Sumer for several decades.",
+     "why": "The first empire collapsed fast, leaving the cities to local rulers and outsiders.",
+     "wikipedia": "Gutians",
+     "date_note": "c.",
+     "wikidata": "Q549531"
+    },
+    {
+     "date": "-2125",
+     "name": "Gudea of Lagash",
+     "place_name": "Girsu",
+     "lat": 31.58,
+     "lon": 46.13,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Gudea"
+     ],
+     "what": "Gudea rebuilds the Eninnu temple at Girsu with cedar from Lebanon and stone from Magan, and has dozens of diorite statues carved.",
+     "why": "Local city-states kept prospering and trading even without an empire.",
+     "wikipedia": "Gudea",
+     "date_note": "c.",
+     "wikidata": "Q310336"
+    },
+    {
+     "date": "-2100",
+     "name": "Ziggurat of Ur",
+     "place_name": "Ur",
+     "lat": 30.96,
+     "lon": 46.1,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ur-Nammu"
+     ],
+     "what": "Ur-Nammu founds the Third Dynasty of Ur and builds a great stepped temple tower for the moon god Nanna.",
+     "why": "Ur III rebuilt a unified state in the south with monumental religion at its centre.",
+     "wikipedia": "Ziggurat of Ur",
+     "date_note": "c.",
+     "wikidata": "Q202927"
+    },
+    {
+     "date": "-2100",
+     "name": "Code of Ur-Nammu",
+     "place_name": "Nippur",
+     "lat": 32.13,
+     "lon": 45.23,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Ur-Nammu"
+     ],
+     "what": "The oldest surviving law code sets fixed fines in silver for injuries.",
+     "why": "Written law shows how far administration had come since the first tablets.",
+     "wikipedia": "Code of Ur-Nammu",
+     "date_note": "c.",
+     "wikidata": "Q705693"
+    },
+    {
+     "date": "-2056",
+     "name": "Puzrish-Dagan",
+     "place_name": "Drehem",
+     "lat": 32.03,
+     "lon": 45.3,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Shulgi"
+     ],
+     "what": "King Shulgi founds a livestock centre near Nippur that logs tens of thousands of animals received as taxes and offerings.",
+     "why": "Ur III was one of history's most bureaucratic states, with every sheep on a tablet.",
+     "wikipedia": "Puzrish-Dagan",
+     "date_note": "c.",
+     "wikidata": "Q3411130"
+    },
+    {
+     "date": "-2004",
+     "name": "Fall of Ur",
+     "place_name": "Ur",
+     "lat": 30.96,
+     "lon": 46.1,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Ibbi-Sin"
+     ],
+     "what": "Elamites sack Ur and carry its last king Ibbi-Sin off to Elam, ending the Third Dynasty.",
+     "why": "The end of Sumerian rule; later scribes mourned it in the Lament for Ur.",
+     "wikipedia": "Ibbi-Sin",
+     "date_note": "c.",
+     "wikidata": "Q352752"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "pyramid_age_egypt",
+   "title": "The pyramid age",
+   "region": "Egypt",
+   "start": -2686,
+   "end": -2055,
+   "view": {
+    "lon": 31.5,
+    "lat": 27.5,
+    "span": 12
+   },
+   "blurb": "How did Old Kingdom Egypt build the pyramids, and why did its central state fall apart?",
+   "steps": [
+    {
+     "date": "-2670",
+     "name": "Pyramid of Djoser",
+     "place_name": "Saqqara",
+     "lat": 29.87,
+     "lon": 31.22,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Djoser",
+      "Imhotep"
+     ],
+     "what": "Djoser's official Imhotep stacks six stone mastabas into the first large stone building, the Step Pyramid.",
+     "why": "It marks the start of monumental stone building and of the state that could organise it.",
+     "wikipedia": "Pyramid of Djoser",
+     "date_note": "c.",
+     "wikidata": "Q192418"
+    },
+    {
+     "date": "-2600",
+     "name": "Bent Pyramid",
+     "place_name": "Dahshur",
+     "lat": 29.79,
+     "lon": 31.21,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Sneferu"
+     ],
+     "what": "Sneferu's builders change the slope halfway up when the structure shows strain, then build the true Red Pyramid nearby.",
+     "why": "Pyramid building was learned by trial and error over a single long reign.",
+     "wikipedia": "Bent Pyramid",
+     "date_note": "c.",
+     "wikidata": "Q459608"
+    },
+    {
+     "date": "-2560",
+     "name": "Great Pyramid of Giza",
+     "place_name": "Giza",
+     "lat": 29.98,
+     "lon": 31.13,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Khufu"
+     ],
+     "what": "Khufu's pyramid rises about 146 metres from roughly 2.3 million blocks.",
+     "why": "The peak of the state's power to mobilise labour, food and stone.",
+     "wikipedia": "Great Pyramid of Giza",
+     "date_note": "c.",
+     "wikidata": "Q37200"
+    },
+    {
+     "date": "-2560",
+     "name": "Diary of Merer",
+     "place_name": "Wadi al-Jarf",
+     "lat": 28.89,
+     "lon": 32.65,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Merer"
+     ],
+     "what": "An inspector named Merer logs his crew's trips carrying limestone from Tura down the Nile to Giza; the papyri were found at a Red Sea harbour.",
+     "why": "The oldest inscribed papyri show the logistics behind the pyramid: boats, canals and rations.",
+     "wikipedia": "Diary of Merer",
+     "date_note": "c.",
+     "wikidata": "Q39343893"
+    },
+    {
+     "date": "-2540",
+     "name": "Great Sphinx of Giza",
+     "place_name": "Giza",
+     "lat": 29.98,
+     "lon": 31.14,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Khafre"
+     ],
+     "what": "The Sphinx is carved from the bedrock beside Khafre's pyramid causeway.",
+     "why": "Royal building turned the whole Giza plateau into a cult landscape for dead kings.",
+     "wikipedia": "Great Sphinx of Giza",
+     "date_note": "c.",
+     "wikidata": "Q130958"
+    },
+    {
+     "date": "-2400",
+     "name": "Abusir Papyri",
+     "place_name": "Abusir",
+     "lat": 29.9,
+     "lon": 31.2,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Neferirkare Kakai"
+     ],
+     "what": "Temple accounts at Abusir record duty rosters, offerings and equipment for the cults of Fifth Dynasty kings.",
+     "why": "They show the everyday running of royal temples, which absorbed land and labour across Egypt.",
+     "wikipedia": "Abusir Papyri",
+     "date_note": "c.",
+     "wikidata": "Q2056704"
+    },
+    {
+     "date": "-2350",
+     "name": "Pyramid Texts",
+     "place_name": "Saqqara",
+     "lat": 29.87,
+     "lon": 31.22,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Unas"
+     ],
+     "what": "Spells for the king's afterlife are carved inside the small pyramid of Unas, the first such texts.",
+     "why": "Pyramids got smaller as religious texts and temples took more of the resources.",
+     "wikipedia": "Pyramid Texts",
+     "date_note": "c.",
+     "wikidata": "Q645882"
+    },
+    {
+     "date": "-2278",
+     "name": "Reign of Pepi II",
+     "place_name": "Saqqara",
+     "lat": 29.87,
+     "lon": 31.22,
+     "family": "culture",
+     "subtype": "reign",
+     "who": [
+      "Pepi II Neferkare"
+     ],
+     "what": "Pepi II is said to reign for over 60 years, perhaps up to 94, while provincial nomarchs gain power.",
+     "why": "A very long reign with a weakening court left a succession crisis at its end.",
+     "wikipedia": "Pepi II Neferkare",
+     "date_note": "c. (length of reign disputed)",
+     "end_date": "-2184",
+     "wikidata": "Q6198"
+    },
+    {
+     "date": "-2270",
+     "name": "Autobiography of Harkhuf",
+     "place_name": "Elephantine",
+     "lat": 24.09,
+     "lon": 32.89,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Harkhuf",
+      "Pepi II Neferkare"
+     ],
+     "what": "Harkhuf, governor at Aswan, leads donkey caravans south to the land of Yam and records a letter from the boy king Pepi II.",
+     "why": "Provincial governors grew rich and independent through trade and long careers far from the capital.",
+     "wikipedia": "Autobiography of Harkhuf",
+     "date_note": "c.",
+     "wikidata": "Q558727"
+    },
+    {
+     "date": "-2200",
+     "name": "4.2-kiloyear event",
+     "place_name": "Memphis",
+     "lat": 29.85,
+     "lon": 31.25,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [],
+     "what": "A long dry period weakens the Nile floods across the region.",
+     "why": "Low floods meant failed harvests, which undermined royal legitimacy and stores.",
+     "wikipedia": "4.2-kiloyear event",
+     "date_note": "c.",
+     "wikidata": "Q1291515"
+    },
+    {
+     "date": "-2160",
+     "name": "First Intermediate Period",
+     "place_name": "Herakleopolis",
+     "lat": 29.09,
+     "lon": 30.93,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "Rulers at Herakleopolis claim kingship in the north while Thebes rises in the south.",
+     "why": "The unified Old Kingdom state had broken into competing centres.",
+     "wikipedia": "First Intermediate Period of Egypt",
+     "date_note": "c.",
+     "wikidata": "Q232211"
+    },
+    {
+     "date": "-2150",
+     "name": "Ankhtifi's famine inscriptions",
+     "place_name": "el-Mo'alla",
+     "lat": 25.47,
+     "lon": 32.52,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [
+      "Ankhtifi"
+     ],
+     "what": "The nomarch Ankhtifi claims in his tomb that all Upper Egypt starved while he fed his own province.",
+     "why": "Local strongmen now took credit for feeding people, the job once claimed by the king.",
+     "wikipedia": "Ankhtifi",
+     "date_note": "c.",
+     "wikidata": "Q592368"
+    },
+    {
+     "date": "-2055",
+     "name": "Reunification by Mentuhotep II",
+     "place_name": "Thebes",
+     "lat": 25.72,
+     "lon": 32.61,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Mentuhotep II"
+     ],
+     "what": "Mentuhotep II of Thebes defeats Herakleopolis and reunites Egypt, founding the Middle Kingdom.",
+     "why": "The collapse ended in a new unified state, governed from the south.",
+     "wikipedia": "Mentuhotep II",
+     "date_note": "c.",
+     "wikidata": "Q296439"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "indus_cities",
+   "title": "The Indus cities",
+   "region": "South Asia and the Gulf",
+   "start": -3300,
+   "end": -1300,
+   "view": {
+    "lon": 63.0,
+    "lat": 27.5,
+    "span": 32
+   },
+   "blurb": "Who built the planned cities of the Indus valley, how did they trade with Mesopotamia, and why did they fade?",
+   "steps": [
+    {
+     "date": "-3300",
+     "name": "Early Harappan Kot Diji",
+     "place_name": "Kot Diji",
+     "lat": 27.34,
+     "lon": 68.71,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "Fortified farming towns like Kot Diji appear along the Indus with wheel-made pottery.",
+     "why": "The urban phase grew out of centuries of village life in the river plains.",
+     "wikipedia": "Kot Diji",
+     "date_note": "c.",
+     "wikidata": "Q1017084"
+    },
+    {
+     "date": "-2600",
+     "name": "Harappa",
+     "place_name": "Harappa",
+     "lat": 30.63,
+     "lon": 72.86,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "Harappa on the Ravi grows into a city of brick houses, drains and standard-size bricks.",
+     "why": "The mature Harappan phase begins, with uniform planning over a huge area.",
+     "wikipedia": "Harappa",
+     "date_note": "c.",
+     "wikidata": "Q185562"
+    },
+    {
+     "date": "-2600",
+     "name": "Rakhigarhi",
+     "place_name": "Rakhigarhi",
+     "lat": 29.29,
+     "lon": 76.11,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "Rakhigarhi in the Ghaggar plain becomes one of the largest Indus settlements.",
+     "why": "The civilisation spread east well beyond the Indus itself.",
+     "wikipedia": "Rakhigarhi",
+     "date_note": "c.",
+     "wikidata": "Q3418050"
+    },
+    {
+     "date": "-2500",
+     "name": "Great Bath",
+     "place_name": "Mohenjo-daro",
+     "lat": 27.33,
+     "lon": 68.14,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "Builders at Mohenjo-daro line a 12 by 7 metre pool with fitted brick and bitumen.",
+     "why": "A large public structure with no clear palace suggests an unusual, less monarchic city.",
+     "wikipedia": "Great Bath",
+     "date_note": "c.",
+     "wikidata": "Q3346415"
+    },
+    {
+     "date": "-2500",
+     "name": "Indus script",
+     "place_name": "Harappa",
+     "lat": 30.63,
+     "lon": 72.86,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [],
+     "what": "Short inscriptions appear on stamp seals used to mark goods.",
+     "why": "The script is still undeciphered, so the people can be read only through objects.",
+     "wikipedia": "Indus script",
+     "date_note": "c.",
+     "wikidata": "Q601388"
+    },
+    {
+     "date": "-2500",
+     "name": "Dholavira",
+     "place_name": "Dholavira",
+     "lat": 23.89,
+     "lon": 70.21,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "On an island in the Rann of Kutch, Dholavira cuts large reservoirs to store seasonal water.",
+     "why": "Water engineering let cities survive in dry margins.",
+     "wikipedia": "Dholavira",
+     "date_note": "c.",
+     "wikidata": "Q9468"
+    },
+    {
+     "date": "-2400",
+     "name": "Lothal dockyard",
+     "place_name": "Lothal",
+     "lat": 22.52,
+     "lon": 72.25,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Lothal in Gujarat has a large brick basin, often read as a dock, and bead workshops.",
+     "why": "Coastal towns linked the Indus to sea trade across the Arabian Sea.",
+     "wikipedia": "Lothal",
+     "date_note": "c. (dock interpretation debated)",
+     "wikidata": "Q9443"
+    },
+    {
+     "date": "-2300",
+     "name": "Meluhha in Akkadian texts",
+     "place_name": "Nippur",
+     "lat": 32.13,
+     "lon": 45.23,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Sargon of Akkad"
+     ],
+     "what": "Sargon of Akkad boasts that ships from Meluhha, Magan and Dilmun moored at his capital.",
+     "why": "Mesopotamian texts name the Indus region as Meluhha, a source of carnelian, wood and ivory.",
+     "wikipedia": "Meluhha",
+     "date_note": "c.",
+     "wikidata": "Q483421"
+    },
+    {
+     "date": "-2200",
+     "name": "Magan copper",
+     "place_name": "Ra's al-Jinz",
+     "lat": 22.42,
+     "lon": 59.83,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Indus pottery and seals reach coastal Oman, the copper-producing land of Magan.",
+     "why": "The Gulf was a shared trade zone, with Oman as a stop between India and Iraq.",
+     "wikipedia": "Magan (civilization)",
+     "date_note": "c.",
+     "wikidata": "Q1429914"
+    },
+    {
+     "date": "-2050",
+     "name": "Dilmun",
+     "place_name": "Qal'at al-Bahrain",
+     "lat": 26.23,
+     "lon": 50.52,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Dilmun on Bahrain acts as a middleman port, using weights on the Indus standard.",
+     "why": "Gulf merchants carried Indus goods into Mesopotamia in the Ur III period and after.",
+     "wikipedia": "Dilmun",
+     "date_note": "c.",
+     "wikidata": "Q748846"
+    },
+    {
+     "date": "-2000",
+     "name": "Shortugai",
+     "place_name": "Shortugai",
+     "lat": 37.36,
+     "lon": 69.49,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "An Indus trading outpost on the Amu Darya in northern Afghanistan, near the lapis lazuli mines of Badakhshan.",
+     "why": "Indus traders reached far into Central Asia for raw materials.",
+     "wikipedia": "Shortugai",
+     "date_note": "c.",
+     "wikidata": "Q1550221"
+    },
+    {
+     "date": "-1900",
+     "name": "Drying of the Ghaggar-Hakra",
+     "place_name": "Ghaggar-Hakra River",
+     "lat": 29.5,
+     "lon": 74.5,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "Weaker monsoons and shifting rivers reduce water in the Ghaggar-Hakra system.",
+     "why": "Changing rivers and climate are the leading explanation for urban decline.",
+     "wikipedia": "Ghaggar-Hakra River",
+     "date_note": "c.",
+     "wikidata": "Q798422"
+    },
+    {
+     "date": "-1900",
+     "name": "Decline of Mohenjo-daro",
+     "place_name": "Mohenjo-daro",
+     "lat": 27.33,
+     "lon": 68.14,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "Mohenjo-daro shrinks, building quality falls and the city is largely abandoned.",
+     "why": "The big cities emptied while people moved east into smaller villages.",
+     "wikipedia": "Mohenjo-daro",
+     "date_note": "c.",
+     "wikidata": "Q5725"
+    },
+    {
+     "date": "-1900",
+     "name": "Cemetery H culture",
+     "place_name": "Harappa",
+     "lat": 30.63,
+     "lon": 72.86,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "A new style of pottery and burial appears at Harappa in the Late Harappan phase.",
+     "why": "Life continued in the region, but without the cities, seals or long-distance trade.",
+     "wikipedia": "Cemetery H culture",
+     "date_note": "c.",
+     "end_date": "-1300",
+     "wikidata": "Q2364797"
+    },
+    {
+     "date": "-1300",
+     "name": "End of the Late Harappan phase",
+     "place_name": "Rakhigarhi",
+     "lat": 29.29,
+     "lon": 76.11,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "By about 1300 BCE the last traces of the Harappan tradition fade into regional village cultures.",
+     "why": "The civilisation did not end in one catastrophe; it dissolved over centuries.",
+     "wikipedia": "Indus Valley Civilisation",
+     "date_note": "c.",
+     "wikidata": "Q42534"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "bronze_age_collapse",
+   "title": "The Late Bronze Age collapse",
+   "region": "Eastern Mediterranean",
+   "start": -1350,
+   "end": -1150,
+   "view": {
+    "lon": 31.0,
+    "lat": 35.0,
+    "span": 22
+   },
+   "blurb": "Why did the connected palace kingdoms of the eastern Mediterranean collapse around 1200 BCE?",
+   "steps": [
+    {
+     "date": "-1350",
+     "name": "Amarna letters",
+     "place_name": "Amarna",
+     "lat": 27.65,
+     "lon": 30.9,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Akhenaten"
+     ],
+     "what": "Clay letters in Akkadian pass between Egypt and the kings of Babylon, Mitanni, Hatti, Assyria and Cyprus, who call each other brother.",
+     "why": "They show a club of great powers bound by gifts, marriages and trade.",
+     "wikipedia": "Amarna letters",
+     "date_note": "c.",
+     "wikidata": "Q235502"
+    },
+    {
+     "date": "-1305",
+     "name": "Uluburun shipwreck",
+     "place_name": "Uluburun",
+     "lat": 36.13,
+     "lon": 29.68,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "A ship sinks off southern Turkey with about ten tons of Cypriot copper, a ton of tin, glass ingots and goods from a dozen cultures.",
+     "why": "The system ran on long-distance metal trade, which made it fragile.",
+     "wikipedia": "Uluburun shipwreck",
+     "date_note": "c.",
+     "wikidata": "Q573852"
+    },
+    {
+     "date": "-1274",
+     "name": "Battle of Kadesh",
+     "place_name": "Kadesh",
+     "lat": 34.56,
+     "lon": 36.52,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Ramesses II",
+      "Muwatalli II"
+     ],
+     "what": "Ramesses II and the Hittite king Muwatalli II fight a huge chariot battle in Syria that neither clearly wins.",
+     "why": "The great powers were evenly matched and spent heavily on war.",
+     "wikipedia": "Battle of Kadesh",
+     "date_note": "conventional date",
+     "wikidata": "Q203729"
+    },
+    {
+     "date": "-1259",
+     "name": "Egyptian-Hittite peace treaty",
+     "place_name": "Pi-Ramesses",
+     "lat": 30.8,
+     "lon": 31.83,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Ramesses II",
+      "Hattusili III"
+     ],
+     "what": "Egypt and Hatti sign the earliest surviving peace treaty, copied in hieroglyphs and in Akkadian.",
+     "why": "Peace between the giants kept trade flowing for two more generations.",
+     "wikipedia": "Egyptian–Hittite peace treaty",
+     "date_note": "conventional date",
+     "wikidata": "Q253155"
+    },
+    {
+     "date": "-1250",
+     "name": "Lion Gate",
+     "place_name": "Mycenae",
+     "lat": 37.73,
+     "lon": 22.76,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "Mycenae enlarges its walls and builds the Lion Gate.",
+     "why": "Heavier fortifications hint at rising insecurity in the Greek palace world.",
+     "wikipedia": "Lion Gate",
+     "date_note": "c.",
+     "wikidata": "Q1450403"
+    },
+    {
+     "date": "-1208",
+     "name": "Merneptah Stele",
+     "place_name": "Thebes",
+     "lat": 25.72,
+     "lon": 32.61,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Merneptah"
+     ],
+     "what": "Merneptah records defeating Libyans and allied northern peoples who invaded the western Delta.",
+     "why": "The first wave of migrating groups was already pressing on Egypt.",
+     "wikipedia": "Merneptah Stele",
+     "date_note": "c.",
+     "wikidata": "Q754378"
+    },
+    {
+     "date": "-1185",
+     "name": "Destruction of Emar",
+     "place_name": "Emar",
+     "lat": 36.03,
+     "lon": 38.08,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "Emar, a Hittite-ruled trade town on the Euphrates, is destroyed; its dated tablets help fix the collapse.",
+     "why": "Inland towns fell too, not only coastal ones.",
+     "wikipedia": "Emar",
+     "date_note": "c.",
+     "wikidata": "Q1196243"
+    },
+    {
+     "date": "-1185",
+     "name": "Fall of Ugarit",
+     "place_name": "Ugarit",
+     "lat": 35.6,
+     "lon": 35.78,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Ammurapi"
+     ],
+     "what": "Ugarit is destroyed; its last king Ammurapi had written that enemy ships were burning his towns while his own fleet was away.",
+     "why": "The richest trading port of the Levant disappeared and never recovered.",
+     "wikipedia": "Ugarit",
+     "date_note": "c. (dates disputed)",
+     "wikidata": "Q191369"
+    },
+    {
+     "date": "-1180",
+     "name": "Destruction of the Palace of Nestor",
+     "place_name": "Pylos",
+     "lat": 37.03,
+     "lon": 21.69,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "The palace at Pylos burns; the fire bakes its Linear B tablets, which record rowers and coast watchers.",
+     "why": "Greek palace states collapsed along with their writing system.",
+     "wikipedia": "Palace of Nestor",
+     "date_note": "c.",
+     "wikidata": "Q2047396"
+    },
+    {
+     "date": "-1180",
+     "name": "Abandonment of Hattusa",
+     "place_name": "Hattusa",
+     "lat": 40.02,
+     "lon": 34.62,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Suppiluliuma II"
+     ],
+     "what": "The Hittite capital is emptied and later burned, after years of grain shortages and civil strife.",
+     "why": "An empire that had matched Egypt vanished within a generation.",
+     "wikipedia": "Hattusa",
+     "date_note": "c.",
+     "wikidata": "Q181007"
+    },
+    {
+     "date": "-1175",
+     "name": "Battle of the Delta",
+     "place_name": "Nile Delta",
+     "lat": 31.2,
+     "lon": 31.5,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Ramesses III"
+     ],
+     "what": "Ramesses III defeats the Sea Peoples in a land and river battle at the mouths of the Nile.",
+     "why": "Egypt survived the collapse, but at heavy cost.",
+     "wikipedia": "Battle of the Delta",
+     "date_note": "c.",
+     "wikidata": "Q1036947"
+    },
+    {
+     "date": "-1170",
+     "name": "Medinet Habu reliefs",
+     "place_name": "Medinet Habu",
+     "lat": 25.72,
+     "lon": 32.6,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ramesses III"
+     ],
+     "what": "Ramesses III's mortuary temple shows the Sea Peoples with families and ox carts as well as warships.",
+     "why": "The reliefs are key evidence that whole populations were on the move.",
+     "wikipedia": "Medinet Habu",
+     "date_note": "c.",
+     "wikidata": "Q932622"
+    },
+    {
+     "date": "-1157",
+     "name": "Deir el-Medina strike",
+     "place_name": "Deir el-Medina",
+     "lat": 25.73,
+     "lon": 32.6,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Ramesses III"
+     ],
+     "what": "Royal tomb builders at Deir el-Medina stop work when their grain rations are months late.",
+     "why": "The first recorded strike shows the strain on Egypt's economy after the collapse.",
+     "wikipedia": "Deir el-Medina",
+     "date_note": "c.",
+     "wikidata": "Q750212"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "near_east_empires",
+   "title": "Assyria, Babylon and Persia",
+   "region": "Near East",
+   "start": -745,
+   "end": -539,
+   "view": {
+    "lon": 44.0,
+    "lat": 33.5,
+    "span": 28
+   },
+   "blurb": "How did one empire after another rule the Near East, from Assyria's rise to Cyrus taking Babylon?",
+   "steps": [
+    {
+     "date": "-0745",
+     "name": "Accession of Tiglath-Pileser III",
+     "place_name": "Nimrud",
+     "lat": 36.1,
+     "lon": 43.33,
+     "family": "war",
+     "subtype": "reign",
+     "who": [
+      "Tiglath-Pileser III"
+     ],
+     "what": "Tiglath-Pileser III seizes the throne at Kalhu and builds a standing army and a system of provinces.",
+     "why": "His reforms turned Assyria from a raiding power into a governing empire.",
+     "wikipedia": "Tiglath-Pileser III",
+     "wikidata": "Q210074"
+    },
+    {
+     "date": "-0722",
+     "name": "Fall of Samaria",
+     "place_name": "Samaria",
+     "lat": 32.28,
+     "lon": 35.19,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Shalmaneser V",
+      "Sargon II"
+     ],
+     "what": "Assyria takes Samaria after a three-year siege and deports thousands of Israelites.",
+     "why": "Mass deportation was Assyria's tool to break resistance and resettle labour.",
+     "wikipedia": "Assyrian captivity",
+     "wikidata": "Q3625264"
+    },
+    {
+     "date": "-0717",
+     "name": "Dur-Sharrukin",
+     "place_name": "Khorsabad",
+     "lat": 36.51,
+     "lon": 43.23,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Sargon II"
+     ],
+     "what": "Sargon II starts building a new capital from scratch, with palaces lined with carved reliefs.",
+     "why": "The empire's wealth paid for whole new cities; this one was abandoned after his death.",
+     "wikipedia": "Dur-Sharrukin",
+     "wikidata": "Q253208"
+    },
+    {
+     "date": "-0701",
+     "name": "Siege of Lachish",
+     "place_name": "Lachish",
+     "lat": 31.56,
+     "lon": 34.85,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Sennacherib"
+     ],
+     "what": "Sennacherib storms the Judean city of Lachish and later shows the siege on his palace walls at Nineveh.",
+     "why": "Assyria punished revolt with exemplary violence and made it propaganda.",
+     "wikipedia": "Siege of Lachish",
+     "wikidata": "Q1160074"
+    },
+    {
+     "date": "-0689",
+     "name": "Destruction of Babylon",
+     "place_name": "Babylon",
+     "lat": 32.54,
+     "lon": 44.42,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Sennacherib"
+     ],
+     "what": "After years of Babylonian revolts, Sennacherib sacks Babylon and floods parts of it.",
+     "why": "Babylon was the empire's hardest problem, and its resentment outlived Assyria.",
+     "wikipedia": "Sennacherib",
+     "wikidata": "Q207140"
+    },
+    {
+     "date": "-0671",
+     "name": "Assyrian conquest of Egypt",
+     "place_name": "Memphis",
+     "lat": 29.85,
+     "lon": 31.25,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Esarhaddon"
+     ],
+     "what": "Esarhaddon takes Memphis and drives out the Kushite pharaoh Taharqa.",
+     "why": "Assyria reached its greatest extent, stretching from Iran to the Nile.",
+     "wikipedia": "Esarhaddon",
+     "wikidata": "Q193912"
+    },
+    {
+     "date": "-0650",
+     "name": "Library of Ashurbanipal",
+     "place_name": "Nineveh",
+     "lat": 36.36,
+     "lon": 43.15,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ashurbanipal"
+     ],
+     "what": "Ashurbanipal collects tens of thousands of tablets at Nineveh, including the Epic of Gilgamesh.",
+     "why": "Much of what is known of Mesopotamian literature survives because this library burned and baked its tablets.",
+     "wikipedia": "Library of Ashurbanipal",
+     "date_note": "c.",
+     "wikidata": "Q856544"
+    },
+    {
+     "date": "-0626",
+     "name": "Nabopolassar takes Babylon",
+     "place_name": "Babylon",
+     "lat": 32.54,
+     "lon": 44.42,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Nabopolassar"
+     ],
+     "what": "Nabopolassar, a Chaldean leader, is crowned king in Babylon and throws off Assyrian rule.",
+     "why": "The revolt began the end of Assyria after a civil war over its throne.",
+     "wikipedia": "Nabopolassar",
+     "wikidata": "Q273514"
+    },
+    {
+     "date": "-0612",
+     "name": "Fall of Nineveh",
+     "place_name": "Nineveh",
+     "lat": 36.36,
+     "lon": 43.15,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Nabopolassar",
+      "Cyaxares"
+     ],
+     "what": "Babylonians and Medes take and sack Nineveh after a siege of about three months.",
+     "why": "The capital of the largest empire yet fell in one summer.",
+     "wikipedia": "Fall of Nineveh",
+     "wikidata": "Q612286"
+    },
+    {
+     "date": "-0605",
+     "name": "Battle of Carchemish",
+     "place_name": "Carchemish",
+     "lat": 36.83,
+     "lon": 38.01,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Nebuchadnezzar II",
+      "Necho II"
+     ],
+     "what": "Crown prince Nebuchadnezzar defeats Egypt and the last Assyrian remnants on the Euphrates.",
+     "why": "Babylon inherited Assyria's western lands.",
+     "wikipedia": "Battle of Carchemish",
+     "wikidata": "Q633560"
+    },
+    {
+     "date": "-0587",
+     "name": "Siege of Jerusalem",
+     "place_name": "Jerusalem",
+     "lat": 31.78,
+     "lon": 35.23,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Nebuchadnezzar II"
+     ],
+     "what": "Nebuchadnezzar destroys Jerusalem and its temple and deports much of Judah's elite to Babylon.",
+     "why": "Babylon used Assyrian methods; the exile reshaped Jewish religion.",
+     "wikipedia": "Siege of Jerusalem (587 BC)",
+     "date_note": "date disputed (587 or 586)",
+     "wikidata": "Q1290590"
+    },
+    {
+     "date": "-0575",
+     "name": "Ishtar Gate",
+     "place_name": "Babylon",
+     "lat": 32.54,
+     "lon": 44.42,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Nebuchadnezzar II"
+     ],
+     "what": "Nebuchadnezzar rebuilds Babylon with blue glazed brick gates, walls and the Esagila temple.",
+     "why": "Tribute from the empire made Babylon the largest city of its day.",
+     "wikipedia": "Ishtar Gate",
+     "date_note": "c.",
+     "wikidata": "Q26082"
+    },
+    {
+     "date": "-0552",
+     "name": "Nabonidus at Tayma",
+     "place_name": "Tayma",
+     "lat": 27.63,
+     "lon": 38.55,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Nabonidus"
+     ],
+     "what": "King Nabonidus leaves Babylon and lives about ten years at the Arabian oasis of Tayma, on the incense routes.",
+     "why": "His absence and religious choices alienated Babylon's priests just as Persia rose.",
+     "wikipedia": "Nabonidus",
+     "date_note": "c.",
+     "end_date": "-0543",
+     "wikidata": "Q239414"
+    },
+    {
+     "date": "-0550",
+     "name": "Cyrus defeats Astyages",
+     "place_name": "Pasargadae",
+     "lat": 30.2,
+     "lon": 53.18,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Cyrus the Great",
+      "Astyages"
+     ],
+     "what": "Cyrus of Persia defeats his Median overlord Astyages and takes the Median kingdom.",
+     "why": "A small Persian kingdom became the heir to the Median empire.",
+     "wikipedia": "Cyrus the Great",
+     "date_note": "c.",
+     "wikidata": "Q8423"
+    },
+    {
+     "date": "-0547",
+     "name": "Siege of Sardis",
+     "place_name": "Sardis",
+     "lat": 38.49,
+     "lon": 28.04,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Cyrus the Great",
+      "Croesus"
+     ],
+     "what": "Cyrus captures Sardis and the Lydian king Croesus, whose kingdom had pioneered coinage.",
+     "why": "Persia gained Anatolia and the Greek cities of the coast.",
+     "wikipedia": "Siege of Sardis (547 BC)",
+     "date_note": "date disputed",
+     "wikidata": "Q3436155"
+    },
+    {
+     "date": "-0539-10",
+     "name": "Fall of Babylon",
+     "place_name": "Babylon",
+     "lat": 32.54,
+     "lon": 44.42,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Cyrus the Great",
+      "Nabonidus"
+     ],
+     "what": "After winning at Opis, Persian forces enter Babylon without a long siege; Cyrus presents himself as restorer of its gods.",
+     "why": "Persia absorbed the last Mesopotamian empire and ruled it through local traditions.",
+     "wikipedia": "Fall of Babylon",
+     "wikidata": "Q28169617"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "greeks_and_persians",
+   "title": "Greeks and Persians",
+   "region": "Aegean",
+   "start": -499,
+   "end": -404,
+   "view": {
+    "lon": 24.5,
+    "lat": 38.5,
+    "span": 14
+   },
+   "blurb": "How did Athens beat Persia, build an empire on silver and ships, and then lose it to Sparta?",
+   "steps": [
+    {
+     "date": "-0499",
+     "name": "Ionian Revolt",
+     "place_name": "Miletus",
+     "lat": 37.53,
+     "lon": 27.28,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Aristagoras"
+     ],
+     "what": "Aristagoras of Miletus leads the Greek cities of Ionia in revolt against Persia, with help from Athens and Eretria.",
+     "why": "Athenian help drew Persian revenge onto mainland Greece.",
+     "wikipedia": "Ionian Revolt",
+     "wikidata": "Q208261"
+    },
+    {
+     "date": "-0494",
+     "name": "Battle of Lade",
+     "place_name": "Lade",
+     "lat": 37.5,
+     "lon": 27.22,
+     "family": "war",
+     "subtype": "battle",
+     "who": [],
+     "what": "The Persian fleet crushes the Ionian fleet off Miletus, and Miletus is sacked.",
+     "why": "The revolt ended, and Darius turned to punishing Athens.",
+     "wikipedia": "Battle of Lade",
+     "wikidata": "Q427565"
+    },
+    {
+     "date": "-0490-09",
+     "name": "Battle of Marathon",
+     "place_name": "Marathon",
+     "lat": 38.12,
+     "lon": 23.97,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Miltiades",
+      "Datis"
+     ],
+     "what": "About 10,000 Athenians and Plataeans defeat a Persian landing force.",
+     "why": "A democracy's citizen army proved it could beat Persia.",
+     "wikipedia": "Battle of Marathon",
+     "date_note": "month traditional",
+     "wikidata": "Q31900"
+    },
+    {
+     "date": "-0483",
+     "name": "Laurion silver strike",
+     "place_name": "Laurion",
+     "lat": 37.71,
+     "lon": 24.05,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Themistocles"
+     ],
+     "what": "A rich new silver vein is found at Laurion; Themistocles persuades Athens to spend it on about 200 triremes.",
+     "why": "Slave-mined silver paid for the navy that saved Athens and then built its empire.",
+     "wikipedia": "Lavrio",
+     "date_note": "c.",
+     "wikidata": "Q3219865"
+    },
+    {
+     "date": "-0480-08",
+     "name": "Battle of Thermopylae",
+     "place_name": "Thermopylae",
+     "lat": 38.8,
+     "lon": 22.54,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Leonidas I",
+      "Xerxes I"
+     ],
+     "what": "Leonidas and a few thousand Greeks hold the pass for three days before being outflanked.",
+     "why": "The delay let the Greek fleet regroup while Xerxes marched on Athens.",
+     "wikipedia": "Battle of Thermopylae",
+     "date_note": "month approximate",
+     "wikidata": "Q131969"
+    },
+    {
+     "date": "-0480-09",
+     "name": "Battle of Salamis",
+     "place_name": "Salamis",
+     "lat": 37.95,
+     "lon": 23.57,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Themistocles",
+      "Xerxes I"
+     ],
+     "what": "The Greek fleet, mostly Athenian, defeats the larger Persian fleet in the straits.",
+     "why": "The silver-built navy won the war at sea.",
+     "wikipedia": "Battle of Salamis",
+     "date_note": "month approximate",
+     "wikidata": "Q178850"
+    },
+    {
+     "date": "-0479",
+     "name": "Battle of Plataea",
+     "place_name": "Plataea",
+     "lat": 38.21,
+     "lon": 23.27,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Pausanias the Regent",
+      "Mardonius"
+     ],
+     "what": "A Greek army led by Sparta defeats the Persian land army and kills Mardonius.",
+     "why": "Persia never invaded mainland Greece again.",
+     "wikipedia": "Battle of Plataea",
+     "wikidata": "Q204636"
+    },
+    {
+     "date": "-0478",
+     "name": "Delian League",
+     "place_name": "Delos",
+     "lat": 37.4,
+     "lon": 25.27,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Aristides"
+     ],
+     "what": "Aegean cities form an alliance under Athens, paying ships or silver into a treasury on Delos.",
+     "why": "The alliance slowly became an Athenian empire funded by tribute.",
+     "wikipedia": "Delian League",
+     "wikidata": "Q193235"
+    },
+    {
+     "date": "-0458",
+     "name": "Long Walls",
+     "place_name": "Piraeus",
+     "lat": 37.94,
+     "lon": 23.65,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Pericles"
+     ],
+     "what": "Athens joins the city to its port Piraeus with walls about six kilometres long.",
+     "why": "With grain coming by sea, Athens could survive a land siege as long as it ruled the waves.",
+     "wikipedia": "Long Walls",
+     "date_note": "c.",
+     "wikidata": "Q1163616"
+    },
+    {
+     "date": "-0447",
+     "name": "Parthenon",
+     "place_name": "Athens",
+     "lat": 37.97,
+     "lon": 23.73,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Pericles",
+      "Phidias"
+     ],
+     "what": "Work begins on the Parthenon, partly funded by League tribute moved to Athens in 454.",
+     "why": "Imperial revenue paid for the monuments of classical Athens.",
+     "wikipedia": "Parthenon",
+     "wikidata": "Q10288"
+    },
+    {
+     "date": "-0430",
+     "name": "Plague of Athens",
+     "place_name": "Piraeus",
+     "lat": 37.94,
+     "lon": 23.64,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [
+      "Pericles",
+      "Thucydides"
+     ],
+     "what": "An epidemic enters through Piraeus into a city crowded with refugees from the countryside, killing perhaps a quarter of the people.",
+     "why": "Pericles' strategy of hiding behind the walls made the plague worse; he died of it in 429.",
+     "wikipedia": "Plague of Athens",
+     "wikidata": "Q758173"
+    },
+    {
+     "date": "-0425",
+     "name": "Battle of Pylos",
+     "place_name": "Pylos",
+     "lat": 36.94,
+     "lon": 21.67,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Cleon",
+      "Demosthenes (general)"
+     ],
+     "what": "Athenians trap and capture about 120 Spartan citizens on Sphacteria.",
+     "why": "Sparta's shortage of citizens made the captives a powerful bargaining chip.",
+     "wikipedia": "Battle of Pylos",
+     "wikidata": "Q670128"
+    },
+    {
+     "date": "-0415",
+     "name": "Sicilian Expedition",
+     "place_name": "Syracuse",
+     "lat": 37.07,
+     "lon": 15.29,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Nicias",
+      "Alcibiades"
+     ],
+     "what": "Athens sends a huge fleet to attack Syracuse; by 413 the whole force is destroyed.",
+     "why": "The disaster cost Athens most of its fleet and manpower.",
+     "wikipedia": "Sicilian Expedition",
+     "end_date": "-0413",
+     "wikidata": "Q844289"
+    },
+    {
+     "date": "-0413",
+     "name": "Spartan fort at Decelea",
+     "place_name": "Decelea",
+     "lat": 38.2,
+     "lon": 23.8,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [],
+     "what": "Sparta fortifies Decelea in Attica year-round; Thucydides says over 20,000 slaves ran away, many from the silver mines.",
+     "why": "Cutting off Laurion silver and farm income starved Athens of money.",
+     "wikipedia": "Decelea",
+     "wikidata": "Q1006561"
+    },
+    {
+     "date": "-0405",
+     "name": "Battle of Aegospotami",
+     "place_name": "Aegospotami",
+     "lat": 40.32,
+     "lon": 26.55,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Lysander"
+     ],
+     "what": "Lysander, with Persian money, captures almost the whole Athenian fleet at the Hellespont.",
+     "why": "Without its fleet Athens could no longer import grain.",
+     "wikipedia": "Battle of Aegospotami",
+     "wikidata": "Q866862"
+    },
+    {
+     "date": "-0404",
+     "name": "Thirty Tyrants",
+     "place_name": "Athens",
+     "lat": 37.97,
+     "lon": 23.73,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Lysander"
+     ],
+     "what": "Starving Athens surrenders, tears down the Long Walls and is put under a pro-Spartan oligarchy.",
+     "why": "The empire built on silver and ships was over.",
+     "wikipedia": "Thirty Tyrants",
+     "wikidata": "Q643488"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "alexander_march",
+   "title": "Alexander's march",
+   "region": "Greece to India",
+   "start": -336,
+   "end": -323,
+   "view": {
+    "lon": 50.0,
+    "lat": 33.0,
+    "span": 55
+   },
+   "blurb": "Where did Alexander go, and how did one army take the Persian Empire in about ten years?",
+   "steps": [
+    {
+     "date": "-0336",
+     "name": "Accession of Alexander",
+     "place_name": "Aegae",
+     "lat": 40.48,
+     "lon": 22.32,
+     "family": "war",
+     "subtype": "reign",
+     "who": [
+      "Alexander the Great",
+      "Philip II of Macedon"
+     ],
+     "what": "Philip II is murdered at Aegae and his 20-year-old son Alexander becomes king of Macedon.",
+     "why": "Alexander inherited his father's army and his planned war on Persia.",
+     "wikipedia": "Philip II of Macedon",
+     "wikidata": "Q130650"
+    },
+    {
+     "date": "-0335",
+     "name": "Destruction of Thebes",
+     "place_name": "Thebes",
+     "lat": 38.32,
+     "lon": 23.32,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander razes rebellious Thebes and enslaves its people.",
+     "why": "Terror secured Greece behind him before he crossed to Asia.",
+     "wikipedia": "Battle of Thebes",
+     "wikidata": "Q2237798"
+    },
+    {
+     "date": "-0334-05",
+     "name": "Battle of the Granicus",
+     "place_name": "Granicus River",
+     "lat": 40.23,
+     "lon": 27.24,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander defeats the Persian satraps' army at a river crossing in northwest Anatolia.",
+     "why": "It opened Asia Minor and its Greek cities to him.",
+     "wikipedia": "Battle of the Granicus",
+     "date_note": "month approximate",
+     "wikidata": "Q192938"
+    },
+    {
+     "date": "-0333-11",
+     "name": "Battle of Issus",
+     "place_name": "Issus",
+     "lat": 36.84,
+     "lon": 36.2,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Alexander the Great",
+      "Darius III"
+     ],
+     "what": "Alexander defeats Darius III, who flees, leaving his family in Macedonian hands.",
+     "why": "Darius lost the coast and the initiative.",
+     "wikipedia": "Battle of Issus",
+     "date_note": "month approximate",
+     "wikidata": "Q201526"
+    },
+    {
+     "date": "-0332",
+     "name": "Siege of Tyre",
+     "place_name": "Tyre",
+     "lat": 33.27,
+     "lon": 35.2,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander builds a causeway to island Tyre and takes it after about seven months.",
+     "why": "Taking the Phoenician ports neutralised the Persian fleet.",
+     "wikipedia": "Siege of Tyre (332 BC)",
+     "end_date": "-0332-07",
+     "wikidata": "Q815233"
+    },
+    {
+     "date": "-0331",
+     "name": "Founding of Alexandria",
+     "place_name": "Alexandria",
+     "lat": 31.2,
+     "lon": 29.92,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander lays out a new Greek city on the coast of Egypt.",
+     "why": "Alexandria became the largest city of the Greek world and a centre of trade and learning.",
+     "wikipedia": "Alexandria",
+     "date_note": "traditional date",
+     "wikidata": "Q87"
+    },
+    {
+     "date": "-0331",
+     "name": "Visit to Siwa",
+     "place_name": "Siwa Oasis",
+     "lat": 29.2,
+     "lon": 25.52,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander crosses the desert to the oracle of Ammon, which greets him as son of the god.",
+     "why": "It gave him a religious claim to rule Egypt and fed his image as more than a man.",
+     "wikipedia": "Siwa Oasis",
+     "wikidata": "Q2008735"
+    },
+    {
+     "date": "-0331-10-01",
+     "name": "Battle of Gaugamela",
+     "place_name": "Gaugamela",
+     "lat": 36.57,
+     "lon": 43.43,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Alexander the Great",
+      "Darius III"
+     ],
+     "what": "Alexander breaks Darius's much larger army on the plain east of the Tigris.",
+     "why": "The Persian Empire's central power was broken.",
+     "wikipedia": "Battle of Gaugamela",
+     "date_note": "date fixed by a lunar eclipse days before",
+     "wikidata": "Q179670"
+    },
+    {
+     "date": "-0330",
+     "name": "Burning of Persepolis",
+     "place_name": "Persepolis",
+     "lat": 29.93,
+     "lon": 52.89,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander loots the Persian treasuries and burns the palaces of Persepolis.",
+     "why": "Persian gold and silver, released as coin, changed the economy of the eastern Mediterranean.",
+     "wikipedia": "Persepolis",
+     "wikidata": "Q129072"
+    },
+    {
+     "date": "-0330-07",
+     "name": "Death of Darius III",
+     "place_name": "Damghan",
+     "lat": 36.17,
+     "lon": 54.34,
+     "family": "war",
+     "subtype": "death",
+     "who": [
+      "Alexander the Great",
+      "Darius III"
+     ],
+     "what": "Darius is killed by his own satrap Bessus while fleeing east, and Alexander claims his throne.",
+     "why": "Alexander now posed as the Persian king's heir.",
+     "wikipedia": "Darius III",
+     "wikidata": "Q102865"
+    },
+    {
+     "date": "-0329",
+     "name": "Alexandria Eschate",
+     "place_name": "Khujand",
+     "lat": 40.28,
+     "lon": 69.62,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander founds 'Alexandria the Furthest' on the Syr Darya.",
+     "why": "Cities and garrisons were his way of holding Central Asia.",
+     "wikipedia": "Alexandria Eschate",
+     "wikidata": "Q2280882"
+    },
+    {
+     "date": "-0326-05",
+     "name": "Battle of the Hydaspes",
+     "place_name": "Hydaspes River",
+     "lat": 32.93,
+     "lon": 73.73,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Alexander the Great",
+      "Porus"
+     ],
+     "what": "Alexander crosses the Jhelum and defeats King Porus and his war elephants.",
+     "why": "His last great battle carried the march into India.",
+     "wikipedia": "Battle of the Hydaspes",
+     "date_note": "month approximate",
+     "wikidata": "Q213074"
+    },
+    {
+     "date": "-0326",
+     "name": "Mutiny at the Hyphasis",
+     "place_name": "Beas River",
+     "lat": 31.5,
+     "lon": 75.2,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Exhausted after eight years, his army refuses to go further east.",
+     "why": "The soldiers, not an enemy, set the limit of the empire.",
+     "wikipedia": "Beas River",
+     "wikidata": "Q319590"
+    },
+    {
+     "date": "-0325",
+     "name": "March through the Gedrosian desert",
+     "place_name": "Gedrosia",
+     "lat": 25.8,
+     "lon": 62.3,
+     "family": "disaster",
+     "subtype": "journey",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander leads part of the army back west through the Makran desert, losing many to heat and thirst.",
+     "why": "The return showed the cost of moving armies across empty land.",
+     "wikipedia": "Gedrosia",
+     "wikidata": "Q1348342"
+    },
+    {
+     "date": "-0324",
+     "name": "Susa weddings",
+     "place_name": "Susa",
+     "lat": 32.19,
+     "lon": 48.26,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander and about 90 companions marry Persian noblewomen in a mass ceremony.",
+     "why": "He tried to fuse Macedonian and Persian elites into one ruling class.",
+     "wikipedia": "Susa weddings",
+     "wikidata": "Q1193349"
+    },
+    {
+     "date": "-0323-06",
+     "name": "Death of Alexander",
+     "place_name": "Babylon",
+     "lat": 32.54,
+     "lon": 44.42,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander dies in Babylon aged 32 after a short fever, with no adult heir.",
+     "why": "His generals carved the empire into Hellenistic kingdoms.",
+     "wikipedia": "Death of Alexander the Great",
+     "date_note": "10 or 11 June",
+     "wikidata": "Q5247391"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "warring_states_qin",
+   "title": "From Warring States to Qin",
+   "region": "China",
+   "start": -475,
+   "end": -206,
+   "view": {
+    "lon": 112.0,
+    "lat": 34.0,
+    "span": 22
+   },
+   "blurb": "How did the state of Qin conquer its rivals and unify China, and why did its empire fall so fast?",
+   "steps": [
+    {
+     "date": "-0453",
+     "name": "Battle of Jinyang",
+     "place_name": "Jinyang",
+     "lat": 37.71,
+     "lon": 112.47,
+     "family": "war",
+     "subtype": "battle",
+     "who": [],
+     "what": "The Zhao, Han and Wei families destroy the Zhi clan and divide the state of Jin among themselves.",
+     "why": "The Partition of Jin created the main rivals of the Warring States era.",
+     "wikipedia": "Battle of Jinyang",
+     "wikidata": "Q987349"
+    },
+    {
+     "date": "-0356",
+     "name": "Reforms of Shang Yang",
+     "place_name": "Yueyang",
+     "lat": 34.66,
+     "lon": 109.24,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Shang Yang",
+      "Duke Xiao of Qin"
+     ],
+     "what": "Shang Yang reorganises Qin into households grouped for mutual responsibility, with ranks earned by military merit and land opened to farmers.",
+     "why": "Qin became a state built to grow grain and raise soldiers.",
+     "wikipedia": "Shang Yang",
+     "date_note": "c.",
+     "wikidata": "Q351345"
+    },
+    {
+     "date": "-0350",
+     "name": "Xianyang becomes capital",
+     "place_name": "Xianyang",
+     "lat": 34.33,
+     "lon": 108.71,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Duke Xiao of Qin",
+      "Shang Yang"
+     ],
+     "what": "Qin moves its capital to Xianyang on the Wei River and divides the state into counties run by appointed officials.",
+     "why": "Centralised counties replaced hereditary lords, a model later imposed on all China.",
+     "wikipedia": "Xianyang",
+     "wikidata": "Q497341"
+    },
+    {
+     "date": "-0307",
+     "name": "Hu clothing and cavalry",
+     "place_name": "Handan",
+     "lat": 36.61,
+     "lon": 114.49,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "King Wuling of Zhao"
+     ],
+     "what": "King Wuling of Zhao orders his soldiers to wear nomad-style trousers and fight as mounted archers.",
+     "why": "Warfare shifted toward mass armies and cavalry, raising the cost of survival for every state.",
+     "wikipedia": "King Wuling of Zhao",
+     "wikidata": "Q575375"
+    },
+    {
+     "date": "-0260",
+     "name": "Battle of Changping",
+     "place_name": "Changping",
+     "lat": 35.8,
+     "lon": 112.92,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Bai Qi",
+      "Zhao Kuo"
+     ],
+     "what": "Qin's general Bai Qi surrounds the Zhao army; sources claim hundreds of thousands of prisoners were killed.",
+     "why": "Zhao, the last state able to match Qin in the field, was broken.",
+     "wikipedia": "Battle of Changping",
+     "wikidata": "Q1195760"
+    },
+    {
+     "date": "-0256",
+     "name": "Dujiangyan",
+     "place_name": "Dujiangyan",
+     "lat": 31.0,
+     "lon": 103.61,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Li Bing"
+     ],
+     "what": "Qin's governor Li Bing builds a river works that splits the Min River to irrigate the Chengdu plain without a dam.",
+     "why": "Sichuan became a granary that fed Qin's armies; the system still works today.",
+     "wikipedia": "Dujiangyan",
+     "date_note": "c.",
+     "wikidata": "Q824157"
+    },
+    {
+     "date": "-0246",
+     "name": "Zhengguo Canal",
+     "place_name": "Jingyang",
+     "lat": 34.53,
+     "lon": 108.84,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Zheng Guo"
+     ],
+     "what": "A Han engineer builds a long irrigation canal across the Guanzhong plain.",
+     "why": "Han meant it to exhaust Qin; instead it made Qin's heartland richer.",
+     "wikipedia": "Zhengguo Canal",
+     "wikidata": "Q197592"
+    },
+    {
+     "date": "-0221",
+     "name": "Qin unification",
+     "place_name": "Linzi",
+     "lat": 36.85,
+     "lon": 118.3,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Qin Shi Huang"
+     ],
+     "what": "Qi surrenders last, completing Qin's conquest of the six states; King Zheng takes the title First Emperor.",
+     "why": "For the first time all of the Chinese states were under one ruler.",
+     "wikipedia": "Qin's wars of unification"
+    },
+    {
+     "date": "-0221",
+     "name": "Standardisation under Qin",
+     "place_name": "Xianyang",
+     "lat": 34.33,
+     "lon": 108.71,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Qin Shi Huang",
+      "Li Si"
+     ],
+     "what": "Chancellor Li Si helps impose one script, one coinage, standard weights and measures and a fixed axle width.",
+     "why": "Common standards tied the conquered states into one economy and administration.",
+     "wikipedia": "Li Si",
+     "wikidata": "Q152919"
+    },
+    {
+     "date": "-0215",
+     "name": "Meng Tian's northern campaign",
+     "place_name": "Ordos",
+     "lat": 40.0,
+     "lon": 109.0,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Meng Tian"
+     ],
+     "what": "General Meng Tian drives the Xiongnu from the Ordos and links older walls into a long northern frontier.",
+     "why": "The first Great Wall was built with conscripted labour at huge human cost.",
+     "wikipedia": "Meng Tian",
+     "wikidata": "Q1151702"
+    },
+    {
+     "date": "-0214",
+     "name": "Lingqu Canal",
+     "place_name": "Xing'an",
+     "lat": 25.61,
+     "lon": 110.67,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Qin Shi Huang"
+     ],
+     "what": "Qin builds a canal joining the Xiang and Li rivers to supply its armies in the far south.",
+     "why": "It linked the Yangtze and Pearl river systems for transport and conquest.",
+     "wikipedia": "Lingqu",
+     "wikidata": "Q966140"
+    },
+    {
+     "date": "-0213",
+     "name": "Burning of books",
+     "place_name": "Xianyang",
+     "lat": 34.33,
+     "lon": 108.71,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Qin Shi Huang",
+      "Li Si"
+     ],
+     "what": "On Li Si's advice, private copies of histories and classics outside official use are ordered burned.",
+     "why": "Qin tried to control thought as tightly as land and labour.",
+     "wikipedia": "Burning of books and burying of scholars",
+     "wikidata": "Q1147887"
+    },
+    {
+     "date": "-0210",
+     "name": "Death of Qin Shi Huang",
+     "place_name": "Shaqiu",
+     "lat": 37.2,
+     "lon": 115.1,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Qin Shi Huang",
+      "Li Si"
+     ],
+     "what": "The First Emperor dies on a tour; Li Si and the eunuch Zhao Gao forge orders to put Huhai on the throne. He is buried at Mount Li with the terracotta army.",
+     "why": "The succession plot weakened the regime at its centre.",
+     "wikipedia": "Qin Shi Huang",
+     "wikidata": "Q7192"
+    },
+    {
+     "date": "-0209",
+     "name": "Dazexiang uprising",
+     "place_name": "Dazexiang",
+     "lat": 33.53,
+     "lon": 117.08,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Chen Sheng",
+      "Wu Guang"
+     ],
+     "what": "Conscripts delayed by rain, facing death for lateness under Qin law, rebel under Chen Sheng and Wu Guang.",
+     "why": "Harsh laws and labour demands turned subjects into rebels across the empire.",
+     "wikipedia": "Chen Sheng and Wu Guang uprising",
+     "wikidata": "Q760021"
+    },
+    {
+     "date": "-0207",
+     "name": "Battle of Julu",
+     "place_name": "Julu",
+     "lat": 37.07,
+     "lon": 115.03,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Xiang Yu"
+     ],
+     "what": "Xiang Yu crushes the main Qin army in the north.",
+     "why": "Qin lost its last field army.",
+     "wikipedia": "Battle of Julu",
+     "wikidata": "Q3270429"
+    },
+    {
+     "date": "-0206",
+     "name": "Surrender of Ziying",
+     "place_name": "Xianyang",
+     "lat": 34.33,
+     "lon": 108.71,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Liu Bang",
+      "Ziying of Qin"
+     ],
+     "what": "The last Qin ruler Ziying surrenders to Liu Bang; Xiang Yu later burns Xianyang.",
+     "why": "The dynasty that unified China lasted only 15 years, though its system outlived it in the Han.",
+     "wikipedia": "Ziying of Qin",
+     "date_note": "conventional date",
+     "wikidata": "Q7203"
+    }
+   ],
+   "status": "draft"
+  }
+ ]
+}

@@ -1,0 +1,2216 @@
+{
+ "stories": [
+  {
+   "id": "islam_first_century",
+   "title": "Islam's first century",
+   "region": "Arabia to Spain and Central Asia",
+   "start": 610,
+   "end": 751,
+   "view": {
+    "lon": 30.0,
+    "lat": 32.0,
+    "span": 75
+   },
+   "blurb": "How did a religious movement in a small Arabian town become an empire stretching from Spain to Central Asia within about 120 years?",
+   "steps": [
+    {
+     "date": "0610",
+     "date_note": "traditional date, c. 610",
+     "name": "Muhammad's first revelation",
+     "place_name": "Cave of Hira, near Mecca",
+     "lat": 21.46,
+     "lon": 39.86,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Muhammad"
+     ],
+     "what": "Muhammad, a Meccan merchant of the Quraysh tribe, reported his first revelation while in retreat in a cave on Jabal al-Nour.",
+     "why": "Muslim tradition dates the start of the Quran and of Islam to this moment.",
+     "wikipedia": "Muhammad's first revelation"
+    },
+    {
+     "date": "0622",
+     "date_note": "traditionally September 622",
+     "name": "Hijrah",
+     "place_name": "Medina",
+     "lat": 24.47,
+     "lon": 39.61,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Muhammad",
+      "Abu Bakr"
+     ],
+     "what": "Facing hostility in Mecca, Muhammad and his followers migrated about 340 km north to Yathrib, later called Medina.",
+     "why": "In Medina Muhammad led a community with its own laws and army, and the year of the migration became year 1 of the Islamic calendar.",
+     "wikipedia": "Hijrah",
+     "wikidata": "Q131482"
+    },
+    {
+     "date": "0630",
+     "date_note": "traditional date, January 630",
+     "name": "Conquest of Mecca",
+     "place_name": "Mecca",
+     "lat": 21.42,
+     "lon": 39.83,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Muhammad"
+     ],
+     "what": "Muhammad entered Mecca with an army of about 10,000 almost without fighting and cleared the idols from the Kaaba.",
+     "why": "Taking Arabia's main shrine and trading town brought most Arabian tribes to submit within two years.",
+     "wikipedia": "Conquest of Mecca",
+     "wikidata": "Q2092033"
+    },
+    {
+     "date": "0632-06",
+     "date_note": "traditionally 8 June 632",
+     "name": "Death of Muhammad",
+     "place_name": "Medina",
+     "lat": 24.47,
+     "lon": 39.61,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Muhammad",
+      "Abu Bakr"
+     ],
+     "what": "Muhammad died in Medina and Abu Bakr was chosen as the first caliph, or successor, as political leader of the community.",
+     "why": "The question of who should lead after Muhammad, settled this way, later divided Sunni and Shia Muslims.",
+     "wikipedia": "Muhammad",
+     "wikidata": "Q9458"
+    },
+    {
+     "date": "0636",
+     "date_note": "636 or 637, disputed",
+     "name": "Battle of al-Qadisiyyah",
+     "place_name": "Al-Qadisiyyah, near Kufa",
+     "lat": 31.7,
+     "lon": 44.47,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Sa'd ibn Abi Waqqas"
+     ],
+     "what": "An Arab army under Sa'd ibn Abi Waqqas defeated the Sasanian Persian army, whose commander Rostam Farrokhzad was killed.",
+     "why": "It opened Iraq, the richest province of the Persian Empire, and led to the fall of the Sasanian capital Ctesiphon.",
+     "wikipedia": "Battle of al-Qadisiyyah",
+     "wikidata": "Q836844"
+    },
+    {
+     "date": "0636-08",
+     "date_note": "August 636, exact days disputed",
+     "name": "Battle of the Yarmuk",
+     "place_name": "Yarmouk River",
+     "lat": 32.81,
+     "lon": 35.95,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Khalid ibn al-Walid"
+     ],
+     "what": "Over six days an Arab army defeated a much larger Byzantine army near the Yarmouk river, a tributary of the Jordan.",
+     "why": "The Byzantines abandoned Syria, and Damascus and Jerusalem passed to Arab rule.",
+     "wikipedia": "Battle of the Yarmuk",
+     "wikidata": "Q194226"
+    },
+    {
+     "date": "0641",
+     "date_note": "treaty 641, evacuation 642",
+     "name": "Arab conquest of Egypt",
+     "place_name": "Alexandria",
+     "lat": 31.2,
+     "lon": 29.92,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Amr ibn al-As"
+     ],
+     "what": "Amr ibn al-As besieged Alexandria and the Byzantines agreed by treaty to evacuate the city, which they left in 642.",
+     "why": "Egypt's grain and taxes, once feeding Constantinople, now went to the caliphate.",
+     "wikipedia": "Arab conquest of Egypt",
+     "wikidata": "Q317519"
+    },
+    {
+     "date": "0650",
+     "date_note": "c. 650",
+     "name": "History of the Quran",
+     "place_name": "Medina",
+     "lat": 24.47,
+     "lon": 39.61,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Uthman"
+     ],
+     "what": "The third caliph Uthman had a standard written text of the Quran compiled and copies sent to the main garrison cities, ordering other versions burned.",
+     "why": "A single authorised text helped hold together a community now spread over three continents.",
+     "wikipedia": "History of the Quran",
+     "wikidata": "Q1517448"
+    },
+    {
+     "date": "0680-10-10",
+     "name": "Battle of Karbala",
+     "place_name": "Karbala",
+     "lat": 32.62,
+     "lon": 44.03,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Husayn ibn Ali",
+      "Yazid I"
+     ],
+     "what": "Husayn, grandson of Muhammad, and about 70 companions were killed by an army sent by the Umayyad caliph Yazid I.",
+     "why": "Husayn's death became the central event of Shia memory and deepened the split over leadership of the community.",
+     "wikipedia": "Battle of Karbala",
+     "wikidata": "Q626058"
+    },
+    {
+     "date": "0691",
+     "date_note": "completed 691-692",
+     "name": "Dome of the Rock",
+     "place_name": "Jerusalem",
+     "lat": 31.78,
+     "lon": 35.24,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Abd al-Malik ibn Marwan"
+     ],
+     "what": "The Umayyad caliph Abd al-Malik completed the Dome of the Rock on the Temple Mount, with Quranic inscriptions in its mosaics.",
+     "why": "It is the oldest surviving major Islamic monument and announced the new faith in a city holy to Jews and Christians.",
+     "wikipedia": "Dome of the Rock",
+     "wikidata": "Q172077"
+    },
+    {
+     "date": "0706",
+     "date_note": "c. 705-706",
+     "end_date": "0715",
+     "name": "Umayyad Mosque",
+     "place_name": "Damascus",
+     "lat": 33.51,
+     "lon": 36.31,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Al-Walid I"
+     ],
+     "what": "Caliph al-Walid I began building the Great Mosque of Damascus on the site of a Christian basilica, decorated with gold mosaics by Byzantine craftsmen.",
+     "why": "Damascus was the capital of the Umayyad empire, and the mosque became a model for mosques across the Islamic world.",
+     "wikipedia": "Umayyad Mosque",
+     "wikidata": "Q183562"
+    },
+    {
+     "date": "0711",
+     "date_note": "711, site and day uncertain",
+     "name": "Battle of Guadalete",
+     "place_name": "Guadalete River",
+     "lat": 36.6,
+     "lon": -5.9,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Tariq ibn Ziyad",
+      "Roderic"
+     ],
+     "what": "Tariq ibn Ziyad crossed from North Africa with mostly Berber troops and defeated the Visigothic king Roderic, who disappeared in the battle.",
+     "why": "Within a few years most of the Iberian Peninsula became al-Andalus, part of the caliphate.",
+     "wikipedia": "Battle of Guadalete",
+     "wikidata": "Q504172"
+    },
+    {
+     "date": "0732-10",
+     "date_note": "October 732; some historians argue 733",
+     "name": "Battle of Tours",
+     "place_name": "Between Tours and Poitiers",
+     "lat": 46.7,
+     "lon": 0.4,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Charles Martel",
+      "Abd al-Rahman ibn Abd Allah al-Ghafiqi"
+     ],
+     "what": "A Frankish army under Charles Martel defeated an Umayyad raiding army, whose governor Abd al-Rahman al-Ghafiqi was killed.",
+     "why": "It marked roughly the northern limit of Umayyad raids into Francia.",
+     "wikipedia": "Battle of Tours",
+     "wikidata": "Q173077"
+    },
+    {
+     "date": "0747",
+     "date_note": "raised 747",
+     "name": "Abbasid revolution",
+     "place_name": "Merv",
+     "lat": 37.66,
+     "lon": 62.19,
+     "family": "unrest",
+     "subtype": "revolution",
+     "who": [
+      "Abu Muslim"
+     ],
+     "what": "Abu Muslim raised the black banners of the Abbasid cause in Khorasan near Merv, drawing on Persian converts and Arab settlers unhappy with Umayyad rule.",
+     "why": "The revolt turned resentment at Umayyad favouritism toward Arab elites into a movement that toppled the dynasty.",
+     "wikipedia": "Abbasid revolution",
+     "wikidata": "Q5933860"
+    },
+    {
+     "date": "0750-01",
+     "name": "Battle of the Zab",
+     "place_name": "Great Zab River",
+     "lat": 36.0,
+     "lon": 43.4,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Marwan II",
+      "Abd Allah ibn Ali"
+     ],
+     "what": "Abbasid forces under Abdallah ibn Ali defeated the last Umayyad caliph Marwan II, who fled to Egypt and was killed later that year.",
+     "why": "The Abbasids took the caliphate and moved its centre from Syria to Iraq.",
+     "wikipedia": "Battle of the Zab",
+     "wikidata": "Q289492"
+    },
+    {
+     "date": "0751",
+     "date_note": "July 751, exact date uncertain",
+     "name": "Battle of Talas",
+     "place_name": "Talas River",
+     "lat": 42.52,
+     "lon": 72.24,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Gao Xianzhi",
+      "Ziyad ibn Salih"
+     ],
+     "what": "An Abbasid army, helped by the defection of Karluk Turks, defeated a Tang Chinese army under Gao Xianzhi near the Talas river.",
+     "why": "It marked the meeting point of the caliphate and Tang China in Central Asia, and Tang power there soon declined.",
+     "wikipedia": "Battle of Talas",
+     "wikidata": "Q492415"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "tang_china",
+   "title": "Tang China, glory to collapse",
+   "region": "China and Central Asia",
+   "start": 618,
+   "end": 907,
+   "view": {
+    "lon": 100.0,
+    "lat": 33.0,
+    "span": 55
+   },
+   "blurb": "How did the Tang dynasty build one of the most open and powerful states in the world, and why did it break apart after An Lushan's rebellion?",
+   "steps": [
+    {
+     "date": "0618-06",
+     "name": "Founding of the Tang dynasty",
+     "place_name": "Chang'an",
+     "lat": 34.26,
+     "lon": 108.94,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Emperor Gaozu of Tang"
+     ],
+     "what": "Li Yuan, a Sui general who had taken Chang'an, declared himself emperor of a new Tang dynasty as the Sui collapsed.",
+     "why": "Chang'an became the capital of a dynasty that lasted almost three centuries.",
+     "wikipedia": "Emperor Gaozu of Tang",
+     "wikidata": "Q9700"
+    },
+    {
+     "date": "0626-07-02",
+     "name": "Xuanwu Gate Incident",
+     "place_name": "Chang'an",
+     "lat": 34.26,
+     "lon": 108.94,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Emperor Taizong of Tang"
+     ],
+     "what": "Li Shimin ambushed and killed his brothers, the crown prince Li Jiancheng and Li Yuanji, at the palace's Xuanwu Gate, and his father soon abdicated.",
+     "why": "Li Shimin, as Emperor Taizong, built the strong early Tang state and its westward expansion.",
+     "wikipedia": "Xuanwu Gate Incident",
+     "wikidata": "Q1192865"
+    },
+    {
+     "date": "0629",
+     "date_note": "629; some sources give 627",
+     "name": "Journey of Xuanzang",
+     "place_name": "Chang'an",
+     "lat": 34.26,
+     "lon": 108.94,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Xuanzang"
+     ],
+     "what": "The Buddhist monk Xuanzang left Chang'an without imperial permission to travel west in search of Buddhist texts.",
+     "why": "His 16-year journey along the Silk Road tied Tang China to Central Asia and India.",
+     "wikipedia": "Xuanzang",
+     "wikidata": "Q42063"
+    },
+    {
+     "date": "0631",
+     "date_note": "arrived c. 631-633",
+     "name": "Xuanzang at Nalanda",
+     "place_name": "Nalanda",
+     "lat": 25.14,
+     "lon": 85.44,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Xuanzang"
+     ],
+     "what": "Xuanzang reached the great Buddhist monastery of Nalanda in north India and studied there for several years under the abbot Silabhadra.",
+     "why": "Nalanda was the leading centre of Buddhist learning, and the texts he gathered shaped Chinese Buddhism.",
+     "wikipedia": "Nalanda mahavihara",
+     "wikidata": "Q216243"
+    },
+    {
+     "date": "0645",
+     "date_note": "early 645",
+     "name": "Return of Xuanzang",
+     "place_name": "Chang'an",
+     "lat": 34.26,
+     "lon": 108.94,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Xuanzang",
+      "Emperor Taizong of Tang"
+     ],
+     "what": "Xuanzang returned to Chang'an with 657 Buddhist texts, was received by Emperor Taizong, and spent the rest of his life translating them.",
+     "why": "His travel record, the Great Tang Records on the Western Regions, is a key source for 7th century Central Asia and India.",
+     "wikipedia": "Xuanzang",
+     "wikidata": "Q42063"
+    },
+    {
+     "date": "0690-10",
+     "end_date": "0705",
+     "name": "Wu Zetian",
+     "place_name": "Luoyang",
+     "lat": 34.62,
+     "lon": 112.45,
+     "family": "diplomacy",
+     "subtype": "reign",
+     "who": [
+      "Wu Zetian"
+     ],
+     "what": "Wu Zetian, widow of Emperor Gaozong, declared herself emperor of a new Zhou dynasty, ruling mostly from Luoyang until 705.",
+     "why": "She was the only woman to rule China as emperor in her own name, and widened recruitment of officials through the examinations.",
+     "wikipedia": "Wu Zetian",
+     "wikidata": "Q9738"
+    },
+    {
+     "date": "0742",
+     "date_note": "c. 742-744",
+     "name": "Li Bai at the Tang court",
+     "place_name": "Chang'an",
+     "lat": 34.26,
+     "lon": 108.94,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Li Bai",
+      "Emperor Xuanzong of Tang"
+     ],
+     "what": "The poet Li Bai was summoned to Chang'an and served at Emperor Xuanzong's court for about two years.",
+     "why": "Xuanzong's reign was the high point of Tang culture, the age of Li Bai and Du Fu.",
+     "wikipedia": "Li Bai",
+     "wikidata": "Q7071"
+    },
+    {
+     "date": "0751",
+     "date_note": "July 751, exact date uncertain",
+     "name": "Battle of Talas",
+     "place_name": "Talas River",
+     "lat": 42.52,
+     "lon": 72.24,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Gao Xianzhi"
+     ],
+     "what": "A Tang army under the Korean-born general Gao Xianzhi was defeated by Abbasid forces near the Talas river after Karluk Turks changed sides.",
+     "why": "It was the furthest west Tang armies fought, and Tang withdrawal from Central Asia followed the crisis of 755.",
+     "wikipedia": "Battle of Talas",
+     "wikidata": "Q492415"
+    },
+    {
+     "date": "0755-12",
+     "end_date": "0763",
+     "name": "An Lushan rebellion",
+     "place_name": "Fanyang (modern Beijing)",
+     "lat": 39.9,
+     "lon": 116.4,
+     "family": "war",
+     "subtype": "revolt",
+     "who": [
+      "An Lushan"
+     ],
+     "what": "An Lushan, a frontier general commanding about 150,000 troops in the northeast, rebelled and marched south, taking Luoyang within weeks.",
+     "why": "The eight-year war devastated north China and permanently weakened the central government.",
+     "wikipedia": "An Lushan rebellion",
+     "wikidata": "Q253774"
+    },
+    {
+     "date": "0756-07",
+     "name": "Death of Yang Guifei",
+     "place_name": "Mawei",
+     "lat": 34.3,
+     "lon": 108.45,
+     "family": "unrest",
+     "subtype": "death",
+     "who": [
+      "Yang Guifei",
+      "Emperor Xuanzong of Tang"
+     ],
+     "what": "As Xuanzong fled Chang'an toward Sichuan, his guards mutinied at Mawei and forced him to have his consort Yang Guifei killed.",
+     "why": "Xuanzong abdicated soon after, and the story became a symbol of the dynasty's fall from glory.",
+     "wikipedia": "Yang Guifei",
+     "wikidata": "Q298046"
+    },
+    {
+     "date": "0757",
+     "end_date": "0757-11",
+     "name": "Siege of Suiyang",
+     "place_name": "Suiyang (modern Shangqiu)",
+     "lat": 34.42,
+     "lon": 115.65,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Zhang Xun"
+     ],
+     "what": "Zhang Xun's small garrison held Suiyang for about ten months against rebel armies, until starvation forced its fall.",
+     "why": "The defence kept rebels out of the Huai and Yangtze valleys, whose taxes kept the Tang alive.",
+     "wikipedia": "Siege of Suiyang",
+     "wikidata": "Q4872459"
+    },
+    {
+     "date": "0845",
+     "name": "Huichang persecution of Buddhism",
+     "place_name": "Chang'an",
+     "lat": 34.26,
+     "lon": 108.94,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Emperor Wuzong of Tang"
+     ],
+     "what": "Emperor Wuzong ordered thousands of Buddhist monasteries closed and about 260,000 monks and nuns returned to lay life, seizing their land and bronze.",
+     "why": "A cash-hungry state turned on the wealth of Buddhist institutions, ending the most open phase of Tang religious life.",
+     "wikipedia": "Huichang persecution of Buddhism",
+     "wikidata": "Q5598658"
+    },
+    {
+     "date": "0868-05",
+     "date_note": "dated in the colophon to 868",
+     "name": "Diamond Sutra",
+     "place_name": "Dunhuang",
+     "lat": 40.04,
+     "lon": 94.8,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [],
+     "what": "A woodblock-printed copy of the Diamond Sutra was made, later found sealed in a cave at Dunhuang.",
+     "why": "It is the oldest dated printed book known, showing that printing was in everyday use by late Tang.",
+     "wikipedia": "Diamond Sutra",
+     "wikidata": "Q494235"
+    },
+    {
+     "date": "0879",
+     "name": "Guangzhou massacre",
+     "place_name": "Guangzhou",
+     "lat": 23.13,
+     "lon": 113.26,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Huang Chao"
+     ],
+     "what": "Rebels under Huang Chao sacked Guangzhou, killing many of its foreign Muslim, Jewish, Christian and Zoroastrian merchants.",
+     "why": "The rebellion, begun among salt smugglers in 874-875, now reached China's main overseas trading port.",
+     "wikipedia": "Guangzhou massacre",
+     "wikidata": "Q5613750"
+    },
+    {
+     "date": "0881",
+     "date_note": "entered the city at the turn of 880-881",
+     "name": "Huang Chao takes Chang'an",
+     "place_name": "Chang'an",
+     "lat": 34.26,
+     "lon": 108.94,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Huang Chao",
+      "Emperor Xizong of Tang"
+     ],
+     "what": "Huang Chao's army entered Chang'an, Emperor Xizong fled to Sichuan, and Huang declared himself emperor of a new state.",
+     "why": "Although the rebels were driven out in 883, the court now depended on regional warlords.",
+     "wikipedia": "Huang Chao",
+     "wikidata": "Q714113"
+    },
+    {
+     "date": "0907",
+     "name": "End of the Tang dynasty",
+     "place_name": "Kaifeng",
+     "lat": 34.8,
+     "lon": 114.31,
+     "family": "diplomacy",
+     "subtype": "coup",
+     "who": [
+      "Zhu Wen"
+     ],
+     "what": "The warlord Zhu Wen, a former follower of Huang Chao, forced the last Tang emperor to abdicate and founded the Later Liang dynasty at Kaifeng.",
+     "why": "China split into the Five Dynasties and Ten Kingdoms until the Song reunified it.",
+     "wikipedia": "Zhu Wen",
+     "wikidata": "Q1275305"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "baghdad_house_of_wisdom",
+   "title": "Baghdad and the House of Wisdom",
+   "region": "Iraq and Iran",
+   "start": 762,
+   "end": 1258,
+   "view": {
+    "lon": 46.0,
+    "lat": 36.0,
+    "span": 35
+   },
+   "blurb": "How did Baghdad become the richest city and greatest centre of learning in the medieval world, and what ended its golden age?",
+   "steps": [
+    {
+     "date": "0762-07-30",
+     "date_note": "traditional foundation date",
+     "name": "Founding of Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Al-Mansur"
+     ],
+     "what": "The Abbasid caliph al-Mansur laid out a new capital on the Tigris as a round walled city about 2 km across, with four gates.",
+     "why": "The site sat where the Tigris came closest to the Euphrates, on canal and caravan routes linking the Gulf, Iran and Syria.",
+     "wikipedia": "Round City of Baghdad",
+     "wikidata": "Q1191316"
+    },
+    {
+     "date": "0794",
+     "date_note": "c. 794-795",
+     "name": "Paper mills in Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [],
+     "what": "Baghdad's first paper mill is reported in the time of Harun al-Rashid, using a craft learned from Chinese papermakers in Central Asia.",
+     "why": "Cheap paper replaced papyrus and parchment, and made a large book trade and government archive possible.",
+     "wikipedia": "History of paper",
+     "wikidata": "Q1811550"
+    },
+    {
+     "date": "0812",
+     "end_date": "0813-09",
+     "name": "Fourth Fitna",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Al-Amin",
+      "Al-Ma'mun"
+     ],
+     "what": "In a civil war between Harun's sons, al-Ma'mun's general Tahir besieged Baghdad for about a year, and al-Amin was killed after the city fell.",
+     "why": "Much of the city was damaged, and al-Ma'mun emerged as caliph.",
+     "wikipedia": "Fourth Fitna",
+     "wikidata": "Q3778593"
+    },
+    {
+     "date": "0820",
+     "date_note": "c. 813-833",
+     "name": "Al-Jabr",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Al-Khwarizmi"
+     ],
+     "what": "Al-Khwarizmi, a scholar at al-Ma'mun's court, wrote a book on solving equations by completion and balancing, dedicated to the caliph.",
+     "why": "Its title gave the world the word algebra, and his name gave the word algorithm.",
+     "wikipedia": "Al-Jabr",
+     "wikidata": "Q8369"
+    },
+    {
+     "date": "0830",
+     "date_note": "c. 830",
+     "name": "House of Wisdom",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Al-Ma'mun",
+      "Hunayn ibn Ishaq"
+     ],
+     "what": "Under al-Ma'mun the House of Wisdom became a library and centre where scholars translated Greek, Persian and Indian works into Arabic.",
+     "why": "Translated Aristotle, Galen, Euclid and Ptolemy became the base of a new Arabic science later passed on to Europe.",
+     "wikipedia": "House of Wisdom",
+     "wikidata": "Q33018"
+    },
+    {
+     "date": "0836",
+     "name": "Samarra",
+     "place_name": "Samarra",
+     "lat": 34.2,
+     "lon": 43.87,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Al-Mu'tasim"
+     ],
+     "what": "Caliph al-Mu'tasim moved the capital about 125 km up the Tigris to a new city at Samarra, partly to separate his Turkish soldiers from Baghdad's people.",
+     "why": "Reliance on Turkish slave soldiers gave military commanders growing power over the caliphs.",
+     "wikipedia": "Samarra",
+     "wikidata": "Q170047"
+    },
+    {
+     "date": "0869",
+     "end_date": "0883",
+     "name": "Zanj Rebellion",
+     "place_name": "Basra",
+     "lat": 30.51,
+     "lon": 47.81,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Ali ibn Muhammad"
+     ],
+     "what": "Enslaved East Africans forced to clear salt flats near Basra rose under Ali ibn Muhammad and held southern Iraq for 14 years, sacking Basra in 871.",
+     "why": "The revolt drained Abbasid resources and showed the human cost of the plantation economy feeding the cities.",
+     "wikipedia": "Zanj Rebellion",
+     "wikidata": "Q759988"
+    },
+    {
+     "date": "0921-06",
+     "name": "Journey of Ahmad ibn Fadlan",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ahmad ibn Fadlan"
+     ],
+     "what": "Ibn Fadlan left Baghdad as secretary of a caliphal embassy to the king of the Volga Bulgars.",
+     "why": "His report is one of the few eyewitness accounts of northern peoples, including the Rus, written by a Baghdad official.",
+     "wikipedia": "Ahmad ibn Fadlan",
+     "wikidata": "Q200947"
+    },
+    {
+     "date": "0922-03",
+     "name": "Execution of al-Hallaj",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Al-Hallaj"
+     ],
+     "what": "The Sufi mystic al-Hallaj, accused of heresy for saying 'I am the Truth', was publicly executed in Baghdad after a long trial.",
+     "why": "His death showed the tensions between mystics, jurists and the court in the caliphal capital.",
+     "wikipedia": "Al-Hallaj",
+     "wikidata": "Q172862"
+    },
+    {
+     "date": "0922-05",
+     "name": "Ibn Fadlan on the Volga",
+     "place_name": "Bolghar",
+     "lat": 54.98,
+     "lon": 49.05,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ahmad ibn Fadlan"
+     ],
+     "what": "After crossing Iran, Khwarazm and the steppe, the embassy reached the Volga Bulgar king, who had asked for help building a mosque and fort.",
+     "why": "It shows how far Baghdad's influence and trade networks reached by the 10th century.",
+     "wikipedia": "Ahmad ibn Fadlan",
+     "wikidata": "Q200947"
+    },
+    {
+     "date": "0945",
+     "date_note": "December 945 or January 946",
+     "name": "Buyid dynasty",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Mu'izz al-Dawla"
+     ],
+     "what": "The Buyid prince Ahmad, given the title Mu'izz al-Dawla, entered Baghdad and took real power, leaving the caliph a religious figurehead.",
+     "why": "From now on the caliphs reigned but did not rule.",
+     "wikipedia": "Buyid dynasty",
+     "wikidata": "Q273874"
+    },
+    {
+     "date": "1055-12",
+     "name": "Tughril enters Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Tughril I"
+     ],
+     "what": "The Seljuk Turkish leader Tughril entered Baghdad, ended Buyid rule, and was named sultan by the caliph.",
+     "why": "Sunni Turkish sultans now protected the caliphate and ruled the Middle East.",
+     "wikipedia": "Tughril I",
+     "wikidata": "Q144565"
+    },
+    {
+     "date": "1067",
+     "name": "Nizamiyya of Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Nizam al-Mulk"
+     ],
+     "what": "The Seljuk vizier Nizam al-Mulk opened a large madrasa in Baghdad where students were taught law with salaries and lodging paid by an endowment.",
+     "why": "It became a model for state-supported Sunni colleges across the Islamic world; al-Ghazali later taught there.",
+     "wikipedia": "Nizamiyya of Baghdad",
+     "wikidata": "Q4703031"
+    },
+    {
+     "date": "1256-11",
+     "date_note": "late 1256",
+     "name": "Siege of Alamut",
+     "place_name": "Alamut Castle",
+     "lat": 36.44,
+     "lon": 50.59,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Hulegu Khan"
+     ],
+     "what": "Hulagu Khan's Mongol army forced the surrender of the Nizari Ismaili leader and took the mountain fortresses of northern Iran, including Alamut.",
+     "why": "With Iran secured, the Mongols turned on Baghdad.",
+     "wikipedia": "Siege of Alamut (1256)",
+     "wikidata": "Q17586779"
+    },
+    {
+     "date": "1258-01-29",
+     "end_date": "1258-02-10",
+     "name": "Siege of Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.4,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Hulegu Khan",
+      "Al-Musta'sim"
+     ],
+     "what": "After a two-week siege the Mongols took Baghdad, killed the caliph al-Musta'sim and many thousands of inhabitants, and destroyed libraries.",
+     "why": "It ended the Abbasid caliphate in Baghdad and is often taken as the end of the city's golden age.",
+     "wikipedia": "Siege of Baghdad",
+     "wikidata": "Q369560"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "viking_age",
+   "title": "The Viking age",
+   "region": "North Atlantic and Eastern Europe",
+   "start": 793,
+   "end": 1066,
+   "view": {
+    "lon": -5.0,
+    "lat": 57.0,
+    "span": 100
+   },
+   "blurb": "How did seafarers from Scandinavia go from raiding monasteries to settling, trading and ruling from Newfoundland to Kiev?",
+   "steps": [
+    {
+     "date": "0793-06-08",
+     "date_note": "date from the Anglo-Saxon Chronicle",
+     "name": "Raid on Lindisfarne",
+     "place_name": "Lindisfarne",
+     "lat": 55.67,
+     "lon": -1.8,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Alcuin"
+     ],
+     "what": "Norse raiders sacked the monastery on Lindisfarne off Northumbria, killing monks and taking treasure; Alcuin wrote of the shock from Charlemagne's court.",
+     "why": "It is the conventional start of the Viking age in western Europe.",
+     "wikipedia": "Lindisfarne",
+     "wikidata": "Q213804"
+    },
+    {
+     "date": "0845-03",
+     "name": "Siege of Paris (845)",
+     "place_name": "Paris",
+     "lat": 48.86,
+     "lon": 2.35,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Charles the Bald"
+     ],
+     "what": "A Viking fleet of about 120 ships sailed up the Seine and took Paris; Charles the Bald paid 7,000 pounds of silver to make them leave.",
+     "why": "Paying tribute showed raiders that river towns in Francia were rich and poorly defended.",
+     "wikipedia": "Siege of Paris (845)",
+     "wikidata": "Q3485986"
+    },
+    {
+     "date": "0860-06-18",
+     "name": "Siege of Constantinople (860)",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Photios I of Constantinople"
+     ],
+     "what": "A Rus fleet of about 200 ships raided the suburbs of Constantinople while the emperor was away; Patriarch Photios preached about the attack.",
+     "why": "It was the first recorded Rus attack on the Byzantine capital, reached by rivers from the Baltic to the Black Sea.",
+     "wikipedia": "Siege of Constantinople (860)",
+     "wikidata": "Q815167"
+    },
+    {
+     "date": "0862",
+     "date_note": "traditional date from the Primary Chronicle",
+     "name": "Rurik at Novgorod",
+     "place_name": "Novgorod",
+     "lat": 58.52,
+     "lon": 31.27,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Rurik"
+     ],
+     "what": "According to the Primary Chronicle, the Varangian Rurik was invited to rule the tribes around Novgorod.",
+     "why": "His dynasty, the Rurikids, ruled Rus and later Muscovy until 1598.",
+     "wikipedia": "Rurik",
+     "wikidata": "Q7990"
+    },
+    {
+     "date": "0866-11",
+     "name": "Great Heathen Army takes York",
+     "place_name": "York",
+     "lat": 53.96,
+     "lon": -1.08,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Ivar the Boneless"
+     ],
+     "what": "The Great Heathen Army, which had landed in East Anglia in 865, captured York, the chief town of Northumbria.",
+     "why": "Raiding turned into conquest, and York became the centre of a Viking kingdom.",
+     "wikipedia": "Great Heathen Army",
+     "wikidata": "Q1419965"
+    },
+    {
+     "date": "0874",
+     "date_note": "traditional date",
+     "name": "Settlement of Iceland",
+     "place_name": "Reykjavik",
+     "lat": 64.15,
+     "lon": -21.94,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Ingólfr Arnarson"
+     ],
+     "what": "Ingólfr Arnarson is said to have settled at Reykjavik, the first of thousands of Norse farmers who claimed Iceland's coastal land over 60 years.",
+     "why": "Iceland showed Norse expansion as farming migration, not only raiding.",
+     "wikipedia": "Settlement of Iceland",
+     "wikidata": "Q2725768"
+    },
+    {
+     "date": "0878-05",
+     "name": "Battle of Edington",
+     "place_name": "Edington, Wiltshire",
+     "lat": 51.28,
+     "lon": -2.1,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Alfred the Great",
+      "Guthrum"
+     ],
+     "what": "Alfred of Wessex defeated the Danish leader Guthrum, who then accepted baptism and withdrew to East Anglia.",
+     "why": "England was divided between Wessex and the Danelaw, where Scandinavian law and place names took root.",
+     "wikipedia": "Battle of Edington",
+     "wikidata": "Q2305651"
+    },
+    {
+     "date": "0882",
+     "date_note": "traditional date",
+     "name": "Oleg takes Kiev",
+     "place_name": "Kiev",
+     "lat": 50.45,
+     "lon": 30.52,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Oleg the Wise"
+     ],
+     "what": "According to the Primary Chronicle, Oleg of Novgorod took Kiev and made it the centre of the Rus state on the Dnieper route.",
+     "why": "Kiev controlled the river trade with Byzantium, the source of Rus wealth.",
+     "wikipedia": "Oleg the Wise",
+     "wikidata": "Q6131983"
+    },
+    {
+     "date": "0911",
+     "date_note": "traditional date, no text survives",
+     "name": "Treaty of Saint-Clair-sur-Epte",
+     "place_name": "Saint-Clair-sur-Epte",
+     "lat": 49.2,
+     "lon": 1.68,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Rollo",
+      "Charles the Simple"
+     ],
+     "what": "Charles the Simple granted the Viking leader Rollo land around Rouen in return for defending the lower Seine against other raiders.",
+     "why": "Rollo's land grew into the Duchy of Normandy, whose Normans later conquered England.",
+     "wikipedia": "Treaty of Saint-Clair-sur-Epte",
+     "wikidata": "Q1072330"
+    },
+    {
+     "date": "0930",
+     "name": "Althing",
+     "place_name": "Thingvellir",
+     "lat": 64.26,
+     "lon": -21.13,
+     "family": "culture",
+     "subtype": "council",
+     "who": [],
+     "what": "Icelanders founded the Althing, a yearly open-air assembly at Thingvellir where chieftains made laws and settled disputes.",
+     "why": "A society without a king governed itself through law and assembly.",
+     "wikipedia": "Althing",
+     "wikidata": "Q131279"
+    },
+    {
+     "date": "0965",
+     "date_note": "c. 965",
+     "name": "Hedeby",
+     "place_name": "Hedeby",
+     "lat": 54.49,
+     "lon": 9.57,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Ibrahim ibn Yaqub"
+     ],
+     "what": "The traveller Ibrahim ibn Yaqub described Hedeby, a Danish trading town where goods from the Baltic, Francia and the Islamic world changed hands.",
+     "why": "Towns like Hedeby show the Viking age as an age of trade, using silver coins from as far as Baghdad.",
+     "wikipedia": "Hedeby",
+     "wikidata": "Q165414"
+    },
+    {
+     "date": "0985",
+     "date_note": "c. 985-986",
+     "name": "Erik the Red in Greenland",
+     "place_name": "Brattahlíð",
+     "lat": 61.15,
+     "lon": -45.52,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Erik the Red"
+     ],
+     "what": "Erik the Red, exiled from Iceland, led settlers in about 14 ships to southwest Greenland and farmed at Brattahlíð.",
+     "why": "The Greenland colony was the base for voyages further west and lasted about 450 years.",
+     "wikipedia": "Erik the Red",
+     "wikidata": "Q172345"
+    },
+    {
+     "date": "0988",
+     "date_note": "traditional date",
+     "name": "Christianization of Kievan Rus'",
+     "place_name": "Kiev",
+     "lat": 50.45,
+     "lon": 30.52,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Vladimir the Great"
+     ],
+     "what": "Grand Prince Vladimir accepted Byzantine Orthodox Christianity, married the emperor's sister Anna, and had the people of Kiev baptised in the Dnieper.",
+     "why": "Rus turned toward Byzantium for its religion, script and art.",
+     "wikipedia": "Christianization of Kievan Rus'"
+    },
+    {
+     "date": "1016-10-18",
+     "date_note": "site disputed",
+     "name": "Battle of Assandun",
+     "place_name": "Assandun, Essex",
+     "lat": 51.62,
+     "lon": 0.7,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Cnut",
+      "Edmund Ironside"
+     ],
+     "what": "Cnut defeated Edmund Ironside; after Edmund died that November, Cnut became king of all England.",
+     "why": "Cnut later ruled England, Denmark and Norway, a North Sea empire.",
+     "wikipedia": "Battle of Assandun",
+     "wikidata": "Q1704268"
+    },
+    {
+     "date": "1021",
+     "date_note": "tree-ring date for wood cutting",
+     "name": "L'Anse aux Meadows",
+     "place_name": "L'Anse aux Meadows",
+     "lat": 51.6,
+     "lon": -55.53,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [],
+     "what": "Norse visitors cut wood with metal tools at this site in Newfoundland, dated by tree rings to 1021; the sagas tell of Leif Erikson's voyage to Vinland around 1000.",
+     "why": "It is the only confirmed Norse site in the Americas, about 500 years before Columbus.",
+     "wikipedia": "L'Anse aux Meadows"
+    },
+    {
+     "date": "1066-09-25",
+     "name": "Battle of Stamford Bridge",
+     "place_name": "Stamford Bridge",
+     "lat": 53.99,
+     "lon": -0.91,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Harald Hardrada",
+      "Harold Godwinson"
+     ],
+     "what": "Harold Godwinson of England defeated and killed the Norwegian king Harald Hardrada, who had invaded with about 300 ships.",
+     "why": "It is often taken as the end of the Viking age; three weeks later Harold lost to William of Normandy at Hastings.",
+     "wikipedia": "Battle of Stamford Bridge",
+     "wikidata": "Q203225"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "charlemagne_europe",
+   "title": "Charlemagne's Europe",
+   "region": "Western Europe",
+   "start": 768,
+   "end": 843,
+   "view": {
+    "lon": 7.0,
+    "lat": 47.0,
+    "span": 25
+   },
+   "blurb": "How did Charlemagne unite most of western Christian Europe into one empire, and why did his grandsons divide it within 30 years of his death?",
+   "steps": [
+    {
+     "date": "0768-10-09",
+     "name": "Charlemagne becomes king",
+     "place_name": "Noyon",
+     "lat": 49.58,
+     "lon": 3.0,
+     "family": "diplomacy",
+     "subtype": "reign",
+     "who": [
+      "Charlemagne",
+      "Carloman I"
+     ],
+     "what": "After the death of their father Pepin the Short, Charlemagne was crowned king of the Franks at Noyon, sharing the kingdom with his brother Carloman.",
+     "why": "Carloman's death in 771 left Charlemagne sole ruler of the Franks.",
+     "wikipedia": "Charlemagne",
+     "wikidata": "Q3044"
+    },
+    {
+     "date": "0772",
+     "name": "Saxon Wars",
+     "place_name": "Eresburg (Marsberg)",
+     "lat": 51.46,
+     "lon": 8.85,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Charlemagne"
+     ],
+     "what": "Charlemagne took the Saxon fort of Eresburg and destroyed the Irminsul, a sacred pillar of the pagan Saxons.",
+     "why": "This began 30 years of war that forced the Saxons into the Frankish kingdom and the Christian church.",
+     "wikipedia": "Saxon Wars",
+     "wikidata": "Q499909"
+    },
+    {
+     "date": "0774-06",
+     "name": "Siege of Pavia",
+     "place_name": "Pavia",
+     "lat": 45.19,
+     "lon": 9.16,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Charlemagne",
+      "Desiderius"
+     ],
+     "what": "After a siege of about nine months, Pavia surrendered and the Lombard king Desiderius was sent to a monastery; Charlemagne took the title King of the Lombards.",
+     "why": "Northern Italy joined the Frankish realm and Charlemagne became protector of the pope.",
+     "wikipedia": "Siege of Pavia (773–774)",
+     "wikidata": "Q114717"
+    },
+    {
+     "date": "0778-08-15",
+     "name": "Battle of Roncevaux Pass",
+     "place_name": "Roncevaux Pass",
+     "lat": 43.01,
+     "lon": -1.32,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Roland"
+     ],
+     "what": "Returning from a campaign in Spain, the Frankish rearguard was ambushed and destroyed by Basques in the Pyrenees, and the commander Roland was killed.",
+     "why": "It set limits on expansion into Spain and later inspired the Song of Roland.",
+     "wikipedia": "Battle of Roncevaux Pass",
+     "wikidata": "Q1233475"
+    },
+    {
+     "date": "0782",
+     "name": "Massacre of Verden",
+     "place_name": "Verden",
+     "lat": 52.92,
+     "lon": 9.23,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Charlemagne"
+     ],
+     "what": "After a Saxon revolt, Charlemagne had about 4,500 Saxon prisoners executed at Verden, according to the Royal Frankish Annals.",
+     "why": "It shows the brutality of the forced conversion of Saxony.",
+     "wikipedia": "Massacre of Verden",
+     "wikidata": "Q820211"
+    },
+    {
+     "date": "0789-03-23",
+     "name": "Admonitio generalis",
+     "place_name": "Aachen",
+     "lat": 50.78,
+     "lon": 6.08,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Charlemagne",
+      "Alcuin"
+     ],
+     "what": "Charlemagne issued a long set of instructions on church reform, ordering that every monastery and cathedral have a school to teach boys reading.",
+     "why": "With scholars like Alcuin, this drove the Carolingian Renaissance, which copied and preserved much of Latin literature.",
+     "wikipedia": "Admonitio generalis",
+     "wikidata": "Q359314"
+    },
+    {
+     "date": "0793",
+     "name": "Fossa Carolina",
+     "place_name": "Treuchtlingen",
+     "lat": 49.01,
+     "lon": 10.92,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Charlemagne"
+     ],
+     "what": "Charlemagne had thousands of workers dig a canal to link the Rhine and Danube river systems.",
+     "why": "It was the largest engineering project of the age, though it was probably never fully usable.",
+     "wikipedia": "Fossa Carolina",
+     "wikidata": "Q566411"
+    },
+    {
+     "date": "0800-12-25",
+     "name": "Coronation of Charlemagne",
+     "place_name": "Old St. Peter's Basilica, Rome",
+     "lat": 41.9,
+     "lon": 12.45,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Charlemagne",
+      "Pope Leo III"
+     ],
+     "what": "At Christmas mass in St Peter's, Pope Leo III crowned Charlemagne emperor of the Romans.",
+     "why": "A western emperor existed again for the first time since 476, challenging Byzantium's claim.",
+     "wikipedia": "Charlemagne",
+     "wikidata": "Q3044"
+    },
+    {
+     "date": "0802-07-20",
+     "name": "Abul-Abbas",
+     "place_name": "Aachen",
+     "lat": 50.78,
+     "lon": 6.08,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [],
+     "what": "An Asian elephant named Abul-Abbas, a gift from the Abbasid caliph Harun al-Rashid, arrived at Aachen with the envoy Isaac the Jew.",
+     "why": "Gift exchange with Baghdad shows Charlemagne's reach as a ruler known across the Mediterranean.",
+     "wikipedia": "Abul-Abbas",
+     "wikidata": "Q335860"
+    },
+    {
+     "date": "0805",
+     "date_note": "traditional consecration date",
+     "name": "Palatine Chapel at Aachen",
+     "place_name": "Aachen",
+     "lat": 50.78,
+     "lon": 6.08,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Charlemagne",
+      "Pope Leo III"
+     ],
+     "what": "The octagonal Palatine Chapel at Aachen, modelled on churches in Ravenna and built with columns brought from Italy, was consecrated.",
+     "why": "Aachen became the court's settled centre and Charlemagne was buried in the chapel.",
+     "wikipedia": "Aachen Cathedral",
+     "wikidata": "Q5908"
+    },
+    {
+     "date": "0806-02",
+     "name": "Divisio Regnorum",
+     "place_name": "Thionville",
+     "lat": 49.36,
+     "lon": 6.17,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Charlemagne"
+     ],
+     "what": "At Thionville Charlemagne set out a plan to divide the empire between his three sons after his death, following Frankish custom.",
+     "why": "Two of the sons died before him, so in the end the whole empire passed to Louis.",
+     "wikipedia": "Charlemagne",
+     "wikidata": "Q3044"
+    },
+    {
+     "date": "0814-01-28",
+     "name": "Death of Charlemagne",
+     "place_name": "Aachen",
+     "lat": 50.78,
+     "lon": 6.08,
+     "family": "diplomacy",
+     "subtype": "death",
+     "who": [
+      "Charlemagne"
+     ],
+     "what": "Charlemagne died at Aachen aged about 65 and was succeeded by his son Louis the Pious.",
+     "why": "The empire's unity now depended on Louis and the rules of inheritance.",
+     "wikipedia": "Charlemagne",
+     "wikidata": "Q3044"
+    },
+    {
+     "date": "0817-07",
+     "name": "Ordinatio imperii",
+     "place_name": "Aachen",
+     "lat": 50.78,
+     "lon": 6.08,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Louis the Pious",
+      "Lothair I"
+     ],
+     "what": "Louis the Pious decreed that his eldest son Lothair would inherit the imperial title and authority over his brothers' kingdoms.",
+     "why": "Later changes to the plan for a fourth son, Charles, sparked civil wars between Louis and his sons.",
+     "wikipedia": "Louis the Pious",
+     "wikidata": "Q43974"
+    },
+    {
+     "date": "0841-06-25",
+     "name": "Battle of Fontenoy (841)",
+     "place_name": "Fontenoy-en-Puisaye",
+     "lat": 47.64,
+     "lon": 3.29,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Lothair I",
+      "Louis the German",
+      "Charles the Bald"
+     ],
+     "what": "Louis the German and Charles the Bald defeated their brother Lothair in one of the bloodiest battles among the Franks.",
+     "why": "It decided that the empire would be divided, not ruled by Lothair alone.",
+     "wikipedia": "Battle of Fontenoy (841)",
+     "wikidata": "Q1430939"
+    },
+    {
+     "date": "0842-02-14",
+     "name": "Oaths of Strasbourg",
+     "place_name": "Strasbourg",
+     "lat": 48.58,
+     "lon": 7.75,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Louis the German",
+      "Charles the Bald"
+     ],
+     "what": "Louis and Charles swore alliance against Lothair, each in the language of the other's troops, an early Romance and an Old High German text.",
+     "why": "The oaths are among the earliest written records of French and German as separate languages.",
+     "wikipedia": "Oaths of Strasbourg",
+     "wikidata": "Q157082"
+    },
+    {
+     "date": "0843-08",
+     "name": "Treaty of Verdun",
+     "place_name": "Verdun",
+     "lat": 49.16,
+     "lon": 5.38,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Lothair I",
+      "Louis the German",
+      "Charles the Bald"
+     ],
+     "what": "The three grandsons divided the empire into West Francia, East Francia and a middle kingdom from the Low Countries to Italy.",
+     "why": "The division roughly outlined the later France and Germany, with a contested borderland between them.",
+     "wikipedia": "Treaty of Verdun",
+     "wikidata": "Q134840"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "crusades",
+   "title": "The Crusades",
+   "region": "Europe and the Levant",
+   "start": 1095,
+   "end": 1291,
+   "view": {
+    "lon": 22.0,
+    "lat": 40.0,
+    "span": 45
+   },
+   "blurb": "Why did western Europeans fight for two centuries to hold the Holy Land, and how did those wars change Europe, Byzantium and the Islamic world?",
+   "steps": [
+    {
+     "date": "1095-11-27",
+     "name": "Council of Clermont",
+     "place_name": "Clermont",
+     "lat": 45.78,
+     "lon": 3.08,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Pope Urban II"
+     ],
+     "what": "Pope Urban II called on knights to march east to help Byzantium against the Seljuk Turks and to free Jerusalem, promising remission of sins.",
+     "why": "The speech launched the First Crusade and a new idea of holy war as penance.",
+     "wikipedia": "Council of Clermont",
+     "wikidata": "Q49964"
+    },
+    {
+     "date": "1096-05",
+     "name": "Rhineland massacres",
+     "place_name": "Mainz",
+     "lat": 50.0,
+     "lon": 8.27,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Emicho"
+     ],
+     "what": "Bands of crusaders led by Count Emicho attacked Jewish communities in Speyer, Worms and Mainz, killing hundreds who refused baptism.",
+     "why": "Crusading zeal turned first on Jews at home, a pattern repeated in later crusades.",
+     "wikipedia": "Rhineland massacres",
+     "wikidata": "Q51651"
+    },
+    {
+     "date": "1097-05-14",
+     "end_date": "1097-06-19",
+     "name": "Siege of Nicaea",
+     "place_name": "Nicaea",
+     "lat": 40.43,
+     "lon": 29.72,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Godfrey of Bouillon",
+      "Alexios I Komnenos"
+     ],
+     "what": "Crusader armies and Byzantine forces besieged the Seljuk capital Nicaea, which surrendered to the Byzantines in June.",
+     "why": "Cooperation with Byzantium began well but tensions over who would hold conquests grew.",
+     "wikipedia": "Siege of Nicaea",
+     "wikidata": "Q642117"
+    },
+    {
+     "date": "1097-10-20",
+     "end_date": "1098-06-28",
+     "name": "Siege of Antioch",
+     "place_name": "Antioch",
+     "lat": 36.2,
+     "lon": 36.16,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Bohemond I of Antioch"
+     ],
+     "what": "After an eight-month siege, a traitor let Bohemond's men into Antioch; the crusaders then beat off a relief army under Kerbogha.",
+     "why": "Bohemond kept the city for himself, founding the Principality of Antioch against his oath to Byzantium.",
+     "wikipedia": "Siege of Antioch",
+     "wikidata": "Q741098"
+    },
+    {
+     "date": "1099-07-15",
+     "name": "Siege of Jerusalem (1099)",
+     "place_name": "Jerusalem",
+     "lat": 31.78,
+     "lon": 35.23,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Godfrey of Bouillon",
+      "Raymond IV of Toulouse"
+     ],
+     "what": "Crusaders stormed Jerusalem after a five-week siege and massacred many of its Muslim and Jewish inhabitants.",
+     "why": "The Kingdom of Jerusalem and three other crusader states were set up along the Levant coast.",
+     "wikipedia": "Siege of Jerusalem (1099)",
+     "wikidata": "Q456993"
+    },
+    {
+     "date": "1120",
+     "date_note": "c. 1119-1120",
+     "name": "Knights Templar",
+     "place_name": "Jerusalem",
+     "lat": 31.78,
+     "lon": 35.23,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Hugues de Payens"
+     ],
+     "what": "Hugues de Payens and a few knights formed a religious order to protect pilgrims, housed in the Al-Aqsa Mosque on the Temple Mount.",
+     "why": "The military orders became the standing armies of the crusader states and powerful bankers across Europe.",
+     "wikipedia": "Knights Templar",
+     "wikidata": "Q41300"
+    },
+    {
+     "date": "1142",
+     "name": "Krak des Chevaliers",
+     "place_name": "Krak des Chevaliers",
+     "lat": 34.76,
+     "lon": 36.29,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "The castle was given to the Knights Hospitaller, who rebuilt it into one of the largest crusader fortresses, guarding the Homs gap.",
+     "why": "A few thousand settlers held a long coast against larger Muslim states largely through castles.",
+     "wikipedia": "Krak des Chevaliers",
+     "wikidata": "Q177549"
+    },
+    {
+     "date": "1144-12-24",
+     "name": "Siege of Edessa (1144)",
+     "place_name": "Edessa",
+     "lat": 37.16,
+     "lon": 38.79,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Zangi"
+     ],
+     "what": "Zengi, atabeg of Mosul and Aleppo, took Edessa after a four-week siege, ending the first crusader state.",
+     "why": "Its fall prompted the Second Crusade, which failed before Damascus in 1148.",
+     "wikipedia": "Siege of Edessa (1144)",
+     "wikidata": "Q2083368"
+    },
+    {
+     "date": "1187-07-04",
+     "name": "Battle of Hattin",
+     "place_name": "Horns of Hattin",
+     "lat": 32.8,
+     "lon": 35.45,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Saladin",
+      "Guy of Lusignan"
+     ],
+     "what": "Saladin's army trapped the thirsty crusader army near the Sea of Galilee and destroyed it, capturing King Guy of Jerusalem.",
+     "why": "The kingdom lost almost all its field army and most of its towns within months.",
+     "wikipedia": "Battle of Hattin",
+     "wikidata": "Q233568"
+    },
+    {
+     "date": "1187-10-02",
+     "name": "Siege of Jerusalem (1187)",
+     "place_name": "Jerusalem",
+     "lat": 31.78,
+     "lon": 35.23,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Saladin",
+      "Balian of Ibelin"
+     ],
+     "what": "Balian of Ibelin surrendered Jerusalem to Saladin, who let most inhabitants leave on payment of ransom.",
+     "why": "Losing Jerusalem led to the Third Crusade.",
+     "wikipedia": "Siege of Jerusalem (1187)",
+     "wikidata": "Q815161"
+    },
+    {
+     "date": "1189-08-28",
+     "end_date": "1191-07-12",
+     "name": "Siege of Acre (1189–1191)",
+     "place_name": "Acre",
+     "lat": 32.92,
+     "lon": 35.07,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Richard I of England",
+      "Philip II of France",
+      "Saladin"
+     ],
+     "what": "Crusaders besieged Acre for almost two years until Richard I and Philip II arrived and forced its surrender.",
+     "why": "Acre became the new capital of a smaller crusader kingdom.",
+     "wikipedia": "Siege of Acre (1189–1191)",
+     "wikidata": "Q815116"
+    },
+    {
+     "date": "1192-09-02",
+     "name": "Treaty of Jaffa (1192)",
+     "place_name": "Jaffa",
+     "lat": 32.05,
+     "lon": 34.75,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Richard I of England",
+      "Saladin"
+     ],
+     "what": "Richard and Saladin agreed a three-year truce: crusaders kept the coast from Tyre to Jaffa and Christian pilgrims could visit Jerusalem.",
+     "why": "The crusader states survived as a coastal strip dependent on trade and truces.",
+     "wikipedia": "Treaty of Jaffa (1192)",
+     "wikidata": "Q7837102"
+    },
+    {
+     "date": "1204-04-12",
+     "name": "Sack of Constantinople",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Enrico Dandolo",
+      "Boniface I of Montferrat"
+     ],
+     "what": "Fourth Crusade armies, in debt to Venice and drawn into Byzantine politics, stormed and plundered Constantinople for three days.",
+     "why": "Christians sacking the greatest Christian city crippled Byzantium and deepened the split between the Latin and Greek churches.",
+     "wikipedia": "Sack of Constantinople",
+     "wikidata": "Q1750892"
+    },
+    {
+     "date": "1229-02-18",
+     "name": "Sixth Crusade",
+     "place_name": "Jaffa",
+     "lat": 32.05,
+     "lon": 34.75,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Frederick II, Holy Roman Emperor",
+      "Al-Kamil"
+     ],
+     "what": "Emperor Frederick II, under excommunication, gained Jerusalem by a ten-year treaty with Sultan al-Kamil of Egypt without a battle.",
+     "why": "Diplomacy achieved what armies had not, but angered hardliners on both sides.",
+     "wikipedia": "Sixth Crusade",
+     "wikidata": "Q51660"
+    },
+    {
+     "date": "1250-02",
+     "end_date": "1250-02-11",
+     "name": "Battle of Mansurah",
+     "place_name": "Mansurah",
+     "lat": 31.04,
+     "lon": 31.38,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Louis IX of France"
+     ],
+     "what": "Louis IX's invasion of Egypt stalled at Mansurah, and in April his army was defeated and he was captured and ransomed.",
+     "why": "The failure helped bring Mamluk soldiers to power in Egypt, the crusaders' most dangerous enemy.",
+     "wikipedia": "Battle of Mansurah",
+     "wikidata": "Q115413876"
+    },
+    {
+     "date": "1291-04-06",
+     "end_date": "1291-05-18",
+     "name": "Siege of Acre (1291)",
+     "place_name": "Acre",
+     "lat": 32.92,
+     "lon": 35.07,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Al-Ashraf Khalil"
+     ],
+     "what": "The Mamluk sultan al-Ashraf Khalil besieged Acre with a large army and siege engines and stormed it after six weeks.",
+     "why": "The last crusader towns on the mainland fell within months, ending the crusader states.",
+     "wikipedia": "Siege of Acre (1291)",
+     "wikidata": "Q325985"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "song_commercial_revolution",
+   "title": "Song China's commercial revolution",
+   "region": "China",
+   "start": 960,
+   "end": 1279,
+   "view": {
+    "lon": 113.0,
+    "lat": 30.0,
+    "span": 28
+   },
+   "blurb": "How did Song China become the world's most commercial and technologically advanced economy, with paper money, printing and gunpowder, and how was it conquered?",
+   "steps": [
+    {
+     "date": "0960",
+     "date_note": "early 960",
+     "name": "Chenqiao mutiny",
+     "place_name": "Chenqiao",
+     "lat": 35.0,
+     "lon": 114.53,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Emperor Taizu of Song"
+     ],
+     "what": "Troops at Chenqiao proclaimed their general Zhao Kuangyin emperor; he took Kaifeng and founded the Song dynasty.",
+     "why": "Taizu then sidelined powerful generals in favour of civil officials chosen by examination.",
+     "wikipedia": "Chenqiao mutiny",
+     "wikidata": "Q8012976"
+    },
+    {
+     "date": "1005-01",
+     "name": "Chanyuan Treaty",
+     "place_name": "Chanyuan (Puyang)",
+     "lat": 35.76,
+     "lon": 115.03,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Emperor Zhenzong"
+     ],
+     "what": "After a Liao invasion stalled at Chanyuan, the Song agreed to pay the Khitan Liao 100,000 taels of silver and 200,000 bolts of silk a year for peace.",
+     "why": "Peace on the northern frontier lasted over a century, letting trade and cities grow.",
+     "wikipedia": "Chanyuan Treaty",
+     "wikidata": "Q1151686"
+    },
+    {
+     "date": "1024",
+     "date_note": "official issue 1023-1024",
+     "name": "Jiaozi (currency)",
+     "place_name": "Chengdu",
+     "lat": 30.66,
+     "lon": 104.07,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [],
+     "what": "The Song government took over the paper notes that Sichuan merchants had issued in place of heavy iron coins, creating official paper money.",
+     "why": "It was the first government-issued paper currency in the world.",
+     "wikipedia": "Jiaozi (currency)",
+     "wikidata": "Q953729"
+    },
+    {
+     "date": "1044",
+     "name": "Wujing Zongyao",
+     "place_name": "Kaifeng",
+     "lat": 34.8,
+     "lon": 114.31,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Zeng Gongliang"
+     ],
+     "what": "A military manual compiled for the court gave the earliest known written formulas for gunpowder, for use in fire arrows and bombs.",
+     "why": "Gunpowder weapons, first used by Song armies, later spread across Eurasia.",
+     "wikipedia": "Wujing Zongyao",
+     "wikidata": "Q44973"
+    },
+    {
+     "date": "1069",
+     "name": "Wang Anshi's New Policies",
+     "place_name": "Kaifeng",
+     "lat": 34.8,
+     "lon": 114.31,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Wang Anshi",
+      "Emperor Shenzong of Song"
+     ],
+     "what": "Chief minister Wang Anshi began reforms including state loans to farmers, a land survey and taxes paid in cash instead of labour.",
+     "why": "The reforms tried to harness a commercial economy for the state and split officials into bitter factions.",
+     "wikipedia": "Wang Anshi",
+     "wikidata": "Q319618"
+    },
+    {
+     "date": "1088",
+     "date_note": "c. 1088",
+     "name": "Dream Pool Essays",
+     "place_name": "Zhenjiang",
+     "lat": 32.2,
+     "lon": 119.45,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Shen Kuo"
+     ],
+     "what": "In retirement at his garden in Zhenjiang, Shen Kuo wrote notes describing Bi Sheng's movable type and the magnetic needle compass, among much else.",
+     "why": "It is the earliest description of movable type printing and of the compass used for direction.",
+     "wikipedia": "Dream Pool Essays",
+     "wikidata": "Q1069875"
+    },
+    {
+     "date": "1100",
+     "date_note": "c., early 12th century",
+     "name": "Along the River During the Qingming Festival",
+     "place_name": "Kaifeng",
+     "lat": 34.8,
+     "lon": 114.31,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Zhang Zeduan"
+     ],
+     "what": "Zhang Zeduan painted a five-metre scroll of daily life along a river near Kaifeng, with shops, inns, boats and hundreds of people.",
+     "why": "It shows the busy commercial city of perhaps a million people that Kaifeng had become.",
+     "wikipedia": "Along the River During the Qingming Festival",
+     "wikidata": "Q714802"
+    },
+    {
+     "date": "1127-01",
+     "date_note": "city fell January 1127, captives taken north in spring",
+     "name": "Jingkang incident",
+     "place_name": "Kaifeng",
+     "lat": 34.8,
+     "lon": 114.31,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Emperor Huizong of Song",
+      "Emperor Qinzong"
+     ],
+     "what": "Jurchen Jin armies took Kaifeng and carried off the retired emperor Huizong, Emperor Qinzong and thousands of courtiers to the north.",
+     "why": "North China was lost, and the court rebuilt in the south as the Southern Song.",
+     "wikipedia": "Jingkang incident",
+     "wikidata": "Q1326831"
+    },
+    {
+     "date": "1138",
+     "name": "Hangzhou becomes capital",
+     "place_name": "Hangzhou",
+     "lat": 30.25,
+     "lon": 120.17,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Emperor Gaozong of Song"
+     ],
+     "what": "Emperor Gaozong settled the court at Hangzhou, then called Lin'an.",
+     "why": "Hangzhou grew into perhaps the largest city in the world, later described by Marco Polo.",
+     "wikipedia": "Hangzhou",
+     "wikidata": "Q4970"
+    },
+    {
+     "date": "1142",
+     "date_note": "agreed 1141, in force 1142",
+     "name": "Treaty of Shaoxing",
+     "place_name": "Hangzhou",
+     "lat": 30.25,
+     "lon": 120.17,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Qin Hui",
+      "Yue Fei"
+     ],
+     "what": "The Song accepted the Huai River as the border and paid yearly tribute to the Jin; the general Yue Fei, who opposed peace, was executed in prison.",
+     "why": "The split of China into a Jurchen north and Song south was fixed for a century.",
+     "wikipedia": "Treaty of Shaoxing",
+     "wikidata": "Q842316"
+    },
+    {
+     "date": "1161-11",
+     "name": "Battle of Caishi",
+     "place_name": "Caishi, Yangtze River",
+     "lat": 31.62,
+     "lon": 118.48,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Yu Yunwen"
+     ],
+     "what": "A Song fleet with paddle-wheel ships and gunpowder bombs stopped a Jin army crossing the Yangtze.",
+     "why": "The navy and the river protected the southern economy from northern armies.",
+     "wikipedia": "Battle of Caishi",
+     "wikidata": "Q2397117"
+    },
+    {
+     "date": "1225",
+     "date_note": "c. 1225",
+     "name": "Zhu Fan Zhi",
+     "place_name": "Quanzhou",
+     "lat": 24.87,
+     "lon": 118.68,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Zhao Rukuo"
+     ],
+     "what": "Zhao Rukuo (Zhao Rugua), maritime trade official at Quanzhou, wrote a guide to foreign lands and goods from Japan to East Africa.",
+     "why": "Quanzhou's sea trade in porcelain, silk and spices made the Song state rely on customs revenue.",
+     "wikipedia": "Zhao Rukuo",
+     "wikidata": "Q698817"
+    },
+    {
+     "date": "1268",
+     "end_date": "1273",
+     "name": "Battle of Xiangyang",
+     "place_name": "Xiangyang",
+     "lat": 32.01,
+     "lon": 112.12,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Lü Wenhuan"
+     ],
+     "what": "Mongol armies besieged the twin cities of Xiangyang and Fancheng for five years, finally using counterweight trebuchets built by Persian engineers.",
+     "why": "Its fall opened the Han River route into the Song heartland.",
+     "wikipedia": "Battle of Xiangyang",
+     "wikidata": "Q1205096"
+    },
+    {
+     "date": "1276",
+     "date_note": "early 1276",
+     "name": "Fall of Lin'an",
+     "place_name": "Hangzhou",
+     "lat": 30.25,
+     "lon": 120.17,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Bayan of the Baarin"
+     ],
+     "what": "The Song regents surrendered Hangzhou and the child emperor to the Mongol general Bayan without a battle.",
+     "why": "The capital's peaceful surrender spared the city, but loyalists fled south with two young princes.",
+     "wikipedia": "Mongol conquest of the Song dynasty",
+     "wikidata": "Q400061"
+    },
+    {
+     "date": "1279-03-19",
+     "name": "Battle of Yamen",
+     "place_name": "Yamen",
+     "lat": 22.25,
+     "lon": 113.08,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Lu Xiufu",
+      "Zhang Hongfan",
+      "Zhao Bing"
+     ],
+     "what": "The Yuan fleet destroyed the last Song fleet; minister Lu Xiufu jumped into the sea holding the boy emperor Zhao Bing.",
+     "why": "It ended the Song dynasty, and all China came under Mongol rule.",
+     "wikipedia": "Battle of Yamen",
+     "wikidata": "Q1078359"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "classic_maya_collapse",
+   "title": "The classic Maya collapse",
+   "region": "Maya lowlands",
+   "start": 600,
+   "end": 950,
+   "view": {
+    "lon": -89.8,
+    "lat": 17.5,
+    "span": 9
+   },
+   "blurb": "Why were the great southern Maya cities, from Tikal to Copan, abandoned between about 800 and 950, while Chichen Itza in the north rose?",
+   "steps": [
+    {
+     "date": "0615-07",
+     "date_note": "29 July 615 in the usual (GMT) calendar correlation",
+     "name": "Pakal becomes king of Palenque",
+     "place_name": "Palenque",
+     "lat": 17.48,
+     "lon": -92.05,
+     "family": "diplomacy",
+     "subtype": "reign",
+     "who": [
+      "Kʼinich Janaabʼ Pakal"
+     ],
+     "what": "Pakal took the throne of Palenque aged 12 and ruled for 68 years.",
+     "why": "Palenque became one of the great western Maya cities during the classic peak.",
+     "wikipedia": "Kʼinich Janaabʼ Pakal",
+     "wikidata": "Q371384"
+    },
+    {
+     "date": "0657",
+     "name": "Calakmul attacks Tikal",
+     "place_name": "Calakmul",
+     "lat": 18.11,
+     "lon": -89.81,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Yuknoom Chʼeen II"
+     ],
+     "what": "Yuknoom Ch'een II of Calakmul, the Snake (Kaan) kingdom, attacked Tikal and drove its king Nuun Ujol Chaak into exile.",
+     "why": "Calakmul and Tikal led rival alliances whose wars shaped the classic period.",
+     "wikipedia": "Yuknoom Chʼeen II",
+     "wikidata": "Q3083253"
+    },
+    {
+     "date": "0683-08",
+     "date_note": "Pakal died 28 August 683",
+     "name": "Temple of the Inscriptions",
+     "place_name": "Palenque",
+     "lat": 17.48,
+     "lon": -92.05,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Kʼinich Janaabʼ Pakal"
+     ],
+     "what": "Pakal died and was buried in a carved stone sarcophagus inside the Temple of the Inscriptions, whose panels record Palenque's dynastic history.",
+     "why": "Monumental tombs and long inscriptions show the wealth and labour classic kings commanded.",
+     "wikipedia": "Temple of the Inscriptions",
+     "wikidata": "Q2559153"
+    },
+    {
+     "date": "0695-08",
+     "name": "Tikal defeats Calakmul",
+     "place_name": "Tikal",
+     "lat": 17.22,
+     "lon": -89.62,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Jasaw Chan Kʼawiil I"
+     ],
+     "what": "Jasaw Chan K'awiil I of Tikal defeated Calakmul's king Yich'aak K'ak' and celebrated the victory on carved lintels.",
+     "why": "Tikal's revival weakened Calakmul's hegemony over the lowlands.",
+     "wikipedia": "Jasaw Chan Kʼawiil I",
+     "wikidata": "Q2623438"
+    },
+    {
+     "date": "0734",
+     "date_note": "c. 734",
+     "name": "Tikal Temple I",
+     "place_name": "Tikal",
+     "lat": 17.22,
+     "lon": -89.62,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Jasaw Chan Kʼawiil I"
+     ],
+     "what": "A 47-metre pyramid temple was completed over the tomb of Jasaw Chan K'awiil I on Tikal's Great Plaza.",
+     "why": "Tikal was at its height, perhaps with tens of thousands of people around its centre.",
+     "wikipedia": "Tikal Temple I",
+     "wikidata": "Q2185890"
+    },
+    {
+     "date": "0738-05",
+     "name": "Quiriguá captures Copán's king",
+     "place_name": "Quiriguá",
+     "lat": 15.27,
+     "lon": -89.04,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Uaxaclajuun Ubʼaah Kʼawiil",
+      "Kʼakʼ Tiliw Chan Yopaat"
+     ],
+     "what": "K'ak' Tiliw Chan Yopaat of Quirigua, once a subordinate of Copan, captured and beheaded Copan's king Uaxaclajuun Ub'aah K'awiil.",
+     "why": "A small vassal humiliating a great city shows how unstable Maya political networks were.",
+     "wikipedia": "Uaxaclajuun Ubʼaah Kʼawiil",
+     "wikidata": "Q6644671"
+    },
+    {
+     "date": "0755",
+     "date_note": "c. 755",
+     "name": "Hieroglyphic Stairway of Copán",
+     "place_name": "Copán",
+     "lat": 14.84,
+     "lon": -89.14,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Kʼakʼ Yipyaj Chan Kʼawiil"
+     ],
+     "what": "Copan's king dedicated a stairway of about 2,200 glyphs telling the royal history of the city.",
+     "why": "It is the longest known Maya inscription, built to restore royal prestige after the 738 defeat.",
+     "wikipedia": "Copán",
+     "wikidata": "Q214827"
+    },
+    {
+     "date": "0761",
+     "date_note": "c. 761",
+     "name": "Fall of Dos Pilas",
+     "place_name": "Dos Pilas",
+     "lat": 16.44,
+     "lon": -90.29,
+     "family": "war",
+     "subtype": "war",
+     "who": [],
+     "what": "Dos Pilas, capital of the Petexbatún kingdom, was defeated by former vassals and abandoned, and the region fell into constant warfare.",
+     "why": "The Petexbatún was one of the first areas to collapse, with walls built even across plazas.",
+     "wikipedia": "Dos Pilas",
+     "wikidata": "Q909286"
+    },
+    {
+     "date": "0791",
+     "date_note": "c. 791",
+     "name": "Bonampak murals",
+     "place_name": "Bonampak",
+     "lat": 16.7,
+     "lon": -91.06,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "Painters covered three rooms at Bonampak with murals of a royal court, a battle and the torture of captives.",
+     "why": "The murals show a warrior elite at its height only a few decades before the region was abandoned.",
+     "wikipedia": "Bonampak",
+     "wikidata": "Q605455"
+    },
+    {
+     "date": "0800",
+     "date_note": "c. 800",
+     "name": "Cancuén massacre",
+     "place_name": "Cancuén",
+     "lat": 16.01,
+     "lon": -90.04,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "About 31 members of Cancuen's royal court were killed and thrown into a palace pool, and the trading city was abandoned soon after.",
+     "why": "Sudden violent ends like this mark the collapse in the southern lowlands.",
+     "wikipedia": "Cancuén",
+     "wikidata": "Q2591884"
+    },
+    {
+     "date": "0800",
+     "date_note": "c. 800-1000",
+     "name": "Drought in the Maya lowlands",
+     "place_name": "Lake Chichancanab",
+     "lat": 19.87,
+     "lon": -88.77,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [],
+     "what": "Sediment cores from Lake Chichancanab and other lakes show a series of severe droughts in the 9th and 10th centuries.",
+     "why": "Many scholars see drought, on top of population pressure and endless war, as a main cause of the collapse.",
+     "wikipedia": "Classic Maya collapse",
+     "wikidata": "Q2736642"
+    },
+    {
+     "date": "0822",
+     "date_note": "822",
+     "name": "Last king of Copán",
+     "place_name": "Copán",
+     "lat": 14.84,
+     "lon": -89.14,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Ukit Took'"
+     ],
+     "what": "An altar for a would-be king, Ukit Took', was begun at Copan but left unfinished, the last royal monument there.",
+     "why": "Copan's dynasty of about 400 years ended, though farmers stayed in the valley for some time.",
+     "wikipedia": "Copán",
+     "wikidata": "Q214827"
+    },
+    {
+     "date": "0869",
+     "name": "Last monument at Tikal",
+     "place_name": "Tikal",
+     "lat": 17.22,
+     "lon": -89.62,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "Stela 11, Tikal's last dated monument, was set up in the Great Plaza.",
+     "why": "After this Tikal's population fell steeply and the city was largely abandoned.",
+     "wikipedia": "Tikal",
+     "wikidata": "Q181172"
+    },
+    {
+     "date": "0900",
+     "date_note": "c. 900",
+     "name": "Rise of Chichen Itza",
+     "place_name": "Chichen Itza",
+     "lat": 20.68,
+     "lon": -88.57,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "Chichen Itza in northern Yucatan grew into the region's leading city, with new styles of building and wide trade networks.",
+     "why": "Power shifted north as the southern cities emptied.",
+     "wikipedia": "Chichen Itza",
+     "wikidata": "Q5859"
+    },
+    {
+     "date": "0909",
+     "date_note": "January 909",
+     "name": "Toniná Monument 101",
+     "place_name": "Toniná",
+     "lat": 16.9,
+     "lon": -92.01,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "A monument at Tonina carries the date 10.4.0.0.0, the last known Long Count date in the Maya lowlands.",
+     "why": "The end of the Long Count calendar on monuments marks the end of classic Maya kingship.",
+     "wikipedia": "Toniná",
+     "wikidata": "Q1042074"
+    }
+   ],
+   "status": "draft"
+  }
+ ]
+}

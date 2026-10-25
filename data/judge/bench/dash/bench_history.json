@@ -1,0 +1,21 @@
+[
+ {
+  "run": "2026-10-25",
+  "commit": "d261156",
+  "answered": 40,
+  "graded": 40,
+  "of": 40,
+  "answerModel": "default",
+  "graderModel": "default",
+  "score": 87.7,
+  "content": 35.7,
+  "accuracy": 14.6,
+  "why": 13.2,
+  "map": 14.8,
+  "sources": 9.4,
+  "serious": 1,
+  "minor": 106,
+  "myths": 0,
+  "medianSeconds": 55
+ }
+]

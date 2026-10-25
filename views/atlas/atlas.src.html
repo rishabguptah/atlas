@@ -483,7 +483,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
 <script>
 (() => {
   // ---------- basics ----------
-  const NOW = 2025, MIN = -4000, SPAN = NOW - MIN, CURVE = 1.6;
+  // Time runs from 300,000 years ago. The slider is in two parts: deep time (before 4000 BCE) on a log scale of years
+  // ago in its first DEEP_T, then history on the old curve (denser toward today) in the rest.
+  const NOW = 2025, MIN = -298000, HIST = -4000, SPAN = NOW - HIST, CURVE = 1.6, DEEP_T = 0.2;
+  const LBP0 = Math.log(NOW - MIN), LBP1 = Math.log(NOW - HIST);
   const LENSES = ["geography", "military", "economy", "population", "disease", "religion", "ideas", "literature", "people", "order"];
   const LENS_NAME = { geography: "Geography", military: "Military", economy: "Economy & trade", population: "Population & migration", disease: "Disease & climate", religion: "Religion", ideas: "Ideas", literature: "Literature", people: "People", order: "Order & chaos" };
   const lensColor = l => `var(--l-${LENSES.includes(l) ? l : "order"})`;
@@ -508,12 +511,19 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // A plugin lens whose data loads after the first paint (LATE_FILES) is skipped until it has arrived.
   const lensReady = d => typeof LATE_FILES === "undefined" || !LATE_FILES["lens:" + d.id] || (typeof LENS_DATA !== "undefined" && !!LENS_DATA[d.id]);
   const BASEMAP0 = ATLAS.basemaps.find(b => b && typeof b.mount === "function") || null;
-  const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
+  const fmtAgo = y => { const a = NOW - y, r = a >= 100000 ? 1000 : 100; return `${(Math.round(a / r) * r).toLocaleString("en-US")} years ago`; };
+  const fmtYear = y => y <= -10000 ? fmtAgo(y) : y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
   const fmtSpan = (s, e) => `${s == null ? "?" : fmtYear(s)}–${e == null ? "today" : fmtYear(e)}`;
-  const tToYear = t => Math.round(NOW - SPAN * Math.pow(1 - t, CURVE));
-  const yearToT = y => 1 - Math.pow(Math.max(0, NOW - y) / SPAN, 1 / CURVE);
+  const tToYearF = t => t >= DEEP_T ? NOW - SPAN * Math.pow(Math.max(0, 1 - (t - DEEP_T) / (1 - DEEP_T)), CURVE)
+    : NOW - Math.exp(LBP0 + (LBP1 - LBP0) * Math.max(0, t) / DEEP_T);
+  // Deep years snap to a grain that grows with age (1,000 years at 100,000 years ago), so steps stay meaningful.
+  const grain = y => y >= HIST ? 1 : NOW - y >= 100000 ? 1000 : NOW - y >= 20000 ? 100 : 10;
+  const snapYear = y => { const g = grain(y); return g === 1 ? Math.round(y) : Math.round(y / g) * g; };
+  const tToYear = t => snapYear(tToYearF(t));
+  const yearToT = y => y >= HIST ? DEEP_T + (1 - DEEP_T) * (1 - Math.pow(Math.max(0, NOW - y) / SPAN, 1 / CURVE))
+    : DEEP_T * (LBP0 - Math.log(Math.min(NOW - MIN, NOW - y))) / (LBP0 - LBP1);
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const clampYear = y => Math.max(MIN, Math.min(NOW, Math.round(Number(y) || 0)));
+  const clampYear = y => snapYear(Math.max(MIN, Math.min(NOW, Math.round(Number(y) || 0))));
   const km = (a, b) => d3.geoDistance(a, b) * 6371;
   const fmtN = n => n >= 1e9 ? (n / 1e9).toFixed(1).replace(/\.0$/, "") + " billion" : n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, "") + " million" : n >= 1e4 ? Math.round(n / 1e3) + ",000" : String(Math.round(n));
   const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -534,9 +544,50 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
 
   const PPL = PEOPLE.people.map((r, i) => {
     const bp = PEOPLE.places[r[3]], dp = PEOPLE.places[r[4]];
-    return { i, name: r[0], b: r[1], d: r[2], occ: r[5], grp: r[6], hpi: r[7], wiki: r[8], place: bp ? bp[0] : "", country: bp ? bp[3] : "", lat: bp ? bp[1] : null, lon: bp ? bp[2] : null, dplace: dp ? dp[0] : "" };
+    return { i, name: r[0], b: r[1], d: r[2], occ: r[5], grp: r[6], hpi: r[7], wiki: r[8], rg: r[9] ?? -1, place: bp ? bp[0] : "", country: bp ? bp[3] : "", lat: bp ? bp[1] : null, lon: bp ? bp[2] : null, dplace: dp ? dp[0] : "" };
   }).filter(p => p.lat != null).sort((a, b) => b.hpi - a.hpi);
   const adult = (p, y) => y >= p.b + 15 && y <= (p.d ?? p.b + 80);
+  // People born within 60 km of a spot, from the world index (ATLAS.world.near), in the page's person shape; null
+  // while the index has nothing loaded for those years.
+  function worldBorn(lon, lat, y) {
+    const W = window.ATLAS.world;
+    if (!W || !W.near || !W.state || !W.state.index) return null;
+    const rows = W.near(lon, lat, 60, { m0: (y - 100) * 12, m1: (y + 60) * 12 }, { kinds: "b" });
+    if (!rows.length) return null;
+    const seen = new Set(), out = [];
+    for (const r of rows) {
+      if (seen.has(r.name)) continue; seen.add(r.name);
+      const b = Math.floor(r.m / 12), dm = r.x.died ? W.mOf(r.x.died) : null;
+      out.push({ x: { name: r.name, b, d: dm != null ? Math.floor(dm / 12) : null, occ: (r.sub || "").replace(/_/g, " "), place: r.x.place || "", country: "", lat: r.lat, lon: r.lon,
+        dplace: "", hpi: r.rank, wiki: null, wd: typeof r.ref === "number" && r.ref ? "Q" + r.ref : null }, d: r.dist });
+    }
+    return out.sort((a, b) => b.x.hpi - a.x.hpi);
+  }
+  // People outside Europe (data/coverage: Pantheon, Wikidata, CBDB), loaded after the first paint as "people:world".
+  // Row: [name, born, died, occupation, group, fame, wikipedia, lat, lon, place, death place, region, what, wikidata or cbdb:id, place kind (0 born, 1 lived or from, 2 served the state there)].
+  const REGIONS = PEOPLE.regions || [];
+  function addPeople(rows) {
+    for (const r of rows) {
+      const id = r[13] || "", src = id.startsWith("cbdb:") ? [{ cite: "China Biographical Database, person " + id.slice(5), url: "https://projects.iq.harvard.edu/cbdb" }]
+        : id ? [{ cite: "Wikidata " + id, url: "https://www.wikidata.org/wiki/" + id }] : [];
+      PPL.push({ i: -1, name: r[0], b: r[1], d: r[2], occ: r[3], grp: r[4], hpi: r[5], wiki: r[6], lat: r[7], lon: r[8], place: r[9], dplace: r[10],
+        rg: r[11], what: r[12], src, pk: r[14] || 0, country: REGIONS[r[11]] || "" });
+    }
+    PPL.sort((a, b) => b.hpi - a.hpi);
+  }
+  if (PEOPLE.world) addPeople(PEOPLE.world);
+  // The n people to show: the most remembered of each region in turn, so a world view is not just Europe's famous.
+  function balanced(list, n) {
+    const by = new Map();
+    for (const p of list) { let b = by.get(p.rg); if (!b) by.set(p.rg, b = []); b.push(p); }
+    const bs = [...by.values()], out = [];
+    for (let i = 0; out.length < n; i++) {
+      let any = false;
+      for (const b of bs) { if (i < b.length) { any = true; out.push(b[i]); if (out.length >= n) break; } }
+      if (!any) break;
+    }
+    return out;
+  }
 
   // Flows: the economy-trade kernel records (lenses/flows.py: 75 routes, people as [low, high]) when built in, else the extracted layer.
   const FLOWS = typeof LENS_DATA !== "undefined" && LENS_DATA.flows && LENS_DATA.flows.flows;
@@ -815,6 +866,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const [x, y] = projection([v.lon, v.lat]);
     const t = fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
     svg.interrupt().transition().duration(reduceMotion() ? 0 : ms).call(zoom.transform, t);
+    if (BASEMAP && BASEMAP.fly) try { BASEMAP.fly(v, reduceMotion() ? 0 : ms); } catch (err) { console.error(err); }
   }
   // Pan only if the point is off screen; keep the zoom the person chose.
   function reveal(lon, lat) {
@@ -1105,7 +1157,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function drawPeople() {
     const y = state.year, out = MK.people.points = [];
     const n = Math.min(450, Math.round(14 + 22 * Math.pow(state.k, 1.25)));
-    const list = state.on.people ? PPL.filter(p => adult(p, y)).slice(0, n) : [];
+    const list = state.on.people ? balanced(PPL.filter(p => adult(p, y)), n) : [];
     list.forEach((d, i) => out.push(P(d, { kind: "person", shape: "circle", color: "var(--y-people)", fill: .8, size: 2 + Math.max(0, d.hpi - 60) / 9,
       label: d.name, lbl: true, always: i < 6, pri: d.hpi / 20, title: () => `${d.name} · ${d.occ} · ${fmtSpan(d.b, d.d)} · born ${d.place}`, card: cardFn(personCard, d) })));
   }
@@ -1194,12 +1246,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const bs = on ? [...battlesNear(y, 12).filter(b => b.cur), ...battlesNear(y, 2).filter(b => !b.cur).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y) || (b.parts || "").length - (a.parts || "").length).slice(0, cap)] : [];
     L.points = bs.map(d => P(d, { kind: "battle", color: "var(--y-war)", size: 6, label: d.name.replace(/^(Battle|Siege|Sack) of /, ""), lbl: true, always: d.cur && Math.abs(d.start - y) <= 2,
       fade: 1 - Math.abs(d.start - y) / 16, pri: d.cur ? 8 : 2, title: () => `${d.name} · ${fmtYear(d.start)}${d.war ? " · " + d.war : ""} · ${sideNames(d).join(" vs ")}`, card: cardFn(battleCard, d) }));
-    if (on) for (const d of CHOKES) L.points.push(P(d, { kind: "choke", shape: "hourglass", color: "var(--y-war)", fill: 1, label: d.name, lbl: true, pri: 5,
+    if (on && state.year >= HIST) for (const d of CHOKES) L.points.push(P(d, { kind: "choke", shape: "hourglass", color: "var(--y-war)", fill: 1, label: d.name, lbl: true, pri: 5,
       title: () => { const h = holderAt(d.id, state.year); return `${d.name} · ${h.length ? "held by " + h.join(", ") : "no state holds it"} in ${fmtYear(state.year)}`; }, card: cardFn(chokeCard, d) }));
   }
   // ---------- plugin lenses and basemap ----------
   const lensCard = (d, c, at) => ({ lon: at ? at.lon : undefined, lat: at ? at.lat : undefined, name: null, ...c, kind: "lens:" + d.id, c: `var(--y-${d.id})`, kick: c.kick || d.name,
-    sources: (c.sources || []).map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c || x.url, url: x.url || x.u }) });
+    sources: (c.sources || []).map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c || x.url, url: x.url || x.u, src: x.src, pages: x.pages }) });
   const lensGo = (d, c, at) => () => { const card = lensCard(d, c, at); if (isFinite(card.lon) && isFinite(card.lat)) select(card, { fly: !at, setYear: card.year != null && !at }); else if (card.year != null) animateYear(card.year); };
   const lensItem = (d, r, at) => item(`<b>${esc(r.title)}</b>${r.tag ? ` <span class="tag">${esc(r.tag)}</span>` : ""}`, typeof r.year === "number" ? fmtYear(r.year) : r.year ?? "", r.why || "",
     r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim || (typeof r.year === "number" && Math.abs(r.year - state.year) > 150));
@@ -1452,7 +1504,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
 
   // ---------- cards: the same item, wherever it is clicked ----------
-  const src1 = s => !s ? [] : Array.isArray(s) ? s.map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c, url: x.url || x.u }) : [{ cite: s.c || s.cite, url: s.u || s.url }];
+  const src1 = s => !s ? [] : Array.isArray(s) ? s.map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c, url: x.url || x.u, src: x.src, pages: x.pages }) : [{ cite: s.c || s.cite, url: s.u || s.url, src: s.src }];
   const wiki = t => t ? [{ cite: "Wikipedia: " + t.replace(/_/g, " "), url: "https://en.wikipedia.org/wiki/" + encodeURIComponent(t.replace(/ /g, "_")) }] : [];
   function cityCard(e) {
     const y = state.year, p = popAt(e, y), ev = (EVENTS[e.id] || []);
@@ -1462,7 +1514,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   function personCard(p) {
     return { kind: "person", c: "var(--y-people)", lon: p.lon, lat: p.lat, name: p.place, kick: `Person · ${p.occ}`, title: p.name, year: p.b + 30,
-      meta: `${fmtSpan(p.b, p.d)} · born in ${p.place}${p.country ? ", " + p.country : ""}${p.dplace && p.dplace !== p.place ? ` · died in ${p.dplace}` : ""}`, sources: wiki(p.wiki) };
+      meta: `${fmtSpan(p.b, p.d)} · ${["born in", "of", "served"][p.pk || 0]} ${p.place}${p.country ? ", " + p.country : ""}${p.dplace && p.dplace !== p.place ? ` · died in ${p.dplace}` : ""}`,
+      body: p.what || "", sources: p.wd ? [{ cite: `Wikidata ${p.wd} (CC0) via the world index`, url: "https://www.wikidata.org/wiki/" + p.wd }] : p.wiki ? wiki(p.wiki) : p.src || [] };
   }
   function tradeCard(t) {
     const m = t.pts[Math.floor(t.pts.length / 2)];
@@ -1519,7 +1572,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (!c || !c.title) return "";
     return `<div class="focus" style="--c:${c.c}"><span class="fk">${esc(c.kick)}</span><span class="ft">${esc(c.title)}</span>
       ${c.meta ? `<span class="sub">${esc(c.meta)}</span>` : ""}${c.body ? `<p>${esc(c.body)}</p>` : ""}${c.why ? `<p class="why">${esc(c.why)}</p>` : ""}
-      ${c.polity && !(ATLAS.cardViz || []).length ? sparkHTML(c.polity) : ""}${cardViz(c)}
+      ${c.html || ""}${c.polity && !(ATLAS.cardViz || []).length ? sparkHTML(c.polity) : ""}${cardViz(c)}${(() => { try { return ATLAS.cardMore ? ATLAS.cardMore(c) : ""; } catch (err) { console.error("cardMore", err); return ""; } })()}
       ${c.holders && c.holders.length ? `<div class="items">${c.holders.map(r => item(`${esc(r.n)}`, fmtSpan(r.s, r.e), "", () => animateYear(r.s), !(state.year >= r.s && state.year <= r.e))).join("")}</div>` : ""}
       ${srcList(c.sources)}
       <div class="row">${c.year != null && c.year !== state.year ? `<button class="btn" data-a="${act(() => animateYear(c.year))}">Go to ${esc(fmtYear(c.year))}</button>` : ""}${c.journey ? journeyNav(c) : ""}<button class="btn" data-a="${act(() => askAbout(c))}">Ask about this</button></div></div>`;
@@ -1554,7 +1607,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const b = ev.target.closest("[data-a]"); if (!b) return;
     const fn = ACTS[+b.dataset.a]; if (fn) fn();
   });
-  const sourceRow = (s, live) => `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite || s.url)}</a>` : esc(s.cite)}${live ? '<span class="unchecked">unchecked</span>' : ""}</li>`;
+  const sourceRow = (s, live) => (ATLAS.cite && ATLAS.cite(s, live)) || `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite || s.url)}</a>` : esc(s.cite)}${live ? '<span class="unchecked">unchecked</span>' : ""}</li>`;
   const srcList = (arr, live) => arr && arr.length ? `<ul class="srcs">${arr.map(s => sourceRow(s, live)).join("")}</ul>` : "";
   const item = (title, y, w, fn, dim) => `<button class="it${dim ? " dim" : ""}" data-a="${act(fn)}"><span>${title}</span><span class="y">${esc(y ?? "")}</span>${w ? `<span class="w">${esc(w)}</span>` : ""}</button>`;
   // Rows from this time lead; rows from other centuries (faded) fold into "other times" so the present reads first.
@@ -1575,7 +1628,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     for (const e of ENTRIES) for (const [yy, t, bad] of (EVENTS[e.id] || [])) if (Math.abs(yy - y) <= 25) evs.push({ e, yy, t, bad });
     evs.sort((a, b) => Math.abs(a.yy - y) - Math.abs(b.yy - y));
     const cities = ENTRIES.filter(e => alive(e, y)).map(e => ({ e, p: popAt(e, y) })).filter(o => o.p).sort((a, b) => b.p - a.p).slice(0, 6);
-    const ppl = PPL.filter(p => adult(p, y)).slice(0, 8);
+    const ppl = balanced(PPL.filter(p => adult(p, y)), 8);
     const tr = TRADE.filter(t => y >= t.start && y <= t.end), mg = MIGS.filter(m => y >= m.start && y <= m.end);
     const hubs = HUBS.filter(h => y >= h.start && y <= h.end);
     const sh = SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 5 && y <= (e.end ?? NOW) + 10).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y)).slice(0, 6);
@@ -1651,7 +1704,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       orderItems.push(item(`<b>${esc(pol.p.n)}</b> ${f != null ? `<span class="band" style="--bc:var(--b-${b})">${b}</span>` : ""}`, fmtSpan(pol.p.s, pol.p.e), f != null ? `${Math.round(f * 100)}% risk of breaking within 25 years (territory model)` : "", goCard(polityCard(pol.p))));
     }
     // People
-    const born = nearby(PPL, lon, lat, 60);
+    // Born here: from the world index (views/atlas/world/: Pantheon, Wikidata people in dense packs, the kernel) once
+    // its time slice is in, else the page's own list. A later visit picks the index up when it arrives.
+    const born = worldBorn(lon, lat, y) || nearby(PPL, lon, lat, 60);
     const here = born.filter(o => adult(o.x, y)).slice(0, 6), ever = born.filter(o => !adult(o.x, y)).slice(0, 6);
     const alivePeople = nearby(PPL.filter(p => adult(p, y)), lon, lat, R_KM).filter(o => o.d > 60).slice(0, 5);
     const pItems = [
@@ -1812,7 +1867,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     yearAnim = requestAnimationFrame(tick);
   }
   yearIn.addEventListener("input", () => { cancelAnimationFrame(yearAnim); stopTime(); setYear(tToYear(yearIn.value / 1000)); });
-  // Play through time: about 40 seconds from 4000 BCE to today, slower where history is denser.
+  // Play through time: about 40 seconds from 300,000 years ago to today (8 of them in deep time), slower where history is denser.
   const playBtn = document.getElementById("playyear");
   let timeRaf = 0, lastT = 0;
   function stopTime() { cancelAnimationFrame(timeRaf); timeRaf = 0; playBtn.textContent = "▶"; playBtn.setAttribute("aria-label", "Play through time"); }
@@ -1824,7 +1879,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   try { const v = localStorage.getItem("atlas.speed"); if (v && [...speedEl.options].some(o => o.value === v)) speedEl.value = speed = v; } catch (e) {}
   playBtn.onclick = () => {
     if (timeRaf) return stopTime();
-    if (state.year >= NOW - 1) setYear(MIN);
+    if (state.year >= NOW - 1) setYear(speed[0] === "y" ? HIST : MIN);
     playBtn.textContent = "❚❚"; playBtn.setAttribute("aria-label", "Pause");
     lastT = performance.now(); yearF = state.year;
     let tF = yearToT(state.year);
@@ -1832,8 +1887,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       const dt = Math.min(100, now - lastT); lastT = now;
       const v = +speed.slice(1);
       if (speed[0] === "y") yearF += v * dt / 1000;
-      else { tF = Math.max(tF, yearToT(yearF)) + v * dt / 40000; yearF = NOW - SPAN * Math.pow(Math.max(0, 1 - tF), CURVE); }
-      if (Math.floor(yearF) > state.year) setYear(Math.floor(yearF));
+      else { tF = Math.max(tF, yearToT(yearF)) + v * dt / 40000; yearF = tToYearF(Math.min(1, tF)); }
+      if (snapYear(Math.floor(yearF)) > state.year) setYear(Math.floor(yearF));
       if (state.year >= NOW) return stopTime();
       timeRaf = requestAnimationFrame(tick);
     };
@@ -1971,7 +2026,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ${(A.views || []).length ? `<div class="sec"><h3 style="border:0;padding:0">Competing explanations</h3>${A.views.map(v => `
         <div class="view"><div class="hd"><span class="nm">${esc(v.name)}</span><span class="sch">${esc(v.school || "")}</span><span class="st ${esc(v.strength || "")}">${esc(v.strength || "")}</span></div>
           <div>${esc(v.claim)}</div>
-          ${v.for ? `<div class="fa"><b>For:</b> ${esc(v.for)}</div>` : ""}${v.against ? `<div class="fa"><b>Against:</b> ${esc(v.against)}</div>` : ""}${srcList(v.sources, live)}</div>`).join("")}</div>` : ""}
+          ${v.for ? `<div class="fa"><b>For:</b> ${esc(v.for)}</div>` : ""}${v.against ? `<div class="fa"><b>Against:</b> ${esc(v.against)}</div>` : ""}${srcList(v.sources, live)}${v.debate && ATLAS.scholar ? `<div class="sch-links">${ATLAS.scholar.debateButton(String(v.debate))}</div>` : ""}</div>`).join("")}</div>` : ""}
       ${(A.whatifs || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What if · simulated, speculative</h3>${A.whatifs.map((w, i) => `
         <button class="whatif" data-w="${i}"><b>${esc(w.q)}</b><span>${esc(w.a)}</span>${w.confidence != null ? `<span class="conf">plausibility ${Math.round(Number(w.confidence) * 100)}%</span>` : ""}</button>`).join("")}</div>` : ""}
       ${(A.unknowns || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What we don't know</h3><ul class="unk">${A.unknowns.map(u => `<li>${esc(u)}</li>`).join("")}</ul></div>` : ""}
@@ -2147,6 +2202,7 @@ JOURNEYS OF IDEAS:\n${cap(JOURNEYS.filter(j => overlaps(j.y0, j.y1, w)).map(j =>
   ];
   // Plugin lenses join the specialist whose lenses they share; a lens nobody owns gets its own specialist.
   for (const d of PLUG) {
+    if (d.specialist && d.specialist.id && !SPECS.some(s => s.id === d.specialist.id)) { SPECS.push({ lenses: ["order"], layers: [d.id], plugs: [], ...d.specialist }); continue; }
     const sp = SPECS.find(s => (d.guide || []).some(l => s.lenses.includes(l)));
     if (sp) { if (!sp.layers.includes(d.id)) sp.layers.push(d.id); (sp.plugs = sp.plugs || []).push(d); }
     else if ((d.guide || []).length) SPECS.push({ id: d.id, name: `${d.name} specialist`, lenses: d.guide.slice(), layers: [d.id], voice: (d.name || d.id).toLowerCase(), plugs: [d], digest: () => "" });
@@ -2161,7 +2217,7 @@ JOURNEYS OF IDEAS:\n${cap(JOURNEYS.filter(j => overlaps(j.y0, j.y1, w)).map(j =>
   const HOUSE = `You are on the Atlas panel: specialist historians who answer Rishi's questions together by driving an interactive world map, each through one lens.
 Rishi wants the feeling of seeing history from a perspective nobody has had. Mix: 55% rigorous, 45% fun. Concrete beats vague: names, numbers, places, years. "We don't know" is a fine answer.
 OUTPUT: JSON Lines only. One JSON object per line, no prose, no markdown, no code fences.
-SOURCE RULES: cite only works you are confident exist (author, title, year) or en.wikipedia.org article URLs you are confident exist. Never invent a URL. Prefer fewer, real sources.`;
+SOURCE RULES: cite only works you are confident exist (author, title, year) or en.wikipedia.org article URLs you are confident exist. Never invent a URL. Prefer fewer, real sources. When a work you lean on is in a BIBLIOGRAPHY below, cite it as {"src":"src:<id>","cite":"Author year","pages":"optional"}: those are checked. Where historians disagree, name the schools and who the evidence favours.`;
   const MAPRULES = `MAP RULES: view.span is how many degrees of longitude the view shows: 300 = whole world, 50 = the Mediterranean, 15 = a country like Italy, 4 = a city and its surroundings. Routes are [lon,lat] pairs (longitude first). Pins mark places not in the index; use real coordinates. Highlight only ids from the indexes below. "layers" switches on map layers that show your evidence: ${LAYERS.map(l => `${l.k} (${l.n})`).join(", ")}.`;
   const roster = () => SPECS.map(s => `${s.id}: ${s.name}, reads ${s.voice}`).join("\n");
   const earlier = () => convo.length ? `\nEARLIER IN THIS CONVERSATION:\n${convo.map(c => `Q: ${c.q}\nA: ${c.a}`).join("\n")}\n` : "";
@@ -2199,7 +2255,7 @@ Lean on YOUR DATA below: it is what the reader sees on the map. Quote its record
 ${MAPRULES}
 
 YOUR DATA (from the Atlas's own layers, inside the window):
-${(() => { try { return sp.digest(w); } catch (e) { console.warn(sp.id, e); return "(this layer's records could not be read)"; } })()}${(sp.plugs || []).map(d => typeof d.index === "function" ? plugIndex(d, w) : "").join("")}
+${(() => { try { return sp.digest(w); } catch (e) { console.warn(sp.id, e); return "(this layer's records could not be read)"; } })()}${(sp.plugs || []).map(d => typeof d.index === "function" ? plugIndex(d, w) : "").join("")}${sp.id !== "historiographer" && ATLAS.scholar ? (() => { try { return ATLAS.scholar.brief(w, sp.lenses); } catch { return ""; } })() : ""}
 
 PLACE INDEX (id|name|lat,lon|start..end):
 ${placeIndex(w)}
@@ -2218,10 +2274,10 @@ Write, in this order:
 1. {"t":"answer","short":"2-4 sentence direct answer that weaves the lenses together","lenses":{"lens name":0.0-1.0 for how much each lens explains, using: ${LENSES.join(", ")}}}
 2. 2 to 4 lines naming the links ACROSS lenses, the chain that only shows when the specialists are heard together:
 {"t":"link","a":step number,"b":step number (a different lens),"why":"one sentence: how a led to, fed, or undercut b"}
-3. 2 to 4 lines: {"t":"view","name":"historian or school","school":"short label","lens":"lens","strength":"strong|medium|weak","claim":"one sentence","for":"evidence for","against":"evidence against","sources":[{"cite":"..."}]}
+3. 2 to 4 lines: {"t":"view","name":"historian or school","school":"short label","lens":"lens","strength":"strong|medium|weak","claim":"one sentence","for":"evidence for","against":"evidence against","sources":[{"cite":"..."}],"debate":"debate:<id> if it is one of the curated debates below"}
 4. 1 or 2 lines: {"t":"whatif","q":"a counterfactual question","a":"2-3 sentences","confidence":0.0-1.0,"year":integer,"view":{"lon":number,"lat":number,"span":number}}
 5. 1 line: {"t":"unknowns","items":["what historians cannot settle", "..."]}
-Where the specialists disagree, say who the evidence favours.`;
+Where the specialists disagree, say who the evidence favours.${(() => { try { return ATLAS.scholar ? ATLAS.scholar.brief(plan.w, null, false) : ""; } catch { return ""; } })()}`;
 
   // use() resolves after the viewer answers; ask() waits for it so an early question is not turned away.
   sampleReady = (async () => {
@@ -2251,7 +2307,7 @@ Where the specialists disagree, say who the evidence favours.`;
       pins: Array.isArray(o.pins) ? o.pins.filter(p => p && isFinite(p.lon) && isFinite(p.lat)).map(p => ({ name: String(p.name || ""), lon: +p.lon, lat: +p.lat })).slice(0, 8) : [],
       routes: Array.isArray(o.routes) ? o.routes.filter(r => r && Array.isArray(r.points)).slice(0, 5) : [],
       confidence: isFinite(o.confidence) ? +o.confidence : null,
-      sources: Array.isArray(o.sources) ? o.sources.filter(s => s && s.cite).map(s => ({ cite: String(s.cite), url: /^https:\/\/en\.wikipedia\.org\//.test(s.url || "") ? s.url : undefined })) : [],
+      sources: Array.isArray(o.sources) ? o.sources.filter(s => s && (s.cite || s.src)).map(s => ({ cite: String(s.cite || s.src), url: /^https:\/\/en\.wikipedia\.org\//.test(s.url || "") ? s.url : undefined, src: ATLAS.scholar && ATLAS.scholar.has(s.src) ? s.src : undefined, pages: s.pages ? String(s.pages) : undefined })) : [],
     };
   }
   const parse = line => { line = line.trim(); if (!line || line[0] !== "{") return null; try { return JSON.parse(line); } catch { return null; } };
@@ -2260,7 +2316,7 @@ Where the specialists disagree, say who the evidence favours.`;
     if (o.t === "answer") { A.short = String(o.short || ""); A.lenses = o.lenses || {}; }
     else if (o.t === "link") { const a = Math.round(o.a) - 1, b = Math.round(o.b) - 1; if (A.steps[a] && A.steps[b] && a !== b) A.links.push({ a, b, why: String(o.why || "") }); }
     else if (o.t === "step") A.steps.push(normStep(o));
-    else if (o.t === "view") A.views.push({ ...o, sources: (o.sources || []).filter(s => s && s.cite) });
+    else if (o.t === "view") A.views.push({ ...o, sources: (o.sources || []).filter(s => s && (s.cite || s.src)).map(s => ({ ...s, cite: s.cite || s.src, src: ATLAS.scholar && ATLAS.scholar.has(s.src) ? s.src : undefined })) });
     else if (o.t === "whatif") { const n = normStep(o); A.whatifs.push({ ...o, view: n.view, year: n.year, pins: [] }); }
     else if (o.t === "unknowns") A.unknowns = (o.items || []).map(String);
     else return false;
@@ -2431,11 +2487,13 @@ Where the specialists disagree, say who the evidence favours.`;
     // The guide, for the Director's "Why?" and "Go deeper": ask the panel (or open a curated tour), and the answer on screen.
     ask: q => { document.getElementById("qbox").value = q; setTab("guide"); document.getElementById("ask").requestSubmit(); },
     get answer() { return state.answer; },
+    // The benchmark (ingest/judge/bench) always wants the live panel, even for a question a curated tour answers.
+    askLive: q => ask(q, false),
   };
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 
   // ---------- eras under the slider: where you are in time, one tap to jump ----------
-  const ERAS = [[MIN, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
+  const ERAS = [[MIN, -70000, "First modern humans"], [-70000, -40000, "Out of Africa"], [-40000, -9700, "Ice Age"], [-9700, HIST, "First farmers"], [HIST, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
     [1450, 1800, "Early modern"], [1800, 1914, "Industrial"], [1914, 1945, "World wars"], [1945, NOW, "Since 1945"]];
   const erasEl = document.getElementById("eras");
   erasEl.innerHTML = ERAS.map(([a, b, n], i) => `<button type="button" data-i="${i}" style="left:${(yearToT(a) * 100).toFixed(2)}%;width:${((yearToT(b) - yearToT(a)) * 100).toFixed(2)}%" title="${esc(n)}, ${esc(fmtYear(a))} to ${esc(fmtYear(b))}">${esc(n)}</button>`).join("");
@@ -2516,7 +2574,7 @@ Where the specialists disagree, say who the evidence favours.`;
   function stepYear(dir, big) {
     stopTime(); cancelAnimationFrame(yearAnim);
     const t = Math.max(0, Math.min(1, yearToT(state.year) + dir * (big ? 0.01 : 0.001)));
-    let y = tToYear(t); if (y === state.year) y += dir;
+    let y = tToYear(t); if (y === state.year) y += dir * grain(y + dir);
     setYear(y);
   }
   document.addEventListener("keydown", ev => {
@@ -2617,6 +2675,7 @@ Where the specialists disagree, say who the evidence favours.`;
     const got = (key, v) => {
       const [kind, id] = key.split(":");
       if (kind === "lens") LENS_DATA[id] = v;
+      else if (key === "people:world") addPeople(v);
       else if (key === "war:wd") { for (const r of v) BATTLES.push(wdBattle(r)); BAT_BY_YEAR = d3.group(BATTLES, b => b.start); }
     };
     let timer = 0;

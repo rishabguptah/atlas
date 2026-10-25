@@ -1,0 +1,566 @@
+{
+ "stories": [
+  {
+   "id": "kaifeng_reform_to_ruin",
+   "title": "From Reform to Ruin: the Northern Song Court",
+   "region": "Kaifeng and the Central Plain",
+   "start": "1058",
+   "end": "1127",
+   "view": {
+    "lon": 114.6,
+    "lat": 34.9,
+    "span": 4.5
+   },
+   "blurb": "Seventy years of argument over how to govern: Wang Anshi's New Policies, Sima Guang's counter-reform, a cycle of purges, Huizong's splendid court, and the Jurchen sieges that ended the Northern Song.",
+   "steps": [
+    {
+     "date": "1058",
+     "date_note": "",
+     "end_date": "",
+     "name": "The Myriad Word Memorial",
+     "place_name": "Kaifeng",
+     "lat": 34.806,
+     "lon": 114.352,
+     "family": "diplomacy",
+     "subtype": "memorial",
+     "who": [
+      "Wang Anshi",
+      "Emperor Renzong"
+     ],
+     "what": "Wang Anshi sent Renzong a long memorial calling for reform of government and of the training of officials.",
+     "why": "It set out the programme he would carry out a decade later.",
+     "wikipedia": "Wang Anshi",
+     "wikidata": "Q319618"
+    },
+    {
+     "date": "1069",
+     "date_note": "",
+     "end_date": "1070",
+     "name": "The New Policies begin",
+     "place_name": "Kaifeng",
+     "lat": 34.803,
+     "lon": 114.348,
+     "family": "diplomacy",
+     "subtype": "law",
+     "who": [
+      "Wang Anshi",
+      "Emperor Shenzong"
+     ],
+     "what": "Shenzong made Wang Anshi assistant councillor, created a Finance Planning Commission and issued the Green Sprouts loan law.",
+     "why": "The young emperor wanted money and soldiers to face the Liao and Western Xia, and the reforms split the bureaucracy into factions.",
+     "wikipedia": "New Policies (Song dynasty)",
+     "wikidata": "Q17035931"
+    },
+    {
+     "date": "1071",
+     "date_note": "",
+     "end_date": "",
+     "name": "Sima Guang withdraws to Luoyang",
+     "place_name": "Luoyang",
+     "lat": 34.668,
+     "lon": 112.454,
+     "family": "culture",
+     "subtype": "retirement",
+     "who": [
+      "Sima Guang"
+     ],
+     "what": "The leading critic of the reforms left court and settled in Luoyang to write history.",
+     "why": "Luoyang became the centre of the opposition while Kaifeng belonged to the reformers.",
+     "wikipedia": "Sima Guang",
+     "wikidata": "Q33566"
+    },
+    {
+     "date": "1074",
+     "date_note": "",
+     "end_date": "",
+     "name": "Drought and the refugee picture",
+     "place_name": "Kaifeng",
+     "lat": 34.8,
+     "lon": 114.395,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [
+      "Zheng Xia",
+      "Wang Anshi",
+      "Emperor Shenzong"
+     ],
+     "what": "During a severe drought a gate official sent Shenzong a drawing of starving refugees, blaming the New Policies.",
+     "why": "The pressure led to Wang Anshi's first resignation.",
+     "wikipedia": "Wang Anshi",
+     "wikidata": "Q319618"
+    },
+    {
+     "date": "1079",
+     "date_note": "Arrest in 1079, sentence early 1080",
+     "end_date": "1080",
+     "name": "Crow Terrace Poetry Trial",
+     "place_name": "Censorate, Kaifeng",
+     "lat": 34.802,
+     "lon": 114.345,
+     "family": "unrest",
+     "subtype": "trial",
+     "who": [
+      "Su Shi"
+     ],
+     "what": "Su Shi was jailed and tried for poems said to slander the government, then exiled to Huangzhou.",
+     "why": "Factional conflict now reached into literature, and dozens of his friends were punished.",
+     "wikipedia": "Crow Terrace Poetry Trial",
+     "wikidata": "Q16209402"
+    },
+    {
+     "date": "1084",
+     "date_note": "",
+     "end_date": "",
+     "name": "Zizhi Tongjian presented",
+     "place_name": "Luoyang",
+     "lat": 34.668,
+     "lon": 112.454,
+     "family": "culture",
+     "subtype": "history",
+     "who": [
+      "Sima Guang"
+     ],
+     "what": "Sima Guang presented his chronicle of 1,362 years of history to the throne.",
+     "why": "The work offered rulers lessons from the past and showed the opposition's idea of good government.",
+     "wikipedia": "Zizhi Tongjian",
+     "wikidata": "Q207062"
+    },
+    {
+     "date": "1085-04-01",
+     "date_note": "",
+     "end_date": "",
+     "name": "Shenzong dies, the regency begins",
+     "place_name": "Kaifeng palace",
+     "lat": 34.808,
+     "lon": 114.352,
+     "family": "diplomacy",
+     "subtype": "succession",
+     "who": [
+      "Emperor Shenzong",
+      "Emperor Zhezong",
+      "Empress Dowager Gao"
+     ],
+     "what": "Shenzong died and his mother ruled for the eight-year-old Zhezong.",
+     "why": "The regent recalled the conservatives and turned the government around.",
+     "wikipedia": "Emperor Shenzong of Song",
+     "wikidata": "Q7483"
+    },
+    {
+     "date": "1086",
+     "date_note": "",
+     "end_date": "",
+     "name": "The Yuanyou repeal",
+     "place_name": "Kaifeng",
+     "lat": 34.806,
+     "lon": 114.352,
+     "family": "diplomacy",
+     "subtype": "policy_reversal",
+     "who": [
+      "Sima Guang",
+      "Su Shi"
+     ],
+     "what": "As chief councillor Sima Guang abolished most of the New Policies before dying in office that autumn.",
+     "why": "Reform and counter-reform became a cycle that each side would repeat.",
+     "wikipedia": "Sima Guang",
+     "wikidata": "Q33566"
+    },
+    {
+     "date": "1094",
+     "date_note": "",
+     "end_date": "",
+     "name": "The Shaosheng restoration",
+     "place_name": "Kaifeng",
+     "lat": 34.806,
+     "lon": 114.352,
+     "family": "diplomacy",
+     "subtype": "policy_restoration",
+     "who": [
+      "Emperor Zhezong",
+      "Zhang Dun"
+     ],
+     "what": "Ruling in his own right, Zhezong restored the reforms and exiled the Yuanyou officials.",
+     "why": "The New Policies returned, but now as a weapon in factional revenge.",
+     "wikipedia": "Emperor Zhezong of Song"
+    },
+    {
+     "date": "1102",
+     "date_note": "Stele erected 1102, enlarged 1104",
+     "end_date": "1104",
+     "name": "The blacklist stele",
+     "place_name": "Kaifeng palace",
+     "lat": 34.81,
+     "lon": 114.355,
+     "family": "unrest",
+     "subtype": "purge",
+     "who": [
+      "Cai Jing",
+      "Emperor Huizong"
+     ],
+     "what": "Cai Jing had the names of Yuanyou officials carved in stone and their families barred from office.",
+     "why": "Factional purges reached their height and the political class was hollowed out.",
+     "wikipedia": "Cai Jing",
+     "wikidata": "Q1146610"
+    },
+    {
+     "date": "1120",
+     "date_note": "Negotiations ran from 1118 to 1123",
+     "end_date": "",
+     "name": "Alliance Conducted at Sea",
+     "place_name": "Kaifeng",
+     "lat": 34.806,
+     "lon": 114.352,
+     "family": "diplomacy",
+     "subtype": "alliance",
+     "who": [
+      "Emperor Huizong",
+      "Tong Guan"
+     ],
+     "what": "The Song agreed with the Jurchen Jin to destroy the Liao together.",
+     "why": "Song military weakness was exposed in the campaign, inviting the Jin to turn south.",
+     "wikipedia": "Alliance Conducted at Sea",
+     "wikidata": "Q1004220"
+    },
+    {
+     "date": "1126-01",
+     "date_note": "",
+     "end_date": "1126-03",
+     "name": "Abdication and the first siege",
+     "place_name": "Kaifeng",
+     "lat": 34.79,
+     "lon": 114.3,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Emperor Huizong",
+      "Emperor Qinzong",
+      "Li Gang",
+      "Chen Dong"
+     ],
+     "what": "Huizong abdicated, Li Gang held the walls, and students led by Chen Dong protested at the palace gate until the Jin withdrew for an indemnity.",
+     "why": "The capital survived once, but the court failed to prepare for the Jin's return.",
+     "wikipedia": "Li Gang (Song dynasty)",
+     "wikidata": "Q1391913"
+    },
+    {
+     "date": "1127-01",
+     "date_note": "",
+     "end_date": "1127-04",
+     "name": "Fall of Kaifeng and the Jingkang incident",
+     "place_name": "Kaifeng",
+     "lat": 34.795,
+     "lon": 114.33,
+     "family": "war",
+     "subtype": "capture",
+     "who": [
+      "Emperor Qinzong",
+      "Emperor Huizong",
+      "Zhang Bangchang"
+     ],
+     "what": "The Jin took the city, plundered it, set up a puppet ruler, and marched both emperors and the imperial clan north.",
+     "why": "The Northern Song ended and north China passed to the Jin.",
+     "wikipedia": "Jingkang incident",
+     "wikidata": "Q1326831"
+    },
+    {
+     "date": "1127-06",
+     "date_note": "",
+     "end_date": "",
+     "name": "A new emperor at Yingtian",
+     "place_name": "Yingtian (Shangqiu)",
+     "lat": 34.41,
+     "lon": 115.65,
+     "family": "diplomacy",
+     "subtype": "enthronement",
+     "who": [
+      "Emperor Gaozong",
+      "Li Gang",
+      "Zong Ze"
+     ],
+     "what": "Prince Kang, the one son of Huizong still free, was enthroned at the Southern Capital.",
+     "why": "The dynasty survived and soon moved south, beginning the Southern Song.",
+     "wikipedia": "Emperor Gaozong of Song",
+     "wikidata": "Q7489"
+    }
+   ],
+   "status": "draft",
+   "pack": "kaifeng_1050_1127"
+  },
+  {
+   "id": "kaifeng_city_of_canals",
+   "title": "City on the Bian: Money, Craft and Ideas in Song Kaifeng",
+   "region": "Kaifeng and the Central Plain",
+   "start": "1057",
+   "end": "1127",
+   "view": {
+    "lon": 114.8,
+    "lat": 34.8,
+    "span": 5.0
+   },
+   "blurb": "How the world's largest city lived: grain fleets on the Bian canal, examinations and academies, floods on the Yellow River, state pharmacies and paper money, clock towers and building manuals, and the paintings that recorded it all before the Jurchen carried its treasures away.",
+   "steps": [
+    {
+     "date": "1057",
+     "date_note": "",
+     "end_date": "",
+     "name": "The great examination of 1057",
+     "place_name": "Kaifeng",
+     "lat": 34.78,
+     "lon": 114.33,
+     "family": "culture",
+     "subtype": "examination",
+     "who": [
+      "Ouyang Xiu",
+      "Su Shi",
+      "Su Zhe",
+      "Zeng Gong",
+      "Zhang Zai",
+      "Cheng Hao"
+     ],
+     "what": "Ouyang Xiu's examination passed a remarkable group of future writers and philosophers.",
+     "why": "The examination system drew talent from all over the empire into the capital.",
+     "wikipedia": "Ouyang Xiu",
+     "wikidata": "Q334323"
+    },
+    {
+     "date": "1060",
+     "date_note": "",
+     "end_date": "",
+     "name": "New Book of Tang",
+     "place_name": "Kaifeng",
+     "lat": 34.806,
+     "lon": 114.352,
+     "family": "culture",
+     "subtype": "history",
+     "who": [
+      "Ouyang Xiu",
+      "Song Qi"
+     ],
+     "what": "The rewritten official history of the Tang was presented to the throne.",
+     "why": "Song scholars used the past to argue about moral government in the present.",
+     "wikipedia": "New Book of Tang",
+     "wikidata": "Q386073"
+    },
+    {
+     "date": "1072",
+     "date_note": "",
+     "end_date": "",
+     "name": "Early Spring",
+     "place_name": "Kaifeng palace",
+     "lat": 34.808,
+     "lon": 114.35,
+     "family": "culture",
+     "subtype": "painting",
+     "who": [
+      "Guo Xi"
+     ],
+     "what": "The court painter Guo Xi painted his great landscape of a mountain in spring mist.",
+     "why": "Monumental landscape became the signature art of the Northern Song court.",
+     "wikipedia": "Early Spring (painting)",
+     "wikidata": "Q5136665"
+    },
+    {
+     "date": "1072",
+     "date_note": "Approximate",
+     "end_date": "",
+     "name": "Levelling the Bian canal",
+     "place_name": "Bian River, east of Kaifeng",
+     "lat": 34.785,
+     "lon": 114.4,
+     "family": "culture",
+     "subtype": "survey",
+     "who": [
+      "Shen Kuo"
+     ],
+     "what": "Shen Kuo measured the fall of the Bian canal using a chain of dykes.",
+     "why": "The canal carried the grain that fed the capital, and Yellow River silt constantly threatened it.",
+     "wikipedia": "Shen Kuo",
+     "wikidata": "Q270085"
+    },
+    {
+     "date": "1072",
+     "date_note": "",
+     "end_date": "",
+     "name": "The state goes into trade",
+     "place_name": "Kaifeng",
+     "lat": 34.795,
+     "lon": 114.345,
+     "family": "culture",
+     "subtype": "market_policy",
+     "who": [
+      "Wang Anshi"
+     ],
+     "what": "The State Trade law set up a market bureau in Kaifeng to buy goods and lend to small merchants.",
+     "why": "The reformers tried to use the capital's commerce to fund the state and curb big dealers.",
+     "wikipedia": "New Policies (Song dynasty)",
+     "wikidata": "Q17035931"
+    },
+    {
+     "date": "1077",
+     "date_note": "",
+     "end_date": "",
+     "name": "The Yellow River reaches Xuzhou",
+     "place_name": "Xuzhou",
+     "lat": 34.262,
+     "lon": 117.184,
+     "family": "disaster",
+     "subtype": "flood",
+     "who": [
+      "Su Shi"
+     ],
+     "what": "After a breach in Chanzhou, floodwaters surrounded Xuzhou and Su Shi led the work to save the city.",
+     "why": "The shifting Yellow River was the great hazard of the Song heartland.",
+     "wikipedia": "Su Shi",
+     "wikidata": "Q36020"
+    },
+    {
+     "date": "1078",
+     "date_note": "",
+     "end_date": "",
+     "name": "Coal for the iron works",
+     "place_name": "Xuzhou",
+     "lat": 34.3,
+     "lon": 117.15,
+     "family": "culture",
+     "subtype": "mining",
+     "who": [
+      "Su Shi"
+     ],
+     "what": "Coal was found near Xuzhou and used to smelt iron, which Su Shi celebrated in verse.",
+     "why": "Coal and iron were part of the Song's early industrial growth.",
+     "wikipedia": "Su Shi",
+     "wikidata": "Q36020"
+    },
+    {
+     "date": "1079",
+     "date_note": "Approximate",
+     "end_date": "",
+     "name": "Clear water for the Bian",
+     "place_name": "Bian canal intake, Sishui",
+     "lat": 34.82,
+     "lon": 113.3,
+     "family": "culture",
+     "subtype": "canal_works",
+     "who": [
+      "Emperor Shenzong"
+     ],
+     "what": "Water from the Luo River was led into the Bian canal to cut down Yellow River silt.",
+     "why": "Keeping the grain route open was a constant engineering struggle.",
+     "wikipedia": "Grand Canal (China)",
+     "wikidata": "Q31347"
+    },
+    {
+     "date": "1088",
+     "date_note": "Begun 1088, finished about 1092",
+     "end_date": "1092",
+     "name": "Su Song's clock tower",
+     "place_name": "Kaifeng palace",
+     "lat": 34.81,
+     "lon": 114.35,
+     "family": "culture",
+     "subtype": "clock_tower",
+     "who": [
+      "Su Song",
+      "Han Gonglian"
+     ],
+     "what": "A water-driven astronomical clock tower was built in the palace.",
+     "why": "It was among the most advanced machines of its time.",
+     "wikipedia": "Su Song",
+     "wikidata": "Q1265657"
+    },
+    {
+     "date": "1103",
+     "date_note": "",
+     "end_date": "",
+     "name": "Yingzao Fashi printed",
+     "place_name": "Kaifeng",
+     "lat": 34.8,
+     "lon": 114.345,
+     "family": "culture",
+     "subtype": "treatise",
+     "who": [
+      "Li Jie"
+     ],
+     "what": "The state building manual was printed for use across the empire.",
+     "why": "Printing spread standard technical knowledge as well as classics.",
+     "wikipedia": "Yingzao Fashi",
+     "wikidata": "Q836526"
+    },
+    {
+     "date": "1105",
+     "date_note": "",
+     "end_date": "",
+     "name": "Paper money renamed and overissued",
+     "place_name": "Kaifeng",
+     "lat": 34.8,
+     "lon": 114.345,
+     "family": "culture",
+     "subtype": "paper_money",
+     "who": [
+      "Cai Jing"
+     ],
+     "what": "The court renamed its paper notes qianyin and extended them, but printed too many.",
+     "why": "The Song were pioneers of state paper money and of its inflation.",
+     "wikipedia": "Jiaozi (currency)",
+     "wikidata": "Q953729"
+    },
+    {
+     "date": "1110",
+     "date_note": "Approximate; described in a memoir of the city",
+     "end_date": "",
+     "name": "Market days at Xiangguo Temple",
+     "place_name": "Daxiangguo Temple, Kaifeng",
+     "lat": 34.792,
+     "lon": 114.355,
+     "family": "culture",
+     "subtype": "market",
+     "who": [
+      "Meng Yuanlao"
+     ],
+     "what": "The great monastery's courtyards filled with traders selling animals, household goods, books and antiques several days each month.",
+     "why": "Commerce had spread through the whole city, even into its temples.",
+     "wikipedia": "Dongjing Meng Hua Lu",
+     "wikidata": "Q1241399"
+    },
+    {
+     "date": "1110",
+     "date_note": "Date of painting uncertain",
+     "end_date": "",
+     "name": "Along the River During the Qingming Festival",
+     "place_name": "Bian River, Kaifeng",
+     "lat": 34.785,
+     "lon": 114.4,
+     "family": "culture",
+     "subtype": "painting",
+     "who": [
+      "Zhang Zeduan"
+     ],
+     "what": "Zhang Zeduan painted the crowded life of boats, bridges and shops along the Bian.",
+     "why": "It is the most vivid record of everyday life in a Song city.",
+     "wikipedia": "Along the River During the Qingming Festival",
+     "wikidata": "Q714802"
+    },
+    {
+     "date": "1127-02",
+     "date_note": "",
+     "end_date": "1127-04",
+     "name": "The treasures carried north",
+     "place_name": "Kaifeng",
+     "lat": 34.808,
+     "lon": 114.352,
+     "family": "war",
+     "subtype": "plunder",
+     "who": [
+      "Emperor Huizong",
+      "Emperor Qinzong"
+     ],
+     "what": "The Jin took the capital's books, printing blocks, instruments and craftsmen north with the captive emperors.",
+     "why": "The city's century as the centre of Chinese economy and culture ended.",
+     "wikipedia": "Jingkang incident",
+     "wikidata": "Q1326831"
+    }
+   ],
+   "status": "draft",
+   "pack": "kaifeng_1050_1127"
+  }
+ ]
+}

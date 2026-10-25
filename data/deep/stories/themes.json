@@ -1,0 +1,1931 @@
+{
+ "stories": [
+  {
+   "id": "trade_hubs",
+   "title": "Trade hubs, Dilmun to New York",
+   "region": "World",
+   "start": -2300,
+   "end": 1825,
+   "view": {
+    "lon": 50.0,
+    "lat": 30.0,
+    "span": 180
+   },
+   "blurb": "Which ports and markets sat at the centre of world trade, and why did the centre keep moving?",
+   "steps": [
+    {
+     "date": "-2300",
+     "name": "Dilmun",
+     "place_name": "Qal'at al-Bahrain",
+     "lat": 26.23,
+     "lon": 50.52,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Inscriptions of Sargon of Akkad boast that ships from Dilmun, Magan and Meluhha moored at the quay of his capital; Dilmun, on Bahrain, was the go-between for Mesopotamian grain and Omani copper and Indus goods.",
+     "why": "The first trade hub we can name was an island with fresh springs halfway down the Gulf, a middleman between richer neighbours.",
+     "wikipedia": "Dilmun",
+     "date_note": "c.",
+     "wikidata": "Q748846"
+    },
+    {
+     "date": "-1350",
+     "name": "Ugarit",
+     "place_name": "Ugarit (Ras Shamra)",
+     "lat": 35.6,
+     "lon": 35.78,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Ugarit's harbour at Minet el-Beida linked Egypt, the Hittites, Cyprus and Mesopotamia, and its scribes kept archives in several languages and wrote a 30-sign cuneiform alphabet.",
+     "why": "A Bronze Age port grew rich by sitting where empires met; it was destroyed around 1185 BCE in the Late Bronze Age collapse.",
+     "wikipedia": "Ugarit",
+     "date_note": "c.",
+     "wikidata": "Q191369"
+    },
+    {
+     "date": "-0970",
+     "name": "Hiram I of Tyre",
+     "place_name": "Tyre",
+     "lat": 33.27,
+     "lon": 35.2,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Hiram I"
+     ],
+     "what": "King Hiram I of Tyre traded cedar and craftsmen to Solomon of Israel for farm produce, and Tyrian ships began the Phoenician trade network that later founded Carthage and Gades.",
+     "why": "Tyre turned a small island city into the hub of a sea network spanning the whole Mediterranean.",
+     "wikipedia": "Hiram I",
+     "date_note": "c.; reign dates approximate",
+     "wikidata": "Q467115"
+    },
+    {
+     "date": "-0331",
+     "name": "Founding of Alexandria",
+     "place_name": "Alexandria",
+     "lat": 31.2,
+     "lon": 29.92,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "Alexander the Great founded Alexandria on the coast west of the Nile delta; under the Ptolemies it became the largest port of the Mediterranean, shipping Egyptian grain and Indian goods.",
+     "why": "Alexandria joined the Mediterranean to the Nile and the Red Sea routes, and stayed a leading port for nearly a thousand years.",
+     "wikipedia": "Alexandria",
+     "wikidata": "Q87"
+    },
+    {
+     "date": "0750",
+     "name": "Tang Chang'an",
+     "place_name": "Chang'an (Xi'an)",
+     "lat": 34.27,
+     "lon": 108.94,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Tang Chang'an, a walled grid of about 84 square kilometres, had an East Market and a West Market where Sogdian, Persian and Uyghur merchants sold horses, silver, spices and silk.",
+     "why": "The eastern end of the Silk Roads was probably the largest city in the world, drawing trade across Asia by land.",
+     "wikipedia": "Chang'an",
+     "date_note": "c."
+    },
+    {
+     "date": "0762",
+     "name": "Founding of Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.38,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Al-Mansur"
+     ],
+     "what": "The Abbasid caliph al-Mansur founded his Round City on the Tigris, near where the Tigris and Euphrates come closest, and within decades Baghdad was the largest city of the Islamic world.",
+     "why": "Baghdad sat where river routes from the Gulf met caravan roads, making it the centre of trade between the Indian Ocean and the Mediterranean.",
+     "wikipedia": "Round City of Baghdad",
+     "wikidata": "Q1191316"
+    },
+    {
+     "date": "1284",
+     "name": "Venice mints the ducat",
+     "place_name": "Venice",
+     "lat": 45.44,
+     "lon": 12.34,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Giovanni Dandolo"
+     ],
+     "what": "Under Doge Giovanni Dandolo Venice began minting a gold ducat of about 3.5 grams, which kept its weight and purity for five centuries.",
+     "why": "A trusted coin and state-run convoys to Alexandria and the Black Sea made Venice the hub of Europe's trade with the East.",
+     "wikipedia": "Ducat",
+     "wikidata": "Q202018"
+    },
+    {
+     "date": "1400",
+     "name": "Founding of the Malacca Sultanate",
+     "place_name": "Malacca",
+     "lat": 2.19,
+     "lon": 102.25,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Parameswara of Malacca"
+     ],
+     "what": "Parameswara, a prince from Sumatra, founded Malacca on the strait; Ming fleets under Zheng He visited from 1405 and backed the new port against Siam.",
+     "why": "Malacca controlled the narrow strait every ship between India and China had to pass, and waited there for the monsoon to turn.",
+     "wikipedia": "Malacca Sultanate",
+     "date_note": "c.",
+     "wikidata": "Q46652"
+    },
+    {
+     "date": "1531",
+     "name": "Antwerp Bourse opens",
+     "place_name": "Antwerp",
+     "lat": 51.22,
+     "lon": 4.4,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Antwerp opened a purpose-built exchange building where merchants from across Europe traded bills and commodities, while Portuguese spices and German silver met in the city.",
+     "why": "Antwerp became the hub of Europe's first global trade, before war and the Spanish sack of 1576 drove merchants north.",
+     "wikipedia": "Stock Exchange, Antwerp",
+     "wikidata": "Q2127864"
+    },
+    {
+     "date": "1602-03-20",
+     "name": "Founding of the Dutch East India Company",
+     "place_name": "Amsterdam",
+     "lat": 52.37,
+     "lon": 4.9,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "The States General chartered the Dutch East India Company (VOC), whose shares, with the Amsterdam chamber holding about half the capital, were traded on a permanent market in Amsterdam.",
+     "why": "Amsterdam combined shipping, cheap credit and a share market, and ran the spice trade for most of the 17th century.",
+     "wikipedia": "Dutch East India Company",
+     "wikidata": "Q159766"
+    },
+    {
+     "date": "1802-08-27",
+     "name": "West India Docks open",
+     "place_name": "London",
+     "lat": 51.51,
+     "lon": -0.02,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "The West India Docks opened on the Isle of Dogs, the first of London's enclosed wet docks, built to unload sugar and rum safely away from river thieves.",
+     "why": "London's docks, insurers and banks made it the centre of world trade in the 19th century.",
+     "wikipedia": "West India Docks",
+     "wikidata": "Q1642944"
+    },
+    {
+     "date": "1819-02-06",
+     "name": "1819 Singapore Treaty",
+     "place_name": "Singapore",
+     "lat": 1.29,
+     "lon": 103.85,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Stamford Raffles"
+     ],
+     "what": "Stamford Raffles signed a treaty with Sultan Hussein Shah and the Temenggong of Johor letting the British East India Company set up a trading post at Singapore, run as a free port.",
+     "why": "Singapore took over Malacca's old role at the strait, and free trade made it a hub within a few decades.",
+     "wikipedia": "1819 Singapore Treaty",
+     "wikidata": "Q111032472"
+    },
+    {
+     "date": "1825-11",
+     "name": "Opening of the Erie Canal",
+     "place_name": "New York City",
+     "lat": 40.7,
+     "lon": -74.01,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "DeWitt Clinton"
+     ],
+     "what": "Governor DeWitt Clinton poured Lake Erie water into New York harbour to mark the completion of the 584 km Erie Canal from Buffalo to the Hudson.",
+     "why": "The canal made New York the cheapest gateway to the American interior, and it soon passed every other American port.",
+     "wikipedia": "Erie Canal",
+     "date_note": "ceremony of 4 November 1825",
+     "wikidata": "Q459578"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "seven_wonders",
+   "title": "The seven wonders, built and lost",
+   "region": "Eastern Mediterranean",
+   "start": -2560,
+   "end": 1522,
+   "view": {
+    "lon": 30.0,
+    "lat": 34.0,
+    "span": 28
+   },
+   "blurb": "When were the seven wonders of the ancient world built, and what destroyed six of them?",
+   "steps": [
+    {
+     "date": "-2560",
+     "name": "Great Pyramid of Giza",
+     "place_name": "Giza",
+     "lat": 29.98,
+     "lon": 31.13,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Khufu"
+     ],
+     "what": "The pharaoh Khufu's pyramid was built of about 2.3 million stone blocks to a height of about 146 metres.",
+     "why": "The oldest wonder is the only one still standing; it was the tallest building in the world for almost 4,000 years.",
+     "wikipedia": "Great Pyramid of Giza",
+     "date_note": "c.",
+     "wikidata": "Q37200"
+    },
+    {
+     "date": "-0600",
+     "name": "Hanging Gardens of Babylon",
+     "place_name": "Babylon",
+     "lat": 32.54,
+     "lon": 44.42,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Nebuchadnezzar II"
+     ],
+     "what": "Greek writers said Nebuchadnezzar II built terraced gardens watered by machines in Babylon, but no Babylonian text mentions them and no trace has been found.",
+     "why": "The only wonder whose existence is doubted; some scholars think the story describes Sennacherib's gardens at Nineveh.",
+     "wikipedia": "Hanging Gardens of Babylon",
+     "date_note": "c.; existence disputed",
+     "wikidata": "Q41931"
+    },
+    {
+     "date": "-0550",
+     "name": "Temple of Artemis rebuilt",
+     "place_name": "Ephesus",
+     "lat": 37.95,
+     "lon": 27.36,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Croesus"
+     ],
+     "what": "King Croesus of Lydia paid for much of a huge marble temple to Artemis at Ephesus, with more than a hundred columns.",
+     "why": "The temple was a shrine and a bank for the Ionian world, and Greek writers rated it above the other wonders.",
+     "wikipedia": "Temple of Artemis",
+     "date_note": "c.",
+     "wikidata": "Q43018"
+    },
+    {
+     "date": "-0435",
+     "name": "Statue of Zeus at Olympia",
+     "place_name": "Olympia",
+     "lat": 37.64,
+     "lon": 21.63,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Phidias"
+     ],
+     "what": "The sculptor Phidias made a seated Zeus about 12 metres tall in gold and ivory for the temple at Olympia, home of the Olympic Games.",
+     "why": "The most famous cult statue of the Greek world stood for about eight centuries.",
+     "wikipedia": "Statue of Zeus at Olympia",
+     "date_note": "c.",
+     "wikidata": "Q46239"
+    },
+    {
+     "date": "-0356",
+     "name": "Herostratus burns the Temple of Artemis",
+     "place_name": "Ephesus",
+     "lat": 37.95,
+     "lon": 27.36,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [
+      "Herostratus"
+     ],
+     "what": "A man named Herostratus set fire to the Temple of Artemis to make himself famous; the Ephesians later rebuilt it on the same plan.",
+     "why": "The first wonder lost was destroyed by one man's arson, though it was rebuilt.",
+     "wikipedia": "Herostratus",
+     "date_note": "traditional date",
+     "wikidata": "Q244944"
+    },
+    {
+     "date": "-0350",
+     "name": "Mausoleum at Halicarnassus",
+     "place_name": "Halicarnassus (Bodrum)",
+     "lat": 37.04,
+     "lon": 27.42,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Mausolus",
+      "Artemisia II of Caria"
+     ],
+     "what": "The tomb of Mausolus, ruler of Caria, finished under his widow Artemisia, rose about 45 metres with sculpture by four leading Greek artists.",
+     "why": "It gave the word 'mausoleum' to every language in Europe.",
+     "wikipedia": "Mausoleum at Halicarnassus",
+     "date_note": "c.",
+     "wikidata": "Q45368"
+    },
+    {
+     "date": "-0280",
+     "name": "Colossus of Rhodes",
+     "place_name": "Rhodes",
+     "lat": 36.45,
+     "lon": 28.23,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Chares of Lindos"
+     ],
+     "what": "Chares of Lindos finished a bronze statue of the sun god Helios about 33 metres tall, paid for by selling siege equipment left behind by Demetrius I.",
+     "why": "Rhodes built its wonder to celebrate surviving a siege of 305-304 BCE.",
+     "wikipedia": "Colossus of Rhodes",
+     "date_note": "c.",
+     "wikidata": "Q41553"
+    },
+    {
+     "date": "-0280",
+     "name": "Lighthouse of Alexandria",
+     "place_name": "Alexandria",
+     "lat": 31.21,
+     "lon": 29.89,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Sostratus of Cnidus"
+     ],
+     "what": "On the island of Pharos the Ptolemies built a lighthouse more than 100 metres tall, often credited to the architect Sostratus of Cnidus.",
+     "why": "The last wonder built was also the most useful: it guided grain ships into the busiest harbour of the Mediterranean.",
+     "wikipedia": "Lighthouse of Alexandria",
+     "date_note": "c.; completed under Ptolemy II",
+     "wikidata": "Q43244"
+    },
+    {
+     "date": "-0226",
+     "name": "Colossus falls in an earthquake",
+     "place_name": "Rhodes",
+     "lat": 36.45,
+     "lon": 28.23,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "An earthquake snapped the Colossus at the knees; the Rhodians declined to rebuild it and the ruins lay on the ground for about 800 years.",
+     "why": "The shortest-lived wonder stood for only about 54 years.",
+     "wikipedia": "Colossus of Rhodes",
+     "date_note": "c.",
+     "wikidata": "Q41553"
+    },
+    {
+     "date": "-0140",
+     "name": "Antipater of Sidon's list",
+     "place_name": "Sidon",
+     "lat": 33.56,
+     "lon": 35.37,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Antipater of Sidon"
+     ],
+     "what": "The poet Antipater of Sidon wrote an epigram naming seven sights, close to the list we use today, though with the walls of Babylon instead of the lighthouse.",
+     "why": "The 'seven wonders' were a Greek tourist list, written down after one of them had already fallen.",
+     "wikipedia": "Antipater of Sidon",
+     "date_note": "c.",
+     "wikidata": "Q114280"
+    },
+    {
+     "date": "0262",
+     "name": "Goths sack the Temple of Artemis",
+     "place_name": "Ephesus",
+     "lat": 37.95,
+     "lon": 27.36,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [],
+     "what": "Gothic raiders sacked Ephesus and damaged the temple; it was not restored, and in the Christian era its stones were carried off for other buildings.",
+     "why": "War and then religious change finished the temple.",
+     "wikipedia": "Temple of Artemis",
+     "date_note": "c.; often given as 262 or 268",
+     "wikidata": "Q43018"
+    },
+    {
+     "date": "0475",
+     "name": "Statue of Zeus destroyed",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.97,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "According to one account the statue, moved to a palace in Constantinople, burned in a great fire in 475; others say it perished at Olympia.",
+     "why": "The pagan temples were closed and their treasures removed or lost.",
+     "wikipedia": "Statue of Zeus at Olympia",
+     "date_note": "fate and date disputed",
+     "wikidata": "Q46239"
+    },
+    {
+     "date": "1303-08-08",
+     "name": "1303 Crete earthquake",
+     "place_name": "Alexandria",
+     "lat": 31.21,
+     "lon": 29.89,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "A strong earthquake in the eastern Mediterranean, with a tsunami, badly damaged the Pharos, already weakened by earlier quakes.",
+     "why": "Earthquakes, not war, brought down the lighthouse after about 1,600 years.",
+     "wikipedia": "1303 Crete earthquake",
+     "wikidata": "Q1485683"
+    },
+    {
+     "date": "1477",
+     "name": "Citadel of Qaitbay",
+     "place_name": "Alexandria",
+     "lat": 31.21,
+     "lon": 29.89,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Qaitbay"
+     ],
+     "what": "The Mamluk sultan Qaitbay built a fort on the lighthouse site, reusing some of its fallen stone.",
+     "why": "The last trace of the lighthouse above ground was folded into a fort.",
+     "wikipedia": "Citadel of Qaitbay",
+     "wikidata": "Q1938065"
+    },
+    {
+     "date": "1522",
+     "name": "Mausoleum stones used for Bodrum Castle",
+     "place_name": "Bodrum",
+     "lat": 37.03,
+     "lon": 27.43,
+     "family": "war",
+     "subtype": "building",
+     "who": [],
+     "what": "The Knights Hospitaller took stone from the Mausoleum, already ruined by earthquakes, to strengthen their Castle of St Peter against the Ottomans.",
+     "why": "Of the seven, only the Great Pyramid remained; the rest were lost to earthquakes, fire, raids and reuse.",
+     "wikipedia": "Bodrum Castle",
+     "date_note": "stones reused from 1494 to 1522",
+     "wikidata": "Q1113602"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "lost_cities",
+   "title": "Lost cities and why they died",
+   "region": "World",
+   "start": -1900,
+   "end": 1565,
+   "view": {
+    "lon": 40.0,
+    "lat": 25.0,
+    "span": 200
+   },
+   "blurb": "Great cities have been emptied by war, rivers that moved, failing trade and changing climate; which killed which?",
+   "steps": [
+    {
+     "date": "-1900",
+     "name": "Decline of Mohenjo-daro",
+     "place_name": "Mohenjo-daro",
+     "lat": 27.33,
+     "lon": 68.14,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "The planned brick city of perhaps 40,000 people on the Indus, with drains and a great bath, was gradually abandoned.",
+     "why": "No conqueror is needed to explain it; shifting rivers and a weaker monsoon are the leading explanations.",
+     "wikipedia": "Mohenjo-daro",
+     "date_note": "c.",
+     "wikidata": "Q5725"
+    },
+    {
+     "date": "-0330",
+     "name": "Burning of Persepolis",
+     "place_name": "Persepolis",
+     "lat": 29.93,
+     "lon": 52.89,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Alexander the Great"
+     ],
+     "what": "After taking the Persian ceremonial capital, Alexander's army looted it and burned the palace of Xerxes.",
+     "why": "Persepolis died with the empire that built it; it had no other reason to exist.",
+     "wikipedia": "Persepolis",
+     "wikidata": "Q129072"
+    },
+    {
+     "date": "-0275",
+     "name": "Babylon emptied for Seleucia",
+     "place_name": "Babylon",
+     "lat": 32.54,
+     "lon": 44.42,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Antiochus I Soter"
+     ],
+     "what": "The Seleucid king Antiochus I moved many of Babylon's people to the new capital of Seleucia on the Tigris.",
+     "why": "Babylon was not destroyed in one blow; it faded as power and trade moved to a new city.",
+     "wikipedia": "Seleucia",
+     "date_note": "c.",
+     "wikidata": "Q1136681"
+    },
+    {
+     "date": "-0146",
+     "name": "Siege of Carthage",
+     "place_name": "Carthage",
+     "lat": 36.85,
+     "lon": 10.32,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Scipio Aemilianus"
+     ],
+     "what": "A Roman army under Scipio Aemilianus stormed Carthage after a three-year siege, burned it and sold about 50,000 survivors into slavery.",
+     "why": "A rival city was wiped out on purpose; Rome later refounded it as a Roman colony.",
+     "wikipedia": "Siege of Carthage (Third Punic War)",
+     "date_note": "c.; spring 146 BCE",
+     "wikidata": "Q815160"
+    },
+    {
+     "date": "0273",
+     "name": "Aurelian sacks Palmyra",
+     "place_name": "Palmyra",
+     "lat": 34.55,
+     "lon": 38.27,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Aurelian",
+      "Zenobia"
+     ],
+     "what": "After Queen Zenobia's breakaway empire was defeated, Palmyra revolted again and the emperor Aurelian's troops sacked it.",
+     "why": "A caravan city lived on desert trade between Rome and Persia; once punished it never regained that trade.",
+     "wikipedia": "Palmyra",
+     "wikidata": "Q5747"
+    },
+    {
+     "date": "0550",
+     "name": "Burning of central Teotihuacan",
+     "place_name": "Teotihuacan",
+     "lat": 19.69,
+     "lon": -98.84,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "The ceremonial centre of Teotihuacan, a city of perhaps 100,000 or more, was burned and the city declined over the following century.",
+     "why": "The burning seems targeted at elite buildings, so internal revolt, perhaps after drought, is a leading theory.",
+     "wikipedia": "Teotihuacan",
+     "date_note": "c.",
+     "wikidata": "Q172613"
+    },
+    {
+     "date": "0638",
+     "name": "Abandonment of Uruk",
+     "place_name": "Uruk",
+     "lat": 31.32,
+     "lon": 45.64,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "Uruk, one of the first true cities, was finally abandoned after more than 4,000 years.",
+     "why": "The Euphrates shifted away from the city, leaving its fields without water.",
+     "wikipedia": "Uruk",
+     "date_note": "c.; abandoned around the Islamic conquest of 633-638",
+     "wikidata": "Q168518"
+    },
+    {
+     "date": "1221",
+     "name": "Mongol destruction of Merv",
+     "place_name": "Merv",
+     "lat": 37.66,
+     "lon": 62.19,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Tolui"
+     ],
+     "what": "Merv, one of the largest cities of Central Asia, surrendered to Tolui's Mongol army and its people were massacred; chroniclers claimed hundreds of thousands of dead.",
+     "why": "Merv's irrigation needed many hands; with the people killed the oasis city never recovered its size.",
+     "wikipedia": "Merv",
+     "wikidata": "Q193325"
+    },
+    {
+     "date": "1350",
+     "name": "Abandonment of Cahokia",
+     "place_name": "Cahokia",
+     "lat": 38.66,
+     "lon": -90.06,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "Cahokia, a Mississippian city near modern St Louis with tens of thousands of people at its peak around 1100 and the huge Monks Mound, was empty by about 1350.",
+     "why": "Floods, drought, exhausted wood and soil, and political trouble are all proposed; the cause is still debated.",
+     "wikipedia": "Cahokia",
+     "date_note": "c.",
+     "wikidata": "Q333661"
+    },
+    {
+     "date": "1431",
+     "name": "Ayutthaya sacks Angkor",
+     "place_name": "Angkor",
+     "lat": 13.41,
+     "lon": 103.87,
+     "family": "war",
+     "subtype": "siege",
+     "who": [],
+     "what": "The Thai kingdom of Ayutthaya sacked Angkor and the Khmer court moved south towards Phnom Penh.",
+     "why": "War was the last blow to a city whose vast water system was already strained by droughts and floods.",
+     "wikipedia": "Angkor",
+     "date_note": "traditional date",
+     "wikidata": "Q163607"
+    },
+    {
+     "date": "1450",
+     "name": "Abandonment of Great Zimbabwe",
+     "place_name": "Great Zimbabwe",
+     "lat": -20.27,
+     "lon": 30.93,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "The stone city of perhaps 18,000 people, rich from gold traded to the coast at Kilwa, was largely abandoned.",
+     "why": "Trade routes moved north and the land around the city may have been exhausted.",
+     "wikipedia": "Great Zimbabwe",
+     "date_note": "c.",
+     "wikidata": "Q209217"
+    },
+    {
+     "date": "1565-01",
+     "name": "Battle of Talikota",
+     "place_name": "Vijayanagara (Hampi)",
+     "lat": 15.33,
+     "lon": 76.46,
+     "family": "war",
+     "subtype": "battle",
+     "who": [],
+     "what": "An alliance of the Deccan sultanates defeated the army of Vijayanagara, then looted the capital for months.",
+     "why": "One of the largest cities in the world was ruined within a year by a single defeat.",
+     "wikipedia": "Battle of Talikota",
+     "wikidata": "Q1362188"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "silk_roads",
+   "title": "The Silk Roads over two thousand years",
+   "region": "Central Asia",
+   "start": -138,
+   "end": 1907,
+   "view": {
+    "lon": 75.0,
+    "lat": 40.0,
+    "span": 80
+   },
+   "blurb": "How did the overland routes between China and the West open, carry goods and ideas, and fade?",
+   "steps": [
+    {
+     "date": "-0138",
+     "name": "Zhang Qian sets out",
+     "place_name": "Chang'an",
+     "lat": 34.27,
+     "lon": 108.94,
+     "family": "diplomacy",
+     "subtype": "journey",
+     "who": [
+      "Zhang Qian"
+     ],
+     "what": "The Han emperor Wu sent Zhang Qian west to find allies against the Xiongnu; he was captured and held for about ten years.",
+     "why": "The first known Chinese envoy to Central Asia opened official contact with the west.",
+     "wikipedia": "Zhang Qian",
+     "date_note": "c.",
+     "wikidata": "Q197276"
+    },
+    {
+     "date": "-0128",
+     "name": "Zhang Qian in Bactria",
+     "place_name": "Bactra (Balkh)",
+     "lat": 36.76,
+     "lon": 66.9,
+     "family": "diplomacy",
+     "subtype": "journey",
+     "who": [
+      "Zhang Qian"
+     ],
+     "what": "After escaping, Zhang Qian reached Ferghana and Bactria, saw Chinese goods for sale there, and returned home in 126 BCE with reports of fine horses.",
+     "why": "His reports convinced the Han court that trade and alliances in the west were worth pursuing.",
+     "wikipedia": "Zhang Qian",
+     "date_note": "c.",
+     "wikidata": "Q197276"
+    },
+    {
+     "date": "-0104",
+     "name": "War of the Heavenly Horses",
+     "place_name": "Ferghana Valley",
+     "lat": 40.5,
+     "lon": 71.8,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Li Guangli"
+     ],
+     "what": "The general Li Guangli led Han armies against Dayuan in Ferghana to win its horses, succeeding on the second attempt.",
+     "why": "China projected power into Central Asia to secure the routes and the horses it needed.",
+     "wikipedia": "War of the Heavenly Horses",
+     "end_date": "-0101",
+     "wikidata": "Q7968690"
+    },
+    {
+     "date": "0313",
+     "name": "Sogdian Ancient Letters",
+     "place_name": "Near Dunhuang",
+     "lat": 40.2,
+     "lon": 93.9,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Sogdian merchants in China wrote letters home to Samarkand describing the fall of Luoyang; the undelivered letters were found in a watchtower near Dunhuang in 1907.",
+     "why": "Sogdians, not Chinese or Romans, carried most of the overland trade.",
+     "wikipedia": "Sogdia",
+     "date_note": "c.",
+     "wikidata": "Q486244"
+    },
+    {
+     "date": "0366",
+     "name": "Mogao Caves begun",
+     "place_name": "Dunhuang",
+     "lat": 40.04,
+     "lon": 94.81,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "According to tradition a monk began carving Buddhist cave shrines into a cliff near Dunhuang, the oasis where routes split around the Taklamakan.",
+     "why": "The roads carried religion as well as goods; Buddhism reached China this way.",
+     "wikipedia": "Mogao Caves",
+     "date_note": "traditional date",
+     "wikidata": "Q43286"
+    },
+    {
+     "date": "0630",
+     "name": "Xuanzang passes Samarkand",
+     "place_name": "Samarkand",
+     "lat": 39.65,
+     "lon": 66.97,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Xuanzang"
+     ],
+     "what": "The Chinese monk Xuanzang, travelling to India for Buddhist texts, passed through Samarkand, the chief Sogdian city.",
+     "why": "Pilgrims used the same roads and caravanserais as merchants.",
+     "wikipedia": "Xuanzang",
+     "date_note": "c.",
+     "wikidata": "Q42063"
+    },
+    {
+     "date": "0751-07",
+     "name": "Battle of Talas",
+     "place_name": "Talas River",
+     "lat": 42.52,
+     "lon": 72.24,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Gao Xianzhi"
+     ],
+     "what": "An Abbasid army, helped by the Karluk Turks, defeated a Tang army under Gao Xianzhi on the Talas river.",
+     "why": "It marked the western limit of Chinese power; tradition says captured Chinese papermakers brought paper to Samarkand.",
+     "wikipedia": "Battle of Talas",
+     "wikidata": "Q492415"
+    },
+    {
+     "date": "0755-12",
+     "name": "An Lushan rebellion",
+     "place_name": "Fanyang (Beijing)",
+     "lat": 39.9,
+     "lon": 116.4,
+     "family": "war",
+     "subtype": "revolt",
+     "who": [
+      "An Lushan"
+     ],
+     "what": "An Lushan, a Tang general of Sogdian and Turkic descent, rebelled; the war cost millions of lives and the Tang pulled troops out of Central Asia.",
+     "why": "China lost control of the western routes for centuries.",
+     "wikipedia": "An Lushan rebellion",
+     "end_date": "0763",
+     "wikidata": "Q253774"
+    },
+    {
+     "date": "0794",
+     "name": "Paper made in Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.33,
+     "lon": 44.38,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [],
+     "what": "Baghdad's first paper mill was set up under the Abbasids, spreading a Chinese technology that came west along the Silk Roads.",
+     "why": "The most important thing the routes carried may have been an idea, not silk.",
+     "wikipedia": "History of paper",
+     "date_note": "c.",
+     "wikidata": "Q1811550"
+    },
+    {
+     "date": "1275",
+     "name": "Marco Polo reaches Kublai Khan",
+     "place_name": "Shangdu (Xanadu)",
+     "lat": 42.36,
+     "lon": 116.18,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Marco Polo",
+      "Kublai Khan"
+     ],
+     "what": "The Venetian Marco Polo, with his father and uncle, reached Kublai Khan's summer capital after crossing Asia overland.",
+     "why": "Under Mongol rule the whole route lay in one family's empire, and Europeans could travel it.",
+     "wikipedia": "Marco Polo",
+     "date_note": "traditional date",
+     "wikidata": "Q6101"
+    },
+    {
+     "date": "1346",
+     "name": "Siege of Caffa",
+     "place_name": "Caffa (Feodosia)",
+     "lat": 45.03,
+     "lon": 35.38,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [
+      "Jani Beg"
+     ],
+     "what": "Plague struck the Golden Horde army of Jani Beg besieging the Genoese port of Caffa, and Genoese ships carried the disease to the Mediterranean.",
+     "why": "The same connected world that carried trade carried the Black Death, which helped break the Mongol order.",
+     "wikipedia": "Siege of Caffa",
+     "wikidata": "Q96506039"
+    },
+    {
+     "date": "1404-09",
+     "name": "Clavijo at Timur's court",
+     "place_name": "Samarkand",
+     "lat": 39.65,
+     "lon": 66.97,
+     "family": "diplomacy",
+     "subtype": "journey",
+     "who": [
+      "Ruy González de Clavijo",
+      "Timur"
+     ],
+     "what": "The Castilian envoy Ruy González de Clavijo reached Samarkand, which Timur was rebuilding with craftsmen taken from conquered cities.",
+     "why": "Samarkand had a last great age as a land-route capital.",
+     "wikipedia": "Ruy González de Clavijo",
+     "wikidata": "Q725872"
+    },
+    {
+     "date": "1498-05-20",
+     "name": "Vasco da Gama reaches Calicut",
+     "place_name": "Calicut",
+     "lat": 11.25,
+     "lon": 75.78,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Vasco da Gama"
+     ],
+     "what": "The Portuguese captain Vasco da Gama reached India by sailing round Africa.",
+     "why": "Sea routes could carry far more for less, and over the next centuries the overland caravans lost their long-distance trade.",
+     "wikipedia": "Vasco da Gama",
+     "wikidata": "Q7328"
+    },
+    {
+     "date": "1605",
+     "name": "Bento de Góis reaches China",
+     "place_name": "Suzhou (Jiuquan)",
+     "lat": 39.73,
+     "lon": 98.49,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Bento de Góis"
+     ],
+     "what": "The Jesuit Bento de Góis travelled overland from India to the edge of China and confirmed that 'Cathay' and China were the same place; he died there in 1607.",
+     "why": "By then the old road was so little used that Europeans had to check where it led.",
+     "wikipedia": "Bento de Góis",
+     "date_note": "c.",
+     "wikidata": "Q818328"
+    },
+    {
+     "date": "1877",
+     "name": "Richthofen names the Silk Road",
+     "place_name": "Berlin",
+     "lat": 52.52,
+     "lon": 13.4,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Ferdinand von Richthofen"
+     ],
+     "what": "The geographer Ferdinand von Richthofen used the term 'Seidenstraße' (Silk Road) in his work on China.",
+     "why": "The name is modern: the travellers themselves never called it that.",
+     "wikipedia": "Ferdinand von Richthofen",
+     "wikidata": "Q76791"
+    },
+    {
+     "date": "1907",
+     "name": "Aurel Stein at Dunhuang",
+     "place_name": "Dunhuang",
+     "lat": 40.04,
+     "lon": 94.81,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Aurel Stein",
+      "Wang Yuanlu"
+     ],
+     "what": "Aurel Stein bought thousands of manuscripts from a sealed cave at Mogao from the caretaker Wang Yuanlu, including the Diamond Sutra of 868, the oldest dated printed book.",
+     "why": "The routes' history was recovered from their ruins, and much of it was carried off to Europe.",
+     "wikipedia": "Mogao Caves",
+     "wikidata": "Q43286"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "monsoon_ocean",
+   "title": "The monsoon ocean",
+   "region": "Indian Ocean",
+   "start": 50,
+   "end": 1869,
+   "view": {
+    "lon": 75.0,
+    "lat": 5.0,
+    "span": 80
+   },
+   "blurb": "How did the seasonal monsoon winds tie Africa, Arabia, India and Southeast Asia into one trading world, and who tried to control it?",
+   "steps": [
+    {
+     "date": "0050",
+     "name": "Periplus of the Erythraean Sea",
+     "place_name": "Berenice",
+     "lat": 23.91,
+     "lon": 35.47,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "A Greek-speaking merchant in Roman Egypt wrote a guide to ports from the Red Sea to India, noting what to buy and sell and when the monsoon winds blew.",
+     "why": "Sailors timed voyages to the winds: south-west to India in summer, north-east back in winter.",
+     "wikipedia": "Periplus of the Erythraean Sea",
+     "date_note": "c.",
+     "wikidata": "Q664162"
+    },
+    {
+     "date": "0150",
+     "name": "Muziris papyrus",
+     "place_name": "Muziris",
+     "lat": 10.16,
+     "lon": 76.21,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "A loan contract written in Egypt covered a cargo of pepper, ivory and textiles shipped from Muziris on the Malabar coast in the ship Hermapollon.",
+     "why": "Roman money paid for Indian pepper on a large scale.",
+     "wikipedia": "Muziris",
+     "date_note": "c.",
+     "wikidata": "Q2974112"
+    },
+    {
+     "date": "0682",
+     "name": "Kedukan Bukit inscription",
+     "place_name": "Palembang",
+     "lat": -2.99,
+     "lon": 104.76,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Sri Jayanasa of Srivijaya"
+     ],
+     "what": "An inscription at Palembang records an expedition by the ruler Dapunta Hyang with an army of 20,000, the earliest record of Srivijaya.",
+     "why": "Srivijaya grew by controlling the straits between the Indian Ocean and the South China Sea.",
+     "wikipedia": "Kedukan Bukit inscription",
+     "wikidata": "Q6382635"
+    },
+    {
+     "date": "0830",
+     "name": "Belitung shipwreck",
+     "place_name": "Belitung",
+     "lat": -2.87,
+     "lon": 107.95,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "An Arab-style sewn ship sank off Belitung carrying about 60,000 pieces of Tang Chinese ceramics, gold and silver.",
+     "why": "Ships sailed directly between China and the Persian Gulf, a two-way trade that the wreck proves.",
+     "wikipedia": "Belitung shipwreck",
+     "date_note": "c.",
+     "wikidata": "Q3589078"
+    },
+    {
+     "date": "1025",
+     "name": "Chola invasion of Srivijaya",
+     "place_name": "Kadaram (Kedah)",
+     "lat": 5.74,
+     "lon": 100.41,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Rajendra I"
+     ],
+     "what": "The Chola king Rajendra I sent a fleet across the Bay of Bengal that raided Srivijaya's ports, including Kadaram in Kedah.",
+     "why": "The ocean's trade was rich enough for an Indian kingdom to fight for it overseas.",
+     "wikipedia": "Chola invasion of Srivijaya",
+     "wikidata": "Q16957926"
+    },
+    {
+     "date": "1331",
+     "name": "Ibn Battuta at Kilwa",
+     "place_name": "Kilwa Kisiwani",
+     "lat": -8.96,
+     "lon": 39.51,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "The Moroccan traveller Ibn Battuta visited Kilwa and called it one of the most beautiful cities in the world; its sultans grew rich on gold from Great Zimbabwe.",
+     "why": "The Swahili coast linked the African interior to the ocean trade.",
+     "wikipedia": "Kilwa Kisiwani",
+     "date_note": "c.",
+     "wikidata": "Q1741475"
+    },
+    {
+     "date": "1407",
+     "name": "Zheng He at Calicut",
+     "place_name": "Calicut",
+     "lat": 11.25,
+     "lon": 75.78,
+     "family": "diplomacy",
+     "subtype": "voyage",
+     "who": [
+      "Zheng He"
+     ],
+     "what": "The Ming admiral Zheng He's first treasure fleet, with dozens of large ships, reached Calicut on the Malabar coast.",
+     "why": "China showed it could dominate the ocean, then chose to stop after 1433.",
+     "wikipedia": "Zheng He",
+     "date_note": "c.; first voyage 1405-1407",
+     "wikidata": "Q7333"
+    },
+    {
+     "date": "1498-05-20",
+     "name": "Vasco da Gama reaches Calicut",
+     "place_name": "Calicut",
+     "lat": 11.25,
+     "lon": 75.78,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Vasco da Gama"
+     ],
+     "what": "Vasco da Gama reached Calicut after sailing round Africa, guided across the Arabian Sea from Malindi by a local pilot.",
+     "why": "Europeans entered a trading world that already existed, and soon used guns to tax it.",
+     "wikipedia": "Vasco da Gama",
+     "wikidata": "Q7328"
+    },
+    {
+     "date": "1507",
+     "name": "Portuguese conquest of Hormuz",
+     "place_name": "Hormuz",
+     "lat": 27.06,
+     "lon": 56.46,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Afonso de Albuquerque"
+     ],
+     "what": "Afonso de Albuquerque attacked Hormuz, the island at the mouth of the Persian Gulf; Portugal secured it fully in 1515.",
+     "why": "Hormuz was one of the chokepoints Portugal needed to control the ocean's trade.",
+     "wikipedia": "Portuguese conquest of Hormuz",
+     "wikidata": "Q1106847"
+    },
+    {
+     "date": "1510-11-25",
+     "name": "Portuguese conquest of Goa",
+     "place_name": "Goa",
+     "lat": 15.5,
+     "lon": 73.91,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Afonso de Albuquerque"
+     ],
+     "what": "Albuquerque took Goa from the Bijapur Sultanate, and it became the capital of the Portuguese State of India.",
+     "why": "Portugal built a network of fortified ports and sold passes to Asian ships.",
+     "wikipedia": "Portuguese conquest of Goa",
+     "wikidata": "Q2357384"
+    },
+    {
+     "date": "1511-08",
+     "name": "Capture of Malacca",
+     "place_name": "Malacca",
+     "lat": 2.19,
+     "lon": 102.25,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Afonso de Albuquerque"
+     ],
+     "what": "Albuquerque's fleet captured Malacca, the richest port of the straits.",
+     "why": "Taking the strait gave Portugal a hold on the spice trade, though Asian merchants moved to other ports.",
+     "wikipedia": "Capture of Malacca (1511)",
+     "wikidata": "Q4110453"
+    },
+    {
+     "date": "1840",
+     "name": "Said bin Sultan moves to Zanzibar",
+     "place_name": "Zanzibar",
+     "lat": -6.16,
+     "lon": 39.19,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Said bin Sultan"
+     ],
+     "what": "Sultan Said bin Sultan of Oman moved his capital to Zanzibar, which grew rich on clove plantations and the ivory and slave trades.",
+     "why": "The monsoon still carried Arab dhows between Oman and East Africa, often in human cargo.",
+     "wikipedia": "Said bin Sultan",
+     "date_note": "commonly dated 1840",
+     "wikidata": "Q506193"
+    },
+    {
+     "date": "1869-11-17",
+     "name": "Opening of the Suez Canal",
+     "place_name": "Port Said",
+     "lat": 31.26,
+     "lon": 32.3,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ferdinand de Lesseps"
+     ],
+     "what": "The Suez Canal opened, joining the Mediterranean to the Red Sea.",
+     "why": "Steamships through Suez no longer had to wait for the monsoon or round Africa, ending the age of sail in the ocean.",
+     "wikipedia": "Suez Canal",
+     "wikidata": "Q899"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "industrial_britain",
+   "title": "The industrial revolution in Britain",
+   "region": "Britain",
+   "start": 1709,
+   "end": 1851,
+   "view": {
+    "lon": -2.0,
+    "lat": 53.0,
+    "span": 8
+   },
+   "blurb": "How did coal, steam, cotton and rail turn Britain into the first industrial economy between 1709 and 1851?",
+   "steps": [
+    {
+     "date": "1709",
+     "name": "Darby smelts iron with coke",
+     "place_name": "Coalbrookdale",
+     "lat": 52.64,
+     "lon": -2.49,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Abraham Darby I"
+     ],
+     "what": "Abraham Darby I made iron in a blast furnace fuelled by coke from coal instead of charcoal from wood.",
+     "why": "Iron no longer depended on forests, and coal became the base of industry.",
+     "wikipedia": "Abraham Darby I",
+     "wikidata": "Q329924"
+    },
+    {
+     "date": "1712",
+     "name": "Newcomen's first engine",
+     "place_name": "Dudley",
+     "lat": 52.52,
+     "lon": -2.08,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Thomas Newcomen"
+     ],
+     "what": "Thomas Newcomen built the first working steam engine near Dudley Castle to pump water out of coal mines.",
+     "why": "Steam first earned its keep by helping dig more coal.",
+     "wikipedia": "Newcomen atmospheric engine",
+     "wikidata": "Q2224989"
+    },
+    {
+     "date": "1761-07-17",
+     "name": "Bridgewater Canal opens",
+     "place_name": "Worsley",
+     "lat": 53.5,
+     "lon": -2.38,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Francis Egerton, 3rd Duke of Bridgewater",
+      "James Brindley"
+     ],
+     "what": "The Duke of Bridgewater's canal, engineered by James Brindley, carried coal from his Worsley mines to Manchester and halved its price there.",
+     "why": "Cheap transport for heavy goods set off a canal boom.",
+     "wikipedia": "Bridgewater Canal",
+     "wikidata": "Q913932"
+    },
+    {
+     "date": "1771",
+     "name": "Cromford Mill",
+     "place_name": "Cromford",
+     "lat": 53.11,
+     "lon": -1.56,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Richard Arkwright"
+     ],
+     "what": "Richard Arkwright built a water-powered cotton spinning mill at Cromford, run in shifts by hundreds of workers, many of them children.",
+     "why": "This is often called the first modern factory: machines, power and discipline under one roof.",
+     "wikipedia": "Cromford Mill",
+     "wikidata": "Q2566525"
+    },
+    {
+     "date": "1775",
+     "name": "Boulton and Watt",
+     "place_name": "Birmingham",
+     "lat": 52.5,
+     "lon": -1.93,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "James Watt",
+      "Matthew Boulton"
+     ],
+     "what": "James Watt joined Matthew Boulton at Soho, Birmingham, to build steam engines with Watt's separate condenser, which used far less coal than Newcomen's.",
+     "why": "Efficient steam power could be used away from coalfields and, after 1781, to turn machines.",
+     "wikipedia": "Boulton and Watt",
+     "wikidata": "Q895118"
+    },
+    {
+     "date": "1779",
+     "name": "The Iron Bridge",
+     "place_name": "Coalbrookdale",
+     "lat": 52.63,
+     "lon": -2.49,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Abraham Darby III"
+     ],
+     "what": "Abraham Darby III cast the world's first major iron bridge across the Severn; it opened in 1781.",
+     "why": "Cheap iron could now build things that were once made of wood and stone.",
+     "wikipedia": "The Iron Bridge",
+     "wikidata": "Q99200"
+    },
+    {
+     "date": "1798",
+     "name": "Murrays' Mills",
+     "place_name": "Manchester",
+     "lat": 53.48,
+     "lon": -2.23,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "The Murray brothers began large steam-powered cotton mills in Ancoats, Manchester, one of the first areas packed with mills.",
+     "why": "Steam let mills cluster in towns, and Manchester grew into 'Cottonopolis'.",
+     "wikipedia": "Murrays' Mills"
+    },
+    {
+     "date": "1811-11",
+     "name": "Luddite machine-breaking",
+     "place_name": "Arnold, Nottinghamshire",
+     "lat": 53.0,
+     "lon": -1.13,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [],
+     "what": "Stocking knitters broke wide knitting frames in Arnold and nearby villages, starting the Luddite movement.",
+     "why": "Workers whose skills machines made worthless fought back; the government sent thousands of troops.",
+     "wikipedia": "Luddites",
+     "wikidata": "Q1159675"
+    },
+    {
+     "date": "1819-08-16",
+     "name": "Peterloo Massacre",
+     "place_name": "Manchester",
+     "lat": 53.48,
+     "lon": -2.25,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Henry Hunt (politician)"
+     ],
+     "what": "Cavalry charged a crowd of about 60,000 gathered at St Peter's Field to hear Henry Hunt call for parliamentary reform; at least 15 died and hundreds were hurt.",
+     "why": "Industrial towns had grown huge but had no MPs, and the demand for a vote came from them.",
+     "wikipedia": "Peterloo Massacre",
+     "wikidata": "Q876357"
+    },
+    {
+     "date": "1825-09-27",
+     "name": "Stockton and Darlington Railway opens",
+     "place_name": "Darlington",
+     "lat": 54.53,
+     "lon": -1.55,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "George Stephenson"
+     ],
+     "what": "George Stephenson's locomotive Locomotion No. 1 hauled coal wagons and passengers on the first public railway to use steam locomotives.",
+     "why": "Railways began as another way to move coal cheaply.",
+     "wikipedia": "Stockton and Darlington Railway",
+     "wikidata": "Q375044"
+    },
+    {
+     "date": "1830-09-15",
+     "name": "Liverpool and Manchester Railway opens",
+     "place_name": "Parkside",
+     "lat": 53.46,
+     "lon": -2.6,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "George Stephenson",
+      "William Huskisson"
+     ],
+     "what": "The first intercity railway, fully steam-hauled and double tracked, opened; the MP William Huskisson was killed by the Rocket on opening day.",
+     "why": "Linking the cotton port to the cotton town began the railway age.",
+     "wikipedia": "Liverpool and Manchester Railway",
+     "wikidata": "Q1398696"
+    },
+    {
+     "date": "1833",
+     "name": "Factory Act 1833",
+     "place_name": "London",
+     "lat": 51.5,
+     "lon": -0.13,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "Parliament banned work by children under nine in textile mills, limited the hours of older children, and appointed factory inspectors.",
+     "why": "The state began to regulate the factory system.",
+     "wikipedia": "Factory Acts",
+     "wikidata": "Q1390816"
+    },
+    {
+     "date": "1851-05-01",
+     "name": "Great Exhibition",
+     "place_name": "Hyde Park, London",
+     "lat": 51.5,
+     "lon": -0.17,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Prince Albert of Saxe-Coburg and Gotha",
+      "Joseph Paxton"
+     ],
+     "what": "Six million visitors came to Joseph Paxton's iron-and-glass Crystal Palace to see machines and goods from around the world, about half the space given to Britain and its empire.",
+     "why": "Britain showed off its lead as the workshop of the world.",
+     "wikipedia": "Great Exhibition",
+     "wikidata": "Q273095"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "belle_epoque",
+   "title": "The Belle Époque",
+   "region": "Europe",
+   "start": 1871,
+   "end": 1914,
+   "view": {
+    "lon": 8.0,
+    "lat": 48.0,
+    "span": 22
+   },
+   "blurb": "What did Europe's long peace between 1871 and 1914 produce, and how did it end?",
+   "steps": [
+    {
+     "date": "1871-05-21",
+     "name": "Semaine sanglante",
+     "place_name": "Paris",
+     "lat": 48.86,
+     "lon": 2.39,
+     "family": "war",
+     "subtype": "battle",
+     "who": [],
+     "what": "French government troops retook Paris from the Commune in a week of street fighting and executions; thousands of Communards were killed.",
+     "why": "The Belle Époque began in the ashes of civil war and defeat by Prussia.",
+     "wikipedia": "Semaine sanglante",
+     "end_date": "1871-05-28",
+     "wikidata": "Q3478362"
+    },
+    {
+     "date": "1874-04-15",
+     "name": "First Impressionist exhibition",
+     "place_name": "Boulevard des Capucines, Paris",
+     "lat": 48.87,
+     "lon": 2.33,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Claude Monet"
+     ],
+     "what": "Thirty artists rejected by the official Salon showed their work in the photographer Nadar's former studio; a critic mocked Monet's Impression, Sunrise and named the movement.",
+     "why": "Painting turned to modern city life and light, outside official taste.",
+     "wikipedia": "Impressionism",
+     "wikidata": "Q40415"
+    },
+    {
+     "date": "1876-08-13",
+     "name": "First Bayreuth Festival",
+     "place_name": "Bayreuth",
+     "lat": 49.95,
+     "lon": 11.58,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Richard Wagner"
+     ],
+     "what": "Richard Wagner opened his own theatre at Bayreuth with the first full performance of The Ring of the Nibelung.",
+     "why": "The new German empire had its own cultural pilgrimage.",
+     "wikipedia": "Bayreuth Festival",
+     "wikidata": "Q157596"
+    },
+    {
+     "date": "1889-05-06",
+     "name": "Exposition Universelle (1889)",
+     "place_name": "Paris",
+     "lat": 48.86,
+     "lon": 2.29,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Gustave Eiffel"
+     ],
+     "what": "The world's fair for the centenary of the Revolution opened under Gustave Eiffel's 300-metre iron tower, then the tallest structure in the world; about 32 million visits followed.",
+     "why": "France displayed its recovery, its engineering and its empire.",
+     "wikipedia": "Exposition Universelle (1889)",
+     "wikidata": "Q957317"
+    },
+    {
+     "date": "1889-10-06",
+     "name": "Moulin Rouge opens",
+     "place_name": "Montmartre, Paris",
+     "lat": 48.88,
+     "lon": 2.33,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "The Moulin Rouge cabaret opened at the foot of Montmartre and made the cancan famous.",
+     "why": "Paris nightlife became an industry and an image of the age.",
+     "wikipedia": "Moulin Rouge",
+     "wikidata": "Q151030"
+    },
+    {
+     "date": "1895-12-28",
+     "name": "Lumière brothers' first public screening",
+     "place_name": "Boulevard des Capucines, Paris",
+     "lat": 48.87,
+     "lon": 2.33,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Auguste Lumière",
+      "Louis Lumière"
+     ],
+     "what": "Auguste and Louis Lumière showed ten short films to a paying audience in the basement of the Grand Café.",
+     "why": "Cinema was born as public entertainment.",
+     "wikipedia": "Lumière brothers",
+     "wikidata": "Q55965"
+    },
+    {
+     "date": "1897-04-03",
+     "name": "Vienna Secession",
+     "place_name": "Vienna",
+     "lat": 48.2,
+     "lon": 16.37,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Gustav Klimt"
+     ],
+     "what": "Gustav Klimt and other artists left Vienna's official artists' association to found the Secession, with its own exhibition hall from 1898.",
+     "why": "Vienna became a second capital of modern art and design.",
+     "wikipedia": "Vienna Secession",
+     "wikidata": "Q208208"
+    },
+    {
+     "date": "1898-01-13",
+     "name": "J'Accuse...!",
+     "place_name": "Paris",
+     "lat": 48.87,
+     "lon": 2.34,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Émile Zola",
+      "Alfred Dreyfus"
+     ],
+     "what": "Émile Zola published an open letter in L'Aurore accusing the army of convicting the Jewish officer Alfred Dreyfus of treason on false evidence.",
+     "why": "The peace hid deep conflict over antisemitism, the army and the Republic.",
+     "wikipedia": "J'Accuse...!"
+    },
+    {
+     "date": "1900-07-19",
+     "name": "Paris Métro opens",
+     "place_name": "Paris",
+     "lat": 48.87,
+     "lon": 2.34,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Fulgence Bienvenüe",
+      "Hector Guimard"
+     ],
+     "what": "The first Paris Métro line opened between Porte de Vincennes and Porte Maillot during the 1900 world's fair, with entrances designed by Hector Guimard.",
+     "why": "Electric transport changed daily life in the great cities.",
+     "wikipedia": "Paris Metro Line 1",
+     "wikidata": "Q13224"
+    },
+    {
+     "date": "1904-04-08",
+     "name": "Entente Cordiale",
+     "place_name": "London",
+     "lat": 51.5,
+     "lon": -0.13,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [],
+     "what": "Britain and France settled their colonial disputes in a set of agreements.",
+     "why": "Old rivals lined up together, forming one side of the alliance system that would go to war.",
+     "wikipedia": "Entente Cordiale",
+     "wikidata": "Q464399"
+    },
+    {
+     "date": "1909-05",
+     "name": "First Ballets Russes season",
+     "place_name": "Théâtre du Châtelet, Paris",
+     "lat": 48.86,
+     "lon": 2.35,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Sergei Diaghilev"
+     ],
+     "what": "Sergei Diaghilev's Russian company opened its first Paris season of ballet.",
+     "why": "Paris became the meeting place of the European avant-garde.",
+     "wikipedia": "Ballets Russes",
+     "wikidata": "Q214423"
+    },
+    {
+     "date": "1913-05-29",
+     "name": "Premiere of The Rite of Spring",
+     "place_name": "Théâtre des Champs-Élysées, Paris",
+     "lat": 48.87,
+     "lon": 2.3,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Igor Stravinsky",
+      "Vaslav Nijinsky",
+      "Sergei Diaghilev"
+     ],
+     "what": "Stravinsky's score and Nijinsky's choreography for the Ballets Russes caused uproar in the audience on the first night.",
+     "why": "The age's own art was already breaking with its manners.",
+     "wikipedia": "The Rite of Spring",
+     "wikidata": "Q206015"
+    },
+    {
+     "date": "1914-06-28",
+     "name": "Assassination of Archduke Franz Ferdinand",
+     "place_name": "Sarajevo",
+     "lat": 43.86,
+     "lon": 18.43,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Archduke Franz Ferdinand of Austria",
+      "Gavrilo Princip"
+     ],
+     "what": "The Bosnian Serb student Gavrilo Princip shot the heir to the Austro-Hungarian throne and his wife.",
+     "why": "The shooting set off the July Crisis.",
+     "wikipedia": "Assassination of Archduke Franz Ferdinand",
+     "wikidata": "Q192050"
+    },
+    {
+     "date": "1914-07-31",
+     "name": "Assassination of Jean Jaurès",
+     "place_name": "Café du Croissant, Paris",
+     "lat": 48.87,
+     "lon": 2.34,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Jean Jaurès"
+     ],
+     "what": "The socialist leader Jean Jaurès, who was trying to stop the war, was shot dead in a café by a nationalist.",
+     "why": "The best-known voice for peace in France was silenced on the eve of war.",
+     "wikipedia": "Jean Jaurès",
+     "wikidata": "Q12688"
+    },
+    {
+     "date": "1914-08-03",
+     "name": "Germany declares war on France",
+     "place_name": "Paris",
+     "lat": 48.88,
+     "lon": 2.36,
+     "family": "war",
+     "subtype": "war",
+     "who": [],
+     "what": "Germany declared war on France, two days after both countries ordered general mobilisation, and invaded Belgium the next day.",
+     "why": "The long peace ended in a war that killed millions and swept away the world it had built.",
+     "wikipedia": "July Crisis",
+     "wikidata": "Q917435"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "great_powers_millennium",
+   "title": "Great powers, 1000 to 2000",
+   "region": "World",
+   "start": 1100,
+   "end": 1991,
+   "view": {
+    "lon": 40.0,
+    "lat": 35.0,
+    "span": 220
+   },
+   "blurb": "Who was the strongest power in each age of the second millennium, where was its centre, and what made it strong?",
+   "steps": [
+    {
+     "date": "1100",
+     "name": "Song Kaifeng",
+     "place_name": "Kaifeng",
+     "lat": 34.8,
+     "lon": 114.31,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Emperor Huizong of Song"
+     ],
+     "what": "The Song capital Kaifeng, a commercial city with perhaps a million people, sat on canals that brought rice and goods from the south.",
+     "why": "Song China led the world in rice yields, iron output, printing and the use of paper money.",
+     "wikipedia": "Kaifeng",
+     "date_note": "c.",
+     "wikidata": "Q208471"
+    },
+    {
+     "date": "1235",
+     "name": "Walls of Karakorum",
+     "place_name": "Karakorum",
+     "lat": 47.2,
+     "lon": 102.82,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ögedei Khan"
+     ],
+     "what": "Ögedei Khan walled the Mongol capital Karakorum, where envoys and merchants from Europe to China came to the court.",
+     "why": "Mounted archers, discipline and a relay-post system built the largest land empire ever.",
+     "wikipedia": "Karakorum",
+     "wikidata": "Q62677"
+    },
+    {
+     "date": "1420",
+     "name": "Forbidden City completed",
+     "place_name": "Beijing",
+     "lat": 39.92,
+     "lon": 116.39,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Yongle Emperor"
+     ],
+     "what": "The Yongle Emperor completed the Forbidden City and made Beijing the Ming capital the next year, while Zheng He's fleets sailed to Africa.",
+     "why": "A rebuilt state with a huge population, the Grand Canal and the largest fleet of its day.",
+     "wikipedia": "Forbidden City",
+     "wikidata": "Q80290"
+    },
+    {
+     "date": "1503",
+     "name": "Casa de Contratación",
+     "place_name": "Seville",
+     "lat": 37.39,
+     "lon": -5.99,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "Spain set up the Casa de Contratación in Seville to control all trade and shipping with the Americas.",
+     "why": "American conquests gave Spain an empire on several continents.",
+     "wikipedia": "Casa de Contratación",
+     "wikidata": "Q1046537"
+    },
+    {
+     "date": "1545",
+     "name": "Silver of Potosí",
+     "place_name": "Potosí",
+     "lat": -19.59,
+     "lon": -65.75,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Silver was found at the Cerro Rico; worked by forced indigenous labour, Potosí became one of the largest cities in the Americas.",
+     "why": "American silver paid for Spain's armies and flowed on to China.",
+     "wikipedia": "Potosí",
+     "wikidata": "Q35045"
+    },
+    {
+     "date": "1557",
+     "name": "Süleymaniye Mosque",
+     "place_name": "Istanbul",
+     "lat": 41.02,
+     "lon": 28.96,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Suleiman the Magnificent",
+      "Mimar Sinan"
+     ],
+     "what": "The architect Mimar Sinan finished the great mosque of Suleiman the Magnificent above the Golden Horn.",
+     "why": "The Ottomans held three continents, with a strong standing army, gunpowder and control of key trade routes.",
+     "wikipedia": "Süleymaniye Mosque",
+     "wikidata": "Q178643"
+    },
+    {
+     "date": "1571",
+     "name": "Founding of Fatehpur Sikri",
+     "place_name": "Fatehpur Sikri",
+     "lat": 27.09,
+     "lon": 77.66,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Akbar"
+     ],
+     "what": "The Mughal emperor Akbar began a new red sandstone capital at Fatehpur Sikri.",
+     "why": "Mughal India was among the largest economies in the world, rich in textiles and land taxes.",
+     "wikipedia": "Fatehpur Sikri",
+     "wikidata": "Q179046"
+    },
+    {
+     "date": "1609-01-31",
+     "name": "Bank of Amsterdam",
+     "place_name": "Amsterdam",
+     "lat": 52.37,
+     "lon": 4.89,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "Amsterdam founded an exchange bank that gave merchants reliable money for settling bills.",
+     "why": "The Dutch Republic was small but led in shipping, finance and trade.",
+     "wikipedia": "Bank of Amsterdam",
+     "wikidata": "Q478744"
+    },
+    {
+     "date": "1793-09-14",
+     "name": "Macartney Embassy",
+     "place_name": "Chengde",
+     "lat": 40.98,
+     "lon": 117.94,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Qianlong Emperor",
+      "George Macartney, 1st Earl Macartney"
+     ],
+     "what": "The Qianlong Emperor received Lord Macartney's British embassy at Chengde but refused its requests for more trade.",
+     "why": "Qing China, at its largest extent and with about 300 million people, did not think it needed Britain.",
+     "wikipedia": "Macartney Embassy",
+     "wikidata": "Q6722675"
+    },
+    {
+     "date": "1805-10-21",
+     "name": "Battle of Trafalgar",
+     "place_name": "Off Cape Trafalgar",
+     "lat": 36.3,
+     "lon": -6.25,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Horatio Nelson, 1st Viscount Nelson"
+     ],
+     "what": "Nelson's fleet of 27 ships defeated 33 French and Spanish ships off southern Spain; Nelson was killed.",
+     "why": "British sea power went unchallenged for a century.",
+     "wikipedia": "Battle of Trafalgar",
+     "wikidata": "Q171416"
+    },
+    {
+     "date": "1897-06-22",
+     "name": "Diamond Jubilee of Queen Victoria",
+     "place_name": "London",
+     "lat": 51.51,
+     "lon": -0.1,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Queen Victoria"
+     ],
+     "what": "Troops from across the British Empire paraded through London for Queen Victoria's 60 years on the throne.",
+     "why": "Industry, the navy and the City of London ran an empire covering about a fifth of the world's land.",
+     "wikipedia": "Diamond Jubilee of Queen Victoria",
+     "wikidata": "Q107395117"
+    },
+    {
+     "date": "1913-12",
+     "name": "Moving assembly line",
+     "place_name": "Highland Park, Michigan",
+     "lat": 42.41,
+     "lon": -83.1,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Henry Ford"
+     ],
+     "what": "Ford introduced the moving assembly line for the Model T at Highland Park, cutting the time to build a car from about twelve hours to about an hour and a half.",
+     "why": "Mass production and a huge home market made the United States the largest industrial economy.",
+     "wikipedia": "Highland Park Ford Plant",
+     "wikidata": "Q5758972"
+    },
+    {
+     "date": "1944-07",
+     "name": "Bretton Woods Conference",
+     "place_name": "Bretton Woods",
+     "lat": 44.26,
+     "lon": -71.44,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "John Maynard Keynes"
+     ],
+     "what": "Delegates from 44 countries set up the IMF and World Bank and a post-war money system pegged to the US dollar.",
+     "why": "The United States came out of the war with most of the world's gold and much of its industry.",
+     "wikipedia": "Bretton Woods Conference",
+     "wikidata": "Q1194052"
+    },
+    {
+     "date": "1957-10-04",
+     "name": "Sputnik 1",
+     "place_name": "Baikonur",
+     "lat": 45.92,
+     "lon": 63.34,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Sergei Korolev"
+     ],
+     "what": "The Soviet Union launched the first artificial satellite.",
+     "why": "Planned heavy industry and science made the USSR the second superpower.",
+     "wikipedia": "Sputnik 1",
+     "wikidata": "Q80811"
+    },
+    {
+     "date": "1980-08-26",
+     "name": "Shenzhen Special Economic Zone",
+     "place_name": "Shenzhen",
+     "lat": 22.54,
+     "lon": 114.06,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Deng Xiaoping"
+     ],
+     "what": "China created a special economic zone at Shenzhen, then a small town next to Hong Kong, open to foreign investment.",
+     "why": "China's reforms began the return of the world's largest population to economic power.",
+     "wikipedia": "Shenzhen Special Economic Zone",
+     "wikidata": "Q7494384"
+    },
+    {
+     "date": "1991-12-26",
+     "name": "Dissolution of the Soviet Union",
+     "place_name": "Moscow",
+     "lat": 55.75,
+     "lon": 37.62,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Mikhail Gorbachev"
+     ],
+     "what": "The Soviet Union formally ceased to exist, a day after Mikhail Gorbachev resigned.",
+     "why": "The century ended with one superpower, the United States.",
+     "wikipedia": "Dissolution of the Soviet Union",
+     "wikidata": "Q5167679"
+    }
+   ],
+   "status": "draft"
+  }
+ ]
+}

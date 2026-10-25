@@ -133,18 +133,69 @@ def audit(kernel):
     return a, src
 
 
+def scholarship(kernel, a):
+    """The scholarship layer: citations checked against the outside world, quotes found verbatim, causal links
+    that say how and on whose authority. Failures are warnings (a human decides), never errors."""
+    recs = {x["id"]: x for xs in kernel["records"].values() for x in xs}
+    st = {"sources": 0, "sources_verified": 0, "quotes": 0, "quotes_verbatim": 0, "causal": 0, "causal_with_mech": 0,
+          "causal_with_src": 0, "debates": 0, "positions": 0, "chains": 0}
+    for x in kernel["records"].get("source", []):
+        st["sources"] += 1
+        v = x.get("verified") or {}
+        if v and not v.get("failed"):
+            st["sources_verified"] += 1
+        elif not x.get("note"):
+            a.warn("source.unverified", x["id"], v.get("failed") or "never checked: run ingest/scholarship/verify.py")
+    for x in kernel["records"].get("quote", []):
+        st["quotes"] += 1
+        v = x.get("verified") or {}
+        if v and not v.get("failed"):
+            st["quotes_verbatim"] += 1
+        else:
+            a.warn("quote.not_verbatim", x["id"], v.get("failed") or "never checked against its text")
+        if not x.get("witness"):
+            a.warn("quote.no_witness", x["id"], "no source criticism (witness)")
+    for x in kernel["records"].get("relation", []):
+        if x.get("type") not in ("caused", "contributed_to", "prevented"):
+            continue
+        st["causal"] += 1
+        st["causal_with_mech"] += bool(x.get("mech"))
+        st["causal_with_src"] += any(s.get("src") for s in x.get("sources") or [])
+        if not (x.get("mech") or x.get("note")):
+            a.warn("cause.no_mechanism", x["id"], "says that, not how: add mech")
+    for x in kernel["records"].get("debate", []):
+        st["debates"] += 1
+        for p in x.get("positions") or []:
+            st["positions"] += 1
+            if not any((recs.get(w) or {}).get("verified") and not recs[w]["verified"].get("failed") for w in p.get("works") or []):
+                a.warn("debate.position_unverified", x["id"], f"position '{p.get('school')}' cites no verified work")
+    for x in kernel["records"].get("chain", []):
+        st["chains"] += 1
+        ls = set()
+        for l in x.get("links") or []:
+            ls.update((recs.get(l) or {}).get("lenses") or [])
+        if len(ls) < 2:
+            a.warn("chain.one_lens", x["id"], "a why chain should cross at least two lenses")
+    return st
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("kernel", nargs="?", default="dist/kernel.json")
     ap.add_argument("--json")
     ap.add_argument("--strict", action="store_true")
     o = ap.parse_args()
-    a, src = audit(json.load(open(o.kernel)))
+    kernel = json.load(open(o.kernel))
+    a, src = audit(kernel)
+    sch = scholarship(kernel, a)
     errs = [f for f in a.findings if f["level"] == "error"]
     warns = [f for f in a.findings if f["level"] == "warning"]
     print(f"judge audit: {src['records']} records, {len(errs)} errors, {len(warns)} warnings")
     print(f"sourcing: {src['draft']} draft, {src['sourced']} sourced, {src['with_url']} with a url, "
           f"{src['unchecked_cite']} cite only 'not yet checked'")
+    print(f"scholarship: {sch['sources_verified']} of {sch['sources']} works verified, {sch['quotes_verbatim']} of {sch['quotes']} quotes verbatim, "
+          f"{sch['causal']} causal links ({sch['causal_with_mech']} say how, {sch['causal_with_src']} cite a checked work), "
+          f"{sch['debates']} debates with {sch['positions']} positions, {sch['chains']} chains")
     rules = {}
     for f in a.findings:
         rules[(f["level"], f["rule"])] = rules.get((f["level"], f["rule"]), 0) + 1
@@ -153,7 +204,7 @@ def main():
     for f in errs + warns[:40]:
         print(f"  {f['level'].upper():7} {f['id']}: {f['msg']}")
     if o.json:
-        json.dump({"sourcing": src, "findings": a.findings}, open(o.json, "w"), indent=1, ensure_ascii=False)
+        json.dump({"sourcing": src, "scholarship": sch, "findings": a.findings}, open(o.json, "w"), indent=1, ensure_ascii=False)
     sys.exit(1 if errs or (o.strict and warns) else 0)
 
 

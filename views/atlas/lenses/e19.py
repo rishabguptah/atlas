@@ -1,12 +1,10 @@
-# Europe 1789-1914 up close: the first deep-zoom region of the one-page Atlas (data/europe-19c/).
-# build(repo) is LENS_DATA.e19: the dated chronicle (events to the day), the study storylines, provinces and city
-# growth. Over 40 KB, so the page build puts it in atlas-files/lens-e19.json, loaded after the first paint.
-# sidecar(repo) is the heavy part the page fetches only when a lens needs it: railway stations and track, and lives.
-#   python3 views/atlas/lenses/e19.py OUT_DIR    writes OUT_DIR/atlas-files/e19-deep.json, to publish beside the page.
-import json, os, re, sys
+# Europe 1789-1914: what this region adds on top of the world index (views/atlas/world/), which now carries its
+# chronicle, lives and storylines like any other place and period (pack europe_1789_1914, data/deep/stories/).
+# build(repo) is LENS_DATA.e19: provinces, city growth and railway growth by year, for the Up close numbers (the
+# pixel map's zoom detail draws the railways themselves). Over 40 KB, so it loads after the first paint.
+import json, os
 
 BOX = (-25, 34, 50, 72)
-FAM = {'war': 'w', 'diplomacy': 'd', 'unrest': 'u', 'disaster': 'x', 'culture': 'c'}
 
 
 def rows(repo, f):
@@ -14,51 +12,15 @@ def rows(repo, f):
     return [json.loads(l) for l in open(p, encoding='utf-8') if l.strip()] if os.path.exists(p) else []
 
 
-def fam_of(r):
-    if r.get('family'):
-        return r['family']
-    s = r.get('subtype', '')
-    ls = r.get('lenses', [])
-    if s in ('battle', 'siege', 'war') or 'military' in ls[:1]: return 'war'
-    if 'law' in ls[:1]: return 'diplomacy'
-    if 'order' in ls[:1]: return 'unrest'
-    if 'disease' in ls[:1]: return 'disaster'
-    return 'culture'
-
-
 def build(repo):
     d = os.path.join(repo, 'data', 'europe-19c')
     if not os.path.exists(os.path.join(d, 'stories.json')):
         return {}
-    stories = json.load(open(os.path.join(d, 'stories.json'), encoding='utf-8'))['stories']
-    sidx = {s['id']: i for i, s in enumerate(stories)}
-    ev = rows(repo, 'events.jsonl') + rows(repo, 'story.jsonl')
-    ev.sort(key=lambda r: (r['date'], -r.get('sitelinks', 0)))
-    # Chronicle row: [date, end date or "", family, subtype, name, lon, lat, wikidata number or 0, sitelinks, story or -1, part of]
-    E, T, idx = [], {}, {}
-    for r in ev:
-        st = sidx.get(r.get('story'), -1)
-        q = int(r['wikidata'][1:]) if r.get('wikidata') else 0
-        E.append([r['date'], r.get('end_date', ''), FAM[fam_of(r)], r.get('subtype', 'event'), r['name'], round(r['lon'], 3), round(r['lat'], 3),
-                  q, r.get('sitelinks', 0), st, ((r.get('part_of') or [{}])[0]).get('name', '')])
-        idx[r['id']] = len(E) - 1
-        # Text for cards: what / why / place / study source / date note / status (s = sourced, d = draft).
-        t = {k: r[k] for k in ('what', 'why', 'place_name', 'date_note') if r.get(k)}
-        # Wikidata's generic descriptions ("1793 battle.") add nothing to the card's kicker and date.
-        if re.match(r'^\d{3,4}s? ', t.get('what', '')) and not r.get('why'):
-            t.pop('what')
-        src = r.get('study_sources') or (r['sources'] if r.get('status') == 'draft' else None)
-        if src: t['src'] = src[0]
-        if r.get('status') == 'draft' or r.get('study_sources'): t['st'] = 'd'
-        if t:
-            T[len(E) - 1] = t
-    S = [{'id': s['id'], 'title': s['title'], 'start': s['start'], 'end': s['end'], 'blurb': s['blurb'],
-          'steps': [idx[i] for i in s['steps'] if i in idx]} for s in stories]
     # Provinces: [name, lon, lat, start, end, kind, of, sitelinks, wikidata number]
     P = [[r['name'], r['lon'], r['lat'], r.get('start'), r.get('end'), r['admin'], r['admin_of'], r.get('sitelinks', 0), int(r['wikidata'][1:])]
          for r in rows(repo, 'provinces.jsonl')]
     return {'region': {'id': 'europe-1789-1914', 'name': 'Europe 1789–1914', 'start': 1789, 'end': 1914, 'view': {'lon': 14, 'lat': 50, 'span': 34}},
-            'events': E, 'text': T, 'stories': S, 'provinces': P, 'cities': cities(repo),
+            'provinces': P, 'cities': cities(repo), 'rail': rail(repo),
             'src': {'wd': 'Wikidata (CC0), queried 2026-10-25', 'reba': 'Reba, Reitsma & Seto 2016 (after Chandler 1987), attribution, non-commercial, share-alike'}}
 
 
@@ -93,25 +55,27 @@ def cities(repo):
     return out
 
 
-def sidecar(repo):
-    rail = os.path.join(repo, 'data', 'europe-19c', 'geo', 'railways.json')
-    R = json.load(open(rail, encoding='utf-8')) if os.path.exists(rail) else {'stations': [], 'edges': []}
-    # Lives: [name, role, born date, born lon, lat, place, died date, lon, lat, place, fame, wikidata number]
-    L = []
-    for r in rows(repo, 'people.jsonl'):
-        b, dd = r.get('born') or {}, r.get('died') or {}
-        L.append([r['name'], (r.get('roles') or [''])[0], b.get('date') or str(b.get('year', '')), b.get('lon'), b.get('lat'), b.get('name', ''),
-                  dd.get('date') or (str(dd['year']) if dd.get('year') else ''), dd.get('lon'), dd.get('lat'), dd.get('name', ''), r.get('fame', 0),
-                  int(r['wikidata'][1:]) if r.get('wikidata') else 0])
-    return {'rail': {'source': R.get('source'), 'note': R.get('note'),
-                     'stations': [[s[0], s[1], s[2], s[3], s[4]] for s in R['stations']], 'edges': R['edges']},
-            'lives': L, 'lives_source': 'Pantheon 2025 update (Yu et al. 2016, pantheon.world), CC BY-SA 4.0: the 2,000 most famous people born in Europe and alive in 1789-1914'}
-
-
-if __name__ == '__main__':
-    repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-    out = os.path.join(sys.argv[1], 'atlas-files')
-    os.makedirs(out, exist_ok=True)
-    f = os.path.join(out, 'e19-deep.json')
-    json.dump(sidecar(repo), open(f, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-    print(f, os.path.getsize(f))
+def rail(repo):
+    """Railway growth by year from Wikidata station openings: [year, stations open, km of linked track, stations opened that year]."""
+    import math
+    p = os.path.join(repo, 'data', 'europe-19c', 'geo', 'railways.json')
+    if not os.path.exists(p):
+        return None
+    R = json.load(open(p, encoding='utf-8'))
+    st = R['stations']
+    yr = lambda s: int(s[2][:4])
+    def km(a, b):
+        la, lb = math.radians(a[1]), math.radians(b[1])
+        h = math.sin((lb - la) / 2) ** 2 + math.cos(la) * math.cos(lb) * math.sin(math.radians(b[0] - a[0]) / 2) ** 2
+        return 2 * 6371 * math.asin(math.sqrt(h))
+    opened, track = {}, {}
+    for s in st:
+        opened[yr(s)] = opened.get(yr(s), 0) + 1
+    for a, b in R['edges']:
+        y = max(yr(st[a]), yr(st[b]))
+        track[y] = track.get(y, 0) + km(st[a], st[b])
+    out, n, k = [], 0, 0.0
+    for y in range(1800, 1915):
+        n += opened.get(y, 0); k += track.get(y, 0)
+        out.append([y, n, round(k), opened.get(y, 0)])
+    return {'years': out, 'source': R.get('source'), 'note': R.get('note')}

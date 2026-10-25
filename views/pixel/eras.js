@@ -242,12 +242,14 @@
     detail: [0.42, 0.12, 0.4],
     shade(P) {
       vellum(P, 12);
-      // Wave strokes: dropped at random per stroke so they never form a lattice; a third as many at world zoom.
-      if (WATER(P.c) && P.d > 2 && (P.v % 6 === 0) && ((P.u + (P.v / 6 | 0) * 3) % 8) < 3 && hash((P.u + (P.v / 6 | 0) * 3) >> 3, P.v) < (P.need > 0.4 ? 0.3 : 0.75)) { P.r = P.r * 0.45 + 60 * 0.55; P.g = P.g * 0.45 + 110 * 0.55; P.b = P.b * 0.45 + 168 * 0.55; }
+      // Wave strokes every sixth row, every eighteenth below 2x so the world view stays quiet; a quarter dropped at random
+      // per stroke so they never read as a lattice.
+      const wr = P.k < 2 ? 18 : 6;
+      if (WATER(P.c) && P.d > 2 && (P.v % wr === 0) && ((P.u + (P.v / wr | 0) * 3) % 8) < 3 && hash((P.u + (P.v / wr | 0) * 3) >> 3, P.v) < 0.75) { P.r = P.r * 0.45 + 60 * 0.55; P.g = P.g * 0.45 + 110 * 0.55; P.b = P.b * 0.45 + 168 * 0.55; }
     },
     redSea: "#c0392b",
     coast: "#2a2220",
-    rhumb: { roses: [[-22, 31], [17, 37]], sea: 0.45, land: 0.08 },
+    rhumb: { roses: [[-22, 31], [17, 37]], sea: 0.45, land: 0 },
     rose: [[-22, 31]],
     realm: { fill: 0.08, band: 0.45, bandW: 2, edge: "#c8962a", edge2: "#6a4a18", pastel: 0 },
     glint: null, frame: { ink: "#2a2220", paper: "#f1e4c0", a: "#d8a32c", b: "#c0392b", c: "#2e4f8f" },
@@ -273,10 +275,10 @@
     detail: [0.38, 0.1, 0.4],
     shade(P) {
       vellum(P, 10);
-      if (WATER(P.c) && P.d > 1 && ((P.v + Math.round(Math.sin(P.u * 0.5) * 1.3)) % 7 === 0) && vnoise(P.u, P.v, 14) > (P.need > 0.4 ? 0.58 : 0.42)) { P.r += 34; P.g += 38; P.b += 40; }
+      if (WATER(P.c) && P.d > 1 && ((P.v + Math.round(Math.sin(P.u * 0.5) * 1.3)) % 9 === 0) && vnoise(P.u, P.v, 14) > 0.55) { P.r += 34; P.g += 38; P.b += 40; }
     },
     coast: "#e8c060",
-    realm: { fill: 0.05, band: 0.3, bandW: 1, edge: "#6a3a28", pastel: 0.1 },
+    realm: { fill: 0.05, band: 0.3, bandW: 1, edge: "#6a3a28", pastel: 0.1, thin: 6 },
     glint: null, frame: { ink: "#1e2a4a", paper: "#efd9a0", a: "#1e3a7a", b: "#e8c060", corner: "star" },
     title: y => ({ text: arabic(Math.max(1, y)), sub: arabic(Math.max(1, hijri(y))), star: true }),
   });
@@ -498,7 +500,7 @@
     const [dLand, dSea, dOut] = s.detail;
     const DET = new Float32Array(19).map((_, c) => c === 18 ? dOut : WATER(c) ? dSea : dLand);
     const R = s.realm, edgeC = rgb(R.edge), edge2 = R.edge2 && rgb(R.edge2), lip = R.lip && rgb(R.lip);
-    const lowC = R.low ? rgb(R.low) : mix(edgeC, rgb(s.paper), 0.3);
+    const lowC = R.low ? rgb(R.low) : mix(edgeC, rgb(s.paper), 0.3), inkC = rgb(s.ink);
     const tintCache = new WeakMap(), groupCache = new WeakMap();
     const tintsOf = realms => {
       let t = tintCache.get(realms); if (t) return t;
@@ -533,10 +535,10 @@
       return meanL;
     };
     let graded = null, gradedKey = null;
-    const P = { r: 0, g: 0, b: 0, c: 0, band: 0, hs: 0, d: 0, u: 0, v: 0, dl: 0, need: 1 };
+    const P = { r: 0, g: 0, b: 0, c: 0, band: 0, hs: 0, d: 0, u: 0, v: 0, dl: 0, k: 1 };
     function gradeTerrain(g) {
       const { terrain, base, cls, band, hs, w, h, U0, V0 } = g, ML = means(), bd = s.bandDither || 0, shade = s.shade;
-      P.need = g.need || 1;
+      P.k = g.k || 1;
       const view = new Uint8Array(base.buffer, base.byteOffset, base.length * 4);
       const red = s.redSea && typeof d3 !== "undefined" && areaMask(g, RED_SEA), redC = s.redSea && rgb(s.redSea);
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
@@ -572,18 +574,20 @@
     // a light fill. World view (k < 3): solid edges between realm groups only, in a quieter colour, no ribbons.
     function realms(g, view) {
       const { ids, cls, w, h, U0, V0, k: zk } = g, tints = tintsOf(g.realms), low = zk < 3;
-      const gid = low ? groupsOf(g.realms) : null, bw = low ? 0 : R.bandW || 0, dash = low ? 0 : R.dash;
+      // thin: below that zoom, borders are a single pixel in the era ink (one side of the line only), with no band.
+      const one = zk < (R.thin || 0), gid = low ? groupsOf(g.realms) : null, bw = low || one ? 0 : R.bandW || 0, dash = low ? 0 : R.dash;
       const land = m => cls[m] > 3 && cls[m] !== 255;
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, n0 = ids[k]; if (n0 <= 0 || !land(k)) continue;
         const n = low ? gid[n0] : n0, idOf = m => { const x = ids[m]; return low && x > 0 ? gid[x] : x; };
         const other = m => idOf(m) !== n && land(m);
-        const edge = (i + 1 < w && other(k + 1)) || (j + 1 < h && other(k + w)) || (i > 0 && other(k - 1)) || (j > 0 && other(k - w));
+        const edge = (i + 1 < w && other(k + 1)) || (j + 1 < h && other(k + w)) || (!one && ((i > 0 && other(k - 1)) || (j > 0 && other(k - w))));
         // Off-register fill: the tint is taken from one pixel up and left, as if the colour plate slipped.
         const tn = R.shift && i > 0 && j > 0 && ids[k - w - 1] > 0 ? idOf(k - w - 1) : n, tc = tints[tn - 1]; if (!tc) continue;
         const o = k * 4;
         let a = R.fill;
         if (edge) {
+          if (one) { view[o] = inkC[0]; view[o + 1] = inkC[1]; view[o + 2] = inkC[2]; continue; }
           if (low) { view[o] = lowC[0]; view[o + 1] = lowC[1]; view[o + 2] = lowC[2]; continue; }
           if (!dash || ((U0 + i + V0 + j) % dash) !== dash - 1) {
             // Two-tone edges (gilding): the lower-right side of the line darker.

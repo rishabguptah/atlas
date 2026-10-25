@@ -1,0 +1,738 @@
+{
+ "run": "2026-10-25",
+ "answered": 40,
+ "graded": 40,
+ "of": 40,
+ "answerModel": "default",
+ "graderModel": "default",
+ "score": 87.7,
+ "parts": {
+  "content": 35.7,
+  "accuracy": 14.6,
+  "why": 13.2,
+  "map": 14.8,
+  "sources": 9.4
+ },
+ "errors": {
+  "serious": 1,
+  "minor": 106,
+  "myths": 0
+ },
+ "medianSeconds": 55,
+ "byRegion": {
+  "Indian Ocean": {
+   "n": 1,
+   "score": 78.2
+  },
+  "Eurasia": {
+   "n": 5,
+   "score": 82
+  },
+  "World": {
+   "n": 3,
+   "score": 83.1
+  },
+  "Middle East": {
+   "n": 1,
+   "score": 83.9
+  },
+  "Mediterranean": {
+   "n": 3,
+   "score": 84
+  },
+  "Oceania": {
+   "n": 1,
+   "score": 85.5
+  },
+  "Africa": {
+   "n": 1,
+   "score": 85.8
+  },
+  "South Asia": {
+   "n": 3,
+   "score": 87.5
+  },
+  "Asia": {
+   "n": 1,
+   "score": 87.6
+  },
+  "Europe": {
+   "n": 4,
+   "score": 88.6
+  },
+  "Eastern Mediterranean": {
+   "n": 2,
+   "score": 88.7
+  },
+  "Southern Africa": {
+   "n": 1,
+   "score": 89.1
+  },
+  "North Atlantic and Russia": {
+   "n": 1,
+   "score": 89.8
+  },
+  "West Africa": {
+   "n": 1,
+   "score": 89.9
+  },
+  "East Asia": {
+   "n": 4,
+   "score": 90.6
+  },
+  "Atlantic": {
+   "n": 3,
+   "score": 91.8
+  },
+  "Mesoamerica": {
+   "n": 2,
+   "score": 94.3
+  },
+  "Southeast Asia": {
+   "n": 1,
+   "score": 94.3
+  },
+  "Andes": {
+   "n": 1,
+   "score": 95.3
+  },
+  "Central Asia": {
+   "n": 1,
+   "score": 96.5
+  }
+ },
+ "byKind": {
+  "compare": {
+   "n": 3,
+   "score": 83.4
+  },
+  "fact": {
+   "n": 4,
+   "score": 87.2
+  },
+  "unknown": {
+   "n": 1,
+   "score": 87.3
+  },
+  "why": {
+   "n": 31,
+   "score": 88
+  },
+  "premise": {
+   "n": 1,
+   "score": 91.8
+  }
+ },
+ "byLens": {
+  "literature": {
+   "n": 1,
+   "score": 79.6
+  },
+  "ideas": {
+   "n": 9,
+   "score": 86
+  },
+  "people": {
+   "n": 10,
+   "score": 86.3
+  },
+  "geography": {
+   "n": 16,
+   "score": 86.8
+  },
+  "economy": {
+   "n": 18,
+   "score": 87.5
+  },
+  "military": {
+   "n": 15,
+   "score": 87.6
+  },
+  "art": {
+   "n": 3,
+   "score": 87.6
+  },
+  "population": {
+   "n": 7,
+   "score": 87.8
+  },
+  "order": {
+   "n": 24,
+   "score": 88.9
+  },
+  "disease": {
+   "n": 11,
+   "score": 89
+  },
+  "religion": {
+   "n": 6,
+   "score": 89.5
+  },
+  "law": {
+   "n": 2,
+   "score": 91.4
+  }
+ },
+ "questions": [
+  {
+   "id": "railways",
+   "total": 72.9,
+   "parts": {
+    "content": 22.9,
+    "accuracy": 14,
+    "why": 12,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It quantifies the jump from tens of kilometres to several hundred a day and ties it to freight cost collapse, armies, and commuting, while noting the army still marched 30 km/day beyond the railhead.",
+   "worst": "It never mentions transcontinental lines (US 1869, Trans-Siberian) or railway time and time zones, and does not clearly state the Liverpool and Manchester line was the first all-steam intercity railway."
+  },
+  {
+   "id": "indian-ocean",
+   "total": 78.2,
+   "parts": {
+    "content": 26.7,
+    "accuracy": 14,
+    "why": 13.5,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It explains the mechanism clearly as a causal chain: reversing winds, one round trip a year, forced waiting, then ports, credit, diasporas and tolls, with Srivijaya and Mamluk Cairo as concrete cases.",
+   "worst": "It omits the ancient Greco-Roman Red Sea to Muziris trade (Periplus) and the 1498 arrival of da Gama at Calicut with a local pilot and the Portuguese attempt to seize control, and it spends heavy space on the Black Death, which the question did not ask about."
+  },
+  {
+   "id": "printing",
+   "total": 79.6,
+   "parts": {
+    "content": 34.3,
+    "accuracy": 10,
+    "why": 11.3,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It explains the speed difference through linked mechanisms (alphabet and fixed-cost type, cheap paper, political fragmentation, state-held type in Korea and a single empire in China) and makes the cross-step links explicit.",
+   "worst": "It never names the Eisenstein versus Adrian Johns debate on how revolutionary print really was, and omits the Ottoman Muteferrika 1727 contrast, so the weighing of the 'print revolution' claim itself is thin."
+  },
+  {
+   "id": "steppe-horse",
+   "total": 80.2,
+   "parts": {
+    "content": 31.4,
+    "accuracy": 12,
+    "why": 12.8,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It links the chariot to its economic and political cost, showing the chariot-lord states as a brittle capital-intensive system that cheap iron and cavalry then displaced, and it is candid about which claims are inference or debated.",
+   "worst": "It never connects steppe horse-and-chariot migration (Yamnaya, c. 3000 BCE) to the spread of Indo-European languages, and its treatment of steppe cavalry peoples such as the Scythians is thin."
+  },
+  {
+   "id": "rome-constantinople",
+   "total": 81,
+   "parts": {
+    "content": 32.5,
+    "accuracy": 14,
+    "why": 10.5,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It links geography, fiscal base, Africa's loss and court politics into a causal chain (e.g. the West's shrinking revenue leading to land-paid generals who controlled emperors) while naming Heather, Ward-Perkins and Luttwak views with honest unknowns.",
+   "worst": "It never challenges the premise that 476 was the 'fall' (a convention, with the West dissolving into successor kingdoms over decades) and the Black Death steps drift off the question into 1348 rather than answering why Rome fell."
+  },
+  {
+   "id": "lost-wonders",
+   "total": 81.1,
+   "parts": {
+    "content": 37.1,
+    "accuracy": 8,
+    "why": 12,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It explains survival and loss through mechanisms (seismic ground, funding and upkeep, law and belief, reuse of stone), and it flags the Hanging Gardens as possibly never at Babylon, citing Dalley.",
+   "worst": "The Ephesus account omits Herostratus's arson in 356 BCE and the rebuild, and several dates are muddled (Goths 262, Bodrum 1402/1406/1522), with a tangent on the Library of Alexandria."
+  },
+  {
+   "id": "scientific-revolution",
+   "total": 81.3,
+   "parts": {
+    "content": 33.3,
+    "accuracy": 12,
+    "why": 12,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It names an institutional mechanism (chartered corporations plus fragmented jurisdictions that made exit cheap) with concrete cases such as Galileo, Paris 1277 and Taqi al-Din, and hedges the causal weights honestly.",
+   "worst": "It engages the Needham framing only through a view card and never directly says the question itself is contested, and it gives little detail on Copernicus, Galileo and Newton's Principia as the actual outcomes, or on the Tusi couple's role in Copernicus beyond a passing hint."
+  },
+  {
+   "id": "islam-spread",
+   "total": 83.9,
+   "parts": {
+    "content": 31.4,
+    "accuracy": 14,
+    "why": 13.5,
+    "map": 15,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It cleanly separates fast conquest from slow conversion, linking exhausted empires, light surrender terms, and the fiscal brake on conversion (Bulliet, jizya) in a coherent causal chain.",
+   "worst": "It never states clearly the full list of key victories (Egypt 641, Nahavand 642 only in passing) or the 711 Indus reach alongside Iberia, and it has inconsistent dates for the war (602/603) and the end of the Sasanians."
+  },
+  {
+   "id": "europe-rich",
+   "total": 84.2,
+   "parts": {
+    "content": 40,
+    "accuracy": 8,
+    "why": 12,
+    "map": 14.2,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It links the Black Death wage shock to persistent income gains using Maddison series and then separates the medieval headcount boom from per-head growth, with competing views weighed.",
+   "worst": "It uses clearly unreliable city-size index values (Antwerp 591,000, Milan 2.5 million in 1800) as evidence and slightly overstates the case for a 1350-1500 start, underplaying the post-1800 sustained-growth point."
+  },
+  {
+   "id": "mongols",
+   "total": 84.2,
+   "parts": {
+    "content": 31.4,
+    "accuracy": 16,
+    "why": 12.8,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It links steppe grass, decimal army and keshig, siege specialists, the yam and terror-as-price-list into a coherent mechanism chain and openly hedges inflated numbers and the contested Hungary withdrawal.",
+   "worst": "It misses the climate factor (the wet, mild 1211-25 period behind horse fodder) and gives little on the empire splitting into four khanates and the Yuan conquest of Song China by 1279."
+  },
+  {
+   "id": "black-death",
+   "total": 84.5,
+   "parts": {
+    "content": 30,
+    "accuracy": 16,
+    "why": 13.5,
+    "map": 15,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It traces the route from the Chu valley through Caffa and the Mediterranean to the Baltic with careful hedging about the Caffa catapult story, the Chu link and transmission, and it ties scarcity to wages and the Statute of Labourers.",
+   "worst": "It omits the massacres of Jews blamed for the plague (Strasbourg 1349) and only vaguely sketches serfdom weakening in the west versus a second serfdom in the east, with no explicit mention of Genoese galleys reaching Messina as the entry point beyond a brief note."
+  },
+  {
+   "id": "china-consolidate",
+   "total": 85,
+   "parts": {
+    "content": 35,
+    "accuracy": 14,
+    "why": 12,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It combines geography (the open plain and canal), the Qin template, exams and the Mandate into a layered mechanism, and explicitly tests it against the long divisions with Red Cliffs, Fei River and Xiangyang.",
+   "worst": "It never cleanly states Ko, Koyama and Sng's argument that a single steppe threat favoured large centralised states, and it blurs the dates of reunification (265 versus 280) and the 1127 case."
+  },
+  {
+   "id": "ottoman-1453",
+   "total": 85,
+   "parts": {
+    "content": 31.4,
+    "accuracy": 16,
+    "why": 14.3,
+    "map": 13.3,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It builds a layered causal chain (lost hinterland, thin garrison, fiscal capacity for Orban's guns, Lycus breach, ships overland) and explicitly weighs 1453 against Portuguese expansion as an accelerant, not the cause.",
+   "worst": "It never says that Greek scholars carried manuscripts to Italy or links 1453 to the Renaissance, and it gives Byzantium's population only indirectly rather than stating it was a tiny rump of a few tens of thousands."
+  },
+  {
+   "id": "polynesia",
+   "total": 85.5,
+   "parts": {
+    "content": 36.7,
+    "accuracy": 12,
+    "why": 12.8,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It explains the pause and burst through wind geometry, return-capable navigation and climate windows, weighs competing views and flags what is unproven.",
+   "worst": "Navigation is only treated in passing (single-hulled versus double-hulled voyaging canoes are never described), and the answer has several inconsistent distance figures and a garbled Lipson citation."
+  },
+  {
+   "id": "scramble-africa",
+   "total": 85.8,
+   "parts": {
+    "content": 34.3,
+    "accuracy": 14,
+    "why": 13.5,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It explicitly corrects the Berlin myth (no map was drawn there, it wrote procedure) and builds a layered causal chain from quinine, steamers and the Maxim gun through cheap concession-company claims to bilateral treaties.",
+   "worst": "Liberia's survival is only briefly explained and the 'only Ethiopia and Liberia stayed independent by 1914' point is never stated outright, and a few shaky details (the 1885 border-change figure, a visible 'Charles H. Ford? no' citation slip) need cleaning up."
+  },
+  {
+   "id": "song-china",
+   "total": 86,
+   "parts": {
+    "content": 34.3,
+    "accuracy": 14,
+    "why": 13.5,
+    "map": 14.2,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It weighs Elvin, Hartwell, Allen and Pomeranz against each other, ties the 1127 loss of the northern coal-iron belt to the state-as-customer argument, and states its uncertainty openly.",
+   "worst": "It never mentions fast-ripening Champa rice or the agricultural revolution behind the Song boom, and its few date slips (Yuan 'from 1294', Jin ending 1233 rather than 1234) need correcting."
+  },
+  {
+   "id": "partition-1947",
+   "total": 86.8,
+   "parts": {
+    "content": 34.3,
+    "accuracy": 14,
+    "why": 13.5,
+    "map": 15,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It links the mechanism of the rushed handover (compressed timetable, late-published Radcliffe line, a divided army with no force able to protect people) to the violence, and weighs Jalal, Khan and Pandey fairly with honest unknowns.",
+   "worst": "It omits the 1940 Lahore Resolution and the sequence of Jinnah's Pakistan demand, so the political origin of the partition demand is thin, and it adds the Punjab Boundary Force strength wrong."
+  },
+  {
+   "id": "flu-1918",
+   "total": 87,
+   "parts": {
+    "content": 37.5,
+    "accuracy": 12,
+    "why": 13.5,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It builds a clear causal chain from wartime logistics, censorship and a short infectious period to rapid global spread, supported by the Samoa natural experiment, while keeping the origin explicitly unsettled.",
+   "worst": "It never states clearly the W-shaped mortality curve for young adults, treating the young-adult pattern only in passing, and it has a mismatched citation for the Indian estimates."
+  },
+  {
+   "id": "indus-unknown",
+   "total": 87.3,
+   "parts": {
+    "content": 35,
+    "accuracy": 14,
+    "why": 14.3,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It separates what is supported (gradual ruralization, monsoon weakening, no invasion or massacre) from what is unsettled, flags 100-200 year dating errors, and shows how river-shift and climate explanations may be one mechanism.",
+   "worst": "It never states clearly in the short answer that the Indus script is undeciphered, so we have no written account, which is the central reason the cause remains uncertain."
+  },
+  {
+   "id": "buddhism-india",
+   "total": 87.6,
+   "parts": {
+    "content": 33.3,
+    "accuracy": 16,
+    "why": 14.3,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It builds a clear causal chain linking narrow patronage, the shift of trade hubs, Hindu absorption and a concentrated monastic base, and it weighs the gradual-decline thesis against the invasion thesis explicitly.",
+   "worst": "Ashoka's role in spreading Buddhism abroad is barely made (the Ashoka step focuses on governance and 'no state church'), and the Nalanda date is given inconsistently as c.1193/1197/1200 instead of anchoring on Bakhtiyar Khilji c.1193."
+  },
+  {
+   "id": "india-consolidate",
+   "total": 88.3,
+   "parts": {
+    "content": 37.5,
+    "accuracy": 14,
+    "why": 12.8,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "A well-developed mechanism chain linking separate self-financing granary cores, the cost of carrying revenue and armies across the Deccan, and an overlordship political culture, with explicit links and honest hedging.",
+   "worst": "It omits the armed peasantry and open military labour market (Kolff) as a driver of cheap rebellion and new states, and misattributes the labour-market idea to Gommans, while the premise check is only implicit rather than stating clearly that India was repeatedly largely unified."
+  },
+  {
+   "id": "vienna-1913",
+   "total": 88.3,
+   "parts": {
+    "content": 37.5,
+    "accuracy": 14,
+    "why": 12.8,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It separates overlap in time and city from an actual meeting, flags the Café Central and Schönbrunn encounter stories as legend, and names the unknowns.",
+   "worst": "It is padded with tangential steps on demography, the Ringstrasse and Habsburg politics, and it hedges on Trotsky's 1907-1914 Vienna residence and Tito's presence instead of stating them cleanly."
+  },
+  {
+   "id": "great-zimbabwe",
+   "total": 89.1,
+   "parts": {
+    "content": 34.3,
+    "accuracy": 18,
+    "why": 12.8,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It gives a well-evidenced causal chain linking thin granite soils, cattle and fuelwood strain, and northward-shifting gold routes to a gradual abandonment, while openly flagging what is inferred and unsettled.",
+   "worst": "It barely addresses the colonial denial of African authorship and Rhodesian suppression of archaeologists, mentioning only that Phoenician/Arab myths persist in popular culture, and it misnames Gertrude Caton-Thompson."
+  },
+  {
+   "id": "lasting-cities",
+   "total": 89.5,
+   "parts": {
+    "content": 40,
+    "accuracy": 12,
+    "why": 13.5,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It builds a clear causal framework (single-channel or single-commodity dependence versus a fallback site, plus sacred obligation) and supports it with climate, silt, trade and disease evidence while flagging inferences.",
+   "worst": "It should more squarely name the rubric's clearest vanished cases (Cahokia, Ctesiphon) and long-lived ones (Rome, Xi'an/Luoyang), and tighten loose claims about Petra and Babylon's geography."
+  },
+  {
+   "id": "ww1-1914",
+   "total": 89.5,
+   "parts": {
+    "content": 35,
+    "accuracy": 16,
+    "why": 13.5,
+    "map": 15,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It builds a layered causal chain from Balkan nationalism through the blank cheque, the Schlieffen clock and Russian mobilisation, and explicitly says mobilisation did not make war literally automatic while weighing Fischer, Clark and Taylor.",
+   "worst": "It never clearly explains how the two alliance blocs (Entente and Central Powers) widened a Balkan war into a continental one, and it gives no weight to Britain's entry beyond the Belgium geography."
+  },
+  {
+   "id": "slave-trade",
+   "total": 89.7,
+   "parts": {
+    "content": 37.1,
+    "accuracy": 16,
+    "why": 12,
+    "map": 14.6,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It gives the Voyages totals (12.5 million embarked, 10.7 million landed, one in seven dying) and correctly explains that Brazil and the Caribbean, not North America, received nearly all captives, with wind systems and sugar as causes.",
+   "worst": "It never clearly states that the trade peaked in the 18th century, so the timing point is only implied through sugar, and the error list should be tightened to avoid hedged claims."
+  },
+  {
+   "id": "law-codes",
+   "total": 89.8,
+   "parts": {
+    "content": 33.3,
+    "accuracy": 18,
+    "why": 13.5,
+    "map": 15,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It explicitly corrects the 'first code' assumption by naming Ur-Namma and Lipit-Ishtar, and ties each shift in authorship to a cause (royal legitimacy, debt crises, imperial restoration).",
+   "worst": "It never states that Hammurabi's penalties varied by social class (free man, commoner, slave), and it gives the Bologna rediscovery only as a passing aside rather than explaining how the Corpus shaped European civil law."
+  },
+  {
+   "id": "vikings",
+   "total": 89.8,
+   "parts": {
+    "content": 34.3,
+    "accuracy": 18,
+    "why": 13.5,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It explains causes through linked mechanisms (political push, silver demand, geography, population limits) and ties the eastern dirham flow to the western raids.",
+   "worst": "The 1021 dated wood evidence at L'Anse aux Meadows is missing (it gives only 'c.1000'), and Iceland's 874 date is given only as an index value, so the settlement chronology is slightly imprecise."
+  },
+  {
+   "id": "mali-gold",
+   "total": 89.9,
+   "parts": {
+    "content": 37.1,
+    "accuracy": 16,
+    "why": 12.8,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It separates what is well attested (al-'Umari's report of the dinar's fall in Cairo, the Catalan Atlas image) from second-hand figures, and explains Mali's wealth as rationing and taxing the gold-salt exchange rather than mining.",
+   "worst": "It treats Timbuktu and Djenne as centres of trade and learning only thinly, saying Timbuktu's fame came later and not clearly tying Djenne to Islamic scholarship, and it includes a questionable claim that Mali was larger than the Byzantines."
+  },
+  {
+   "id": "aztec-fall",
+   "total": 90.5,
+   "parts": {
+    "content": 40,
+    "accuracy": 12,
+    "why": 13.5,
+    "map": 15,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It builds a clear causal chain linking tribute fragility, Tlaxcalan defection, Malinche's diplomacy, smallpox decapitation and the lake siege, while explicitly treating technology as the keystone rather than the arch.",
+   "worst": "Tighten the chronology around Cuitlahuac's reign and the smallpox timeline, and weigh Restall and Townsend more directly rather than leaving the Indigenous-agency argument mostly in one view."
+  },
+  {
+   "id": "premise-columbus",
+   "total": 91.8,
+   "parts": {
+    "content": 40,
+    "accuracy": 14,
+    "why": 12.8,
+    "map": 15,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It corrects the premise at once and shows that the real dispute was Columbus's small Earth versus his critics' correct larger one, with Irving, Draper and White tracing how the myth was made.",
+   "worst": "Tighten the numbers: the answer gives inconsistent estimates of Columbus's distance to Japan (3,700 km versus 2,400 nm) and loosely states the Americas' distance, and the economic steps stray from the question."
+  },
+  {
+   "id": "bronze-1177",
+   "total": 92.3,
+   "parts": {
+    "content": 40,
+    "accuracy": 14,
+    "why": 14.3,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It frames the collapse as a cascading systems failure, linking drought, tin trade, palace centralisation and Egypt's Nile buffer, and weighs Cline, Kaniewski, Nur and Drews fairly.",
+   "worst": "It never clearly says the collapse was spread over decades rather than the single year 1177, and the Mycenaean date of 1101 BCE misplaces the palace destruction by about a century."
+  },
+  {
+   "id": "gothic",
+   "total": 92.5,
+   "parts": {
+    "content": 40,
+    "accuracy": 14,
+    "why": 14.3,
+    "map": 14.2,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It builds a layered causal chain that links surplus, political need, and Suger's theology of light, and weighs von Simson, Panofsky, Duby and the political school fairly, including what each cannot explain.",
+   "worst": "Treat Beauvais as a structural limit of the style rather than a casualty of population stagnation, and drop or heavily caveat the implausible 124,000 figure for Paris."
+  },
+  {
+   "id": "tokugawa",
+   "total": 93.1,
+   "parts": {
+    "content": 40,
+    "accuracy": 16,
+    "why": 13.5,
+    "map": 14.6,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It builds a real causal chain in which Hideyoshi's disarmament, the daimyo sorting, sankin-kotai, the Edo and Osaka market and ideology reinforce one another, and it frames the settlement as a bargain that left the tozama armed.",
+   "worst": "Fix the inconsistent koku totals (18-20 million versus 30 million) and say more clearly that the end came with Perry's 1853 arrival, which is only briefly mentioned in the unknowns."
+  },
+  {
+   "id": "columbian-exchange",
+   "total": 94,
+   "parts": {
+    "content": 37.1,
+    "accuracy": 18,
+    "why": 14.3,
+    "map": 14.6,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It links disease, succession crises, labor shortage, slavery, silver and crops into a causal chain, and it names the population uncertainty (8 to over 100 million) alongside rival scholars.",
+   "worst": "It barely covers the Old World animals and crops (horses, cattle, wheat) that transformed the Americas, such as the Plains horse cultures, and it gives the Great Dying as a precise 80 to 90 percent loss."
+  },
+  {
+   "id": "angkor",
+   "total": 94.3,
+   "parts": {
+    "content": 40,
+    "accuracy": 16,
+    "why": 14.3,
+    "map": 15,
+    "sources": 9
+   },
+   "failed": null,
+   "best": "It treats the 'abandonment' as a slow relocation, weighs climate, Ayutthaya, trade and politics against each other, and notes that Angkor Wat stayed a living monastery.",
+   "worst": "It never cites the lidar finding of roughly 1,000 km² explicitly or uses it, and the Phnom Penh trade-pull argument leans on inference without data, so quantify scale and tighten the dating of the court's move."
+  },
+  {
+   "id": "inca-roads",
+   "total": 95.3,
+   "parts": {
+    "content": 40,
+    "accuracy": 16,
+    "why": 14.3,
+    "map": 15,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It ties khipu, mit'a labour, qollqa storehouses, roads and mitmaq into one coherent system and links its strengths to its fragility, with Murra, Urton and D'Altroy weighed fairly.",
+   "worst": "Pachacuti's rapid expansion from about 1438 is only implicit and the civil war and smallpox sequence is scattered across steps; a tighter, explicit timeline and a clearer statement that the 1532 conquest came after smallpox and civil war would help."
+  },
+  {
+   "id": "silk-road",
+   "total": 96.5,
+   "parts": {
+    "content": 40,
+    "accuracy": 18,
+    "why": 14.3,
+    "map": 14.2,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It shows with causal links why geography (Taklamakan, steppe, monsoon) produced a braid of relayed routes and then ties trade, ideas and plague into one mechanism.",
+   "worst": "It spends over half its steps on the 1340s plague and gives little weight to the first-millennium Sogdian role and the Han-to-Tang period, and it gives Richthofen's 1877 naming only in the views section."
+  },
+  {
+   "id": "maya-collapse",
+   "total": 98,
+   "parts": {
+    "content": 40,
+    "accuracy": 18,
+    "why": 15,
+    "map": 15,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It builds a layered causal chain in which drought struck a dense, rain-fed population and war-weakened divine kingship, while explaining the north's survival through cenotes and different rule, and it names Haug, Demarest and Diamond as competing views with fair weighting.",
+   "worst": "The errors list is thin; the answer could be tightened by clarifying the 530-600 drought claim and by stating more directly that the Maya people persist today, rather than only implying it through emigration and northern continuity."
+  },
+  {
+   "id": "qing-opium",
+   "total": 98.1,
+   "parts": {
+    "content": 40,
+    "accuracy": 20,
+    "why": 13.5,
+    "map": 14.6,
+    "sources": 10
+   },
+   "failed": null,
+   "best": "It links the economic, military and political lenses into one causal chain, running from the silver drain through the court's divided response to steamers flanking forts and cutting the Grand Canal, and it shows the mechanism at each link.",
+   "worst": "The short answer's claim that Britain never fought the Qing army on land is overstated, since the war included land battles at Chinhai, Chapoo and Chinkiang. The answer is also very long and repeats the Nemesis and Zhenjiang points across several steps."
+  }
+ ]
+}

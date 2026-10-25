@@ -1,0 +1,11 @@
+{
+ "note": "Dense packs for the world index: one line per window, assembled by views/atlas/world/assemble.py from the kernel, the global chronicle, Pantheon and Wikidata box queries. Nobody hand-builds a pack: add a line and run the assembler.",
+ "packs": [
+  {"id": "europe_1789_1914", "name": "Europe 1789–1914", "bbox": [-25, 34, 50, 72], "t0": 1789, "t1": 1914, "wd": false},
+  {"id": "kaifeng_1050_1127", "name": "Kaifeng and the Northern Song heartland", "bbox": [112.0, 33.0, 117.5, 36.8], "t0": 1050, "t1": 1127},
+  {"id": "delhi_agra_1526_1707", "name": "Delhi and Agra under the Mughals", "bbox": [76.0, 26.3, 79.0, 29.5], "t0": 1526, "t1": 1707},
+  {"id": "baghdad_762_1258", "name": "Abbasid Baghdad", "bbox": [43.0, 32.0, 45.8, 34.6], "t0": 762, "t1": 1258},
+  {"id": "edo_1700_1868", "name": "Edo and the Kantō", "bbox": [138.8, 35.0, 140.4, 36.2], "t0": 1700, "t1": 1868},
+  {"id": "vienna_1900_1914", "name": "Vienna 1900–1914", "bbox": [15.9, 47.9, 16.7, 48.4], "t0": 1900, "t1": 1914}
+ ]
+}

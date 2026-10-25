@@ -15,7 +15,7 @@ bending an existing one, and say so in your PR.
 - Run `python3 tools/build.py` before you push. It fails on any error, and CI runs the same check.
 
 Workstream folders: `kernel`, `living-atlas`, `places-people`, `states-war`, `economy-trade`,
-`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`, `law`, `europe-19c`, `peoples-languages`, `scholarship`.
+`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`, `law`, `europe-19c`, `peoples-languages`, `scholarship`, `travels`, `coverage` (people, places and events outside Europe, any kind).
 
 ## Common fields (every record)
 
@@ -45,6 +45,8 @@ is then checked once, against Crossref or OpenLibrary, and every record that cit
 ### Time
 
 Years are integers. Negative is BCE, and there is no year 0 (-1 is 1 BCE).
+Deep-time records (data/deep-time/) go back to about 3 million years ago: a date given in the source as "ka" (thousands
+of years before 1950) is stored as `1950 - ka * 1000`. The checker accepts years after -3,000,000.
 
 | Field | Rule |
 | --- | --- |

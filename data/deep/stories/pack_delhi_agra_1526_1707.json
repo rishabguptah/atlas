@@ -1,0 +1,558 @@
+{
+ "stories": [
+  {
+   "id": "delhi_agra_throne",
+   "title": "Thrones of Delhi and Agra",
+   "region": "Delhi and Agra",
+   "start": "1526",
+   "end": "1707",
+   "view": {
+    "lon": 77.6,
+    "lat": 28.0,
+    "span": 3.2
+   },
+   "blurb": "How the Mughals won, lost, rebuilt and fought over the twin capitals of the Yamuna, from Babur's guns at Panipat to the succession battle at Jajau.",
+   "steps": [
+    {
+     "date": "1526-04-21",
+     "date_note": "",
+     "end_date": "",
+     "name": "First Battle of Panipat",
+     "place_name": "Panipat",
+     "lat": 29.39,
+     "lon": 76.97,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Babur",
+      "Ibrahim Lodi"
+     ],
+     "what": "Babur's small army with matchlocks and field guns destroyed the Lodi host.",
+     "why": "It ended the Delhi Sultanate and opened north India to Mughal rule.",
+     "wikipedia": "First Battle of Panipat",
+     "wikidata": "Q605321"
+    },
+    {
+     "date": "1527-03-16",
+     "date_note": "",
+     "end_date": "",
+     "name": "Battle of Khanwa",
+     "place_name": "Khanwa",
+     "lat": 27.03,
+     "lon": 77.54,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Babur",
+      "Rana Sanga"
+     ],
+     "what": "Babur defeated the Rajput confederacy near Sikri.",
+     "why": "It secured Agra and the Mughal hold on the Ganga plain.",
+     "wikipedia": "Battle of Khanwa",
+     "wikidata": "Q4166578"
+    },
+    {
+     "date": "1540",
+     "date_note": "Humayun was beaten at Kannauj, east of this map",
+     "end_date": "",
+     "name": "Sher Shah takes the capitals",
+     "place_name": "Purana Qila, Delhi",
+     "lat": 28.61,
+     "lon": 77.244,
+     "family": "war",
+     "subtype": "conquest",
+     "who": [
+      "Sher Shah Suri",
+      "Humayun"
+     ],
+     "what": "The Afghan Sher Shah drove Humayun into exile and ruled from Delhi and Agra.",
+     "why": "His roads, revenue and coins outlasted his dynasty.",
+     "wikipedia": "Sher Shah Suri",
+     "wikidata": "Q83680"
+    },
+    {
+     "date": "1556-01-27",
+     "date_note": "",
+     "end_date": "",
+     "name": "Humayun dies at the library stairs",
+     "place_name": "Purana Qila, Delhi",
+     "lat": 28.61,
+     "lon": 77.244,
+     "family": "diplomacy",
+     "subtype": "succession",
+     "who": [
+      "Humayun",
+      "Akbar"
+     ],
+     "what": "Months after retaking Delhi, Humayun fell on the steps of the Sher Mandal.",
+     "why": "A thirteen-year-old Akbar inherited a fragile kingdom.",
+     "wikipedia": "Humayun",
+     "wikidata": "Q486188"
+    },
+    {
+     "date": "1556-11-05",
+     "date_note": "",
+     "end_date": "",
+     "name": "Second Battle of Panipat",
+     "place_name": "Panipat",
+     "lat": 29.39,
+     "lon": 76.97,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Akbar",
+      "Bairam Khan",
+      "Hemu"
+     ],
+     "what": "Hemu, who had taken Delhi in October, was wounded by an arrow and lost.",
+     "why": "The victory made Mughal rule in Hindustan permanent.",
+     "wikipedia": "Second Battle of Panipat",
+     "wikidata": "Q233414"
+    },
+    {
+     "date": "1565",
+     "date_note": "work continued to about 1573",
+     "end_date": "",
+     "name": "Agra Fort in red sandstone",
+     "place_name": "Agra Fort, Agra",
+     "lat": 27.18,
+     "lon": 78.021,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Akbar"
+     ],
+     "what": "Akbar rebuilt the fort at Agra as the seat of a centralised state.",
+     "why": "It announced Agra as the imperial capital.",
+     "wikipedia": "Agra Fort",
+     "wikidata": "Q171857"
+    },
+    {
+     "date": "1571",
+     "date_note": "",
+     "end_date": "1585",
+     "name": "A capital at Sikri",
+     "place_name": "Fatehpur Sikri",
+     "lat": 27.094,
+     "lon": 77.661,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Akbar",
+      "Salim Chishti"
+     ],
+     "what": "Akbar built Fatehpur Sikri beside the saint who had foretold his sons.",
+     "why": "For fourteen years the court, debates and studios lived here.",
+     "wikipedia": "Fatehpur Sikri",
+     "wikidata": "Q179046"
+    },
+    {
+     "date": "1605-10-27",
+     "date_note": "",
+     "end_date": "",
+     "name": "Akbar dies at Agra",
+     "place_name": "Agra Fort, Agra",
+     "lat": 27.18,
+     "lon": 78.021,
+     "family": "diplomacy",
+     "subtype": "succession",
+     "who": [
+      "Akbar",
+      "Jahangir"
+     ],
+     "what": "Akbar died in the fort and Salim took the throne as Jahangir.",
+     "why": "The transition held despite Prince Khusrau's challenge.",
+     "wikipedia": "Akbar",
+     "wikidata": "Q8597"
+    },
+    {
+     "date": "1611-05",
+     "date_note": "",
+     "end_date": "",
+     "name": "Nur Jahan",
+     "place_name": "Agra",
+     "lat": 27.18,
+     "lon": 78.01,
+     "family": "diplomacy",
+     "subtype": "marriage",
+     "who": [
+      "Jahangir",
+      "Nur Jahan"
+     ],
+     "what": "Jahangir married the widow Mehr-un-Nissa.",
+     "why": "Her family dominated the court for two decades.",
+     "wikipedia": "Nur Jahan",
+     "wikidata": "Q541530"
+    },
+    {
+     "date": "1648-04",
+     "date_note": "",
+     "end_date": "",
+     "name": "The court moves to Shahjahanabad",
+     "place_name": "Red Fort, Delhi",
+     "lat": 28.656,
+     "lon": 77.241,
+     "family": "culture",
+     "subtype": "capital",
+     "who": [
+      "Shah Jahan"
+     ],
+     "what": "Shah Jahan entered his new palace fortress at Delhi.",
+     "why": "Delhi again became the centre of Mughal power.",
+     "wikipedia": "Shahjahanabad",
+     "wikidata": "Q3242297"
+    },
+    {
+     "date": "1658-05-29",
+     "date_note": "",
+     "end_date": "",
+     "name": "Battle of Samugarh",
+     "place_name": "Samugarh, near Agra",
+     "lat": 27.12,
+     "lon": 78.08,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Aurangzeb",
+      "Murad Bakhsh",
+      "Dara Shikoh"
+     ],
+     "what": "Aurangzeb broke the heir apparent's army east of Agra.",
+     "why": "Within weeks Shah Jahan was a prisoner in Agra Fort.",
+     "wikipedia": "Battle of Samugarh",
+     "wikidata": "Q4087464"
+    },
+    {
+     "date": "1659-08-30",
+     "date_note": "",
+     "end_date": "",
+     "name": "Dara Shikoh executed",
+     "place_name": "Red Fort, Delhi",
+     "lat": 28.656,
+     "lon": 77.241,
+     "family": "unrest",
+     "subtype": "execution",
+     "who": [
+      "Aurangzeb",
+      "Dara Shikoh"
+     ],
+     "what": "After being paraded through Delhi, Dara was put to death.",
+     "why": "It closed the war of succession and silenced Dara's eclectic party.",
+     "wikipedia": "Dara Shikoh",
+     "wikidata": "Q604647"
+    },
+    {
+     "date": "1669",
+     "date_note": "",
+     "end_date": "",
+     "name": "Jat rising at Tilpat",
+     "place_name": "Tilpat",
+     "lat": 28.44,
+     "lon": 77.33,
+     "family": "unrest",
+     "subtype": "rebellion",
+     "who": [
+      "Gokula"
+     ],
+     "what": "Jat peasants rose against Mughal officials south of Delhi.",
+     "why": "It began a long Jat revolt around Agra and Mathura.",
+     "wikipedia": "Gokula Jat",
+     "wikidata": "Q5578097"
+    },
+    {
+     "date": "1707-06-20",
+     "date_note": "",
+     "end_date": "",
+     "name": "Battle of Jajau",
+     "place_name": "Jajau, near Dholpur",
+     "lat": 26.89,
+     "lon": 77.96,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Bahadur Shah I",
+      "Azam Shah"
+     ],
+     "what": "After Aurangzeb's death in the Deccan his sons fought near Agra.",
+     "why": "The empire passed on, but the age of the great Mughals was over.",
+     "wikipedia": "Battle of Jajau",
+     "wikidata": "Q21244903"
+    }
+   ],
+   "status": "draft",
+   "pack": "delhi_agra_1526_1707"
+  },
+  {
+   "id": "delhi_agra_bazaar",
+   "title": "Markets, Workshops and Ideas",
+   "region": "Delhi and Agra",
+   "start": "1540",
+   "end": "1679",
+   "view": {
+    "lon": 77.6,
+    "lat": 27.9,
+    "span": 3.0
+   },
+   "blurb": "Coins, roads, indigo and marble: how money, craft and argument moved through the Mughal capitals, told through merchants, painters, translators and travellers.",
+   "steps": [
+    {
+     "date": "1540",
+     "date_note": "",
+     "end_date": "",
+     "name": "The silver rupiya",
+     "place_name": "Agra",
+     "lat": 27.18,
+     "lon": 78.01,
+     "family": "culture",
+     "subtype": "coinage",
+     "who": [
+      "Sher Shah Suri"
+     ],
+     "what": "Sher Shah struck a silver coin of standard weight.",
+     "why": "It became the basis of Mughal and later Indian money.",
+     "wikipedia": "Rupiya"
+    },
+    {
+     "date": "1541",
+     "date_note": "",
+     "end_date": "",
+     "name": "Sarais on the great road",
+     "place_name": "Palwal",
+     "lat": 28.14,
+     "lon": 77.33,
+     "family": "culture",
+     "subtype": "road",
+     "who": [
+      "Sher Shah Suri"
+     ],
+     "what": "Rest houses and wells lined the road through Delhi and Agra.",
+     "why": "Merchants, couriers and pilgrims moved faster and safer.",
+     "wikipedia": "Grand Trunk Road",
+     "wikidata": "Q300701"
+    },
+    {
+     "date": "1562",
+     "date_note": "about 1562 to 1577",
+     "end_date": "",
+     "name": "The Hamzanama studio",
+     "place_name": "Agra",
+     "lat": 27.18,
+     "lon": 78.01,
+     "family": "culture",
+     "subtype": "painting",
+     "who": [
+      "Akbar",
+      "Mir Sayyid Ali",
+      "Abd al-Samad"
+     ],
+     "what": "Persian and Indian painters worked together on a giant illustrated romance.",
+     "why": "It created the Mughal painting style.",
+     "wikipedia": "Hamzanama",
+     "wikidata": "Q1574072"
+    },
+    {
+     "date": "1575",
+     "date_note": "",
+     "end_date": "",
+     "name": "The Ibadat Khana debates",
+     "place_name": "Fatehpur Sikri",
+     "lat": 27.094,
+     "lon": 77.661,
+     "family": "culture",
+     "subtype": "debate",
+     "who": [
+      "Akbar",
+      "Abul Fazl",
+      "Badayuni"
+     ],
+     "what": "Scholars of many faiths argued before Akbar.",
+     "why": "Their arguments shaped the policy of universal tolerance.",
+     "wikipedia": "Ibadat Khana",
+     "wikidata": "Q4021737"
+    },
+    {
+     "date": "1580",
+     "date_note": "",
+     "end_date": "",
+     "name": "Measuring the harvest",
+     "place_name": "Fatehpur Sikri",
+     "lat": 27.094,
+     "lon": 77.661,
+     "family": "diplomacy",
+     "subtype": "revenue",
+     "who": [
+      "Todar Mal"
+     ],
+     "what": "Cash revenue was fixed from ten-year averages of crops and prices.",
+     "why": "Peasant taxes paid for the army and the cities.",
+     "wikipedia": "Dahsala"
+    },
+    {
+     "date": "1585",
+     "date_note": "",
+     "end_date": "",
+     "name": "Ralph Fitch counts the crowds",
+     "place_name": "Fatehpur Sikri",
+     "lat": 27.094,
+     "lon": 77.661,
+     "family": "culture",
+     "subtype": "travel",
+     "who": [
+      "Ralph Fitch"
+     ],
+     "what": "An English merchant found Agra and Fatehpur Sikri each bigger than London.",
+     "why": "It shows how large the Mughal capitals were.",
+     "wikipedia": "Ralph Fitch",
+     "wikidata": "Q1674694"
+    },
+    {
+     "date": "1598",
+     "date_note": "completed about 1598",
+     "end_date": "",
+     "name": "Ain-i-Akbari",
+     "place_name": "Agra",
+     "lat": 27.18,
+     "lon": 78.01,
+     "family": "culture",
+     "subtype": "book",
+     "who": [
+      "Abul Fazl"
+     ],
+     "what": "Abul Fazl recorded prices, wages, crafts and revenue.",
+     "why": "It is the main source for the Mughal economy.",
+     "wikipedia": "Ain-i-Akbari",
+     "wikidata": "Q3344867"
+    },
+    {
+     "date": "1620",
+     "date_note": "",
+     "end_date": "",
+     "name": "Indigo at Bayana",
+     "place_name": "Bayana",
+     "lat": 26.91,
+     "lon": 77.29,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Francisco Pelsaert"
+     ],
+     "what": "Dutch and English buyers bid for Bayana indigo.",
+     "why": "Agra's hinterland was tied into world trade.",
+     "wikipedia": "Bayana",
+     "wikidata": "Q760257"
+    },
+    {
+     "date": "1626",
+     "date_note": "",
+     "end_date": "",
+     "name": "Pelsaert on wages",
+     "place_name": "Agra",
+     "lat": 27.18,
+     "lon": 78.01,
+     "family": "culture",
+     "subtype": "report",
+     "who": [
+      "Francisco Pelsaert"
+     ],
+     "what": "A Dutch factor contrasted court luxury with workers' poverty.",
+     "why": "It is a rare look at ordinary life in Agra.",
+     "wikipedia": "Francisco Pelsaert",
+     "wikidata": "Q331564"
+    },
+    {
+     "date": "1632",
+     "date_note": "",
+     "end_date": "1653",
+     "name": "Marble and inlay for the Taj",
+     "place_name": "Taj Mahal, Agra",
+     "lat": 27.175,
+     "lon": 78.042,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Shah Jahan",
+      "Ustad Ahmad Lahori"
+     ],
+     "what": "Thousands of masons and inlayers built the Taj.",
+     "why": "It made Agra the centre of pietra dura craft.",
+     "wikipedia": "Taj Mahal",
+     "wikidata": "Q9141"
+    },
+    {
+     "date": "1641",
+     "date_note": "",
+     "end_date": "",
+     "name": "A merchant's half-story",
+     "place_name": "Agra",
+     "lat": 27.18,
+     "lon": 78.01,
+     "family": "culture",
+     "subtype": "book",
+     "who": [
+      "Banarasidas"
+     ],
+     "what": "A Jain trader wrote his life in verse at Agra.",
+     "why": "It shows debts, partnerships and fears of a merchant under the Mughals.",
+     "wikipedia": "Banarasidas",
+     "wikidata": "Q4853935"
+    },
+    {
+     "date": "1650",
+     "date_note": "",
+     "end_date": "",
+     "name": "Chandni Chowk opens",
+     "place_name": "Chandni Chowk, Delhi",
+     "lat": 28.656,
+     "lon": 77.23,
+     "family": "culture",
+     "subtype": "market",
+     "who": [
+      "Jahanara Begum"
+     ],
+     "what": "Jahanara laid out a market street and caravanserai in Delhi.",
+     "why": "It became the commercial heart of Shahjahanabad.",
+     "wikipedia": "Chandni Chowk",
+     "wikidata": "Q3236763"
+    },
+    {
+     "date": "1657",
+     "date_note": "",
+     "end_date": "",
+     "name": "Upanishads in Persian",
+     "place_name": "Shahjahanabad, Delhi",
+     "lat": 28.65,
+     "lon": 77.232,
+     "family": "culture",
+     "subtype": "translation",
+     "who": [
+      "Dara Shikoh"
+     ],
+     "what": "Dara had fifty Upanishads translated at Delhi.",
+     "why": "Through a later Latin version they reached European philosophy.",
+     "wikipedia": "Sirr-i-Akbar",
+     "wikidata": "Q102079321"
+    },
+    {
+     "date": "1679-04",
+     "date_note": "",
+     "end_date": "",
+     "name": "Jizya returns",
+     "place_name": "Red Fort, Delhi",
+     "lat": 28.656,
+     "lon": 77.241,
+     "family": "diplomacy",
+     "subtype": "tax",
+     "who": [
+      "Aurangzeb"
+     ],
+     "what": "Aurangzeb reimposed the poll tax that Akbar had abolished.",
+     "why": "It reversed a century of policy and stirred protest.",
+     "wikipedia": "Jizya",
+     "wikidata": "Q461786"
+    }
+   ],
+   "status": "draft",
+   "pack": "delhi_agra_1526_1707"
+  }
+ ]
+}
