@@ -8,12 +8,13 @@
 //   D.names(view)                                         province names for the label engine (ATLAS.labels source)
 //
 // Zoom tiers (k = zoom factor; one art pixel is about 180 / k km): long walls from 2.5x; main roads, railways and
-// fields from 5x; ports from 12x; hamlets from 10x; castles, forts and lighthouses from 12x; secondary roads from 12-22x;
+// fields from 5x; main historical trade, pilgrim and courier routes from 6x (all from 10x); windmills, vineyards and
+// two-pixel roads from 16x; ports from 12x; hamlets from 10x; castles, forts and lighthouses from 12x; secondary roads from 12-22x;
 // mapped ancient villages from 24x; villas and city walls from 36x. Lines whose route or date is estimated are dashed
 // (rule 5: every mark shows how sure we are).
 (function (global) {
   // At k the map shows about 180 / k km per art pixel, so "past 6x" is still 30 km a pixel: detail is chosen, not traced.
-  const T0 = { rr: 5, hw: 6, rd: 24, rw: 5, wl: 2.5 }, T1 = { rr: 22, hw: 14, rd: 24, rw: 12, wl: 2.5 };
+  const T0 = { rr: 5, hw: 6, rd: 24, rw: 5, wl: 2.5, tr: 6 }, T1 = { rr: 22, hw: 14, rd: 24, rw: 12, wl: 2.5, tr: 10 };
   const OLD_ROAD = 400;  // years a Roman road stays visible (faded) after Roman upkeep ended there
   // Arable weight per terrain class (SPEC.md ids): how readily land of that kind is farmed.
   const ARABLE = new Float32Array(18); Object.assign(ARABLE, { 4: 1, 6: 0.15, 7: 0.35, 8: 0.8, 9: 0.45, 10: 1, 11: 0.6, 14: 0.5, 15: 0.7 });
@@ -21,13 +22,14 @@
   const P = s => { const [r, g, b] = hex(s); return (255 << 24 | b << 16 | g << 8 | r) >>> 0; };
   const C = {
     road: P("#efe0b4"), roadS: P("#5e4c38"), old: P("#c8b890"), hw: P("#f6f0e0"), hwS: P("#3e3830"), rd: P("#e2d4ac"),
-    rail: P("#2a2420"), tie: P("#d8ccb4"), wall: P("#ece2cc"), wallS: P("#4a4038"), bridge: P("#8a5a32"),
+    rail: P("#2a2420"), tie: P("#d8ccb4"), trail: P("#e4cc94"), trailS: P("#7a6040"), wall: P("#ece2cc"), wallS: P("#4a4038"), bridge: P("#8a5a32"),
     pier: P("#8a5a32"), pierD: P("#5e3a1e"), sail: P("#f6f0dc"), hull: P("#5e3a1e"),
     stone: P("#b4aca0"), stoneL: P("#d8d0c4"), stoneD: P("#6e665c"), ink: P("#221f1a"), flag: P("#b8382a"),
     light: P("#ffe08a"), white: P("#f2eee4"), red: P("#b8382a"),
   };
   // Crops: [fill, furrow] pairs; paddies are wet green with a water edge.
   const CROPS = [["#d8c262", "#8e8a3c"], ["#c4b452", "#7e7a34"], ["#a8c45a", "#6a8a38"], ["#90b44e", "#5a7c30"], ["#bccc6a", "#7a8e40"], ["#ccb46c", "#8a7a44"]].map(p => p.map(P));
+  const VINE = ["#3e5e2a", "#5e7a34", "#b0905c"].map(P);
   const PADDY = [["#9cc884", "#5e9aa4"], ["#86ba78", "#5e9aa4"], ["#b4cc80", "#6aa0a8"]].map(p => p.map(P));
   const ROOF = { terracotta: P("#b8583a"), thatch: P("#8a6a3a"), slate: P("#5a6270"), red: P("#a84a38"), mud: P("#8a5a34"), tile: P("#4a5a6a"), palm: P("#9a7a40") };
   const WALLC = { light: P("#efe6d2"), mud: P("#dcc49a"), wood: P("#a07a4a") };
@@ -36,14 +38,15 @@
     const base = (opts && opts.base) || "detail/", onLoad = (opts && opts.onLoad) || (() => {});
     const tiles = {};
     let loaded = 0;
-    let pop = null, grid = null, GW = 0, GH = 0, densY = null, dens = null, projKey = "", wantSoon = 0;
+    let pop = null, grid = null, irr = null, basin = null, GW = 0, GH = 0, densY = null, dens = null, projKey = "", wantSoon = 0;
     fetch(base + "pop.json").then(r => r.ok ? r.json() : null).then(j => { pop = j; densY = null; ping(); }).catch(() => {});
     const img = new Image();
     img.onload = () => {
       const c = document.createElement("canvas"); c.width = GW = img.width; c.height = GH = img.height;
       const x = c.getContext("2d"); x.drawImage(img, 0, 0);
       const d = x.getImageData(0, 0, GW, GH).data; grid = new Uint8Array(GW * GH);
-      for (let i = 0; i < grid.length; i++) grid[i] = d[i * 4];
+      irr = new Uint8Array(GW * GH); basin = new Uint8Array(GW * GH);
+      for (let i = 0; i < grid.length; i++) { grid[i] = d[i * 4]; irr[i] = d[i * 4 + 1]; basin[i] = d[i * 4 + 2]; }
       ping();
     };
     img.src = base + "countries.png";
@@ -92,6 +95,14 @@
       pop.countries.forEach((c, n) => { if (c.pop && c.km2 > 0) dens[n + 1] = (c.pop[i - 1] + (c.pop[i] - c.pop[i - 1]) * f) / c.km2; });
       densY = year; return dens;
     }
+    // Irrigated today (FAO GMIA) and, before 1850, only inside the old irrigation basins, from the basin's start.
+    const BASIN_FROM = [9999, -5000, -1000, 1, 500];
+    function irrigated(lon, lat, year) {
+      if (!irr) return false;
+      const x = Math.min(GW - 1, Math.max(0, ((lon + 180) * GW / 360) | 0)), y = Math.min(GH - 1, Math.max(0, ((90 - lat) * GH / 180) | 0)), i = y * GW + x;
+      if (irr[i] < 25) return false;
+      return year >= 1850 || year >= BASIN_FROM[basin[i]];
+    }
     const densAt = (D, lon, lat) => { if (!grid || !D) return 0; const x = Math.min(GW - 1, Math.max(0, ((lon + 180) * GW / 360) | 0)), y = Math.min(GH - 1, Math.max(0, ((90 - lat) * GH / 180) | 0)); return D[grid[y * GW + x]] || 0; };
 
     // Farm styles by place and time: open-field strips in medieval Europe, rice paddies in monsoon Asia, square
@@ -102,6 +113,13 @@
       if (year >= -1000 && lat < 36 && lat > -10 && ((lon > 98 && lon < 125) || (lon > 85 && lon < 92 && lat < 27) || (lon > 74 && lon < 81 && lat < 14))) return 2;
       if (year >= 700 && year < 1850 && lat > 44 && lat < 60 && lon > -6 && lon < 40) return 1;
       return 0;
+    }
+    // Vineyards: rows of vines in the old wine lands (Mediterranean, Rhone, Bordeaux, Rhine, Moselle, Tokaj, Caucasus).
+    function vines(lon, lat, year) {
+      if (year < -1500) return false;
+      if (lat > 30 && lat < 44 && lon > -10 && lon < 45) return year >= -1000 || lon > 25;
+      if (lat >= 44 && lat < 50.5 && lon > -2 && lon < 22) return year >= 100;
+      return lat > 40 && lat < 44 && lon > 40 && lon < 50;
     }
 
     function fields(G, year) {
@@ -124,10 +142,11 @@
         const k = j * w + i, c = cls[k];
         if (c === 255 || c <= 4) continue;
         let a = ARABLE[c];
-        const oasis = (c === 12 || c === 13 || c === 11) && wet && wet[k];
+        const lon = lonA[k], lat = latA[k];
+        const dry = c === 12 || c === 13 || c === 11;
+        const oasis = dry && ((wet && wet[k] && (c !== 11 || wet[k] > 2)) || irrigated(lon, lat, year));
         if (oasis) a = 1;
         if (!a) continue;
-        const lon = lonA[k], lat = latA[k];
         let d = densAt(D, lon, lat);
         if (d < 0.5) continue;
         // Irrigated valleys in dry lands (the Nile, Mesopotamia, the Indus) are farmed wall to wall wherever people live.
@@ -142,6 +161,8 @@
         const r = hash(pu * 3 + 1, pv * 7 + 2);
         if (r > p) continue;
         const lx = (u + off) - pu * PW, ly = v - pv * PH;
+        // Close in, one parcel in eight in the wine lands is a vineyard: rows of vines on bare earth.
+        if (G.k >= 16 && st !== 2 && r < p * 0.14 && vines(lon, lat, year)) { B[k] = ly % 2 === 0 && lx % 2 === 0 ? VINE[0] : ly % 2 === 0 ? VINE[1] : VINE[2]; continue; }
         const pal = st === 2 ? PADDY[(r * 997 | 0) % PADDY.length] : CROPS[(r * 991 | 0) % CROPS.length];
         const edge = st === 1 ? ly === PH - 1 && lx % 3 === 0 : lx === PW - 1 || ly === PH - 1;
         B[k] = edge ? pal[1] : pal[0];
@@ -152,7 +173,7 @@
     function stroke(G, pp, kind, cert, main, old, year) {
       const { w, h, U0, V0, PX, k: K, cls, base: B } = G;
       let n = 0, pi = null, pj = null;
-      const wide = K >= 30;
+      const wide = K >= 16;
       const put = (i, j) => {
         n++;
         if (i < 0 || j < 0 || i >= w || j >= h) return;
@@ -170,6 +191,7 @@
           B[q] = C.hw; if ((main || wide) && j + 1 < h && cls[q + w] > 4 && cls[q + w] !== 255 && !occ[q + w]) B[q + w] = C.hwS;
         } else if (kind === "rd") B[q] = C.rd;
         else if (kind === "rw") B[q] = n & 1 ? C.rail : C.tie;
+        else if (kind === "tr") { B[q] = C.trail; if (main && j + 1 < h && cls[q + w] > 4 && cls[q + w] !== 255 && !occ[q + w]) B[q + w] = C.trailS; }
         else if (kind === "wl") {
           B[q] = C.wall;
           if (j + 1 < h) B[q + w] = C.wallS;
@@ -203,7 +225,7 @@
         list.push([L, old]);
       }
       // Lesser lines first so walls, main roads and railways sit on top.
-      const ord = { rd: 0, rr: 1, hw: 2, rw: 3, wl: 4 };
+      const ord = { rd: 0, tr: 0.5, rr: 1, hw: 2, rw: 3, wl: 4 };
       list.sort((a, b) => (ord[a[0].kind] - ord[b[0].kind]) || (a[0].main - b[0].main) || (b[1] - a[1]));
       for (const [L, old] of list) stroke(G, L.pp, L.kind, old ? 0 : L.cert, L.main, old, year);
     }
@@ -231,6 +253,7 @@
     const HOUSE = [".r.", "rrr", "wdw"], HUT = [".r.", "rwr"], YURT = [".w.", "wwd"];
     const CASTLE = ["s.s.s", "sssss", "sLsDs", "sLdDs"], FORT = ["w.w.w", "w...w", "wwdww"], TOWER = [".y.", ".s.", ".s.", "sDs"];
     const VILLA = ["rrrr", "wwww", "wddw"];
+    const MILL = ["s.s", ".w.", "sws", ".w.", "wdw"];
     function roofOf(lon, lat, year) {
       const R = global.PixelEra ? PixelEra.region(lon, lat) : "europe";
       if (R === "steppe") return year < 1900 ? "yurt" : "slate";
@@ -280,7 +303,7 @@
       const K = G.k, D = density(year), { w, h, U0, V0, cls, lonA, latA, hash } = G;
       // Procedural hamlets where the farmland is densely peopled: one candidate per world-anchored cell.
       if (K >= 10 && D) {
-        const VW = 13, VH = 9;
+        const VW = K >= 20 ? 10 : 13, VH = K >= 20 ? 7 : 9;
         const c0 = Math.floor(U0 / VW), c1 = Math.ceil((U0 + w) / VW), r0 = Math.floor(V0 / VH), r1 = Math.ceil((V0 + h) / VH) + 1;
         for (let cv = r0; cv < r1; cv++) for (let cu = c0; cu < c1; cu++) {
           const r = hash(cu * 11 + 5, cv * 3 + 9), r2 = hash(cv * 13 + 1, cu * 7 + 3);
@@ -290,7 +313,10 @@
           const d = densAt(D, lonA[k], latA[k]);
           const p = Math.min(0.3, Math.max(0, (d - 6) / 160)) * ARABLE[c];
           if (hash(cu, cv) > p) continue;
-          village(G, i, j, lonA[k], latA[k], year, 1 + ((r * 3) | 0), r2);
+          // Windmills stood among the fields of north-western Europe from the 1180s until steam and electricity.
+          if (K >= 16 && r2 < 0.18 && year >= 1180 && year <= 1920 && latA[k] > 44 && latA[k] < 58 && lonA[k] > -10 && lonA[k] < 30)
+            stamp(G, i, j, MILL, { s: C.white, w: P("#8a6a46"), d: C.ink });
+          else village(G, i, j, lonA[k], latA[k], year, 1 + ((r * 3) | 0), r2);
         }
       }
       const rows = [];
