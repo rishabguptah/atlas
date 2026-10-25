@@ -40,3 +40,7 @@ One journey dataset: the living-world simulation reads these journeys through `v
 `journeys_as_stops(repo)` (its stop format), and the page through `ATLAS.travel.journey(id).legs[].path`. On the page each
 leg is routed lazily through `ATLAS.world.route` (land, sea or air by leg mode) once the motion model is ready; until
 then, or if routing fails, the leg is drawn straight.
+
+`presences_cbdb.jsonl`: dated office postings from the China Biographical Database (CBDB, CC BY-NC-SA 4.0) for kernel
+people matched by `ext.cbdb` or Wikidata, one presence per posting at its geocoded address (`ingest/travels/cbdb.py`;
+unzip raw/coverage/cbdb/latest.zip first). Both years given: attested; one: estimated; neither: skipped.
