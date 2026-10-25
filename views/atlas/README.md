@@ -79,7 +79,7 @@ Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces, Growing 
 
 The map zooms to about 0.2 degrees across (`K_MAX` in atlas.src.html), enough to stand inside the walls of
 Constantinople in 1453. Around the 18 story cities in `data/cities/cities.json` the pixel map switches to 45 m terrain
-(one patch per city, `tiles/l3_<id>.png`, OpenStreetMap water through Overture Maps plus Terrarium elevation), and the
+(one patch per city, all packed into `tiles/l3.png`, OpenStreetMap water through Overture Maps plus Terrarium elevation), and the
 city layer (`views/pixel/city.js`, beside the page as `atlas-files/city.js`, loaded the first time you zoom past about
 3 degrees) draws walls, gates, towers, harbours, built-up areas and landmark buildings as they stood in the year, from
 `atlas-files/world/cities.json`. Walls come from OpenStreetMap, landmarks with their dates from Wikidata, and what
