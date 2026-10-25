@@ -147,7 +147,7 @@ def build(repo):
         v = r.get('verified') or {}
         for a in r.get('about') or []:
             node(a)
-        Q.append([r['id'], r.get('name', ''), r['text'], r.get('author', ''), r.get('work', ''), r.get('written'), r.get('start') or r.get('written'),
+        Q.append([r['id'], r.get('name', ''), r['text'], r.get('author_name') or (recs.get(r.get('author')) or {}).get('name') or r.get('author', ''), r.get('work', ''), r.get('written'), r.get('start') or r.get('written'),
                   p[0] if p else None, p[1] if p else None, r.get('about') or [], r.get('witness', ''), r.get('src', ''),
                   0 if v.get('failed') or not v else 1, r.get('check_url') or '', (r.get('lenses') or ['ideas'])[0]])
 

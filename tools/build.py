@@ -162,7 +162,7 @@ def refs(r):
     """Ids this record points at."""
     out = []
     for f in ('place', 'from', 'to', 'of', 'capital', 'author', 'by', 'policy', 'language'):
-        if isinstance(r.get(f), str):
+        if isinstance(r.get(f), str) and (r.get('kind') != 'quote' or ':' in r[f]):   # a quote's author may be a plain name
             out.append(r[f])
     if r.get('kind') == 'language':  # elsewhere `family` is a plain label (europe-19c event families)
         out += [r[f] for f in ('family', 'branch') if isinstance(r.get(f), str)]

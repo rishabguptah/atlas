@@ -78,8 +78,8 @@
       const span = a && b ? Math.min(120, Math.max(10, Math.abs(a[0] - b[0]) * 1.8, Math.abs(a[1] - b[1]) * 2.6)) : 30;
       return { id: `${cid}#${i}`, t: l.s ?? D.N[l.to][1], view: mid ? { lon: mid[0], lat: mid[1], span } : null, lenses: [l.lf, l.lt],
         pins: [a && { name: nm(l.from), lon: a[0], lat: a[1] }, b && { name: nm(l.to), lon: b[0], lat: b[1] }].filter(Boolean),
-        routes: a && b ? [{ label: TYPE[l.t], points: [a, b], style: "cut" }] : [],
-        caption: `${nm(l.from)} ${TYPE[l.t]} ${nm(l.to)}`, text: l.mech, by: "historiographer", conf: CONF[l.cf], confidence: l.c, view: l.view,
+        routes: a && b ? [{ label: "", points: [a, b] }] : [],
+        caption: `${nm(l.from)} ${TYPE[l.t]} ${nm(l.to)}`, text: l.mech, by: "historiographer", conf: CONF[l.cf], confidence: l.c, explainer: l.view,
         sources: l.src.map(s => D.S[s] ? { src: s, cite: D.S[s][0] } : { cite: s }), next: i < all.length - 1 ? [`${cid}#${i + 1}`] : [], ask: "Why?" };
     });
     return { id: cid, title: c.n, kind: "chain", blurb: c.blurb, question: c.question, scenes };
@@ -307,7 +307,7 @@
     const y = Y(), st = PLAY.id ? chainStory(PLAY.id) : null;
     const player = st ? (() => { const s = st.scenes[PLAY.i];
       return `<div class="focus sch-player" style="--c:var(--y-why)"><span class="fk">Playing a why chain · ${PLAY.i + 1} of ${st.scenes.length}</span><span class="ft">${esc(st.title)}</span>
-        <p><b>${esc(s.caption)}</b></p>${s.text ? `<p>${esc(s.text)}</p>` : ""}<p class="sch-meta">${s.view ? esc(s.view) + " · " : ""}confidence ${Math.round(s.confidence * 100)}% · ${esc(s.conf)}</p>
+        <p><b>${esc(s.caption)}</b></p>${s.text ? `<p>${esc(s.text)}</p>` : ""}<p class="sch-meta">${s.explainer ? esc(s.explainer) + " · " : ""}confidence ${Math.round(s.confidence * 100)}% · ${esc(s.conf)}</p>
         <ul class="srcs">${s.sources.map(x => citeRow(x) || `<li>${esc(x.cite)}</li>`).join("")}</ul>
         <div class="row">${PLAY.i > 0 ? `<button class="btn" data-sch="step:${PLAY.i - 1}">◀ Back</button>` : ""}${PLAY.i < st.scenes.length - 1 ? `<button class="btn primary" data-sch="step:${PLAY.i + 1}">Next link ▶</button>` : `<span class="sch-meta">End of the chain.${st.question ? " It answers: " + esc(st.question) : ""}</span>`}</div></div>`; })() : "";
     const q = norm(filt);
