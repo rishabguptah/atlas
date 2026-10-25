@@ -47,7 +47,8 @@
     const y = yearOf(t), [m, d] = monthDay(t);
     return prec === "y" ? fmtY(y) : prec === "m" ? `${MONTHS[m]} ${fmtY(y)}` : `${d} ${MONTHS[m]} ${fmtY(y)}`;
   }
-  W.time = { of, parse, year: yearOf, fmt, month: t => monthDay(t)[0], MONTHS };
+  const iso = t => { const y = yearOf(t), [m, d] = monthDay(t); return `${y < 0 ? "-" + String(-y).padStart(4, "0") : String(y).padStart(4, "0")}-${String(m + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`; };
+  W.time = { of, parse, year: yearOf, fmt, iso, month: t => monthDay(t)[0], MONTHS };
   const DAY = 1 / 365;
 
   // ---------- seeded randomness (same seed, same world) ----------
@@ -215,20 +216,21 @@
     for (const c of CULT) {
       if (year < (c.start ?? -1e5) - 100 || year > (c.end ?? 3000) + 100) continue;
       if (id && c.id === id) return c;
+      if (c.minority) continue;  // minority lists (e.g. Jewish communities) only when a flow names them
       for (const b of c.regions || []) {
         if (lon >= b[0] && lon <= b[2] && lat >= b[1] && lat <= b[3]) { const a = (b[2] - b[0]) * (b[3] - b[1]); if (a < area) { area = a; best = c; } }
       }
     }
     if (!best && id) best = CULT.find(c => c.id === id || (c.id && (c.id.startsWith(id) || id.startsWith(c.id))));
     // Nothing for this era here: the nearest era's list for the place, so a group still has a plausible name.
-    if (!best) { let gap = Infinity; for (const c of CULT) for (const b of c.regions || []) if (lon >= b[0] && lon <= b[2] && lat >= b[1] && lat <= b[3]) { const g = Math.max(0, (c.start ?? 0) - year, year - (c.end ?? 3000)); if (g < gap && g <= 300) { gap = g; best = c; } } }
+    if (!best) { let gap = Infinity; for (const c of CULT) for (const b of c.regions || []) if (!c.minority && lon >= b[0] && lon <= b[2] && lat >= b[1] && lat <= b[3]) { const g = Math.max(0, (c.start ?? 0) - year, year - (c.end ?? 3000)); if (g < gap && g <= 300) { gap = g; best = c; } } }
     return best;
   }
   function personName(r, c, sex, home) {
     if (!c) return null;
     const list = (sex === "f" ? c.female : c.male) || c.male;
     if (!list || !list.length) return null;
-    let pat = c.pattern || (c.family && c.family.length ? "{given} {family}" : "{given}");
+    let pat = (sex === "f" && c.pattern_female) || c.pattern || (c.family && c.family.length ? "{given} {family}" : "{given}");
     const by = c.bynames && c.bynames.length ? pick(r, c.bynames) : "";
     if (/\{byname\}/.test(pat)) pat = pat.replace("{byname}", by);
     else if (by && r() < 0.4 && !/\{family\}/.test(pat)) pat += " " + by;
@@ -487,9 +489,9 @@
     const near = (lon, lat, t, r = 160) => (opts.context || W.context || (() => []))(lon, lat, t, r);
     const sc = (o) => scenes.push({ id: `${a.id}:${scenes.length}`, kind: "simulation", actors: [a.person || a.id], sources: src, conf: "estimated", ...o, date: o.date || fmtT(o.t), year: yearOf(o.t) });
     const first = a.legs[0], start = along(first.L, 0);
-    sc({ t: a.t0, view: { lon: start[0], lat: start[1], span: 10 }, caption: a.role === "enslaved" ? `${a.name} is forced aboard at ${first.from}` : `${a.name} sets out from ${first.from}`, text: a.role === "enslaved" ? `${describe({ a, to: first.to })}. ${a.name} is a generated person standing for the real people taken on this route (${a.flow.name}); the route, season and numbers follow the sources, and most of their names were never recorded.` : a.gen ? `${describe({ a, to: first.to })}. ${(() => { const g = W.splitGoods(a.carry); return (g.goods.length ? "Carrying " + g.goods.join(", ") + ". " : "") + (g.people.length ? "With " + g.people.join(", ") + ". " : ""); })()}A generated traveller: the trip follows a real system (${a.flow.name}), the person is invented.` : a.summary, conf: first.conf, pins: [{ lon: start[0], lat: start[1], label: first.from }] });
+    sc({ t: a.t0, view: { lon: start[0], lat: start[1], span: 10 }, caption: a.role === "enslaved" ? `${a.name} is forced aboard at ${first.from}` : `${a.name} sets out from ${first.from}`, text: a.role === "enslaved" ? `${describe({ a, to: first.to })}. ${a.name} is a generated person standing for the real people taken on this route (${a.flow.name}); the route, season and numbers follow the sources, and most of their names were never recorded.` : a.gen ? `${describe({ a, to: first.to })}. ${(() => { const g = W.splitGoods(a.carry); return (g.goods.length ? "Carrying " + g.goods.join(", ") + ". " : "") + (g.people.length ? "With " + g.people.join(", ") + ". " : ""); })()}A generated traveller: the trip follows a real system (${a.flow.name}), the person is invented.` : a.summary, conf: first.conf, pins: [{ lon: start[0], lat: start[1], name: first.from }] });
     a.legs.forEach((g, i) => {
-      const p0 = along(g.L, 0), p1 = along(g.L, 1), route = { coords: g.L.pts, conf: g.conf, mode: g.mode };
+      const p0 = along(g.L, 0), p1 = along(g.L, 1), route = { points: g.L.pts, conf: g.conf, mode: g.mode, style: g.conf === "attested" ? null : "cut" };
       // Sample the leg every ~5 days for people and events near the road.
       const n = Math.max(1, Math.min(60, Math.round((g.t1 - g.t0) / (5 * DAY))));
       for (let k = 1; k < n; k++) {
@@ -504,7 +506,7 @@
         for (const c of near(p.lon, p.lat, t)) { if (!scenes.some(s => s.caption === c.caption)) sc({ t, view: { lon: c.lon, lat: c.lat, span: 8 }, ...c }); }
       }
       const stay = (a.stops && a.stops[i + 1]) || null;
-      sc({ t: g.t1, view: { lon: p1[0], lat: p1[1], span: span_(p0, p1) }, caption: `${g.mode === "sea" ? "Lands at" : "Reaches"} ${g.to}`, text: g.note || (stay && stay.note) || "", conf: g.conf, routes: [route], pins: [{ lon: p1[0], lat: p1[1], label: g.to }] });
+      sc({ t: g.t1, view: { lon: p1[0], lat: p1[1], span: span_(p0, p1) }, caption: `${g.mode === "sea" ? "Lands at" : "Reaches"} ${g.to}`, text: g.note || (stay && stay.note) || "", conf: g.conf, routes: [route], pins: [{ lon: p1[0], lat: p1[1], name: g.to }] });
       // While a real traveller stays somewhere, the groups that pass through that town (a caravan setting out, a fleet in port).
       if (!a.gen && stay) {
         let n = 0;

@@ -156,6 +156,8 @@
     const view = sc.view && isFinite(sc.view.span) ? { ...sc.view, lat: sc.view.lat - sc.view.span * 0.07 } : sc.view;
     api.scene({ year: sc.t, view, lens: sc.lens || sc.by, by: null, layers: sc.lenses || [], highlight: sc.highlight || [],
       pins: sc.pins || [], routes: sc.routes || [], title: sc.caption });
+    // A scene can carry its own moment within the year (Living world's day clock): sc.show(sc) after the page's scene.
+    if (typeof sc.show === "function") try { sc.show(sc); } catch (err) { console.error(err); }
     const e19 = A.e19;
     if (e19 && sc.date && sc.date.length >= 7) {
       const y = +sc.date.slice(0, 4);

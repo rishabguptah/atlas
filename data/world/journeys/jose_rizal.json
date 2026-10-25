@@ -1,0 +1,303 @@
+{
+ "id": "jose_rizal",
+ "name": "Jose Rizal's travels",
+ "kind": "scholar",
+ "summary": "The Filipino ophthalmologist and novelist studies in Madrid, Paris and Heidelberg, publishes his anti-colonial novels in Berlin and Ghent, circles the world via Japan and America, and is exiled to Dapitan before his execution in Manila.",
+ "start": 1882,
+ "end": 1896,
+ "stops": [
+  {
+   "place": "Manila",
+   "lon": 120.98,
+   "lat": 14.59,
+   "date": "1882-05-03",
+   "until": "1882-05-03",
+   "mode": "start",
+   "note": "Leaves secretly for Spain on the Salvadora under an assumed name.",
+   "conf": "documented"
+  },
+  {
+   "place": "Singapore",
+   "lon": 103.85,
+   "lat": 1.29,
+   "date": "1882-05-09",
+   "until": "1882-05-11",
+   "mode": "sea",
+   "note": "First sight of a foreign city.",
+   "conf": "documented"
+  },
+  {
+   "place": "Marseille",
+   "lon": 5.37,
+   "lat": 43.3,
+   "date": "1882-06-12",
+   "until": "1882-06-14",
+   "mode": "sea",
+   "note": "Lands via Suez after passing Aden and Naples.",
+   "conf": "documented"
+  },
+  {
+   "place": "Barcelona",
+   "lon": 2.17,
+   "lat": 41.39,
+   "date": "1882-06-16",
+   "until": "1882-09",
+   "mode": "rail",
+   "note": "Writes the essay Love of Country.",
+   "conf": "documented"
+  },
+  {
+   "place": "Madrid",
+   "lon": -3.7,
+   "lat": 40.42,
+   "date": "1882-09",
+   "until": "1885-06",
+   "mode": "rail",
+   "note": "Takes degrees in medicine and philosophy at the Universidad Central.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1885-11",
+   "until": "1886-02",
+   "mode": "rail",
+   "note": "Trains as an eye surgeon under Louis de Wecker.",
+   "conf": "documented"
+  },
+  {
+   "place": "Heidelberg",
+   "lon": 8.69,
+   "lat": 49.4,
+   "date": "1886-02",
+   "until": "1886-08",
+   "mode": "rail",
+   "note": "Assists at the university eye clinic and writes To the Flowers of Heidelberg.",
+   "conf": "documented"
+  },
+  {
+   "place": "Leipzig",
+   "lon": 12.37,
+   "lat": 51.34,
+   "date": "1886-08",
+   "until": "1886-10",
+   "mode": "rail",
+   "note": "Translates Schiller's William Tell into Tagalog.",
+   "conf": "documented"
+  },
+  {
+   "place": "Berlin",
+   "lon": 13.4,
+   "lat": 52.52,
+   "date": "1886-11",
+   "until": "1887-05",
+   "mode": "rail",
+   "note": "Publishes Noli Me Tangere in March 1887.",
+   "conf": "documented"
+  },
+  {
+   "place": "Leitmeritz",
+   "lon": 14.13,
+   "lat": 50.53,
+   "date": "1887-05-13",
+   "until": "1887-05-17",
+   "mode": "rail",
+   "note": "Meets his correspondent Ferdinand Blumentritt for the first time.",
+   "conf": "documented"
+  },
+  {
+   "place": "Rome",
+   "lon": 12.48,
+   "lat": 41.9,
+   "date": "1887-06",
+   "until": "1887-07",
+   "mode": "rail",
+   "note": "Ends his European tour.",
+   "conf": "documented"
+  },
+  {
+   "place": "Manila",
+   "lon": 120.98,
+   "lat": 14.59,
+   "date": "1887-08-05",
+   "until": "1888-02-03",
+   "mode": "sea",
+   "note": "Returns; opens a clinic in Calamba and treats his mother's eyes.",
+   "conf": "documented"
+  },
+  {
+   "place": "Hong Kong",
+   "lon": 114.16,
+   "lat": 22.28,
+   "date": "1888-02-08",
+   "until": "1888-02-22",
+   "mode": "sea",
+   "note": "Leaves under pressure from friars and the governor.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tokyo",
+   "lon": 139.76,
+   "lat": 35.68,
+   "date": "1888-03",
+   "until": "1888-04-13",
+   "mode": "sea",
+   "note": "Falls in love with Usui Seiko and studies Japanese theatre.",
+   "conf": "documented"
+  },
+  {
+   "place": "San Francisco",
+   "lon": -122.42,
+   "lat": 37.79,
+   "date": "1888-04-28",
+   "until": "1888-05-06",
+   "mode": "sea",
+   "note": "Quarantined, then crosses the United States by rail.",
+   "conf": "documented"
+  },
+  {
+   "place": "New York",
+   "lon": -74.01,
+   "lat": 40.71,
+   "date": "1888-05-13",
+   "until": "1888-05-16",
+   "mode": "rail",
+   "note": "Sails for Liverpool.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1888-05-25",
+   "until": "1889-03",
+   "mode": "sea",
+   "note": "Copies Morga's 1609 history of the Philippines in the British Museum.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1889-03",
+   "until": "1890-01",
+   "mode": "rail",
+   "note": "Publishes his annotated Morga and visits the Exposition Universelle.",
+   "conf": "documented"
+  },
+  {
+   "place": "Brussels",
+   "lon": 4.35,
+   "lat": 50.85,
+   "date": "1890-01",
+   "until": "1890-07",
+   "mode": "rail",
+   "note": "Writes El Filibusterismo.",
+   "conf": "documented"
+  },
+  {
+   "place": "Madrid",
+   "lon": -3.7,
+   "lat": 40.42,
+   "date": "1890-08",
+   "until": "1891-01",
+   "mode": "rail",
+   "note": "Breaks with Marcelo del Pilar over leadership of the reform movement.",
+   "conf": "documented"
+  },
+  {
+   "place": "Biarritz",
+   "lon": -1.56,
+   "lat": 43.48,
+   "date": "1891-02",
+   "until": "1891-03",
+   "mode": "rail",
+   "note": "Courts Nellie Boustead.",
+   "conf": "documented"
+  },
+  {
+   "place": "Ghent",
+   "lon": 3.72,
+   "lat": 51.05,
+   "date": "1891-07",
+   "until": "1891-10",
+   "mode": "rail",
+   "note": "Prints El Filibusterismo on borrowed money in September.",
+   "conf": "documented"
+  },
+  {
+   "place": "Hong Kong",
+   "lon": 114.16,
+   "lat": 22.28,
+   "date": "1891-11-20",
+   "until": "1892-06",
+   "mode": "sea",
+   "note": "Practises as an eye doctor; visits Sandakan to plan a Filipino colony.",
+   "conf": "documented"
+  },
+  {
+   "place": "Manila",
+   "lon": 120.98,
+   "lat": 14.59,
+   "date": "1892-06-26",
+   "until": "1892-07-07",
+   "mode": "sea",
+   "note": "Founds La Liga Filipina on 3 July and is arrested days later.",
+   "conf": "documented"
+  },
+  {
+   "place": "Dapitan",
+   "lon": 123.42,
+   "lat": 8.66,
+   "date": "1892-07-17",
+   "until": "1896-07-31",
+   "mode": "sea",
+   "note": "Four years of exile: builds a school, clinic and water system.",
+   "conf": "documented"
+  },
+  {
+   "place": "Manila",
+   "lon": 120.98,
+   "lat": 14.59,
+   "date": "1896-08-06",
+   "until": "1896-09-03",
+   "mode": "sea",
+   "note": "Waits to sail as a volunteer army doctor to Cuba as the Katipunan revolt breaks out.",
+   "conf": "documented"
+  },
+  {
+   "place": "Barcelona",
+   "lon": 2.17,
+   "lat": 41.39,
+   "date": "1896-10-03",
+   "until": "1896-10-06",
+   "mode": "sea",
+   "note": "Arrested on arrival and shipped back.",
+   "conf": "documented"
+  },
+  {
+   "place": "Manila (Fort Santiago)",
+   "lon": 120.97,
+   "lat": 14.59,
+   "date": "1896-11-03",
+   "until": "1896-12-30",
+   "mode": "sea",
+   "note": "Tried for rebellion and shot at Bagumbayan.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Austin Coates, Rizal: Philippine Nationalist and Martyr, Hong Kong 1968"
+  },
+  {
+   "cite": "Leon Ma. Guerrero, The First Filipino, Manila 1963"
+  },
+  {
+   "cite": "Wikipedia, Jose Rizal",
+   "url": "https://en.wikipedia.org/wiki/Jos%C3%A9_Rizal"
+  }
+ ],
+ "status": "draft"
+}

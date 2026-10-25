@@ -1,0 +1,244 @@
+{
+ "id": "ho_chi_minh_travels",
+ "name": "Ho Chi Minh's thirty years abroad",
+ "person": "person:ho_chi_minh",
+ "kind": "exile",
+ "summary": "Nguyen Tat Thanh leaves Saigon as a ship's kitchen hand, works his way through France, the Americas and Britain, becomes the communist Nguyen Ai Quoc in Paris and a Comintern agent in Moscow, Canton, Siam and Hong Kong, and returns to Vietnam in 1941.",
+ "start": 1911,
+ "end": 1941,
+ "stops": [
+  {
+   "place": "Saigon (Nha Rong wharf)",
+   "lon": 106.71,
+   "lat": 10.77,
+   "date": "1911-06-05",
+   "until": "1911-06-05",
+   "mode": "start",
+   "note": "Sails as a kitchen hand on the Amiral Latouche-Treville under the name Van Ba.",
+   "conf": "documented"
+  },
+  {
+   "place": "Marseille",
+   "lon": 5.37,
+   "lat": 43.3,
+   "date": "1911-07-05",
+   "until": "1911-09",
+   "mode": "sea",
+   "note": "Applies unsuccessfully to the French Colonial School.",
+   "conf": "documented"
+  },
+  {
+   "place": "Le Havre",
+   "lon": 0.11,
+   "lat": 49.49,
+   "date": "1911-09",
+   "until": "1912",
+   "mode": "land",
+   "note": "Works as a gardener and uses the town as his base between voyages.",
+   "conf": "likely"
+  },
+  {
+   "place": "Rio de Janeiro",
+   "lon": -43.17,
+   "lat": -22.91,
+   "date": "1912",
+   "until": "1912",
+   "mode": "sea",
+   "note": "Arrives on the Amiral Latouche-Treville.",
+   "conf": "documented"
+  },
+  {
+   "place": "New York",
+   "lon": -74.01,
+   "lat": 40.71,
+   "date": "1912-12-15",
+   "until": "1913",
+   "mode": "sea",
+   "note": "Writes to the colonial administration from New York; may have worked in Boston and Harlem.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1913",
+   "until": "1919-05",
+   "mode": "sea",
+   "note": "Claims to work at the Carlton Hotel kitchens and on the Newhaven-Dieppe ferry.",
+   "conf": "likely"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1919-06",
+   "until": "1920-12",
+   "mode": "land",
+   "note": "As Nguyen Ai Quoc, petitions the Versailles peace conference for Vietnamese rights.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tours",
+   "lon": 0.69,
+   "lat": 47.39,
+   "date": "1920-12-25",
+   "until": "1920-12-30",
+   "mode": "rail",
+   "note": "Votes for the Third International and becomes a founding member of the French Communist Party.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1921-01",
+   "until": "1923-06",
+   "mode": "rail",
+   "note": "Edits Le Paria under police surveillance.",
+   "conf": "documented"
+  },
+  {
+   "place": "Moscow",
+   "lon": 37.62,
+   "lat": 55.75,
+   "date": "1923-06-30",
+   "until": "1924-11",
+   "mode": "sea",
+   "note": "Works for the Comintern, studies at the Communist University of the Toilers of the East and attends Lenin's funeral.",
+   "conf": "documented"
+  },
+  {
+   "place": "Canton",
+   "lon": 113.26,
+   "lat": 23.13,
+   "date": "1924-11",
+   "until": "1927-04",
+   "mode": "rail",
+   "note": "Founds the Vietnamese Revolutionary Youth League and trains cadres; marries Zeng Xueming.",
+   "conf": "documented"
+  },
+  {
+   "place": "Moscow",
+   "lon": 37.62,
+   "lat": 55.75,
+   "date": "1927-06",
+   "until": "1927-10",
+   "mode": "rail",
+   "note": "Returns after Chiang Kai-shek's coup; recovers from tuberculosis in the Crimea.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1927-11",
+   "until": "1927-12",
+   "mode": "rail",
+   "note": "Brief return, then Brussels, Berlin, Switzerland and Italy.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bangkok",
+   "lon": 100.5,
+   "lat": 13.75,
+   "date": "1928-07",
+   "until": "1928-07",
+   "mode": "sea",
+   "note": "Lands in Siam disguised as a Chinese.",
+   "conf": "documented"
+  },
+  {
+   "place": "Nachok (Nakhon Phanom)",
+   "lon": 104.78,
+   "lat": 17.41,
+   "date": "1928-08",
+   "until": "1929-11",
+   "mode": "land",
+   "note": "Organises Vietnamese émigrés in north-eastern Siam disguised as a monk.",
+   "conf": "documented"
+  },
+  {
+   "place": "Hong Kong",
+   "lon": 114.16,
+   "lat": 22.28,
+   "date": "1930-01",
+   "until": "1931-06-06",
+   "mode": "sea",
+   "note": "Chairs the meeting of 3 February 1930 that founds the Communist Party of Vietnam; arrested in June 1931.",
+   "conf": "documented"
+  },
+  {
+   "place": "Shanghai",
+   "lon": 121.47,
+   "lat": 31.23,
+   "date": "1933",
+   "until": "1934",
+   "mode": "sea",
+   "note": "Released after a Privy Council appeal, slips out of Hong Kong.",
+   "conf": "likely"
+  },
+  {
+   "place": "Moscow",
+   "lon": 37.62,
+   "lat": 55.75,
+   "date": "1934",
+   "until": "1938",
+   "mode": "rail",
+   "note": "Studies at the Lenin School, under suspicion during the purges.",
+   "conf": "documented"
+  },
+  {
+   "place": "Yan'an",
+   "lon": 109.49,
+   "lat": 36.59,
+   "date": "1938",
+   "until": "1938",
+   "mode": "rail",
+   "note": "Returns to China to work with the Chinese communists.",
+   "conf": "likely"
+  },
+  {
+   "place": "Guilin",
+   "lon": 110.29,
+   "lat": 25.27,
+   "date": "1939",
+   "until": "1939",
+   "mode": "land",
+   "note": "Serves with the Eighth Route Army under Ye Jianying.",
+   "conf": "likely"
+  },
+  {
+   "place": "Kunming",
+   "lon": 102.71,
+   "lat": 25.04,
+   "date": "1940",
+   "until": "1940",
+   "mode": "land",
+   "note": "Meets Vo Nguyen Giap and Pham Van Dong.",
+   "conf": "likely"
+  },
+  {
+   "place": "Pac Bo",
+   "lon": 106.06,
+   "lat": 22.98,
+   "date": "1941-02-08",
+   "until": "1941-05",
+   "mode": "land",
+   "note": "Crosses back into Vietnam after thirty years and founds the Viet Minh in May.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "William J. Duiker, Ho Chi Minh: A Life, New York 2000"
+  },
+  {
+   "cite": "Sophie Quinn-Judge, Ho Chi Minh: The Missing Years 1919-1941, Berkeley 2002"
+  },
+  {
+   "cite": "Wikipedia, Ho Chi Minh",
+   "url": "https://en.wikipedia.org/wiki/Ho_Chi_Minh"
+  }
+ ],
+ "status": "draft"
+}

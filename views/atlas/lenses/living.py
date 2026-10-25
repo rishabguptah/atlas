@@ -91,7 +91,7 @@ def build(repo):
                       'note': (r.get('why') or r.get('what') or '')[:200], 'conf': 'approximate', 'auto': True,
                       'sources': _src(r.get('sources')) or [{'cite': 'Atlas trade route ' + r['id']}]})
     names = _load(os.path.join(d, 'names.json'), {'cultures': []})
-    cultures = [{k: c[k] for k in ('id', 'name', 'start', 'end', 'regions', 'male', 'female', 'family', 'bynames', 'pattern') if c.get(k) is not None} for c in names.get('cultures', [])]
+    cultures = [{k: c[k] for k in ('id', 'name', 'start', 'end', 'regions', 'male', 'female', 'family', 'bynames', 'pattern', 'pattern_female', 'minority') if c.get(k) is not None} for c in names.get('cultures', [])]
     meetings = []
     for m in _load(os.path.join(d, 'meetings.json'), []) or []:
         if m.get('lon') is None or not m.get('date'):

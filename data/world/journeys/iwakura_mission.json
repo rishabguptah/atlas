@@ -1,0 +1,303 @@
+{
+ "id": "iwakura_mission",
+ "name": "Iwakura Mission",
+ "kind": "envoy",
+ "summary": "Iwakura Tomomi leads about fifty Meiji government leaders, including Okubo Toshimichi and Ito Hirobumi, plus students, on a twenty-one-month study tour of the United States and Europe to seek treaty revision and learn how the West worked.",
+ "start": 1871,
+ "end": 1873,
+ "stops": [
+  {
+   "place": "Yokohama",
+   "lon": 139.64,
+   "lat": 35.44,
+   "date": "1871-12-23",
+   "until": "1871-12-23",
+   "mode": "start",
+   "note": "About a hundred officials and students, including the six-year-old Tsuda Ume, sail on the SS America.",
+   "conf": "documented"
+  },
+  {
+   "place": "San Francisco",
+   "lon": -122.42,
+   "lat": 37.79,
+   "date": "1872-01-15",
+   "until": "1872-01-31",
+   "mode": "sea",
+   "note": "Feted by the city; Ito gives his 'rising sun' speech.",
+   "conf": "documented"
+  },
+  {
+   "place": "Salt Lake City",
+   "lon": -111.89,
+   "lat": 40.76,
+   "date": "1872-02-04",
+   "until": "1872-02-22",
+   "mode": "rail",
+   "note": "Snowbound for nearly three weeks on the transcontinental railroad.",
+   "conf": "documented"
+  },
+  {
+   "place": "Chicago",
+   "lon": -87.63,
+   "lat": 41.88,
+   "date": "1872-02-26",
+   "until": "1872-02-27",
+   "mode": "rail",
+   "note": "Sees the city rebuilding after the great fire.",
+   "conf": "documented"
+  },
+  {
+   "place": "Washington",
+   "lon": -77.04,
+   "lat": 38.9,
+   "date": "1872-02-29",
+   "until": "1872-07",
+   "mode": "rail",
+   "note": "Meets President Grant; treaty talks fail for lack of full powers, and Okubo and Ito return to Japan for credentials.",
+   "conf": "documented"
+  },
+  {
+   "place": "Boston",
+   "lon": -71.06,
+   "lat": 42.36,
+   "date": "1872-07",
+   "until": "1872-08-06",
+   "mode": "rail",
+   "note": "Tours New England mills and schools before sailing.",
+   "conf": "documented"
+  },
+  {
+   "place": "Liverpool",
+   "lon": -2.99,
+   "lat": 53.41,
+   "date": "1872-08-17",
+   "until": "1872-08-17",
+   "mode": "sea",
+   "note": "Arrives on the Cunard steamer Olympus.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1872-08-18",
+   "until": "1872-09",
+   "mode": "rail",
+   "note": "Visits Parliament, the Bank of England and the Crystal Palace.",
+   "conf": "documented"
+  },
+  {
+   "place": "Edinburgh",
+   "lon": -3.19,
+   "lat": 55.95,
+   "date": "1872-09",
+   "until": "1872-10",
+   "mode": "rail",
+   "note": "Tours Scotland, including Glasgow shipyards and the Highlands.",
+   "conf": "documented"
+  },
+  {
+   "place": "Manchester",
+   "lon": -2.24,
+   "lat": 53.48,
+   "date": "1872-10",
+   "until": "1872-10",
+   "mode": "rail",
+   "note": "Inspects cotton mills.",
+   "conf": "documented"
+  },
+  {
+   "place": "Sheffield",
+   "lon": -1.47,
+   "lat": 53.38,
+   "date": "1872-10-28",
+   "until": "1872-10-31",
+   "mode": "rail",
+   "note": "Visits Cammell's steelworks.",
+   "conf": "documented"
+  },
+  {
+   "place": "Windsor Castle",
+   "lon": -0.6,
+   "lat": 51.48,
+   "date": "1872-12-05",
+   "until": "1872-12-05",
+   "mode": "rail",
+   "note": "Audience with Queen Victoria.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1872-12-16",
+   "until": "1873-02-17",
+   "mode": "sea",
+   "note": "Received by President Thiers on 26 December.",
+   "conf": "documented"
+  },
+  {
+   "place": "Brussels",
+   "lon": 4.35,
+   "lat": 50.85,
+   "date": "1873-02-17",
+   "until": "1873-02-24",
+   "mode": "rail",
+   "note": "Visits King Leopold II.",
+   "conf": "documented"
+  },
+  {
+   "place": "The Hague",
+   "lon": 4.3,
+   "lat": 52.08,
+   "date": "1873-02-24",
+   "until": "1873-03-07",
+   "mode": "rail",
+   "note": "Recalls the Dutch as Japan's old window on the West.",
+   "conf": "documented"
+  },
+  {
+   "place": "Berlin",
+   "lon": 13.4,
+   "lat": 52.52,
+   "date": "1873-03-09",
+   "until": "1873-03-28",
+   "mode": "rail",
+   "note": "Bismarck tells them at dinner that international law serves the strong.",
+   "conf": "documented"
+  },
+  {
+   "place": "Saint Petersburg",
+   "lon": 30.31,
+   "lat": 59.94,
+   "date": "1873-03-30",
+   "until": "1873-04-14",
+   "mode": "rail",
+   "note": "Received by Alexander II.",
+   "conf": "documented"
+  },
+  {
+   "place": "Copenhagen",
+   "lon": 12.57,
+   "lat": 55.68,
+   "date": "1873-04-18",
+   "until": "1873-04-23",
+   "mode": "sea",
+   "note": "Visits the Danish court.",
+   "conf": "documented"
+  },
+  {
+   "place": "Stockholm",
+   "lon": 18.07,
+   "lat": 59.33,
+   "date": "1873-04-24",
+   "until": "1873-04-30",
+   "mode": "sea",
+   "note": "Visits King Oscar II.",
+   "conf": "documented"
+  },
+  {
+   "place": "Rome",
+   "lon": 12.48,
+   "lat": 41.9,
+   "date": "1873-05",
+   "until": "1873-05",
+   "mode": "rail",
+   "note": "Received by King Victor Emmanuel II.",
+   "conf": "documented"
+  },
+  {
+   "place": "Venice",
+   "lon": 12.33,
+   "lat": 45.44,
+   "date": "1873-05",
+   "until": "1873-05",
+   "mode": "rail",
+   "note": "Shown letters of Hasekura's 1615 embassy in the state archives.",
+   "conf": "documented"
+  },
+  {
+   "place": "Vienna",
+   "lon": 16.37,
+   "lat": 48.21,
+   "date": "1873-06-03",
+   "until": "1873-06-18",
+   "mode": "rail",
+   "note": "Visits the World Exhibition, where Japan has its first pavilion.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bern",
+   "lon": 7.45,
+   "lat": 46.95,
+   "date": "1873-06-19",
+   "until": "1873-07",
+   "mode": "rail",
+   "note": "Studies Swiss federalism and militia.",
+   "conf": "documented"
+  },
+  {
+   "place": "Marseille",
+   "lon": 5.37,
+   "lat": 43.3,
+   "date": "1873-07-20",
+   "until": "1873-07-20",
+   "mode": "rail",
+   "note": "Embarks for home via Suez.",
+   "conf": "documented"
+  },
+  {
+   "place": "Galle",
+   "lon": 80.22,
+   "lat": 6.03,
+   "date": "1873-08",
+   "until": "1873-08",
+   "mode": "sea",
+   "note": "Notes European domination of the Asian ports.",
+   "conf": "documented"
+  },
+  {
+   "place": "Singapore",
+   "lon": 103.85,
+   "lat": 1.29,
+   "date": "1873-08",
+   "until": "1873-08",
+   "mode": "sea",
+   "note": "Calls at the Straits port.",
+   "conf": "documented"
+  },
+  {
+   "place": "Shanghai",
+   "lon": 121.47,
+   "lat": 31.23,
+   "date": "1873-09",
+   "until": "1873-09",
+   "mode": "sea",
+   "note": "Last stop before Japan.",
+   "conf": "documented"
+  },
+  {
+   "place": "Yokohama",
+   "lon": 139.64,
+   "lat": 35.44,
+   "date": "1873-09-13",
+   "until": "1873-09-13",
+   "mode": "sea",
+   "note": "Returns nearly two years after setting out, to the Korea crisis.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Kume Kunitake, The Iwakura Embassy 1871-73: A True Account of the Ambassador Extraordinary and Plenipotentiary's Journey of Observation, ed. Graham Healey and Chushichi Tsuzuki, 5 vols, Chiba 2002"
+  },
+  {
+   "cite": "Ian Nish (ed.), The Iwakura Mission in America and Europe: A New Assessment, Richmond 1998"
+  },
+  {
+   "cite": "Wikipedia, Iwakura Mission",
+   "url": "https://en.wikipedia.org/wiki/Iwakura_Mission"
+  }
+ ],
+ "status": "draft"
+}

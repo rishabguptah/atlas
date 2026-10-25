@@ -248,6 +248,42 @@
     renderSoon(true);
   }
 
+  // ---------- stories for the Director (views/atlas/world/director.js) ----------
+  // Director scenes take the page's year in t and an ISO date; show() puts the day clock and the followed traveller
+  // back when the Director plays the scene, so the map shows the right day, not the middle of the year.
+  function forDirector(story, id) {
+    const KICK = { meeting: "They could have met", crossed: "On the road", danger: "Nearby", object: "Seen here" };
+    return { id: story.id, title: story.title, kind: "simulation", blurb: (W.agent(id) || {}).summary || "", status: "draft",
+      scenes: story.scenes.map(sc => ({ ...sc, tt: sc.t, t: T.year(sc.t), date: T.iso(sc.t), lenses: ["living"], kick: KICK[sc.kind] || null,
+        show: s => { S.t = s.tt; S.follow = id; if (!S.story || S.story.id !== story.id) { S.story = story; } lastT = null; refresh(); } })) };
+  }
+  const dStories = new Map();
+  function directorStory(id) {
+    if (!dStories.has(id)) { const a = W.agent(id); if (!a) return null; dStories.set(id, forDirector(S.story && S.follow === id ? S.story : W.story(a), id)); }
+    return dStories.get(id);
+  }
+  // Every named journey is a Story in the Atlas's story list; scenes are worked out when one is first asked for.
+  const lazy = new Map();
+  function lazyStory(a) {
+    if (dStories.has(a.id)) return dStories.get(a.id);
+    if (!lazy.has(a.id)) {
+      const st = { id: "story:" + a.id, title: a.name, kind: "simulation", blurb: a.summary || "", status: a.status || "draft" };
+      Object.defineProperty(st, "scenes", { enumerable: true, configurable: true, get() { const d = directorStory(a.id); Object.defineProperty(st, "scenes", { value: d.scenes, enumerable: true, writable: true }); return d.scenes; } });
+      lazy.set(a.id, st);
+    }
+    return lazy.get(a.id);
+  }
+  if (W.stories && W.stories.add) W.stories.add({ kind: "simulation", list: () => ok() ? W.journeys().map(lazyStory) : [] });
+  function playScenes() {
+    if (!S.follow || !W.director || !W.director.play) return false;
+    stop();
+    const st = directorStory(S.follow);
+    if (!st) return false;
+    if (W.stories && W.stories.add) W.stories.add(st);
+    W.director.play(st, { at: Math.max(0, S.scene) });
+    return true;
+  }
+
   // ---------- telling a story with Claude (the page's `sample` capability) ----------
   let sample = null, sampleTried = false;
   async function tell() {
@@ -294,7 +330,7 @@
       ${A ? `<div class="lw-follow"><h3>Following ${esc(A.name)}${A.gen ? ' <span class="tag">generated</span>' : ""}</h3>
         <p class="note">${esc(A.gen ? W.describe({ a: A, to: A.legs[0].to }) : A.summary)}</p>
         <div class="lw-scenes">${S.story.scenes.map((s, i) => `<button class="lw-sc${i === S.scene ? " on" : i < S.scene ? " past" : ""}" data-scene="${i}"><span class="d">${esc(s.date)}</span><span>${esc(s.caption)}${s.conf && s.conf !== "attested" ? ` <i class="cf">${esc(s.conf)}</i>` : ""}</span></button>`).join("")}</div>
-        <div class="lw-ctl"><button data-a="next">Next scene</button><button data-a="tell">Tell this story</button><button data-a="unfollow">Stop following</button></div>
+        <div class="lw-ctl">${W.director && W.director.play ? `<button data-a="scenes">Play as scenes</button>` : ""}<button data-a="next">Next scene</button><button data-a="tell">Tell this story</button><button data-a="unfollow">Stop following</button></div>
         ${S.tell ? `<div class="lw-tell">${S.tell.err ? `<p class="note">${esc(S.tell.err)}</p>` : esc(S.tell.text || "…").split(/\n\n+/).map(p => `<p>${p}</p>`).join("")}</div>` : ""}
         ${A.sources && A.sources.length ? `<p class="note">Sources: ${A.sources.map(s => s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite)}</a>` : esc(s.cite)).join("; ")}${A.status === "draft" ? " · draft, waiting for the judge" : ""}</p>` : ""}
       </div>` : ""}
@@ -328,6 +364,7 @@
         if (a === "play") return play();
         if (a === "next") { if (S.story) goScene(Math.min(S.story.scenes.length - 1, S.scene + 1)); return; }
         if (a === "tell") return tell();
+        if (a === "scenes") return playScenes();
         if (a === "unfollow") { S.follow = null; S.story = null; S.tell = null; refresh(); return renderSoon(true); }
         if (a) { stop(); return setT((S.t ?? now(api.year)) + (+a) * DAY); }
         if (b.dataset.speed) { S.speed = +b.dataset.speed; return renderSoon(true); }
