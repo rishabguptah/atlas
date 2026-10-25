@@ -48,7 +48,7 @@
       if (y < e.start) continue;
       if (ERA) {
         const p = ERA.place(e, y, typeof POP !== "undefined" ? interp(POP[e.id], y) : null);
-        if (k >= p.minK) statics.push({ lon: e.lon, lat: e.lat, sprite: p.sprite });
+        if (k >= p.minK) statics.push({ lon: e.lon, lat: e.lat, sprite: p.sprite, pri: p.pri });
         continue;
       }
       const sp = e.end != null && y >= e.end ? "ruin" : tierOf(e, y);
@@ -59,18 +59,20 @@
       const a = hashC(b.sides && b.sides[0] && b.sides[0][0] && b.sides[0][0].name), c = hashC(b.sides && b.sides[1] && b.sides[1][0] && b.sides[1][0].name);
       // Era armies: hoplites, legions, knights, musket lines, tanks; the second side faces the first.
       const ar = ERA ? ERA.army(b.start, b.lon, b.lat) : "army";
-      statics.push({ lon: b.lon, lat: b.lat, sprite: ar, team: a, dx: -5 }, { lon: b.lon, lat: b.lat, sprite: ERA ? ar : "army_flip", flip: !!ERA, team: c, dx: 5, frame: 1 }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -7 });
+      const grp = "b:" + b.name + b.start;
+      statics.push({ lon: b.lon, lat: b.lat, sprite: ar, team: a, dx: -5, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: ERA ? ar : "army_flip", flip: !!ERA, team: c, dx: 5, frame: 1, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -7, pri: 5, grp });
     }
     if (typeof PLAGUE !== "undefined" && isOn("disease")) for (const s of PLAGUE.events) {
       if (s.lat == null || y < s.start - 1 || y > (s.end ?? s.start) + 3) continue;
       const sp = ERA ? ERA.shock(s.subtype) : /epidemic|pandemic|plague/.test(s.subtype) ? "plague" : s.subtype === "famine" ? "skull" : s.subtype === "eruption" ? "volcano" : "fire";
-      statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2 });
+      statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2, pri: 3.8 });
     }
     if (typeof MONEY !== "undefined" && isOn("money")) for (const t of MONEY.trade) {
       if (y < t.start || y > t.end || !t.line || t.line.length < 2) continue;
       const segs = []; let tot = 0;
       for (let i = 1; i < t.line.length; i++) { const d = d3.geoDistance(t.line[i - 1], t.line[i]); segs.push(d); tot += d; }
-      const n = Math.max(1, Math.min(4, Math.round(tot / 0.6)));
+      // One traveller per route zoomed out, up to four along it as you come in.
+      const n = k < 2 ? 1 : Math.max(1, Math.min(4, Math.round(tot / 0.6)));
       for (let q = 0; q < n; q++) movers.push({ line: t.line, segs, tot, phase: q / n });
     }
   }
@@ -84,10 +86,10 @@
     const list = statics.slice();
     for (const m of movers) {
       const [lon, lat] = moverAt(m), sea = pm.isWater(lon, lat);
-      list.push({ lon, lat, sprite: ERA ? ERA.mover(year, lon, lat, sea) : sea ? "ship" : "caravan" });
+      list.push({ lon, lat, sprite: ERA ? ERA.mover(year, lon, lat, sea) : sea ? "ship" : "caravan", pri: 0.5 });
     }
     list.sort((a, b) => b.lat - a.lat);
-    pm.sprites(list);
+    pm.sprites(list, ERA && T ? ERA.budget(T.k) : undefined);
   }
 
   ATLAS.basemap({

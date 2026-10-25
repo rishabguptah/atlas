@@ -227,27 +227,28 @@ const LAND = /*__LAND__*/;
       if (y < e.start) continue;
       const lost = e.end != null && y >= e.end;
       // Era- and region-aware sprite (era.js); declutter by zoom: great cities always, towns and ruins as you come closer.
-      const { sprite: sp, minK } = PixelEra.place(e, y, popAt(e, y));
+      const { sprite: sp, minK, pri } = PixelEra.place(e, y, popAt(e, y));
       if (T.k < minK && !(state.sel && state.sel.e === e)) continue;
-      statics.push({ lon: e.lon, lat: e.lat, sprite: sp });
+      statics.push({ lon: e.lon, lat: e.lat, sprite: sp, pri });
       hits.push({ lon: e.lon, lat: e.lat, kind: lost ? "Lost city" : e.layer === "wonders" ? "Wonder" : "City", name: nameAt(e, y), what: e.what, why: e.why, pop: lost ? null : popAt(e, y), lost, e });
     }
     for (const b of BATTLES) {
       if (Math.abs(b.start - y) > 3) continue;
       const a = sideColor(b.sides && b.sides[0]), c = sideColor(b.sides && b.sides[1]);
       const ar = PixelEra.army(b.start, b.lon, b.lat);
-      statics.push({ lon: b.lon, lat: b.lat, sprite: ar, team: a, dx: -5 }, { lon: b.lon, lat: b.lat, sprite: ar, flip: true, team: c, dx: 5, frame: 1 }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -7 });
+      const grp = "b:" + b.name + b.start;
+      statics.push({ lon: b.lon, lat: b.lat, sprite: ar, team: a, dx: -5, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: ar, flip: true, team: c, dx: 5, frame: 1, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -7, pri: 5, grp });
       hits.push({ lon: b.lon, lat: b.lat, kind: "Battle · " + fmtYear(b.start), name: b.name, what: (b.sides || []).map(s => s.map(x => x.name).join(", ")).join("  vs  "), why: b.why });
     }
     for (const s of SHOCKS) {
       if (y < s.start - 1 || y > (s.end ?? s.start) + 3) continue;
       const sp = PixelEra.shock(s.subtype);
-      statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2 });
+      statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2, pri: 3.8 });
       hits.push({ lon: s.lon, lat: s.lat, kind: s.subtype, name: s.name, what: s.what });
     }
     TRADE.filter(t => y >= t.start && y <= t.end).forEach((t, i) => {
       const len = d3.geoLength({ type: "LineString", coordinates: t.line });
-      const n = Math.max(1, Math.min(4, Math.round(len / 0.6)));
+      const n = T.k < 2 ? 1 : Math.max(1, Math.min(4, Math.round(len / 0.6)));
       for (let q = 0; q < n; q++) movers.push({ t, len, phase: q / n, interp: d3.geoInterpolate });
     });
     const P = d => projection([d.lon, d.lat]);
@@ -272,10 +273,10 @@ const LAND = /*__LAND__*/;
     const list = statics.slice();
     for (const m of movers) {
       const [lon, lat] = moverAt(m);
-      list.push({ lon, lat, sprite: PixelEra.mover(state.year, lon, lat, pm.isWater(lon, lat)) });
+      list.push({ lon, lat, sprite: PixelEra.mover(state.year, lon, lat, pm.isWater(lon, lat)), pri: 0.5 });
     }
     list.sort((a, b) => b.lat - a.lat);
-    pm.sprites(list);
+    pm.sprites(list, PixelEra.budget(T.k));
   }
   let lastHits = [];
   function labels(hits) {
