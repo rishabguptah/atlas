@@ -59,6 +59,9 @@ input[type=range]::-moz-range-thumb { width: 14px; height: 20px; background: var
 .dlg .more { font-family: var(--pix); color: var(--gold); font-size: 13px; animation: blink 1s steps(1) infinite; float: right; }
 @keyframes blink { 50% { opacity: 0; } }
 .lbl { font-family: var(--pix); font-weight: 600; fill: var(--paper); paint-order: stroke; stroke: var(--ink); stroke-width: 3px; stroke-linejoin: miter; pointer-events: none; }
+.realms text.realm { font-family: var(--pix); font-weight: 600; letter-spacing: .32em; fill: rgba(44, 28, 18, .78); stroke: rgba(246, 240, 220, .62); stroke-width: 3px; paint-order: stroke; pointer-events: none; }
+body[data-mood="night"] .realms text.realm { fill: rgba(246, 236, 200, .78); stroke: rgba(14, 18, 34, .7); }
+body[data-mood="chronicle"] .realms text.realm { fill: rgba(70, 36, 14, .85); stroke: rgba(240, 226, 196, .7); font-style: italic; }
 .lbl.big { font-size: 15px; } .lbl.mid { font-size: 13px; } .lbl.sm { font-size: 11px; font-weight: 500; }
 .lbl.ruin { fill: #d8c8a8; font-style: italic; }
 .lbl.realm { font-family: var(--tiny); fill: rgba(246, 240, 220, .92); stroke: rgba(34, 31, 26, .75); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; }
@@ -152,19 +155,58 @@ const LAND = /*__LAND__*/;
   const sideColor = side => hashC((side && side[0] && (side[0].name || "")) || "x");
 
   // ---------- map ----------
-  const gHit = svg.append("g"), gLab = svg.append("g");
+  const gRealm = svg.append("g").attr("class", "realms"), gHit = svg.append("g"), gLab = svg.append("g");
   let W = 0, H = 0, T = d3.zoomIdentity, curSnap = null, settleTimer = 0;
   const zoom = d3.zoom().scaleExtent([1, 64]).on("zoom", ev => {
     T = ev.transform; pm.move(T);
-    gHit.attr("transform", T); gLab.attr("transform", T);
+    gHit.attr("transform", T); gLab.attr("transform", T); gRealm.attr("transform", T);
     gLab.selectAll("text").attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / T.k})`);
+    gRealm.selectAll("text").attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / T.k})`);
     gHit.selectAll("circle").attr("r", 9 / T.k);
     clearTimeout(settleTimer); settleTimer = setTimeout(settle, 140);
   });
   svg.call(zoom).on("dblclick.zoom", null);
-  const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm.same(T)) pm.setRealms(realmsNow()); else settle(); } });
+  const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm.same(T)) { pm.setRealms(realmsNow()); realmLabels(); } else settle(); } });
   const realmsNow = () => borders.realms(state.year, T.k) || realmsFor(curSnap);
-  function settle() { pm.render(T, { realms: realmsNow() }); placeSprites(); labels(); }
+  let shownRealms = null;
+  function settle() { pm.render(T, { realms: shownRealms = realmsNow() }); placeSprites(); labels(); realmLabels(); }
+
+  // Realm names in wide-spaced capitals across their land, like an old atlas: sized by the realm's area on screen.
+  const realmGeo = new WeakMap();
+  function geoOf(realms) {
+    if (realmGeo.has(realms)) return realmGeo.get(realms);
+    const path = d3.geoPath(projection), best = {};
+    for (const r of realms) {
+      const name = (r.name || "").trim(); if (!name || name.length > 28) continue;
+      const g = r.feature.geometry; if (!g) continue;
+      const polys = g.type === "MultiPolygon" ? g.coordinates.map(c => ({ type: "Polygon", coordinates: c })) : [g];
+      let big = null, ba = 0, tot = 0;
+      for (const q of polys) { const a = path.area(q); tot += a; if (a > ba) { ba = a; big = q; } }
+      if (!big || (best[name] && best[name].area >= tot)) continue;
+      const c = path.centroid(big);
+      if (c.every(Number.isFinite)) best[name] = { name, area: tot, core: ba, x: c[0], y: c[1] };
+    }
+    const out = Object.values(best).sort((a, b) => b.area - a.area);
+    realmGeo.set(realms, out);
+    return out;
+  }
+  function realmLabels() {
+    const realms = realmsNow() || [], k = T.k, boxes = [], out = [];
+    for (const d of geoOf(realms)) {
+      if (out.length >= 40) break;
+      const side = Math.sqrt(d.area * 0.6 + d.core * 0.4) * k, n = d.name.length;
+      const fs = Math.min(34, Math.round(side * 1.5 / (n * 0.9 + 2)));
+      if (fs < 11) continue;
+      const sx = d.x * k + T.x, sy = d.y * k + T.y;
+      if (sx < 0 || sy < 0 || sx > W || sy > H) continue;
+      const wpx = n * fs * 0.95, bx = [sx - wpx / 2, sy - fs, sx + wpx / 2, sy + 4];
+      if (bx[0] < 8 || bx[2] > W - 8 || bx[1] < 8 || bx[3] > H - 140) continue;
+      if (boxes.some(b => !(bx[2] < b[0] || bx[0] > b[2] || bx[3] < b[1] || bx[1] > b[3]))) continue;
+      boxes.push(bx); out.push({ ...d, fs });
+    }
+    gRealm.selectAll("text").data(out, d => d.name).join("text").attr("class", "realm").attr("text-anchor", "middle")
+      .style("font-size", d => d.fs + "px").attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / k})`).text(d => d.name.toUpperCase());
+  }
 
   function layout() {
     W = mapEl.clientWidth; H = mapEl.clientHeight;
@@ -274,7 +316,9 @@ const LAND = /*__LAND__*/;
     document.getElementById("era").textContent = eraOf(state.year).toUpperCase();
     if (!fromSlider) slider.value = Math.round(yearToT(state.year) * 1000);
     const s = snapFor(state.year);
-    if (s !== curSnap) { curSnap = s; pm.setRealms(realmsNow()); }
+    curSnap = s;
+    const r = realmsNow();
+    if (r !== shownRealms) { shownRealms = r; pm.setRealms(r); realmLabels(); }
     placeSprites();
   }
   slider.addEventListener("input", () => setYear(tToYear(slider.value / 1000), true));
