@@ -87,6 +87,10 @@ Shipped in `views/atlas/world/route.js` (data: `data/motion/`, lens data `motion
 `notes` (seasons, canals, roads used) and `meet` (borders, battles and plague on the way). `ATLAS.world.reach`
 returns `{days: Float32Array(720 * 360), at(lon, lat)}`. A continental route takes about 0.1 to 0.6 s warm.
 `ATLAS.world.motion` exposes the grid helpers (`cellOf`, `cls`, `isWater`, `polity`, `plagueAt`, `battles`, `rules()`).
+Open ocean is closed until a crossing became a route (`rules.open_ocean`: the Atlantic until 1492, the South Atlantic
+until 1488, the open Pacific until 1565), so nobody sails from Rome to New York. Empire roads test only the realms named
+for a road-building empire that year, so a reach through Mongol lands takes about 0.1 s instead of 2 s. The Travel time
+lens (`lenses/shrink.js`) draws `reach` as isochrones and checks `route` against documented journeys.
 
 ## L3 Agents and causes (agents: "Simulate people meeting and traveling"; `why`: "Bring scholar-level depth to the atlas")
 

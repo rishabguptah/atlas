@@ -1,0 +1,347 @@
+{
+  "id": "story:world_shrinks",
+  "title": "Watch the world shrink",
+  "kind": "tour",
+  "status": "draft",
+  "author": "Claude (curated), waiting for the judge",
+  "blurb": "Two thousand years of travel time in eleven scenes: how far you could get in a week, a month and a season, and how fast the news came.",
+  "scenes": [
+    {
+      "id": "rome",
+      "t": 100,
+      "view": {
+        "lon": 18,
+        "lat": 37,
+        "span": 55
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "rome",
+          "solo": true
+        }
+      },
+      "caption": "100 CE. From Rome a week gets you to Florence, a month to Alexandria. Past that, the map goes dark.",
+      "text": "The rings show how far the fastest ordinary traveller could get from Rome: red within a week, ochre within a month, blue within a season, dusk beyond. Roman roads and the summer sailing season made the Mediterranean one world; Pliny boasts that a prefect once sailed from the Strait of Messina to Alexandria in seven days. But nobody in Rome could get to China, and the open Atlantic was not a route at all.",
+      "conf": "estimated",
+      "sources": [
+        {
+          "cite": "Scheidel and Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World",
+          "url": "https://orbis.stanford.edu/"
+        },
+        {
+          "cite": "Pliny the Elder, Natural History 19.3-4"
+        },
+        {
+          "cite": "Rings: the Atlas's shared router (views/atlas/world/route.js, rules in data/motion/rules.json)"
+        }
+      ],
+      "ask": "How long did it take to travel across the Roman Empire?"
+    },
+    {
+      "id": "changan",
+      "t": 750,
+      "view": {
+        "lon": 100,
+        "lat": 36,
+        "span": 60
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "changan",
+          "solo": true
+        }
+      },
+      "caption": "750. Chang'an is the greatest city on earth, and a season on the road from it still ends in Central Asia.",
+      "text": "Tang China had a superb post-road system: when An Lushan rebelled at Fanyang in 755, word reached the emperor near Chang'an in about six days. But for an ordinary traveller the deserts and mountains of Central Asia were months deep. From Chang'an, Baghdad and Rome lie far outside even the season ring: the two halves of the Old World knew of each other mostly through goods passed hand to hand.",
+      "conf": "estimated",
+      "sources": [
+        {
+          "cite": "Rings: the Atlas's shared router (views/atlas/world/route.js, rules in data/motion/rules.json)"
+        },
+        {
+          "cite": "Zizhi Tongjian, juan 217 (the news of An Lushan's rising)"
+        }
+      ]
+    },
+    {
+      "id": "baghdad",
+      "t": 900,
+      "view": {
+        "lon": 45,
+        "lat": 29,
+        "span": 70
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "baghdad",
+          "solo": true
+        }
+      },
+      "caption": "900. Baghdad sits in the middle of the known world: a season reaches Cairo, Rome and the coast of India.",
+      "text": "The Abbasid capital was built in 762 at the meeting of the Tigris, the Euphrates canals and the caravan roads. By the router's count Cairo was about five weeks away, Rome under two months and the Indian coast a season. That reach, and a common language of trade and learning, is part of why the House of Wisdom could gather books from Greece, Persia and India.",
+      "conf": "estimated",
+      "sources": [
+        {
+          "cite": "Rings: the Atlas's shared router (views/atlas/world/route.js, rules in data/motion/rules.json)"
+        },
+        {
+          "cite": "Hugh Kennedy, When Baghdad Ruled the Muslim World (2004)"
+        }
+      ]
+    },
+    {
+      "id": "constantinople",
+      "t": 1453,
+      "view": {
+        "lon": 21,
+        "lat": 40,
+        "span": 30
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "venice",
+          "solo": true
+        }
+      },
+      "caption": "29 May 1453. Constantinople falls. Venice hears about a month later; Rome after forty days.",
+      "text": "News moved at the speed of the fastest ship. A galley carried word to Venetian Crete in about seventeen days, and the Venetian Senate had it by the end of June. Compare the rings: from Venice, the city on the Bosporus sat in the month band, and so did the news.",
+      "conf": "estimated",
+      "sources": [
+        {
+          "cite": "Steven Runciman, The Fall of Constantinople 1453 (1965)"
+        },
+        {
+          "cite": "Rings: the Atlas's shared router (views/atlas/world/route.js, rules in data/motion/rules.json)"
+        }
+      ],
+      "date": "1453-05",
+      "kick": "How fast news travelled"
+    },
+    {
+      "id": "london1800",
+      "t": 1800,
+      "view": {
+        "lon": -25,
+        "lat": 25,
+        "span": 170
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "london",
+          "solo": true
+        }
+      },
+      "caption": "1800. Sailing ships have opened the oceans: from London, New York is two months away and India more than a season.",
+      "text": "After 1492 the Atlantic became a road, and the rings stretch west across it. But sail still meant waiting for a ship and a wind. East India Company ships took five or six months around the Cape to India, which is why India sits out in the dusk here.",
+      "conf": "estimated",
+      "sources": [
+        {
+          "cite": "H. V. Bowen, The Business of Empire (2006)"
+        },
+        {
+          "cite": "Rings: the Atlas's shared router (views/atlas/world/route.js, rules in data/motion/rules.json)"
+        }
+      ]
+    },
+    {
+      "id": "trafalgar",
+      "t": 1805,
+      "view": {
+        "lon": -6,
+        "lat": 44,
+        "span": 22
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "london",
+          "solo": true
+        }
+      },
+      "caption": "21 October 1805. Nelson wins at Trafalgar and dies. London reads about it sixteen days later.",
+      "text": "Lieutenant Lapenotière's schooner Pickle took the dispatch to Falmouth, and a post-chaise with 21 changes of horses reached the Admiralty 37 hours later, on 6 November. Gibraltar knew in two days. The arrows show each arrival with the days it took.",
+      "conf": "attested",
+      "sources": [
+        {
+          "cite": "Wikipedia: John Richards Lapenotière",
+          "url": "https://en.wikipedia.org/wiki/John_Richards_Lapenotière"
+        }
+      ],
+      "date": "1805-10",
+      "kick": "How fast news travelled"
+    },
+    {
+      "id": "lincoln",
+      "t": 1865,
+      "view": {
+        "lon": -35,
+        "lat": 44,
+        "span": 85
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "new_york",
+          "solo": true
+        }
+      },
+      "caption": "14 April 1865. Lincoln is shot. New York knows by morning, by telegraph; London waits twelve days for a steamer.",
+      "text": "On land the telegraph had already abolished distance: San Francisco had the news the next day. The ocean had not been wired yet. The first lasting transatlantic cable opened in July 1866, fifteen months later; after that, news crossed the Atlantic in minutes.",
+      "conf": "attested",
+      "sources": [
+        {
+          "cite": "Wikipedia: Assassination of Abraham Lincoln",
+          "url": "https://en.wikipedia.org/wiki/Assassination_of_Abraham_Lincoln"
+        }
+      ],
+      "date": "1865-04",
+      "kick": "How fast news travelled"
+    },
+    {
+      "id": "london1870",
+      "t": 1870,
+      "view": {
+        "lon": 40,
+        "lat": 20,
+        "span": 250
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "london",
+          "solo": true
+        }
+      },
+      "caption": "1870. Steam, rail and the Suez Canal. From London, Bombay is now about a month away. Watch the rings jump.",
+      "text": "The Suez Canal opened in November 1869. Steamers ran to timetables, so the long waits for a ship disappeared, and railways crossed Europe, India and the United States. In the router's count London to Bombay fell from more than a season in 1800 to about 34 days, close to Headrick's figure of a month. Use the Travel tab's bars to see a month's reach grow fifteenfold.",
+      "conf": "estimated",
+      "sources": [
+        {
+          "cite": "Daniel Headrick, The Tentacles of Progress (1988)"
+        },
+        {
+          "cite": "Rings: the Atlas's shared router (views/atlas/world/route.js, rules in data/motion/rules.json)"
+        }
+      ]
+    },
+    {
+      "id": "sarajevo",
+      "t": 1914,
+      "view": {
+        "lon": 10,
+        "lat": 45,
+        "span": 60
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "london",
+          "solo": true
+        }
+      },
+      "caption": "28 June 1914. Franz Ferdinand is shot in Sarajevo. Vienna, Berlin, London and New York all know the same day.",
+      "text": "By 1914 a dense web of cables and wires meant news of an event anywhere in Europe reached every capital within hours. Travel had not caught up: a liner still took the best part of a week to cross the Atlantic. July 1914 was the first great crisis run at the speed of the telegraph.",
+      "conf": "attested",
+      "sources": [
+        {
+          "cite": "Christopher Clark, The Sleepwalkers (2012)"
+        }
+      ],
+      "date": "1914-06",
+      "kick": "How fast news travelled"
+    },
+    {
+      "id": "london1960",
+      "t": 1960,
+      "view": {
+        "lon": 40,
+        "lat": 20,
+        "span": 260
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "by": "geography",
+      "set": {
+        "shrink": {
+          "from": "london",
+          "solo": true
+        }
+      },
+      "caption": "1960. Jets. From London a week now reaches nearly every city on the map.",
+      "text": "Air fares were still high, but the reach was there: a couple of days to Bombay or Beijing, flying from city to city. The rings that took two thousand years to stretch across the Mediterranean now wrap the planet. Galton, who drew the first map like this in 1881, would hardly have believed it.",
+      "conf": "estimated",
+      "sources": [
+        {
+          "cite": "Francis Galton, On the construction of isochronic passage-charts, Proceedings of the RGS (1881)"
+        },
+        {
+          "cite": "Rings: the Atlas's shared router (views/atlas/world/route.js, rules in data/motion/rules.json)"
+        }
+      ]
+    },
+    {
+      "id": "centres",
+      "t": 2000,
+      "view": {
+        "lon": 55,
+        "lat": 40,
+        "span": 200
+      },
+      "lenses": [
+        "shrink"
+      ],
+      "set": {
+        "shrink": {
+          "from": "london",
+          "mode": "centres",
+          "solo": true
+        }
+      },
+      "caption": "And the centre of the world? Five thousand years in three wandering lines.",
+      "text": "The red diamond balances the world's big cities on the globe: it sits in Mesopotamia for two thousand years, swings east as Chinese and Indian cities join the lists, and in the twentieth century slides north towards the Arctic, the midpoint between New York and Asia. The gold line follows the richest trade crossroads, from Dilmun to Singapore; the blue one where thinkers were born and great works made. Drag the slider back to watch them wander.",
+      "conf": "approximate",
+      "sources": [
+        {
+          "cite": "Reba, Reitsma and Seto (2016), Spatializing 6,000 years of global urbanization, Scientific Data 3"
+        },
+        {
+          "cite": "Dobbs et al. (2012), Urban world: cities and the rise of the consuming class, McKinsey Global Institute"
+        }
+      ],
+      "kick": "Centre of the world"
+    }
+  ]
+}

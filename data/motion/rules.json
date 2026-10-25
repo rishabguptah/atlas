@@ -985,5 +985,58 @@
    }
   ],
   "war_max": 3
+ },
+ "open_ocean": {
+  "why": "Before regular ocean crossings, ships kept to coasts, inland seas and the monsoon routes of the Indian Ocean. These boxes of open ocean are closed to travellers until the year a crossing became a route anyone could book. Norse voyages to Vinland (about 1000) and Polynesian voyaging were real, but not a way for a traveller from Rome or Baghdad to go.",
+  "boxes": [
+   {
+    "n": "Open Atlantic",
+    "box": [
+     -62,
+     -50,
+     -24,
+     58
+    ],
+    "until": 1492
+   },
+   {
+    "n": "South Atlantic",
+    "box": [
+     -30,
+     -50,
+     8,
+     -8
+    ],
+    "until": 1488
+   },
+   {
+    "n": "Open Pacific (west)",
+    "box": [
+     150,
+     -45,
+     180,
+     48
+    ],
+    "until": 1565
+   },
+   {
+    "n": "Open Pacific (east)",
+    "box": [
+     -180,
+     -45,
+     -122,
+     48
+    ],
+    "until": 1565
+   }
+  ],
+  "src": [
+   {
+    "cite": "Felipe Fernandez-Armesto, Pathfinders: A Global History of Exploration (2006)"
+   },
+   {
+    "cite": "Dias rounded the Cape in 1488, Columbus crossed in 1492, Urdaneta found the return route across the Pacific in 1565 (the Manila galleon)."
+   }
+  ]
  }
 }
