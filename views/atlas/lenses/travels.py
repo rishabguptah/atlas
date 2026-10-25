@@ -194,6 +194,45 @@ def sidecar(repo):
             'sv_src': sv['source'], 'sv_note': sv['note']}
 
 
+BACK = {'attested': 'documented', 'estimated': 'likely', 'approximate': 'guess', 'unknown': 'guess'}
+
+
+def journeys_as_stops(repo):
+    """Every kernel journey (not the VOC voyages) in the living-world format of data/world/README.md:
+    {id, name, person, kind, summary, start, end, stops: [{place, lon, lat, date, until, mode, note, conf}], sources, status}.
+    A stop's date is when the traveller arrived, until when they left; conf documented | likely | guess."""
+    K = kernel(repo)
+    places = {p['id']: p for p in K['place']}
+    people = _people(K)
+    out = []
+
+    def at(ref):
+        if isinstance(ref, list):
+            return '', ref[0], ref[1]
+        p = places.get(ref, {})
+        return p.get('name', ref), p.get('lon'), p.get('lat')
+
+    for r in K['route']:
+        if r.get('subtype') != 'journey' or r['id'].startswith('route:voyage:'):
+            continue
+        legs = r['legs']
+        n, lo, la = at(legs[0]['from'])
+        stops = [{'place': n, 'lon': lo, 'lat': la, 'date': legs[0].get('start_date', str(r.get('start', ''))),
+                  'until': legs[0].get('start_date', ''), 'mode': 'start', 'note': '', 'conf': BACK.get(legs[0].get('conf'), 'likely')}]
+        for i, g in enumerate(legs):
+            n, lo, la = at(g['to'])
+            nxt = legs[i + 1] if i + 1 < len(legs) else None
+            stops.append({'place': n, 'lon': lo, 'lat': la, 'date': g.get('end_date', ''),
+                          'until': (nxt or {}).get('start_date', g.get('end_date', '')), 'mode': g.get('mode', 'land'),
+                          'note': g.get('note', ''), 'conf': BACK.get(g.get('conf'), 'likely')})
+        who = r.get('carrier') if r.get('carrier') in people else None
+        out.append({'id': r['id'].split(':', 2)[2], 'name': (people[who]['name'] if who else r['name']), 'title': r['name'],
+                    'person': who, 'kind': (r.get('tags') or ['traveller'])[0], 'summary': r.get('what', ''),
+                    'start': r.get('start'), 'end': r.get('end'), 'stops': stops, 'sources': r.get('sources', []),
+                    'status': r.get('status', 'draft'), 'kernel_id': r['id']})
+    return out
+
+
 if __name__ == '__main__':
     repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     out = os.path.join(sys.argv[1], 'atlas-files')

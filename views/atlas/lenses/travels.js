@@ -1,6 +1,6 @@
 // Travellers in motion: history's people and ships moving on the map, and who was really in the same place at once.
 // Data from views/atlas/lenses/travels.py (data/travels/ in the kernel). Three lenses and one tab:
-//   Travellers (Peoples)    famous journeys: the traveller walks, rides or sails between dated stops; the trail behind
+//   Journeys (Peoples)      famous journeys: the traveller walks, rides or sails between dated stops; the trail behind
 //                           them follows the confidence grammar (solid attested, dashed estimated, dots approximate)
 //   VOC ships (Wealth)      every Dutch East India Company ship at sea that year (Dutch-Asiatic Shipping, 8,157 voyages)
 //                           with the people aboard and the people who died on the way
@@ -72,6 +72,44 @@
   }
   // Densify a two-point leg so it draws as a great circle on the flat map.
   const arc = (a, b) => { const n = Math.max(2, Math.ceil(d3.geoDistance(a, b) / 0.05)), f = d3.geoInterpolate(a, b); return Array.from({ length: n + 1 }, (_, i) => f(i / n)); };
+
+  // ---------- paths from the shared motion model (ATLAS.world.route, views/atlas/world/route.js) ----------
+  // A leg starts as a great circle and is routed lazily, one leg per idle moment (an A* can take a few hundred ms),
+  // legs on screen first. The routed path is the model's estimate for that year and month, not the traveller's track.
+  const LANDISH = new Set(["land", "road", "foot", "horse", "caravan"]);
+  const RQ = [], RQset = new Set();
+  let pumping = false, redrawT = 0;
+  const motionOk = () => { const W = window.ATLAS.world; return !!(W && W.route && (!W.motionReady || W.motionReady())); };
+  function routeLeg(g) {
+    if (g.routed || g.tried) return true;
+    if (!motionOk()) return false;
+    g.tried = true;
+    const y = Math.floor(g.t0), m = Math.min(12, Math.floor((g.t0 - y) * 12) + 1);
+    const mode = g.mode === "sea" ? "sea" : g.mode === "air" ? "air" : LANDISH.has(g.mode) ? "land" : undefined;
+    let r = null;
+    try { r = ATLAS.world.route([g.pa[1], g.pa[2]], [g.pb[1], g.pb[2]], { y, m }, mode ? { mode } : {}); } catch (err) { r = null; }
+    if (r && Array.isArray(r.path) && r.path.length > 1) {
+      g.L = line([[g.pa[1], g.pa[2]], ...r.path, [g.pb[1], g.pb[2]]]); g.routed = true; g.days = r.days;
+    }
+    return true;
+  }
+  function wantRoute(g, urgent) {
+    if (g.routed || g.tried || RQset.has(g)) return;
+    RQset.add(g); urgent ? RQ.unshift(g) : RQ.push(g); pump();
+  }
+  function pump() {
+    if (pumping || !RQ.length) return;
+    pumping = true;
+    const idle = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout: 1500 }) : f => setTimeout(f, 60);
+    const step = () => {
+      if (!motionOk()) { setTimeout(step, 2000); return; }
+      const g = RQ.shift(); RQset.delete(g);
+      if (g) routeLeg(g);
+      clearTimeout(redrawT); redrawT = setTimeout(() => { try { if (ATLAS.isOn(ID) || ATLAS.isOn(VOC)) ATLAS.api.redraw(); } catch (err) {} }, 250);
+      if (RQ.length) idle(step); else pumping = false;
+    };
+    idle(step);
+  }
 
   // ---------- the data ----------
   let M = null;
@@ -213,8 +251,8 @@
 
   // ---------- cards ----------
   function legCard(C, j, g) {
-    return { kick: "Travellers · " + j.wn, title: `${g.pa[0]} → ${g.pb[0]}`, year: Math.floor(g.t1), lon: g.pb[1], lat: g.pb[2], line: g.L.pts,
-      meta: `${fmtT(g.t0)} to ${fmtT(g.t1)} · by ${g.mode} · ${CONF[g.conf]}${j.st === "draft" ? " · draft for the judge" : ""}`,
+    return { kick: "Journeys · " + j.wn, title: `${g.pa[0]} → ${g.pb[0]}`, year: Math.floor(g.t1), lon: g.pb[1], lat: g.pb[2], line: g.L.pts,
+      meta: `${fmtT(g.t0)} to ${fmtT(g.t1)} · by ${g.mode} · ${CONF[g.conf]}${j.st === "draft" ? " · draft for the judge" : ""} · ${g.routed ? `path estimated by the motion model${g.days ? ` (about ${Math.round(g.days)} days)` : ""}` : "path drawn straight (route unknown)"}`,
       body: g.note || j.w, why: j.n + ": " + j.w, sources: j.sources };
   }
   function voyCard(C, v) {
@@ -242,6 +280,7 @@
     const t = tNow(ctx.year), trails = [[], [], []], movers = [], stops = [];
     for (const j of followId ? [C.byJ[followId]] : C.J) {
       const w = j && posJ(j, t); if (!w) continue;
+      wantRoute(w.leg, true); const nx = j.legs[w.leg.i + 1]; if (nx) wantRoute(nx, false);
       for (const g of j.legs) {
         if (g.t0 > t) break;
         const done = g.t1 <= t, pts = done ? g.L.pts : upto(g.L, (t - g.t0) / Math.max(1e-3, g.t1 - g.t0));
@@ -259,7 +298,9 @@
     });
     ctx.pins(stops, { key: s => s.j.id + ":s" + s.g.i, shape: "circle", size: 2.6, fade: .8, label: s => followId ? s.g.pb[0] : null,
       title: s => `${s.j.wn} reached ${s.g.pb[0]}, ${fmtT(s.g.t1)}`, card: s => legCard(C, s.j, s.g) });
-    ctx.pins(movers, { key: m => "tr:" + m.j.id, shape: m => m.sprite || "diamond", always: true, hi: m => !!followId, pri: 8,
+    // The living-world simulation (lens "living") draws the same people day by day; don't show them twice.
+    const living = !followId && (() => { try { return ATLAS.isOn("living"); } catch (err) { return false; } })();
+    ctx.pins(living ? [] : movers, { key: m => "tr:" + m.j.id, shape: m => m.sprite || "diamond", always: true, hi: m => !!followId, pri: 8,
       label: m => m.w.moving ? `${m.j.wn} → ${m.w.leg.pb[0]}` : `${m.j.wn} · ${C.P[m.w.at ?? m.w.leg.b][0]}`,
       title: m => `${m.j.wn}, ${fmtT(t)}: ${m.w.moving ? "on the way from " + m.w.leg.pa[0] + " to " + m.w.leg.pb[0] + " by " + m.w.leg.mode : "in " + C.P[m.w.at ?? m.w.leg.b][0]}`,
       card: m => legCard(C, m.j, m.w.leg) });
@@ -288,8 +329,8 @@
       why: w.leg.note || j.w, card: legCard(C, j, w.leg) }));
   }
   ATLAS.lens({
-    id: ID, name: "Travellers", family: "peoples", color: COLOR, on: false, guide: ["people", "geography"],
-    desc: "Famous journeys moving across the map, and who was really where",
+    id: ID, name: "Journeys", family: "peoples", color: COLOR, on: false, guide: ["people", "geography"],
+    desc: "Famous journeys and their trails, with who was really where",
     key: [["sprite", "A traveller where they were this year: walking, riding, with a caravan or aboard ship"],
       ["line", "Their trail: solid = dated by the source, dashed = estimated, dots = route or date uncertain"],
       ["small", "Places they had just reached"]],
@@ -494,8 +535,10 @@
   async function follow(id) {
     const C = prep(), j = C && C.byJ[id]; if (!j || !api) return;
     const my = ++run; followId = id; api.setOn(ID, true); api.clearScene(); renderTab();
+    for (const g of j.legs) wantRoute(g, false);
     for (const g of j.legs) {
       if (my !== run) return;
+      routeLeg(g);
       api.fly(viewOf(g), 900);
       const ms = reduce() ? 0 : Math.min(3200, 900 + 2400 * Math.sqrt(g.L.len / Math.PI)), t0 = performance.now();
       await new Promise(done => {
@@ -510,7 +553,7 @@
         requestAnimationFrame(tick);
       });
       if (my !== run) return;
-      api.scene({ lens: "Travellers", title: `${j.wn} · ${g.pb[0]}, ${fmtT(g.t1)}${g.note ? ". " + g.note : ""}`.slice(0, 220) });
+      api.scene({ lens: "Journeys", title: `${j.wn} · ${g.pb[0]}, ${fmtT(g.t1)}${g.note ? ". " + g.note : ""}`.slice(0, 220) });
       await wait(reduce() ? 900 : g.note ? 2600 : 1100);
     }
     if (my === run) { await wait(1500); stopFollow(false); }

@@ -2,7 +2,7 @@
 
 Owner: the "Set history's travellers in motion" workstream (L0 movement data in views/atlas/WORLD.md). Shapes are schema
 v0.5: relation `present_at`, route subtype `journey` with `legs`, and the `conf` class (`attested`, `estimated`,
-`approximate`, `unknown`). Consumers: the Travellers, VOC ships and Middle Passage lenses and the Who was there tab
+`approximate`, `unknown`). Consumers: the Journeys, VOC ships and Middle Passage lenses and the Who was there tab
 (views/atlas/lenses/travels.*), and through `ATLAS.travel` the living-world simulation, the life RPG and objects.
 
 | File | What | Built by |
@@ -35,3 +35,8 @@ python3 tools/build.py
 
 `fetch_wikidata.py` takes every person in the kernel, so rerun it (and `presences.py`) when the coverage thread adds
 people. Next: route legs with unknown paths through `ATLAS.world.route` once views/atlas/world/route.js is on main.
+
+One journey dataset: the living-world simulation reads these journeys through `views/atlas/lenses/travels.py`
+`journeys_as_stops(repo)` (its stop format), and the page through `ATLAS.travel.journey(id).legs[].path`. On the page each
+leg is routed lazily through `ATLAS.world.route` (land, sea or air by leg mode) once the motion model is ready; until
+then, or if routing fails, the leg is drawn straight.

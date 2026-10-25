@@ -22,7 +22,7 @@ Pick the one your lens belongs to:
 | `land`    | Terrain, Cities, Borders                                     |
 | `power`   | Rule & law, War & chokepoints, Order & chaos                 |
 | `wealth`  | Trade & migration, Technology, food & energy, Object journeys, VOC ships |
-| `peoples` | People, Peoples & languages, Travellers, Middle Passage      |
+| `peoples` | People, Peoples & languages, Journeys, Middle Passage        |
 | `mind`    | Ideas & faith, Art & architecture                            |
 | `shocks`  | Plague & climate, Epidemics, Eruptions, famine & cold          |
 

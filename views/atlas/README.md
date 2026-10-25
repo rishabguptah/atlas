@@ -76,7 +76,7 @@ python3 views/atlas/lenses/e19.py pub          # writes pub/atlas-files/e19-deep
 
 ## Travellers in motion
 
-Lenses Travellers and Middle Passage (Peoples) and VOC ships (Wealth), and the Who was there tab: famous journeys move
+Lenses Journeys and Middle Passage (Peoples) and VOC ships (Wealth), and the Who was there tab: famous journeys move
 along dated legs, every Dutch East India Company ship at sea, the forced crossing of enslaved Africans with the human
 toll, and real co-presence (who was in Vienna in 1913). Data: `data/travels/`. Presences and the slave voyages load
 only when needed, from a sidecar to publish beside the page:
