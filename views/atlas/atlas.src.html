@@ -2694,7 +2694,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k];
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
-  syncChips();
+  syncChips(); drawStrip();
   // ---------- phone: the panel is a bottom sheet over a full-screen map ----------
   // Three heights: peek (tabs only), half, full. Drag the handle or the tabs; tap the handle to step up; picking
   // something on the map, or a tab, opens it to half so the answer shows without covering the whole map.
