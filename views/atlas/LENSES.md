@@ -133,6 +133,8 @@ when your marks change without a year change (a month cursor). `lenses/e19.js` i
 - Records with `date` / `end_date` (ISO, as precise as the source) in their own workstream folder.
 - A `<id>.py` whose `build(repo)` returns `region: {id, name, start, end, view}`, the dated rows, and storylines;
   heavy parts (railway stations, lives) go in a sidecar file written by `python3 views/atlas/lenses/<id>.py OUT_DIR`
-  to `OUT_DIR/deep/<id>.json`, published beside the page and fetched only when a lens needs it.
+  to `OUT_DIR/atlas-files/<id>-deep.json`, published beside the page and fetched only when a lens needs it.
+- The `.js` registers its lenses and tab at once and builds from `LENS_DATA.<id>` lazily (`ok()` in `e19.js`): big
+  lens data arrives after the first paint, so every draw, row and tab render must cope with it not being there yet.
 - A month cursor shared on `ATLAS.<id>.m` (year * 12 + month - 1). Lenses use it while the page's year is that
   month's year and fall back to the whole year when the main slider moves. An `ATLAS.tab` holds the scrubber.

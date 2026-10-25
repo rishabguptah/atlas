@@ -1,7 +1,8 @@
 # Europe 1789-1914 up close: the first deep-zoom region of the one-page Atlas (data/europe-19c/).
-# build(repo) is the inline part: the dated chronicle (events to the day), the study storylines, provinces and city
-# growth. sidecar(repo) is the heavy part the page fetches when it needs it: railway stations and track, and lives.
-#   python3 views/atlas/lenses/e19.py OUT_DIR    writes OUT_DIR/deep/e19.json, to publish beside the page.
+# build(repo) is LENS_DATA.e19: the dated chronicle (events to the day), the study storylines, provinces and city
+# growth. Over 40 KB, so the page build puts it in atlas-files/lens-e19.json, loaded after the first paint.
+# sidecar(repo) is the heavy part the page fetches only when a lens needs it: railway stations and track, and lives.
+#   python3 views/atlas/lenses/e19.py OUT_DIR    writes OUT_DIR/atlas-files/e19-deep.json, to publish beside the page.
 import json, os, re, sys
 
 BOX = (-25, 34, 50, 72)
@@ -109,7 +110,8 @@ def sidecar(repo):
 
 if __name__ == '__main__':
     repo = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-    out = os.path.join(sys.argv[1], 'deep')
+    out = os.path.join(sys.argv[1], 'atlas-files')
     os.makedirs(out, exist_ok=True)
-    json.dump(sidecar(repo), open(os.path.join(out, 'e19.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
-    print(os.path.join(out, 'e19.json'), os.path.getsize(os.path.join(out, 'e19.json')))
+    f = os.path.join(out, 'e19-deep.json')
+    json.dump(sidecar(repo), open(f, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+    print(f, os.path.getsize(f))

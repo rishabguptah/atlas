@@ -1,12 +1,27 @@
 // Europe 1789-1914 up close: the first deep-zoom region. Time runs by the month here, not the year.
 // Five precise lenses (Chronicle, Railways, Provinces, Growing cities, Lives) and an "Up close" tab with a month
 // scrubber, the ten study storylines and what is happening this month. Data: views/atlas/lenses/e19.py
-// (inline: chronicle, storylines, provinces, cities) and deep/e19.json beside the page (railways, lives).
+// (chronicle, storylines, provinces, cities: LENS_DATA.e19, which the page may load after the first paint) and
+// atlas-files/e19-deep.json beside the page (railways, lives), fetched when a lens or the tab needs it.
 // Other deep regions can reuse this file's pattern: a region block, dated rows, a month cursor shared on ATLAS.e19.
 (function () {
-  const D = typeof LENS_DATA !== "undefined" && LENS_DATA.e19;
-  if (!D || !D.events || !D.events.length) return;
-  const R = D.region, M0 = R.start * 12, M1 = R.end * 12 + 11;
+  // The region's frame is fixed here so the lenses and the tab can register before their data has arrived.
+  const R = { id: "europe-1789-1914", name: "Europe 1789–1914", start: 1789, end: 1914, view: { lon: 14, lat: 50, span: 34 } }, M0 = R.start * 12, M1 = R.end * 12 + 11;
+  // D and everything built from it are filled by prep() once LENS_DATA.e19 is there; until then every lens draws nothing.
+  let D = null, EV = [], LONG = [], PROV = [], CITY = [];
+  function prep() {
+    const d = typeof LENS_DATA !== "undefined" && LENS_DATA.e19;
+    if (!d || !d.events || !d.events.length) return false;
+    D = d;
+    EV = D.events.map(([d, e, f, s, n, lon, lat, q, w, st, part], i) => ({
+      i, d, e, f, s, n, lon, lat, q, w, st, part, m: mOf(d), me: e ? mOf(e) : null, prec: d.length >= 10 ? "d" : d.length >= 7 ? "m" : "y", t: D.text[i] || {},
+      pri: (st >= 0 ? 1000 : 0) + w }));
+    LONG = EV.filter(e => e.me != null && e.me > e.m && (e.f === "w" && (e.s === "war" || e.s === "campaign") || e.s === "revolution" || e.s === "revolt" || e.s === "epidemic" || e.s === "famine"));
+    PROV = D.provinces.map(([n, lon, lat, s, e, kind, of, w, q], i) => ({ i, n, lon, lat, s, e, kind, of, w, q }));
+    CITY = D.cities.map(([n, lon, lat, src, pts], i) => ({ i, n, lon, lat, src, pts }));
+    return true;
+  }
+  const ok = () => !!D || prep();
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const BOX = [-25, 34, 50, 72];
@@ -31,14 +46,10 @@
     mutiny: "Mutiny", riot: "Riot", protest: "Protest", strike: "Strike", massacre: "Massacre", pogrom: "Pogrom", assassination: "Assassination", treaty: "Treaty",
     congress: "Congress", independence: "Independence", referendum: "Referendum", coronation: "Coronation", exhibition: "Exhibition", epidemic: "Epidemic",
     famine: "Famine", earthquake: "Earthquake", fire: "Fire", shipwreck: "Shipwreck", disaster: "Disaster", event: "Turning point" };
-  const EV = D.events.map(([d, e, f, s, n, lon, lat, q, w, st, part], i) => ({
-    i, d, e, f, s, n, lon, lat, q, w, st, part, m: mOf(d), me: e ? mOf(e) : null, prec: d.length >= 10 ? "d" : d.length >= 7 ? "m" : "y", t: D.text[i] || {},
-    pri: (st >= 0 ? 1000 : 0) + w }));
   // Sorted by month already (e19.py sorts by date); binary search for a month range.
   const firstAt = m => { let lo = 0, hi = EV.length; while (lo < hi) { const k = (lo + hi) >> 1; if (EV[k].m < m) lo = k + 1; else hi = k; } return lo; };
   const between = (a, b) => { const out = []; for (let i = firstAt(a); i < EV.length && EV[i].m <= b; i++) out.push(EV[i]); return out; };
   // Wars and long events in progress at month m (started before, not yet ended).
-  const LONG = EV.filter(e => e.me != null && e.me > e.m && (e.f === "w" && (e.s === "war" || e.s === "campaign") || e.s === "revolution" || e.s === "revolt" || e.s === "epidemic" || e.s === "famine"));
   const ongoing = m => LONG.filter(e => e.m <= m && e.me >= m).sort((a, b) => b.pri - a.pri);
   const wd = q => q ? { cite: `Wikidata Q${q} (CC0)`, url: `https://www.wikidata.org/wiki/Q${q}` } : null;
   function evCard(e) {
@@ -52,7 +63,7 @@
 
   // ---------- sidecar: railways and lives, fetched beside the page ----------
   function side() {
-    if (!ES.side) ES.side = fetch("deep/e19.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(j => {
+    if (!ES.side) ES.side = fetch("atlas-files/e19-deep.json").then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(j => {
       const st = j.rail.stations.map(([lon, lat, d, n, q], i) => ({ i, lon, lat, d, n, q, m: mOf(d), y: +d.slice(0, 4) }));
       const km = (a, b) => d3.geoDistance([a.lon, a.lat], [b.lon, b.lat]) * 6371;
       const edges = j.rail.edges.map(([a, b]) => ({ a: st[a], b: st[b], m: Math.max(st[a].m, st[b].m), km: km(st[a], st[b]) })).sort((x, y) => x.m - y.m);
@@ -131,7 +142,7 @@
   const famOn = { w: true, d: true, u: true, x: true, c: true };
   function visibleEvents(ctx) {
     const c = cursor(ctx.year);
-    if (Math.floor(c.m / 12) < R.start || Math.floor(c.m / 12) > R.end) return { c, list: [] };
+    if (!ok() || Math.floor(c.m / 12) < R.start || Math.floor(c.m / 12) > R.end) return { c, list: [] };
     const list = between(c.month ? c.m - 3 : c.m, c.month ? c.m : c.m + 11).filter(e => inWin(e, c) && famOn[e.f]);
     // The step the Up close tab just went to always shows, whatever the cap.
     const f = ES.focus != null ? EV[ES.focus] : null;
@@ -144,7 +155,7 @@
   ATLAS.lens({
     id: "e19", name: "Chronicle 1789–1914", family: "power", color: "#b8442c", on: false,
     guide: ["military", "order", "law"],
-    index: () => "Europe 1789-1914 study storylines (dated steps): " + D.stories.map(s => `${s.title}: ` + s.steps.map(i => `${EV[i].d} ${EV[i].n}`).join("; ")).join(" | "),
+    index: () => !ok() ? "" : "Europe 1789-1914 study storylines (dated steps): " + D.stories.map(s => `${s.title}: ` + s.steps.map(i => `${EV[i].d} ${EV[i].n}`).join("; ")).join(" | "),
     draw(ctx) {
       const { c, list } = visibleEvents(ctx);
       for (const f in FAM) {
@@ -156,18 +167,19 @@
       }
     },
     here(ctx, at) {
+      if (!ok()) return [];
       const c = cursor(ctx.year);
       const near = ctx.near(between(c.m - 60, c.m + 60), { ...at, r: Math.max(at.r || 300, 200) });
       return near.sort((a, b) => Math.abs(a.m - c.m) - Math.abs(b.m - c.m) || b.pri - a.pri).slice(0, 8).map(e => evRow(e, c));
     },
     now(ctx) {
       const c = cursor(ctx.year), y = Math.floor(c.m / 12);
-      if (y < R.start || y > R.end) return [];
+      if (!ok() || y < R.start || y > R.end) return [];
       const list = between(c.month ? c.m : y * 12, c.month ? c.m : y * 12 + 11).sort((a, b) => b.pri - a.pri).slice(0, 6).map(e => evRow(e));
       const on = ongoing(c.m).slice(0, 2).map(e => ({ title: `Ongoing: ${e.n}`, year: `${fmtDate(e.d)}–${fmtDate(e.e)}`, why: SUB[e.s], card: evCard(e) }));
       return [...list, ...on];
     },
-    strip: () => EV.filter(e => e.st >= 0).map(e => Math.floor(e.m / 12)),
+    strip: () => !ok() ? [] : EV.filter(e => e.st >= 0).map(e => Math.floor(e.m / 12)),
   });
 
   // ---------- lens: Railways ----------
@@ -236,14 +248,13 @@
   });
 
   // ---------- lens: Provinces ----------
-  const PROV = D.provinces.map(([n, lon, lat, s, e, kind, of, w, q], i) => ({ i, n, lon, lat, s, e, kind, of, w, q }));
   const provName = p => p._n || (p._n = p.n.replace(/ (Governorate|Province|County|Vilayet|Department|Sanjak|Canton|District)$/i, "").replace(/^(Province|Governorate|County|Canton|Department|Vilayet|Sanjak) of /, "").replace(/ \(.*\)$/, ""));
   const provAlive = (p, y) => (p.s == null || p.s <= y) && (p.e == null || p.e >= y);
   ATLAS.lens({
     id: "e19prov", name: "Provinces 1789–1914", family: "land", color: "#6b5b3e", on: false,
     draw(ctx) {
       const y = ctx.year;
-      if (y < R.start || y > R.end || ctx.k < 2.4) { ctx.pins([], {}); return; }
+      if (!ok() || y < R.start || y > R.end || ctx.k < 2.4) { ctx.pins([], {}); return; }
       // Province names appear as you zoom: the best-known first, all of them from about 5x.
       // Greedy declutter in screen space: best-known first, skip any name that would overlap one already placed.
       const k = ctx.k, boxes = [], list = [];
@@ -262,14 +273,13 @@
     },
     here(ctx, at) {
       const y = ctx.year;
-      if (y < R.start || y > R.end) return [];
+      if (!ok() || y < R.start || y > R.end) return [];
       const p = ctx.near(PROV.filter(p => provAlive(p, y)), { ...at, r: 150 })[0];
       return p ? [{ title: p.n, year: p.s ? `from ${p.s}` : "", why: `${p.kind} of ${p.of}`, card: { kick: `Province · ${p.kind} of ${p.of}`, title: p.n, lon: p.lon, lat: p.lat, sources: [wd(p.q)] } }] : [];
     },
   });
 
   // ---------- lens: Growing cities ----------
-  const CITY = D.cities.map(([n, lon, lat, src, pts], i) => ({ i, n, lon, lat, src, pts }));
   // Population at year y, growing geometrically between known points; null outside the series.
   const popAt = (c, y) => {
     const p = c.pts; if (y < p[0][0] || y > p[p.length - 1][0] + 5) return null;
@@ -290,7 +300,7 @@
     guide: ["population", "economy"],
     draw(ctx) {
       const y = ctx.year;
-      if (y < R.start - 39 || y > R.end) { ctx.pins([], {}); return; }
+      if (!ok() || y < R.start - 39 || y > R.end) { ctx.pins([], {}); return; }
       const list = CITY.map(c => ({ c, v: popAt(c, y), g: growth(c, y) })).filter(o => o.v).sort((a, b) => b.v - a.v).slice(0, Math.round(40 * Math.max(1, ctx.k)));
       ctx.pins(list.map(o => ({ ...o, lon: o.c.lon, lat: o.c.lat, id: o.c.i })), { key: o => o.c.i,
         label: o => o.v > 400000 || ctx.k >= 5 ? o.c.n : null, title: o => `${o.c.n} · about ${fmtN(o.v)}${o.g ? ` · ${o.g.toFixed(1)}× in 50 years` : ""}`, card: o => cityCard(o.c, y),
@@ -298,11 +308,12 @@
     },
     here(ctx, at) {
       const y = ctx.year;
+      if (!ok()) return [];
       return ctx.near(CITY.filter(c => popAt(c, y)), { ...at, r: 120 }).slice(0, 3).map(c => ({ title: `${c.n}: about ${fmtN(popAt(c, y))}`, year: y, why: (cityCard(c, y).why || ""), card: cityCard(c, y) }));
     },
     now(ctx) {
       const y = ctx.year;
-      if (y < R.start || y > R.end) return [];
+      if (!ok() || y < R.start || y > R.end) return [];
       const g = CITY.map(c => ({ c, g: growth(c, y), v: popAt(c, y) })).filter(o => o.g && o.v > 50000).sort((a, b) => b.g - a.g).slice(0, 3);
       return g.map(o => ({ title: `${o.c.n} boom: ${o.g.toFixed(1)}× in 50 years`, year: y, why: `about ${fmtN(o.v)} people`, card: cityCard(o.c, y) }));
     },
@@ -354,6 +365,7 @@
   const SPR = { epidemic: "event_plague", famine: "event_famine", earthquake: "event_earthquake", fire: "event_fire", shipwreck: "ship_steamer", disaster: "event_flood" };
   (ATLAS.pixelSprites || (ATLAS.pixelSprites = [])).push((y, k) => {
     const out = [], on = window.ATLAS.isOn;
+    if (!ok()) return out;
     if (on && on("e19")) {
       const { c, list } = visibleEvents({ year: y, k });
       for (const e of list.slice(0, Math.round(10 * k))) {
@@ -404,6 +416,8 @@
   }
   function render() {
     const el = T.el; if (!el || el.hidden) return;
+    // The chronicle may still be loading beside the page: say so and look again shortly.
+    if (!ok()) { el.innerHTML = `<div class="uc"><h2>${esc(R.name)} up close</h2><p class="empty">Loading the chronicle…</p></div>`; clearTimeout(T.wait); T.wait = setTimeout(() => renderSoon(), 300); return; }
     const m = ES.m ?? M0, c = { m, month: true }, y = Math.floor(m / 12), S = D.stories[T.story];
     const thisMonth = between(m, m).sort((a, b) => a.d.localeCompare(b.d) || b.pri - a.pri);
     const ong = ongoing(m).slice(0, 6);
@@ -437,7 +451,7 @@
       ${lives.length ? `<h3>Born and died this month</h3><div>${lives.map(o => `<div class="row" style="cursor:default"><span class="d">${esc(fmtDate(o.k === "b" ? o.p.bd : o.p.dd).replace(/ \d{4}$/, ""))}</span><span>${o.k === "b" ? "▲" : "†"} ${esc(o.p.n)}<small>${esc(o.p.role.replace(/_/g, " "))}${o.k === "b" && o.p.bp ? ", " + esc(o.p.bp) : o.k === "d" && o.p.dp ? ", " + esc(o.p.dp) : ""}</small></span></div>`).join("")}</div>` : ""}
       <h3>The year in numbers</h3>
       <div class="stats">${rail}${cityStat}</div>
-      <p class="note">${ES.data ? esc(ES.data.rnote) : ES.sideErr ? "Railways and lives could not load (deep/e19.json is not beside this page)." : "Loading railways and lives…"}</p>
+      <p class="note">${ES.data ? esc(ES.data.rnote) : ES.sideErr ? "Railways and lives could not load (atlas-files/e19-deep.json is not beside this page)." : "Loading railways and lives…"}</p>
       <p class="note">Sources: ${esc(D.events.length.toLocaleString())} dated events from Wikidata (CC0) with day, month or year precision; storyline text written from the Wikipedia article named on each step (draft, waiting for the judge); provinces from Wikidata, named at their centre; cities from Wikidata census years and Reba et al. 2016; lives from Pantheon.</p>
     </div>`;
   }
@@ -453,6 +467,7 @@
         if (b.dataset.a) { stop(); return setMonth((ES.m ?? M0) + +b.dataset.a, { now: true }); }
         if (b.dataset.speed) { T.speed = +b.dataset.speed; return renderSoon(true); }
         if (b.dataset.lens) { api.setOn(b.dataset.lens, !ATLAS.isOn(b.dataset.lens)); pixelRefresh(); return renderSoon(true); }
+        if (!ok()) return;
         if (b.dataset.story) { T.story = +b.dataset.story; const s = D.stories[T.story]; stop(); return go(EV[s.steps[0]]); }
         if (b.dataset.ev) return go(EV[+b.dataset.ev]);
       });
