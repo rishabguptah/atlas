@@ -531,7 +531,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
       ${notes.length ? `<p class="sub">${notes.map(s => `<b>${esc(s.n)}:</b> ${esc(s.why)}`).join(" ")}</p>` : ""}
       ${isReal && next && next.took ? `<p class="sub"><b>The record:</b> ${esc(next.took)}</p>` : ""}
       ${g.planning ? `<p class="sub">Looking for other ways to go…</p>` : ""}<button class="go" data-a="setout">Set out</button>
-      <p class="src">Routes run on a half-degree terrain grid with ${esc(fy(g.ty))}'s ways of travel, ports, canals and seasons. Speeds: ${esc(rules.modes.filter(m => modesFor(g.ty).includes(m)).map(m => `${m.n.toLowerCase()} ${m.kmd} km/day`).join(", "))}.</p></div>`;
+      <p class="src">Routes run on a half-degree terrain grid with ${esc(fy(g.ty))}'s ways of travel, ports, canals and seasons. Speeds: ${esc(modesFor(g.ty).map(m => `${m.n.toLowerCase()} ${Math.round(m.kmd)} km/day`).join(", "))}.</p></div>`;
   }
   function arrivedView(g, life) {
     const tr = g.trip, next = life ? life.chapters[g.i + 1] : null;

@@ -91,14 +91,44 @@
    "src": [
     {
      "cite": "Bowen, The Business of Empire (2006): East India Company ships took about five to six months from England to India around the Cape"
+    },
+    {
+     "cite": "Lubbock, The China Clippers (1914); Kaukiainen (2001) on sailing-ship passage times"
     }
-   ]
+   ],
+   "kmd_by": [
+    [
+     1450,
+     110
+    ],
+    [
+     1700,
+     120
+    ],
+    [
+     1800,
+     140
+    ],
+    [
+     1840,
+     180
+    ],
+    [
+     1855,
+     240
+    ],
+    [
+     1880,
+     250
+    ]
+   ],
+   "kmd_why": "Square-riggers got faster with copper sheathing, better charts and, from the 1840s, the clippers: Flying Cloud ran New York to San Francisco in 89 days in 1851 and tea clippers raced Fuzhou to London in about 90 to 100."
   },
   {
    "id": "steam",
    "n": "Steamship",
    "medium": "sea",
-   "from": 1840,
+   "from": 1838,
    "to": null,
    "kmd": 380,
    "cost": 3,
@@ -106,8 +136,96 @@
    "src": [
     {
      "cite": "Headrick, The Tentacles of Progress (1988): by the 1870s steamers via Suez reached Bombay from London in about a month"
+    },
+    {
+     "cite": "Fox, Transatlantic: Samuel Cunard, Isambard Brunel, and the Great Atlantic Steamships (2003)"
+    },
+    {
+     "cite": "Kaukiainen, Shrinking the world: improvements in the speed of information transmission, c. 1820-1870, European Review of Economic History 5 (2001)"
     }
-   ]
+   ],
+   "kmd_by": [
+    [
+     1838,
+     330
+    ],
+    [
+     1860,
+     420
+    ],
+    [
+     1880,
+     520
+    ],
+    [
+     1900,
+     640
+    ],
+    [
+     1914,
+     720
+    ],
+    [
+     1950,
+     800
+    ]
+   ],
+   "kmd_why": "Average over a voyage, coaling stops included, for mail and passenger steamers: Great Western made Bristol to New York in 15 days in 1838 (about 390 km a day); liners of the 1870s crossed in 9 to 10 days; by 1910 most took 6 to 7 (the record-holding Mauretania 4.5). Tramps and long eastern routes with coaling were slower, so the curve sits below the express records."
+  },
+  {
+   "id": "coach",
+   "n": "By stagecoach",
+   "medium": "land",
+   "from": 1750,
+   "to": 1900,
+   "kmd": 200,
+   "kmd_by": [
+    [
+     1750,
+     70
+    ],
+    [
+     1784,
+     200
+    ],
+    [
+     1830,
+     330
+    ]
+   ],
+   "cost": 4,
+   "sprite": "caravan_wagon",
+   "regions": [
+    {
+     "n": "Britain's turnpikes",
+     "box": [
+      -6,
+      50,
+      2,
+      58.5
+     ],
+     "from": 1750
+    },
+    {
+     "n": "France, the Low Countries and western Germany",
+     "box": [
+      -5,
+      43,
+      15,
+      55
+     ],
+     "from": 1780
+    }
+   ],
+   "src": [
+    {
+     "cite": "Bogart, Turnpike trusts and the transportation revolution in 18th-century England, Explorations in Economic History 42 (2005)"
+    },
+    {
+     "cite": "Gerhold, Carriers and Coachmasters (2005): London to Edinburgh fell from about ten days in the 1750s to under two by the 1830s"
+    }
+   ],
+   "why": "Turnpikes and Palmer's mail coaches (1784) ran day and night with fresh horses at every stage."
   },
   {
    "id": "rail",
@@ -123,7 +241,30 @@
     {
      "cite": "Wolmar, Blood, Iron and Gold: How the Railways Transformed the World (2009); opening years per region in rail_regions"
     }
-   ]
+   ],
+   "kmd_by": [
+    [
+     1830,
+     350
+    ],
+    [
+     1850,
+     550
+    ],
+    [
+     1870,
+     750
+    ],
+    [
+     1900,
+     1000
+    ],
+    [
+     1950,
+     1200
+    ]
+   ],
+   "kmd_why": "Per day of through travel, changes and waits included: the first transcontinental trains (1869-70) took about a week from New York to San Francisco, the 1876 Transcontinental Express 83 hours; by 1913 the Trans-Siberian ran Moscow to Vladivostok in about nine and a half days."
   },
   {
    "id": "motor",
@@ -288,6 +429,24 @@
    {
     "cite": "Relative speeds are the game's own rough weights, in the spirit of ORBIS's terrain costs and Naismith's rule (W. W. Naismith, 1892: an extra hour for every 600 m climbed); deserts are slow on foot and fine by camel (Bulliet 1975)"
    }
+  ],
+  "coach": [
+   0,
+   0,
+   0,
+   0,
+   0.4,
+   0.6,
+   1,
+   0.4,
+   1,
+   1,
+   0.3,
+   0.4,
+   0.4,
+   0.8,
+   0.5,
+   0.2
   ]
  },
  "seasons": [
@@ -591,6 +750,107 @@
    "src": [
     {
      "cite": "Gommans, Mughal Warfare (2002): campaigning seasons and the monsoon"
+    }
+   ]
+  },
+  {
+   "id": "atlantic_westerlies",
+   "n": "North Atlantic westerlies",
+   "box": [
+    -75,
+    35,
+    -8,
+    62
+   ],
+   "medium": "sea",
+   "months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "heading": "east",
+   "before": 1880,
+   "x": 1.3,
+   "against": 0.75,
+   "why": "Prevailing westerlies made the run east from New York to Liverpool much quicker than the beat west: packet ships took about 23 days eastbound and 40 westbound in the 1820s.",
+   "src": [
+    {
+     "cite": "Albion, Square-Riggers on Schedule: The New York Sailing Packets (1938)"
+    }
+   ]
+  },
+  {
+   "id": "trade_winds",
+   "n": "North-east trade winds",
+   "box": [
+    -70,
+    10,
+    -15,
+    30
+   ],
+   "medium": "sea",
+   "months": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ],
+   "heading": "west",
+   "before": 1880,
+   "x": 1.3,
+   "against": 0.8,
+   "why": "The trade winds blow steadily from the north-east across the tropical Atlantic: Columbus rode them from the Canaries to the Bahamas in 36 days, and ships went home by the westerlies further north.",
+   "src": [
+    {
+     "cite": "Fernandez-Armesto, Pathfinders (2006)"
+    }
+   ]
+  },
+  {
+   "id": "etesians",
+   "n": "The etesian winds",
+   "box": [
+    10,
+    30,
+    36,
+    42
+   ],
+   "medium": "sea",
+   "months": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "heading": "south",
+   "before": 1870,
+   "x": 1.5,
+   "against": 0.6,
+   "why": "All summer the etesians blow from the north over the Aegean and the eastern Mediterranean: the grain ships ran from Italy to Alexandria in a week or two and beat back for a month or more.",
+   "src": [
+    {
+     "cite": "Casson, Ships and Seamanship in the Ancient World (1971), ch. 12"
+    },
+    {
+     "cite": "Pliny the Elder, Natural History 19.3-4"
     }
    ]
   }
