@@ -251,5 +251,18 @@
     };
   }
   PixelMarks.ICON = ICON;
+  // A small picture of one mark for the map key: {kind, shape?, size?, line?: true, arrow?}, a CSS colour -> data URL.
+  const swatches = new Map();
+  PixelMarks.swatch = (rec, color, w = 11, h = 8) => {
+    const key = JSON.stringify(rec) + color;
+    if (swatches.has(key)) return swatches.get(key);
+    const mk = PixelMarks(null, p => p), out = new Uint32Array(w * h);
+    mk.set(rec.line ? { lines: [{ polys: [[[1, h - 3], [w - 2, 2]]], kind: rec.kind, color, arrow: rec.arrow }] }
+      : { points: [{ lon: w >> 1, lat: h >> 1, kind: rec.kind, shape: rec.shape, size: rec.size || 0, color }] });
+    mk.paint({ out, w, h, px: 2, frame: 0, sprite: new Uint8Array(w * h), at: (x, y) => [x, y] });
+    const c = document.createElement("canvas"); c.width = w; c.height = h;
+    const img = c.getContext("2d").createImageData(w, h); new Uint32Array(img.data.buffer).set(out); c.getContext("2d").putImageData(img, 0, 0);
+    const url = c.toDataURL(); swatches.set(key, url); return url;
+  };
   global.PixelMarks = PixelMarks;
 })(typeof window !== "undefined" ? window : globalThis);

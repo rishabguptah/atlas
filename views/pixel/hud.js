@@ -12,10 +12,10 @@
 .pxhud canvas { image-rendering: pixelated; display: block; }
 .pxhud .hit { pointer-events: auto; cursor: pointer; }
 .pxhud-br { right: 10px; bottom: 10px; display: grid; justify-items: end; gap: 6px; }
-.pxhud-tr { right: 10px; top: 10px; }
+.pxhud .row { display: flex; align-items: flex-end; gap: 6px; }
 .pxhud .scale { display: grid; justify-items: start; gap: 2px; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; text-shadow: 1px 1px 0 #221f1a, -1px 1px 0 #221f1a, 1px -1px 0 #221f1a, -1px -1px 0 #221f1a; }
 .pxhud .mini[hidden] { display: none; }
-@media (max-width: 640px) { .pxhud .mini { display: none; } .pxhud-tr { transform: scale(.67); transform-origin: top right; } }
+@media (max-width: 640px) { .pxhud .mini { display: none; } .pxhud .compass { width: 38px !important; height: 50px !important; } }
 `;
   // Compass rose, 15 x 15: k ink, w paper, r red needle, g gold, d shade.
   const ROSE = [
@@ -30,15 +30,16 @@
   function PixelHUD(mapEl, projection, opts = {}) {
     const PX = opts.px || 3, PAL = opts.palette || global.PIXEL_PALETTE;
     if (!document.getElementById("pxhud-style")) { const st = document.createElement("style"); st.id = "pxhud-style"; st.textContent = STYLE; document.head.appendChild(st); }
-    const br = document.createElement("div"), tr = document.createElement("div");
-    br.className = "pxhud pxhud-br"; tr.className = "pxhud pxhud-tr";
+    // Bottom right, out of the way of the year plate (top left), the map controls (top right) and the caption (bottom left).
+    const br = document.createElement("div"), row = document.createElement("div");
+    br.className = "pxhud pxhud-br"; row.className = "row";
     // Right after the SVG, so the guide's caption and other map chrome stay on top of the HUD.
     const svg = mapEl.querySelector(":scope > svg");
-    if (svg) svg.after(tr, br); else mapEl.append(tr, br);
+    if (svg) svg.after(br); else mapEl.append(br);
 
     // ---------- compass: click for the whole world ----------
     const cc = document.createElement("canvas"), cw = 19, ch = 25;
-    cc.width = cw; cc.height = ch; cc.className = "hit"; Object.assign(cc.style, { width: cw * PX + "px", height: ch * PX + "px" });
+    cc.width = cw; cc.height = ch; cc.className = "hit compass"; Object.assign(cc.style, { width: cw * PX + "px", height: ch * PX + "px" });
     cc.title = "North is up. Click for the whole world"; cc.setAttribute("role", "button"); cc.setAttribute("aria-label", "Compass: show the whole world"); cc.tabIndex = 0;
     {
       const x = cc.getContext("2d");
@@ -52,7 +53,6 @@
     const world = () => opts.fly && opts.fly({ lon: 10, lat: 20, zoom: 1 });
     cc.addEventListener("click", world);
     cc.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); world(); } });
-    tr.append(cc);
 
     // ---------- minimap ----------
     const MW = 66, MH = 36;
@@ -126,7 +126,8 @@
     const scale = document.createElement("div"); scale.className = "scale";
     const sb = document.createElement("canvas"), sl = document.createElement("span");
     scale.append(sb, sl);
-    br.append(mini, scale);
+    row.append(cc, mini);
+    br.append(row, scale);
     const NICE = [1, 2, 5];
     function drawScale() {
       // Kilometres across 100 screen px at the middle of the view (NaturalEarth1 stretches toward the poles).
@@ -161,7 +162,7 @@
           drawScale();
         });
       },
-      remove() { cancelAnimationFrame(raf); br.remove(); tr.remove(); },
+      remove() { cancelAnimationFrame(raf); br.remove(); },
     };
   }
   global.PixelHUD = PixelHUD;

@@ -1969,7 +1969,8 @@ Where the specialists disagree, say who the evidence favours.`;
       const rows = MEMBERS[f.id].filter(k => isOn(k) && k !== "terrain" && k !== "political").flatMap(k => {
         const d = PLUG.find(x => x.id === k);
         const rs = KEY[k] || (d ? (Array.isArray(d.key) ? d.key : [["dot", d.desc || d.name || k]]) : []);
-        return rs.map(([g, t]) => `<div class="kr" style="--c:${COLOR(k)}"><svg viewBox="0 0 22 16" aria-hidden="true">${G_[g] || G_.dot}</svg><span>${d && !KEY[k] && !Array.isArray(d.key) ? "<b>" + esc(d.name) + "</b> " : ""}${esc(t)}</span></div>`);
+        // A basemap that paints marks itself (the pixel map) can draw the key's glyphs in the same style.
+        return rs.map(([g, t]) => `<div class="kr" style="--c:${COLOR(k)}">${(ATLAS.keyGlyph && ATLAS.keyGlyph(g, k, COLOR(k))) || `<svg viewBox="0 0 22 16" aria-hidden="true">${G_[g] || G_.dot}</svg>`}<span>${d && !KEY[k] && !Array.isArray(d.key) ? "<b>" + esc(d.name) + "</b> " : ""}${esc(t)}</span></div>`);
       });
       return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${esc(f.n)}</b>${rows.join("")}</div>` : "";
     }).join("");

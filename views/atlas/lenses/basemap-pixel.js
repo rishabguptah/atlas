@@ -118,6 +118,16 @@
     watch.observe(svgEl(), { subtree: true, childList: true, attributes: true, attributeFilter: ["class", "style", "d", "r"] });
   }
 
+  // The map key shows the same pixel marks the map draws (null keeps the page's own glyph).
+  const KEY_MARK = { dot: { kind: "city" }, small: { kind: "person" }, line: { kind: "trade", line: true }, arrow: { kind: "mig", line: true, arrow: true },
+    diamond: { kind: "lens", shape: "diamond" }, square: { kind: "lens", shape: "square" }, halo: { kind: "shock", size: 5 }, ring: { kind: "order", size: 6 },
+    cross: { kind: "broke" }, battle: { kind: "battle" }, hourglass: { kind: "choke" } };
+  const KEY_LAYER = { "money:diamond": { kind: "hub" }, "ideas:diamond": { kind: "work" }, "ideas:square": { kind: "school" }, "ideas:arrow": { kind: "leg", line: true, arrow: true } };
+  ATLAS.keyGlyph = (g, layer, color) => {
+    const r = pm && marks && (KEY_LAYER[layer + ":" + g] || KEY_MARK[g]);
+    return r ? `<img src="${PixelMarks.swatch(r, color)}" width="22" height="16" alt="" style="image-rendering:pixelated;display:block">` : null;
+  };
+
   ATLAS.basemap({
     id: "pixel", name: "Pixel map", paintsMarks: typeof PixelMarks === "function",
     mount(el, projection) {
