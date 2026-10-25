@@ -1,0 +1,62 @@
+{
+  "id": "marco_polo", "name": "Marco Polo", "pid": "Marco Polo", "born": 1254, "died": 1324, "role": "Venetian merchant", "sprite": "person_merchant", "team": "#a8342a",
+  "intro": "You are Marco Polo, 17, son of a Venetian merchant. Your father Niccolo and uncle Maffeo have already been to the court of Kublai Khan and are going back with letters from the new pope. They are taking you with them.",
+  "sources": [
+    {"cite": "Marco Polo and Rustichello da Pisa, The Description of the World, tr. A. C. Moule and P. Pelliot (1938); tr. R. Latham, The Travels (1958)"},
+    {"cite": "Hans Ulrich Vogel, Marco Polo Was in China: New Evidence from Currencies, Salts and Revenues (2013)"},
+    {"cite": "John Larner, Marco Polo and the Discovery of the World (1999)"},
+    {"cite": "Wikipedia: Marco Polo", "url": "https://en.wikipedia.org/wiki/Marco_Polo"}
+  ],
+  "chapters": [
+    {"y": 1271, "m": 11, "at": {"n": "Ayas (Laiazzo)", "lon": 35.79, "lat": 36.77}, "title": "The friars turn back",
+     "via": [[12.34, 45.44], [35.07, 32.92], [35.79, 36.77]],
+     "text": "Pope Gregory X sent two Dominican friars with you to preach to the Khan. At Ayas, in Armenian Cilicia, news comes that the Mamluk sultan Baibars is invading. The friars hand over their letters and go home.",
+     "choices": [
+       {"t": "Go on with your father and uncle", "real": true, "out": "You ride inland across Anatolia and Greater Armenia, past a mountain your book says is Noah's Ark, to Tabriz.", "fx": {"renown": 1}},
+       {"t": "Go back with the friars", "out": "You grow up a Venetian merchant who never saw Asia, and Europe's best picture of Yuan China is never drawn.", "end": "A Venetian merchant in the Levant trade, unknown to history.", "p": 0.4}
+     ]},
+    {"y": 1272, "m": 6, "at": {"n": "Hormuz", "lon": 57.07, "lat": 27.15},
+     "via": [[35.79, 36.77], [38.3, 39.0], [46.29, 38.08], [51.67, 32.65], [55.1, 29.6], [57.07, 30.28], [57.07, 27.15]],
+     "title": "The sewn ships",
+     "text": "The plan was to sail from Hormuz to China. But the ships here are sewn together with coconut-fibre cord, with no iron nails and one mast. Your book calls them wretched and says many are lost.",
+     "choices": [
+       {"t": "Turn north and go overland", "real": true, "out": "You cross the salt deserts of Persia to Balkh and climb into the mountains of Badakhshan.", "fx": {"health": -1}},
+       {"t": "Risk the sewn ships", "out": "Sewn dhows sailed the Indian Ocean for centuries, and most arrived. With the monsoons you might reach China in under two years, but you would see nothing of Central Asia.", "fx": {"renown": -1}}
+     ]},
+    {"y": 1273, "m": 5, "at": {"n": "Badakhshan", "lon": 70.58, "lat": 37.12},
+     "via": [[57.07, 27.15], [57.07, 30.28], [59.6, 36.3], [62.2, 37.6], [66.9, 36.76], [70.58, 37.12]],
+     "title": "Sick in the mountains",
+     "text": "You fall ill. People tell you the high air of the Badakhshan mountains cures fevers. The Pamirs, 'the roof of the world', are next.",
+     "choices": [
+       {"t": "Rest a year in the mountain air", "real": true, "out": "You stay about a year and recover. Your book praises Badakhshan's rubies, lapis and horses.", "fx": {"health": 2}},
+       {"t": "Push on sick", "out": "The Pamir crossing is twelve days with no settlement. Sick men died on it.", "end": "Dead of fever in the Pamirs, 1273.", "p": 0.4}
+     ]},
+    {"y": 1275, "m": 5, "at": {"n": "Shangdu (Xanadu)", "lon": 116.18, "lat": 42.36},
+     "via": [[70.58, 37.12], [73.5, 37.5], [75.99, 39.47], [79.92, 37.11], [85.5, 38.1], [94.66, 40.14], [98.5, 39.73], [111.0, 41.0], [116.18, 42.36]],
+     "took": "Venice to Shangdu: about three and a half years (1271 to 1275), including the year in Badakhshan.",
+     "title": "The Khan's summer palace",
+     "text": "Kublai Khan welcomes your father and uncle and asks who you are. 'Sire, he is my son and your man,' says Niccolo. The Khan likes foreigners who owe nothing to Chinese factions.",
+     "choices": [
+       {"t": "Enter the Khan's service", "real": true, "out": "You learn languages and go on missions for the Khan. Your book's details of Yuan salt revenues and paper money fit the Chinese records, which is part of why historians think you were really there.", "fx": {"renown": 2, "learning": 2}},
+       {"t": "Trade, then go home", "out": "The Khan would not easily let you go. The Polos had to wait about 16 years before he let them go.", "fx": {"wealth": 1}}
+     ]},
+    {"y": 1291, "m": 1, "at": {"n": "Quanzhou (Zaytun)", "lon": 118.59, "lat": 24.91},
+     "via": [[116.18, 42.36], [116.4, 39.9], [117.0, 36.0], [119.4, 32.4], [120.15, 30.27], [118.59, 24.91]],
+     "title": "The princess's fleet",
+     "text": "The Ilkhan Arghun of Persia has asked for a bride from his family's Mongol clan, and the Khan chose the girl Kokochin. Land routes are closed by war. The Khan agrees to let the Polos escort her by sea. Fourteen ships are ready.",
+     "choices": [
+       {"t": "Sail with the princess", "real": true, "out": "The fleet waits five months in Sumatra for the monsoon. Your book says that of some 600 passengers only 18 survived; Persian sources name the same three envoys your book does, though not you.", "fx": {"health": -1, "renown": 1}},
+       {"t": "Stay in China in the Khan's service", "out": "Kublai died in 1294 and the Yuan court turned on many of his foreign favourites. You might have ended your days in Hangzhou, or been stripped of everything.", "end": "A foreign official in Yuan China after Kublai, his fate unrecorded.", "p": 0.3}
+     ]},
+    {"y": 1295, "m": 1, "at": {"n": "Venice", "lon": 12.34, "lat": 45.44},
+     "via": [[118.59, 24.91], [109.0, 12.0], [97.15, 5.18], [79.86, 6.93], [75.78, 11.25], [57.07, 27.15], [46.29, 38.08], [39.72, 41.0], [28.98, 41.01], [12.34, 45.44]],
+     "took": "Quanzhou to Hormuz took about two years (1291 to 1293) with five months waiting in Sumatra; then overland through Persia to Trebizond and by sea to Venice, home in 1295.", "days": 760,
+     "title": "Home, and a Genoese prison",
+     "text": "Arghun died before the bride arrived, so she married his son Ghazan. Back in Venice nobody recognises you. A few years later you are captured in a war with Genoa and share a cell with Rustichello of Pisa, a writer of romances. He wants your story.",
+     "choices": [
+       {"t": "Tell him everything, and let him dress it up", "real": true, "out": "The book that comes out mixes eyewitness detail with romance. It claims the Polos built siege engines for the siege of Xiangyang, which ended in 1273, before you arrived. That part is almost certainly false.", "fx": {"renown": 3}},
+       {"t": "Tell only what you saw yourself", "out": "A plainer book, maybe more trusted, but it would lack the stories that made it a medieval bestseller and that Columbus himself later read and annotated.", "fx": {"renown": 1}}
+     ]}
+  ],
+  "epilogue": "Marco Polo lived on as a merchant in Venice and died in 1324. A friar later recorded that, asked on his deathbed to take back his tall tales, he said he had not told half of what he saw."
+}

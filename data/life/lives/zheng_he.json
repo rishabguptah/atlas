@@ -1,0 +1,68 @@
+{
+  "id": "zheng_he", "name": "Zheng He", "pid": "Zheng He", "born": 1371, "died": 1433, "role": "Admiral and court eunuch", "sprite": "ship_junk", "team": "#3a5aa8",
+  "intro": "You were born Ma He, to a Muslim family in Yunnan; your father and grandfather made the hajj. When Ming armies conquered Yunnan in 1381 you were captured as a boy, castrated, and sent to serve in the household of Zhu Di, Prince of Yan, at Beiping. Now you are 28 and one of his trusted officers.",
+  "sources": [
+    {"cite": "Edward L. Dreyer, Zheng He: China and the Oceans in the Early Ming Dynasty, 1405-1433 (2007)"},
+    {"cite": "Louise Levathes, When China Ruled the Seas (1994)"},
+    {"cite": "Ma Huan, Ying-yai Sheng-lan: The Overall Survey of the Ocean's Shores (1433), tr. J. V. G. Mills (1970)"},
+    {"cite": "Wikipedia: Zheng He", "url": "https://en.wikipedia.org/wiki/Zheng_He"}
+  ],
+  "chapters": [
+    {"y": 1399, "m": 8, "at": {"n": "Beiping (Beijing)", "lon": 116.4, "lat": 39.9}, "title": "The prince rebels",
+     "text": "The young Jianwen emperor is stripping his uncles of their princedoms. Your master Zhu Di rises against his nephew. It is treason, and if he loses everyone around him dies.",
+     "choices": [
+       {"t": "Stand with Zhu Di", "real": true, "out": "You distinguish yourself in the defence of Beiping, at the reservoir of Zhenglunba. In 1402 Zhu Di takes Nanjing and becomes the Yongle emperor. In 1404 he gives you the surname Zheng.", "fx": {"renown": 2}},
+       {"t": "Slip away and go home to Yunnan", "out": "A runaway eunuch of the rebel prince had nowhere safe to go.", "end": "Caught and killed as a deserter in 1400.", "p": 0.15}
+     ]},
+    {"y": 1405, "m": 7, "at": {"n": "Liujiagang, Yangtze mouth", "lon": 121.15, "lat": 31.6},
+     "via": [[116.4, 39.9], [117.2, 34.3], [118.78, 32.06], [121.15, 31.6]],
+     "title": "The treasure fleet",
+     "text": "The emperor wants the rulers of the Western Ocean to send tribute. You command 317 ships and about 27,800 men, the largest fleet the world has seen.",
+     "choices": [
+       {"t": "Sail for Calicut", "real": true, "out": "You sail by Champa, Java, Palembang, Malacca and Ceylon to Calicut on the Malabar coast, the pepper market of the Indian Ocean.", "fx": {"renown": 2}},
+       {"t": "Ask the emperor for a smaller, faster fleet", "out": "The point was the show. A small fleet would have bought spices; a huge one bought submission.", "fx": {"wealth": 1}}
+     ]},
+    {"y": 1407, "m": 3, "at": {"n": "Palembang", "lon": 104.76, "lat": -2.99},
+     "via": [[121.15, 31.6], [119.5, 25.9], [109.2, 13.8], [106.8, -6.1], [104.76, -2.99], [101.6, 2.9], [79.86, 6.93], [75.78, 11.25], [104.76, -2.99]],
+     "took": "The first voyage, 1405 to 1407: out to Calicut and back, sailing with the monsoons.",
+     "title": "The pirate of Palembang",
+     "text": "Chen Zuyi, a Chinese pirate chief, controls Palembang and preys on the Strait of Malacca. He pretends to surrender while planning to ambush your fleet. A local rival warns you.",
+     "choices": [
+       {"t": "Strike first", "real": true, "out": "Your fleet kills about 5,000 of Chen's men and burns ten of his ships. He is taken to Nanjing and beheaded. The strait is safe for Ming shipping.", "fx": {"renown": 1}},
+       {"t": "Accept his surrender", "out": "Then his ambush comes. The Ming record says he meant to attack you; trusting him could have cost the fleet.", "fx": {"health": -2}}
+     ]},
+    {"y": 1411, "m": 2, "at": {"n": "Kotte, Ceylon", "lon": 79.92, "lat": 6.89},
+     "via": [[104.76, -2.99], [101.6, 2.9], [79.92, 6.89]],
+     "title": "Ambush in Ceylon",
+     "text": "On your way home from your third voyage, the Sinhalese ruler Alakeshvara lures part of your force inland and sends his army to cut you off from your ships.",
+     "choices": [
+       {"t": "March on his capital while his army is away", "real": true, "out": "With about 2,000 men you storm Kotte and capture Alakeshvara and his family, then fight your way back to the coast. He is taken to Nanjing, and the emperor sends him home.", "fx": {"renown": 2}},
+       {"t": "Fight your way back to the ships", "out": "You might reach the shore, but you would sail home without the prize that made the voyages feared.", "fx": {"health": -1}}
+     ]},
+    {"y": 1415, "m": 8, "at": {"n": "Nanjing", "lon": 118.78, "lat": 32.06},
+     "via": [[79.92, 6.89], [56.4, 26.5], [45.03, 12.79], [40.12, -3.22], [79.86, 6.93], [104.76, -2.99], [118.78, 32.06]],
+     "took": "The fourth voyage, 1413 to 1415, reached Hormuz; a detachment went on to Aden and East Africa.",
+     "title": "The qilin",
+     "text": "In 1414 envoys from Bengal brought a giraffe; now Malindi on the African coast has sent another. Courtiers say it is a qilin, the beast that appears under a perfect ruler.",
+     "choices": [
+       {"t": "Present the giraffe as a qilin", "real": true, "out": "The court celebrates and painters record it. The emperor modestly plays down the omen, and pleased, keeps the fleets sailing to Africa.", "fx": {"renown": 1}},
+       {"t": "Present it as just a strange animal", "out": "Honest, but you lose the omen that made Africa worth the cost to the court.", "fx": {"renown": -1}}
+     ]},
+    {"y": 1424, "m": 9, "at": {"n": "Nanjing", "lon": 118.78, "lat": 32.06},
+     "title": "The voyages stop",
+     "text": "The Yongle emperor has died on campaign in Mongolia. His son, the Hongxi emperor, listens to officials who call the voyages a waste of silver while the northern border needs it. He cancels them.",
+     "choices": [
+       {"t": "Accept command of the Nanjing garrison", "real": true, "out": "You stay in Nanjing as garrison commander and help oversee the building of the great Bao'en temple. You are 53.", "fx": {"wealth": 1}},
+       {"t": "Argue at court for the fleets", "out": "Eunuchs who fought the scholar-officials often lost. Hongxi died within a year anyway, and his son would call on you again.", "fx": {"renown": -1}}
+     ]},
+    {"y": 1431, "m": 1, "at": {"n": "Liujiagang, Yangtze mouth", "lon": 121.15, "lat": 31.6},
+     "via": [[118.78, 32.06], [121.15, 31.6]],
+     "title": "One last voyage",
+     "text": "The new Xuande emperor wants the tribute missions back. You are 60. Before sailing you set up stone inscriptions at Liujiagang and Changle recording all your voyages.",
+     "choices": [
+       {"t": "Sail once more", "real": true, "out": "The seventh voyage reaches Hormuz, and some of your men go on to Mecca. You die in 1433, probably at Calicut or at sea on the way home.", "fx": {"renown": 2, "health": -3}},
+       {"t": "Let a younger admiral go", "out": "You might have lived out your years in Nanjing, the man who had seen more of the world than any Chinese of his age.", "end": "An old admiral who died at home in Nanjing.", "p": 0.4}
+     ]}
+  ],
+  "epilogue": "After 1433 the Ming never sent another treasure fleet. Many of the voyage records were later lost or destroyed, and China turned its strength to the northern frontier. Sixty-five years later, in 1498, Vasco da Gama reached Calicut with a handful of ships."
+}
