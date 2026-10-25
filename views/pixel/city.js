@@ -57,6 +57,12 @@
   }
   const ART = {};
   for (const k in S) ART[k] = stampArt(S[k]);
+  // Walls, per pixel along the line: o.faint for undated walls, towers every few pixels once close enough.
+  ART["line:wall"] = (put, i, j, f, year, n, o) => {
+    if (o.faint) { if (n & 1) put(i, j, C.wallF); return; }
+    put(i, j, C.wall); put(i, j + 1, C.wallS);
+    if (o.k >= 300 && n % 9 === 0) { put(i, j - 1, C.tower); put(i - 1, j, C.tower); put(i + 1, j, C.tower); }
+  };
 
   function PixelCity(opts) {
     const url = (opts && opts.url) || "atlas-files/world/cities.json", onLoad = (opts && opts.onLoad) || (() => {});
@@ -130,12 +136,10 @@
           else line(f.line, (i, j, n) => { if (f.conf < 2 || n % 4 !== 3) put(i, j, C.street); });
         }
         for (const f of F) if (f.k === "wall" && f.line) {
-          const faint = f.t0 == null, dashed = (f.conf || 0) >= 2 && !faint;
+          const faint = f.t0 == null, dashed = (f.conf || 0) >= 2 && !faint, art = ART["line:wall"];
           line(f.line, (i, j, n) => {
             if (dashed && n % 6 === 5) return;
-            if (faint) { if (n & 1) put(i, j, C.wallF); return; }
-            put(i, j, C.wall); put(i, j + 1, C.wallS);
-            if (G.k >= 300 && n % 9 === 0) { put(i, j - 1, C.tower); put(i - 1, j, C.tower); put(i + 1, j, C.tower); }
+            art(put, i, j, f, year, n, { faint, k: G.k });
           });
         }
         const pts = F.filter(f => f.at && f.k !== "wall").sort((a, b) => (b.sl || 0) - (a.sl || 0));
