@@ -103,6 +103,14 @@ Guide tours, panel answers, What-if scenarios, Up close storylines, Codex trails
 follows and simulation stories all emit Stories. One Director plays them: on-map caption, Space for next,
 one obvious "Why?" or "Go deeper", the panel collapses to a story strip.
 
+Built (2026-10-25): `views/atlas/world/story.js` (format, registry, converters) and `world/director.js` (player).
+Extra optional Scene fields the Director reads: `lens` (the guide lens, when `by` names a specialist), `kick` (a
+short label over the caption), `debate` (one line on what is argued over, shown under "How do we know") and
+`deeper` (`{story, label}`, `{tab}` or `{q}`: where "Go deeper" goes; otherwise it asks the panel `ask`). A Story may
+name `next` (the story offered at its end), `status` (`draft`, `live`) and a `sync()` that refreshes `scenes` while
+it streams. Register with `ATLAS.world.stories.add(story)` or `add({kind, list})`; play with
+`ATLAS.world.director.play(story, {at, auto})`. Authored stories: `data/stories/*.json`.
+
 ## Rules for every owner
 
 - Ship behind the existing hooks (`ATLAS.lens`, `ATLAS.tab`, `ATLAS.api`, `ATLAS.marks`); don't fork the page.

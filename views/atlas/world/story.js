@@ -44,7 +44,7 @@
   const from = {
     // Curated guide tours (data/guide/tours) and panel answers have the same shape: {question, short, steps, ...}.
     tour(t, kind = "tour") {
-      const steps = (t.steps || []).map((s, i) => fromStep({ ...s, ask: s.ask || `Why ${s.title ? s.title.replace(/[.?!]$/, "").replace(/^./, c => c.toLowerCase()) : "did this happen"}${s.year != null ? `, in ${s.year < 0 ? -s.year + " BCE" : s.year}` : ""}? (from: ${t.question})` }, i));
+      const steps = (t.steps || []).map((s, i) => fromStep({ ...s, ask: s.ask || `${s.title}${s.year != null ? ` (${s.year < 0 ? -s.year + " BCE" : s.year})` : ""}: why does it matter for "${t.question}"?` }, i));
       const scenes = steps.slice();
       if (t.short && steps.length) scenes.push(fromStep({ id: "close", title: "The short answer", kick: "In short", text: t.short, year: steps[steps.length - 1].t, view: frameOf(steps), lens: steps[0].by,
         layers: [...new Set(steps.flatMap(s => s.lenses))], sources: [], confidence: null }, steps.length, { caption: firstSentence(t.short), ask: t.question }));
@@ -74,12 +74,10 @@
     },
     // Up close storylines (data/europe-19c/stories.json): dated chronicle events, played by the month.
     storyline(region, st, D) {
-      const MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      const fmt = d => d.length >= 10 ? `${+d.slice(8, 10)} ${MON[+d.slice(5, 7) - 1]} ${d.slice(0, 4)}` : d.length >= 7 ? `${MON[+d.slice(5, 7) - 1]} ${d.slice(0, 4)}` : d.slice(0, 4);
       const scenes = st.steps.map(i => {
         const [d, , , sub, n, lon, lat, q, , , part] = D.events[i], t = D.text[i] || {};
         return fromStep({ id: "e" + i, title: n, year: +d.slice(0, 4), date: d, view: { lon, lat, span: 12 }, layers: ["e19"], pins: [{ name: n, lon, lat }],
-          text: [t.what, t.why].filter(Boolean).join(" "), kick: `${fmt(d)}${t.place_name ? " · " + t.place_name : ""}`,
+          text: [t.what, t.why].filter(Boolean).join(" "), kick: t.place_name || null,
           sources: [q ? { cite: `Wikidata Q${q} (CC0)`, url: `https://www.wikidata.org/wiki/Q${q}` } : null, t.src || null].filter(Boolean),
           deeper: { tab: "upclose" }, ask: `Why did ${n} happen in ${d.slice(0, 4)}, and what did it lead to?` }, i, { conf: t.st === "d" ? "estimated" : "attested", e19: i, part });
       });

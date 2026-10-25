@@ -152,7 +152,9 @@
   }
   // A scene on the map: the page's own scene player (fly, year, lenses, pins, routes), plus a month for deep regions.
   function apply(sc) {
-    api.scene({ year: sc.t, view: sc.view, lens: sc.lens || sc.by, by: null, layers: sc.lenses || [], highlight: sc.highlight || [],
+    // The dialog box covers the bottom of the map, so the scene's subject sits a little above the centre.
+    const view = sc.view && isFinite(sc.view.span) ? { ...sc.view, lat: sc.view.lat - sc.view.span * 0.07 } : sc.view;
+    api.scene({ year: sc.t, view, lens: sc.lens || sc.by, by: null, layers: sc.lenses || [], highlight: sc.highlight || [],
       pins: sc.pins || [], routes: sc.routes || [], title: sc.caption });
     const e19 = A.e19;
     if (e19 && sc.date && sc.date.length >= 7) {
@@ -341,7 +343,7 @@
     if (ev.shiftKey && (k === "ArrowLeft" || k === "ArrowRight")) return;  // Shift+arrows still step the year
     if (k === " " || k === "ArrowRight") next();
     else if (k === "ArrowLeft") { stopAuto(); renderStrip(); prev(); }
-    else if (k === "Enter") { if (S.ended) { const b = box.querySelector(".dr-btn"); if (b) b.click(); } else { const b = box.querySelector(".dr-btn"); if (b) b.click(); } }
+    else if (k === "Enter") { const b = box.querySelector(".dr-btn"); if (b) b.click(); }
     else if (k === "w" || k === "y") { if (!S.ended) onBox({ target: box.querySelector('[data-a="why"]') || box }); }
     else if (k === "h") { if (!S.ended) onBox({ target: box.querySelector('[data-a="src"]') }); }
     else if (k === "p") toggleAuto();
