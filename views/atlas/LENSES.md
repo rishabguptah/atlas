@@ -129,7 +129,7 @@ The Codex tab (`lenses/codex.js`) is the example of a plugin that keeps the view
 
 The Live tab (`lenses/life.js`) is the life RPG: play a real life from `data/life/lives/*.json` (or ask for anyone,
 drafted by AI and marked so) or an ordinary one from base rates in `data/life/rules.json`. It travels with
-`ATLAS.world.route` and exposes `ATLAS.life.story()`, the life so far as a Story of Scenes (WORLD.md L4).
+`ATLAS.world.route` and exposes `ATLAS.life.story()`, the life so far as a Story of Scenes (WORLD.md L4), registered with `ATLAS.world.stories` (kind `life`) and played by the Director.
 
 ## Pixel sprites from a lens
 

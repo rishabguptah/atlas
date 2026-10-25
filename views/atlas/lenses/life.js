@@ -96,11 +96,11 @@
     const scenes = g.log.map((e, i) => {
       const at = e.at || g.at, cap = e.t.split(/(?<=\.)\s/)[0];
       return { id: `s${i}`, t: e.y, date: `${Math.round(e.y)}-${String(e.m || 1).padStart(2, "0")}`, view: { lon: at.lon, lat: at.lat, span: e.pts ? 24 : 6 },
-        lenses: ["life"], highlight: [], pins: [{ lon: at.lon, lat: at.lat, n: at.n }], routes: e.pts ? [{ pts: e.pts, conf: "estimated", mode: "travel" }] : [],
+        lenses: ["life"], highlight: [], pins: [{ lon: at.lon, lat: at.lat, name: at.n }], routes: e.pts ? [{ points: e.pts, conf: "estimated", label: at.n }] : [],
         actors: who ? [who] : [], caption: cap, text: e.t, by: "life", conf: conf(e), generated: gen || undefined,
         sources: life ? life.sources : [], branch: e.k === "alt" ? "yours" : null, next: i + 1 < g.log.length ? [`s${i + 1}`] : [] };
     });
-    if (g.over) scenes.push({ id: "end", t: g.over.y, date: `${g.over.y}`, view: { lon: g.at.lon, lat: g.at.lat, span: 8 }, lenses: ["life"], pins: [{ lon: g.at.lon, lat: g.at.lat, n: g.at.n }], routes: [],
+    if (g.over) scenes.push({ id: "end", t: g.over.y, date: `${g.over.y}`, view: { lon: g.at.lon, lat: g.at.lat, span: 8 }, lenses: ["life"], pins: [{ lon: g.at.lon, lat: g.at.lat, name: g.at.n }], routes: [],
       actors: who ? [who] : [], caption: g.over.t.split(/(?<=\.)\s/)[0], text: [g.over.t, life && life.epilogue].filter(Boolean).join(" "), by: "life", conf: gen || g.over.alt ? "approximate" : "attested", sources: life ? life.sources : [], next: [], ask: "How did the real life go?" });
     if (scenes.length > 1 && scenes[scenes.length - 2].next) scenes[scenes.length - 2].next = scenes[scenes.length - 1].id === "end" ? ["end"] : [];
     return { id: `life:${life ? life.id : (g.name || "someone").toLowerCase().replace(/\W+/g, "_")}`, title: life ? `The life of ${life.name}, as you lived it` : `${g.name}, ${g.home ? g.home.n : ""}`, kind: "life", scenes };
@@ -109,7 +109,10 @@
   let replayT = 0;
   function replay() {
     clearTimeout(replayT);
-    const st = story(); if (!st || !api.scene) return;
+    const st = story(); if (!st) return;
+    const dir = ATLAS.world && ATLAS.world.director;
+    if (dir && dir.play) { dir.play(st, { auto: true }); return; }
+    if (!api.scene) return;
     let i = 0;
     const step = () => {
       const sc = st.scenes[i++]; if (!sc) { if (api.clearScene) api.clearScene(); return; }
@@ -683,5 +686,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
   });
   let homeT = 0;
   // For tests and other plugins: the router and the world reader.
+  // The current or last life shows up in the Stories tab and plays through the Director.
+  if (ATLAS.world && ATLAS.world.stories) ATLAS.world.stories.add({ kind: "life", list: () => { const g = D() && G0(); return g && g.log.length ? [story(g)] : []; } });
   ATLAS.life = { story, route, flight, around, hazard: (y, age) => hazard({ st: { health: 5, wealth: 100 } }, y, age), plagueAt };
 })();
