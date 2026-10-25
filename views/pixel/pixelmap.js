@@ -6,6 +6,7 @@
 //   pm.sprites(list, {max, pad}?)           [{lon, lat, sprite, frame?, team?, flip?, pri?, grp?}] drawn into the pixel grid; with pri, decluttered
 //   pm.tick()                                advance sprite and water animation by one frame (call ~4 fps)
 //   pm.overlay(fn) / pm.repaint()            fn(g) paints last, into the same grid (lens marks, see marks.js); repaint redraws
+//   pm.setDetail(fn)                         fn(G, phase) draws zoom detail into the grid: "under" before realm tints, "over" after; "key" names the under pass (see detail.js)
 //
 // levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
 // land: GeoJSON land (coasts come from it, so they stay sharp at any zoom). rivers: [{rank, line: [[lon,lat],...]}].
@@ -51,7 +52,7 @@
     container.prepend(canvas);
     const ctx = canvas.getContext("2d");
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
-    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [];
+    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [];
 
     // Terrain tiles: levels coarse to fine, each {cell (degrees), tdeg (tile size in degrees), url(col, row)}.
     // Tiles load on demand; until a finer tile arrives the coarser level shows, then the map re-renders.
@@ -125,7 +126,7 @@
     function terrainPass(t, need) {
       const landM = maskFor([opts.land], () => "#fff");
       base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255);
-      hs = new Uint8Array(w * h); band = new Uint8Array(w * h); NEED = need; lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h);
+      hs = new Uint8Array(w * h); band = new Uint8Array(w * h); NEED = need; lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h); lonA = new Float32Array(w * h);
       // Inverse projection on a coarse grid, interpolated inside cells whose corners are all on the globe and do not
       // straddle the antimeridian; exact per pixel elsewhere (near the rim). Much cheaper than inverting every pixel.
       // The grid is anchored to the world (every G-th art column and row), so any region of the same view interpolates
@@ -162,7 +163,7 @@
         if (isLand && WATER(c) && c !== 3) c = 10;
         if (!isLand && !WATER(c)) c = 2;
         cls[k] = c; hs[k] = s1; band[k] = s2;
-        latA[k] = ll[1];
+        latA[k] = ll[1]; lonA[k] = ll[0];
         lowNoise[k] = Math.sin(ll[0] * 1.7 + Math.sin(ll[1] * 2.3)) * Math.sin(ll[1] * 2.1 + ll[0] * 0.6);
       }
       // Base colours: three tones per class, picked by hillshade (land) or depth (sea), with a world-anchored Bayer dither.
@@ -366,15 +367,23 @@
     // Realm rasters are kept per border frame (the realms array) for the current view, so scrubbing back and forth
     // through years that share a frame, or revisiting one, only copies a buffer. Cleared by render() (new view).
     const realmRaster = new Map(), RASTER_MAX = 16, NONE = [];
+    // The zoom detail's "under" pass (fields) sits beneath the realm tints, so it is part of the cached raster: a hit
+    // must also match the detail key (it changes by decade, not by year).
     function applyRealms() {
-      const hit = realmRaster.get(realmsNow);
-      if (hit) { base.set(hit.base); ids = hit.ids; realmRaster.delete(realmsNow); realmRaster.set(realmsNow, hit); return; }
-      base.set(terrain); drawRealms();
-      realmRaster.set(realmsNow, { base: base.slice(), ids });
+      const hit = realmRaster.get(realmsNow), dk = detail("key") || "";
+      if (hit && hit.dk === dk) { base.set(hit.base); ids = hit.ids; realmRaster.delete(realmsNow); realmRaster.set(realmsNow, hit); return; }
+      base.set(terrain); detail("under"); drawRealms();
+      realmRaster.delete(realmsNow);
+      realmRaster.set(realmsNow, { base: base.slice(), ids, dk });
       if (realmRaster.size > RASTER_MAX) realmRaster.delete(realmRaster.keys().next().value);
     }
     // The one place where realms are done and sprites come next (year-dependent passes over base go here).
-    function realmsDone() { paint(); }
+    function realmsDone() { detail("over"); paint(); }
+    function detail(phase) {
+      if (!detailFn || !last) return;
+      try { return detailFn({ w, h, U0, V0, PX, k: last.k, need: NEED, base, cls, hs, band, lonA, latA, lowNoise, ids, realms: realmsNow, hash, toPixel: (lon, lat) => { const p = projection([lon, lat]); return p && [Math.floor((p[0] * last.k) / PX) - U0, Math.floor((p[1] * last.k) / PX) - V0]; } }, phase); }
+      catch (err) { console.error("pixel detail", err); }
+    }
 
     // Realms: rasterise polygons to an id buffer at art-pixel size, tint the land, and draw borders where ids change.
     function drawRealms() {
@@ -508,6 +517,7 @@
       tick() { frame++; paint(); },
       overlay(fn) { overlay = fn; },
       repaint() { paint(); },
+      setDetail(fn) { detailFn = fn; },
       setFrame(f) { frame = f; },
       // Is this lon/lat drawn as water right now (from the last render)?
       isWater(lon, lat) { if (!cls || !last) return false; const q = this.toPixel(lon, lat); if (!q || q[0] < 0 || q[1] < 0 || q[0] >= w || q[1] >= h) return false; return cls[q[1] * w + q[0]] <= 2; },
