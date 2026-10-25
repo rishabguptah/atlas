@@ -236,17 +236,37 @@
     const gain = rgbOf(LENS.power), ink = pack(INK);
     // A realm is the same power across years by its Living Atlas link (la: tsardom and empire are both Russia), else its id.
     const idOf = r => r.la || r.id || r.name, idA = n => n > 0 ? idOf(realms[n - 1]) : null, idB = n => n > 0 ? idOf(other[n - 1]) : null;
-    const memo = new Map();
+    // Renamed states (Spanish Empire then Kingdom of Spain) are the same power too: two realms are heirs when each is the
+    // other's largest overlap and they share at least half of the smaller one. Counted once per view and year.
+    if (cmp.heirKey !== key || cmp.heirOf !== realms) { cmp.heirs = heirs(ids, B, cls); cmp.heirKey = key; cmp.heirOf = realms; }
+    const H = cmp.heirs, memo = new Map();
     for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) {
       const k = j * w + i; if (cls[k] <= 4 || cls[k] === 255) continue;
       const a = ids[k], b = B[k], u = i + U0, v = j + V0;
       // The other year's borders: a dotted ink line.
       if ((B[k + 1] !== b || B[k + w] !== b) && ((u + v) & 1) === 0) { out[k] = ink; continue; }
       const key = a * 65536 + b; let changed = memo.get(key);
-      if (changed === undefined) { changed = idA(a) !== idB(b); memo.set(key, changed); }
+      if (changed === undefined) { changed = idA(a) !== idB(b) && !H.has(key); memo.set(key, changed); }
       if (changed && ((u + v) & 3) === 0) out[k] = pack(mix(unpack(out[k]), gain, 0.8));
       else if (changed && ((u + v) & 3) === 1) out[k] = pack(mix(unpack(out[k]), INK, 0.35));
     }
+  }
+  function heirs(A, B, cls) {
+    const pair = new Map(), na = new Map(), nb = new Map(), bestA = new Map(), bestB = new Map(), out = new Set();
+    for (let k = 0; k < A.length; k++) {
+      const a = A[k], b = B[k]; if (a <= 0 || b <= 0 || cls[k] <= 4 || cls[k] === 255) continue;
+      const key = a * 65536 + b; pair.set(key, (pair.get(key) || 0) + 1); na.set(a, (na.get(a) || 0) + 1); nb.set(b, (nb.get(b) || 0) + 1);
+    }
+    pair.forEach((c, key) => {
+      const a = Math.floor(key / 65536), b = key % 65536;
+      if (!bestA.has(a) || c > pair.get(bestA.get(a))) bestA.set(a, key);
+      if (!bestB.has(b) || c > pair.get(bestB.get(b))) bestB.set(b, key);
+    });
+    bestA.forEach((key, a) => {
+      const b = key % 65536;
+      if (bestB.get(b) === key && pair.get(key) * 2 >= Math.min(na.get(a), nb.get(b))) out.add(key);
+    });
+    return out;
   }
   // Rasterise a list of realms to an id buffer for the frame g came from (for compare).
   let RCV = null;
