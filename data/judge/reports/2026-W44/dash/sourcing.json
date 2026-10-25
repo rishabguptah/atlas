@@ -1,0 +1,93 @@
+[
+ {
+  "kind": "event",
+  "records": 15936,
+  "draft": 583,
+  "with_url": 15833,
+  "unchecked_cite": 171
+ },
+ {
+  "kind": "group",
+  "records": 43,
+  "draft": 43,
+  "with_url": 2,
+  "unchecked_cite": 0
+ },
+ {
+  "kind": "idea",
+  "records": 181,
+  "draft": 181,
+  "with_url": 181,
+  "unchecked_cite": 0
+ },
+ {
+  "kind": "language",
+  "records": 8418,
+  "draft": 0,
+  "with_url": 8418,
+  "unchecked_cite": 0
+ },
+ {
+  "kind": "measure",
+  "records": 13570,
+  "draft": 126,
+  "with_url": 13464,
+  "unchecked_cite": 30
+ },
+ {
+  "kind": "person",
+  "records": 4249,
+  "draft": 76,
+  "with_url": 4249,
+  "unchecked_cite": 0
+ },
+ {
+  "kind": "place",
+  "records": 16693,
+  "draft": 352,
+  "with_url": 16414,
+  "unchecked_cite": 35
+ },
+ {
+  "kind": "polity",
+  "records": 1592,
+  "draft": 5,
+  "with_url": 1591,
+  "unchecked_cite": 1
+ },
+ {
+  "kind": "relation",
+  "records": 8079,
+  "draft": 1270,
+  "with_url": 7854,
+  "unchecked_cite": 0
+ },
+ {
+  "kind": "route",
+  "records": 95,
+  "draft": 95,
+  "with_url": 21,
+  "unchecked_cite": 0
+ },
+ {
+  "kind": "sample",
+  "records": 9344,
+  "draft": 0,
+  "with_url": 9344,
+  "unchecked_cite": 0
+ },
+ {
+  "kind": "script",
+  "records": 51,
+  "draft": 51,
+  "with_url": 45,
+  "unchecked_cite": 0
+ },
+ {
+  "kind": "work",
+  "records": 4245,
+  "draft": 331,
+  "with_url": 4242,
+  "unchecked_cite": 0
+ }
+]
