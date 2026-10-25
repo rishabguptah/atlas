@@ -486,14 +486,43 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   const SNAPS = Object.keys(POLITIES).map(Number).sort((a, b) => a - b);
   const snapFor = y => { let s = SNAPS[0]; for (const v of SNAPS) if (v <= y) s = v; return s; };
   const featCache = {};
+  // Precise borders (coasts fitted to Natural Earth) load from borders/<level>/world_<year>.json beside the
+  // published page: l0 (5 km) for the map, l1 (1.5 km) for the basemap when zoomed in. Until one arrives,
+  // or if the files are not there, the inline historical-basemaps snapshot stands in.
+  const PRECISE = {}, PRECISE_LV = [["l0", 1], ["l1", 3]];
+  const preciseLevel = k => PRECISE_LV.filter(l => k >= l[1]).pop()[0];
+  function precise(lv, s, then) {
+    const key = lv + ":" + s, have = PRECISE[key];
+    if (have !== undefined) return have instanceof Promise ? null : have;
+    PRECISE[key] = fetch(`borders/${lv}/world_${s < 0 ? "bc" + -s : s}.json`).then(r => r.ok ? r.json() : null).then(t => {
+      PRECISE[key] = t ? Object.values(t.objects).flatMap(o => topojson.feature(t, o).features) : false;
+      if (PRECISE[key] && then) then();
+    }).catch(() => { PRECISE[key] = false; });
+    return null;
+  }
+  const onPrecise = s => () => { delete featCache[s]; realmCache = {}; if (snapFor(state.year) === s) { drawRealmsLayer(true); drawPolys(true); refreshPanel(); renderBasemap(); } };
+  // Realms for the basemap, at the detail its zoom needs: [{id, n, name, subject_of, color, feature}].
+  let realmCache = {};
+  ATLAS.realms = (y, k = 1) => {
+    const s = snapFor(y ?? state.year), lv = preciseLevel(k), key = lv + ":" + s;
+    if (realmCache[key]) return realmCache[key];
+    let fs = precise(lv, s, onPrecise(s)), level = lv;
+    if (!fs && lv !== "l0") { fs = precise("l0", s, onPrecise(s)); level = "l0"; }
+    const list = fs ? fs.map(f => ({ f, p: f.properties || {} })).map(({ f, p }) => ({ f, p, d: featuresFor(s).find(x => x.id === p.id) }))
+      .map(({ f, p, d }) => ({ id: p.id, n: p.n, name: d && d.emp ? d.emp.name : p.name, subject_of: p.subject_of, color: d && d.emp ? d.emp.color : hashColor(p.name || p.id || ""), feature: f, level }))
+      : featuresFor(s).map((d, i) => ({ id: s + ":" + i, name: d.emp ? d.emp.name : d.name, color: d.emp ? d.emp.color : hashColor(d.name || ""), feature: d.f, level: "basemaps" }));
+    if (fs) realmCache[key] = list;
+    return list;
+  };
   function featuresFor(s) {
     if (featCache[s]) return featCache[s];
+    const pr = precise("l0", s, onPrecise(s));
     const t = POLITIES[s];
-    const fc = topojson.feature(t, Object.values(t.objects)[0]).features;
+    const fc = pr || topojson.feature(t, Object.values(t.objects)[0]).features;
     return featCache[s] = fc.map(f => {
-      const p = f.properties || {}, name = (p.NAME || "").trim(), subj = (p.SUBJECTO || "").trim();
+      const p = f.properties || {}, name = (p.name || p.NAME || "").trim(), subj = (p.subject_of || p.SUBJECTO || "").trim();
       const emp = EMPIRES.find(e => s >= e.start && s <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj))) || null;
-      return { f, name: name || subj, emp, d: path(f), area: path.area(f), c: path.centroid(f) };
+      return { f, id: p.id, name: name || subj, emp, d: path(f), area: path.area(f), c: path.centroid(f) };
     }).filter(d => d.d);
   }
   let curSnap;
@@ -803,6 +832,13 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     bmYear = state.year;
     try { BASEMAP.render(d3.zoomTransform(svg.node()), state.year); } catch (err) { console.error("basemap", err); }
   }
+  // A full basemap render is heavy, so year changes (slider, play) re-render it at most every 350 ms.
+  let bmTimer = 0, bmLast = 0;
+  function renderBasemapSoon() {
+    if (bmTimer) return;
+    const wait = Math.max(0, 350 - (performance.now() - bmLast));
+    bmTimer = setTimeout(() => { bmTimer = 0; bmLast = performance.now(); if (bmYear !== state.year) renderBasemap(); }, wait);
+  }
   function setBasemap() {
     const want = state.basemap ? BASEMAP0 : null;
     if (want === BASEMAP) return;
@@ -815,7 +851,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
 
   let rafAll = 0;
   function drawAll(now) {
-    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); if (BASEMAP && bmYear !== state.year) renderBasemap(); };
+    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); if (BASEMAP && bmYear !== state.year) renderBasemapSoon(); };
     if (now) { cancelAnimationFrame(rafAll); run(); } else if (!rafAll) rafAll = requestAnimationFrame(run);
   }
 

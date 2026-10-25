@@ -83,3 +83,8 @@ its year and source. Prefer one record per real event or span over a summary rec
 draws under the SVG. `render` runs on zoom end, year change, resize and lens toggles; `move` on every zoom frame.
 `ATLAS.polityAt(lon, lat, year)` gives `{name, color}` and `ATLAS.isOn(k)` says whether a lens (or `borders`,
 `terrain`) is on. `ATLAS.sprite(name, {w, h, ax, ay, href | frames: [dataURI]})` registers a sprite for pins.
+
+`ATLAS.realms(year, k)` returns the realms for that year at the detail zoom `k` needs, as
+`[{id, n, name, subject_of, color, feature, level}]`: the precise borders (`l0` 5 km, `l1` 1.5 km from zoom 3)
+once they have loaded from `borders/` beside the page, the inline historical-basemaps snapshot until then.
+The page calls the basemap's `render` again when a precise level arrives.
