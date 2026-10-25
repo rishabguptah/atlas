@@ -1,0 +1,1477 @@
+{
+ "id": "cairo",
+ "note": "Claude draft for Cairo and Fustat: Fustat, al-Askar and al-Qata'i, the Fatimid walls of Jawhar (969) and Badr al-Jamali (1087-92), Saladin's wall and Citadel (1176), lost gates and palaces, the Qasaba and Khalij, the medieval Nile bank, Birkat al-Fil and Azbakiya ponds, built-up area by period. Shapes reconstructed (conf 2). The OSM line named in Arabic (northern wall of Cairo) is left without a wall_dates patch: its name normalises to empty in plan.py and would also match every unnamed wall line; the Badr al-Jamali draft line covers it.",
+ "features": [
+  {
+   "k": "wall_dates",
+   "match": "Ayyubid Historic Wall",
+   "t0": 1176,
+   "t1": null,
+   "label": "Saladin's wall (eastern stretch)",
+   "conf": 1,
+   "src": "Walls of Cairo (Wikipedia); Behrens-Abouseif 1989, Islamic Architecture in Cairo"
+  },
+  {
+   "k": "wall",
+   "name": "Fatimid mudbrick wall of Jawhar",
+   "t0": 969,
+   "t1": 1092,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Raymond 1993, Le Caire",
+   "line": [
+    [
+     31.2555,
+     30.0548
+    ],
+    [
+     31.26,
+     30.0551
+    ],
+    [
+     31.264,
+     30.0549
+    ],
+    [
+     31.2663,
+     30.0543
+    ],
+    [
+     31.266,
+     30.05
+    ],
+    [
+     31.2655,
+     30.046
+    ],
+    [
+     31.2652,
+     30.0438
+    ],
+    [
+     31.2615,
+     30.0437
+    ],
+    [
+     31.258,
+     30.0435
+    ],
+    [
+     31.2552,
+     30.0438
+    ],
+    [
+     31.2553,
+     30.048
+    ],
+    [
+     31.2555,
+     30.052
+    ],
+    [
+     31.2555,
+     30.0548
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Fatimid stone wall of Badr al-Jamali",
+   "t0": 1087,
+   "t1": null,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Behrens-Abouseif 1989, Islamic Architecture in Cairo; Raymond 1993, Le Caire",
+   "line": [
+    [
+     31.256,
+     30.0561
+    ],
+    [
+     31.26,
+     30.056
+    ],
+    [
+     31.2634,
+     30.0555
+    ],
+    [
+     31.265,
+     30.0542
+    ],
+    [
+     31.268,
+     30.0548
+    ],
+    [
+     31.2672,
+     30.05
+    ],
+    [
+     31.2667,
+     30.0462
+    ],
+    [
+     31.266,
+     30.0432
+    ],
+    [
+     31.2615,
+     30.0428
+    ],
+    [
+     31.2578,
+     30.0428
+    ],
+    [
+     31.2545,
+     30.043
+    ],
+    [
+     31.2547,
+     30.048
+    ],
+    [
+     31.2552,
+     30.0525
+    ],
+    [
+     31.256,
+     30.0561
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Saladin's wall (Cairo to Fustat)",
+   "t0": 1176,
+   "t1": null,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Behrens-Abouseif 1989, Islamic Architecture in Cairo; Raymond 1993, Le Caire",
+   "line": [
+    [
+     31.247,
+     30.0598
+    ],
+    [
+     31.252,
+     30.0588
+    ],
+    [
+     31.2565,
+     30.057
+    ],
+    [
+     31.261,
+     30.0565
+    ],
+    [
+     31.268,
+     30.0548
+    ],
+    [
+     31.2675,
+     30.05
+    ],
+    [
+     31.2672,
+     30.0448
+    ],
+    [
+     31.265,
+     30.04
+    ],
+    [
+     31.2622,
+     30.036
+    ],
+    [
+     31.2602,
+     30.0318
+    ],
+    [
+     31.2585,
+     30.0275
+    ],
+    [
+     31.255,
+     30.0205
+    ],
+    [
+     31.248,
+     30.0125
+    ],
+    [
+     31.24,
+     30.0065
+    ],
+    [
+     31.2335,
+     30.003
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Walls of the Citadel of Cairo",
+   "t0": 1176,
+   "t1": null,
+   "conf": 2,
+   "src": "Cairo Citadel (Wikipedia); Behrens-Abouseif 1989, Islamic Architecture in Cairo",
+   "line": [
+    [
+     31.258,
+     30.03
+    ],
+    [
+     31.26,
+     30.0315
+    ],
+    [
+     31.2625,
+     30.0322
+    ],
+    [
+     31.265,
+     30.032
+    ],
+    [
+     31.2665,
+     30.031
+    ],
+    [
+     31.2665,
+     30.0295
+    ],
+    [
+     31.2655,
+     30.0285
+    ],
+    [
+     31.263,
+     30.0281
+    ],
+    [
+     31.2615,
+     30.0268
+    ],
+    [
+     31.2598,
+     30.0267
+    ],
+    [
+     31.2585,
+     30.028
+    ],
+    [
+     31.258,
+     30.03
+    ]
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Citadel of Saladin (Qal'at al-Jabal)",
+   "t0": 1176,
+   "t1": null,
+   "conf": 2,
+   "src": "Cairo Citadel (Wikipedia)",
+   "at": [
+    31.2611,
+    30.029
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Barqiya",
+   "t0": 969,
+   "t1": null,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Raymond 1993, Le Caire",
+   "at": [
+    31.2667,
+    30.0465
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Qantara",
+   "t0": 969,
+   "t1": 1880,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Raymond 1993, Le Caire",
+   "at": [
+    31.2551,
+    30.0525
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Sa'ada",
+   "t0": 969,
+   "t1": 1880,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Raymond 1993, Le Caire",
+   "at": [
+    31.2547,
+    30.0462
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Sha'riya",
+   "t0": 1176,
+   "t1": 1880,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Raymond 1993, Le Caire",
+   "at": [
+    31.2545,
+    30.058
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Wazir",
+   "t0": 1341,
+   "t1": null,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Raymond 1993, Le Caire",
+   "at": [
+    31.2622,
+    30.036
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Futuh of Jawhar (earlier site)",
+   "t0": 969,
+   "t1": 1087,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Raymond 1993, Le Caire",
+   "at": [
+    31.2633,
+    30.0549
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab Zuwayla of Jawhar (earlier site)",
+   "t0": 969,
+   "t1": 1092,
+   "conf": 2,
+   "src": "Walls of Cairo (Wikipedia); Raymond 1993, Le Caire",
+   "at": [
+    31.258,
+    30.0437
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Fortress of Babylon",
+   "t0": 300,
+   "t1": null,
+   "conf": 2,
+   "src": "Babylon Fortress (Wikipedia)",
+   "at": [
+    31.2303,
+    30.0058
+   ]
+  },
+  {
+   "k": "mosque",
+   "name": "Mosque of Amr ibn al-As",
+   "t0": 642,
+   "t1": null,
+   "conf": 2,
+   "src": "Mosque of 'Amr ibn al-'As (Wikipedia)",
+   "at": [
+    31.2333,
+    30.0102
+   ]
+  },
+  {
+   "k": "column",
+   "name": "Nilometer on Roda Island",
+   "t0": 861,
+   "t1": null,
+   "conf": 2,
+   "src": "Nilometer (Wikipedia)",
+   "at": [
+    31.2253,
+    30.0068
+   ]
+  },
+  {
+   "k": "mosque",
+   "name": "Mosque of al-Askar (Jami' al-Askar)",
+   "t0": 786,
+   "t1": 1100,
+   "conf": 2,
+   "src": "Al-Askar (Wikipedia); Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious",
+   "at": [
+    31.244,
+    30.0275
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Dar al-Imara of Ibn Tulun (al-Qata'i)",
+   "t0": 870,
+   "t1": 905,
+   "conf": 2,
+   "src": "Al-Qata'i (Wikipedia); Behrens-Abouseif 1989, Islamic Architecture in Cairo",
+   "at": [
+    31.2535,
+    30.03
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Great Eastern Fatimid Palace",
+   "t0": 970,
+   "t1": 1171,
+   "conf": 2,
+   "src": "Raymond 1993, Le Caire; Fatimid architecture (Wikipedia)",
+   "at": [
+    31.263,
+    30.049
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Western Fatimid Palace",
+   "t0": 975,
+   "t1": 1171,
+   "conf": 2,
+   "src": "Raymond 1993, Le Caire; Fatimid architecture (Wikipedia)",
+   "at": [
+    31.26,
+    30.05
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Bayn al-Qasrayn (square between the palaces)",
+   "t0": 970,
+   "t1": null,
+   "conf": 2,
+   "src": "Bayn al-Qasrayn (Wikipedia); Raymond 1993, Le Caire",
+   "at": [
+    31.2614,
+    30.0496
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Aqueduct of Cairo (intake tower)",
+   "t0": 1505,
+   "t1": null,
+   "conf": 2,
+   "src": "Aqueduct of Cairo (Wikipedia)",
+   "at": [
+    31.2318,
+    30.0222
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Port of al-Maqs",
+   "t0": 969,
+   "t1": 1300,
+   "conf": 2,
+   "src": "Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious; Raymond 1993, Le Caire",
+   "at": [
+    31.2465,
+    30.0605
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Port of Bulaq",
+   "t0": 1313,
+   "t1": null,
+   "conf": 2,
+   "src": "Bulaq (Wikipedia); Raymond 1993, Le Caire",
+   "at": [
+    31.2305,
+    30.059
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Khan el-Khalili",
+   "t0": 1382,
+   "t1": null,
+   "conf": 2,
+   "src": "Khan el-Khalili (Wikipedia)",
+   "at": [
+    31.2622,
+    30.0477
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Qasaba (al-Mu'izz Street)",
+   "t0": 969,
+   "t1": null,
+   "conf": 2,
+   "src": "Al-Mu'izz Street (Wikipedia); Raymond 1993, Le Caire",
+   "line": [
+    [
+     31.2634,
+     30.0555
+    ],
+    [
+     31.2625,
+     30.0525
+    ],
+    [
+     31.2615,
+     30.0496
+    ],
+    [
+     31.2605,
+     30.047
+    ],
+    [
+     31.2595,
+     30.0455
+    ],
+    [
+     31.258,
+     30.043
+    ],
+    [
+     31.257,
+     30.04
+    ],
+    [
+     31.256,
+     30.037
+    ],
+    [
+     31.2545,
+     30.0335
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Saliba Street",
+   "t0": 1340,
+   "t1": null,
+   "conf": 2,
+   "src": "Al-Saliba Street (Wikipedia); Behrens-Abouseif 1989, Islamic Architecture in Cairo",
+   "line": [
+    [
+     31.258,
+     30.0315
+    ],
+    [
+     31.2545,
+     30.0305
+    ],
+    [
+     31.2515,
+     30.0295
+    ],
+    [
+     31.247,
+     30.031
+    ],
+    [
+     31.2425,
+     30.033
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Muhammad Ali Street",
+   "t0": 1873,
+   "t1": null,
+   "conf": 2,
+   "src": "Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious; Muhammad Ali Street (Wikipedia)",
+   "line": [
+    [
+     31.248,
+     30.051
+    ],
+    [
+     31.2505,
+     30.0455
+    ],
+    [
+     31.253,
+     30.0405
+    ],
+    [
+     31.2552,
+     30.0355
+    ],
+    [
+     31.257,
+     30.0322
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Khalij of Cairo",
+   "t0": 641,
+   "t1": 1899,
+   "conf": 2,
+   "src": "Khalij (Cairo) (Wikipedia); Raymond 1993, Le Caire",
+   "line": [
+    [
+     31.231,
+     30.0225
+    ],
+    [
+     31.236,
+     30.027
+    ],
+    [
+     31.2425,
+     30.0325
+    ],
+    [
+     31.247,
+     30.0375
+    ],
+    [
+     31.25,
+     30.042
+    ],
+    [
+     31.253,
+     30.045
+    ],
+    [
+     31.2545,
+     30.05
+    ],
+    [
+     31.255,
+     30.056
+    ],
+    [
+     31.258,
+     30.06
+    ],
+    [
+     31.2625,
+     30.064
+    ],
+    [
+     31.2665,
+     30.072
+    ],
+    [
+     31.271,
+     30.082
+    ],
+    [
+     31.276,
+     30.095
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Medieval east bank of the Nile",
+   "t0": 641,
+   "t1": 1300,
+   "conf": 2,
+   "src": "Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious; Raymond 1993, Le Caire; Bulaq (Wikipedia)",
+   "area": [
+    [
+     31.2265,
+     30.0
+    ],
+    [
+     31.2305,
+     30.004
+    ],
+    [
+     31.232,
+     30.013
+    ],
+    [
+     31.2345,
+     30.02
+    ],
+    [
+     31.236,
+     30.024
+    ],
+    [
+     31.238,
+     30.035
+    ],
+    [
+     31.24,
+     30.045
+    ],
+    [
+     31.244,
+     30.055
+    ],
+    [
+     31.2455,
+     30.061
+    ],
+    [
+     31.245,
+     30.07
+    ],
+    [
+     31.243,
+     30.085
+    ],
+    [
+     31.24,
+     30.1
+    ],
+    [
+     31.234,
+     30.1
+    ],
+    [
+     31.2305,
+     30.085
+    ],
+    [
+     31.2265,
+     30.07
+    ],
+    [
+     31.228,
+     30.06
+    ],
+    [
+     31.228,
+     30.045
+    ],
+    [
+     31.228,
+     30.03
+    ],
+    [
+     31.228,
+     30.018
+    ],
+    [
+     31.226,
+     30.008
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Birkat al-Fil (Elephant Pond)",
+   "t0": 900,
+   "t1": 1880,
+   "conf": 2,
+   "src": "Birkat al-Fil (Wikipedia); Raymond 1993, Le Caire",
+   "area": [
+    [
+     31.2465,
+     30.04
+    ],
+    [
+     31.25,
+     30.041
+    ],
+    [
+     31.2535,
+     30.04
+    ],
+    [
+     31.2545,
+     30.0375
+    ],
+    [
+     31.2535,
+     30.035
+    ],
+    [
+     31.2505,
+     30.034
+    ],
+    [
+     31.247,
+     30.0345
+    ],
+    [
+     31.2455,
+     30.037
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Birkat al-Azbakiya",
+   "t0": 1476,
+   "t1": 1848,
+   "conf": 2,
+   "src": "Azbakiya (Wikipedia); Raymond 1993, Le Caire",
+   "area": [
+    [
+     31.2455,
+     30.0545
+    ],
+    [
+     31.249,
+     30.056
+    ],
+    [
+     31.2515,
+     30.0545
+    ],
+    [
+     31.2515,
+     30.0515
+    ],
+    [
+     31.249,
+     30.05
+    ],
+    [
+     31.246,
+     30.051
+    ],
+    [
+     31.2452,
+     30.0518
+    ],
+    [
+     31.245,
+     30.0528
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Fustat",
+   "t0": 641,
+   "t1": 750,
+   "conf": 2,
+   "src": "Fustat (Wikipedia); Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious",
+   "area": [
+    [
+     31.229,
+     30.0
+    ],
+    [
+     31.2305,
+     30.012
+    ],
+    [
+     31.233,
+     30.021
+    ],
+    [
+     31.2385,
+     30.0245
+    ],
+    [
+     31.245,
+     30.0215
+    ],
+    [
+     31.2475,
+     30.012
+    ],
+    [
+     31.2465,
+     30.001
+    ],
+    [
+     31.24,
+     29.993
+    ],
+    [
+     31.232,
+     29.9935
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Fustat and al-Askar",
+   "t0": 750,
+   "t1": 870,
+   "conf": 2,
+   "src": "Al-Askar (Wikipedia); Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious",
+   "area": [
+    [
+     31.229,
+     30.0
+    ],
+    [
+     31.2305,
+     30.012
+    ],
+    [
+     31.2335,
+     30.023
+    ],
+    [
+     31.24,
+     30.031
+    ],
+    [
+     31.246,
+     30.031
+    ],
+    [
+     31.249,
+     30.025
+    ],
+    [
+     31.248,
+     30.012
+    ],
+    [
+     31.2465,
+     30.001
+    ],
+    [
+     31.24,
+     29.993
+    ],
+    [
+     31.232,
+     29.9935
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Fustat, al-Askar and al-Qata'i",
+   "t0": 870,
+   "t1": 969,
+   "conf": 2,
+   "src": "Al-Qata'i (Wikipedia); Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious",
+   "area": [
+    [
+     31.229,
+     30.0
+    ],
+    [
+     31.2305,
+     30.012
+    ],
+    [
+     31.2335,
+     30.023
+    ],
+    [
+     31.24,
+     30.032
+    ],
+    [
+     31.247,
+     30.035
+    ],
+    [
+     31.254,
+     30.035
+    ],
+    [
+     31.2585,
+     30.031
+    ],
+    [
+     31.2565,
+     30.026
+    ],
+    [
+     31.2495,
+     30.0215
+    ],
+    [
+     31.248,
+     30.012
+    ],
+    [
+     31.2465,
+     30.001
+    ],
+    [
+     31.24,
+     29.993
+    ],
+    [
+     31.232,
+     29.9935
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Fatimid al-Qahira and Fustat",
+   "t0": 969,
+   "t1": 1250,
+   "conf": 2,
+   "src": "Fustat (Wikipedia); Raymond 1993, Le Caire; Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious",
+   "area": [
+    [
+     31.255,
+     30.057
+    ],
+    [
+     31.2685,
+     30.0555
+    ],
+    [
+     31.2675,
+     30.043
+    ],
+    [
+     31.258,
+     30.042
+    ],
+    [
+     31.2545,
+     30.037
+    ],
+    [
+     31.252,
+     30.03
+    ],
+    [
+     31.249,
+     30.022
+    ],
+    [
+     31.248,
+     30.012
+    ],
+    [
+     31.2465,
+     30.001
+    ],
+    [
+     31.24,
+     29.994
+    ],
+    [
+     31.232,
+     29.994
+    ],
+    [
+     31.2295,
+     30.001
+    ],
+    [
+     31.231,
+     30.012
+    ],
+    [
+     31.235,
+     30.022
+    ],
+    [
+     31.244,
+     30.03
+    ],
+    [
+     31.249,
+     30.036
+    ],
+    [
+     31.253,
+     30.043
+    ],
+    [
+     31.254,
+     30.05
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Mamluk Cairo at its height",
+   "t0": 1250,
+   "t1": 1517,
+   "conf": 2,
+   "src": "Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious; Raymond 1993, Le Caire",
+   "area": [
+    [
+     31.256,
+     30.072
+    ],
+    [
+     31.265,
+     30.074
+    ],
+    [
+     31.27,
+     30.062
+    ],
+    [
+     31.269,
+     30.045
+    ],
+    [
+     31.2665,
+     30.036
+    ],
+    [
+     31.2665,
+     30.027
+    ],
+    [
+     31.26,
+     30.022
+    ],
+    [
+     31.252,
+     30.017
+    ],
+    [
+     31.247,
+     30.008
+    ],
+    [
+     31.244,
+     29.999
+    ],
+    [
+     31.234,
+     29.999
+    ],
+    [
+     31.231,
+     30.01
+    ],
+    [
+     31.2335,
+     30.02
+    ],
+    [
+     31.239,
+     30.03
+    ],
+    [
+     31.242,
+     30.04
+    ],
+    [
+     31.234,
+     30.052
+    ],
+    [
+     31.231,
+     30.06
+    ],
+    [
+     31.235,
+     30.065
+    ],
+    [
+     31.246,
+     30.064
+    ],
+    [
+     31.252,
+     30.066
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ottoman Cairo",
+   "t0": 1517,
+   "t1": 1805,
+   "conf": 2,
+   "src": "Raymond 1993, Le Caire; Description de l'Egypte plan of Cairo (1809)",
+   "area": [
+    [
+     31.256,
+     30.064
+    ],
+    [
+     31.268,
+     30.06
+    ],
+    [
+     31.269,
+     30.045
+    ],
+    [
+     31.2665,
+     30.036
+    ],
+    [
+     31.2665,
+     30.027
+    ],
+    [
+     31.26,
+     30.023
+    ],
+    [
+     31.2525,
+     30.021
+    ],
+    [
+     31.245,
+     30.025
+    ],
+    [
+     31.241,
+     30.033
+    ],
+    [
+     31.243,
+     30.045
+    ],
+    [
+     31.238,
+     30.053
+    ],
+    [
+     31.232,
+     30.056
+    ],
+    [
+     31.231,
+     30.062
+    ],
+    [
+     31.236,
+     30.064
+    ],
+    [
+     31.245,
+     30.06
+    ],
+    [
+     31.251,
+     30.062
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Khedival Cairo",
+   "t0": 1805,
+   "t1": null,
+   "conf": 2,
+   "src": "Abu-Lughod 1971, Cairo: 1001 Years of the City Victorious; Khedivial Cairo (Wikipedia)",
+   "area": [
+    [
+     31.256,
+     30.076
+    ],
+    [
+     31.27,
+     30.074
+    ],
+    [
+     31.272,
+     30.06
+    ],
+    [
+     31.2695,
+     30.045
+    ],
+    [
+     31.267,
+     30.036
+    ],
+    [
+     31.2665,
+     30.026
+    ],
+    [
+     31.258,
+     30.019
+    ],
+    [
+     31.25,
+     30.012
+    ],
+    [
+     31.246,
+     30.002
+    ],
+    [
+     31.234,
+     29.999
+    ],
+    [
+     31.23,
+     30.008
+    ],
+    [
+     31.232,
+     30.025
+    ],
+    [
+     31.231,
+     30.035
+    ],
+    [
+     31.231,
+     30.045
+    ],
+    [
+     31.2295,
+     30.056
+    ],
+    [
+     31.229,
+     30.065
+    ],
+    [
+     31.238,
+     30.07
+    ],
+    [
+     31.248,
+     30.072
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q2190649",
+   "names": [
+    [
+     1540,
+     1935,
+     "Bayt al-Kritliyya"
+    ],
+    [
+     1935,
+     null,
+     "Gayer-Anderson Museum"
+    ]
+   ],
+   "kinds": [
+    [
+     1540,
+     1945,
+     "house"
+    ],
+    [
+     1945,
+     null,
+     "school"
+    ]
+   ],
+   "t0": 1540,
+   "fix_dates": true,
+   "src": "Gayer-Anderson Museum (Wikipedia)",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q2474653",
+   "names": [
+    [
+     882,
+     null,
+     "Ben Ezra Synagogue"
+    ]
+   ],
+   "kinds": [
+    [
+     882,
+     null,
+     "temple"
+    ]
+   ],
+   "t0": 882,
+   "fix_dates": true,
+   "src": "Ben Ezra Synagogue (Wikipedia): synagogue on the site from the 9th century, rebuilt 1892",
+   "conf": 2
+  },
+  {
+   "k": "rename",
+   "wd": "Q12243219",
+   "names": [
+    [
+     1133,
+     null,
+     "Mausoleum of Sayyida Ruqayya"
+    ]
+   ],
+   "kinds": [
+    [
+     1133,
+     null,
+     "tomb"
+    ]
+   ],
+   "src": "Mashhad of Sayyida Ruqayya (Wikipedia)",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q775838",
+   "names": [
+    [
+     990,
+     null,
+     "Mosque of al-Hakim"
+    ]
+   ],
+   "kinds": [
+    [
+     990,
+     null,
+     "mosque"
+    ]
+   ],
+   "t0": 990,
+   "fix_dates": true,
+   "src": "Al-Hakim Mosque (Wikipedia): begun 990 by al-Aziz, finished 1013",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q915413",
+   "names": [
+    [
+     876,
+     null,
+     "Mosque of Ibn Tulun"
+    ]
+   ],
+   "kinds": [
+    [
+     876,
+     null,
+     "mosque"
+    ]
+   ],
+   "t0": 876,
+   "fix_dates": true,
+   "src": "Mosque of Ibn Tulun (Wikipedia): built 876-879",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q1572776",
+   "names": [
+    [
+     1869,
+     1971,
+     "Khedivial Opera House"
+    ]
+   ],
+   "kinds": [
+    [
+     1869,
+     1971,
+     "house"
+    ]
+   ],
+   "src": "Khedivial Opera House (Wikipedia): burned 1971",
+   "conf": 1
+  }
+ ]
+}

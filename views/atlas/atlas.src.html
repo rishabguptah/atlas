@@ -822,9 +822,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // Each zoom frame only moves the root group; labels hide while the scale changes and the
   // counter-scaling, thinning and label layout run once per frame at most, the rest when it settles.
+  // City scale: at K_MAX a 1400 px map shows about a fifth of a degree (20 km), enough for a siege or a street plan.
+  const K_MAX = 1600;
   let zoomK0 = 1, zoomRaf = 0, drawnK = 1;
   const zoomFrame = () => { zoomRaf = 0; svg.style("--k", state.k); placeScaled(); paintMarks(); };
-  const zoom = d3.zoom().scaleExtent([1, 80]).on("start", ev => { zoomK0 = ev.transform.k; }).on("zoom", ev => {
+  const zoom = d3.zoom().scaleExtent([1, K_MAX]).on("start", ev => { zoomK0 = ev.transform.k; }).on("zoom", ev => {
     root.attr("transform", ev.transform);
     state.k = ev.transform.k;
     if (state.k !== zoomK0) mapEl.classList.add("moving");
@@ -862,7 +864,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     // so there the smallest zoom fills the height and the view stops at the world's edges.
     const sb = path.bounds({ type: "Sphere" }), worldH = sb[1][1] - sb[0][1];
     kMin = worldH < H * 0.75 ? Math.min(6, H / worldH) : 1;
-    zoom.scaleExtent([kMin, 80]).translateExtent(kMin > 1 ? sb : [[-W, -H], [W * 2, H * 2]]);
+    zoom.scaleExtent([kMin, K_MAX]).translateExtent(kMin > 1 ? sb : [[-W, -H], [W * 2, H * 2]]);
     drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(true); drawOverlay(); drawSel(); renderBasemap();
     if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had), k = Math.max(kMin, t0.k); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k))); }
     else if (kMin > 1) { const [x, y] = projection([30, 25]); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - kMin * x, H / 2 - kMin * y).scale(kMin))); }
@@ -871,7 +873,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function flyTo(v, ms = 1400) {
     if (!v || !isFinite(v.lon) || !isFinite(v.lat)) return;
     const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]);
-    const k = Math.max(kMin, Math.min(80, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
+    const k = Math.max(kMin, Math.min(K_MAX, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
     const [x, y] = projection([v.lon, v.lat]);
     const t = fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
     svg.interrupt().transition().duration(reduceMotion() ? 0 : ms).call(zoom.transform, t);
@@ -2709,7 +2711,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   syncEra(state.year);
   setTab("guide");
   if (RESUME) {
-    flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(1, Math.min(80, +RESUME.k || 1)) }, 0);
+    flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(1, Math.min(K_MAX, +RESUME.k || 1)) }, 0);
     document.getElementById("maphint").textContent = `Picked up where you left off, in ${fmtYear(state.year)}. Press S for a surprise.`;
   } else flyTo({ lon: 45, lat: 35, span: 140 }, 0);
 })();

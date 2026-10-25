@@ -1,0 +1,1596 @@
+{
+ "id": "kaifeng",
+ "note": "Kaifeng (Bianjing): Tang Bianzhou, the Northern Song triple-walled capital (Palace, Inner and Outer City) now 8-11 m under Yellow River silt after the 1642 flood, the Ming city and Prince of Zhou palace, and the Qing city whose wall (rebuilt 1841-43) survives. Song positions are reconstructed around the Ming-Qing wall and the Imperial Way (Zhongshan Road); treat Outer City corners and gates as estimates.",
+ "features": [
+  {
+   "k": "wall_dates",
+   "match": "",
+   "name": "Kaifeng city wall (Qing, rebuilt 1841-43 on the Ming line)",
+   "t0": 1843,
+   "t1": null,
+   "label": "Kaifeng city wall (Qing, rebuilt 1841-43 on the Ming line)",
+   "conf": 1,
+   "src": "Kaifeng; Kaifeng City Wall (Chinese Wikipedia: 开封城墙)"
+  },
+  {
+   "k": "wall",
+   "name": "Bianzhou wall / Song Inner City (Old City) wall",
+   "t0": 781,
+   "t1": 1368,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Kaifeng (Tang wall of Li Mian 781, the Song Inner City; roughly under the Ming-Qing line)",
+   "line": [
+    [
+     114.3281,
+     34.78812
+    ],
+    [
+     114.32872,
+     34.78752
+    ],
+    [
+     114.3442,
+     34.7844
+    ],
+    [
+     114.35634,
+     34.78375
+    ],
+    [
+     114.35761,
+     34.7843
+    ],
+    [
+     114.35984,
+     34.78867
+    ],
+    [
+     114.36073,
+     34.79075
+    ],
+    [
+     114.36423,
+     34.80035
+    ],
+    [
+     114.36661,
+     34.81548
+    ],
+    [
+     114.36615,
+     34.81637
+    ],
+    [
+     114.36094,
+     34.81708
+    ],
+    [
+     114.34812,
+     34.8182
+    ],
+    [
+     114.33715,
+     34.81765
+    ],
+    [
+     114.33619,
+     34.81722
+    ],
+    [
+     114.33396,
+     34.81333
+    ],
+    [
+     114.33319,
+     34.81127
+    ],
+    [
+     114.32996,
+     34.80168
+    ],
+    [
+     114.32877,
+     34.79765
+    ],
+    [
+     114.3281,
+     34.78812
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Ming Kaifeng wall",
+   "t0": 1368,
+   "t1": 1642,
+   "conf": 2,
+   "src": "Kaifeng; Steinhardt 1990, Chinese Imperial City Planning (rebuilt 1368 on the Song-Jin inner line, breached in the 1642 flood)",
+   "line": [
+    [
+     114.32594,
+     34.78669
+    ],
+    [
+     114.32663,
+     34.78602
+    ],
+    [
+     114.34383,
+     34.78255
+    ],
+    [
+     114.35732,
+     34.78183
+    ],
+    [
+     114.35873,
+     34.78244
+    ],
+    [
+     114.36121,
+     34.7873
+    ],
+    [
+     114.3622,
+     34.78961
+    ],
+    [
+     114.36609,
+     34.80028
+    ],
+    [
+     114.36873,
+     34.81709
+    ],
+    [
+     114.36822,
+     34.81808
+    ],
+    [
+     114.36243,
+     34.81887
+    ],
+    [
+     114.34819,
+     34.82011
+    ],
+    [
+     114.336,
+     34.8195
+    ],
+    [
+     114.33493,
+     34.81902
+    ],
+    [
+     114.33246,
+     34.8147
+    ],
+    [
+     114.3316,
+     34.81241
+    ],
+    [
+     114.32801,
+     34.80176
+    ],
+    [
+     114.32669,
+     34.79728
+    ],
+    [
+     114.32594,
+     34.78669
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Qing Kaifeng wall (before the 1841 flood)",
+   "t0": 1662,
+   "t1": 1841,
+   "conf": 2,
+   "src": "Kaifeng (rebuilt 1662 on the buried Ming wall)",
+   "line": [
+    [
+     114.32594,
+     34.78669
+    ],
+    [
+     114.32663,
+     34.78602
+    ],
+    [
+     114.34383,
+     34.78255
+    ],
+    [
+     114.35732,
+     34.78183
+    ],
+    [
+     114.35873,
+     34.78244
+    ],
+    [
+     114.36121,
+     34.7873
+    ],
+    [
+     114.3622,
+     34.78961
+    ],
+    [
+     114.36609,
+     34.80028
+    ],
+    [
+     114.36873,
+     34.81709
+    ],
+    [
+     114.36822,
+     34.81808
+    ],
+    [
+     114.36243,
+     34.81887
+    ],
+    [
+     114.34819,
+     34.82011
+    ],
+    [
+     114.336,
+     34.8195
+    ],
+    [
+     114.33493,
+     34.81902
+    ],
+    [
+     114.33246,
+     34.8147
+    ],
+    [
+     114.3316,
+     34.81241
+    ],
+    [
+     114.32801,
+     34.80176
+    ],
+    [
+     114.32669,
+     34.79728
+    ],
+    [
+     114.32594,
+     34.78669
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Song Outer City (New City) wall",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999) (built 955, about 29 km around; ruined after 1233 and buried by Yellow River silt in 1642)",
+   "line": [
+    [
+     114.31,
+     34.767
+    ],
+    [
+     114.3309,
+     34.7666
+    ],
+    [
+     114.3518,
+     34.7662
+    ],
+    [
+     114.3694,
+     34.7671
+    ],
+    [
+     114.387,
+     34.768
+    ],
+    [
+     114.3875,
+     34.7845
+    ],
+    [
+     114.388,
+     34.801
+    ],
+    [
+     114.387,
+     34.818
+    ],
+    [
+     114.386,
+     34.835
+    ],
+    [
+     114.3689,
+     34.8353
+    ],
+    [
+     114.3518,
+     34.8356
+    ],
+    [
+     114.3319,
+     34.8348
+    ],
+    [
+     114.312,
+     34.834
+    ],
+    [
+     114.31,
+     34.8175
+    ],
+    [
+     114.308,
+     34.801
+    ],
+    [
+     114.309,
+     34.784
+    ],
+    [
+     114.31,
+     34.767
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Song Palace City wall",
+   "t0": 962,
+   "t1": 1233,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Kaifeng (palace under the Longting lakes)",
+   "line": [
+    [
+     114.3483,
+     34.8052
+    ],
+    [
+     114.3553,
+     34.8052
+    ],
+    [
+     114.3553,
+     34.8112
+    ],
+    [
+     114.3483,
+     34.8112
+    ],
+    [
+     114.3483,
+     34.8052
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Ming Prince of Zhou's palace wall",
+   "t0": 1378,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Kaifeng (Zhou Wang Fu on the Song-Jin palace site, destroyed 1642)",
+   "line": [
+    [
+     114.347,
+     34.8042
+    ],
+    [
+     114.3566,
+     34.8042
+    ],
+    [
+     114.3566,
+     34.8126
+    ],
+    [
+     114.347,
+     34.8126
+    ],
+    [
+     114.347,
+     34.8042
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Xuande Gate (palace south gate)",
+   "t0": 962,
+   "t1": 1233,
+   "conf": 2,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3518,
+    34.8052
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Zhuque Gate (Inner City south gate)",
+   "t0": 781,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3518,
+    34.78415
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Jinglong Gate (Inner City north gate)",
+   "t0": 781,
+   "t1": 1233,
+   "conf": 1,
+   "src": "China Daily 2024, \"Gate from past opens new path to studies\"; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3538,
+    34.8178
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Nanxun Gate (Outer City south gate)",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3518,
+    34.7662
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Chenzhou Gate",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3695,
+    34.7672
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Daizhou Gate",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3275,
+    34.7668
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Xinzheng Gate (Shuntian Gate)",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "China Daily 2024, \"Gate from past opens new path to studies\" (Shuntian Gate excavated); Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3083,
+    34.7975
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Wansheng Gate",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3098,
+    34.82
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Xinsong Gate (Chaoyang Gate)",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3877,
+    34.7975
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Xincao Gate",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3874,
+    34.82
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Fengqiu Gate",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3578,
+    34.8354
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Chenqiao Gate",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3725,
+    34.8347
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Weizhou Gate",
+   "t0": 955,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3295,
+    34.8345
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Bianzhou (Tang prefectural city)",
+   "t0": 781,
+   "t1": 954,
+   "conf": 2,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Kaifeng",
+   "area": [
+    [
+     114.32853,
+     34.78841
+    ],
+    [
+     114.32913,
+     34.78782
+    ],
+    [
+     114.34427,
+     34.78476
+    ],
+    [
+     114.35614,
+     34.78413
+    ],
+    [
+     114.35738,
+     34.78467
+    ],
+    [
+     114.35956,
+     34.78894
+    ],
+    [
+     114.36044,
+     34.79098
+    ],
+    [
+     114.36386,
+     34.80037
+    ],
+    [
+     114.36618,
+     34.81516
+    ],
+    [
+     114.36573,
+     34.81603
+    ],
+    [
+     114.36064,
+     34.81673
+    ],
+    [
+     114.34811,
+     34.81782
+    ],
+    [
+     114.33738,
+     34.81728
+    ],
+    [
+     114.33644,
+     34.81686
+    ],
+    [
+     114.33426,
+     34.81306
+    ],
+    [
+     114.33351,
+     34.81104
+    ],
+    [
+     114.33035,
+     34.80167
+    ],
+    [
+     114.32919,
+     34.79773
+    ],
+    [
+     114.32853,
+     34.78841
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Bianjing, Northern Song capital (peak c. 1100)",
+   "t0": 955,
+   "t1": 1126,
+   "conf": 2,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "area": [
+    [
+     114.305,
+     34.765
+    ],
+    [
+     114.3284,
+     34.764
+    ],
+    [
+     114.3518,
+     34.763
+    ],
+    [
+     114.3714,
+     34.7645
+    ],
+    [
+     114.391,
+     34.766
+    ],
+    [
+     114.394,
+     34.776
+    ],
+    [
+     114.397,
+     34.786
+    ],
+    [
+     114.394,
+     34.7935
+    ],
+    [
+     114.391,
+     34.801
+    ],
+    [
+     114.39,
+     34.819
+    ],
+    [
+     114.389,
+     34.837
+    ],
+    [
+     114.3704,
+     34.838
+    ],
+    [
+     114.3518,
+     34.839
+    ],
+    [
+     114.3299,
+     34.8375
+    ],
+    [
+     114.308,
+     34.836
+    ],
+    [
+     114.306,
+     34.8185
+    ],
+    [
+     114.304,
+     34.801
+    ],
+    [
+     114.301,
+     34.7965
+    ],
+    [
+     114.298,
+     34.792
+    ],
+    [
+     114.3015,
+     34.7785
+    ],
+    [
+     114.305,
+     34.765
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Kaifeng under the Jin (Nanjing, capital 1214-33)",
+   "t0": 1127,
+   "t1": 1232,
+   "conf": 2,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Kaifeng",
+   "area": [
+    [
+     114.32271,
+     34.78454
+    ],
+    [
+     114.3231,
+     34.78416
+    ],
+    [
+     114.3235,
+     34.78377
+    ],
+    [
+     114.33339,
+     34.78178
+    ],
+    [
+     114.34328,
+     34.77978
+    ],
+    [
+     114.35104,
+     34.77937
+    ],
+    [
+     114.35879,
+     34.77895
+    ],
+    [
+     114.3596,
+     34.77931
+    ],
+    [
+     114.36041,
+     34.77966
+    ],
+    [
+     114.36184,
+     34.78245
+    ],
+    [
+     114.36327,
+     34.78525
+    ],
+    [
+     114.36384,
+     34.78657
+    ],
+    [
+     114.36441,
+     34.7879
+    ],
+    [
+     114.36664,
+     34.79404
+    ],
+    [
+     114.36888,
+     34.80017
+    ],
+    [
+     114.3704,
+     34.80984
+    ],
+    [
+     114.37191,
+     34.8195
+    ],
+    [
+     114.37162,
+     34.82007
+    ],
+    [
+     114.37133,
+     34.82064
+    ],
+    [
+     114.368,
+     34.8211
+    ],
+    [
+     114.36467,
+     34.82155
+    ],
+    [
+     114.35648,
+     34.82226
+    ],
+    [
+     114.34829,
+     34.82298
+    ],
+    [
+     114.34128,
+     34.82263
+    ],
+    [
+     114.33428,
+     34.82227
+    ],
+    [
+     114.33366,
+     34.822
+    ],
+    [
+     114.33304,
+     34.82172
+    ],
+    [
+     114.33162,
+     34.81924
+    ],
+    [
+     114.3302,
+     34.81676
+    ],
+    [
+     114.32971,
+     34.81544
+    ],
+    [
+     114.32921,
+     34.81412
+    ],
+    [
+     114.32715,
+     34.808
+    ],
+    [
+     114.32509,
+     34.80187
+    ],
+    [
+     114.32433,
+     34.7993
+    ],
+    [
+     114.32357,
+     34.79672
+    ],
+    [
+     114.32314,
+     34.79063
+    ],
+    [
+     114.32271,
+     34.78454
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Kaifeng, Ming provincial capital (c. 1600)",
+   "t0": 1233,
+   "t1": 1641,
+   "conf": 2,
+   "src": "Kaifeng; Steinhardt 1990, Chinese Imperial City Planning",
+   "area": [
+    [
+     114.32465,
+     34.78583
+    ],
+    [
+     114.32538,
+     34.78512
+    ],
+    [
+     114.34361,
+     34.78144
+    ],
+    [
+     114.35791,
+     34.78068
+    ],
+    [
+     114.3594,
+     34.78133
+    ],
+    [
+     114.36203,
+     34.78648
+    ],
+    [
+     114.36308,
+     34.78893
+    ],
+    [
+     114.36721,
+     34.80024
+    ],
+    [
+     114.37,
+     34.81806
+    ],
+    [
+     114.36946,
+     34.8191
+    ],
+    [
+     114.36333,
+     34.81994
+    ],
+    [
+     114.34823,
+     34.82126
+    ],
+    [
+     114.33531,
+     34.82061
+    ],
+    [
+     114.33418,
+     34.8201
+    ],
+    [
+     114.33156,
+     34.81552
+    ],
+    [
+     114.33065,
+     34.81309
+    ],
+    [
+     114.32684,
+     34.80181
+    ],
+    [
+     114.32544,
+     34.79706
+    ],
+    [
+     114.32465,
+     34.78583
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Kaifeng after the 1642 flood (ruins on the silt)",
+   "t0": 1642,
+   "t1": 1661,
+   "conf": 1,
+   "src": "Kaifeng (the 1642 breach of the Yellow River dikes buried the city; few survivors)",
+   "area": [
+    [
+     114.342,
+     34.792
+    ],
+    [
+     114.35,
+     34.788
+    ],
+    [
+     114.36,
+     34.79
+    ],
+    [
+     114.364,
+     34.798
+    ],
+    [
+     114.366,
+     34.81
+    ],
+    [
+     114.364,
+     34.817
+    ],
+    [
+     114.356,
+     34.806
+    ],
+    [
+     114.348,
+     34.8
+    ],
+    [
+     114.34,
+     34.799
+    ],
+    [
+     114.342,
+     34.792
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Kaifeng, Qing provincial capital (c. 1850)",
+   "t0": 1662,
+   "t1": 1949,
+   "conf": 2,
+   "src": "Kaifeng (the north-west of the walled city stayed lakes and fields after 1642)",
+   "area": [
+    [
+     114.32663,
+     34.78602
+    ],
+    [
+     114.34383,
+     34.78255
+    ],
+    [
+     114.35732,
+     34.78183
+    ],
+    [
+     114.35873,
+     34.78244
+    ],
+    [
+     114.36121,
+     34.7873
+    ],
+    [
+     114.36609,
+     34.80028
+    ],
+    [
+     114.36873,
+     34.81709
+    ],
+    [
+     114.36243,
+     34.81887
+    ],
+    [
+     114.359,
+     34.815
+    ],
+    [
+     114.357,
+     34.806
+    ],
+    [
+     114.348,
+     34.803
+    ],
+    [
+     114.338,
+     34.806
+    ],
+    [
+     114.331,
+     34.805
+    ],
+    [
+     114.328,
+     34.798
+    ],
+    [
+     114.327,
+     34.79
+    ],
+    [
+     114.32663,
+     34.78602
+    ]
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Fan Pagoda (Tianqing Temple)",
+   "t0": 977,
+   "t1": null,
+   "conf": 1,
+   "src": "Kaifeng (Po Pagoda, built 974-977)",
+   "at": [
+    114.3735,
+    34.7845
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Daxiangguo Temple",
+   "t0": 555,
+   "t1": null,
+   "conf": 2,
+   "src": "Daxiangguo Temple",
+   "at": [
+    114.353,
+    34.7955
+   ],
+   "names": [
+    [
+     555,
+     712,
+     "Jianguo Temple"
+    ],
+    [
+     712,
+     null,
+     "Daxiangguo Temple"
+    ]
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Kaifeng synagogue",
+   "t0": 1163,
+   "t1": 1860,
+   "conf": 1,
+   "src": "Kaifeng Jews (founded 1163, rebuilt after floods, ruined by the 1850s-60s)",
+   "at": [
+    114.359,
+    34.799
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Zhou Bridge (Tianhan Bridge) over the Bian",
+   "t0": 781,
+   "t1": 1642,
+   "conf": 2,
+   "src": "China Daily 2024, \"Gate from past opens new path to studies\" (Zhouqiao excavated); Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3518,
+    34.7935
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Rainbow Bridge (Hongqiao, of the Qingming scroll)",
+   "t0": 1050,
+   "t1": 1127,
+   "conf": 3,
+   "src": "Along the River During the Qingming Festival (location east of the city is conjectural)",
+   "at": [
+    114.413,
+    34.781
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Xiangguo Temple Bridge",
+   "t0": 960,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.357,
+    34.7935
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Daqing Hall (Song palace audience hall)",
+   "t0": 962,
+   "t1": 1127,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3518,
+    34.8075
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Longting (Dragon Pavilion)",
+   "t0": 1692,
+   "t1": null,
+   "conf": 2,
+   "src": "Kaifeng (built on the Song-Ming palace terrace)",
+   "at": [
+    114.3505,
+    34.812
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Prince of Zhou's palace",
+   "t0": 1378,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Kaifeng",
+   "at": [
+    114.3518,
+    34.809
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Yanqing Guan (Daoist temple)",
+   "t0": 1233,
+   "t1": null,
+   "conf": 2,
+   "src": "Kaifeng (Chongyang Guan, Yuan; renamed Yanqing Guan in the Ming)",
+   "at": [
+    114.3368,
+    34.7952
+   ],
+   "names": [
+    [
+     1233,
+     1368,
+     "Chongyang Guan"
+    ],
+    [
+     1368,
+     null,
+     "Yanqing Guan"
+    ]
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Fan Lou (Song restaurant tower)",
+   "t0": 1100,
+   "t1": 1127,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "at": [
+    114.3475,
+    34.799
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Genyue (Huizong imperial garden)",
+   "t0": 1117,
+   "t1": 1127,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Kaifeng",
+   "at": [
+    114.363,
+    34.814
+   ]
+  },
+  {
+   "k": "school",
+   "name": "Imperial examination hall (Gongyuan)",
+   "t0": 1734,
+   "t1": 1905,
+   "conf": 1,
+   "src": "Henan University (built on the Qing examination hall site)",
+   "at": [
+    114.3637,
+    34.8127
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Shan-Shaan-Gan Guild Hall",
+   "t0": 1765,
+   "t1": null,
+   "conf": 1,
+   "src": "Kaifeng",
+   "at": [
+    114.35,
+    34.8
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Xiangguo Temple market",
+   "t0": 960,
+   "t1": 1127,
+   "conf": 2,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999) (monthly fairs at the temple)",
+   "at": [
+    114.3545,
+    34.796
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Imperial Way (Yujie)",
+   "t0": 962,
+   "t1": 1233,
+   "conf": 2,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "line": [
+    [
+     114.3518,
+     34.8052
+    ],
+    [
+     114.3518,
+     34.78375
+    ],
+    [
+     114.3518,
+     34.7662
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Zhongshan Road (on the Imperial Way)",
+   "t0": 1662,
+   "t1": null,
+   "conf": 2,
+   "src": "Kaifeng",
+   "line": [
+    [
+     114.3518,
+     34.811
+    ],
+    [
+     114.3518,
+     34.7826
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Song east-west avenue (Xinzheng Gate to Xinsong Gate)",
+   "t0": 955,
+   "t1": 1233,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "line": [
+    [
+     114.308,
+     34.7975
+    ],
+    [
+     114.33,
+     34.7975
+    ],
+    [
+     114.3518,
+     34.7978
+    ],
+    [
+     114.366,
+     34.7975
+    ],
+    [
+     114.387,
+     34.7975
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Bian Canal (Bianhe)",
+   "t0": 605,
+   "t1": 1200,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999); Grand Canal (Bian section silted after the Song)",
+   "line": [
+    [
+     114.25,
+     34.793
+    ],
+    [
+     114.28,
+     34.7915
+    ],
+    [
+     114.308,
+     34.7905
+    ],
+    [
+     114.32,
+     34.792
+    ],
+    [
+     114.33,
+     34.7935
+    ],
+    [
+     114.3518,
+     34.7935
+    ],
+    [
+     114.36,
+     34.793
+    ],
+    [
+     114.368,
+     34.7925
+    ],
+    [
+     114.387,
+     34.7895
+    ],
+    [
+     114.4,
+     34.785
+    ],
+    [
+     114.413,
+     34.781
+    ],
+    [
+     114.45,
+     34.774
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Cai River (Huimin River)",
+   "t0": 960,
+   "t1": 1200,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "line": [
+    [
+     114.29,
+     34.765
+    ],
+    [
+     114.308,
+     34.776
+    ],
+    [
+     114.33,
+     34.776
+    ],
+    [
+     114.3518,
+     34.772
+    ],
+    [
+     114.37,
+     34.774
+    ],
+    [
+     114.387,
+     34.77
+    ],
+    [
+     114.41,
+     34.758
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Wuzhang River",
+   "t0": 960,
+   "t1": 1200,
+   "conf": 1,
+   "src": "Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999)",
+   "line": [
+    [
+     114.43,
+     34.85
+    ],
+    [
+     114.397,
+     34.84
+    ],
+    [
+     114.387,
+     34.831
+    ],
+    [
+     114.37,
+     34.825
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Jinming Pool (Song naval pool)",
+   "t0": 959,
+   "t1": 1642,
+   "conf": 1,
+   "src": "Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Meng Yuanlao 1147, Dongjing Meng Hua Lu (tr. in Heng 1999) (dug 959 outside the Shuntian Gate, silted)",
+   "area": [
+    [
+     114.282,
+     34.787
+    ],
+    [
+     114.295,
+     34.7868
+    ],
+    [
+     114.2955,
+     34.7975
+    ],
+    [
+     114.282,
+     34.7978
+    ],
+    [
+     114.28,
+     34.792
+    ],
+    [
+     114.282,
+     34.787
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q1561904",
+   "name": "Iron Pagoda (Youguo Temple)",
+   "names": [
+    [
+     1049,
+     1368,
+     "Iron Pagoda (Kaibao Temple)"
+    ],
+    [
+     1368,
+     null,
+     "Iron Pagoda (Youguo Temple)"
+    ]
+   ],
+   "src": "Iron Pagoda",
+   "t0": 1049,
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q391150",
+   "name": "Henan University",
+   "names": [
+    [
+     1912,
+     1923,
+     "Henan Preparatory School for Study in Europe and America"
+    ],
+    [
+     1923,
+     1927,
+     "Zhongzhou University"
+    ],
+    [
+     1927,
+     1930,
+     "Henan Sun Yat-sen University"
+    ],
+    [
+     1930,
+     null,
+     "Henan University"
+    ]
+   ],
+   "src": "Henan University",
+   "t0": 1912,
+   "conf": 1
+  }
+ ]
+}

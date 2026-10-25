@@ -6,7 +6,7 @@
 # ATLAS_DIR holds the Living Atlas files (entries*.js, empires.js, borders/); default /mnt/project-files/atlas.
 # LAYERS_DIR holds people/money/plague/ideas.json from extract_layers.py; default ATLAS_DIR/unified/layers.
 # Order and Chaos (data/order-chaos/lab.json) and the guide tours come from this repo.
-import sys, json, glob, os, re
+import sys, json, glob, os, re, shutil
 
 args = sys.argv[1:]
 local = None
@@ -148,6 +148,12 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
     for f in ('palette.js', 'icons.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'paleo.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js', 'motion.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
+    # The city layer (views/pixel/city.js) is only needed past about 3 degrees across: beside the page, loaded on
+    # first use by the pixel basemap; inline only in a one-file build.
+    if inline:
+        scripts.append('<script>\n' + open(os.path.join(pixel_dir, 'city.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
+    else:
+        os.makedirs(side_dir, exist_ok=True); shutil.copy(os.path.join(pixel_dir, 'city.js'), os.path.join(side_dir, 'city.js'))
 # The label engine (one queue for every layer's names) goes first, with or without the pixel map.
 scripts.insert(0, '<script>\n' + open(os.path.join(pixel_dir, 'labels.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 # The world engine (views/atlas/world/: the world index and its packs) loads before the lenses that read it; its

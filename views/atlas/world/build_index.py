@@ -1,8 +1,9 @@
 # Compile the world index (L1) beside the page:
 #   OUT/atlas-files/world/index.json      table of contents: time slices, packs, storylines (a few KB, fetched at start)
-#   OUT/atlas-files/world/base-<i>.json   the whole world in time slices of at most ~3,000 rows (chronicle, Pantheon, kernel)
+#   OUT/atlas-files/world/base-<i>.json   the whole world in time slices of about 7,000 rows (chronicle, Pantheon, kernel)
 #   OUT/atlas-files/world/stories.json    the study storylines (data/deep/stories/)
 #   OUT/atlas-files/world/density.json    the coverage grid, when data/coverage/geo/density.json exists
+#   OUT/atlas-files/world/cities.json     city plans by date (data/cities/plans/, ingest/city/plan.py), for views/pixel/city.js
 #   OUT/atlas-files/packs/<id>.json       dense packs (data/deep/packs/, from assemble.py)
 # views/atlas/build.py calls write() for every page build; run it alone with
 #   python3 views/atlas/world/build_index.py OUT_DIR
@@ -12,7 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import assemble as A  # noqa: E402
 
-SLICE = 3000          # rows per time slice, at most (a slice never splits one year)
+SLICE = 7000          # rows per time slice, at least (a slice never splits one year); few files keep the publish small
 LIVES_MODERN_HPI = 62  # after 1700, Pantheon people below this fame wait for a pack (Pantheon's modern tail is mostly sport and screen)
 
 
@@ -103,9 +104,18 @@ def write(repo, side_dir):
     S = stories(repo)
     open(os.path.join(wd, 'stories.json'), 'w', encoding='utf-8').write(J({'stories': S}))
     dens = os.path.join(repo, 'data', 'coverage', 'geo', 'density.json')
-    if os.path.exists(dens):
+    has_dens = os.path.exists(dens)
+    if has_dens:
         shutil.copy(dens, os.path.join(wd, 'density.json'))
-    ix = {'built': A.time.strftime('%Y-%m-%d'), 'base': base, 'packs': packs, 'stories_file': 'stories.json',
+    elif os.path.exists(os.path.join(wd, 'density.json')):
+        os.remove(os.path.join(wd, 'density.json'))
+    for f in os.listdir(wd):  # slices left from an older build with a different slice size
+        if f.startswith('base-') and f not in {b['f'] for b in base}:
+            os.remove(os.path.join(wd, f))
+    cp = os.path.join(repo, 'data', 'cities', 'plans')
+    plans = [json.load(open(os.path.join(cp, f), encoding='utf-8')) for f in sorted(os.listdir(cp)) if f.endswith('.json')] if os.path.isdir(cp) else []
+    open(os.path.join(wd, 'cities.json'), 'w', encoding='utf-8').write(J({'cities': plans}))
+    ix = {'built': A.time.strftime('%Y-%m-%d'), 'base': base, 'packs': packs, 'stories_file': 'stories.json', 'density': 'density.json' if has_dens else None,
           'stories': [{'id': s['id'], 'title': s['title'], 'region': s.get('region', ''), 'start': s['start'], 'end': s['end'], 'view': s['view'],
                        'blurb': s['blurb'], 'n': len(s['steps'])} for s in S],
           'sources': {'chronicle': 'Wikidata (CC0), dated events of 38 classes, queried 2026-10-25', 'lives': 'Pantheon 2025 update (Yu et al. 2016), CC BY-SA 4.0',
