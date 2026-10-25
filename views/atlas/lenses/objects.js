@@ -75,23 +75,22 @@
   function prep(D) {
     if (M && M.D === D) return M;
     const src = i => ({ cite: D.src[i][0], url: D.src[i][1] || undefined });
-    const objs = (D.objects || []).map(o => {
-      const ob = { ...o, stops: [] };
-      // br: a branch stop (copies, or a part that left); the object itself stays where it was.
-      ob.stops = o.st.map((s, i) => ({ ...s, i, owner: s.o || null, lon: s.at[0], lat: s.at[1], obj: ob, br: !!(s.cp || s.sp) }));
-      ob.real = ob.stops.filter(s => !s.br);
-      for (const s of ob.stops) s.prev = s.f != null ? ob.stops[s.f] : null;
-      ob.y0 = ob.stops[0].y; ob.y1 = ob.stops[ob.stops.length - 1].y;
-      return ob;
-    });
-    for (const o of objs) {
-      // Geodesic length of each leg, for moving along it.
-      for (const s of o.stops) if (s.L) {
-        s.seg = []; s.len = 0;
-        for (let i = 1; i < s.L.length; i++) { const d = d3.geoDistance(s.L[i - 1], s.L[i]); s.seg.push(d); s.len += d; }
-      }
-    }
+    const objs = (D.objects || []).map(mk);
     return M = { D, src, objs, byId: Object.fromEntries(objs.map(o => [o.id, o])) };
+  }
+  function mk(o) {
+    const ob = { ...o, stops: [] };
+    // br: a branch stop (copies, or a part that left); the object itself stays where it was.
+    ob.stops = o.st.map((s, i) => ({ ...s, i, owner: s.o || null, lon: s.at[0], lat: s.at[1], obj: ob, br: !!(s.cp || s.sp) }));
+    ob.real = ob.stops.filter(s => !s.br);
+    for (const s of ob.stops) s.prev = s.f != null ? ob.stops[s.f] : null;
+    ob.y0 = ob.stops[0].y; ob.y1 = ob.stops[ob.stops.length - 1].y;
+    // Geodesic length of each leg, for moving along it.
+    for (const s of ob.stops) if (s.L) {
+      s.seg = []; s.len = 0;
+      for (let i = 1; i < s.L.length; i++) { const d = d3.geoDistance(s.L[i - 1], s.L[i]); s.seg.push(d); s.len += d; }
+    }
+    return ob;
   }
   // A point t (0-1) of the way along a leg, and the leg up to there.
   function along(s, t) {
@@ -195,6 +194,11 @@
     ctx.pins(rest, { key: r => r.o.id + (r.part ? ":" + r.s.i : ""), shape: r => sprite(r.s.cp ? "obj_paper" : r.o.sp) || "diamond", hi: r => !!r.hi, ghost: r => !!r.ghost, always: !!F,
       label: r => r.kind ? `${r.o.n} · ${r.s.p}` : r.s.cp ? `copies of the ${r.o.n}` : r.part ? `${r.o.n} (part) · ${r.s.p}` : r.s.e && ctx.year > r.s.y ? `${r.o.n} (lost)` : r.o.n,
       title: r => `${r.o.n} · ${r.s.p}${r.s.owner ? ", " + r.s.owner : ""} · ${fmtY(r.s.y)}`, card: r => stopCard(C, r.s) });
+    if (F && follow.quiz) {
+      const q = follow.quiz;
+      ctx.pins(q.opts.map(x => ({ ...x, lon: x.s.lon, lat: x.s.lat })), { key: x => "q" + x.k, shape: "diamond", size: 6, always: true, pri: 30, hi: x => !!q.picked && !!x.right,
+        fade: x => q.picked && !x.right ? .35 : 1, label: x => `${x.k}  ${x.s.p}${q.picked && x.right ? "  ✓" : ""}`, title: x => `${x.k}: ${x.s.p}` });
+    }
     ctx.pins(movers, { key: m => "m:" + m.s.obj.id, shape: m => m.sprite || "circle", hi: m => !!m.hi, always: true,
       label: m => `${m.s.obj.n} → ${m.s.p}`, title: m => `${m.s.obj.n} on its way to ${m.s.p} (${m.s.by})`, card: m => stopCard(C, m.s) });
   }
@@ -263,6 +267,9 @@
 .obj .stops li p { margin: 4px 0 0; font-size: 13.5px; display: none; }
 .obj .stops li.on p { display: block; }
 .obj .note { font-size: 13px; color: var(--ink-soft); margin: 0; }
+.obj .quiz { display: grid; gap: 6px; padding: 10px; border: 2px solid ${COLOR}; border-radius: 8px; }
+.obj .quiz .go { text-align: left; } .obj .quiz .dim { opacity: .45; }
+.obj .quiz .yes { color: #2f7a4b; margin: 0; font-weight: 600; } .obj .quiz .no { color: #a33a2a; margin: 0; font-weight: 600; }
 .obj .conf { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--ink-soft); }
 .obj .conf span::before { content: ""; display: inline-block; width: 18px; margin-right: 5px; vertical-align: middle; border-top: 2px solid ${COLOR}; }
 .obj .conf .likely::before { border-top-style: dashed; } .obj .conf .legend::before { border-top-style: dotted; }
@@ -289,7 +296,8 @@
       <div class="ctl">${on ? `<button type="button" class="go ghost" data-act="prev" aria-label="Previous stop">◀</button>
         <button type="button" class="go" data-act="pause">${follow.playing ? "❚❚ Pause" : "▶ Play"}</button>
         <button type="button" class="go ghost" data-act="next" aria-label="Next stop">▶</button><button type="button" class="go ghost" data-act="stop">✕ Stop</button>`
-        : `<button type="button" class="go" data-act="follow">▶ Follow its journey</button>`}</div>
+        : `<button type="button" class="go" data-act="follow">▶ Follow its journey</button><button type="button" class="go ghost" data-act="play">🎲 Play: guess where it goes</button>`}</div>
+      ${on ? quizHtml(o) : best(o.id) != null ? `<p class="note">Your best guessing game: ${best(o.id)} of ${rounds(o)}.</p>` : ""}
       <div class="conf"><span>documented</span><span class="likely">likely</span><span class="legend">legend or unknown route</span></div>
       <ol class="stops">${o.stops.map(s => `<li data-i="${s.i}" class="${s.c}${on && s.i === follow.i ? " on" : ""}${on && s.i < follow.i ? " done" : ""}"><i></i><div>
         <b>${esc(s.p)}</b> <span class="m">${s.a ? "about " : ""}${esc(fmtY(s.y))} · ${esc(s.by)}${s.owner ? " · " + esc(s.owner) : ""}${s.c !== "sure" ? " · " + esc(CONF[s.c]) : ""}</span>
@@ -297,6 +305,15 @@
       ${o.now ? `<p class="note"><b>Today:</b> ${esc(o.now)}</p>` : ""}${o.dis ? `<p class="note"><b>Disputed:</b> ${esc(o.dis)}</p>` : ""}
       <p class="note">Sources: ${o.s.map(i => { const [c, u] = C.D.src[i]; return u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(c)}</a>` : esc(c); }).join("; ")}</p></div>`;
     const li = pane.querySelector("li.on"); if (li && li.scrollIntoView) li.scrollIntoView({ block: "nearest" });
+  }
+  function quizHtml(o) {
+    const g = follow.game; if (!g) return "";
+    const q = follow.quiz, head = `<p class="note"><b>Guessing game:</b> ${g.score} of ${g.n} right${g.done ? `. Finished! Best: ${best(o.id) ?? g.score} of ${rounds(o)}.` : ""}</p>`;
+    if (!q) return head;
+    const s = o.stops[q.i], prev = s.prev || o.stops[q.i - 1];
+    return `${head}<div class="quiz"><b>${esc(fmtY(prev.y))}, ${esc(prev.p)}. Where does the ${esc(o.n)} go next${s.y !== prev.y ? `, by ${esc(fmtY(s.y))}` : ""}?</b>
+      ${q.opts.map(x => `<button type="button" class="go ${q.picked ? (x.right ? "" : "ghost dim") : "ghost"}" data-act="pick${x.k}">${x.k} · ${esc(x.s.p)}</button>`).join("")}
+      ${q.picked ? `<p class="${q.right ? "yes" : "no"}">${q.right ? "Right!" : `No: it went to ${esc(s.p)}.`} ${esc(s.by)}${s.owner ? ", " + esc(s.owner) : ""}.</p>` : ""}</div>`;
   }
   const render = () => { if (pane) openId ? renderObj() : renderList(); };
 
@@ -348,22 +365,64 @@
     follow.playing = true; render();
     for (; i < o.stops.length; i++) {
       await showStop(i, my); if (my !== run) return;
+      if (follow.game && i + 1 < o.stops.length && askable(o.stops[i + 1])) { await ask(o, i + 1, my); if (my !== run) return; continue; }
       await wait(reduce() ? 1500 : 3400); if (my !== run || !follow.playing) return;
     }
-    follow.playing = false; render();
+    follow.playing = false;
+    if (follow.game) { follow.game.done = true; best(o.id, follow.game.score); }
+    render();
   }
-  function start(id) {
+
+  // ---------- play: guess where it goes next ----------
+  // Three places on the map: the real next stop and two decoys from other journeys of about the same time.
+  function options(o, s) {
+    const C = C0(), far = p => d3.geoDistance([p.lon, p.lat], [s.lon, s.lat]) * 6371 > 600;
+    const pool = C.objs.filter(x => x !== o).flatMap(x => x.stops).filter(p => far(p) && Math.abs(p.y - s.y) <= 250);
+    const seen = new Set([s.p]), out = [{ s, right: true }];
+    const shuffled = pool.map(p => [Math.random(), p]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+    for (const p of shuffled) { if (out.length >= 3) break; if (seen.has(p.p) || out.some(q => d3.geoDistance([p.lon, p.lat], [q.s.lon, q.s.lat]) * 6371 < 600)) continue; seen.add(p.p); out.push({ s: p }); }
+    return out.map(q => [Math.random(), q]).sort((a, b) => a[0] - b[0]).map((x, k) => ({ ...x[1], k: "ABC"[k] }));
+  }
+  // Only ask about real moves: a stop that stays put (found, lost, hidden nearby) just plays.
+  const askable = s => s.prev && !s.br && d3.geoDistance([s.lon, s.lat], [s.prev.lon, s.prev.lat]) * 6371 > 150;
+  const rounds = o => o.stops.filter(askable).length;
+  function ask(o, i, my) {
+    const s = o.stops[i];
+    return new Promise(done => {
+      follow.quiz = { i, opts: options(o, s), done };
+      api.redraw(); render();
+      const prev = o.stops[i - 1];
+      api.fly({ ...viewFor(s), span: Math.max(60, viewFor(s).span * 1.6), lon: (viewFor(s).lon + prev.lon) / 2, lat: (viewFor(s).lat + prev.lat) / 2 }, 900);
+      const check = setInterval(() => { if (my !== run) { clearInterval(check); follow.quiz = null; done(); } }, 300);
+      follow.quiz.stop = () => clearInterval(check);
+    });
+  }
+  function answer(k) {
+    const q = follow.quiz; if (!q || q.picked) return;
+    const opt = q.opts.find(x => x.k === k); if (!opt) return;
+    q.picked = k; q.right = !!opt.right;
+    follow.game.n++; if (q.right) follow.game.score++;
+    render(); api.redraw();
+    setTimeout(() => { if (follow.quiz === q) { q.stop(); follow.quiz = null; q.done(); } }, reduce() ? 600 : 1500);
+  }
+  const BEST = "atlas.objects.best.v1";
+  function best(id, score) {
+    try { const b = JSON.parse(localStorage.getItem(BEST) || "{}"); if (score != null && !(b[id] >= score)) { b[id] = score; localStorage.setItem(BEST, JSON.stringify(b)); } return b[id]; } catch { return null; }
+  }
+  function start(id, game = false) {
     const o = C0().byId[id]; if (!o) return false;
-    follow.id = id; openId = id; follow.i = 0;
+    follow.id = id; openId = id; follow.i = 0; follow.quiz = null; follow.game = game ? { score: 0, n: 0 } : null;
     if (api) { api.setTab(ID); playFrom(0); }
     return true;
   }
-  function stop() { run++; follow.id = null; follow.playing = false; if (api) { api.clearScene(); api.redraw(); } render(); }
+  function stop() { run++; follow.id = null; follow.playing = false; follow.quiz = null; follow.game = null; if (api) { api.clearScene(); api.redraw(); } render(); }
   function act(a) {
     const o = C0().byId[follow.id];
     if (a === "surprise") { const all = C0().objs; return start(all[Math.floor(Math.random() * all.length)].id); }
     if (a === "back") { if (follow.id) stop(); openId = null; return render(); }
     if (a === "follow") return start(openId);
+    if (a === "play") return start(openId, true);
+    if (a.startsWith("pick")) return answer(a.slice(4));
     if (a === "stop") return stop();
     if (!o) return;
     if (a === "pause") {
