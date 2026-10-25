@@ -761,7 +761,8 @@
     const widthOf = l => l.cune ? l.cune * 4 - 1 : l.seal ? 18 : textWidth(l.text), heightOf = l => l.seal ? 10 : 5;
     const pw = Math.max(...lines.map(widthOf)) + (t.star ? 10 : 0) + 8, ph = lines.reduce((a, l) => a + heightOf(l) + 2, 0) + 4;
     const cx = Math.round((f.i0 + f.i1) / 2), x0 = cx - (pw >> 1) - (t.star ? 5 : 0), y0 = f.j0 + 2;
-    if (pw > f.i1 - f.i0 - 40) return;
+    // Phones: the year cartouche already names the era, and the plate would sit under it.
+    if (pw > f.i1 - f.i0 - 40 || f.i1 - f.i0 < 230) return;
     f.box(x0, y0, pw, ph, edge, fill);
     let y = y0 + 3;
     for (const l of lines) {

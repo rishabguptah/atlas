@@ -306,7 +306,8 @@
   const nearestLocked = (list, from) => list.filter(s => !found(s.id)).map(s => ({ s, d: km(from, s) })).sort((a, b) => a.d - b.d).map(o => o.s);
 
   // ---------- the tab ----------
-  const badge = () => { const b = document.querySelector('.tab[data-tab="codex"]'); if (b) { const n = Object.keys(P.f).filter(id => site(id)).length; b.textContent = n ? `Codex ${n}` : "Codex"; } };
+  // The count sits in its own element when the chrome gave the tab an icon and a name span (.nm).
+  const badge = () => { const b = document.querySelector('.tab[data-tab="codex"]'); if (b) { const n = Object.keys(P.f).filter(id => site(id)).length; const nm = b.querySelector(".nm"); if (nm) { b.dataset.n = n || ""; nm.textContent = "Codex"; } else b.textContent = n ? `Codex ${n}` : "Codex"; } };
   const meter = (got, need) => need <= 30 ? `<div class="meter" style="--n:${need}" role="img" aria-label="${got} of ${need}">${Array.from({ length: need }, (_, i) => `<i class="${i < got ? "on" : ""}"></i>`).join("")}</div>`
     : `<div class="bar" role="img" aria-label="${got} of ${need}"><i style="width:${Math.round(100 * got / need)}%"></i></div>`;
 
@@ -425,6 +426,21 @@
     draw(ctx) {
       const d = fogPath(ctx.projection, era(ctx.year));
       ctx.g.selectAll("path.cx-fog").data([d]).join("path").attr("class", "cx-fog").attr("d", x => x);
+    },
+  });
+
+  // The one next thing on the map (ATLAS.nextThing): today's riddle, then a trail under way, then the nearest quest find.
+  if (ATLAS.nextThing) ATLAS.nextThing({
+    id: "codex", pri: 20,
+    get() {
+      if (!api) return null;
+      if (!R.st || R.st.d !== today()) setupRiddle();
+      if (R.target && !R.st.ok) return { kick: "Today's riddle", title: clues(R.target)[0], go: () => { mode = "riddle"; api.setTab("codex"); } };
+      for (const t of D().trails) { const i = trailNext(t); if (i >= 0 && trailDone(t) > 0) { const st = t.steps[i]; return { kick: `Your trail · stop ${i + 1} of ${t.steps.length}`, title: st.n, go: () => api.scene({ year: st.year, view: { lon: st.lon, lat: st.lat, span: st.span }, title: st.n }) }; } }
+      const v = api.view ? api.view() : null, from = v || { lon: 30, lat: 35 };
+      const q = D().quests.find(q => !P.qd[q.id] && qGot(q) > 0);
+      if (q) { const s = nearestLocked(q.ids.map(site).filter(Boolean), from)[0]; if (s) return { kick: `Quest · ${q.n} · ${qGot(q)} of ${qNeed(q)}`, title: `${KIND[s.k][0]} somewhere in ${region(s)}`, go: () => pointMe(s) }; }
+      return null;
     },
   });
 

@@ -6,7 +6,7 @@
 # ATLAS_DIR holds the Living Atlas files (entries*.js, empires.js, borders/); default /mnt/project-files/atlas.
 # LAYERS_DIR holds people/money/plague/ideas.json from extract_layers.py; default ATLAS_DIR/unified/layers.
 # Order and Chaos (data/order-chaos/lab.json) and the guide tours come from this repo.
-import sys, json, glob, os
+import sys, json, glob, os, re
 
 args = sys.argv[1:]
 local = None
@@ -145,7 +145,7 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
         lb = open(pixel_src + 'city-lights.json', 'rb').read()
         lights = side('city-lights.json', lb) if 'side' in globals() and not globals().get('inline') else json.loads(lb)
     data += 'const PIXEL = ' + J({'tile0': tile0, 'rivers': rv, 'lights': lights}) + ';\n'
-    for f in ('palette.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'paleo.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js', 'motion.js'):
+    for f in ('palette.js', 'icons.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'paleo.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js', 'motion.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 # The label engine (one queue for every layer's names) goes first, with or without the pixel map.
@@ -161,9 +161,21 @@ for f in sorted(glob.glob(os.path.join(world_dir, '*.js'))) + sorted(glob.glob(o
     scripts.append('<script>\n' + open(f, encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 
 data += f'const LATE_FILES = {J(late)};\n'
+
+# The chronicle chrome (views/atlas/chrome/): tokens and pixel frames from the kit, components, the HUD layout, and
+# chrome.js after the page script. Icons are views/pixel/icons.js, inlined above with the pixel scripts.
+sys.path.insert(0, os.path.join(here, 'chrome'))
+import kit
+chrome_css = kit.css() + '\n'.join(open(os.path.join(here, 'chrome', f), encoding='utf-8').read() for f in ('chrome.css', 'atlas.css'))
+# The chrome's comments are for its source; the page gets it without them.
+chrome_css = re.sub(r';}', '}', re.sub(r':\s+', ':', re.sub(r'\s*([{};,>])\s*', r'\1', re.sub(r'/\*.*?\*/', '', chrome_css, flags=re.S))))
+if 'PIXEL_ICONS' not in '\n'.join(scripts):
+    scripts.insert(0, '<script>\n' + open(os.path.join(repo, 'views/pixel/icons.js'), encoding='utf-8').read() + '\n</script>')
+chrome_js = '<script>\n' + re.sub(r'(?m)^\s*//.*\n', '', open(os.path.join(here, 'chrome', 'chrome.js'), encoding='utf-8').read()).replace('</script', '<\\/script') + '\n</script>'
+
 land = J(json.load(open(atlas + 'borders/land-50m.json')))
 tours = [json.load(open(f)) for f in sorted(glob.glob(os.path.join(repo, 'data/guide/tours/*.json')))]
-s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours)).replace('/*__TERRAIN_JS__*/', terrain_js).replace('<!--__LENS_SCRIPTS__-->', '\n'.join(scripts))
+s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours)).replace('/*__TERRAIN_JS__*/', terrain_js).replace('<!--__LENS_SCRIPTS__-->', '\n'.join(scripts)).replace('/*__CHROME_CSS__*/', chrome_css).replace('<!--__CHROME_JS__-->', chrome_js)
 if local:
     s = s.replace('https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js', 'file://' + local + '/d3-7.8.5/package/dist/d3.min.js')
     s = s.replace('https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js', 'file://' + local + '/topojson-client-3.1.0/package/dist/topojson-client.min.js')
