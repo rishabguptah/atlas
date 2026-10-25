@@ -15,7 +15,7 @@ bending an existing one, and say so in your PR.
 - Run `python3 tools/build.py` before you push. It fails on any error, and CI runs the same check.
 
 Workstream folders: `kernel`, `living-atlas`, `places-people`, `states-war`, `economy-trade`,
-`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`, `law`, `europe-19c`.
+`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`, `law`, `europe-19c`, `peoples-languages`.
 
 ## Common fields (every record)
 
@@ -68,6 +68,9 @@ Years are integers. Negative is BCE, and there is no year 0 (-1 is 1 BCE).
 | `idea` | `idea:` | religion-ideas | `subtype`: religion, school, theory, technology, institution, movement, style (art and architecture: `idea:style:<slug>`, with `family`, `origin`, `spread`). |
 | `work` | `work:` | religion-ideas | `subtype`: book, poem, scripture, artwork, map, building. `author`: person id. `styles`: `idea:style:` ids (art). `styled_from`: year a building founded earlier was rebuilt in its style. `made_at`: where an artwork was made, when lat/lon is that place rather than today's museum. |
 | `route` | `route:` | economy-trade | `subtype`: trade, migration, campaign, pilgrimage, epidemic_spread. `stops`: place ids in order, or `geo`. `goods`: string[]. |
+| `language` | `lang:` | peoples-languages | Id is `lang:<glottocode>`. `subtype`: family, branch, language. `family`, `branch`: lang ids. `endangerment`: Glottolog AES (not endangered … extinct). `attested`: `[first, last]` years of documentation as Glottolog gives them. `isolate` / `unclassified`: true. |
+| `script` | `script:` | peoples-languages | A writing system. `subtype`: abjad, alphabet, abugida, syllabary, logographic, undeciphered... `origin`: place name. `ext.iso15924`. Parent script via a `derived_from` relation. |
+| `sample` | `dna:` | peoples-languages | One ancient genome (AADR). `start` = median date, `start_range`, `group` (AADR group label), `site`, `country`, `sex`, `y_haplogroup`, `mt_haplogroup`. |
 | `relation` | `rel:` | anyone | See below. |
 | `measure` | `m:` | anyone | See below. |
 
@@ -89,7 +92,7 @@ The current Living Atlas data lives in `data/living-atlas/` as stubs, so any own
 
 | Field | Rule |
 | --- | --- |
-| `type` | One of: `controls`, `capital_of`, `part_of`, `located_in`, `born_in`, `died_in`, `ruled`, `participant_in`, `fought`, `allied_with`, `trades_with`, `founded`, `destroyed`, `succeeded`, `influenced`, `teacher_of`, `translated`, `wrote`, `spread_to`, `migrated_to`, `caused`, `contributed_to`, `prevented`, `governed_as`. Ask the kernel thread to add one. |
+| `type` | One of: `controls`, `capital_of`, `part_of`, `located_in`, `born_in`, `died_in`, `ruled`, `participant_in`, `fought`, `allied_with`, `trades_with`, `founded`, `destroyed`, `succeeded`, `influenced`, `teacher_of`, `translated`, `wrote`, `spread_to`, `migrated_to`, `caused`, `contributed_to`, `prevented`, `governed_as`, `derived_from` (a script or language from its parent). Ask the kernel thread to add one. |
 | `from`, `to` | Ids. Read as "from TYPE to": `place:damascus capital_of polity:umayyad`, `event:x caused event:y`. |
 | `start`, `end` | Optional time window. |
 | `weight` | Optional number: strength, volume, or troop count, depending on type. |
@@ -112,7 +115,7 @@ One measure record per (thing, metric, source), with id `m:<metric>:<thing slug>
 
 `geography` (land, rivers, chokepoints, climate) · `military` · `economy` (wealth, trade) ·
 `population` (size, migration) · `disease` · `religion` · `ideas` (philosophy, science, technology) ·
-`literature` · `people` · `order` (stability, crisis, collapse) · `art` (buildings, works of art, styles) · `law` (forms of government, law codes, rights and policies such as slavery and suffrage).
+`literature` · `people` · `order` (stability, crisis, collapse) · `art` (buildings, works of art, styles) · `law` (forms of government, law codes, rights and policies such as slavery and suffrage) · `language` (languages, scripts, peoples and ancient DNA).
 
 ## Causes (for dead places, and anything that ended)
 
@@ -121,6 +124,7 @@ One measure record per (thing, metric, source), with id `m:<metric>:<thing slug>
 
 ## Changes
 
+v0.5 · 2026-10-25 · `peoples-languages` workstream: kinds `language`, `script`, `sample`; lens `language`; relation `derived_from`; event subtypes `language_spread` (with `hypotheses` and `stages`), `attestation`, `language_death`, `script_reform`, `genetic_finding` (with `ancestry_share` [low, high] %). The build now also checks `language` references, and `family` / `branch` on language records.
 v0.4 · 2026-10-25 · `europe-19c` workstream (deep zoom): `date` and `end_date` on any record, ISO `YYYY`, `YYYY-MM` or `YYYY-MM-DD` as precise as the source, and always in the same year as `start` / `end`; `date_note` when sources disagree. Event subtypes `siege`, `campaign`, `expedition`, `revolution`, `coup`, `mutiny`, `riot`, `protest`, `strike`, `massacre`, `pogrom`, `assassination`, `congress`, `independence`, `referendum`, `coronation`, `exhibition`, `fire`, `shipwreck`, `disaster`; `family` groups them (war, diplomacy, unrest, disaster, culture). `sitelinks` = how many Wikipedias cover a record. Place field `admin` / `admin_of` for provinces. See data/europe-19c/README.md.
 v0.3 · 2026-10-25 · `law` workstream: lens `law`; relation `governed_as` (polity -> `idea:gov:<form>`, time-bounded, with `basis`: curated or wikidata); event subtype `law` with `by` (polity id), `policy` (`idea:policy:<slug>`) and `effect` (adopt, abolish, restrict, extend); `by` and `policy` are checked as references; measures `regime_lied` (Lexical Index class 0-7, `step: true` = value holds until the next point) and Seshat presence metrics (`legal_code`, `courts`, `judges`, `lawyers`, `bureaucrats`, `divine_rulers`, `divine_legitimation`, `exec_constraint_gov`, `exec_constraint_nongov`). See data/law/README.md.
 v0.2 · 2026-10-25 · `art-architecture` workstream: `art` lens; idea subtype `style` (`family`, `origin`, `spread`); work fields `styles`, `styled_from`, `made_at`.
