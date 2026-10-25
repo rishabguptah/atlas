@@ -1,5 +1,5 @@
 # Usage: python3 views/atlas/build.py OUT.html [ATLAS_DIR] [LAYERS_DIR] [--local D3_DIR] [--inline]
-# Big blobs the first paint does not need go to atlas-files/ next to OUT.html (publish them with the page):
+# Big blobs the first paint does not need go to atlas-files/ next to OUT.html (publish them with the page, world/ and packs/ included):
 # relief images, the terrain L0 tile, plugin lens data over 40 KB and the Wikidata battles. The old border snapshots
 # are not inlined (the page reads borders/l0 beside it). --inline keeps everything in one file (for opening locally).
 # One page, one map, one year: every workstream's layer on the same map, the guide on top.
@@ -137,8 +137,14 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 # The label engine (one queue for every layer's names) goes first, with or without the pixel map.
 scripts.insert(0, '<script>\n' + open(os.path.join(pixel_dir, 'labels.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
-# The world engine (views/atlas/world/*.js, see WORLD.md) loads before the lenses so they can use ATLAS.world.
-for f in sorted(glob.glob(os.path.join(here, 'world', '*.js'))) + sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
+# The world engine (views/atlas/world/: the world index and its packs) loads before the lenses that read it; its
+# files go beside the page in atlas-files/world/ and atlas-files/packs/, fetched only when a view asks.
+world_dir = os.path.join(here, 'world')
+if not inline and os.path.exists(os.path.join(world_dir, 'build_index.py')):
+    spec = importlib.util.spec_from_file_location('atlas_world_index', os.path.join(world_dir, 'build_index.py'))
+    wmod = importlib.util.module_from_spec(spec); spec.loader.exec_module(wmod)
+    wmod.write(repo, side_dir)
+for f in sorted(glob.glob(os.path.join(world_dir, '*.js'))) + sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
     scripts.append('<script>\n' + open(f, encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 
 data += f'const LATE_FILES = {J(late)};\n'

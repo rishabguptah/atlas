@@ -537,6 +537,22 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     return { i, name: r[0], b: r[1], d: r[2], occ: r[5], grp: r[6], hpi: r[7], wiki: r[8], place: bp ? bp[0] : "", country: bp ? bp[3] : "", lat: bp ? bp[1] : null, lon: bp ? bp[2] : null, dplace: dp ? dp[0] : "" };
   }).filter(p => p.lat != null).sort((a, b) => b.hpi - a.hpi);
   const adult = (p, y) => y >= p.b + 15 && y <= (p.d ?? p.b + 80);
+  // People born within 60 km of a spot, from the world index (ATLAS.world.near), in the page's person shape; null
+  // while the index has nothing loaded for those years.
+  function worldBorn(lon, lat, y) {
+    const W = window.ATLAS.world;
+    if (!W || !W.near || !W.state || !W.state.index) return null;
+    const rows = W.near(lon, lat, 60, { m0: (y - 100) * 12, m1: (y + 60) * 12 }, { kinds: "b" });
+    if (!rows.length) return null;
+    const seen = new Set(), out = [];
+    for (const r of rows) {
+      if (seen.has(r.name)) continue; seen.add(r.name);
+      const b = Math.floor(r.m / 12), dm = r.x.died ? W.mOf(r.x.died) : null;
+      out.push({ x: { name: r.name, b, d: dm != null ? Math.floor(dm / 12) : null, occ: (r.sub || "").replace(/_/g, " "), place: r.x.place || "", country: "", lat: r.lat, lon: r.lon,
+        dplace: "", hpi: r.rank, wiki: null, wd: typeof r.ref === "number" && r.ref ? "Q" + r.ref : null }, d: r.dist });
+    }
+    return out.sort((a, b) => b.x.hpi - a.x.hpi);
+  }
 
   // Flows: the economy-trade kernel records (lenses/flows.py: 75 routes, people as [low, high]) when built in, else the extracted layer.
   const FLOWS = typeof LENS_DATA !== "undefined" && LENS_DATA.flows && LENS_DATA.flows.flows;
@@ -1463,7 +1479,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   function personCard(p) {
     return { kind: "person", c: "var(--y-people)", lon: p.lon, lat: p.lat, name: p.place, kick: `Person · ${p.occ}`, title: p.name, year: p.b + 30,
-      meta: `${fmtSpan(p.b, p.d)} · born in ${p.place}${p.country ? ", " + p.country : ""}${p.dplace && p.dplace !== p.place ? ` · died in ${p.dplace}` : ""}`, sources: wiki(p.wiki) };
+      meta: `${fmtSpan(p.b, p.d)} · born in ${p.place}${p.country ? ", " + p.country : ""}${p.dplace && p.dplace !== p.place ? ` · died in ${p.dplace}` : ""}`,
+      sources: p.wd ? [{ cite: `Wikidata ${p.wd} (CC0) via the world index`, url: "https://www.wikidata.org/wiki/" + p.wd }] : wiki(p.wiki) };
   }
   function tradeCard(t) {
     const m = t.pts[Math.floor(t.pts.length / 2)];
@@ -1652,7 +1669,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       orderItems.push(item(`<b>${esc(pol.p.n)}</b> ${f != null ? `<span class="band" style="--bc:var(--b-${b})">${b}</span>` : ""}`, fmtSpan(pol.p.s, pol.p.e), f != null ? `${Math.round(f * 100)}% risk of breaking within 25 years (territory model)` : "", goCard(polityCard(pol.p))));
     }
     // People
-    const born = nearby(PPL, lon, lat, 60);
+    // Born here: from the world index (views/atlas/world/: Pantheon, Wikidata people in dense packs, the kernel) once
+    // its time slice is in, else the page's own list. A later visit picks the index up when it arrives.
+    const born = worldBorn(lon, lat, y) || nearby(PPL, lon, lat, 60);
     const here = born.filter(o => adult(o.x, y)).slice(0, 6), ever = born.filter(o => !adult(o.x, y)).slice(0, 6);
     const alivePeople = nearby(PPL.filter(p => adult(p, y)), lon, lat, R_KM).filter(o => o.d > 60).slice(0, 5);
     const pItems = [
