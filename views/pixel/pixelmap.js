@@ -11,6 +11,8 @@
 //   pm.labelGrid()                           realm id and terrain class per art pixel of the last frame (for realm names)
 //   pm.spriteBoxes()                         screen boxes of the prioritised sprites last painted (labels keep off them)
 //   pm.underlay(fn)                          fn(g) paints after the terrain and realms, before the sprites (choropleths, grammar.js)
+//   pm.on(fn) / pm.view() / pm.ownWater(on)  for an animation layer above the map (motion.js): fn('layout'|'realms'|'paint') after
+//                                            each pass; view() reads this frame's buffers; ownWater(false) leaves water shimmer to it
 //
 // levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
 // land: GeoJSON land (coasts come from it, so they stay sharp at any zoom). rivers: [{rank, line: [[lon,lat],...]}].
@@ -267,6 +269,7 @@
       realmRaster.clear();
       applyRealms();
       realmsDone();
+      emit("layout");
     }
 
     function setPx(i, j, col) { if (i >= 0 && j >= 0 && i < w && j < h) base[j * w + i] = col; }
@@ -330,7 +333,9 @@
       if (realmRaster.size > RASTER_MAX) realmRaster.delete(realmRaster.keys().next().value);
     }
     // The one place where realms are done and sprites come next (year-dependent passes over base go here).
-    function realmsDone() { detail("over"); paint(); }
+    function realmsDone() { detail("over"); paint(); emit("realms"); }
+    const hooks = [];
+    function emit(kind) { for (const fn of hooks) try { fn(kind); } catch (err) { console.error("pixel hook", err); } }
     function detail(phase) {
       if (!detailFn || !last) return;
       try { return detailFn({ w, h, U0, V0, PX, k: last.k, need: NEED, base, cls, hs, band, lonA, latA, lowNoise, ids, realms: realmsNow, hash, toPixel: (lon, lat) => { const p = projection([lon, lat]); return p && [Math.floor((p[0] * last.k) / PX) - U0, Math.floor((p[1] * last.k) / PX) - V0]; } }, phase); }
@@ -385,7 +390,7 @@
     }
     // Declutter: when sprites carry a priority (pri), keep the most important ones that fit without touching,
     // up to max; sprites sharing a grp (a battle's two armies and clash) are kept or dropped together.
-    let spriteOpts = {}, spriteMask = null, overlay = null, underlay = null, shown = [], lastOut = null;
+    let spriteOpts = {}, spriteMask = null, overlay = null, underlay = null, shown = [], lastOut = null, kept = [], outNow = null, water = true;
     const GLINT = pack(rgb("#8ab8c4"));
     function declutter(src, t) {
       if (!src.some(s => s.pri != null)) return src;
@@ -411,12 +416,12 @@
     function paint() {
       if (!base) return;
       const list = declutter(allSprites, last);
-      shown = list;
+      shown = kept = list;
       const img = ctx.createImageData(w, h), out = new Uint32Array(img.data.buffer);
       out.set(base);
       // Water shimmer: a few world-anchored wave glints that move with the frame.
       const glint = era && era.glint !== undefined ? era.glint : GLINT;
-      if (glint !== null) for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+      if (water && glint !== null) for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, c = cls[k]; if (c > 1) continue;
         const u = U0 + i, v = V0 + j;
         if (v % 5 === 0 && hash(u >> 2, v) < 0.035 && ((u + frame) & 3) < 2) out[k] = glint;
@@ -465,6 +470,8 @@
       if (fade) { if (fade.prev.length === out.length && fade.U0 === U0 && fade.V0 === V0) { const m = fade.mask, p = fade.prev, f = fade.t; for (let k = 0; k < out.length; k++) if (m[k] >= f) out[k] = p[k]; } }
       lastOut = out;
       ctx.putImageData(img, 0, 0);
+      outNow = out;
+      emit("paint");
     }
 
     return {
@@ -500,6 +507,11 @@
       repaint() { paint(); },
       setDetail(fn) { detailFn = fn; },
       setFrame(f) { frame = f; },
+      on(fn) { hooks.push(fn); },
+      ownWater(on) { water = !!on; },
+      spritePixels,
+      // This frame's buffers, read-only: art-pixel grid w x h whose (0, 0) is world grid (U0, V0) at transform t.
+      view() { return last && base ? { w, h, U0, V0, PX, t: last, cls, hs, band, lat: latA, lon: lonA, ids, realms: realmsNow, base, terrain, anim, out: outNow, sprite: spriteMask, kept, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top) } : null; },
       // Is this lon/lat drawn as water right now (from the last render)?
       isWater(lon, lat) { if (!cls || !last) return false; const q = this.toPixel(lon, lat); if (!q || q[0] < 0 || q[1] < 0 || q[0] >= w || q[1] >= h) return false; return cls[q[1] * w + q[0]] <= 2; },
       // Which realm is drawn under a screen point (for hover and click), from the id buffer.

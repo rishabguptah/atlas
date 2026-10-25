@@ -1,0 +1,1977 @@
+{
+ "stories": [
+  {
+   "id": "mongol_conquests",
+   "title": "The Mongol conquests",
+   "region": "Eurasia",
+   "start": 1206,
+   "end": 1294,
+   "view": {
+    "lon": 75.0,
+    "lat": 42.0,
+    "span": 120
+   },
+   "blurb": "How did a confederation of steppe herders build the largest land empire in history in two generations, and where were they stopped?",
+   "steps": [
+    {
+     "date": "1206",
+     "name": "Kurultai of 1206",
+     "place_name": "Onon River",
+     "lat": 48.9,
+     "lon": 109.0,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Genghis Khan"
+     ],
+     "what": "An assembly of Mongol and Turkic clan leaders near the source of the Onon River proclaimed Temüjin as Genghis Khan, ruler of all the steppe peoples.",
+     "why": "Unifying the feuding tribes under one ruler, with an army reorganised into decimal units of tens to ten thousands, created the force behind every later conquest.",
+     "wikipedia": "Genghis Khan",
+     "wikidata": "Q720"
+    },
+    {
+     "date": "1215",
+     "date_note": "city fell in the summer of 1215",
+     "name": "Battle of Zhongdu",
+     "place_name": "Zhongdu (Beijing)",
+     "lat": 39.9,
+     "lon": 116.4,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Genghis Khan"
+     ],
+     "what": "After a long siege the Mongols took and sacked Zhongdu, the Jin dynasty's central capital, whose court had already fled south to Kaifeng.",
+     "why": "The fall of a great Chinese capital showed that steppe cavalry could now break walled cities, partly by recruiting Chinese and Khitan siege engineers.",
+     "wikipedia": "Battle of Zhongdu"
+    },
+    {
+     "date": "1220-02",
+     "date_note": "month approximate",
+     "name": "Siege of Bukhara",
+     "place_name": "Bukhara",
+     "lat": 39.77,
+     "lon": 64.42,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Genghis Khan"
+     ],
+     "what": "After the Khwarazmian governor of Otrar massacred a Mongol trade caravan, Genghis Khan invaded Khwarazm and took Bukhara, burning much of the city.",
+     "why": "The war on the Khwarazmian Empire carried the Mongols into the Islamic world and set the pattern of sparing cities that surrendered and destroying those that resisted.",
+     "wikipedia": "Siege of Bukhara",
+     "wikidata": "Q110970851"
+    },
+    {
+     "date": "1223-05-31",
+     "date_note": "exact day disputed",
+     "name": "Battle of the Kalka River",
+     "place_name": "Kalka River",
+     "lat": 47.5,
+     "lon": 37.7,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Subutai",
+      "Jebe",
+      "Mstislav Mstislavich"
+     ],
+     "what": "A Mongol reconnaissance force under Subutai and Jebe defeated a combined army of Rus' princes and Cumans on the steppe north of the Sea of Azov.",
+     "why": "It was the Rus' first contact with the Mongols, who withdrew and returned fifteen years later to conquer them.",
+     "wikipedia": "Battle of the Kalka River",
+     "wikidata": "Q570204"
+    },
+    {
+     "date": "1227-08",
+     "date_note": "month traditional",
+     "name": "Death of Genghis Khan",
+     "place_name": "Western Xia",
+     "lat": 35.6,
+     "lon": 106.2,
+     "family": "war",
+     "subtype": "death",
+     "who": [
+      "Genghis Khan"
+     ],
+     "what": "Genghis Khan died during the final campaign against the Western Xia kingdom, which the Mongols then destroyed.",
+     "why": "The empire did not break apart at his death; it was divided among his sons, with Ögedei chosen as Great Khan in 1229.",
+     "wikipedia": "Genghis Khan",
+     "wikidata": "Q720"
+    },
+    {
+     "date": "1235",
+     "name": "Walls of Karakorum built",
+     "place_name": "Karakorum",
+     "lat": 47.2,
+     "lon": 102.82,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ögedei Khan"
+     ],
+     "what": "Ögedei Khan had walls and a palace built at Karakorum in the Orkhon valley, making it the fixed capital of the empire.",
+     "why": "A permanent capital with craftsmen, merchants and envoys from across Eurasia shows how the conquerors began to govern, not just raid.",
+     "wikipedia": "Karakorum",
+     "wikidata": "Q62677"
+    },
+    {
+     "date": "1240-12-06",
+     "date_note": "traditional date",
+     "name": "Siege of Kiev (1240)",
+     "place_name": "Kiev",
+     "lat": 50.45,
+     "lon": 30.52,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Batu Khan",
+      "Subutai"
+     ],
+     "what": "Batu Khan's army stormed Kiev after a short siege, destroying much of the city during the conquest of the Rus' principalities.",
+     "why": "The Rus' lands became tributaries of the Golden Horde for some two centuries.",
+     "wikipedia": "Siege of Kiev (1240)",
+     "wikidata": "Q815162"
+    },
+    {
+     "date": "1241-04-09",
+     "name": "Battle of Legnica",
+     "place_name": "Legnica",
+     "lat": 51.21,
+     "lon": 16.16,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Henry II the Pious"
+     ],
+     "what": "A Mongol detachment destroyed the army of Duke Henry II the Pious of Silesia, who was killed in the battle.",
+     "why": "It shows how far west the Mongols reached; the force was a flank guard for the main invasion of Hungary.",
+     "wikipedia": "Battle of Legnica",
+     "wikidata": "Q159512"
+    },
+    {
+     "date": "1241-04-11",
+     "name": "Battle of Mohi",
+     "place_name": "Mohi, Sajó River",
+     "lat": 47.98,
+     "lon": 20.97,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Batu Khan",
+      "Subutai",
+      "Béla IV of Hungary"
+     ],
+     "what": "Batu and Subutai crushed the army of King Béla IV of Hungary at the Sajó River and occupied the Hungarian plain for a year.",
+     "why": "The Mongols withdrew in 1242, probably in part because news of Ögedei's death called the princes home, and never returned in force to central Europe.",
+     "wikipedia": "Battle of Mohi",
+     "wikidata": "Q705874"
+    },
+    {
+     "date": "1246-08",
+     "name": "Enthronement of Güyük Khan",
+     "place_name": "Sira Ordo, near Karakorum",
+     "lat": 47.2,
+     "lon": 102.82,
+     "family": "diplomacy",
+     "subtype": "journey",
+     "who": [
+      "Giovanni da Pian del Carpine",
+      "Güyük Khan"
+     ],
+     "what": "The Franciscan friar Giovanni da Pian del Carpine, sent by Pope Innocent IV, witnessed Güyük's election as Great Khan and carried back a letter demanding the Pope's submission.",
+     "why": "His report was one of the first detailed European accounts of the Mongols and opened two centuries of diplomatic and missionary travel to the east.",
+     "wikipedia": "Giovanni da Pian del Carpine",
+     "wikidata": "Q315149"
+    },
+    {
+     "date": "1258-02-10",
+     "name": "Fall of Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.31,
+     "lon": 44.37,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Hulagu Khan"
+     ],
+     "what": "Hulagu Khan's army took Baghdad after a short siege, sacked the city and executed the last Abbasid caliph, al-Musta'sim.",
+     "why": "The end of the Abbasid caliphate in Baghdad was a lasting shock to the Islamic world and founded the Mongol Ilkhanate in Iran.",
+     "wikipedia": "Siege of Baghdad (1258)"
+    },
+    {
+     "date": "1260-09-03",
+     "name": "Battle of Ain Jalut",
+     "place_name": "Ain Jalut",
+     "lat": 32.55,
+     "lon": 35.36,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Qutuz",
+      "Baybars",
+      "Kitbuqa"
+     ],
+     "what": "The Mamluk army of Egypt under Qutuz and Baybars defeated a Mongol force under Kitbuqa in the Jezreel Valley, and Kitbuqa was executed.",
+     "why": "It was the first major Mongol defeat in open battle and fixed the empire's southwest frontier; Egypt and the holy cities of Arabia stayed out of Mongol hands.",
+     "wikipedia": "Battle of Ain Jalut",
+     "wikidata": "Q244356"
+    },
+    {
+     "date": "1267",
+     "date_note": "construction began 1267",
+     "name": "Founding of Khanbaliq",
+     "place_name": "Khanbaliq (Beijing)",
+     "lat": 39.91,
+     "lon": 116.39,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Kublai Khan"
+     ],
+     "what": "Kublai Khan began building a new capital, Dadu or Khanbaliq, beside the ruins of Zhongdu, and in 1271 proclaimed the Yuan dynasty.",
+     "why": "The empire's centre moved from the steppe into China, and by now its four khanates were drifting apart into separate states.",
+     "wikipedia": "Khanbaliq"
+    },
+    {
+     "date": "1281",
+     "date_note": "invasions in 1274 and 1281",
+     "name": "Mongol invasions of Japan",
+     "place_name": "Hakata Bay",
+     "lat": 33.62,
+     "lon": 130.4,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Kublai Khan"
+     ],
+     "what": "Kublai sent two seaborne invasions against Japan, in 1274 and 1281; the second, perhaps 140,000 men, was wrecked by a typhoon after weeks of fighting at Hakata Bay.",
+     "why": "The failures at sea, together with later defeats in Vietnam and Java, marked the limits of Mongol expansion.",
+     "wikipedia": "Mongol invasions of Japan",
+     "wikidata": "Q208156"
+    },
+    {
+     "date": "1294-02-18",
+     "name": "Death of Kublai Khan",
+     "place_name": "Khanbaliq (Beijing)",
+     "lat": 39.91,
+     "lon": 116.39,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Kublai Khan"
+     ],
+     "what": "Kublai Khan died at Khanbaliq aged 78, after ruling for 34 years.",
+     "why": "With no Great Khan accepted by all the khanates after him, the unified Mongol Empire was effectively over, though its successor states lasted.",
+     "wikipedia": "Kublai Khan",
+     "wikidata": "Q7523"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "black_death",
+   "title": "The Black Death",
+   "region": "Europe and the Mediterranean",
+   "start": 1338,
+   "end": 1353,
+   "view": {
+    "lon": 20.0,
+    "lat": 45.0,
+    "span": 70
+   },
+   "blurb": "How did plague travel from the steppe to the whole of Europe in a few years, and what did it change for those who survived?",
+   "steps": [
+    {
+     "date": "1338",
+     "date_note": "1338-1339",
+     "name": "Plague graves at Issyk-Kul",
+     "place_name": "Chüy Valley, near Issyk-Kul",
+     "lat": 42.82,
+     "lon": 74.6,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "Gravestones in two Christian cemeteries in the Chüy Valley record an unusual number of deaths in 1338-1339, some described as from pestilence; DNA from these burials has identified Yersinia pestis.",
+     "why": "This is the strongest evidence for where the Black Death began, in Central Asia, before trade routes carried it west.",
+     "wikipedia": "Black Death",
+     "wikidata": "Q42005"
+    },
+    {
+     "date": "1346",
+     "name": "Siege of Caffa",
+     "place_name": "Caffa (Feodosia)",
+     "lat": 45.03,
+     "lon": 35.38,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [
+      "Jani Beg"
+     ],
+     "what": "Plague broke out in the Golden Horde army of Jani Beg besieging the Genoese trading port of Caffa in Crimea; a later account says corpses were catapulted into the town.",
+     "why": "Genoese ships leaving the Black Sea ports carried the disease into the Mediterranean.",
+     "wikipedia": "Siege of Caffa",
+     "wikidata": "Q96506039"
+    },
+    {
+     "date": "1347-10",
+     "name": "Plague reaches Messina",
+     "place_name": "Messina",
+     "lat": 38.19,
+     "lon": 15.55,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "Genoese galleys arriving from the east brought plague to Messina in Sicily, and within weeks it spread through the island.",
+     "why": "Sicily was the gateway; from here plague moved along every sea lane in the western Mediterranean.",
+     "wikipedia": "Black Death",
+     "wikidata": "Q42005"
+    },
+    {
+     "date": "1347-11",
+     "name": "Plague reaches Marseille",
+     "place_name": "Marseille",
+     "lat": 43.3,
+     "lon": 5.37,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "Ships brought plague to Marseille, and it moved up the Rhône valley to Avignon, seat of the papacy, in early 1348.",
+     "why": "From the Rhône it entered the heart of France and from there northern Europe.",
+     "wikipedia": "Black Death in France",
+     "wikidata": "Q90151663"
+    },
+    {
+     "date": "1348",
+     "date_note": "spring and summer 1348",
+     "name": "Plague in Florence",
+     "place_name": "Florence",
+     "lat": 43.77,
+     "lon": 11.25,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Giovanni Boccaccio"
+     ],
+     "what": "Plague killed perhaps half or more of Florence's population of around 100,000; Boccaccio described it in the opening of the Decameron, written soon after.",
+     "why": "The Decameron's frame story of young people fleeing the city is one of the best eyewitness pictures of how a society broke down under the epidemic.",
+     "wikipedia": "The Decameron",
+     "wikidata": "Q16438"
+    },
+    {
+     "date": "1348",
+     "name": "Plague in Cairo",
+     "place_name": "Cairo",
+     "lat": 30.04,
+     "lon": 31.24,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "Plague arrived in Egypt in autumn 1347 and peaked in Cairo in the winter of 1348-1349, when chroniclers reported thousands of deaths a day.",
+     "why": "The Islamic Mediterranean was hit as hard as Europe, and Egypt's irrigated farming suffered for generations from the loss of labour.",
+     "wikipedia": "Black Death in the Middle East",
+     "wikidata": "Q92159855"
+    },
+    {
+     "date": "1348-10",
+     "name": "Report of the Paris medical faculty",
+     "place_name": "Paris",
+     "lat": 48.85,
+     "lon": 2.35,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Philip VI of France"
+     ],
+     "what": "At the request of King Philip VI, the medical faculty of the University of Paris issued a report blaming a conjunction of Saturn, Jupiter and Mars in 1345 for corrupting the air.",
+     "why": "It shows how the best learning of the time understood the plague, and why its remedies, such as fleeing bad air, did little.",
+     "wikipedia": "Black Death in France",
+     "wikidata": "Q90151663"
+    },
+    {
+     "date": "1348-11",
+     "date_note": "arrived in England June 1348; London by autumn",
+     "name": "Plague in London",
+     "place_name": "East Smithfield, London",
+     "lat": 51.51,
+     "lon": -0.07,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "Plague landed at Melcombe in Dorset in June 1348 and reached London by autumn; the city dug mass burial grounds such as East Smithfield.",
+     "why": "Excavated skeletons from East Smithfield were later used to sequence the plague bacterium's genome.",
+     "wikipedia": "Black Death in England",
+     "wikidata": "Q4920638"
+    },
+    {
+     "date": "1349-02-14",
+     "name": "Strasbourg massacre",
+     "place_name": "Strasbourg",
+     "lat": 48.58,
+     "lon": 7.75,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "Accused of poisoning wells, several hundred Jews of Strasbourg were burned to death by the townspeople, part of a wave of massacres across the Rhineland and Germany.",
+     "why": "Fear looked for scapegoats, and many Jewish communities of the Holy Roman Empire were destroyed in 1348-1351.",
+     "wikipedia": "Strasbourg massacre",
+     "wikidata": "Q476345"
+    },
+    {
+     "date": "1349-06-18",
+     "name": "Ordinance of Labourers",
+     "place_name": "Westminster",
+     "lat": 51.5,
+     "lon": -0.13,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Edward III of England"
+     ],
+     "what": "Edward III's government ordered that labourers take wages no higher than before the plague and that all able-bodied people must work.",
+     "why": "With so many workers dead, survivors could demand higher wages; the attempt to freeze them fed resentment that later broke out in the Peasants' Revolt of 1381.",
+     "wikipedia": "Ordinance of Labourers 1349",
+     "wikidata": "Q3355455"
+    },
+    {
+     "date": "1349",
+     "date_note": "summer 1349",
+     "name": "Plague reaches Bergen",
+     "place_name": "Bergen",
+     "lat": 60.39,
+     "lon": 5.32,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "A ship from England brought plague to Bergen, and it spread through Norway, killing perhaps a third to a half of the population.",
+     "why": "Norway's loss of farmers and clergy weakened the kingdom for a long time; plague had now reached the far north of Europe.",
+     "wikipedia": "Black Death in Norway",
+     "wikidata": "Q89728140"
+    },
+    {
+     "date": "1349-10-20",
+     "name": "Papal bull against the flagellants",
+     "place_name": "Avignon",
+     "lat": 43.95,
+     "lon": 4.81,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Pope Clement VI"
+     ],
+     "what": "Pope Clement VI condemned the flagellants, bands who marched from town to town whipping themselves in public penance, and had earlier issued bulls saying Jews were not to blame for the plague.",
+     "why": "The epidemic produced new mass religious movements that the Church found hard to control.",
+     "wikipedia": "Flagellant",
+     "wikidata": "Q740885"
+    },
+    {
+     "date": "1353-04-27",
+     "name": "Death of Simeon of Moscow",
+     "place_name": "Moscow",
+     "lat": 55.75,
+     "lon": 37.62,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [
+      "Simeon of Moscow"
+     ],
+     "what": "Grand Prince Simeon of Moscow died of plague, along with his sons and his brother Andrei, as the epidemic swept the Russian lands.",
+     "why": "The disease came full circle to the edges of the steppe; in about six years it had killed perhaps a third or more of Europe's people.",
+     "wikipedia": "Simeon of Moscow",
+     "wikidata": "Q297102"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "mali_gold",
+   "title": "Mali and Saharan gold",
+   "region": "West Africa",
+   "start": 1235,
+   "end": 1468,
+   "view": {
+    "lon": -4.0,
+    "lat": 20.0,
+    "span": 50
+   },
+   "blurb": "How did a West African empire grow rich on gold and salt, and how did the rest of the world come to know it?",
+   "steps": [
+    {
+     "date": "1235",
+     "date_note": "c., traditional date",
+     "name": "Battle of Kirina",
+     "place_name": "Kirina",
+     "lat": 12.85,
+     "lon": -8.1,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Sundiata Keita",
+      "Sumanguru Kanté"
+     ],
+     "what": "Sundiata Keita, leading a coalition of Mande clans, defeated Sumanguru, king of the Sosso, near the Niger River.",
+     "why": "The victory founded the Mali Empire, remembered mainly through the oral epic of Sundiata kept by griots.",
+     "wikipedia": "Battle of Kirina",
+     "wikidata": "Q1319855"
+    },
+    {
+     "date": "1300",
+     "date_note": "c., trade long established",
+     "name": "Gold fields of Bure",
+     "place_name": "Bure gold fields",
+     "lat": 11.42,
+     "lon": -9.17,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Villagers in the upper Niger region of Bure, and in Bambuk to the west, mined alluvial gold that Mali taxed and traded north.",
+     "why": "West Africa was then one of the main sources of the gold used in the coins of the Mediterranean world, and Mali controlled the trade.",
+     "wikipedia": "Mali Empire",
+     "wikidata": "Q184536"
+    },
+    {
+     "date": "1300",
+     "date_note": "c.",
+     "name": "Salt mines of Taghaza",
+     "place_name": "Taghaza",
+     "lat": 23.6,
+     "lon": -5.0,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "In the middle of the Sahara, workers cut slabs of rock salt that camel caravans carried south to be traded for gold.",
+     "why": "Salt from the north for gold from the south was the core exchange of the trans-Saharan trade that fed Mali's wealth.",
+     "wikipedia": "Taghaza",
+     "wikidata": "Q966431"
+    },
+    {
+     "date": "1324-07",
+     "name": "Mansa Musa in Cairo",
+     "place_name": "Cairo",
+     "lat": 30.04,
+     "lon": 31.24,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Mansa Musa"
+     ],
+     "what": "On his pilgrimage to Mecca, Mansa Musa stayed in Cairo with a huge retinue and gave away and spent so much gold that, according to al-Umari, its value in Egypt fell for years.",
+     "why": "The visit made Mali famous across the Islamic world and in Europe as a land of gold.",
+     "wikipedia": "Mansa Musa",
+     "wikidata": "Q309333"
+    },
+    {
+     "date": "1324",
+     "date_note": "hajj season 1324",
+     "name": "Hajj of Mansa Musa",
+     "place_name": "Mecca",
+     "lat": 21.42,
+     "lon": 39.83,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Mansa Musa"
+     ],
+     "what": "Mansa Musa completed the hajj and returned with scholars and an architect to strengthen Islam and learning in Mali.",
+     "why": "The pilgrimage tied Mali to the intellectual networks of the Muslim world.",
+     "wikipedia": "Mansa Musa",
+     "wikidata": "Q309333"
+    },
+    {
+     "date": "1325",
+     "date_note": "c.",
+     "name": "Mali takes Gao",
+     "place_name": "Gao",
+     "lat": 16.27,
+     "lon": -0.04,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Mansa Musa"
+     ],
+     "what": "Around the time of Mansa Musa's return, Mali brought the Songhai trading city of Gao on the Niger bend under its rule.",
+     "why": "Control of the Niger bend gave Mali the river ports where Saharan caravans met river trade.",
+     "wikipedia": "Gao",
+     "wikidata": "Q188904"
+    },
+    {
+     "date": "1327",
+     "date_note": "c.",
+     "name": "Djinguereber Mosque",
+     "place_name": "Timbuktu",
+     "lat": 16.77,
+     "lon": -3.01,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Mansa Musa",
+      "Abu Ishaq al-Sahili"
+     ],
+     "what": "Mansa Musa had the great mud-brick Djinguereber Mosque built at Timbuktu, traditionally credited to the Andalusi poet and architect Abu Ishaq al-Sahili.",
+     "why": "Timbuktu grew into a centre of trade and Islamic scholarship, with libraries of manuscripts that survive today.",
+     "wikipedia": "Djinguereber Mosque",
+     "wikidata": "Q2480949"
+    },
+    {
+     "date": "1352",
+     "date_note": "1352-1353",
+     "name": "Ibn Battuta at the Mali court",
+     "place_name": "Capital of Mali (site disputed)",
+     "lat": 11.38,
+     "lon": -8.38,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta",
+      "Mansa Suleyman"
+     ],
+     "what": "The Moroccan traveller Ibn Battuta spent eight months at the court of Mansa Suleyman, Musa's brother, and described its ceremony, justice and safety for travellers.",
+     "why": "His account is one of the few eyewitness descriptions of Mali at its height.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1375",
+     "name": "Catalan Atlas",
+     "place_name": "Palma, Majorca",
+     "lat": 39.57,
+     "lon": 2.65,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Abraham Cresques"
+     ],
+     "what": "The Jewish cartographer Abraham Cresques of Majorca drew a world map showing Mansa Musa enthroned, holding a gold nugget, labelled the richest king in the land.",
+     "why": "Fifty years after the hajj, Europeans still pictured Mali as the source of gold, a motive for later Portuguese voyages down the African coast.",
+     "wikipedia": "Catalan Atlas",
+     "wikidata": "Q1356297"
+    },
+    {
+     "date": "1433",
+     "date_note": "c.",
+     "name": "Tuareg take Timbuktu",
+     "place_name": "Timbuktu",
+     "lat": 16.77,
+     "lon": -3.01,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [],
+     "what": "Tuareg nomads under Akil seized Timbuktu from a weakening Mali.",
+     "why": "Mali was losing its northern trading cities as rival powers rose around it.",
+     "wikipedia": "Timbuktu",
+     "wikidata": "Q9427"
+    },
+    {
+     "date": "1455",
+     "name": "Cadamosto on the Gambia River",
+     "place_name": "Gambia River",
+     "lat": 13.45,
+     "lon": -16.0,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Alvise Cadamosto"
+     ],
+     "what": "The Venetian Alvise Cadamosto, sailing for Prince Henry of Portugal, traded on the Senegal and Gambia rivers and described the West African peoples he met.",
+     "why": "European ships began to reach West African gold by sea, bypassing the Sahara routes that had made Mali rich.",
+     "wikipedia": "Alvise Cadamosto",
+     "wikidata": "Q360073"
+    },
+    {
+     "date": "1468",
+     "name": "Sonni Ali takes Timbuktu",
+     "place_name": "Timbuktu",
+     "lat": 16.77,
+     "lon": -3.01,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Sonni Ali"
+     ],
+     "what": "Sonni Ali, ruler of Songhai at Gao, captured Timbuktu from the Tuareg and treated its scholars harshly.",
+     "why": "Songhai replaced Mali as the great power of the Niger bend and the trans-Saharan gold trade.",
+     "wikipedia": "Sonni Ali",
+     "wikidata": "Q945436"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "ibn_battuta",
+   "title": "The travels of Ibn Battuta",
+   "region": "Afro-Eurasia",
+   "start": 1325,
+   "end": 1355,
+   "view": {
+    "lon": 50.0,
+    "lat": 20.0,
+    "span": 130
+   },
+   "blurb": "What did the fourteenth-century world look like to a Muslim scholar who travelled from Morocco to China and back over nearly thirty years?",
+   "steps": [
+    {
+     "date": "1325-06",
+     "name": "Departure from Tangier",
+     "place_name": "Tangier",
+     "lat": 35.77,
+     "lon": -5.8,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "Ibn Battuta, a 21-year-old student of Islamic law, left his home town of Tangier alone to make the pilgrimage to Mecca.",
+     "why": "The trip meant to last about a year became a journey of some 120,000 km through the Muslim world and beyond.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1326",
+     "date_note": "spring-summer 1326",
+     "name": "Ibn Battuta in Cairo",
+     "place_name": "Cairo",
+     "lat": 30.04,
+     "lon": 31.24,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "Ibn Battuta reached Alexandria and then Cairo, capital of the Mamluk Sultanate, which he called the mother of cities.",
+     "why": "Cairo was the largest city in the Muslim world, and his path through it shows how scholars could move and find support across the Islamic lands.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1326-11",
+     "date_note": "month approximate",
+     "name": "First hajj",
+     "place_name": "Mecca",
+     "lat": 21.42,
+     "lon": 39.83,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "After travelling with the pilgrim caravan from Damascus, Ibn Battuta completed his first hajj in Mecca.",
+     "why": "Instead of going home he decided to keep travelling, reportedly vowing never to take the same road twice.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1327",
+     "name": "Ibn Battuta in Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.31,
+     "lon": 44.37,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta",
+      "Abu Sa'id Bahadur Khan"
+     ],
+     "what": "Ibn Battuta toured Iran and Iraq and travelled for a time with the camp of Abu Sa'id, the Mongol Ilkhan, finding Baghdad still in ruins from the 1258 sack.",
+     "why": "He saw a Mongol-ruled Iran that had converted to Islam, a sign of how the conquerors had been absorbed.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1331",
+     "date_note": "1330 or 1331, disputed",
+     "name": "Ibn Battuta at Kilwa",
+     "place_name": "Kilwa Kisiwani",
+     "lat": -8.96,
+     "lon": 39.51,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "Sailing down the East African coast via Mogadishu and Mombasa, Ibn Battuta reached Kilwa, which he called one of the most beautiful cities in the world.",
+     "why": "Kilwa grew rich from the gold of Zimbabwe shipped through its port, part of the Indian Ocean trade linking Africa to Arabia and India.",
+     "wikipedia": "Kilwa Kisiwani",
+     "wikidata": "Q1741475"
+    },
+    {
+     "date": "1334",
+     "name": "Ibn Battuta in Delhi",
+     "place_name": "Delhi",
+     "lat": 28.61,
+     "lon": 77.21,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta",
+      "Muhammad bin Tughluq"
+     ],
+     "what": "Ibn Battuta reached Delhi, where Sultan Muhammad bin Tughluq appointed him a judge with a large salary; he stayed about eight years.",
+     "why": "Foreign Muslim scholars were in demand in the Delhi Sultanate, and his account of the unpredictable sultan is a major source for the period.",
+     "wikipedia": "Muhammad bin Tughluq",
+     "wikidata": "Q381830"
+    },
+    {
+     "date": "1342",
+     "date_note": "1341 or 1342",
+     "name": "Shipwreck at Calicut",
+     "place_name": "Calicut",
+     "lat": 11.25,
+     "lon": 75.78,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "Sent by the sultan as envoy to the Yuan court in China, Ibn Battuta lost the ships carrying the gifts in a storm off Calicut.",
+     "why": "Afraid to return to Delhi, he went on independently, and Calicut shows the Malabar ports where Arab, Indian and Chinese merchants met.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1343",
+     "name": "Ibn Battuta in the Maldives",
+     "place_name": "Malé",
+     "lat": 4.18,
+     "lon": 73.51,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "Ibn Battuta spent about nine months as chief judge in the Maldives, which exported cowrie shells used as money from Bengal to West Africa.",
+     "why": "The cowrie trade shows how far Indian Ocean goods travelled; he later saw the same shells used as currency in Mali.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1344",
+     "name": "Climb of Adam's Peak",
+     "place_name": "Adam's Peak, Sri Lanka",
+     "lat": 6.81,
+     "lon": 80.5,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "In Sri Lanka Ibn Battuta climbed Adam's Peak, a mountain revered by Muslims, Buddhists and Hindus for the footprint at its summit.",
+     "why": "It shows a shared sacred landscape where pilgrims of several faiths met.",
+     "wikipedia": "Adam's Peak"
+    },
+    {
+     "date": "1345",
+     "date_note": "c., his China dates are uncertain",
+     "name": "Ibn Battuta in Quanzhou",
+     "place_name": "Quanzhou (Zaitun)",
+     "lat": 24.87,
+     "lon": 118.68,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "Ibn Battuta landed at Quanzhou, which he called one of the greatest ports in the world, and found a Muslim merchant community with its own judge.",
+     "why": "Under Mongol rule China's ports were open to foreign merchants, the eastern end of the sea route he had followed.",
+     "wikipedia": "Quanzhou",
+     "wikidata": "Q68695"
+    },
+    {
+     "date": "1348",
+     "name": "Black Death in Damascus",
+     "place_name": "Damascus",
+     "lat": 33.51,
+     "lon": 36.29,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "Returning west, Ibn Battuta was in Damascus during the plague of 1348 and reported over 2,000 deaths in a single day.",
+     "why": "He was an eyewitness to the pandemic that was spreading along the same routes he travelled.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1349-11",
+     "name": "Return to Fez",
+     "place_name": "Fez",
+     "lat": 34.06,
+     "lon": -4.98,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta",
+      "Abu Inan Faris"
+     ],
+     "what": "Ibn Battuta reached Fez, capital of the Marinid sultan Abu Inan Faris, learning that his mother had died of the plague.",
+     "why": "After 24 years away he was home, but he soon set out again, to Granada and then across the Sahara.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1352",
+     "name": "Ibn Battuta at Taghaza",
+     "place_name": "Taghaza",
+     "lat": 23.6,
+     "lon": -5.0,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta"
+     ],
+     "what": "Crossing the Sahara by caravan from Sijilmasa, Ibn Battuta stopped at the salt mine of Taghaza, where houses and the mosque were built of salt blocks.",
+     "why": "He saw the source of the salt that was traded south for West African gold.",
+     "wikipedia": "Taghaza",
+     "wikidata": "Q966431"
+    },
+    {
+     "date": "1352",
+     "date_note": "1352-1353",
+     "name": "Ibn Battuta in Mali",
+     "place_name": "Capital of Mali (site disputed)",
+     "lat": 11.38,
+     "lon": -8.38,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Ibn Battuta",
+      "Mansa Suleyman"
+     ],
+     "what": "Ibn Battuta spent eight months at the court of Mansa Suleyman of Mali and later visited Timbuktu and Gao on the Niger.",
+     "why": "His travels now spanned every major region of the Muslim world, from West Africa to China.",
+     "wikipedia": "Ibn Battuta",
+     "wikidata": "Q7331"
+    },
+    {
+     "date": "1355",
+     "date_note": "dictation completed 1355",
+     "name": "Writing of the Rihla",
+     "place_name": "Fez",
+     "lat": 34.06,
+     "lon": -4.98,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Ibn Battuta",
+      "Ibn Juzayy"
+     ],
+     "what": "At Sultan Abu Inan's request Ibn Battuta dictated his memories to the scholar Ibn Juzayy, who shaped them into the book known as the Rihla.",
+     "why": "The Rihla is the main source for his life; some passages, especially on China, may be borrowed or embellished.",
+     "wikipedia": "Rihla",
+     "wikidata": "Q2745914"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "marco_polo",
+   "title": "Marco Polo and the Pax Mongolica",
+   "region": "Eurasia",
+   "start": 1260,
+   "end": 1299,
+   "view": {
+    "lon": 75.0,
+    "lat": 32.0,
+    "span": 120
+   },
+   "blurb": "How could a Venetian merchant family cross Asia, serve the Great Khan and return, and what did Europe learn from it?",
+   "steps": [
+    {
+     "date": "1260",
+     "name": "Elder Polos leave for the steppe",
+     "place_name": "Soldaia (Sudak)",
+     "lat": 44.85,
+     "lon": 34.97,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Niccolò Polo",
+      "Maffeo Polo"
+     ],
+     "what": "The Venetian merchant brothers Niccolò and Maffeo Polo left the Crimean port of Soldaia to trade jewels with Berke, khan of the Golden Horde.",
+     "why": "War between Mongol khanates blocked their way home, and they went east instead, eventually reaching Kublai Khan.",
+     "wikipedia": "Niccolò and Maffeo Polo",
+     "wikidata": "Q3294114"
+    },
+    {
+     "date": "1271",
+     "name": "Marco Polo leaves Venice",
+     "place_name": "Venice",
+     "lat": 45.44,
+     "lon": 12.33,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Marco Polo",
+      "Niccolò Polo",
+      "Maffeo Polo"
+     ],
+     "what": "After a first visit to Kublai, Niccolò and Maffeo set out again, taking Niccolò's 17-year-old son Marco.",
+     "why": "Venice's trade with the eastern Mediterranean gave its merchants the contacts and capital for such a journey.",
+     "wikipedia": "Marco Polo",
+     "wikidata": "Q6101"
+    },
+    {
+     "date": "1271",
+     "name": "The Polos at Acre",
+     "place_name": "Acre",
+     "lat": 32.92,
+     "lon": 35.07,
+     "family": "diplomacy",
+     "subtype": "journey",
+     "who": [
+      "Marco Polo",
+      "Niccolò Polo",
+      "Maffeo Polo",
+      "Pope Gregory X"
+     ],
+     "what": "At the crusader port of Acre the Polos received letters from Teobaldo Visconti, just elected Pope Gregory X, and two friars, who soon turned back, for Kublai.",
+     "why": "Kublai had asked for a hundred learned Christians; the Polos travelled as semi-official envoys between Pope and Khan.",
+     "wikipedia": "Marco Polo",
+     "wikidata": "Q6101"
+    },
+    {
+     "date": "1272",
+     "date_note": "c.",
+     "name": "The Polos at Hormuz",
+     "place_name": "Hormuz",
+     "lat": 27.13,
+     "lon": 57.05,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Marco Polo",
+      "Niccolò Polo",
+      "Maffeo Polo"
+     ],
+     "what": "The Polos reached the Persian Gulf port of Hormuz, where ships from India unloaded spices and pearls, but they judged the ships unsafe and went overland.",
+     "why": "Hormuz was a hub of the Indian Ocean trade that Marco would see again on his return by sea.",
+     "wikipedia": "Marco Polo",
+     "wikidata": "Q6101"
+    },
+    {
+     "date": "1273",
+     "date_note": "c.",
+     "name": "The Polos at Kashgar",
+     "place_name": "Kashgar",
+     "lat": 39.47,
+     "lon": 75.99,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Marco Polo",
+      "Niccolò Polo",
+      "Maffeo Polo"
+     ],
+     "what": "After crossing the Pamirs, the Polos reached the oasis city of Kashgar and followed the southern edge of the Taklamakan Desert east.",
+     "why": "Mongol control of the whole route made it possible for western merchants to travel the Silk Road end to end.",
+     "wikipedia": "Marco Polo",
+     "wikidata": "Q6101"
+    },
+    {
+     "date": "1275",
+     "name": "Arrival at Shangdu",
+     "place_name": "Shangdu (Xanadu)",
+     "lat": 42.36,
+     "lon": 116.18,
+     "family": "diplomacy",
+     "subtype": "journey",
+     "who": [
+      "Marco Polo",
+      "Niccolò Polo",
+      "Maffeo Polo",
+      "Kublai Khan"
+     ],
+     "what": "The Polos reached Kublai Khan's summer capital Shangdu, about three and a half years after leaving Venice.",
+     "why": "Kublai employed foreigners in his administration, and Marco said he served the Khan for seventeen years.",
+     "wikipedia": "Shangdu",
+     "wikidata": "Q471765"
+    },
+    {
+     "date": "1276",
+     "name": "Paper money of the Yuan",
+     "place_name": "Khanbaliq (Beijing)",
+     "lat": 39.91,
+     "lon": 116.39,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Marco Polo",
+      "Kublai Khan"
+     ],
+     "what": "Marco described how the Khan's mint at Khanbaliq issued paper money from mulberry bark that had to be accepted throughout the empire.",
+     "why": "Paper currency was unknown in Europe, and his account is one of the earliest western descriptions of it.",
+     "wikipedia": "Khanbaliq"
+    },
+    {
+     "date": "1280",
+     "date_note": "c., Marco's dates in China are uncertain",
+     "name": "Marco Polo in Hangzhou",
+     "place_name": "Hangzhou (Quinsai)",
+     "lat": 30.25,
+     "lon": 120.17,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Marco Polo"
+     ],
+     "what": "Marco described Hangzhou, the former Song capital taken by the Mongols in 1276, as the finest city in the world, with canals, bridges and huge markets.",
+     "why": "Hangzhou, with perhaps a million people, dwarfed any European city of the time.",
+     "wikipedia": "Hangzhou",
+     "wikidata": "Q4970"
+    },
+    {
+     "date": "1291",
+     "name": "Departure from Quanzhou",
+     "place_name": "Quanzhou (Zaitun)",
+     "lat": 24.87,
+     "lon": 118.68,
+     "family": "diplomacy",
+     "subtype": "voyage",
+     "who": [
+      "Marco Polo",
+      "Niccolò Polo",
+      "Maffeo Polo",
+      "Kököchin"
+     ],
+     "what": "The Polos sailed from Quanzhou with a fleet of 14 ships escorting the princess Kököchin to marry Arghun, the Ilkhan of Persia.",
+     "why": "The escort gave them their chance to leave China, by the sea route that linked the Mongol khanates.",
+     "wikipedia": "Kököchin",
+     "wikidata": "Q3263550"
+    },
+    {
+     "date": "1292",
+     "name": "The Polos in Sumatra",
+     "place_name": "Samudera, Sumatra",
+     "lat": 5.2,
+     "lon": 97.1,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Marco Polo",
+      "Niccolò Polo",
+      "Maffeo Polo"
+     ],
+     "what": "The fleet waited five months in northern Sumatra for the monsoon winds to change, and Marco described a small Muslim town there.",
+     "why": "The monsoon set the rhythm of all Indian Ocean travel, and his note is an early record of Islam's spread in Southeast Asia.",
+     "wikipedia": "Marco Polo",
+     "wikidata": "Q6101"
+    },
+    {
+     "date": "1293",
+     "name": "Return to Hormuz",
+     "place_name": "Hormuz",
+     "lat": 27.13,
+     "lon": 57.05,
+     "family": "diplomacy",
+     "subtype": "voyage",
+     "who": [
+      "Marco Polo",
+      "Niccolò Polo",
+      "Maffeo Polo",
+      "Kököchin"
+     ],
+     "what": "The fleet reached Persia, where Arghun had died, so Kököchin was married to his son Ghazan; many of the passengers had died on the voyage.",
+     "why": "From here the Polos went home overland through Tabriz and Trebizond.",
+     "wikipedia": "Kököchin",
+     "wikidata": "Q3263550"
+    },
+    {
+     "date": "1295",
+     "name": "Return to Venice",
+     "place_name": "Venice",
+     "lat": 45.44,
+     "lon": 12.33,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Marco Polo",
+      "Niccolò Polo",
+      "Maffeo Polo"
+     ],
+     "what": "The Polos arrived back in Venice after 24 years away, by tradition with jewels sewn into their clothes.",
+     "why": "They brought firsthand knowledge of Asia that few Europeans had.",
+     "wikipedia": "Marco Polo",
+     "wikidata": "Q6101"
+    },
+    {
+     "date": "1298",
+     "date_note": "circumstances of capture disputed",
+     "name": "The Travels of Marco Polo",
+     "place_name": "Genoa",
+     "lat": 44.41,
+     "lon": 8.93,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Marco Polo",
+      "Rustichello da Pisa"
+     ],
+     "what": "Held prisoner in Genoa during the war with Venice, Marco dictated his story to a fellow prisoner, the romance writer Rustichello da Pisa.",
+     "why": "The book, copied in many languages, shaped European ideas of Asia for two centuries; Columbus owned an annotated copy.",
+     "wikipedia": "The Travels of Marco Polo",
+     "wikidata": "Q654562"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "ottoman_rise",
+   "title": "The Ottoman rise to Constantinople",
+   "region": "Anatolia and the Balkans",
+   "start": 1299,
+   "end": 1453,
+   "view": {
+    "lon": 27.0,
+    "lat": 41.0,
+    "span": 22
+   },
+   "blurb": "How did a small frontier emirate in Anatolia grow in 150 years into the empire that took Constantinople?",
+   "steps": [
+    {
+     "date": "1299",
+     "date_note": "traditional date",
+     "name": "Rise of Osman I",
+     "place_name": "Söğüt",
+     "lat": 40.02,
+     "lon": 30.18,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Osman I"
+     ],
+     "what": "Osman, leader of a small Turkish principality around Söğüt on the Byzantine frontier, is traditionally said to have declared independence around 1299.",
+     "why": "His band of frontier warriors was one of many Turkish emirates left after the Seljuk state broke up under Mongol pressure.",
+     "wikipedia": "Osman I",
+     "wikidata": "Q83100"
+    },
+    {
+     "date": "1302-07-27",
+     "date_note": "exact location uncertain",
+     "name": "Battle of Bapheus",
+     "place_name": "Near Nicomedia",
+     "lat": 40.7,
+     "lon": 29.9,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Osman I"
+     ],
+     "what": "Osman defeated a Byzantine force near Nicomedia, the first major Ottoman victory over the empire.",
+     "why": "The win attracted fighters to Osman and left Byzantine Bithynia open to raids.",
+     "wikipedia": "Battle of Bapheus",
+     "wikidata": "Q1509619"
+    },
+    {
+     "date": "1326-04-06",
+     "name": "Siege of Bursa",
+     "place_name": "Bursa",
+     "lat": 40.19,
+     "lon": 29.06,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Orhan"
+     ],
+     "what": "Osman's son Orhan took the Byzantine city of Bursa after a long blockade, and it became the first Ottoman capital.",
+     "why": "With a real city, mosques and a market, the emirate began to become a state.",
+     "wikipedia": "Siege of Bursa",
+     "wikidata": "Q1099263"
+    },
+    {
+     "date": "1354-03-02",
+     "name": "Fall of Gallipoli",
+     "place_name": "Gallipoli",
+     "lat": 40.41,
+     "lon": 26.67,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [
+      "Orhan",
+      "Süleyman Pasha"
+     ],
+     "what": "An earthquake shattered the walls of Gallipoli and Orhan's son Süleyman Pasha occupied the town and settled Turks there.",
+     "why": "It gave the Ottomans a permanent foothold in Europe, across the Dardanelles.",
+     "wikipedia": "Fall of Gallipoli"
+    },
+    {
+     "date": "1369",
+     "date_note": "c., date disputed (1361-1371)",
+     "name": "Adrianople becomes the capital",
+     "place_name": "Adrianople (Edirne)",
+     "lat": 41.68,
+     "lon": 26.56,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Murad I"
+     ],
+     "what": "Murad I took Adrianople in Thrace, which became the main Ottoman capital, and his reign saw the start of the Janissaries, an infantry corps raised from captured Christian boys.",
+     "why": "Ruling from Europe, the Ottomans could push into the Balkans with a standing army loyal only to the sultan.",
+     "wikipedia": "Edirne",
+     "wikidata": "Q43387"
+    },
+    {
+     "date": "1389-06-15",
+     "name": "Battle of Kosovo",
+     "place_name": "Kosovo Field",
+     "lat": 42.7,
+     "lon": 21.1,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Murad I",
+      "Lazar of Serbia",
+      "Bayezid I"
+     ],
+     "what": "Ottoman and Serbian armies met at Kosovo Field; both Murad I and Prince Lazar were killed, and Bayezid I took command.",
+     "why": "Serbia soon became an Ottoman vassal, and the battle became central to Serbian memory.",
+     "wikipedia": "Battle of Kosovo",
+     "wikidata": "Q179288"
+    },
+    {
+     "date": "1396-09-25",
+     "name": "Battle of Nicopolis",
+     "place_name": "Nicopolis",
+     "lat": 43.7,
+     "lon": 24.9,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Bayezid I",
+      "Sigismund, Holy Roman Emperor"
+     ],
+     "what": "Bayezid I destroyed a crusading army of Hungarians, French and others led by King Sigismund of Hungary on the Danube.",
+     "why": "The defeat ended large western efforts to drive the Ottomans out of the Balkans for decades.",
+     "wikipedia": "Battle of Nicopolis",
+     "wikidata": "Q212220"
+    },
+    {
+     "date": "1402-07-20",
+     "name": "Battle of Ankara",
+     "place_name": "Çubuk plain, near Ankara",
+     "lat": 40.15,
+     "lon": 32.95,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Timur",
+      "Bayezid I"
+     ],
+     "what": "Timur defeated and captured Bayezid I, who died in captivity in 1403.",
+     "why": "The Ottoman state nearly collapsed into a civil war among Bayezid's sons, and Constantinople gained fifty years.",
+     "wikipedia": "Battle of Ankara",
+     "wikidata": "Q209387"
+    },
+    {
+     "date": "1444-11-10",
+     "name": "Battle of Varna",
+     "place_name": "Varna",
+     "lat": 43.21,
+     "lon": 27.91,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Murad II",
+      "Władysław III of Poland",
+      "John Hunyadi"
+     ],
+     "what": "Murad II defeated a crusade led by King Władysław III of Poland and Hungary, who was killed, and John Hunyadi on the Black Sea coast.",
+     "why": "It was the last major crusade sent to save Constantinople, which was now isolated.",
+     "wikipedia": "Battle of Varna",
+     "wikidata": "Q32832"
+    },
+    {
+     "date": "1452-08",
+     "date_note": "completed August 1452",
+     "name": "Rumelihisarı built",
+     "place_name": "Bosphorus",
+     "lat": 41.08,
+     "lon": 29.06,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Mehmed II"
+     ],
+     "what": "Mehmed II had the fortress of Rumelihisarı built on the European shore of the Bosphorus in about four months, with guns to control the strait.",
+     "why": "It cut Constantinople off from Black Sea grain and help, the first step of the siege.",
+     "wikipedia": "Rumelihisarı",
+     "wikidata": "Q90801"
+    },
+    {
+     "date": "1452",
+     "name": "Orban's great cannon",
+     "place_name": "Adrianople (Edirne)",
+     "lat": 41.68,
+     "lon": 26.56,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Orban",
+      "Mehmed II"
+     ],
+     "what": "A Hungarian founder named Orban, who had offered his services to Byzantium first, cast huge bronze cannons for Mehmed II.",
+     "why": "Gunpowder artillery could now batter walls that had stood for a thousand years.",
+     "wikipedia": "Orban",
+     "wikidata": "Q1240377"
+    },
+    {
+     "date": "1453-05-29",
+     "date_note": "siege began 6 April 1453",
+     "name": "Fall of Constantinople",
+     "place_name": "Constantinople",
+     "lat": 41.02,
+     "lon": 28.93,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Mehmed II",
+      "Constantine XI Palaiologos"
+     ],
+     "what": "After a siege of nearly two months, Mehmed II's army stormed the land walls and Constantine XI, the last Byzantine emperor, died in the fighting.",
+     "why": "The Ottomans took the city that had blocked their growth, ending the Roman Empire in the east.",
+     "wikipedia": "Fall of Constantinople",
+     "wikidata": "Q160077"
+    },
+    {
+     "date": "1453-06-01",
+     "name": "Hagia Sophia becomes a mosque",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Mehmed II"
+     ],
+     "what": "Mehmed II converted the 900-year-old cathedral of Hagia Sophia into a mosque, and made the city his new capital.",
+     "why": "Constantinople, later known as Istanbul, became the capital of an empire that would last until 1922.",
+     "wikipedia": "Hagia Sophia",
+     "wikidata": "Q12506"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "zheng_he",
+   "title": "Zheng He's treasure fleets",
+   "region": "Indian Ocean",
+   "start": 1405,
+   "end": 1433,
+   "view": {
+    "lon": 85.0,
+    "lat": 10.0,
+    "span": 90
+   },
+   "blurb": "Why did Ming China send the largest fleets the world had seen across the Indian Ocean, and why did it stop?",
+   "steps": [
+    {
+     "date": "1402-07",
+     "name": "Yongle Emperor takes the throne",
+     "place_name": "Nanjing",
+     "lat": 32.06,
+     "lon": 118.78,
+     "family": "war",
+     "subtype": "coup",
+     "who": [
+      "Yongle Emperor",
+      "Zheng He"
+     ],
+     "what": "Zhu Di, Prince of Yan, captured Nanjing from his nephew the Jianwen Emperor and took the throne as the Yongle Emperor; the eunuch Zheng He had served him in the war.",
+     "why": "The usurper wanted foreign rulers to acknowledge his legitimacy, one of the main motives for the voyages.",
+     "wikipedia": "Yongle Emperor",
+     "wikidata": "Q9965"
+    },
+    {
+     "date": "1404",
+     "date_note": "c.",
+     "name": "Building the treasure ships",
+     "place_name": "Longjiang shipyard, Nanjing",
+     "lat": 32.07,
+     "lon": 118.73,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Zheng He"
+     ],
+     "what": "Shipyards at Nanjing built hundreds of vessels, including the great treasure ships whose size is still debated by historians.",
+     "why": "The fleets drew on the shipbuilding skill and resources of the largest economy in the world.",
+     "wikipedia": "Chinese treasure ship",
+     "wikidata": "Q702138"
+    },
+    {
+     "date": "1405",
+     "date_note": "departed autumn 1405",
+     "name": "First voyage sets sail",
+     "place_name": "Liujiagang",
+     "lat": 31.6,
+     "lon": 121.17,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Zheng He"
+     ],
+     "what": "Zheng He left the Yangtze estuary with a fleet of over 200 ships and about 27,000 men.",
+     "why": "It was the first of seven voyages that would reach Southeast Asia, India, Arabia and East Africa.",
+     "wikipedia": "Ming treasure voyages",
+     "wikidata": "Q699127"
+    },
+    {
+     "date": "1407",
+     "date_note": "c.",
+     "name": "Treasure fleet at Calicut",
+     "place_name": "Calicut",
+     "lat": 11.25,
+     "lon": 75.78,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Zheng He"
+     ],
+     "what": "The fleet reached Calicut on the Malabar coast, the main goal of the first voyage, and traded for pepper and other goods.",
+     "why": "Calicut was the leading pepper port of the Indian Ocean and a regular stop on every voyage.",
+     "wikipedia": "Ming treasure voyages",
+     "wikidata": "Q699127"
+    },
+    {
+     "date": "1407",
+     "name": "Defeat of Chen Zuyi",
+     "place_name": "Palembang",
+     "lat": -2.98,
+     "lon": 104.76,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Zheng He",
+      "Chen Zuyi"
+     ],
+     "what": "On the way home the fleet destroyed the pirate fleet of Chen Zuyi at Palembang in Sumatra; Chen was taken to Nanjing and executed.",
+     "why": "The fleet acted as an armed police force for the sea lanes as well as a diplomatic mission.",
+     "wikipedia": "Chen Zuyi",
+     "wikidata": "Q5091011"
+    },
+    {
+     "date": "1409",
+     "name": "Galle Trilingual Inscription",
+     "place_name": "Galle",
+     "lat": 6.03,
+     "lon": 80.22,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Zheng He"
+     ],
+     "what": "Zheng He's fleet left a stone in Sri Lanka recording offerings to the Buddha, to Allah and to a Hindu deity, in Chinese, Persian and Tamil.",
+     "why": "It shows the Ming court presenting itself to a world of many religions and languages.",
+     "wikipedia": "Galle Trilingual Inscription",
+     "wikidata": "Q5518913"
+    },
+    {
+     "date": "1411",
+     "name": "Ming–Kotte War",
+     "place_name": "Kotte",
+     "lat": 6.89,
+     "lon": 79.9,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Zheng He"
+     ],
+     "what": "When the Sinhalese ruler Alakeshvara attacked the fleet, Zheng He's troops captured him and took him to Nanjing.",
+     "why": "It was the most serious fighting of the voyages and showed their military power.",
+     "wikipedia": "Ming–Kotte War",
+     "wikidata": "Q6864869"
+    },
+    {
+     "date": "1411",
+     "name": "Malacca's ruler visits China",
+     "place_name": "Malacca",
+     "lat": 2.19,
+     "lon": 102.25,
+     "family": "diplomacy",
+     "subtype": "trade",
+     "who": [
+      "Zheng He",
+      "Parameswara"
+     ],
+     "what": "Parameswara, founder of Malacca, travelled to Nanjing with the fleet, and Malacca became the fleet's main depot and a Ming protectorate.",
+     "why": "Ming protection helped Malacca grow into the great trading port of the straits.",
+     "wikipedia": "Malacca Sultanate",
+     "wikidata": "Q46652"
+    },
+    {
+     "date": "1414",
+     "name": "Treasure fleet at Hormuz",
+     "place_name": "Hormuz",
+     "lat": 27.07,
+     "lon": 56.46,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Zheng He",
+      "Ma Huan"
+     ],
+     "what": "The fourth voyage went past India to Hormuz, the island port at the mouth of the Persian Gulf, with the Muslim interpreter Ma Huan on board.",
+     "why": "Ma Huan's account of the ports he visited, later published, is a key record of the Indian Ocean world in the early 1400s.",
+     "wikipedia": "Ma Huan",
+     "wikidata": "Q702918"
+    },
+    {
+     "date": "1414",
+     "name": "The giraffe at court",
+     "place_name": "Nanjing",
+     "lat": 32.06,
+     "lon": 118.78,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Shen Du",
+      "Yongle Emperor"
+     ],
+     "what": "A giraffe from Africa, sent by the sultan of Bengal, was presented to the Yongle Emperor as a qilin, a lucky beast, and painted by the court artist Shen Du.",
+     "why": "Exotic tribute was valued as a sign of Heaven's favour for the emperor's rule.",
+     "wikipedia": "Shen Du"
+    },
+    {
+     "date": "1418",
+     "date_note": "fifth voyage, 1417-1419",
+     "name": "Treasure fleet at Malindi",
+     "place_name": "Malindi",
+     "lat": -3.22,
+     "lon": 40.12,
+     "family": "diplomacy",
+     "subtype": "voyage",
+     "who": [
+      "Zheng He"
+     ],
+     "what": "The fifth voyage reached the East African coast at Mogadishu and Malindi, whose envoys had brought a giraffe to China in 1415.",
+     "why": "It was the farthest west the fleets went, almost a century before the Portuguese arrived.",
+     "wikipedia": "Ming treasure voyages",
+     "wikidata": "Q699127"
+    },
+    {
+     "date": "1424-09",
+     "name": "Hongxi Emperor halts the voyages",
+     "place_name": "Beijing",
+     "lat": 39.91,
+     "lon": 116.39,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Hongxi Emperor"
+     ],
+     "what": "After the Yongle Emperor died, his son the Hongxi Emperor ordered the voyages stopped, as officials argued they were too costly.",
+     "why": "With the capital now in Beijing, the court was more concerned with the Mongol frontier than with the sea.",
+     "wikipedia": "Hongxi Emperor",
+     "wikidata": "Q9972"
+    },
+    {
+     "date": "1431",
+     "date_note": "seventh voyage, 1431-1433",
+     "name": "Seventh voyage",
+     "place_name": "Liujiagang",
+     "lat": 31.6,
+     "lon": 121.17,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Zheng He",
+      "Xuande Emperor"
+     ],
+     "what": "The Xuande Emperor sent Zheng He on one last voyage, and before sailing he set up an inscription recording all seven expeditions.",
+     "why": "It was the final voyage; some crew members, including Ma Huan, went on to Mecca.",
+     "wikipedia": "Ming treasure voyages",
+     "wikidata": "Q699127"
+    },
+    {
+     "date": "1433",
+     "date_note": "probably; place and date not certain",
+     "name": "Death of Zheng He",
+     "place_name": "Calicut",
+     "lat": 11.25,
+     "lon": 75.78,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Zheng He"
+     ],
+     "what": "Zheng He most likely died at sea or at Calicut on the return journey of the seventh voyage, and the fleet reached China later in 1433.",
+     "why": "No more voyages were sent; the Ming turned inward, and the Indian Ocean was left to Arab, Indian and soon Portuguese ships.",
+     "wikipedia": "Zheng He",
+     "wikidata": "Q7333"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "aztecs_incas",
+   "title": "Aztecs and Incas to the conquest",
+   "region": "The Americas",
+   "start": 1428,
+   "end": 1533,
+   "view": {
+    "lon": -85.0,
+    "lat": 5.0,
+    "span": 60
+   },
+   "blurb": "How did two great American empires rise in a century, and how did small Spanish forces bring them down?",
+   "steps": [
+    {
+     "date": "1428",
+     "name": "Aztec Triple Alliance",
+     "place_name": "Azcapotzalco",
+     "lat": 19.49,
+     "lon": -99.18,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Itzcoatl"
+     ],
+     "what": "Tenochtitlan under Itzcoatl joined Texcoco and Tlacopan to defeat Azcapotzalco, the dominant city of the Valley of Mexico.",
+     "why": "The alliance became the Aztec Empire, which collected tribute from much of central Mexico.",
+     "wikipedia": "Aztec Triple Alliance",
+     "wikidata": "Q794210"
+    },
+    {
+     "date": "1438",
+     "date_note": "c., traditional date",
+     "name": "Pachacuti takes power",
+     "place_name": "Cusco",
+     "lat": -13.53,
+     "lon": -71.97,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Pachacuti"
+     ],
+     "what": "Pachacuti defended Cusco against the Chanka, took the throne, and began rebuilding the city and expanding the Inca state.",
+     "why": "Under Pachacuti and his son, a small Andean kingdom became Tawantinsuyu, the largest empire in the Americas.",
+     "wikipedia": "Pachacuti",
+     "wikidata": "Q213758"
+    },
+    {
+     "date": "1450",
+     "date_note": "c.",
+     "name": "Machu Picchu built",
+     "place_name": "Machu Picchu",
+     "lat": -13.16,
+     "lon": -72.55,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Pachacuti"
+     ],
+     "what": "A royal estate of fitted stone buildings and farming terraces was built on a ridge above the Urubamba River, probably for Pachacuti.",
+     "why": "It shows the stonework and labour the Incas could command through the mit'a labour tax.",
+     "wikipedia": "Machu Picchu",
+     "wikidata": "Q676203"
+    },
+    {
+     "date": "1470",
+     "date_note": "c.",
+     "name": "Inca conquest of Chimor",
+     "place_name": "Chan Chan",
+     "lat": -8.11,
+     "lon": -79.07,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Topa Inca Yupanqui"
+     ],
+     "what": "Inca armies under Topa Inca Yupanqui conquered the coastal kingdom of Chimor and its capital Chan Chan, taking its craftsmen to Cusco.",
+     "why": "The Incas absorbed the largest rival state in the Andes.",
+     "wikipedia": "Chimor",
+     "wikidata": "Q581741"
+    },
+    {
+     "date": "1487",
+     "name": "Templo Mayor rededicated",
+     "place_name": "Tenochtitlan",
+     "lat": 19.43,
+     "lon": -99.13,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ahuitzotl"
+     ],
+     "what": "Ahuitzotl rededicated the enlarged Templo Mayor, the great twin temple at the centre of Tenochtitlan, with mass sacrifices of war captives.",
+     "why": "Tenochtitlan, an island city of perhaps 200,000 people fed by chinampa farms on the lake, was the centre of a tribute empire.",
+     "wikipedia": "Templo Mayor",
+     "wikidata": "Q774021"
+    },
+    {
+     "date": "1500",
+     "date_note": "c.",
+     "name": "Inca road system",
+     "place_name": "Huánuco Pampa",
+     "lat": -9.87,
+     "lon": -76.82,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Huayna Capac"
+     ],
+     "what": "Under Huayna Capac the Inca road network of some 30,000 km linked Quito to Chile, with storehouses and administrative centres such as Huánuco Pampa along it.",
+     "why": "Roads, storehouses and knotted-cord quipu records let the Incas run an empire without writing or markets.",
+     "wikipedia": "Inca road system",
+     "wikidata": "Q948975"
+    },
+    {
+     "date": "1519-04-22",
+     "name": "Cortés lands at Veracruz",
+     "place_name": "Veracruz",
+     "lat": 19.2,
+     "lon": -96.14,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Hernán Cortés",
+      "La Malinche"
+     ],
+     "what": "Hernán Cortés landed on the Gulf coast with about 500 soldiers, and the Nahua woman Malinche became his interpreter.",
+     "why": "Peoples resentful of Aztec rule, above all the Tlaxcalans, joined the Spanish and provided most of their army.",
+     "wikipedia": "Hernán Cortés",
+     "wikidata": "Q7326"
+    },
+    {
+     "date": "1519-11-08",
+     "name": "Cortés enters Tenochtitlan",
+     "place_name": "Tenochtitlan",
+     "lat": 19.43,
+     "lon": -99.13,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Hernán Cortés",
+      "Moctezuma II",
+      "La Malinche"
+     ],
+     "what": "Moctezuma II received Cortés in Tenochtitlan as a guest; within days the Spanish took him hostage.",
+     "why": "Holding the ruler let a few hundred Spaniards try to control the empire from within.",
+     "wikipedia": "Spanish conquest of the Aztec Empire",
+     "wikidata": "Q828435"
+    },
+    {
+     "date": "1520-06-30",
+     "name": "La Noche Triste",
+     "place_name": "Tlacopan causeway, Tenochtitlan",
+     "lat": 19.44,
+     "lon": -99.15,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Hernán Cortés",
+      "Cuitláhuac"
+     ],
+     "what": "After Moctezuma's death the Mexica rose and drove the Spanish out along the causeway at night, killing hundreds of them and their allies.",
+     "why": "The Aztecs had won, and Cortés retreated to Tlaxcala to rebuild.",
+     "wikipedia": "La Noche Triste",
+     "wikidata": "Q1308854"
+    },
+    {
+     "date": "1520-12",
+     "date_note": "month approximate",
+     "name": "Smallpox in Tenochtitlan",
+     "place_name": "Tenochtitlan",
+     "lat": 19.43,
+     "lon": -99.13,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [
+      "Cuitláhuac"
+     ],
+     "what": "Smallpox, brought from the Caribbean, swept through central Mexico and killed the new ruler Cuitláhuac after only about 80 days on the throne.",
+     "why": "Epidemics to which Americans had no immunity killed far more people than Spanish weapons and broke societies before battle.",
+     "wikipedia": "Cuitláhuac",
+     "wikidata": "Q315628"
+    },
+    {
+     "date": "1521-08-13",
+     "name": "Fall of Tenochtitlan",
+     "place_name": "Tenochtitlan",
+     "lat": 19.43,
+     "lon": -99.13,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Hernán Cortés",
+      "Cuauhtémoc"
+     ],
+     "what": "After a siege of about three months with brigantines on the lake and tens of thousands of native allies, Cortés captured Cuauhtémoc and the ruined city.",
+     "why": "The Aztec Empire ended, and Mexico City was built on its ruins as the capital of New Spain.",
+     "wikipedia": "Fall of Tenochtitlan",
+     "wikidata": "Q593267"
+    },
+    {
+     "date": "1527",
+     "date_note": "c., date disputed (1524-1528)",
+     "name": "Death of Huayna Capac",
+     "place_name": "Quito",
+     "lat": -0.22,
+     "lon": -78.51,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [
+      "Huayna Capac"
+     ],
+     "what": "Huayna Capac died at Quito, probably of smallpox that had spread south ahead of the Spanish, and his chosen heir also died.",
+     "why": "Disease reached the Andes before the conquistadors and left the succession open.",
+     "wikipedia": "Huayna Capac",
+     "wikidata": "Q311433"
+    },
+    {
+     "date": "1529",
+     "end_date": "1532",
+     "name": "Inca Civil War",
+     "place_name": "Cusco",
+     "lat": -13.53,
+     "lon": -71.97,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Atahualpa",
+      "Huáscar"
+     ],
+     "what": "Huayna Capac's sons Huáscar, ruling at Cusco, and Atahualpa, with the northern army at Quito, fought for the throne until Atahualpa's generals captured Huáscar in 1532.",
+     "why": "The war divided and weakened the empire just as Pizarro arrived.",
+     "wikipedia": "Inca Civil War",
+     "wikidata": "Q1763918"
+    },
+    {
+     "date": "1532-11-16",
+     "name": "Battle of Cajamarca",
+     "place_name": "Cajamarca",
+     "lat": -7.16,
+     "lon": -78.51,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Francisco Pizarro",
+      "Atahualpa"
+     ],
+     "what": "Francisco Pizarro, with fewer than 200 men, ambushed Atahualpa's unarmed retinue in the town square of Cajamarca and took him prisoner.",
+     "why": "Capturing the Sapa Inca at the top of a centralised state paralysed the empire.",
+     "wikipedia": "Battle of Cajamarca",
+     "wikidata": "Q1425362"
+    },
+    {
+     "date": "1533-07-26",
+     "name": "Execution of Atahualpa",
+     "place_name": "Cajamarca",
+     "lat": -7.16,
+     "lon": -78.51,
+     "family": "war",
+     "subtype": "death",
+     "who": [
+      "Atahualpa",
+      "Francisco Pizarro"
+     ],
+     "what": "After filling a room with gold and silver as ransom, Atahualpa was executed by the Spanish.",
+     "why": "The Spanish marched on Cusco that year, and the Inca Empire fell under Spanish rule.",
+     "wikipedia": "Atahualpa",
+     "wikidata": "Q179577"
+    }
+   ],
+   "status": "draft"
+  }
+ ]
+}
