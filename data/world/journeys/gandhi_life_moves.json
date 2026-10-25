@@ -1,0 +1,394 @@
+{
+ "id": "gandhi_life_moves",
+ "name": "Gandhi's life moves",
+ "person": "person:mahatma_gandhi",
+ "kind": "activist",
+ "summary": "Mohandas Gandhi moves from Porbandar to law school in London, two decades of activism in South Africa, and thirty years of campaigning across India, from Champaran and the Salt March to Noakhali and his assassination in Delhi.",
+ "start": 1869,
+ "end": 1948,
+ "stops": [
+  {
+   "place": "Porbandar",
+   "lon": 69.61,
+   "lat": 21.64,
+   "date": "1869-10-02",
+   "until": "1876",
+   "mode": "start",
+   "note": "Born in the diwan's household.",
+   "conf": "documented"
+  },
+  {
+   "place": "Rajkot",
+   "lon": 70.8,
+   "lat": 22.3,
+   "date": "1876",
+   "until": "1888-08",
+   "mode": "land",
+   "note": "Schooled here; married to Kasturba at thirteen.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bombay",
+   "lon": 72.83,
+   "lat": 18.95,
+   "date": "1888-08",
+   "until": "1888-09-04",
+   "mode": "land",
+   "note": "Outcast by his caste for going abroad; sails on the SS Clyde.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1888-09-29",
+   "until": "1891-06-12",
+   "mode": "sea",
+   "note": "Studies law at the Inner Temple and joins the Vegetarian Society.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bombay",
+   "lon": 72.83,
+   "lat": 18.95,
+   "date": "1891-07-05",
+   "until": "1893-04",
+   "mode": "sea",
+   "note": "Struggles to establish a legal practice.",
+   "conf": "documented"
+  },
+  {
+   "place": "Durban",
+   "lon": 31.03,
+   "lat": -29.86,
+   "date": "1893-05-24",
+   "until": "1893-06",
+   "mode": "sea",
+   "note": "Arrives to work on a merchant's lawsuit.",
+   "conf": "documented"
+  },
+  {
+   "place": "Pietermaritzburg",
+   "lon": 30.38,
+   "lat": -29.6,
+   "date": "1893-06-07",
+   "until": "1893-06-07",
+   "mode": "rail",
+   "note": "Thrown off a first-class carriage at the station for being Indian.",
+   "conf": "documented"
+  },
+  {
+   "place": "Pretoria",
+   "lon": 28.19,
+   "lat": -25.75,
+   "date": "1893-06",
+   "until": "1894-05",
+   "mode": "rail",
+   "note": "Settles the lawsuit and reads Tolstoy.",
+   "conf": "documented"
+  },
+  {
+   "place": "Durban",
+   "lon": 31.03,
+   "lat": -29.86,
+   "date": "1894-05",
+   "until": "1896-06",
+   "mode": "rail",
+   "note": "Founds the Natal Indian Congress.",
+   "conf": "documented"
+  },
+  {
+   "place": "Rajkot",
+   "lon": 70.8,
+   "lat": 22.3,
+   "date": "1896-07",
+   "until": "1896-11",
+   "mode": "sea",
+   "note": "Fetches his family and publishes the Green Pamphlet.",
+   "conf": "documented"
+  },
+  {
+   "place": "Durban",
+   "lon": 31.03,
+   "lat": -29.86,
+   "date": "1897-01-13",
+   "until": "1903",
+   "mode": "sea",
+   "note": "Assaulted by a white mob on landing; later leads an ambulance corps in the Boer War.",
+   "conf": "documented"
+  },
+  {
+   "place": "Johannesburg",
+   "lon": 28.05,
+   "lat": -26.2,
+   "date": "1903",
+   "until": "1904-11",
+   "mode": "rail",
+   "note": "Opens a law practice and starts the weekly Indian Opinion.",
+   "conf": "documented"
+  },
+  {
+   "place": "Phoenix Settlement",
+   "lon": 30.97,
+   "lat": -29.7,
+   "date": "1904-12",
+   "until": "1904-12",
+   "mode": "rail",
+   "note": "Founds a communal farm inspired by Ruskin's Unto This Last.",
+   "conf": "documented"
+  },
+  {
+   "place": "Johannesburg",
+   "lon": 28.05,
+   "lat": -26.2,
+   "date": "1905",
+   "until": "1906-09",
+   "mode": "rail",
+   "note": "Launches satyagraha against the Asiatic registration ordinance at the Empire Theatre on 11 September 1906.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1906-10",
+   "until": "1906-11",
+   "mode": "sea",
+   "note": "Lobbies the Colonial Office with a deputation.",
+   "conf": "documented"
+  },
+  {
+   "place": "Johannesburg",
+   "lon": 28.05,
+   "lat": -26.2,
+   "date": "1907",
+   "until": "1910-04",
+   "mode": "sea",
+   "note": "Jailed several times for leading resistance to the registration act.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tolstoy Farm",
+   "lon": 27.8,
+   "lat": -26.1,
+   "date": "1910-05",
+   "until": "1913-10",
+   "mode": "rail",
+   "note": "Houses satyagrahis' families near Johannesburg.",
+   "conf": "documented"
+  },
+  {
+   "place": "Volksrust",
+   "lon": 29.88,
+   "lat": -27.37,
+   "date": "1913-11-06",
+   "until": "1913-11-06",
+   "mode": "land",
+   "note": "Leads two thousand Indian miners across the Transvaal border in defiance of the law; arrested.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cape Town",
+   "lon": 18.42,
+   "lat": -33.92,
+   "date": "1914-07-18",
+   "until": "1914-07-18",
+   "mode": "rail",
+   "note": "Leaves South Africa after the Smuts-Gandhi agreement.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1914-08-06",
+   "until": "1914-12-19",
+   "mode": "sea",
+   "note": "Arrives as war breaks out and organises an Indian ambulance unit.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bombay",
+   "lon": 72.83,
+   "lat": 18.95,
+   "date": "1915-01-09",
+   "until": "1915-01",
+   "mode": "sea",
+   "note": "Returns to India to a hero's welcome.",
+   "conf": "documented"
+  },
+  {
+   "place": "Ahmedabad (Kochrab, then Sabarmati)",
+   "lon": 72.58,
+   "lat": 23.06,
+   "date": "1915-05-25",
+   "until": "1917-04",
+   "mode": "rail",
+   "note": "Founds his ashram.",
+   "conf": "documented"
+  },
+  {
+   "place": "Motihari (Champaran)",
+   "lon": 84.92,
+   "lat": 26.65,
+   "date": "1917-04-15",
+   "until": "1917-06",
+   "mode": "rail",
+   "note": "Investigates indigo planters' abuses and defies an order to leave.",
+   "conf": "documented"
+  },
+  {
+   "place": "Sabarmati Ashram",
+   "lon": 72.58,
+   "lat": 23.06,
+   "date": "1917-06",
+   "until": "1922-03",
+   "mode": "rail",
+   "note": "Leads the Kheda and non-cooperation campaigns from here.",
+   "conf": "documented"
+  },
+  {
+   "place": "Yerwada Jail, Poona",
+   "lon": 73.89,
+   "lat": 18.56,
+   "date": "1922-03-20",
+   "until": "1924-02-05",
+   "mode": "rail",
+   "note": "Serves two years of a six-year sedition sentence.",
+   "conf": "documented"
+  },
+  {
+   "place": "Sabarmati Ashram",
+   "lon": 72.58,
+   "lat": 23.06,
+   "date": "1924-02",
+   "until": "1930-03-12",
+   "mode": "rail",
+   "note": "Leaves on foot with 78 followers for the sea.",
+   "conf": "documented"
+  },
+  {
+   "place": "Dandi",
+   "lon": 72.8,
+   "lat": 20.89,
+   "date": "1930-04-05",
+   "until": "1930-04-06",
+   "mode": "land",
+   "note": "Picks up a lump of salt on the beach after a 24-day march.",
+   "conf": "documented"
+  },
+  {
+   "place": "Yerwada Jail, Poona",
+   "lon": 73.89,
+   "lat": 18.56,
+   "date": "1930-05-05",
+   "until": "1931-01-26",
+   "mode": "rail",
+   "note": "Arrested at Karadi and held without trial.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1931-09-12",
+   "until": "1931-12-05",
+   "mode": "sea",
+   "note": "Attends the Second Round Table Conference and stays in the East End at Kingsley Hall.",
+   "conf": "documented"
+  },
+  {
+   "place": "Rome",
+   "lon": 12.48,
+   "lat": 41.9,
+   "date": "1931-12-12",
+   "until": "1931-12-13",
+   "mode": "rail",
+   "note": "Meets Mussolini on his way home.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bombay",
+   "lon": 72.83,
+   "lat": 18.95,
+   "date": "1931-12-28",
+   "until": "1932-01-04",
+   "mode": "sea",
+   "note": "Arrested a week after landing.",
+   "conf": "documented"
+  },
+  {
+   "place": "Sevagram (Wardha)",
+   "lon": 78.66,
+   "lat": 20.73,
+   "date": "1936-04",
+   "until": "1942-08",
+   "mode": "rail",
+   "note": "Makes the village ashram his base.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bombay (Gowalia Tank)",
+   "lon": 72.81,
+   "lat": 18.96,
+   "date": "1942-08-08",
+   "until": "1942-08-09",
+   "mode": "rail",
+   "note": "Launches Quit India with 'Do or Die'; arrested next morning.",
+   "conf": "documented"
+  },
+  {
+   "place": "Aga Khan Palace, Poona",
+   "lon": 73.9,
+   "lat": 18.55,
+   "date": "1942-08-09",
+   "until": "1944-05-06",
+   "mode": "rail",
+   "note": "Interned; Kasturba dies here in 1944.",
+   "conf": "documented"
+  },
+  {
+   "place": "Noakhali",
+   "lon": 91.1,
+   "lat": 22.87,
+   "date": "1946-11-07",
+   "until": "1947-03-02",
+   "mode": "rail",
+   "note": "Walks barefoot through riot-torn villages.",
+   "conf": "documented"
+  },
+  {
+   "place": "Calcutta (Beliaghata)",
+   "lon": 88.4,
+   "lat": 22.56,
+   "date": "1947-08-13",
+   "until": "1947-09-07",
+   "mode": "rail",
+   "note": "Spends Independence Day fasting and spinning to calm riots.",
+   "conf": "documented"
+  },
+  {
+   "place": "Delhi (Birla House)",
+   "lon": 77.21,
+   "lat": 28.6,
+   "date": "1947-09-09",
+   "until": "1948-01-30",
+   "mode": "rail",
+   "note": "Fasts for communal peace and is shot by Nathuram Godse.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "M. K. Gandhi, An Autobiography, or The Story of My Experiments with Truth, Ahmedabad 1927-29"
+  },
+  {
+   "cite": "Ramachandra Guha, Gandhi Before India (2013) and Gandhi: The Years That Changed the World 1914-1948 (2018)"
+  },
+  {
+   "cite": "Wikipedia, Mahatma Gandhi",
+   "url": "https://en.wikipedia.org/wiki/Mahatma_Gandhi"
+  }
+ ],
+ "status": "draft"
+}

@@ -217,8 +217,8 @@
   "conf": "documented",
   "sources": [
    {
-    "cite": "Arrian, Anabasis 7.2-3; Strabo 15.1.63-68; summarised in Wikipedia, 'Calanus'",
-    "url": "https://en.wikipedia.org/wiki/Calanus"
+    "cite": "Arrian, Anabasis 7.2-3; Strabo 15.1.63-68; summarised in Wikipedia, 'Kalanos'",
+    "url": "https://en.wikipedia.org/wiki/Kalanos"
    }
   ]
  },
@@ -504,6 +504,27 @@
    {
     "cite": "Paul, Galatians 1:18; summarised in Wikipedia, 'Paul the Apostle'",
     "url": "https://en.wikipedia.org/wiki/Paul_the_Apostle"
+   }
+  ]
+ },
+ {
+  "id": "liu_bei_zhuge_liang",
+  "a": "Liu Bei",
+  "b": "Zhuge Liang",
+  "a_person": "person:liu_bei",
+  "b_person": "person:zhuge_liang",
+  "date": "207",
+  "date_approx": true,
+  "place": "Longzhong, near Xiangyang",
+  "lon": 112.08,
+  "lat": 32.0,
+  "what": "After calling three times at his thatched cottage, Liu Bei met the young recluse Zhuge Liang, who laid out the Longzhong Plan for dividing the realm into three.",
+  "why": "Zhuge Liang became Liu Bei's chancellor and the plan foreshadowed the Three Kingdoms; Zhuge's own memorial recalls the three visits.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Chen Shou, Records of the Three Kingdoms; Zhuge Liang, Chu Shi Biao; summarised in Wikipedia, 'Zhuge Liang'",
+    "url": "https://en.wikipedia.org/wiki/Zhuge_Liang"
    }
   ]
  },
@@ -1075,7 +1096,7 @@
   "id": "carpine_guyuk",
   "a": "Giovanni da Pian del Carpine",
   "b": "Güyük Khan",
-  "date": "1246-11",
+  "date": "1246-08",
   "date_approx": true,
   "place": "Sira Ordo, near Karakorum",
   "lon": 102.8,
@@ -1136,10 +1157,10 @@
   "b_person": "person:nasir_al_din_al_tusi",
   "date": "1256-11",
   "date_approx": true,
-  "place": "Alamut",
+  "place": "Maymun-Diz, near Alamut",
   "lon": 50.59,
   "lat": 36.44,
-  "what": "When the Nizari stronghold surrendered to Hulagu, the astronomer al-Tusi, living among the Ismailis, came over to the Mongols.",
+  "what": "When the Nizari imam surrendered Maymun-Diz to Hulagu, the astronomer al-Tusi, who had served the Ismailis for decades, came over to the Mongols.",
   "why": "Hulagu made him adviser and built him the Maragheh observatory, a high point of medieval astronomy.",
   "conf": "documented",
   "sources": [
@@ -1263,8 +1284,8 @@
   "conf": "documented",
   "sources": [
    {
-    "cite": "Ibn Battuta, Rihla; summarised in Wikipedia, 'Kilwa Sultanate'",
-    "url": "https://en.wikipedia.org/wiki/Kilwa_Sultanate"
+    "cite": "Ibn Battuta, Rihla; summarised in Wikipedia, 'Kilwa Kisiwani'",
+    "url": "https://en.wikipedia.org/wiki/Kilwa_Kisiwani"
    }
   ]
  },
@@ -2080,7 +2101,7 @@
   "a": "Oda Nobunaga",
   "b": "Yasuke",
   "a_person": "person:oda_nobunaga",
-  "date": "1581-03-27",
+  "date": "1581-03",
   "date_approx": true,
   "place": "Kyoto",
   "lon": 135.76,
@@ -3341,8 +3362,8 @@
   "conf": "documented",
   "sources": [
    {
-    "cite": "Marsden, Journal; summarised in Wikipedia, 'Ruatara'",
-    "url": "https://en.wikipedia.org/wiki/Ruatara"
+    "cite": "Marsden, Journal; summarised in Wikipedia, 'Ruatara (chief)'",
+    "url": "https://en.wikipedia.org/wiki/Ruatara_(chief)"
    }
   ]
  },
@@ -3371,7 +3392,7 @@
   "b": "Manuela Sáenz",
   "a_person": "person:simon_bolivar",
   "date": "1822-06-16",
-  "date_approx": false,
+  "date_approx": true,
   "place": "Quito",
   "lon": -78.51,
   "lat": -0.22,
@@ -3462,6 +3483,25 @@
    {
     "cite": "Fynn, Diary; summarised in Wikipedia, 'Henry Francis Fynn'",
     "url": "https://en.wikipedia.org/wiki/Henry_Francis_Fynn"
+   }
+  ]
+ },
+ {
+  "id": "truganini_robinson",
+  "a": "Truganini",
+  "b": "George Augustus Robinson",
+  "date": "1829-03",
+  "date_approx": true,
+  "place": "Bruny Island, Tasmania",
+  "lon": 147.33,
+  "lat": -43.28,
+  "what": "The young Nuenonne woman Truganini met George Augustus Robinson at his ration station on Bruny Island and became guide on his 'Friendly Mission'.",
+  "why": "Robinson's mission ended with the removal of surviving Aboriginal Tasmanians to Flinders Island; Truganini's life became a symbol of colonial dispossession.",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Robinson, Friendly Mission journals (ed. Plomley); summarised in Wikipedia, 'Truganini'",
+    "url": "https://en.wikipedia.org/wiki/Truganini"
    }
   ]
  },
@@ -3626,11 +3666,11 @@
   "a": "William Hobson",
   "b": "Hōne Heke",
   "date": "1840-02-06",
-  "date_approx": false,
+  "date_approx": true,
   "place": "Waitangi",
   "lon": 174.07,
   "lat": -35.27,
-  "what": "Hōne Heke was the first chief to sign the Treaty of Waitangi with Captain Hobson.",
+  "what": "Hōne Heke signed the Treaty of Waitangi with Captain Hobson, by some accounts the first chief to do so.",
   "why": "The treaty founded British New Zealand; in 1844 Heke cut down the flagstaff at Kororāreka in protest.",
   "conf": "documented",
   "sources": [
@@ -4216,7 +4256,7 @@
   "a_person": "person:gustav_mahler",
   "b_person": "person:sigmund_freud",
   "date": "1910-08-26",
-  "date_approx": false,
+  "date_approx": true,
   "place": "Leiden",
   "lon": 4.49,
   "lat": 52.16,

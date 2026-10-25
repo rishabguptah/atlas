@@ -122,9 +122,9 @@
    "lon": 35.07,
    "lat": 32.92,
    "date": "1799-03-19",
-   "until": "1799-05-20",
+   "until": "1799-04-14",
    "mode": "land",
-   "note": "Fails to take the city from Jazzar Pasha and Sidney Smith in a two-month siege.",
+   "note": "Besieges the city held by Jazzar Pasha with Sidney Smith's help.",
    "conf": "documented"
   },
   {
@@ -135,6 +135,16 @@
    "until": "1799-04-16",
    "mode": "land",
    "note": "Rescues Kleber's division from an Ottoman relief army.",
+   "conf": "documented"
+  },
+  {
+   "place": "Acre",
+   "lon": 35.07,
+   "lat": 32.92,
+   "date": "1799-04-18",
+   "until": "1799-05-20",
+   "mode": "land",
+   "note": "Fails to storm the walls and lifts the two-month siege.",
    "conf": "documented"
   },
   {

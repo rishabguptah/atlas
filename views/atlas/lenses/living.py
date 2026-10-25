@@ -59,6 +59,9 @@ def build(repo):
             journeys.append({'id': L['id'], 'name': L['name'], 'person': None, 'kind': (L.get('role') or 'traveller').split()[0].lower(), 'summary': (L.get('intro') or '').replace('You are ', '')[:300],
                              'stops': stops, 'sources': _src(L.get('sources')), 'status': 'draft', 'from': 'life'})
     flows = []
+    # Road and sea paths for each flow, routed once by ingest/world/paths.js with the shared router (world/route.js).
+    paths = (_load(os.path.join(d, 'flow-paths.json'), {}) or {})
+    paths = paths.get('paths', paths) if isinstance(paths, dict) else {}
     for f in (_load(os.path.join(d, 'flows.json'), {}) or {}).get('flows', []):
         if not f.get('stops') or f.get('start') is None:
             continue
@@ -66,6 +69,8 @@ def build(repo):
                                    'days_range', 'goods_out', 'goods_back', 'culture', 'note', 'conf') if f.get(k) is not None}
         keep['stops'] = [{'name': s['name'], 'lon': _r(s['lon']), 'lat': _r(s['lat'])} for s in f['stops'] if s.get('lon') is not None]
         keep['sources'] = _src(f.get('sources'))
+        if isinstance(paths.get(f['id']), list) and len(paths[f['id']]) > 1:
+            keep['path'] = paths[f['id']]
         flows.append(keep)
     # Trade routes from the economy workstream: a few merchant groups a year along their stops, approximate.
     places = {}
