@@ -6,10 +6,10 @@
 //   pm.overlay(mk.paint)               PixelMap calls paint(g) at the end of every paint
 //
 // Records (the same shape the scrubbing work's ATLAS.marks() gives):
-//   points {lon, lat, kind, shape, color, hi, ghost, size, fade}
+//   points {lon, lat, kind, shape, color, hi, ghost, size, fade, sprite?}  sprite: a PIXEL_SPRITES name, painted as that sprite
 //     kind  city | person | hub | shock | reached | school | work | stop | order | broke | battle | choke | lens | sel | pin
 //     shape circle | square | diamond | cross | triangle (kind "lens"); size is the old SVG radius in CSS px
-//   lines  {poly: [[x, y], ...] projected, or pts: [[lon, lat], ...], color, kind, dash, arrow, ghost, fade}
+//   lines  {poly: [[x, y], ...] projected, or pts: [[lon, lat], ...], color, kind, dash, arrow, ghost, fade, conf?}  conf: sure | likely | legend
 // Colours are CSS colours; city and battle marks step aside where a sprite already stands for them.
 (function (global) {
   const rgbOf = s => { const m = String(s).match(/[\d.]+/g); return m && m.length >= 3 ? [+m[0], +m[1], +m[2]] : [128, 128, 128]; };
@@ -153,7 +153,9 @@
     }
     // Lines: a 1-px dash in the colour over a 1-px shadow, walked pixel by pixel; the pattern counter runs along the line.
     function line(L) {
-      const T = tones(L.color), a = Math.max(0.25, L.fade ?? 1), dash = L.ghost ? [1, 3, 0] : L.dashed ? [3, 3, 1] : DASH[L.kind] || [3, 2, 0];
+      // Confidence (house rule 5): documented is a near-solid marching line, likely a dash, legend or unknown route dots.
+      const T = tones(L.color), a = Math.max(0.25, L.fade ?? (L.alpha != null ? Math.min(1, L.alpha / 0.75) : 1));
+      const dash = L.conf === "legend" || L.ghost ? [1, 3, 0] : L.conf === "likely" || L.dashed ? [3, 3, 1] : L.conf === "sure" ? [6, 1, 1] : DASH[L.kind] || [3, 2, 0];
       const per = dash[0] + dash[1], march = dash[2] ? G.frame : 0, shadow = L.kind !== "ring";
       const pix = [];
       let s = 0, lastDir = null, end = null;
@@ -194,8 +196,25 @@
       for (let y = j - r - 3; y <= j + 1; y++) for (let x = i - r; x <= i + r; x++) if (x >= 0 && y >= 0 && x < G.w && y < G.h && G.sprite[y * G.w + x]) return true;
       return false;
     }
+    // A pin with a sprite name is painted as that pixel sprite (PIXEL_SPRITES, the basemap's own art), animated with
+    // the map's frame; ghost sprites (legend, unknown) keep every other pixel.
+    const keyCol = new Map();
+    function keyColor(ch) {
+      let v = keyCol.get(ch);
+      if (v == null) { const K = (global.PIXEL_PALETTE && global.PIXEL_PALETTE.KEYS) || {}, hex = ch === "x" ? "#b8382a" : ch === "X" ? "#7c2018" : K[ch]; v = hex ? pack(tone(hex)) : 0; keyCol.set(ch, v); }
+      return v;
+    }
+    function sprite(S, i, j, a, ghost, flip) {
+      const fr = S.frames[G.frame % S.frames.length];
+      for (let y = 0; y < fr.length; y++) for (let x = 0; x < fr[y].length; x++) {
+        const ch = fr[y][x]; if (ch === "." || (ghost && ((x + y) & 1))) continue;
+        const c = keyColor(ch); if (c) put(i - S.ax + (flip ? S.w - 1 - x : x), j - S.ay + y, c, a);
+      }
+    }
     function point(m, i, j) {
       const T = tones(m.color), a = Math.max(0.2, Math.min(1, m.fade ?? 1)), PX = G.px;
+      const S = m.sprite && global.PIXEL_SPRITES && global.PIXEL_SPRITES[m.sprite];
+      if (S && S.frames) { sprite(S, i, j, a, m.ghost, m.flip); if (m.hi) brackets(i, j - (S.ay >> 1), Math.max(4, S.w >> 1), a); return; }
       switch (m.kind) {
         case "city": case "battle":
           if (!m.hi && covered(i, j, 2)) return; // the city or army sprite already marks it

@@ -1,0 +1,26 @@
+{
+  "id": "parthenon_marbles",
+  "name": "Parthenon sculptures (Elgin marbles)",
+  "type": "single",
+  "sprite": "obj_marble",
+  "what": "The carved frieze, metopes and pediment figures of the Parthenon in Athens, made under Phidias in 447-432 BCE. About half of what survives is in London, most of the rest in Athens.",
+  "why": "One building became a church, a mosque, an ammunition store, a ruin and a cause. The sculptures show how a monument is taken apart by religion, war and empire, and then argued over by nations.",
+  "now": "About half of the surviving sculpture (75 m of the frieze, 15 metopes, 17 pediment figures) in the British Museum, London; most of the rest in the Acropolis Museum, Athens, with pieces in Paris, Rome, Vienna and elsewhere.",
+  "dispute": "Greece has asked for them back since 1983. The British Museum says they were acquired legally under an Ottoman permit and the Museum Act forbids giving them away; the permit's wording survives only in an Italian translation.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Beard, M. (2002). The Parthenon. Profile Books."},
+    {"cite": "St Clair, W. (1998). Lord Elgin and the Marbles. 3rd ed. Oxford University Press."},
+    {"cite": "Wikipedia: Elgin Marbles", "url": "https://en.wikipedia.org/wiki/Elgin_Marbles"},
+    {"cite": "British Museum: The Parthenon Sculptures", "url": "https://www.britishmuseum.org/about-us/british-museum-story/contested-objects-collection/parthenon-sculptures"}
+  ],
+  "stops": [
+    {"y": -438, "at": [23.7265, 37.9715], "place": "Parthenon, Athens", "owner": "Athenian democracy", "by": "made", "conf": "sure", "note": "Built 447-432 BCE under Pericles; the frieze was finished by about 438 and the pediments by 432. Phidias directed the sculpture, carved from Pentelic marble quarried 16 km away.", "meet": "an Athenian at the Panathenaic festival"},
+    {"y": 600, "approx": true, "at": [23.7265, 37.9715], "place": "Church of the Virgin, Athens", "owner": "Byzantine Church", "by": "converted", "conf": "likely", "note": "Turned into a church of the Virgin Mary, probably in the sixth century. An apse was cut through the east end and many metopes were chiselled away as pagan."},
+    {"y": 1460, "approx": true, "at": [23.7265, 37.9715], "place": "Mosque, Athens", "owner": "Ottoman empire", "by": "seized", "conf": "sure", "note": "After the Ottoman conquest of Athens (1456-1458) the church became a mosque, with a minaret added in the south-west corner. The building stood almost whole for two more centuries."},
+    {"y": 1687, "at": [23.7265, 37.9715], "place": "Acropolis, Athens", "owner": "Ottoman empire", "by": "destroyed", "conf": "sure", "note": "On 26 September 1687 a Venetian mortar shell under Francesco Morosini hit the gunpowder the Ottoman garrison had stored inside. The explosion blew out the middle of the temple. Morosini then tried to lower the west pediment's horses and they shattered.", "meet": "a Venetian gunner or an Athenian in the town below"},
+    {"y": 1802, "at": [23.08, 36.23], "place": "Off Kythera", "owner": "Lord Elgin", "by": "lost", "conf": "sure", "via": "sea", "path": [[23.63, 37.94], [23.3, 37.0], [23.08, 36.23]], "note": "From 1801 Elgin's agents, led by the painter Giovanni Battista Lusieri, sawed and lifted about half the surviving sculpture off the building under an Ottoman permit. The brig Mentor sank off Kythera in 1802 with 17 cases; sponge divers raised them over the next two years.", "meet": "a sponge diver from Kythera"},
+    {"y": 1816, "at": [-0.127, 51.519], "place": "British Museum, London", "owner": "British Museum", "by": "sold", "conf": "sure", "via": "sea", "path": [[23.08, 36.23], [20, 36.5], [15.5, 36.4], [11.5, 37.6], [5, 37.5], [-5.6, 36], [-9.8, 36.5], [-10, 43], [-5, 48.3], [-1.1, 50.8], [1.4, 51.4], [-0.127, 51.519]], "note": "Elgin, deep in debt, sold them to Parliament in 1816 for £35,000, less than he had spent. A select committee found the purchase legal; Byron called it plunder. They went on show at the British Museum in 1817.", "meet": "Keats, who saw them in 1817 and wrote a sonnet about it, or anyone at the British Museum"},
+    {"y": 2009, "at": [23.7285, 37.9685], "place": "Acropolis Museum, Athens", "owner": "Greek state", "by": "displayed", "conf": "sure", "note": "The new Acropolis Museum opened with a top-floor gallery laid out like the temple, the pieces in Athens in place and gaps or casts where the London pieces belong.", "split": true, "from": -1}
+  ]
+}
