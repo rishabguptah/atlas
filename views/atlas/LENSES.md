@@ -62,7 +62,7 @@ ATLAS.lens({
 });
 ```
 
-`ctx.pins` options can also be given per record as functions: `shape` (a shape or a sprite name), `hi`, `ghost`, `fade` and `size`.
+`ctx.pins` options can also be given per record as functions: `shape` (a shape or a sprite name; the pixel map paints a `PIXEL_SPRITES` name as that sprite), `color`, `size`, `fade`, `always`, `hi`, `ghost`, `pri`, `fill`, `stroke`, `fontPx`, `lblColor`, `lblAt`.
 `ctx.paths` takes `conf: "sure" | "likely" | "legend"` for the confidence grammar (house rule 5: documented is solid, likely is
 dashed, legend or an unknown route is dotted, on the canvas and in the pixel map alike), plus `arrow`, `alpha`, `width` and `dash`.
 
