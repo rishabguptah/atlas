@@ -123,10 +123,50 @@
       const t = last;
       octx.setTransform(t.k / PX, 0, 0, t.k / PX, -U0, -V0);
       // Projected outlines are cached as Path2D per feature (and per projection), then filled through the zoom transform.
-      const pk = projection.scale() + "," + projection.translate().join(",");
-      feats.forEach((f, i) => { octx.fillStyle = fill(f, i); octx.fill(pathOf(f, pk)); });
+      const pk = projection.scale() + "," + projection.translate().join(",") + "," + tierOf(t.k);
+      // Realms wholly outside this region are skipped, so a zoomed-in view never projects the rest of the world.
+      const vb = viewBounds(t);
+      // Outlines the border worker already projected (views/pixel/borders.js) are filled in raw Natural Earth units
+      // through one transform; anything else goes through pathOf.
+      const P = rawProj(), tier = tierOf(t.k);
+      feats.forEach((f, i) => {
+        const b = vb && llBounds(f);
+        if (b && (b[2] < vb[0] || b[0] > vb[2] || b[3] < vb[1] || b[1] > vb[3])) return;
+        octx.fillStyle = fill(f, i);
+        if (P && f.raw && !f.raw.cross) {
+          octx.setTransform(t.k * P.s / PX, 0, 0, -t.k * P.s / PX, t.k * P.tx / PX - U0, t.k * P.ty / PX - V0);
+          octx.fill(rawPathOf(f.raw, tier, P.s));
+          octx.setTransform(t.k / PX, 0, 0, t.k / PX, -U0, -V0);
+        } else octx.fill(pathOf(f, pk));
+      });
       octx.setTransform(1, 0, 0, 1, 0, 0);
       return octx.getImageData(0, 0, w, h).data;
+    }
+    // Longitude/latitude box of the region (U0, V0, w, h), padded; null when it reaches the antimeridian or a pole.
+    function viewBounds(t) {
+      if (t.k < 1.5) return null;
+      let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
+      for (let s = 0; s <= 8; s++) for (const [i, j] of [[s / 8 * w, 0], [s / 8 * w, h], [0, s / 8 * h], [w, s / 8 * h]]) {
+        const ll = projection.invert([(i + U0) * PX / t.k, (j + V0) * PX / t.k]);
+        if (!ll || !isFinite(ll[0]) || !isFinite(ll[1])) return null;
+        x0 = Math.min(x0, ll[0]); x1 = Math.max(x1, ll[0]); y0 = Math.min(y0, ll[1]); y1 = Math.max(y1, ll[1]);
+      }
+      if (x1 - x0 > 200 || y1 > 84 || y0 < -84) return null;
+      const pad = 2 + (x1 - x0) * 0.05;
+      return [x0 - pad, y0 - pad, x1 + pad, y1 + pad];
+    }
+    const llCache = new WeakMap();
+    function llBounds(f) {
+      if (f && f.raw) return f.raw.bbox;
+      let b = llCache.get(f);
+      if (b !== undefined) return b;
+      b = [180, 90, -180, -90];
+      const walk = c => { if (typeof c[0] === "number") { if (c[0] < b[0]) b[0] = c[0]; if (c[0] > b[2]) b[2] = c[0]; if (c[1] < b[1]) b[1] = c[1]; if (c[1] > b[3]) b[3] = c[1]; } else for (const x of c) walk(x); };
+      const g = f && (f.geometry || f);
+      if (g && g.coordinates) walk(g.coordinates); else b = null;
+      // A shape straddling the antimeridian looks world-wide here, so it is always drawn (safe, just not culled).
+      llCache.set(f, b);
+      return b;
     }
 
     // Build the projected outlines of features ahead of time, in idle slices, so the first visit to a border frame
@@ -136,15 +176,85 @@
     function pathOf(f, pk) {
       let c = pathCache.get(f);
       // Projected straight into a Path2D (no SVG string to build and parse).
-      if (!c || c.pk !== pk) { const p2 = new Path2D(); ctxPath.context(p2)(f); pathCache.set(f, c = { pk, p: p2 }); }
+      // Resampling off: border vertices are far denser than an art pixel, so straight segments look the same and
+      // projecting costs about half.
+      if (!c || c.pk !== pk) {
+        let p2 = fastPath(f);
+        if (!p2) {
+          p2 = new Path2D(); const pr = projection.precision(); projection.precision(0);
+          try { ctxPath.context(p2)(f); } finally { projection.precision(pr); }
+        }
+        pathCache.set(f, c = { pk, p: p2 });
+      }
       return c.p;
+    }
+    // The page's Natural Earth projection evaluated directly (no stream, clipping or resampling): about five times
+    // quicker than d3.geoPath. Used for shapes that stay off the antimeridian and the poles, which need d3's clipping.
+    const RAW = (() => {
+      if (projection.rotate().some(v => v)) return null;
+      // d3.geoNaturalEarth1Raw inlined (no array per point); the check below falls back to d3 for any other projection.
+      const raw = (l, p) => { const p2 = p * p, p4 = p2 * p2; OUT2[0] = l * (0.8707 - 0.131979 * p2 + p4 * (-0.013791 + p4 * (0.003971 * p2 - 0.001529 * p4)));
+        OUT2[1] = p * (1.007226 + p2 * (0.015085 + p4 * (-0.044475 + 0.028874 * p2 - 0.005916 * p4))); return OUT2; };
+      const s = projection.scale(), [tx, ty] = projection.translate(), R = Math.PI / 180;
+      const f = (lon, lat) => { const p = raw(lon * R, lat * R); return [tx + s * p[0], ty - s * p[1]]; };
+      for (const [lo, la] of [[0, 0], [100, 40], [-60, -30]]) { const a = projection([lo, la]), b = f(lo, la); if (!a || Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) > 1e-6) return null; }
+      return { raw, s, tx, ty, R, key: s + "," + tx + "," + ty };
+    });
+    let rawP = null; const OUT2 = [0, 0];
+    // Zoom tiers for simplified outlines (powers of two), so a path built at one zoom serves until the next tier.
+    const tierOf = k => Math.pow(2, Math.ceil(Math.log2(Math.max(1, k))));
+    function rawProj() {
+      const pk = projection.scale() + "," + projection.translate().join(",");
+      if (!rawP || rawP.pk !== pk) rawP = { pk, P: RAW() };
+      return rawP.P;
+    }
+    // A worker-projected outline as a Path2D in raw units, dropping vertices closer than a third of an art pixel.
+    const rawCache = new WeakMap();
+    function rawPathOf(d, tier, s) {
+      const key = tier + "," + s; let c = rawCache.get(d);
+      if (c && c.key === key) return c.p;
+      const p2 = new Path2D(), xy = d.xy, tol = PX / tier / s / 3;
+      let o = 0;
+      for (let r = 0; r < d.lens.length; r++) {
+        const n = d.lens[r]; let lx = xy[o], ly = xy[o + 1];
+        p2.moveTo(lx, ly);
+        for (let i = 1; i < n; i++) { const x = xy[o + 2 * i], y = xy[o + 2 * i + 1]; if (i === n - 1 || Math.abs(x - lx) + Math.abs(y - ly) > tol) { p2.lineTo(x, y); lx = x; ly = y; } }
+        p2.closePath(); o += 2 * n;
+      }
+      rawCache.set(d, c = { key, p: p2 });
+      return p2;
+    }
+    function fastPath(f) {
+      const g = f && f.geometry; if (!g) return null;
+      const polys = g.type === "Polygon" ? [g.coordinates] : g.type === "MultiPolygon" ? g.coordinates : null; if (!polys) return null;
+      const P = rawProj(); if (!P) return null;
+      for (const poly of polys) for (const ring of poly) for (let i = 0; i < ring.length; i++) {
+        const c = ring[i]; if (c[1] > 89 || c[1] < -89 || c[0] >= 180 || c[0] <= -180) return null;
+        if (i && Math.abs(c[0] - ring[i - 1][0]) > 90) return null;
+      }
+      // Vertices closer than a third of an art pixel at this zoom tier are dropped: they cannot change the raster.
+      const { raw, s, tx, ty, R } = P, p2 = new Path2D(), tol = PX / tierOf(last ? last.k : 1) / 3;
+      for (const poly of polys) for (const ring of poly) {
+        let lx = 0, ly = 0;
+        for (let i = 0, n = ring.length; i < n; i++) {
+          const q = raw(ring[i][0] * R, ring[i][1] * R), x = tx + s * q[0], y = ty - s * q[1];
+          if (!i) { p2.moveTo(x, y); lx = x; ly = y; } else if (i === n - 1 || Math.abs(x - lx) + Math.abs(y - ly) > tol) { p2.lineTo(x, y); lx = x; ly = y; }
+        }
+        p2.closePath();
+      }
+      return p2;
     }
     function warm(feats) {
       warmQ = feats.slice();
       if (warmOn) return; warmOn = true;
       const step = dl => {
-        const pk = projection.scale() + "," + projection.translate().join(",");
-        while (warmQ.length && dl.timeRemaining() > 2) { const f = warmQ.pop(), c = pathCache.get(f); if (!c || c.pk !== pk) pathOf(f, pk); }
+        const pk = projection.scale() + "," + projection.translate().join(",") + "," + tierOf(last ? last.k : 1);
+        const P = rawProj(), tier = tierOf(last ? last.k : 1);
+        while (warmQ.length && dl.timeRemaining() > 2) {
+          const f = warmQ.pop();
+          if (P && f.raw && !f.raw.cross) rawPathOf(f.raw, tier, P.s);
+          else { const c = pathCache.get(f); if (!c || c.pk !== pk) pathOf(f, pk); }
+        }
         if (warmQ.length) idle(step); else warmOn = false;
       };
       idle(step);
@@ -345,7 +455,7 @@
       if (realmRaster.size > RASTER_MAX) realmRaster.delete(realmRaster.keys().next().value);
     }
     // The one place where realms are done and sprites come next (year-dependent passes over base go here).
-    function realmsDone() { detail("over"); paint(); emit("realms"); }
+    function realmsDone(o) { detail("over"); if (!o || o.paint !== false) paint(); emit("realms"); }
     const hooks = [];
     function emit(kind) { for (const fn of hooks) try { fn(kind); } catch (err) { console.error("pixel hook", err); } }
     function detail(phase) {
@@ -493,7 +603,8 @@
       move(t) { if (!last) return; const s = t.k / last.k; canvas.style.transform = `translate(${t.x - last.x * s}px,${t.y - last.y * s}px) scale(${s})`; canvas.style.transformOrigin = `${-parseFloat(canvas.style.left)}px ${-parseFloat(canvas.style.top)}px`; },
       sprites(l, o) { allSprites = l; spriteOpts = o || {}; paint(); },
       // A new year with the same view: keep the terrain pass, redo only realms and sprites.
-      setRealms(r) { realmsNow = r || NONE; if (!terrain) return; applyRealms(); realmsDone(); },
+      // o.paint false: the caller sets sprites next, which paints (one paint per year step, not two).
+      setRealms(r, o) { realmsNow = r || NONE; if (!terrain) return; applyRealms(); realmsDone(o); },
       // Is the last render for this transform (so a year change can use setRealms)?
       same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === container.clientWidth && lastH === container.clientHeight; },
       // Switch era style (null = today's look): regrade, then dissolve from the old frame over about 400 ms.

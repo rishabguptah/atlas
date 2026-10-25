@@ -2693,6 +2693,10 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     const got = (key, v) => {
       const [kind, id] = key.split(":");
       if (kind === "lens") LENS_DATA[id] = v;
+      else if (key === "order:series") {
+        // Fragility and area series per polity id; POLS holds copies, so fill both.
+        for (const list of [ORDER.polities, POLS]) for (const p of list) { const sv = v[p.id]; if (sv) { if (sv[0]) p.a = sv[0]; if (sv[1]) p.f = sv[1]; } }
+      }
       else if (key === "people:world") addPeople(v);
       else if (key === "war:wd") { for (const r of v) BATTLES.push(wdBattle(r)); BAT_BY_YEAR = d3.group(BATTLES, b => b.start); }
     };

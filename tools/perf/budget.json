@@ -1,0 +1,16 @@
+{
+  "about": "Limits for tools/perf/perf.js, the CI gate. The targets are the performance budget in views/atlas/README.md; the limits add headroom for slower CI machines. A step that fits in one frame measures about 16.7 ms (the time to the next frame), so medians near that are on budget and p90 is what catches stalls. Lower a limit when the page gets faster; raising one needs a reason in the PR.",
+  "limits": {
+    "pageMB": 4.0,
+    "mapLocalMs": 2500,
+    "map25Ms": 4500,
+    "stepsWorld1800s": {
+      "median": 25,
+      "p90": 50
+    },
+    "stepsEurope1800s": {
+      "median": 30,
+      "p90": 90
+    }
+  }
+}

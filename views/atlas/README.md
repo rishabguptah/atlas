@@ -45,6 +45,13 @@ Every change to the page keeps these (headless Chromium, 1440x900; measure befor
 - Work on every year step stays O(what is visible); cache anything keyed by border frame or view.
 - Idle (nothing moving) under 10% of one core; animation timers pause when the tab is hidden.
 - Zoom or pan settling under 100 ms.
+- Border chunks, and any other big data, are parsed and decoded off the main thread (see the worker in
+  `views/pixel/borders.js`) or in idle slices, never all at once on a year step.
+
+CI runs `tools/perf/perf.js` on every pull request and fails it when a number goes over the limits in
+`tools/perf/budget.json` (the budget above plus headroom for slower machines). Run it locally with Playwright
+installed: `node tools/perf/perf.js`. A step that fits in one frame measures about 16.7 ms, so p90 is the number that
+shows stalls.
 
 
 Order & chaos reads `data/order-chaos/lab.json`, War & chokepoints reads `data/states-war/` (curated plus Wikidata battles); Terrain reads terrain.json, terrain.js and terrain-relief.webp from LAYERS_DIR when present; tours come from `data/guide/tours/`. Next step: read
