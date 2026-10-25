@@ -711,6 +711,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   let realmCache = new WeakMap(), realmSnapCache = {};
   ATLAS.realms = (y, k = 1) => {
     y = y ?? state.year;
+    if (y < HIST) return [];
     const fk = frameOf(y);
     if (fk[0] === "t") {
       const rs = TL.realms(y, k) || TL.realms(y, 1);
@@ -757,7 +758,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   let curSnap, curHi = "";
   function drawPolys(force) {
-    const s = state.borders ? frameOf(state.year) : null;
+    // No states before 4000 BCE: the earliest snapshot must not stand in for deep time.
+    const s = state.borders && state.year >= HIST ? frameOf(state.year) : null;
     drawRealmsLayer();
     // Under the pixel basemap the fills are invisible, so only highlighted states get an SVG outline.
     const isHi = d => !!d.emp && state.hi.has("polity:" + d.emp.id), onlyHi = !!BASEMAP && !isPolitical();
@@ -778,7 +780,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const isPolitical = () => !!(state.political && state.terrain && TERRAIN && RELIEF_POL && window.drawRealms);
   // Paradox-style realms: one flat colour per state, thick borders, the name curved across its largest piece.
   function drawRealmsLayer(force) {
-    const s = isPolitical() && state.borders ? frameOf(state.year) : null;
+    const s = isPolitical() && state.borders && state.year >= HIST ? frameOf(state.year) : null;
     if (!force && s === realmSnap) return;
     realmSnap = s; gRealms.selectAll("*").remove(); realmsT = null;
     if (s == null) return;
@@ -805,6 +807,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // The state drawn under a point in the current border snapshot (smallest polygon that contains it).
   function ruledBy(lon, lat, y) {
+    if (y < HIST) return null;
     const list = featuresFor(frameOf(y)); const whole = path.area({ type: "Sphere" }) * 0.4;
     let best = null;
     for (const d of list) if (d.area < whole && d3.geoContains(d.f, [lon, lat]) && (!best || d.area < best.area)) best = d;
@@ -1758,7 +1761,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const P = fam => lensRows(fam, "here", at);
     el.innerHTML = `
       <div><p class="kick">Here, in ${esc(fmtYear(y))}</p><h2 class="ttl">${esc(name)}</h2>
-      ${rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(frameYear(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(frameYear(y)))} border map</p>`}</div>
+      ${y < HIST ? `<p class="sub">Before the first states</p>` : rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(frameYear(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(frameYear(y)))} border map</p>`}</div>
       ${cardHTML(s)}
       ${rb && rb.emp ? `<div class="focus" style="--c:${rb.emp.color}"><span class="fk">Empire</span><span class="ft">${esc(rb.emp.name)}</span><span class="sub">${esc(fmtSpan(rb.emp.start, rb.emp.end))}${rb.emp.peak ? ` · peak ${rb.emp.peak[1]} million km² in ${esc(fmtYear(rb.emp.peak[0]))}` : ""}</span><p>${esc(rb.emp.what || "")}</p>${rb.emp.why ? `<p class="why">${esc(rb.emp.why)}</p>` : ""}</div>` : ""}
       ${sec("places", "The place", cityItems)}${P("land")}
