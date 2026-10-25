@@ -32,3 +32,22 @@ python3 views/terrain/build.py LAYER terrain.html        # standalone preview pa
 
 `views/terrain/terrain.js` has `drawRelief`, `drawTerrain` and `drawRealms` (the political, strategy-game look) for any d3 + SVG view; see the comment at its top.
 Tiers: 1 always named, 2 from zoom 1.6x, 3 from 2.5x, 4 from 4x, 5 from 6x, 6 from 9x.
+
+## For the pixel-art map and precise borders
+
+| File | What |
+| --- | --- |
+| `pixel_terrain.py` | ETOPO2 + Natural Earth + Köppen-Geiger climate + NE1 colour -> terrain-class rasters in plain lon/lat: `terrain_l0.png` (2160x1080), `terrain_l1.png` (5400x2700) and 30° tiles `z2_<col>_<row>.png` for the full 10800x5400 grid. R = class id (18 classes, listed in `terrain.json`), G = hillshade, B = elevation/25 m or depth/40 m |
+| `precise_borders.py` | Full-resolution historical-basemaps snapshots fitted to Natural Earth 10m coasts, at three zoom levels (`l0` 5 km, `l1` 1.5 km, `l2` 400 m) with a stable `id`/`n` per realm across snapshots (`realms.json`) |
+
+Extra raw downloads: Natural Earth 10m land, lakes and rivers (same URL pattern as above), `NE1_50M_SR_W.zip` from
+naciscdn.org, `Koeppen-Geiger-ASCII.zip` from koeppen-geiger.vu-wien.ac.at, and the full-resolution
+`world_<year>.geojson` files from `raw.githubusercontent.com/aourednik/historical-basemaps/master/geojson/` (GPL-3.0).
+
+```sh
+python3 ingest/geography/pixel_terrain.py RAW Koeppen-Geiger-ASCII.txt NE1_50M_SR_W.tif OUT   # add L0 / L1 / L2 to build only some levels
+npx mapshaper@0.6.102 -v
+python3 ingest/geography/precise_borders.py HB RAW node_modules/.bin/mapshaper OUT [year ...]
+```
+
+The views load border levels by zoom: `l0` below 3x, `l1` from 3x, `l2` from 9x.
