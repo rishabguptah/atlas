@@ -69,6 +69,12 @@ capital or leave lon/lat out.
 `ctx` gives: `data, year, k (zoom), g, d3, projection, path, pins, paths, near(list, at), km(a,b), fmtYear,
 fmtSpan, select(card), ruledBy(lon, lat, year)`. Records passed to `ctx.pins` need `lon` and `lat`.
 
+`ctx.pins` options beyond `key, shape, label, title, card, cls, always`: `color`, `size` (radius in px), `fade` (0 to 1),
+`always` (label always shown), `hi`, `pri` (label priority), `ghost`, `fill` (fill opacity), `stroke` (false for none),
+`fontPx`, `lblColor` and `lblAt` (`[dx, dy]` of the label),
+each a value or a function of the record. Marks are records on one canvas, so the returned selection only takes
+`style("--c", ...)` and `classed("ghost", ...)`; use these options for anything else.
+
 `shape` is one of `circle | square | diamond | cross | triangle`, or a sprite name once the art-style
 work adds them (`army`, `temple`, `ship`, ...); unknown sprite names fall back to a circle.
 
@@ -112,3 +118,23 @@ centre, zoom and about how many degrees fit across and down), `onView(fn)` (call
 
 The Codex tab (`lenses/codex.js`) is the example of a plugin that keeps the viewer's progress: it uses `localStorage`
 (wrapped in try/catch, so the page works without it) and never sends it anywhere.
+
+## Pixel sprites from a lens
+
+A lens can put its marks into the pixel grid (house rule: one world, one grid). Push a function onto
+`ATLAS.pixelSprites`; the pixel basemap calls it with `(year, k)` whenever it collects sprites and draws what it
+returns, `[{lon, lat, sprite, pri, grp, dy, team}]`, decluttered with everything else. Call `ATLAS.pixelRefresh()`
+when your marks change without a year change (a month cursor). `lenses/e19.js` is the example.
+
+## Deep regions (time by the month)
+
+`lenses/e19.*` is the first deep-zoom region, Europe 1789-1914. The pattern for the next one:
+
+- Records with `date` / `end_date` (ISO, as precise as the source) in their own workstream folder.
+- A `<id>.py` whose `build(repo)` returns `region: {id, name, start, end, view}`, the dated rows, and storylines;
+  heavy parts (railway stations, lives) go in a sidecar file written by `python3 views/atlas/lenses/<id>.py OUT_DIR`
+  to `OUT_DIR/atlas-files/<id>-deep.json`, published beside the page and fetched only when a lens needs it.
+- The `.js` registers its lenses and tab at once and builds from `LENS_DATA.<id>` lazily (`ok()` in `e19.js`): big
+  lens data arrives after the first paint, so every draw, row and tab render must cope with it not being there yet.
+- A month cursor shared on `ATLAS.<id>.m` (year * 12 + month - 1). Lenses use it while the page's year is that
+  month's year and fall back to the whole year when the main slider moves. An `ATLAS.tab` holds the scrubber.

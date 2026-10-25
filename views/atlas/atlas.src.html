@@ -1160,10 +1160,15 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       pins(list, o = {}) {
         const lb = o.label, tt = o.title || lb, cls = " " + (o.cls || "") + " ";
         const color = o.color || `var(--y-${d.id})`, ghost = cls.includes(" ghost "), always = !!o.always || cls.includes(" always ");
+        // Per-record options take a value or a function of the record: color, size, fade (0-1), always, hi, pri, fill, stroke,
+        // fontPx, lblColor, lblAt ([dx, dy] of the label).
+        const per = (v, x) => typeof v === "function" ? v(x) : v;
         const recs = list.filter(ok).map(x => {
-          const sprite = o.shape && !SHAPE_PATH[o.shape] ? o.shape : null;
-          return { src: x, x, lon: x.lon, lat: x.lat, kind: "lens", lens: d.id, shape: SHAPE_PATH[o.shape] ? o.shape : "circle", sprite, color, ghost, always, lbl: !!lb, heavy: cls.includes(" wf-hit "),
-            label: lb ? lb(x) : null, pri: always ? 7 : 3, title: tt ? () => tt(x) : null, card: o.card ? () => lensCard(d, o.card(x)) : null };
+          const sprite = o.shape && !SHAPE_PATH[o.shape] ? o.shape : null, al = o.always != null ? !!per(o.always, x) : always;
+          const r = { src: x, x, lon: x.lon, lat: x.lat, kind: "lens", lens: d.id, shape: SHAPE_PATH[o.shape] ? o.shape : "circle", sprite, color: o.color ? per(o.color, x) : color, ghost: o.ghost != null ? !!per(o.ghost, x) : ghost, always: al, lbl: !!lb, heavy: cls.includes(" wf-hit "),
+            label: lb ? lb(x) : null, pri: o.pri != null ? per(o.pri, x) : al ? 7 : 3, title: tt ? () => tt(x) : null, card: o.card ? () => lensCard(d, o.card(x)) : null };
+          for (const f of ["size", "fade", "hi", "fill", "stroke", "fontPx", "lblColor", "lblAt"]) if (o[f] != null) r[f] = per(o[f], x);
+          return r;
         });
         L.points.push(...recs);
         return markSel(recs, r => r.x);
