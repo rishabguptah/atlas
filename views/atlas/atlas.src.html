@@ -1907,11 +1907,14 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // A lens toggle also re-renders the basemap so anything it draws for a lens (sprites) follows the chip.
   function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); renderBasemap(); drawStrip(); }
   // Tap a family: open its lenses below, and switch the family on or off. Tap a lens: just that one.
+  // A plugin lens with optIn: true (a whole mode of its own, like Travel time) comes on only when its own chip,
+  // tab or Story picks it, never with its family.
+  const OPT_IN = new Set(PLUG.filter(d => d.optIn).map(d => d.id));
   layersEl.addEventListener("click", ev => {
     const b = ev.target.closest(".chip"); if (!b) return;
     const f = b.dataset.k, m = MEMBERS[f];
     if (state.fam !== f && m.some(isOn)) state.fam = f;
-    else { const on = !m.some(isOn); m.forEach(k => setOn(k, on && !(k === "political" || (k === "terrain" && BASEMAP0)))); state.fam = f; redrawToggles(); }
+    else { const on = !m.some(isOn); m.forEach(k => setOn(k, on && !(k === "political" || (k === "terrain" && BASEMAP0) || OPT_IN.has(k)))); state.fam = f; redrawToggles(); }
     syncChips(); refreshPanel();
   });
   subEl.addEventListener("click", ev => {
@@ -2763,7 +2766,8 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   // ---------- start: where you left off, or 1348, the Black Death year, where five lenses overlap ----------
   const RESUME = loadView();
   if (RESUME) {
-    for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k];
+    // Opt-in modes (Travel time) do not come back on by themselves after a reload.
+    for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k] && !OPT_IN.has(k);
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
   syncChips(); drawStrip();

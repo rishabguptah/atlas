@@ -37,6 +37,7 @@ ATLAS.lens({
   family: "power",
   color: "#b0744f",                // one hue; the page derives light/dark variants
   on: false,                       // on by default?
+  optIn: true,                     // optional: never switched on by tapping its family (a mode of its own)
   guide: ["law", "government"],    // kernel lens names the AI guide may use to switch this lens on
   index: d => "...",               // optional: a few-KB text index of your records for the guide prompt
 
