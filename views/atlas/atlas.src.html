@@ -803,6 +803,13 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     bmYear = state.year;
     try { BASEMAP.render(d3.zoomTransform(svg.node()), state.year); } catch (err) { console.error("basemap", err); }
   }
+  // A full basemap render is heavy, so year changes (slider, play) re-render it at most every 350 ms.
+  let bmTimer = 0, bmLast = 0;
+  function renderBasemapSoon() {
+    if (bmTimer) return;
+    const wait = Math.max(0, 350 - (performance.now() - bmLast));
+    bmTimer = setTimeout(() => { bmTimer = 0; bmLast = performance.now(); if (bmYear !== state.year) renderBasemap(); }, wait);
+  }
   function setBasemap() {
     const want = state.basemap ? BASEMAP0 : null;
     if (want === BASEMAP) return;
@@ -815,7 +822,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
 
   let rafAll = 0;
   function drawAll(now) {
-    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); if (BASEMAP && bmYear !== state.year) renderBasemap(); };
+    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); if (BASEMAP && bmYear !== state.year) renderBasemapSoon(); };
     if (now) { cancelAnimationFrame(rafAll); run(); } else if (!rafAll) rafAll = requestAnimationFrame(run);
   }
 
