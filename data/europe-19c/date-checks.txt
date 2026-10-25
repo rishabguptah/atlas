@@ -1,0 +1,19 @@
+Study spine dates compared with Wikidata
+
+french_revolution: "Estates-General opens" spine 1789-05-05, Wikidata 1789-01-24
+french_revolution: "War in the Vendée" spine 1793-03, Wikidata 1793-03-03
+napoleon: "First abdication" spine 1814-04-06, Wikidata 1814-04-11
+vienna_order: "Congress of Vienna opens" spine 1814-09-18, Wikidata 1814-09
+vienna_order: "Final Act of Vienna" 1815-06-09 vs Wikidata Q46362 "Congress of Vienna" 1814-09: kept as its own step (article covers more)
+vienna_order: "Greek War of Independence" 1821-03-25 vs Wikidata Q182062 "Greek War of Independence" 1821: kept as its own step (article covers more)
+vienna_order: "July Revolution" spine 1830-07-27, Wikidata 1830-07-26
+vienna_order: "Great Famine in Ireland" spine 1845-09, Wikidata 1845
+1848: "February Revolution" spine 1848-02-24, Wikidata 1848-02-22
+1848: "Barricades in Berlin" 1848-03-18 vs Wikidata Q3699 "Revolutions of 1848 in the German states" 1848: kept as its own step (article covers more)
+italy: "Expedition of the Thousand" spine 1860-05-11, Wikidata 1860-05-05
+italy: "Meeting at Teano" 1860-10-26 vs Wikidata Q228284 "Expedition of the Thousand" 1860-05-05: kept as its own step (article covers more)
+italy: "Venetia joins Italy" 1866-10-19 vs Wikidata Q1248722 "Third Italian War of Independence" 1866-06-20: kept as its own step (article covers more)
+germany: "Treaty of Frankfurt" spine 1871-05-10, Wikidata 1871-11-07
+eastern_question: "Crimean War begins" spine 1853-10-16, Wikidata 1853-10
+eastern_question: "Fall of Sevastopol" 1855-09-09 vs Wikidata Q815216 "Siege of Sevastopol" 1854-10-17: kept as its own step (article covers more)
+eastern_question: "April Uprising of 1876" spine 1876-04-20, Wikidata 1876
