@@ -695,8 +695,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (!zoomRaf) zoomRaf = requestAnimationFrame(zoomFrame);
     if (BASEMAP && BASEMAP.move) try { BASEMAP.move(ev.transform); } catch (err) { console.error(err); }
   });
+  const viewWatch = [];  // plugin tabs listening for pans and zooms (ATLAS.api.onView)
   zoom.on("end", () => {
     mapEl.classList.remove("moving");
+    for (const fn of viewWatch) try { fn(); } catch (err) { console.error(err); }
     if (Math.abs(Math.log(state.k / drawnK)) > 0.15) { drawnK = state.k; drawPeople(); drawWar(); drawLenses(); }
     if (terrainT) terrainT.update(state.k); if (realmsT) realmsT.update(state.k);
     renderBasemap();
@@ -1930,6 +1932,14 @@ Where the specialists disagree, say who the evidence favours.`;
     clearScene: () => { state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); showCaption(null); drawAll(); },
     fly: (v, ms) => flyTo(v, ms), setOn: (k, v = true) => { if (isOn(k) !== v) { setOn(k, v); redrawToggles(); syncChips(); } },
     redraw: () => drawAll(), setTab: t => setTab(t), fmtYear, onYear: fn => yearWatch.push(fn),
+    // What the map shows now: the centre, the zoom and roughly how many degrees fit across and down.
+    view: () => {
+      const t = d3.zoomTransform(svg.node()), c = projection.invert(t.invert([W / 2, H / 2]));
+      const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]) * t.k;
+      return c && isFinite(c[0]) ? { lon: c[0], lat: c[1], k: t.k, w: W / pxPerDeg, h: H / pxPerDeg } : null;
+    },
+    onView: fn => viewWatch.push(fn),  // called when a pan or zoom settles
+    select: card => select(card, { fly: true }),
   };
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 
