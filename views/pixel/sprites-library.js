@@ -123,7 +123,7 @@
   const knightA = over(over(blank(16, 14), barded(HORSE, ["...w.w...w.w....", "...w.w...w.w....", "...M.M...M.M...."]), 0, 4), knightRider, 1, 0);
   const knightB = over(over(blank(16, 14), barded(HORSE_STEP, ["...w..w.w...w...", "..w...w.w....w..", "..M....MM....M.."]), 0, 4),
     edit(knightRider, { 0: "...........x...", 1: "...........1xXx" }), 1, 0);
-  def("army_knight", { kind: "army", label: "Mounted knights", era: [950, 1500], regions: ["europe", "middle_east"], map: { 1: "w" } },
+  def("army_knight", { kind: "army", label: "Mounted knights", era: [950, 1500], regions: ["europe", "middle_east", "mediterranean"], map: { 1: "w" } },
     [knightA, knightB]);
 
   // Horse archer: bay steppe horse, fur hat, composite bow drawn forward.
@@ -138,6 +138,24 @@
   ];
   def("army_horse_archer", { kind: "army", label: "Horse archers", era: [-900, 1700], regions: ["steppe", "middle_east", "east_asia"], map: { 1: "N" }, fps: 4 },
     [over(over(blank(16, 14), HORSE, 0, 4), archer, 1, 0), over(over(blank(16, 14), HORSE_STEP, 0, 4), archer, 1, 1)]);
+
+  // Levy spearman: the fallback army for any region and era without a more specific sprite.
+  const levy = [
+    "...mmmm...2",
+    "..mmmmmM..1",
+    "..sssss...1",
+    "..sksks...1",
+    "..sssss...1",
+    ".xxxxxxx.s1",
+    "xxxxxxxxXs1",
+    "xxxxXxxXX.1",
+    "xxxxxxxXX.1",
+    ".xxxxxXX..1",
+    "..ss..ss...",
+    "..MM..MM...",
+  ];
+  def("army_levy", { kind: "army", label: "Levy spearmen", era: [-3000, 1700], regions: ANY, map: { 1: "M", 2: "m" } },
+    [levy, edit(levy, { 10: "..ss...ss..", 11: "..MM...MM.." })]);
 
   const musket = [
     "..........2.",
@@ -491,7 +509,7 @@
     ".....wkwwkWW....",
     ".....wwwkkWW....",
   ];
-  def("city_town", { kind: "city", label: "Town", size: 2, era: [-3000, 2100], regions: ["europe", "americas", "oceania"] }, [town]);
+  def("city_town", { kind: "city", label: "Town", size: 2, era: [-3000, 2100], regions: ["europe", "mediterranean", "americas", "oceania"] }, [town]);
 
   const adobe = [
     ".......WWWW......",
@@ -505,7 +523,7 @@
     ".ttkkntttttttnttn",
     "NNNNNNNNNNNNNNNNN",
   ];
-  def("city_town_adobe", { kind: "city", label: "Mudbrick town", size: 2, era: [-4000, 2100], regions: ["middle_east", "africa", "south_asia", "americas"] }, [adobe]);
+  def("city_town_adobe", { kind: "city", label: "Mudbrick town", size: 2, era: [-4000, 2100], regions: ["middle_east", "africa", "south_asia", "steppe", "americas"] }, [adobe]);
 
   const asianTown = [
     "L.........L.....",
@@ -1024,18 +1042,380 @@
   def("wonder_eiffel", { kind: "wonder", label: "Eiffel Tower", era: [1889, 2100], regions: ["europe"], place: [48.858, 2.294], lost: null, note: "Tallest structure in the world until 1930" },
     [W_EIFFEL]);
 
+  // ---------------------------------------------------------------- ruins (anchor = ground centre)
+  const ruinColumns = [
+    ".ww...........",
+    "wwwW..........",
+    ".wW...ww......",
+    ".wW..wwwW.....",
+    ".wW...wW...w..",
+    ".wW...wW..wwW.",
+    ".wW.l.wW...wW.",
+    ".wWlLlwW.ttwW.",
+    "wwwWWwwwWWwwwW",
+    "WWWWWWWWWWWWWW",
+  ];
+  def("ruin_columns", { kind: "ruin", label: "Classical ruins", era: [-500, 2100], regions: ["mediterranean", "middle_east", "europe", "africa"] }, [ruinColumns]);
+
+  const ruinTell = [
+    "......nn..n.......",
+    "......tn.tn.......",
+    ".....ttnttnnn.....",
+    "...ttttttttnnnn...",
+    "..tttNNtttttnnnn..",
+    ".ttttttttNNttnnnn.",
+    "tttttttttttttnnnnn",
+    "NNNNNNNNNNNNNNNNNN",
+  ];
+  def("ruin_tell", { kind: "ruin", label: "Buried city mound", era: [-4000, 2100], regions: ["middle_east", "south_asia", "africa", "steppe"] }, [ruinTell]);
+
+  const ruinJungle = [
+    "...........ll...",
+    "..........lllL..",
+    "....mmmM..llLL..",
+    "....mkkM...nL...",
+    "...mmmmmM..nL...",
+    "...MlMMMM..n....",
+    "..mmmlmmmMMnM...",
+    "..MMMLMMMMMMM...",
+    ".mmmmlmmmmmmmM..",
+    ".MMMMLMMMMMMMMl.",
+    "lmmmmmmmmmmmmmLl",
+    "LLLLLLLLLLLLLLLL",
+  ];
+  def("ruin_jungle", { kind: "ruin", label: "Overgrown temple", era: [800, 2100], regions: ["americas", "southeast_asia", "south_asia", "africa"] }, [ruinJungle]);
+
+  const ruinCastle = [
+    "...m.m........",
+    "..mmmmM.......",
+    "..mkmmM.m.....",
+    "..mmmmM.mM....",
+    "..mmLmMmmM....",
+    "..mmLLMmmmm.m.",
+    "..mLLmMmkmmmM.",
+    "..mmLmMmmmmmM.",
+    ".mmmmmMmmmmmM.",
+    "mmmmkkmmmmLmMM",
+    "MMMMkkMMMMLLMM",
+    "lllllllllLLLLl",
+  ];
+  def("ruin_castle", { kind: "ruin", label: "Ruined castle", era: [1300, 2100], regions: ["europe", "middle_east"] }, [ruinCastle]);
+
+  // ---------------------------------------------------------------- people (face the viewer, anchor = feet)
+  // glance: the eyes slide one pixel to the side, a small idle beat that keeps the face readable.
+  function glance(frame, row) { return edit(frame, { [row]: frame[row].replace(/ks/g, "sk") }); }
+
+  const ruler = [
+    "..g.g.g...",
+    "..ggggg..2",
+    "..sssss..1",
+    "..sksks..1",
+    "..sssss..1",
+    ".wwwwwww.1",
+    "xxxxgxxxs1",
+    "xxxxgxxXX1",
+    "xxxxgxxXX.",
+    "xxxxgxxXX.",
+    "xxxxgxxXX.",
+    "wwwwwwwww.",
+  ];
+  def("person_ruler", { kind: "person", label: "Ruler", era: [-3000, 2100], regions: ANY, map: { 1: "g", 2: "g" }, fps: 2 },
+    [ruler, ruler, ruler, glance(ruler, 3)]);
+
+  const priest = [
+    "...wwW....",
+    "...wgW...2",
+    "..wwwwW.2.",
+    "..sssss.21",
+    "..sksks..1",
+    "..sssss..1",
+    ".wwwwwwws1",
+    ".wwxwwxWW1",
+    ".wwxwwxWW1",
+    ".wwxwwxWW1",
+    ".wwxwwxWW1",
+    ".WWWWWWWW.",
+  ];
+  def("person_priest", { kind: "person", label: "Priest or bishop", era: [300, 2100], regions: ["europe", "mediterranean", "americas", "africa"], map: { 1: "g", 2: "g" }, fps: 2 },
+    [priest, priest, priest, glance(priest, 4)]);
+
+  const monk = [
+    "...ssss...",
+    "..ssssss..",
+    "..sksksS..",
+    "..ssssSS..",
+    "...ssss...",
+    ".ooorooo..",
+    "oooorroor.",
+    "ooosnnsor.",
+    "oooonnoor.",
+    "ooooroorr.",
+    "ooooroorr.",
+    ".oooorrrr.",
+    "..rr..rr..",
+  ];
+  def("person_monk", { kind: "person", label: "Buddhist monk", era: [-500, 2100], regions: ["south_asia", "east_asia", "southeast_asia"], fps: 2 },
+    [monk, monk, monk, glance(monk, 2)]);
+
+  const merchant = [
+    "...wwww...",
+    "..wwwwww..",
+    "..wwwwww..",
+    "..sssss...",
+    "..sksks...",
+    "..sssss...",
+    ".xxxxxxx..",
+    "xxxgxxxxsg",
+    "xxxgxxxxgg",
+    "xxxgxxxxgG",
+    "xxxxxxxxx.",
+    ".kk...kk..",
+  ];
+  def("person_merchant", { kind: "person", label: "Merchant", era: [-3000, 2100], regions: ANY, fps: 2 },
+    [merchant, merchant, edit(merchant, { 7: "xxxgxxxsgg", 8: "xxxgxxxxgG", 9: "xxxgxxxxG." }), glance(merchant, 4)]);
+
+  const scholar = [
+    "..kkkkk...",
+    "..kkkkk...",
+    "..sssss...",
+    "..sksks...",
+    "..sssss...",
+    ".bbbbbbb..",
+    "bbbbbbbbB.",
+    "bswwwwwsB.",
+    "bbwWwWwbB.",
+    "bbbbbbbBB.",
+    "bbbbbbbBB.",
+    ".bbbbbbB..",
+    "..kk.kk...",
+  ];
+  def("person_scholar", { kind: "person", label: "Scholar", era: [-1000, 2100], regions: ANY, fps: 2 },
+    [scholar, scholar, scholar, glance(scholar, 3)]);
+
+  const philosopher = [
+    "..WWWWW...",
+    "..Wssss...",
+    "..sksks...",
+    "..sssss...",
+    "..WWWWW...",
+    "..WWWWw...",
+    ".wwwwwwwW.",
+    "wwswwwwWs.",
+    "wwwwwwWWW.",
+    ".wwwwwWWW.",
+    ".wwwwwWWW.",
+    ".wwwwWWWW.",
+    "..nn..nn..",
+  ];
+  def("person_philosopher", { kind: "person", label: "Philosopher", era: [-600, 600], regions: ["mediterranean", "middle_east"], fps: 2 },
+    [philosopher, philosopher, philosopher, glance(philosopher, 2)]);
+
+  const farmer = [
+    "...yyyy..2",
+    ".yyyyyyyy2",
+    "..sssss..1",
+    "..sksks..1",
+    "..sssss..1",
+    ".lllllll.1",
+    "lllllllls1",
+    "lllllllLL1",
+    "lllllllLL1",
+    "lllllllLL.",
+    ".nnnnnnn..",
+    ".ss...ss..",
+  ];
+  def("person_farmer", { kind: "person", label: "Farmer", era: [-9000, 2100], regions: ANY, map: { 1: "n", 2: "k" }, fps: 2 },
+    [farmer, farmer, edit(farmer, { 0: "...yyyy...", 1: ".yyyyyyyy.", 2: "..sssss.22", 3: "..sksks.1.", 4: "..sssss1..", 5: ".lllllll1.", 6: "lllllllsl." , 7: "lllllllLL.", 8: "lllllllLL." }), glance(farmer, 3)]);
+
+  const sailor = [
+    "..bbbbb...",
+    ".bbbbbbb..",
+    "..sssss...",
+    "..sksks...",
+    "..sssss...",
+    ".wwwwwww..",
+    "wbbbbbbbw.",
+    "wwwwwwwww.",
+    "sbbbbbbbs.",
+    ".wwwwwww..",
+    ".BBBBBBB..",
+    ".BB...BB..",
+    ".kk...kk..",
+  ];
+  def("person_sailor", { kind: "person", label: "Sailor", era: [-1500, 2100], regions: ANY, fps: 2 },
+    [sailor, sailor, sailor, glance(sailor, 3)]);
+
+  const explorer = [
+    "...tttt....",
+    "..tttttt...",
+    ".tttttttt..",
+    "..sssss....",
+    "..skssggg..",
+    "..ssssss...",
+    ".nnnnnns...",
+    "nnnnnnnnN..",
+    "nngnnnnNN..",
+    "nnnnnnnNN..",
+    ".nnnnnnNN..",
+    ".tt...tt...",
+    ".NN...NN...",
+  ];
+  def("person_explorer", { kind: "person", label: "Explorer", era: [1400, 1950], regions: ANY, fps: 2 },
+    [explorer, explorer, edit(explorer, { 4: "..sksssggg." }), explorer]);
+
+  const pilgrim = [
+    "...nnn...2",
+    "..nnnnn..1",
+    ".nnsssnn.1",
+    ".nsksksn.1",
+    ".nnsssnn.1",
+    ".nnnnnnns1",
+    "nnnwnnnNs1",
+    "nnwwwnnNN1",
+    "nnnwnnnNN1",
+    "nnnnnnnNN1",
+    ".nnnnnnN..",
+    "..NN.NN...",
+  ];
+  def("person_pilgrim", { kind: "person", label: "Pilgrim", era: [-500, 2100], regions: ANY, map: { 1: "N", 2: "w" }, fps: 2 },
+    [pilgrim, pilgrim, pilgrim, glance(pilgrim, 3)]);
+
+  const plagueDoctor = [
+    "..ddddd...",
+    ".ddddddd..",
+    "..WWWW....",
+    "..WkWkwww.",
+    "..WWWWwW..",
+    "..WWWW....",
+    ".ddddddd.1",
+    "ddddddddW1",
+    "ddddddddd1",
+    "ddddddddd1",
+    "ddddddddd1",
+    ".ddddddd..",
+    "..nn.nn...",
+  ];
+  def("person_plague_doctor", { kind: "person", label: "Plague doctor", era: [1619, 1720], regions: ["europe"], map: { 1: "n" }, fps: 2 },
+    [plagueDoctor, plagueDoctor, plagueDoctor, edit(plagueDoctor, { 3: "..WWWWwww." })]);
+
+  // ---------------------------------------------------------------- events (anchor = ground centre)
+  const rat = [
+    "......m.m...",
+    "....mmmmmm..",
+    "...mmmmmmrmm",
+    "s.mmmmmmmmms",
+    ".sMMMMMMMM..",
+    "..sM.M..M.M.",
+  ];
+  def("event_plague", { kind: "event", label: "Plague", era: [-3000, 2100], regions: ANY, fps: 4 },
+    [rat, edit(rat, { 3: ".smmmmmmmmms", 4: "s.MMMMMMMM..", 5: "...M.M.M.M.." })]);
+
+  const famine = [
+    "..2.....2...",
+    "..21...21.2.",
+    "...1...1.21.",
+    "...1...1..1.",
+    "...1...1..1.",
+    "..1...1...1.",
+    "nnnnnnnnnnnn",
+    "nkNnnNknnNkn",
+    "NnkNnkNnkNnN",
+  ];
+  def("event_famine", { kind: "event", label: "Famine", era: [-3000, 2100], regions: ANY, map: { 1: "G", 2: "y" }, fps: 2 },
+    [famine, edit(famine, { 0: "...2.....2..", 1: "...1....21.2", 2: "...1...1..21" })]);
+
+  const volcano = [
+    "......3..3......",
+    ".....3.33.3.....",
+    "......3333......",
+    ".......33.......",
+    "......yoyo......",
+    ".....NrorrN.....",
+    ".....NNroNNK....",
+    "....NNNrNNNKK...",
+    "...NNNNroNNNKK..",
+    "...NNNNNrNNNKKK.",
+    "..NNNNNNoNNNNKKK",
+    ".NNNNNNNrNNNNNKK",
+    "NNNNNNNNNNNNNNKK",
+  ];
+  def("event_volcano", { kind: "event", label: "Eruption", era: [-10000, 2100], regions: ANY, map: { 3: "K" }, fps: 4 },
+    [volcano,
+     edit(volcano, { 0: ".....3..3.3.....", 1: "......33.33.....", 2: ".......333......", 4: "......oyoy......", 5: ".....NorroN.....", 7: "....NNNoNNNKK...", 8: "...NNNNrrNNNKK.." }),
+     edit(volcano, { 0: "....3.3...3.3...", 1: ".....3.3333.....", 2: "......33.33.....", 3: "......y33y......", 6: ".....NNorNNK....", 9: "...NNNNNoNNNKKK.", 10: "..NNNNNNrNNNNKKK" })]);
+
+  const fire = [
+    "....o.....",
+    "....oo....",
+    "...ooy..o.",
+    "..oyyo.oo.",
+    "..oywyooo.",
+    ".ooywwyoo.",
+    ".oyywwyyo.",
+    ".roywwyor.",
+    "rroyyyyorr",
+    ".rrooooorr",
+    "..RrrrrrR.",
+    "..R.RR.R..",
+  ];
+  def("event_fire", { kind: "event", label: "Fire", era: [-10000, 2100], regions: ANY, fps: 4 },
+    [fire,
+     edit(fire, { 0: ".....o....", 1: "....oo..o.", 2: "...oyo..o.", 3: "..ooyy.oo." }),
+     edit(fire, { 0: "...o......", 1: "...oo.....", 2: "..oooy.o..", 3: "..oyyooo.." }),
+     edit(fire, { 0: "......o...", 1: "....o.oo..", 2: "...ooyoo..", 3: "..oyyyoo.." })]);
+
+  const battle = [
+    "w..........w",
+    "mw........wm",
+    ".mw......wm.",
+    "..mw....wm..",
+    "...mw..wm...",
+    "....mwwm....",
+    "....wmmw....",
+    "..gwm..mwg..",
+    "..ggm..mgg..",
+    ".G..g..g..G.",
+    "G..........G",
+  ];
+  def("event_battle", { kind: "event", label: "Battle", era: [-3000, 2100], regions: ANY, fps: 3 },
+    [battle, edit(battle, { 4: "...mw.ymm...", 5: "....mwym....", 6: "...ywmmwy...", 7: "..gwmy.mwg.." })]);
+
+  const flood = [
+    ".....rrR......",
+    "....rrrRR.....",
+    "....rrkRR.....",
+    "bc.cbbbbbc.cb.",
+    "bbcbbbcbbbcbbb",
+    "BbbbbbbbbbbbbB",
+  ];
+  def("event_flood", { kind: "event", label: "Flood", era: [-10000, 2100], regions: ANY, fps: 2 },
+    [flood, edit(flood, { 3: ".cb.cbbbbbc.c.", 4: "bbbcbbbbcbbbcb" })]);
+
+  const quake = [
+    "...m......M...",
+    "..mmM....mmM..",
+    "nnnnnnk.nnnnnn",
+    "nnnnnkk..knnnn",
+    "nnnnnnkk.knnnn",
+    "NNNNNNNk.kNNNN",
+  ];
+  def("event_earthquake", { kind: "event", label: "Earthquake", era: [-10000, 2100], regions: ANY, fps: 6 },
+    [quake, edit(quake, { 0: "....m.....M...", 1: "...mmM...mmM.." })]);
+
   // ---------------------------------------------------------------- lookup and checks
   const KINDS = ["army", "ship", "caravan", "city", "ruin", "wonder", "person", "event"];
 
   // pick: the sprite of this kind whose era covers the year, preferring the region; falls back to the nearest era.
-  function pick(kind, year, region) {
+  // where narrows by exact meta values, e.g. pick("city", 1200, "europe", { size: 3 }) or { landmark: true }.
+  function pick(kind, year, region, where) {
     let best = null, bestScore = Infinity;
     for (const name in S) {
       const s = S[name];
       if (s.kind !== kind) continue;
+      if (where && Object.keys(where).some((k) => (s[k] == null ? false : s[k]) !== where[k])) continue;
       const gap = year < s.era[0] ? s.era[0] - year : year > s.era[1] ? year - s.era[1] : 0;
       const fit = !region || s.regions.includes(region) ? 0 : s.regions.includes("any") ? 1 : 2;
-      const score = gap * 10 + fit * 1000 + (s.era[1] - s.era[0]) / 1e4;
+      const score = gap * 100 + fit * 1000 + (s.era[1] - s.era[0]) / 1e4;
       if (score < bestScore) { bestScore = score; best = name; }
     }
     return best;

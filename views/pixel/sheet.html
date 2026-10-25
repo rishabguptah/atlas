@@ -1,0 +1,242 @@
+<title>Atlas Sprite Library</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=VT323&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+  /* Layout: a classic RPG menu over the open sea: framed windows, a time-machine strip, then one window per sprite family. */
+  :root {
+    --sea: #1d3a4c;        /* page ground, the atlas deep-sea tone */
+    --sea-deep: #152c3a;
+    --window: #233f8a;     /* menu window fill */
+    --window-edge: #f6f0dc;
+    --ink: #f6f0dc;        /* text on windows */
+    --muted: #b9c4d8;
+    --gold: #e8c050;       /* accent: cursor, active chip */
+    --lost: #e07a5a;
+    --display: "Pixelify Sans", "Courier New", monospace;
+    --digits: "VT323", "Courier New", monospace;  /* numbers and small labels, where the display face blurs 2 and Z */
+    --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--sea); color: var(--ink); font: 15px/1.5 var(--body);
+    background-image: radial-gradient(var(--sea-deep) 1px, transparent 1px); background-size: 6px 6px;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; padding-block: 28px 64px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: grid; gap: 22px; }
+  .win { background: linear-gradient(180deg, #2b4ea3, var(--window)); border: 3px solid var(--window-edge);
+    border-radius: 6px; box-shadow: 0 0 0 3px #10172e, 6px 6px 0 #0c1424; padding: 16px 18px; min-width: 0; }
+  h1, h2 { font-family: var(--display); font-weight: 700; margin: 0; letter-spacing: .02em; text-wrap: balance; }
+  h1 { font-size: clamp(30px, 6vw, 52px); line-height: 1; }
+  h2 { font-size: 22px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  h2 small { font: 13px var(--body); color: var(--muted); }
+  p { margin: 0; max-width: 68ch; }
+  .lede { display: grid; gap: 10px; }
+  .lede p { color: var(--muted); }
+  .controls { display: flex; flex-wrap: wrap; gap: 14px 26px; align-items: center; }
+  .group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .label { font: 17px var(--digits); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-right: 4px; }
+  button { font: 19px/1 var(--digits); color: var(--ink); background: #1a2d66; border: 2px solid #8fa0c8; border-radius: 4px;
+    padding: 4px 10px; cursor: pointer; }
+  button[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
+  button:focus-visible, input:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .swatch { width: 26px; height: 26px; padding: 0; }
+  .time { display: grid; gap: 12px; }
+  .yearline { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .year { font: 40px/1 var(--digits); color: var(--gold); min-width: 5.5em; font-variant-numeric: tabular-nums; }
+  input[type=range] { flex: 1 1 260px; accent-color: var(--gold); min-width: 0; }
+  .regions { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; }
+  th { font: 17px var(--digits); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); text-align: left; padding: 4px 6px; }
+  td { padding: 4px 6px; vertical-align: bottom; border-top: 1px dashed #5a6ea8; }
+  td.r { font: 19px var(--digits); white-space: nowrap; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 14px; }
+  .card { display: grid; gap: 6px; align-content: start; min-width: 0; }
+  .card canvas { image-rendering: pixelated; width: 100%; height: auto; max-width: 100%; border: 2px solid #10172e; border-radius: 3px; display: block; }
+  .name { font: 15px var(--display); line-height: 1.2; }
+  .meta { font-size: 12.5px; color: var(--muted); line-height: 1.35; }
+  .meta b { color: var(--lost); font-weight: 700; }
+  .slot canvas { image-rendering: pixelated; display: block; }
+  .notes ul { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 4px; max-width: 75ch; }
+  .cursor::before { content: "\25B6"; color: var(--gold); margin-right: 8px; font-size: .8em; }
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+
+<div class="wrap">
+  <header class="win lede">
+    <h1>Atlas Sprite Library</h1>
+    <p id="count">Era-aware pixel sprites for the Atlas world map, drawn on the map's own palette.</p>
+    <p>Every sprite knows when and where it belongs. Drag the year to see which army, ship, caravan and city each region gets. The banner colour is swapped per realm at runtime.</p>
+  </header>
+
+  <section class="win controls" aria-label="Display options">
+    <div class="group"><span class="label">Realm colour</span><span id="teams" class="group"></span></div>
+    <div class="group"><span class="label">Ground</span><span id="grounds" class="group"></span></div>
+    <div class="group"><span class="label">Zoom</span><span id="zooms" class="group"></span></div>
+    <div class="group"><span class="label">Motion</span><button id="motion" type="button" aria-pressed="true">Animate</button></div>
+  </section>
+
+  <section class="win time" aria-labelledby="time-h">
+    <h2 id="time-h" class="cursor">Time machine <small>what pick(kind, year, region) returns</small></h2>
+    <div class="yearline">
+      <span id="year" class="year">1200 AD</span>
+      <input id="yr" type="range" min="-3000" max="2020" step="10" value="1200" aria-label="Year">
+    </div>
+    <div class="regions"><table id="timetable"></table></div>
+  </section>
+
+  <div id="sections" style="display:grid;gap:22px"></div>
+
+  <section class="win notes" aria-labelledby="notes-h">
+    <h2 id="notes-h">Weak spots to fix next</h2>
+    <ul>
+      <li>The East Asian town and the earthquake are the least readable sprites; both need another pass.</li>
+      <li>Horses share one body, so the knight, horse archer, chariot and wagon all walk the same way. A gallop cycle would help the steppe armies.</li>
+      <li>People face the viewer while armies face right. Right-facing walkers for people would let them travel along routes.</li>
+      <li>Wonders are drawn front-on at one size; the largest ones may want a smaller far-zoom version.</li>
+    </ul>
+  </section>
+</div>
+
+<script src="palette.js"></script>
+<script src="sprites-library.js"></script>
+<script>
+(() => {
+  const P = window.PIXEL_PALETTE, L = window.PIXEL_SPRITE_LIBRARY, S = L.sprites;
+  const KEYS = P.KEYS;
+  const state = { team: P.REALM[3], ground: 10, zoom: 3, animate: !matchMedia("(prefers-reduced-motion: reduce)").matches, year: 1200 };
+  try { const z = +localStorage.getItem("sprite-zoom"); if (z) state.zoom = z; } catch (e) {}
+
+  const shade = (hex, f) => "#" + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * f).toString(16).padStart(2, "0")).join("");
+  const BAYER = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]];
+  const GROUNDS = [[10, "Grassland"], [11, "Steppe"], [12, "Desert"], [8, "Forest"], [6, "Tundra"]];
+  const SEA = 1;
+
+  // Ground tile: the terrain class's three tones, Bayer-dithered like the map renderer.
+  function paintGround(ctx, w, h, cls, x0, y0) {
+    const t = P.TERRAIN[cls];
+    for (let y = y0; y < h; y++) for (let x = x0; x < w; x++) {
+      const v = BAYER[y & 3][x & 3] / 16, n = ((x * 7 + y * 13) % 11) / 11;
+      ctx.fillStyle = t[v + n * 0.5 < 0.45 ? 0 : v + n * 0.5 < 1.05 ? 1 : 2];
+      ctx.fillRect(x, y, 1, 1);
+    }
+  }
+  function drawSprite(ctx, s, f, ox, oy) {
+    const n = s.frames.length, frame = s.frames[((f % n) + n) % n];
+    for (let y = 0; y < s.h; y++) for (let x = 0; x < s.w; x++) {
+      const c = frame[y][x];
+      if (c === ".") continue;
+      ctx.fillStyle = c === "x" ? state.team : c === "X" ? shade(state.team, 0.68) : KEYS[c];
+      ctx.fillRect(ox + x, oy + y, 1, 1);
+    }
+  }
+  // A scene: the sprite standing on its ground (ships float on sea up to their waterline).
+  function scene(canvas, name, pad) {
+    const s = S[name]; if (!s) return;
+    const w = s.w + pad * 2, h = s.h + pad * 2;
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    const ox = pad, oy = pad, groundY = oy + s.ay + (s.kind === "ship" ? 0 : 1);
+    canvas._draw = (f) => {
+      paintGround(ctx, w, h, s.kind === "ship" ? SEA : state.ground, 0, 0);
+      if (s.kind === "ship") { ctx.fillStyle = P.UI.foam; for (let x = 0; x < w; x += 3) ctx.fillRect(x + ((f + x) % 2), groundY + 1, 2, 1); }
+      ctx.fillStyle = "rgba(20,16,10,.28)";
+      if (s.kind !== "ship") ctx.fillRect(ox + 1, groundY - 1, s.w - 2, 1);
+      drawSprite(ctx, s, f, ox, oy);
+    };
+    canvas._fps = s.fps || 3; canvas._draw(0);
+    canvas.style.width = w * state.zoom + "px"; canvas.style.maxWidth = "100%";
+  }
+
+  const fmtYear = (y) => (y < 0 ? -y + " BC" : y + " AD");
+  const era = (s) => fmtYear(s.era[0]) + (s.era[1] >= 2100 ? " on" : " to " + fmtYear(s.era[1]));
+  const REG = { any: "anywhere", mediterranean: "Mediterranean", europe: "Europe", middle_east: "Middle East", africa: "Africa",
+    south_asia: "South Asia", east_asia: "East Asia", southeast_asia: "Southeast Asia", steppe: "Steppe", americas: "Americas", oceania: "Oceania" };
+
+  const SECTIONS = [
+    ["army", "Armies", "Facing right, anchored at the feet; the banner and kit take the realm colour."],
+    ["ship", "Ships", "Anchored at the waterline; they bob, billow and row."],
+    ["caravan", "Caravans", "For trade routes: camels in the desert belt, mules in the hills, wagons on the plains."],
+    ["city", "Settlements and landmarks", "Size 1 to 5 by population, plus regional landmarks a city can show instead."],
+    ["wonder", "Wonders", "Each carries where it stood and, for the lost ones, the year it was lost."],
+    ["ruin", "Ruins", "What a lost city leaves behind, by climate."],
+    ["person", "People", "Roles for the people lens; each has a small idle loop."],
+    ["event", "Disasters and events", "Plague, famine, eruption, fire, battle, flood and earthquake markers."],
+  ];
+  const cards = [];
+  function build() {
+    const root = document.getElementById("sections"); root.textContent = "";
+    for (const [kind, title, blurb] of SECTIONS) {
+      const names = Object.keys(S).filter((n) => S[n].kind === kind);
+      const sec = document.createElement("section"); sec.className = "win"; sec.id = kind;
+      sec.innerHTML = `<h2>${title} <small>${names.length} sprites · ${blurb}</small></h2><div class="grid"></div>`;
+      const grid = sec.querySelector(".grid");
+      for (const n of names) {
+        const s = S[n], card = document.createElement("div"); card.className = "card";
+        const cv = document.createElement("canvas"); cv.setAttribute("role", "img"); cv.setAttribute("aria-label", s.label);
+        scene(cv, n, 3); cards.push(cv);
+        const lost = s.lost != null ? ` · <b>lost ${fmtYear(s.lost)}</b>` : "";
+        const regions = s.regions.map((r) => REG[r] || r).join(", ");
+        card.append(cv);
+        card.insertAdjacentHTML("beforeend", `<div class="name">${s.label}</div><div class="meta">${era(s)}${lost}<br>${regions}${s.note ? "<br>" + s.note : ""}</div>`);
+        grid.append(card);
+      }
+      root.append(sec);
+    }
+    document.getElementById("count").textContent =
+      `${Object.keys(S).length} era-aware pixel sprites for the Atlas world map, drawn on the map's own palette with ${Object.values(S).reduce((a, s) => a + s.frames.length, 0)} animation frames.`;
+  }
+
+  const TIME_REGIONS = ["europe", "mediterranean", "middle_east", "africa", "steppe", "south_asia", "east_asia", "southeast_asia", "americas"];
+  const TIME_KINDS = [["army", null], ["ship", null], ["caravan", null], ["city", { landmark: true }], ["city", { size: 2 }]];
+  const slots = [];
+  function buildTime() {
+    const t = document.getElementById("timetable");
+    t.innerHTML = "<tr><th>Region</th><th>Army</th><th>Ship</th><th>Caravan</th><th>Landmark</th><th>Town</th></tr>" +
+      TIME_REGIONS.map((r) => `<tr><td class="r">${REG[r]}</td>${TIME_KINDS.map(() => '<td class="slot"><canvas></canvas></td>').join("")}</tr>`).join("");
+    t.querySelectorAll("tr").forEach((tr, i) => { if (i) tr.querySelectorAll("canvas").forEach((c, j) => slots.push([c, TIME_REGIONS[i - 1], TIME_KINDS[j]])); });
+    updateTime();
+  }
+  function updateTime() {
+    document.getElementById("year").textContent = fmtYear(state.year || 1);
+    for (const [c, region, [kind, where]] of slots) {
+      const name = L.pick(kind, state.year, region, where);
+      scene(c, name, 1); c.style.width = (c.width * 2) + "px"; c.title = S[name] ? S[name].label : "";
+      c.setAttribute("aria-label", S[name] ? S[name].label : "none");
+    }
+  }
+
+  function chips(id, items, isOn, onPick) {
+    const box = document.getElementById(id); box.textContent = "";
+    for (const [val, label, color] of items) {
+      const b = document.createElement("button"); b.type = "button";
+      if (color) { b.className = "swatch"; b.style.background = color; b.setAttribute("aria-label", label); } else b.textContent = label;
+      b.setAttribute("aria-pressed", String(isOn(val)));
+      b.onclick = () => { onPick(val); box.querySelectorAll("button").forEach((x, i) => x.setAttribute("aria-pressed", String(isOn(items[i][0])))); };
+      box.append(b);
+    }
+  }
+  const rebuild = () => { cards.length = 0; build(); updateTime(); };
+  chips("teams", P.REALM.slice(0, 8).map((c, i) => [c, "Realm " + (i + 1), c]), (v) => v === state.team, (v) => { state.team = v; rebuild(); });
+  chips("grounds", GROUNDS.map(([c, l]) => [c, l]), (v) => v === state.ground, (v) => { state.ground = v; rebuild(); });
+  chips("zooms", [[2, "2x"], [3, "3x (map)"], [5, "5x"]], (v) => v === state.zoom, (v) => {
+    state.zoom = v; try { localStorage.setItem("sprite-zoom", v); } catch (e) {} rebuild(); });
+  const mbtn = document.getElementById("motion");
+  mbtn.setAttribute("aria-pressed", String(state.animate));
+  mbtn.onclick = () => { state.animate = !state.animate; mbtn.setAttribute("aria-pressed", String(state.animate)); };
+  document.getElementById("yr").addEventListener("input", (e) => { state.year = +e.target.value; updateTime(); });
+
+  build(); buildTime();
+  let t0 = performance.now();
+  (function tick(now) {
+    if (state.animate) {
+      const sec = (now - t0) / 1000;
+      for (const c of cards) c._draw && c._draw(Math.floor(sec * c._fps));
+      for (const [c] of slots) c._draw && c._draw(Math.floor(sec * c._fps));
+    }
+    requestAnimationFrame(tick);
+  })(t0);
+})();
+</script>
