@@ -162,7 +162,9 @@ const LAND = /*__LAND__*/;
     clearTimeout(settleTimer); settleTimer = setTimeout(settle, 140);
   });
   svg.call(zoom).on("dblclick.zoom", null);
-  function settle() { pm.render(T, { realms: curSnap == null ? [] : realmsFor(curSnap) }); placeSprites(); labels(); }
+  const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm.same(T)) pm.setRealms(realmsNow()); else settle(); } });
+  const realmsNow = () => borders.realms(state.year, T.k) || realmsFor(curSnap);
+  function settle() { pm.render(T, { realms: realmsNow() }); placeSprites(); labels(); }
 
   function layout() {
     W = mapEl.clientWidth; H = mapEl.clientHeight;
@@ -184,7 +186,7 @@ const LAND = /*__LAND__*/;
       const lost = e.end != null && y >= e.end;
       const sp = lost ? "ruin" : tier(e, y);
       // Declutter by zoom: great cities always, towns and ruins as you come closer.
-      const minK = sp === "city_metropolis" ? 1 : sp.startsWith("wonder") ? 2.5 : sp === "city_city" ? 2.2 : sp === "ruin" ? 4 : sp === "city_town" ? 3.6 : 6;
+      const minK = sp === "city_metropolis" ? 1.4 : sp.startsWith("wonder") ? 3 : sp === "city_city" ? 3 : sp === "ruin" ? 4.5 : sp === "city_town" ? 5 : 8;
       if (T.k < minK && !(state.sel && state.sel.e === e)) continue;
       statics.push({ lon: e.lon, lat: e.lat, sprite: sp });
       hits.push({ lon: e.lon, lat: e.lat, kind: lost ? "Lost city" : e.layer === "wonders" ? "Wonder" : "City", name: nameAt(e, y), what: e.what, why: e.why, pop: lost ? null : popAt(e, y), lost, e });
@@ -271,7 +273,7 @@ const LAND = /*__LAND__*/;
     document.getElementById("era").textContent = eraOf(state.year).toUpperCase();
     if (!fromSlider) slider.value = Math.round(yearToT(state.year) * 1000);
     const s = snapFor(state.year);
-    if (s !== curSnap) { curSnap = s; pm.setRealms(realmsFor(s)); }
+    if (s !== curSnap) { curSnap = s; pm.setRealms(realmsNow()); }
     placeSprites();
   }
   slider.addEventListener("input", () => setYear(tToYear(slider.value / 1000), true));

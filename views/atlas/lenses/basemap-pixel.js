@@ -2,7 +2,7 @@
 // Renderer, palette and sprites live in views/pixel/ (see SPEC.md); this file wires them to the page.
 // Data: PIXEL.tile0 (terrain L0 as a data URI), PIXEL.rivers; finer tiles load from tiles/ next to the page when published.
 (function () {
-  if (typeof PixelMap !== "function" || typeof PIXEL === "undefined" || !PIXEL.tile0) return;
+  if (typeof PixelMap !== "function" || typeof PixelBorders !== "function" || typeof PIXEL === "undefined" || !PIXEL.tile0) return;
   const STYLE = `@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Silkscreen&display=swap");
 .basemap canvas.pixelmap { image-rendering: pixelated; }
 .basemap-on .pt.city .dot, .basemap-on .pt.city .ring, .basemap-on .pt.battle circle, .basemap-on .pt.battle path { opacity: 0; }
@@ -22,8 +22,10 @@
     const p = typeof POP !== "undefined" ? interp(POP[e.id], y) : null;
     return p == null ? "city_town" : p > 400000 ? "city_metropolis" : p > 80000 ? "city_city" : p > 15000 ? "city_town" : "city_village";
   };
-  const MIN_K = { city_metropolis: 1, city_city: 2.2, wonder_pyramid: 2.5, wonder_temple: 3, ruin: 4, city_town: 3.6, city_village: 6 };
+  const MIN_K = { city_metropolis: 1.4, city_city: 3, wonder_pyramid: 3, wonder_temple: 3, ruin: 4.5, city_town: 5, city_village: 8 };
 
+  // Precise borders from borders/l0|l1|l2 next to the page; the page's own simplified borders until they arrive.
+  const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(borders.realms(year, T.k)); else pm.render(T, { realms: borders.realms(year, T.k) }); } } });
   let pm = null, proj = null, T = null, year = null, snap = null, timer = 0, frame = 0, statics = [], movers = [];
   const realmCache = {};
   function realmsFor(y) {
@@ -89,7 +91,7 @@
     render(t, y) {
       if (!pm) return;
       T = t; year = y;
-      const realms = isOn("borders") ? realmsFor(y) : [];
+      const realms = isOn("borders") ? (borders.realms(y, t.k) || realmsFor(y)) : [];
       if (pm.same(t)) pm.setRealms(realms); else pm.render(t, { realms });
       collect(y, t.k); draw();
     },
