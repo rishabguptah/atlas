@@ -45,7 +45,7 @@ Every feature has `name`, `t0`, `t1` (years, 480 BCE = -480, null = open), `conf
 Drafts may also patch built features:
 
 - `{"k": "wall_dates", "match": "<wall name as in the plan>", "t0": 413, "t1": null, "label": "Theodosian Walls", "conf": 1, "src": "..."}`
-  dates every undated wall line with that name.
+  dates every undated wall line with that name (an optional `box` [west, south, east, north] limits it to lines inside, for unnamed fragments).
 - `{"k": "rename", "wd": "Q...", "names": [[null, 1453, "Church of the Holy Apostles"], [1453, null, "..."]], "kinds": [[null, 1453, "church"], [1453, null, "mosque"]], "src": "..."}`
   gives a landmark its names and kinds by period (with `fix_dates: true`, also its `t0`/`t1`).
 

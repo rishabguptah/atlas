@@ -1,0 +1,1466 @@
+{
+ "id": "venice",
+ "note": "Claude draft for Venice: built-up extents of the islands from the move to Rialto (810) to 1900, Arsenale phases, the wooden Rialto bridges, lost churches and fondaci, main streets, the railway bridge, land reclaimed from the lagoon after 1800, and name/kind changes. Venice had no city wall. Shapes are approximate (conf 2) or estimated (conf 1).",
+ "features": [
+  {
+   "k": "extent",
+   "name": "Rivoalto islands (Rialto, San Marco, Olivolo)",
+   "t0": 810,
+   "t1": 1200,
+   "conf": 1,
+   "src": "History of the Republic of Venice",
+   "area": [
+    [
+     12.329,
+     45.441
+    ],
+    [
+     12.335,
+     45.4415
+    ],
+    [
+     12.34,
+     45.44
+    ],
+    [
+     12.344,
+     45.438
+    ],
+    [
+     12.349,
+     45.436
+    ],
+    [
+     12.356,
+     45.436
+    ],
+    [
+     12.361,
+     45.4355
+    ],
+    [
+     12.3615,
+     45.4335
+    ],
+    [
+     12.355,
+     45.433
+    ],
+    [
+     12.347,
+     45.4335
+    ],
+    [
+     12.34,
+     45.4335
+    ],
+    [
+     12.337,
+     45.432
+    ],
+    [
+     12.333,
+     45.431
+    ],
+    [
+     12.328,
+     45.432
+    ],
+    [
+     12.325,
+     45.434
+    ],
+    [
+     12.3255,
+     45.437
+    ],
+    [
+     12.327,
+     45.4395
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Venice c. 1200-1500",
+   "t0": 1200,
+   "t1": 1500,
+   "conf": 2,
+   "src": "Jacopo de' Barbari, View of Venice (1500)",
+   "area": [
+    [
+     12.32,
+     45.443
+    ],
+    [
+     12.326,
+     45.445
+    ],
+    [
+     12.333,
+     45.446
+    ],
+    [
+     12.34,
+     45.4435
+    ],
+    [
+     12.346,
+     45.4425
+    ],
+    [
+     12.35,
+     45.44
+    ],
+    [
+     12.356,
+     45.438
+    ],
+    [
+     12.36,
+     45.4365
+    ],
+    [
+     12.3615,
+     45.4335
+    ],
+    [
+     12.356,
+     45.433
+    ],
+    [
+     12.348,
+     45.4335
+    ],
+    [
+     12.342,
+     45.433
+    ],
+    [
+     12.338,
+     45.432
+    ],
+    [
+     12.333,
+     45.43
+    ],
+    [
+     12.328,
+     45.4295
+    ],
+    [
+     12.322,
+     45.4305
+    ],
+    [
+     12.318,
+     45.433
+    ],
+    [
+     12.319,
+     45.437
+    ],
+    [
+     12.318,
+     45.44
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Venice and the Giudecca, 1500-1846",
+   "t0": 1500,
+   "t1": 1846,
+   "conf": 2,
+   "src": "Jacopo de' Barbari, View of Venice (1500)",
+   "area": [
+    [
+     12.3165,
+     45.442
+    ],
+    [
+     12.32,
+     45.445
+    ],
+    [
+     12.328,
+     45.4475
+    ],
+    [
+     12.336,
+     45.447
+    ],
+    [
+     12.342,
+     45.445
+    ],
+    [
+     12.348,
+     45.444
+    ],
+    [
+     12.352,
+     45.44
+    ],
+    [
+     12.36,
+     45.4385
+    ],
+    [
+     12.363,
+     45.435
+    ],
+    [
+     12.36,
+     45.432
+    ],
+    [
+     12.352,
+     45.4325
+    ],
+    [
+     12.344,
+     45.433
+    ],
+    [
+     12.342,
+     45.4275
+    ],
+    [
+     12.34,
+     45.425
+    ],
+    [
+     12.33,
+     45.4235
+    ],
+    [
+     12.32,
+     45.4245
+    ],
+    [
+     12.313,
+     45.4265
+    ],
+    [
+     12.315,
+     45.43
+    ],
+    [
+     12.315,
+     45.433
+    ],
+    [
+     12.316,
+     45.436
+    ],
+    [
+     12.314,
+     45.4395
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Venice after the railway bridge (station, Marittima, Giardini)",
+   "t0": 1846,
+   "t1": null,
+   "conf": 2,
+   "src": "Venezia Santa Lucia railway station",
+   "area": [
+    [
+     12.311,
+     45.4415
+    ],
+    [
+     12.3165,
+     45.443
+    ],
+    [
+     12.32,
+     45.4455
+    ],
+    [
+     12.328,
+     45.4478
+    ],
+    [
+     12.336,
+     45.4472
+    ],
+    [
+     12.342,
+     45.4452
+    ],
+    [
+     12.348,
+     45.4442
+    ],
+    [
+     12.352,
+     45.4402
+    ],
+    [
+     12.36,
+     45.4387
+    ],
+    [
+     12.363,
+     45.435
+    ],
+    [
+     12.3615,
+     45.43
+    ],
+    [
+     12.356,
+     45.43
+    ],
+    [
+     12.352,
+     45.4325
+    ],
+    [
+     12.344,
+     45.433
+    ],
+    [
+     12.342,
+     45.4275
+    ],
+    [
+     12.34,
+     45.425
+    ],
+    [
+     12.33,
+     45.4235
+    ],
+    [
+     12.32,
+     45.4245
+    ],
+    [
+     12.313,
+     45.4265
+    ],
+    [
+     12.315,
+     45.43
+    ],
+    [
+     12.31,
+     45.433
+    ],
+    [
+     12.309,
+     45.4365
+    ],
+    [
+     12.312,
+     45.4395
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Ghetto of Venice",
+   "t0": 1516,
+   "t1": 1797,
+   "conf": 2,
+   "src": "Venetian Ghetto",
+   "area": [
+    [
+     12.3254,
+     45.4447
+    ],
+    [
+     12.327,
+     45.4458
+    ],
+    [
+     12.3285,
+     45.4452
+    ],
+    [
+     12.328,
+     45.444
+    ],
+    [
+     12.3262,
+     45.4437
+    ]
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Arsenale Vecchio",
+   "t0": 1104,
+   "t1": null,
+   "conf": 2,
+   "src": "Venetian Arsenal",
+   "at": [
+    12.3513,
+    45.4358
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Arsenale Nuovo",
+   "t0": 1325,
+   "t1": null,
+   "conf": 1,
+   "src": "Venetian Arsenal",
+   "at": [
+    12.3548,
+    45.4372
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Arsenale Nuovissimo",
+   "t0": 1473,
+   "t1": null,
+   "conf": 1,
+   "src": "Venetian Arsenal",
+   "at": [
+    12.3572,
+    45.439
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Porta Magna of the Arsenale",
+   "t0": 1460,
+   "t1": null,
+   "conf": 1,
+   "src": "Venetian Arsenal",
+   "at": [
+    12.3499,
+    45.435
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Corderie della Tana (ropeworks)",
+   "t0": 1579,
+   "t1": null,
+   "conf": 1,
+   "src": "Venetian Arsenal",
+   "at": [
+    12.3533,
+    45.4347
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Rialto pontoon bridge (Ponte della Moneta)",
+   "t0": 1181,
+   "t1": 1255,
+   "conf": 2,
+   "src": "Rialto Bridge",
+   "at": [
+    12.33564,
+    45.43801
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Rialto wooden bridge",
+   "t0": 1255,
+   "t1": 1588,
+   "conf": 1,
+   "src": "Rialto Bridge",
+   "at": [
+    12.33564,
+    45.43801
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Rialto Market",
+   "t0": 1097,
+   "t1": null,
+   "conf": 1,
+   "src": "Rialto",
+   "at": [
+    12.3344,
+    45.4392
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Fondaco dei Turchi",
+   "t0": 1621,
+   "t1": 1838,
+   "conf": 1,
+   "src": "Fondaco dei Turchi",
+   "at": [
+    12.3278,
+    45.4418
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Ducal castle (first Doge's palace)",
+   "t0": 810,
+   "t1": 1340,
+   "conf": 2,
+   "src": "Doge's Palace",
+   "at": [
+    12.34042,
+    45.43367
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Torre dell'Orologio",
+   "t0": 1499,
+   "t1": null,
+   "conf": 1,
+   "src": "St Mark's Clocktower",
+   "at": [
+    12.33896,
+    45.4345
+   ]
+  },
+  {
+   "k": "column",
+   "name": "Columns of San Marco and San Todaro",
+   "t0": 1172,
+   "t1": null,
+   "conf": 2,
+   "src": "Columns of San Marco and San Todaro",
+   "at": [
+    12.3398,
+    45.4332
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Zecca (mint)",
+   "t0": 1277,
+   "t1": null,
+   "conf": 2,
+   "src": "Zecca of Venice",
+   "at": [
+    12.3387,
+    45.4331
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Granai di Terranova (state granaries)",
+   "t0": 1341,
+   "t1": 1808,
+   "conf": 2,
+   "src": "Giardini Reali (Venice)",
+   "at": [
+    12.3376,
+    45.4329
+   ]
+  },
+  {
+   "k": "church",
+   "name": "San Geminiano",
+   "t0": 1170,
+   "t1": 1807,
+   "conf": 2,
+   "src": "San Geminiano, Venice",
+   "at": [
+    12.3373,
+    45.434
+   ]
+  },
+  {
+   "k": "church",
+   "name": "Santa Lucia (demolished for the station)",
+   "t0": 1192,
+   "t1": 1861,
+   "conf": 2,
+   "src": "Santa Lucia, Venice",
+   "at": [
+    12.3213,
+    45.441
+   ]
+  },
+  {
+   "k": "church",
+   "name": "Sant'Antonio di Castello",
+   "t0": 1346,
+   "t1": 1807,
+   "conf": 2,
+   "src": "Giardini della Biennale",
+   "at": [
+    12.3568,
+    45.4301
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Lazzaretto Vecchio",
+   "t0": 1423,
+   "t1": null,
+   "conf": 1,
+   "src": "Lazzaretto Vecchio",
+   "at": [
+    12.3359,
+    45.4114
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Lazzaretto Nuovo",
+   "t0": 1468,
+   "t1": null,
+   "conf": 1,
+   "src": "Lazzaretto Nuovo",
+   "at": [
+    12.3827,
+    45.4437
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Ponte dell'Accademia (iron bridge)",
+   "t0": 1854,
+   "t1": 1933,
+   "conf": 1,
+   "src": "Ponte dell'Accademia",
+   "at": [
+    12.32899,
+    45.43166
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Ponte degli Scalzi (iron bridge)",
+   "t0": 1858,
+   "t1": 1934,
+   "conf": 1,
+   "src": "Ponte degli Scalzi",
+   "at": [
+    12.3235,
+    45.441
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Giardini (Napoleonic public gardens, Biennale from 1895)",
+   "t0": 1807,
+   "t1": null,
+   "conf": 1,
+   "src": "Giardini della Biennale",
+   "at": [
+    12.3565,
+    45.4295
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Mercerie (San Marco to Rialto)",
+   "t0": 1100,
+   "t1": null,
+   "conf": 2,
+   "src": "Mercerie",
+   "line": [
+    [
+     12.3389,
+     45.4345
+    ],
+    [
+     12.3385,
+     45.4355
+    ],
+    [
+     12.3375,
+     45.4365
+    ],
+    [
+     12.3368,
+     45.4372
+    ],
+    [
+     12.336,
+     45.4377
+    ],
+    [
+     12.3356,
+     45.438
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Ruga degli Orefici and Ruga Vecchia San Giovanni",
+   "t0": 1100,
+   "t1": null,
+   "conf": 2,
+   "src": "Rialto",
+   "line": [
+    [
+     12.3352,
+     45.4384
+    ],
+    [
+     12.3343,
+     45.4392
+    ],
+    [
+     12.3335,
+     45.439
+    ],
+    [
+     12.3322,
+     45.4385
+    ],
+    [
+     12.3305,
+     45.4378
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Riva degli Schiavoni",
+   "t0": 1324,
+   "t1": null,
+   "conf": 2,
+   "src": "Riva degli Schiavoni",
+   "line": [
+    [
+     12.3405,
+     45.4335
+    ],
+    [
+     12.345,
+     45.434
+    ],
+    [
+     12.35,
+     45.4343
+    ],
+    [
+     12.3535,
+     45.4338
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Via Garibaldi (Via Eugenia, filled canal)",
+   "t0": 1808,
+   "t1": null,
+   "conf": 2,
+   "src": "Via Garibaldi (Venice)",
+   "line": [
+    [
+     12.3505,
+     45.433
+    ],
+    [
+     12.352,
+     45.4337
+    ],
+    [
+     12.354,
+     45.4345
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Strada Nova",
+   "t0": 1871,
+   "t1": null,
+   "conf": 2,
+   "src": "Strada Nova",
+   "line": [
+    [
+     12.3366,
+     45.4405
+    ],
+    [
+     12.3345,
+     45.4418
+    ],
+    [
+     12.332,
+     45.443
+    ],
+    [
+     12.329,
+     45.4432
+    ],
+    [
+     12.326,
+     45.443
+    ],
+    [
+     12.3225,
+     45.4416
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Railway bridge across the lagoon",
+   "t0": 1846,
+   "t1": null,
+   "conf": 2,
+   "src": "Ponte della Libertà",
+   "line": [
+    [
+     12.318,
+     45.442
+    ],
+    [
+     12.308,
+     45.4475
+    ],
+    [
+     12.2973,
+     45.4545
+    ],
+    [
+     12.285,
+     45.462
+    ],
+    [
+     12.272,
+     45.47
+    ],
+    [
+     12.265,
+     45.4735
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Rio Batario (filled when the Piazza was enlarged)",
+   "t0": 810,
+   "t1": 1156,
+   "conf": 1,
+   "src": "Piazza San Marco",
+   "line": [
+    [
+     12.3372,
+     45.4334
+    ],
+    [
+     12.3374,
+     45.434
+    ],
+    [
+     12.3376,
+     45.4347
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Lagoon later filled as the Stazione Marittima",
+   "t0": 697,
+   "t1": 1869,
+   "conf": 1,
+   "src": "Venezia Santa Lucia railway station",
+   "area": [
+    [
+     12.309,
+     45.436
+    ],
+    [
+     12.315,
+     45.4372
+    ],
+    [
+     12.3185,
+     45.436
+    ],
+    [
+     12.319,
+     45.4335
+    ],
+    [
+     12.315,
+     45.432
+    ],
+    [
+     12.3095,
+     45.4325
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Lagoon later filled as Piazzale Roma",
+   "t0": 697,
+   "t1": 1931,
+   "conf": 1,
+   "src": "Piazzale Roma",
+   "area": [
+    [
+     12.315,
+     45.44
+    ],
+    [
+     12.3185,
+     45.4402
+    ],
+    [
+     12.3192,
+     45.438
+    ],
+    [
+     12.3155,
+     45.4376
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Lagoon later filled as the Tronchetto",
+   "t0": 697,
+   "t1": 1957,
+   "conf": 1,
+   "src": "Tronchetto",
+   "area": [
+    [
+     12.302,
+     45.4425
+    ],
+    [
+     12.3095,
+     45.442
+    ],
+    [
+     12.3125,
+     45.44
+    ],
+    [
+     12.312,
+     45.4375
+    ],
+    [
+     12.306,
+     45.4365
+    ],
+    [
+     12.301,
+     45.438
+    ],
+    [
+     12.3,
+     45.4405
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Lagoon later filled as the Sant'Elena quarter",
+   "t0": 697,
+   "t1": 1924,
+   "conf": 1,
+   "src": "Sant'Elena (Venice)",
+   "area": [
+    [
+     12.3625,
+     45.43
+    ],
+    [
+     12.368,
+     45.429
+    ],
+    [
+     12.37,
+     45.4265
+    ],
+    [
+     12.366,
+     45.425
+    ],
+    [
+     12.362,
+     45.4265
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Lagoon later filled as Sacca Fisola",
+   "t0": 697,
+   "t1": 1960,
+   "conf": 1,
+   "src": "Giudecca",
+   "area": [
+    [
+     12.3105,
+     45.429
+    ],
+    [
+     12.315,
+     45.4295
+    ],
+    [
+     12.316,
+     45.427
+    ],
+    [
+     12.3115,
+     45.4262
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q172988",
+   "name": "St Mark's Basilica (cathedral)",
+   "names": [
+    [
+     null,
+     1807,
+     "St Mark's Basilica (the Doge's chapel)"
+    ],
+    [
+     1807,
+     null,
+     "St Mark's Basilica (cathedral)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "St Mark's Basilica"
+  },
+  {
+   "k": "rename",
+   "wd": "Q945981",
+   "name": "San Pietro di Castello",
+   "names": [
+    [
+     null,
+     1807,
+     "San Pietro di Castello (cathedral of Venice)"
+    ],
+    [
+     1807,
+     null,
+     "San Pietro di Castello"
+    ]
+   ],
+   "t0": 775,
+   "conf": 2,
+   "src": "San Pietro di Castello",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q52505",
+   "name": "Rialto Bridge",
+   "names": [
+    [
+     null,
+     null,
+     "Rialto Bridge"
+    ]
+   ],
+   "t0": 1591,
+   "conf": 1,
+   "src": "Rialto Bridge",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q1259067",
+   "name": "Fondaco dei Tedeschi",
+   "names": [
+    [
+     null,
+     1806,
+     "Fondaco dei Tedeschi (German merchants' house)"
+    ],
+    [
+     1806,
+     2016,
+     "Fondaco dei Tedeschi (customs, then post office)"
+    ],
+    [
+     2016,
+     null,
+     "Fondaco dei Tedeschi"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Fondaco dei Tedeschi",
+   "kinds": [
+    [
+     null,
+     1806,
+     "market"
+    ],
+    [
+     1806,
+     null,
+     "house"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q2931413",
+   "name": "Punta della Dogana",
+   "names": [
+    [
+     null,
+     2009,
+     "Dogana da Mar (sea customs house)"
+    ],
+    [
+     2009,
+     null,
+     "Punta della Dogana"
+    ]
+   ],
+   "t0": 1682,
+   "conf": 1,
+   "src": "Punta della Dogana",
+   "kinds": [
+    [
+     null,
+     2009,
+     "market"
+    ],
+    [
+     2009,
+     null,
+     "school"
+    ]
+   ],
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q1273362",
+   "name": "Ospedale Civile (Scuola Grande di San Marco)",
+   "names": [
+    [
+     null,
+     1819,
+     "Scuola Grande di San Marco"
+    ],
+    [
+     1819,
+     null,
+     "Ospedale Civile (Scuola Grande di San Marco)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Scuola Grande di San Marco",
+   "kinds": [
+    [
+     null,
+     1819,
+     "school"
+    ],
+    [
+     1819,
+     null,
+     "house"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q338330",
+   "name": "Gallerie dell'Accademia",
+   "names": [
+    [
+     null,
+     1807,
+     "Scuola Grande di Santa Maria della Carità"
+    ],
+    [
+     1807,
+     null,
+     "Gallerie dell'Accademia"
+    ]
+   ],
+   "t0": 1260,
+   "conf": 2,
+   "src": "Gallerie dell'Accademia",
+   "kinds": [
+    [
+     null,
+     null,
+     "school"
+    ]
+   ],
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q3982047",
+   "name": "Teatro Malibran",
+   "names": [
+    [
+     null,
+     1835,
+     "Teatro San Giovanni Grisostomo"
+    ],
+    [
+     1835,
+     null,
+     "Teatro Malibran"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Teatro Malibran"
+  },
+  {
+   "k": "rename",
+   "wd": "Q3982376",
+   "name": "Teatro Goldoni",
+   "names": [
+    [
+     null,
+     1875,
+     "Teatro San Luca (Teatro Vendramin)"
+    ],
+    [
+     1875,
+     null,
+     "Teatro Goldoni"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Teatro Goldoni"
+  },
+  {
+   "k": "rename",
+   "wd": "Q523565",
+   "name": "Teatro Rossini",
+   "names": [
+    [
+     null,
+     1868,
+     "Teatro San Benedetto"
+    ],
+    [
+     1868,
+     null,
+     "Teatro Rossini"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Teatro Rossini"
+  },
+  {
+   "k": "rename",
+   "wd": "Q1546906",
+   "name": "Ca' Foscari University",
+   "names": [
+    [
+     null,
+     1868,
+     "Ca' Foscari (palace)"
+    ],
+    [
+     1868,
+     null,
+     "Ca' Foscari University"
+    ]
+   ],
+   "t0": 1453,
+   "conf": 1,
+   "src": "Ca' Foscari",
+   "kinds": [
+    [
+     null,
+     1868,
+     "palace"
+    ],
+    [
+     1868,
+     null,
+     "school"
+    ]
+   ],
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q1134699",
+   "name": "Ponte della Libertà",
+   "names": [
+    [
+     null,
+     1933,
+     "Railway bridge (Ponte Ferroviario)"
+    ],
+    [
+     1933,
+     null,
+     "Ponte della Libertà"
+    ]
+   ],
+   "t0": 1846,
+   "conf": 1,
+   "src": "Ponte della Libertà",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q1943482",
+   "name": "Hilton Molino Stucky",
+   "names": [
+    [
+     null,
+     1955,
+     "Molino Stucky (flour mill)"
+    ],
+    [
+     1955,
+     2007,
+     "Molino Stucky (derelict)"
+    ],
+    [
+     2007,
+     null,
+     "Hilton Molino Stucky"
+    ]
+   ],
+   "t0": 1884,
+   "conf": 1,
+   "src": "Molino Stucky",
+   "kinds": [
+    [
+     null,
+     null,
+     "house"
+    ]
+   ],
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q2568227",
+   "name": "Piraeus Lion (brought from Athens by Morosini)",
+   "names": [
+    [
+     null,
+     null,
+     "Piraeus Lion (brought from Athens by Morosini)"
+    ]
+   ],
+   "t0": 1687,
+   "conf": 1,
+   "src": "Piraeus Lion",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q46592",
+   "name": "I Gesuiti (Santa Maria Assunta)",
+   "names": [
+    [
+     null,
+     1657,
+     "Santa Maria dei Crociferi"
+    ],
+    [
+     1657,
+     null,
+     "I Gesuiti (Santa Maria Assunta)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Gesuiti, Venice"
+  },
+  {
+   "k": "rename",
+   "wd": "Q189883",
+   "name": "Doge's Palace (museum)",
+   "names": [
+    [
+     null,
+     1797,
+     "Doge's Palace"
+    ],
+    [
+     1797,
+     1923,
+     "Doge's Palace (government offices)"
+    ],
+    [
+     1923,
+     null,
+     "Doge's Palace (museum)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Doge's Palace"
+  },
+  {
+   "k": "rename",
+   "wd": "Q3735802",
+   "name": "Incurabili (former hospital)",
+   "names": [
+    [
+     null,
+     1807,
+     "Ospedale degli Incurabili"
+    ],
+    [
+     1807,
+     null,
+     "Incurabili (former hospital)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Ospedale degli Incurabili",
+   "kinds": [
+    [
+     null,
+     null,
+     "house"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q1449262",
+   "name": "San Michele in Isola (cemetery church)",
+   "names": [
+    [
+     null,
+     1807,
+     "San Michele in Isola (Camaldolese monastery)"
+    ],
+    [
+     1807,
+     null,
+     "San Michele in Isola (cemetery church)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "San Michele in Isola"
+  }
+ ]
+}

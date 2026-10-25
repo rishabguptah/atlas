@@ -1,0 +1,1633 @@
+{
+ "id": "xian",
+ "note": "Chang'an / Xi'an: Han Chang'an north-west, the Sui-Tang grid city (Daxing 582, Chang'an 618) with its Imperial and Palace Cities, Daming Palace, wards and the two markets, the 904 shrinkage to the Imperial City, and the Ming wall (1370-78) on the Imperial City's south and west lines. Tang lines are anchored on the Ming wall and the mapped outer-wall remains; the Han outline and the canals are estimates.",
+ "features": [
+  {
+   "k": "wall_dates",
+   "match": "西安城墙",
+   "name": "Xi'an City Wall (Ming, 1370-78)",
+   "t0": 1370,
+   "t1": null,
+   "label": "Xi'an City Wall (Ming, 1370-78)",
+   "conf": 1,
+   "src": "Fortifications of Xi'an"
+  },
+  {
+   "k": "wall_dates",
+   "match": "Fortifications of Xi'an",
+   "name": "Sui-Tang Chang'an wall remains",
+   "t0": 582,
+   "t1": 904,
+   "label": "Sui-Tang Chang'an wall remains",
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an (mapped remains of the Tang outer wall and Daming Palace; a few lines in the west are Han Weiyang Palace)"
+  },
+  {
+   "k": "wall_dates",
+   "match": "明秦王府城墙遗址南段",
+   "name": "Ming Prince of Qin's palace wall (south section remains)",
+   "t0": 1371,
+   "t1": null,
+   "label": "Ming Prince of Qin's palace wall (south section remains)",
+   "conf": 1,
+   "src": "Fortifications of Xi'an; Steinhardt 1990, Chinese Imperial City Planning"
+  },
+  {
+   "k": "wall_dates",
+   "match": "明秦王府城墙遗址东段",
+   "name": "Ming Prince of Qin's palace wall (east section remains)",
+   "t0": 1371,
+   "t1": null,
+   "label": "Ming Prince of Qin's palace wall (east section remains)",
+   "conf": 1,
+   "src": "Fortifications of Xi'an; Steinhardt 1990, Chinese Imperial City Planning"
+  },
+  {
+   "k": "wall",
+   "name": "Han Chang'an wall",
+   "t0": -194,
+   "t1": 582,
+   "conf": 1,
+   "src": "Chang'an; Steinhardt 1990, Chinese Imperial City Planning (built 194-190 BCE, about 25.7 km around; outline estimated)",
+   "line": [
+    [
+     108.842,
+     34.295
+    ],
+    [
+     108.851,
+     34.2955
+    ],
+    [
+     108.8616,
+     34.295
+    ],
+    [
+     108.87,
+     34.295
+    ],
+    [
+     108.872,
+     34.2925
+    ],
+    [
+     108.88,
+     34.2912
+    ],
+    [
+     108.889,
+     34.291
+    ],
+    [
+     108.9,
+     34.29
+    ],
+    [
+     108.901,
+     34.305
+    ],
+    [
+     108.902,
+     34.32
+    ],
+    [
+     108.903,
+     34.333
+    ],
+    [
+     108.904,
+     34.349
+    ],
+    [
+     108.893,
+     34.348
+    ],
+    [
+     108.888,
+     34.344
+    ],
+    [
+     108.876,
+     34.343
+    ],
+    [
+     108.87,
+     34.341
+    ],
+    [
+     108.86,
+     34.3405
+    ],
+    [
+     108.855,
+     34.337
+    ],
+    [
+     108.848,
+     34.336
+    ],
+    [
+     108.842,
+     34.339
+    ],
+    [
+     108.842,
+     34.295
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Weiyang Palace wall",
+   "t0": -200,
+   "t1": 904,
+   "conf": 2,
+   "src": "Weiyang Palace",
+   "line": [
+    [
+     108.847,
+     34.2962
+    ],
+    [
+     108.8697,
+     34.2962
+    ],
+    [
+     108.8697,
+     34.3138
+    ],
+    [
+     108.847,
+     34.3138
+    ],
+    [
+     108.847,
+     34.2962
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Sui-Tang outer wall (Daxing / Chang'an)",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an; Chang'an (9.7 x 8.6 km)",
+   "line": [
+    [
+     108.884,
+     34.2055
+    ],
+    [
+     108.9888,
+     34.2055
+    ],
+    [
+     108.9888,
+     34.2825
+    ],
+    [
+     108.884,
+     34.2825
+    ],
+    [
+     108.884,
+     34.2055
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Imperial City wall (Huangcheng)",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an; Xi'an City Wall (Ming wall on its south and west lines)",
+   "line": [
+    [
+     108.91986,
+     34.2522
+    ],
+    [
+     108.95066,
+     34.2522
+    ],
+    [
+     108.95066,
+     34.2688
+    ],
+    [
+     108.91986,
+     34.2688
+    ],
+    [
+     108.91986,
+     34.2522
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Palace City wall (Gongcheng)",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "line": [
+    [
+     108.91986,
+     34.2688
+    ],
+    [
+     108.95066,
+     34.2688
+    ],
+    [
+     108.95066,
+     34.2822
+    ],
+    [
+     108.91986,
+     34.2822
+    ],
+    [
+     108.91986,
+     34.2688
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Han Jian's New City wall (rebuilt Imperial City)",
+   "t0": 904,
+   "t1": 1370,
+   "conf": 2,
+   "src": "Chang'an; Xiong 2000, Sui-Tang Chang'an (the city shrank to the Imperial City in 904)",
+   "line": [
+    [
+     108.91986,
+     34.2522
+    ],
+    [
+     108.95066,
+     34.2522
+    ],
+    [
+     108.95066,
+     34.2688
+    ],
+    [
+     108.91986,
+     34.2688
+    ],
+    [
+     108.91986,
+     34.2522
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Daming Palace wall",
+   "t0": 634,
+   "t1": 896,
+   "conf": 2,
+   "src": "Daming Palace",
+   "line": [
+    [
+     108.9517,
+     34.2829
+    ],
+    [
+     108.9517,
+     34.3046
+    ],
+    [
+     108.9566,
+     34.3053
+    ],
+    [
+     108.9586,
+     34.3046
+    ],
+    [
+     108.9641,
+     34.305
+    ],
+    [
+     108.9661,
+     34.2967
+    ],
+    [
+     108.9661,
+     34.2829
+    ],
+    [
+     108.9517,
+     34.2829
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Xingqing Palace wall",
+   "t0": 714,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xingqing Palace",
+   "line": [
+    [
+     108.975,
+     34.252
+    ],
+    [
+     108.988,
+     34.252
+    ],
+    [
+     108.988,
+     34.264
+    ],
+    [
+     108.975,
+     34.264
+    ],
+    [
+     108.975,
+     34.252
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Mingde Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.9355,
+    34.2055
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Zhuque Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an; Xi'an City Wall",
+   "at": [
+    108.9355,
+    34.2522
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Chengtian Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.9355,
+    34.2688
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Yongning Gate (South Gate)",
+   "t0": 582,
+   "t1": null,
+   "conf": 2,
+   "src": "Xi'an City Wall; Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.9426,
+    34.2522
+   ],
+   "names": [
+    [
+     582,
+     1370,
+     "Anshang Gate"
+    ],
+    [
+     1370,
+     null,
+     "Yongning Gate (South Gate)"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Anhua Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.9426,
+    34.2055
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Qixia Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.9284,
+    34.2055
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Chunming Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.9888,
+    34.2518
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Jinguang Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.884,
+    34.2518
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Tonghua Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.9888,
+    34.269
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Kaiyuan Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.884,
+    34.269
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Yanxing Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.9888,
+    34.229
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Yanping Gate",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.884,
+    34.229
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Danfeng Gate (Daming Palace)",
+   "t0": 662,
+   "t1": 896,
+   "conf": 2,
+   "src": "Daming Palace",
+   "at": [
+    108.957,
+    34.2829
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Changle Gate (East Gate)",
+   "t0": 1370,
+   "t1": null,
+   "conf": 2,
+   "src": "Xi'an City Wall",
+   "at": [
+    108.96744,
+    34.2602
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Anding Gate (West Gate)",
+   "t0": 1370,
+   "t1": null,
+   "conf": 2,
+   "src": "Xi'an City Wall",
+   "at": [
+    108.91986,
+    34.2602
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Anyuan Gate (North Gate)",
+   "t0": 1370,
+   "t1": null,
+   "conf": 2,
+   "src": "Xi'an City Wall",
+   "at": [
+    108.9426,
+    34.27821
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Han Chang'an",
+   "t0": -194,
+   "t1": 581,
+   "conf": 2,
+   "src": "Chang'an; Steinhardt 1990, Chinese Imperial City Planning",
+   "area": [
+    [
+     108.84293,
+     34.29569
+    ],
+    [
+     108.85166,
+     34.29617
+    ],
+    [
+     108.86194,
+     34.29569
+    ],
+    [
+     108.87009,
+     34.29569
+    ],
+    [
+     108.87203,
+     34.29326
+    ],
+    [
+     108.87979,
+     34.292
+    ],
+    [
+     108.88852,
+     34.29181
+    ],
+    [
+     108.89919,
+     34.29084
+    ],
+    [
+     108.90016,
+     34.30539
+    ],
+    [
+     108.90113,
+     34.31994
+    ],
+    [
+     108.9021,
+     34.33255
+    ],
+    [
+     108.90307,
+     34.34807
+    ],
+    [
+     108.8924,
+     34.3471
+    ],
+    [
+     108.88755,
+     34.34322
+    ],
+    [
+     108.87591,
+     34.34225
+    ],
+    [
+     108.87009,
+     34.34031
+    ],
+    [
+     108.86039,
+     34.33982
+    ],
+    [
+     108.85554,
+     34.33643
+    ],
+    [
+     108.84875,
+     34.33546
+    ],
+    [
+     108.84293,
+     34.33837
+    ],
+    [
+     108.84293,
+     34.29569
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Sui-Tang Chang'an (peak c. 750)",
+   "t0": 582,
+   "t1": 903,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an; Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats (108 wards and the two markets)",
+   "area": [
+    [
+     108.884,
+     34.2825
+    ],
+    [
+     108.884,
+     34.25
+    ],
+    [
+     108.884,
+     34.2095
+    ],
+    [
+     108.9,
+     34.2055
+    ],
+    [
+     108.9355,
+     34.2055
+    ],
+    [
+     108.96,
+     34.2055
+    ],
+    [
+     108.975,
+     34.2075
+    ],
+    [
+     108.98,
+     34.214
+    ],
+    [
+     108.9888,
+     34.22
+    ],
+    [
+     108.9888,
+     34.25
+    ],
+    [
+     108.9888,
+     34.2825
+    ],
+    [
+     108.9661,
+     34.2835
+    ],
+    [
+     108.9661,
+     34.2967
+    ],
+    [
+     108.9641,
+     34.305
+    ],
+    [
+     108.9517,
+     34.3046
+    ],
+    [
+     108.9517,
+     34.2825
+    ],
+    [
+     108.92,
+     34.2825
+    ],
+    [
+     108.9,
+     34.2825
+    ],
+    [
+     108.884,
+     34.2825
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Late Tang to Yuan Chang'an (the Imperial City, from 904)",
+   "t0": 904,
+   "t1": 1369,
+   "conf": 2,
+   "src": "Chang'an; Xiong 2000, Sui-Tang Chang'an",
+   "area": [
+    [
+     108.91786,
+     34.2492
+    ],
+    [
+     108.93013,
+     34.2492
+    ],
+    [
+     108.94239,
+     34.2492
+    ],
+    [
+     108.95466,
+     34.2492
+    ],
+    [
+     108.95466,
+     34.25607
+    ],
+    [
+     108.95466,
+     34.26293
+    ],
+    [
+     108.95466,
+     34.2698
+    ],
+    [
+     108.94239,
+     34.2698
+    ],
+    [
+     108.93013,
+     34.2698
+    ],
+    [
+     108.91786,
+     34.2698
+    ],
+    [
+     108.91786,
+     34.26293
+    ],
+    [
+     108.91786,
+     34.25607
+    ],
+    [
+     108.91786,
+     34.2492
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ming Xi'an (c. 1400)",
+   "t0": 1370,
+   "t1": 1643,
+   "conf": 2,
+   "src": "Xi'an City Wall; Steinhardt 1990, Chinese Imperial City Planning (walled city and the Dongguan suburb)",
+   "area": [
+    [
+     108.91986,
+     34.2522
+    ],
+    [
+     108.93123,
+     34.2502
+    ],
+    [
+     108.9426,
+     34.2482
+    ],
+    [
+     108.95502,
+     34.2502
+    ],
+    [
+     108.96744,
+     34.2522
+    ],
+    [
+     108.97344,
+     34.2532
+    ],
+    [
+     108.97944,
+     34.2542
+    ],
+    [
+     108.98044,
+     34.2572
+    ],
+    [
+     108.98144,
+     34.2602
+    ],
+    [
+     108.98044,
+     34.26721
+    ],
+    [
+     108.97944,
+     34.27421
+    ],
+    [
+     108.97344,
+     34.27621
+    ],
+    [
+     108.96744,
+     34.27821
+    ],
+    [
+     108.95502,
+     34.27921
+    ],
+    [
+     108.9426,
+     34.28021
+    ],
+    [
+     108.93123,
+     34.27921
+    ],
+    [
+     108.91986,
+     34.27821
+    ],
+    [
+     108.91786,
+     34.2692
+    ],
+    [
+     108.91586,
+     34.2602
+    ],
+    [
+     108.91786,
+     34.2562
+    ],
+    [
+     108.91986,
+     34.2522
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Qing Xi'an (c. 1900)",
+   "t0": 1644,
+   "t1": 1949,
+   "conf": 2,
+   "src": "Xi'an City Wall",
+   "area": [
+    [
+     108.91686,
+     34.2502
+    ],
+    [
+     108.92973,
+     34.2482
+    ],
+    [
+     108.9426,
+     34.2462
+    ],
+    [
+     108.95502,
+     34.2482
+    ],
+    [
+     108.96744,
+     34.2502
+    ],
+    [
+     108.97544,
+     34.2517
+    ],
+    [
+     108.98344,
+     34.2532
+    ],
+    [
+     108.98444,
+     34.2567
+    ],
+    [
+     108.98544,
+     34.2602
+    ],
+    [
+     108.98344,
+     34.2677
+    ],
+    [
+     108.98144,
+     34.27521
+    ],
+    [
+     108.97444,
+     34.27771
+    ],
+    [
+     108.96744,
+     34.28021
+    ],
+    [
+     108.95502,
+     34.28121
+    ],
+    [
+     108.9426,
+     34.28221
+    ],
+    [
+     108.93123,
+     34.28071
+    ],
+    [
+     108.91986,
+     34.27921
+    ],
+    [
+     108.91686,
+     34.26971
+    ],
+    [
+     108.91386,
+     34.2602
+    ],
+    [
+     108.91536,
+     34.2552
+    ],
+    [
+     108.91686,
+     34.2502
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Manchu garrison city (Mancheng)",
+   "t0": 1649,
+   "t1": 1911,
+   "conf": 1,
+   "src": "Xi'an; Fortifications of Xi'an",
+   "area": [
+    [
+     108.9426,
+     34.2602
+    ],
+    [
+     108.96744,
+     34.2602
+    ],
+    [
+     108.96744,
+     34.27821
+    ],
+    [
+     108.9426,
+     34.27821
+    ],
+    [
+     108.9426,
+     34.2602
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "East Market",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an; Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats",
+   "area": [
+    [
+     108.963,
+     34.2425
+    ],
+    [
+     108.973,
+     34.2425
+    ],
+    [
+     108.973,
+     34.2515
+    ],
+    [
+     108.963,
+     34.2515
+    ],
+    [
+     108.963,
+     34.2425
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "West Market",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an; Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats; Tang West Market Museum",
+   "area": [
+    [
+     108.898,
+     34.2425
+    ],
+    [
+     108.908,
+     34.2425
+    ],
+    [
+     108.908,
+     34.2515
+    ],
+    [
+     108.898,
+     34.2515
+    ],
+    [
+     108.898,
+     34.2425
+    ]
+   ]
+  },
+  {
+   "k": "market",
+   "name": "East Market",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "at": [
+    108.968,
+    34.247
+   ]
+  },
+  {
+   "k": "market",
+   "name": "West Market",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an; Tang West Market Museum",
+   "at": [
+    108.903,
+    34.247
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Small Wild Goose Pagoda (Jianfu Temple)",
+   "t0": 709,
+   "t1": null,
+   "conf": 2,
+   "src": "Small Wild Goose Pagoda",
+   "at": [
+    108.9393,
+    34.2401
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Bell Tower of Xi'an",
+   "t0": 1582,
+   "t1": null,
+   "conf": 2,
+   "src": "Bell Tower of Xi'an (built 1384, moved to the crossing 1582)",
+   "at": [
+    108.9426,
+    34.261
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Drum Tower of Xi'an",
+   "t0": 1380,
+   "t1": null,
+   "conf": 2,
+   "src": "Drum Tower of Xi'an",
+   "at": [
+    108.9395,
+    34.2622
+   ]
+  },
+  {
+   "k": "mosque",
+   "name": "Great Mosque of Xi'an",
+   "t0": 1392,
+   "t1": null,
+   "conf": 2,
+   "src": "Great Mosque of Xi'an (traditionally founded 742; present plan 1392)",
+   "at": [
+    108.9378,
+    34.2635
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Hanyuan Hall (Daming Palace)",
+   "t0": 663,
+   "t1": 886,
+   "conf": 2,
+   "src": "Daming Palace",
+   "at": [
+    108.957,
+    34.2868
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Xuanzheng Hall (Daming Palace)",
+   "t0": 663,
+   "t1": 886,
+   "conf": 2,
+   "src": "Daming Palace",
+   "at": [
+    108.957,
+    34.2905
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Zichen Hall (Daming Palace)",
+   "t0": 663,
+   "t1": 886,
+   "conf": 1,
+   "src": "Daming Palace",
+   "at": [
+    108.957,
+    34.2928
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Linde Hall (Daming Palace)",
+   "t0": 665,
+   "t1": 886,
+   "conf": 2,
+   "src": "Daming Palace",
+   "at": [
+    108.954,
+    34.2985
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Xingqing Palace",
+   "t0": 714,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xingqing Palace",
+   "at": [
+    108.981,
+    34.258
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Weiyang Palace",
+   "t0": -200,
+   "t1": 904,
+   "conf": 2,
+   "src": "Weiyang Palace",
+   "at": [
+    108.858,
+    34.304
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Changle Palace",
+   "t0": -202,
+   "t1": 25,
+   "conf": 1,
+   "src": "Changle Palace",
+   "at": [
+    108.885,
+    34.308
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Prince of Qin's palace (Qinwang Fu)",
+   "t0": 1371,
+   "t1": 1644,
+   "conf": 2,
+   "src": "Fortifications of Xi'an; Steinhardt 1990, Chinese Imperial City Planning",
+   "at": [
+    108.953,
+    34.2675
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Da Xingshan Temple",
+   "t0": 582,
+   "t1": null,
+   "conf": 2,
+   "src": "Daxingshan Temple",
+   "at": [
+    108.94,
+    34.2335
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Qinglong Temple",
+   "t0": 582,
+   "t1": null,
+   "conf": 2,
+   "src": "Qinglong Temple (Xi'an)",
+   "at": [
+    108.98,
+    34.2318
+   ],
+   "names": [
+    [
+     582,
+     711,
+     "Linggan Temple"
+    ],
+    [
+     711,
+     null,
+     "Qinglong Temple"
+    ]
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Jianfu Temple",
+   "t0": 684,
+   "t1": null,
+   "conf": 2,
+   "src": "Small Wild Goose Pagoda",
+   "at": [
+    108.9393,
+    34.241
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Zhuque Avenue (150 m wide)",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an; Heng Chye Kiang 1999, Cities of Aristocrats and Bureaucrats",
+   "line": [
+    [
+     108.9355,
+     34.2522
+    ],
+    [
+     108.9355,
+     34.23
+    ],
+    [
+     108.9355,
+     34.2055
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Chengtianmen Street (Imperial City axis)",
+   "t0": 582,
+   "t1": 904,
+   "conf": 2,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "line": [
+    [
+     108.9355,
+     34.2688
+    ],
+    [
+     108.9355,
+     34.2522
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Chunming Gate - Jinguang Gate street",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "line": [
+    [
+     108.884,
+     34.2518
+    ],
+    [
+     108.91986,
+     34.2518
+    ],
+    [
+     108.95066,
+     34.2518
+    ],
+    [
+     108.9888,
+     34.2518
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Anshang Gate street",
+   "t0": 582,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "line": [
+    [
+     108.9426,
+     34.2522
+    ],
+    [
+     108.9426,
+     34.2055
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "North-South Street (Ming axis)",
+   "t0": 1370,
+   "t1": null,
+   "conf": 2,
+   "src": "Bell Tower of Xi'an",
+   "line": [
+    [
+     108.9426,
+     34.27821
+    ],
+    [
+     108.9426,
+     34.261
+    ],
+    [
+     108.9426,
+     34.2522
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "East-West Street (Ming)",
+   "t0": 1370,
+   "t1": null,
+   "conf": 2,
+   "src": "Bell Tower of Xi'an",
+   "line": [
+    [
+     108.91986,
+     34.2602
+    ],
+    [
+     108.9426,
+     34.261
+    ],
+    [
+     108.96744,
+     34.2602
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Longshou Canal",
+   "t0": 583,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an (from the Chan river to the north-east city and palaces)",
+   "line": [
+    [
+     109.04,
+     34.225
+    ],
+    [
+     109.02,
+     34.235
+    ],
+    [
+     109.0,
+     34.248
+    ],
+    [
+     108.992,
+     34.26
+    ],
+    [
+     108.9888,
+     34.272
+    ],
+    [
+     108.98,
+     34.284
+    ],
+    [
+     108.97,
+     34.286
+    ],
+    [
+     108.962,
+     34.285
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Longshou Canal (city branch)",
+   "t0": 583,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "line": [
+    [
+     108.992,
+     34.26
+    ],
+    [
+     108.9888,
+     34.258
+    ],
+    [
+     108.981,
+     34.258
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Yong'an Canal",
+   "t0": 584,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "line": [
+    [
+     108.905,
+     34.185
+    ],
+    [
+     108.91,
+     34.2055
+    ],
+    [
+     108.912,
+     34.25
+    ],
+    [
+     108.914,
+     34.2825
+    ],
+    [
+     108.915,
+     34.3
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Qingming Canal",
+   "t0": 584,
+   "t1": 904,
+   "conf": 1,
+   "src": "Xiong 2000, Sui-Tang Chang'an",
+   "line": [
+    [
+     108.925,
+     34.185
+    ],
+    [
+     108.927,
+     34.2055
+    ],
+    [
+     108.93,
+     34.24
+    ],
+    [
+     108.93,
+     34.2522
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q1158530",
+   "name": "Daming Palace National Heritage Park",
+   "names": [
+    [
+     634,
+     896,
+     "Daming Palace"
+    ],
+    [
+     896,
+     2010,
+     "Daming Palace ruins"
+    ],
+    [
+     2010,
+     null,
+     "Daming Palace National Heritage Park"
+    ]
+   ],
+   "src": "Daming Palace",
+   "t0": 634,
+   "fix_dates": true,
+   "t1": null,
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q10038732",
+   "name": "Taiji Palace",
+   "names": [
+    [
+     582,
+     710,
+     "Daxing Palace"
+    ],
+    [
+     710,
+     904,
+     "Taiji Palace"
+    ]
+   ],
+   "src": "Taiji Palace",
+   "t0": 582,
+   "fix_dates": true,
+   "t1": 904,
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q641427",
+   "name": "Forest of Steles",
+   "names": [
+    [
+     1087,
+     null,
+     "Forest of Steles"
+    ]
+   ],
+   "src": "Stele Forest (Xi'an Beilin, gathered 1087)",
+   "t0": 1087,
+   "fix_dates": true,
+   "t1": null,
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q5370929",
+   "name": "Da Ci'en Temple",
+   "names": [
+    [
+     648,
+     null,
+     "Da Ci'en Temple"
+    ]
+   ],
+   "src": "Giant Wild Goose Pagoda (Da Ci'en Temple founded 648)",
+   "t0": 648,
+   "fix_dates": true,
+   "t1": null,
+   "conf": 1
+  }
+ ]
+}

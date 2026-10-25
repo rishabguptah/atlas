@@ -101,7 +101,7 @@ def r5(v):
 
 
 def norm(s):
-    return re.sub(r'[^a-z0-9]+', ' ', (s or '').lower().replace('ı', 'i')).strip()
+    return re.sub(r'[\W_]+', ' ', (s or '').lower().replace('ı', 'i')).strip()  # any script: Arabic and Chinese names match too
 
 
 def wall_rows(city):
@@ -145,7 +145,7 @@ def build(city):
     by_name = {}
     for q, r in T.items():
         for nm in [r.get('lab', '')] + (r.get('alts') or '').split('|'):
-            if nm:
+            if norm(nm):
                 by_name.setdefault(norm(nm), q)
     feats, seen_q = [], set()
 
@@ -155,7 +155,7 @@ def build(city):
 
     # Walls first (OpenStreetMap lines), dated through their Wikidata item or name, else left undated.
     for w_ in W:
-        q = w_['wd'] if w_['wd'] in T else by_name.get(norm(w_['name']))
+        q = w_['wd'] if w_['wd'] in T else (by_name.get(norm(w_['name'])) if norm(w_['name']) else None)
         r = T.get(q) if q else None
         a, b = dates(r) if r else (None, None)
         sd = re.match(r'-?\d{1,4}', w_['tags'].get('start_date', '') or '')
@@ -181,6 +181,8 @@ def build(city):
         lon, lat = wdq.point(r['coord'])
         feats.append({'k': k, 'name': r.get('lab') or q, 'wd': q, 't0': a, 't1': b, 'conf': 0, 'sl': int(r['sl']), 'at': [r5(lon), r5(lat)]})
         seen_q.add(q)
+    def inside(line, box):
+        return not box or all(box[0] <= x <= box[2] and box[1] <= y <= box[3] for x, y in line)
     # Claude's drafts.
     dp = os.path.join(OUT, 'drafts', city['id'] + '.json')
     nd = 0
@@ -190,7 +192,7 @@ def build(city):
             if f['k'] == 'wall_dates':
                 # Dates for OpenStreetMap wall lines that Wikidata leaves undated, matched by name.
                 for w_ in feats:
-                    if w_['k'] == 'wall' and w_['t0'] is None and norm(w_['name']) == norm(f['match']):
+                    if w_['k'] == 'wall' and w_['t0'] is None and norm(w_['name']) == norm(f['match']) and inside(w_['line'], f.get('box')):
                         w_.update(t0=f['t0'], t1=f.get('t1'), conf=f['conf'], src=f.get('src'), status='draft')
                         if f.get('label'): w_['name'] = f['label']
                 continue
@@ -208,14 +210,16 @@ def build(city):
             feats.append(f); nd += 1
     feats.sort(key=lambda f: (f['k'] != 'wall', -(f.get('sl') or 0)))
     walls = [f for f in feats if f['k'] == 'wall']
-    feats = walls + [f for f in feats if f['k'] != 'wall'][:MAX_LANDMARKS]
+    # The cap trims Wikidata landmarks only; Claude's drafts fill gaps the sources leave, so they all stay.
+    wd_marks = [f for f in feats if f['k'] != 'wall' and f.get('status') != 'draft']
+    feats = walls + wd_marks[:MAX_LANDMARKS] + [f for f in feats if f['k'] != 'wall' and f.get('status') == 'draft']
     out = {'id': city['id'], 'name': city['name'], 'bbox': city['bbox'], 't0': city['t0'], 't1': city['t1'], 'features': feats,
            'sources': {'walls': 'OpenStreetMap contributors (ODbL), via Overture Maps', 'landmarks': 'Wikidata (CC0): items with coordinates and dates in the box',
                        'drafts': 'data/cities/plans/drafts (Claude, from the sources named on each feature; unchecked)'}}
     os.makedirs(OUT, exist_ok=True)
     json.dump(out, open(os.path.join(OUT, city['id'] + '.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     print(f'  {city["id"]}: {len(walls)} wall lines ({sum(1 for f in walls if f["t0"] is not None)} dated), '
-          f'{len(feats) - len(walls) - nd} landmarks, {nd} drafts', file=sys.stderr)
+          f'{len(wd_marks[:MAX_LANDMARKS])} landmarks, {nd} drafts', file=sys.stderr)
 
 
 def main():

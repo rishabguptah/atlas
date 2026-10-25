@@ -1,0 +1,2066 @@
+{
+ "id": "beijing",
+ "note": "Beijing: Liao Nanjing and Jin Zhongdu in the south-west, Yuan Dadu (1267) with its Jishuitan harbour lake and the Tucheng earthen walls, Ming Beiping (1368), the Ming Inner City (1420) and Outer City (1553) walls demolished mostly in the 1950s-60s, the Imperial City and gates with names by period, and the Legation Quarter. Lines are anchored on the Forbidden City, the surviving south-east wall and the gate sites; Liao-Jin outlines are estimates.",
+ "features": [
+  {
+   "k": "wall_dates",
+   "match": "city walls of Beijing",
+   "name": "Beijing walls (Ming: Forbidden City, Imperial City and city wall sections)",
+   "t0": 1420,
+   "t1": null,
+   "label": "Beijing walls (Ming: Forbidden City, Imperial City and city wall sections)",
+   "conf": 1,
+   "src": "Fortifications of Beijing (mapped lines are mostly the Forbidden City and surviving Imperial and city wall sections)"
+  },
+  {
+   "k": "wall_dates",
+   "match": "明城墙",
+   "name": "Ming Inner City wall (surviving south-east section)",
+   "t0": 1419,
+   "t1": null,
+   "label": "Ming Inner City wall (surviving south-east section)",
+   "conf": 1,
+   "src": "Beijing Ming City Wall Ruins Park"
+  },
+  {
+   "k": "wall_dates",
+   "match": "明城墙遗址公园",
+   "name": "Ming Inner City wall (Ming City Wall Ruins Park)",
+   "t0": 1419,
+   "t1": null,
+   "label": "Ming Inner City wall (Ming City Wall Ruins Park)",
+   "conf": 1,
+   "src": "Beijing Ming City Wall Ruins Park"
+  },
+  {
+   "k": "wall_dates",
+   "match": "皇城根",
+   "name": "Imperial City wall (Huangchenggen remnant)",
+   "t0": 1420,
+   "t1": null,
+   "label": "Imperial City wall (Huangchenggen remnant)",
+   "conf": 1,
+   "src": "Imperial City, Beijing"
+  },
+  {
+   "k": "wall",
+   "name": "Liao Nanjing wall",
+   "t0": 938,
+   "t1": 1153,
+   "conf": 1,
+   "src": "Zhongdu; Hou Renzhi 1985, Historical Atlas of Beijing",
+   "line": [
+    [
+     116.332,
+     39.87
+    ],
+    [
+     116.369,
+     39.87
+    ],
+    [
+     116.369,
+     39.902
+    ],
+    [
+     116.332,
+     39.902
+    ],
+    [
+     116.332,
+     39.87
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Jin Zhongdu wall",
+   "t0": 1153,
+   "t1": 1215,
+   "conf": 1,
+   "src": "Zhongdu; Hou Renzhi 1985, Historical Atlas of Beijing (destroyed 1215)",
+   "line": [
+    [
+     116.318,
+     39.858
+    ],
+    [
+     116.345,
+     39.858
+    ],
+    [
+     116.372,
+     39.858
+    ],
+    [
+     116.372,
+     39.88
+    ],
+    [
+     116.372,
+     39.902
+    ],
+    [
+     116.345,
+     39.902
+    ],
+    [
+     116.318,
+     39.902
+    ],
+    [
+     116.318,
+     39.88
+    ],
+    [
+     116.318,
+     39.858
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Yuan Dadu wall",
+   "t0": 1267,
+   "t1": 1368,
+   "conf": 2,
+   "src": "Khanbaliq; Steinhardt 1990, Chinese Imperial City Planning; Hou Renzhi 1985, Historical Atlas of Beijing",
+   "line": [
+    [
+     116.353,
+     39.907
+    ],
+    [
+     116.3912,
+     39.907
+    ],
+    [
+     116.4345,
+     39.907
+    ],
+    [
+     116.4345,
+     39.9488
+    ],
+    [
+     116.4345,
+     39.977
+    ],
+    [
+     116.395,
+     39.9765
+    ],
+    [
+     116.352,
+     39.9765
+    ],
+    [
+     116.353,
+     39.9488
+    ],
+    [
+     116.353,
+     39.907
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Yuan Dadu wall remains (Tucheng)",
+   "t0": 1368,
+   "t1": null,
+   "conf": 2,
+   "src": "Khanbaliq (the earthen north and west walls abandoned in 1368 survive as Tucheng parks)",
+   "line": [
+    [
+     116.355,
+     39.9488
+    ],
+    [
+     116.353,
+     39.96
+    ],
+    [
+     116.352,
+     39.9765
+    ],
+    [
+     116.3787,
+     39.9765
+    ],
+    [
+     116.406,
+     39.9768
+    ],
+    [
+     116.4285,
+     39.977
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Ming Beiping wall (Dadu walls with the new north wall)",
+   "t0": 1368,
+   "t1": 1419,
+   "conf": 2,
+   "src": "Fortifications of Beijing (north wall moved 2.8 km south by Xu Da, 1368-71)",
+   "line": [
+    [
+     116.355,
+     39.907
+    ],
+    [
+     116.4345,
+     39.907
+    ],
+    [
+     116.4345,
+     39.9488
+    ],
+    [
+     116.364,
+     39.9488
+    ],
+    [
+     116.3545,
+     39.943
+    ],
+    [
+     116.355,
+     39.907
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Ming Inner City wall",
+   "t0": 1420,
+   "t1": 1965,
+   "conf": 2,
+   "src": "Fortifications of Beijing (south wall moved south 1419; mostly demolished 1950s-60s for the 2nd Ring Road and subway)",
+   "line": [
+    [
+     116.3512,
+     39.8984
+    ],
+    [
+     116.3745,
+     39.899
+    ],
+    [
+     116.3915,
+     39.8992
+    ],
+    [
+     116.417,
+     39.8997
+    ],
+    [
+     116.4328,
+     39.9002
+    ],
+    [
+     116.4345,
+     39.9085
+    ],
+    [
+     116.435,
+     39.9245
+    ],
+    [
+     116.4345,
+     39.9415
+    ],
+    [
+     116.434,
+     39.9488
+    ],
+    [
+     116.406,
+     39.9488
+    ],
+    [
+     116.3787,
+     39.9488
+    ],
+    [
+     116.364,
+     39.9488
+    ],
+    [
+     116.3545,
+     39.943
+    ],
+    [
+     116.355,
+     39.9405
+    ],
+    [
+     116.3555,
+     39.924
+    ],
+    [
+     116.3555,
+     39.9075
+    ],
+    [
+     116.3512,
+     39.8984
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Ming Outer City wall",
+   "t0": 1553,
+   "t1": 1965,
+   "conf": 2,
+   "src": "Fortifications of Beijing (built 1553 around the southern suburbs only)",
+   "line": [
+    [
+     116.3512,
+     39.8984
+    ],
+    [
+     116.3425,
+     39.8985
+    ],
+    [
+     116.3425,
+     39.892
+    ],
+    [
+     116.3425,
+     39.87
+    ],
+    [
+     116.36,
+     39.8672
+    ],
+    [
+     116.3923,
+     39.867
+    ],
+    [
+     116.423,
+     39.869
+    ],
+    [
+     116.444,
+     39.8715
+    ],
+    [
+     116.443,
+     39.893
+    ],
+    [
+     116.443,
+     39.8985
+    ],
+    [
+     116.4328,
+     39.9002
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Imperial City wall",
+   "t0": 1420,
+   "t1": 1927,
+   "conf": 2,
+   "src": "Imperial City, Beijing (mostly demolished 1915-27)",
+   "line": [
+    [
+     116.376,
+     39.9068
+    ],
+    [
+     116.388,
+     39.9068
+    ],
+    [
+     116.388,
+     39.901
+    ],
+    [
+     116.3945,
+     39.901
+    ],
+    [
+     116.3945,
+     39.9068
+    ],
+    [
+     116.4035,
+     39.9068
+    ],
+    [
+     116.4035,
+     39.932
+    ],
+    [
+     116.394,
+     39.932
+    ],
+    [
+     116.377,
+     39.9318
+    ],
+    [
+     116.376,
+     39.92
+    ],
+    [
+     116.376,
+     39.9068
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Zhengyangmen (Qianmen)",
+   "t0": 1419,
+   "t1": null,
+   "conf": 2,
+   "src": "Zhengyangmen",
+   "at": [
+    116.3915,
+    39.8992
+   ],
+   "names": [
+    [
+     1419,
+     1439,
+     "Lizhengmen"
+    ],
+    [
+     1439,
+     null,
+     "Zhengyangmen (Qianmen)"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Chongwenmen",
+   "t0": 1419,
+   "t1": 1966,
+   "conf": 2,
+   "src": "Chongwenmen",
+   "at": [
+    116.417,
+    39.8997
+   ],
+   "names": [
+    [
+     1419,
+     1439,
+     "Wenmingmen"
+    ],
+    [
+     1439,
+     1966,
+     "Chongwenmen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Xuanwumen",
+   "t0": 1419,
+   "t1": 1965,
+   "conf": 2,
+   "src": "Xuanwumen",
+   "at": [
+    116.3745,
+    39.899
+   ],
+   "names": [
+    [
+     1419,
+     1439,
+     "Shunchengmen"
+    ],
+    [
+     1439,
+     1965,
+     "Xuanwumen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Chaoyangmen",
+   "t0": 1267,
+   "t1": 1956,
+   "conf": 1,
+   "src": "Chaoyangmen",
+   "at": [
+    116.435,
+    39.9245
+   ],
+   "names": [
+    [
+     1267,
+     1439,
+     "Qihuamen"
+    ],
+    [
+     1439,
+     1956,
+     "Chaoyangmen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Dongzhimen",
+   "t0": 1267,
+   "t1": 1969,
+   "conf": 1,
+   "src": "Dongzhimen",
+   "at": [
+    116.4345,
+    39.9415
+   ],
+   "names": [
+    [
+     1267,
+     1439,
+     "Chongrenmen"
+    ],
+    [
+     1439,
+     1969,
+     "Dongzhimen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Fuchengmen",
+   "t0": 1267,
+   "t1": 1965,
+   "conf": 1,
+   "src": "Fuchengmen",
+   "at": [
+    116.3555,
+    39.924
+   ],
+   "names": [
+    [
+     1267,
+     1439,
+     "Pingzemen"
+    ],
+    [
+     1439,
+     1965,
+     "Fuchengmen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Xizhimen",
+   "t0": 1267,
+   "t1": 1969,
+   "conf": 1,
+   "src": "Xizhimen (the Ming gate encased Yuan Heyimen)",
+   "at": [
+    116.355,
+    39.9405
+   ],
+   "names": [
+    [
+     1267,
+     1439,
+     "Heyimen"
+    ],
+    [
+     1439,
+     1969,
+     "Xizhimen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Deshengmen",
+   "t0": 1371,
+   "t1": null,
+   "conf": 2,
+   "src": "Deshengmen (arrow tower survives)",
+   "at": [
+    116.3787,
+    39.9488
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Andingmen",
+   "t0": 1371,
+   "t1": 1969,
+   "conf": 2,
+   "src": "Andingmen",
+   "at": [
+    116.406,
+    39.9488
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Dongbianmen",
+   "t0": 1553,
+   "t1": 1958,
+   "conf": 2,
+   "src": "Dongbianmen",
+   "at": [
+    116.4328,
+    39.9002
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Xibianmen",
+   "t0": 1553,
+   "t1": 1952,
+   "conf": 2,
+   "src": "Xibianmen",
+   "at": [
+    116.3512,
+    39.8984
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Yongdingmen",
+   "t0": 1553,
+   "t1": null,
+   "conf": 2,
+   "src": "Yongdingmen",
+   "at": [
+    116.3923,
+    39.867
+   ],
+   "names": [
+    [
+     1553,
+     1957,
+     "Yongdingmen"
+    ],
+    [
+     1957,
+     2005,
+     "Yongdingmen (demolished)"
+    ],
+    [
+     2005,
+     null,
+     "Yongdingmen (rebuilt 2005)"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Zuoanmen",
+   "t0": 1553,
+   "t1": 1958,
+   "conf": 2,
+   "src": "Fortifications of Beijing",
+   "at": [
+    116.423,
+    39.869
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Youanmen",
+   "t0": 1553,
+   "t1": 1958,
+   "conf": 2,
+   "src": "Fortifications of Beijing",
+   "at": [
+    116.36,
+    39.8672
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Guang'anmen",
+   "t0": 1553,
+   "t1": 1957,
+   "conf": 2,
+   "src": "Fortifications of Beijing",
+   "at": [
+    116.3425,
+    39.892
+   ],
+   "names": [
+    [
+     1553,
+     1821,
+     "Guangningmen"
+    ],
+    [
+     1821,
+     1957,
+     "Guang'anmen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Guangqumen",
+   "t0": 1553,
+   "t1": 1953,
+   "conf": 2,
+   "src": "Fortifications of Beijing",
+   "at": [
+    116.443,
+    39.893
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Tiananmen",
+   "t0": 1420,
+   "t1": null,
+   "conf": 2,
+   "src": "Tiananmen",
+   "at": [
+    116.3908,
+    39.9072
+   ],
+   "names": [
+    [
+     1420,
+     1651,
+     "Chengtianmen"
+    ],
+    [
+     1651,
+     null,
+     "Tiananmen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Daming Gate (Zhonghua Gate)",
+   "t0": 1420,
+   "t1": 1959,
+   "conf": 2,
+   "src": "Gate of China",
+   "at": [
+    116.3912,
+    39.901
+   ],
+   "names": [
+    [
+     1420,
+     1644,
+     "Damingmen"
+    ],
+    [
+     1644,
+     1912,
+     "Daqingmen"
+    ],
+    [
+     1912,
+     1959,
+     "Zhonghuamen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Di'anmen",
+   "t0": 1420,
+   "t1": 1954,
+   "conf": 2,
+   "src": "Imperial City, Beijing",
+   "at": [
+    116.3935,
+    39.932
+   ],
+   "names": [
+    [
+     1420,
+     1651,
+     "Beianmen"
+    ],
+    [
+     1651,
+     1954,
+     "Di'anmen"
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Lizhengmen (Dadu south gate)",
+   "t0": 1267,
+   "t1": 1419,
+   "conf": 1,
+   "src": "Khanbaliq",
+   "at": [
+    116.3912,
+    39.907
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Wenmingmen (Dadu)",
+   "t0": 1267,
+   "t1": 1419,
+   "conf": 1,
+   "src": "Khanbaliq",
+   "at": [
+    116.41,
+    39.907
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Shunchengmen (Dadu)",
+   "t0": 1267,
+   "t1": 1419,
+   "conf": 1,
+   "src": "Khanbaliq",
+   "at": [
+    116.372,
+    39.907
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Jiandemen (Dadu north gate)",
+   "t0": 1267,
+   "t1": 1368,
+   "conf": 1,
+   "src": "Khanbaliq",
+   "at": [
+    116.3787,
+    39.9765
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Anzhenmen (Dadu north gate)",
+   "t0": 1267,
+   "t1": 1368,
+   "conf": 1,
+   "src": "Khanbaliq",
+   "at": [
+    116.406,
+    39.9768
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Guangximen (Dadu)",
+   "t0": 1267,
+   "t1": 1368,
+   "conf": 1,
+   "src": "Khanbaliq",
+   "at": [
+    116.4345,
+    39.962
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Suqingmen (Dadu)",
+   "t0": 1267,
+   "t1": 1368,
+   "conf": 1,
+   "src": "Khanbaliq",
+   "at": [
+    116.3525,
+    39.962
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Southeast Corner Tower (Dongbianmen)",
+   "t0": 1439,
+   "t1": null,
+   "conf": 2,
+   "src": "Dongbianmen",
+   "at": [
+    116.4335,
+    39.9
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Liao Nanjing",
+   "t0": 938,
+   "t1": 1152,
+   "conf": 2,
+   "src": "Zhongdu; Hou Renzhi 1985, Historical Atlas of Beijing",
+   "area": [
+    [
+     116.33,
+     39.869
+    ],
+    [
+     116.34333,
+     39.869
+    ],
+    [
+     116.35667,
+     39.869
+    ],
+    [
+     116.37,
+     39.869
+    ],
+    [
+     116.37,
+     39.88033
+    ],
+    [
+     116.37,
+     39.89167
+    ],
+    [
+     116.37,
+     39.903
+    ],
+    [
+     116.35667,
+     39.903
+    ],
+    [
+     116.34333,
+     39.903
+    ],
+    [
+     116.33,
+     39.903
+    ],
+    [
+     116.33,
+     39.89167
+    ],
+    [
+     116.33,
+     39.88033
+    ],
+    [
+     116.33,
+     39.869
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Jin Zhongdu",
+   "t0": 1153,
+   "t1": 1266,
+   "conf": 2,
+   "src": "Zhongdu; Hou Renzhi 1985, Historical Atlas of Beijing",
+   "area": [
+    [
+     116.317,
+     39.857
+    ],
+    [
+     116.33567,
+     39.857
+    ],
+    [
+     116.35433,
+     39.857
+    ],
+    [
+     116.373,
+     39.857
+    ],
+    [
+     116.373,
+     39.87233
+    ],
+    [
+     116.373,
+     39.88767
+    ],
+    [
+     116.373,
+     39.903
+    ],
+    [
+     116.35433,
+     39.903
+    ],
+    [
+     116.33567,
+     39.903
+    ],
+    [
+     116.317,
+     39.903
+    ],
+    [
+     116.317,
+     39.88767
+    ],
+    [
+     116.317,
+     39.87233
+    ],
+    [
+     116.317,
+     39.857
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Yuan Dadu (c. 1300)",
+   "t0": 1267,
+   "t1": 1367,
+   "conf": 2,
+   "src": "Khanbaliq; Steinhardt 1990, Chinese Imperial City Planning",
+   "area": [
+    [
+     116.353,
+     39.907
+    ],
+    [
+     116.3721,
+     39.905
+    ],
+    [
+     116.3912,
+     39.903
+    ],
+    [
+     116.41285,
+     39.905
+    ],
+    [
+     116.4345,
+     39.907
+    ],
+    [
+     116.4345,
+     39.9235
+    ],
+    [
+     116.4345,
+     39.94
+    ],
+    [
+     116.4325,
+     39.95
+    ],
+    [
+     116.4305,
+     39.96
+    ],
+    [
+     116.42025,
+     39.965
+    ],
+    [
+     116.41,
+     39.97
+    ],
+    [
+     116.4,
+     39.97
+    ],
+    [
+     116.39,
+     39.97
+    ],
+    [
+     116.38,
+     39.9675
+    ],
+    [
+     116.37,
+     39.965
+    ],
+    [
+     116.363,
+     39.96
+    ],
+    [
+     116.356,
+     39.955
+    ],
+    [
+     116.3545,
+     39.9425
+    ],
+    [
+     116.353,
+     39.93
+    ],
+    [
+     116.353,
+     39.9185
+    ],
+    [
+     116.353,
+     39.907
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ming Beijing (c. 1450)",
+   "t0": 1368,
+   "t1": 1552,
+   "conf": 2,
+   "src": "Fortifications of Beijing; Hou Renzhi 1985, Historical Atlas of Beijing (walled Inner City and the suburbs outside Qianmen)",
+   "area": [
+    [
+     116.3512,
+     39.8984
+    ],
+    [
+     116.3745,
+     39.892
+    ],
+    [
+     116.3915,
+     39.886
+    ],
+    [
+     116.41,
+     39.893
+    ],
+    [
+     116.4328,
+     39.9002
+    ],
+    [
+     116.4345,
+     39.9085
+    ],
+    [
+     116.435,
+     39.9245
+    ],
+    [
+     116.4345,
+     39.9415
+    ],
+    [
+     116.434,
+     39.9488
+    ],
+    [
+     116.364,
+     39.9488
+    ],
+    [
+     116.3545,
+     39.943
+    ],
+    [
+     116.3555,
+     39.9075
+    ],
+    [
+     116.3512,
+     39.8984
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ming Beijing (c. 1600)",
+   "t0": 1553,
+   "t1": 1643,
+   "conf": 2,
+   "src": "Fortifications of Beijing; Hou Renzhi 1985, Historical Atlas of Beijing (Outer City built up in its northern half)",
+   "area": [
+    [
+     116.3425,
+     39.8985
+    ],
+    [
+     116.3425,
+     39.885
+    ],
+    [
+     116.36,
+     39.878
+    ],
+    [
+     116.385,
+     39.876
+    ],
+    [
+     116.398,
+     39.885
+    ],
+    [
+     116.42,
+     39.88
+    ],
+    [
+     116.443,
+     39.885
+    ],
+    [
+     116.443,
+     39.8985
+    ],
+    [
+     116.4345,
+     39.9085
+    ],
+    [
+     116.435,
+     39.9245
+    ],
+    [
+     116.4345,
+     39.9415
+    ],
+    [
+     116.434,
+     39.9488
+    ],
+    [
+     116.364,
+     39.9488
+    ],
+    [
+     116.3545,
+     39.943
+    ],
+    [
+     116.3555,
+     39.9075
+    ],
+    [
+     116.3512,
+     39.8984
+    ],
+    [
+     116.3425,
+     39.8985
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Qing Peking (c. 1850)",
+   "t0": 1644,
+   "t1": 1860,
+   "conf": 2,
+   "src": "Fortifications of Beijing; Hou Renzhi 1985, Historical Atlas of Beijing",
+   "area": [
+    [
+     116.3425,
+     39.8985
+    ],
+    [
+     116.3425,
+     39.88
+    ],
+    [
+     116.36,
+     39.873
+    ],
+    [
+     116.39,
+     39.872
+    ],
+    [
+     116.398,
+     39.888
+    ],
+    [
+     116.42,
+     39.876
+    ],
+    [
+     116.443,
+     39.88
+    ],
+    [
+     116.443,
+     39.8985
+    ],
+    [
+     116.437,
+     39.9085
+    ],
+    [
+     116.438,
+     39.9245
+    ],
+    [
+     116.437,
+     39.9415
+    ],
+    [
+     116.434,
+     39.95
+    ],
+    [
+     116.364,
+     39.95
+    ],
+    [
+     116.352,
+     39.943
+    ],
+    [
+     116.353,
+     39.9075
+    ],
+    [
+     116.349,
+     39.8984
+    ],
+    [
+     116.3425,
+     39.8985
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Peking (c. 1900)",
+   "t0": 1861,
+   "t1": 1949,
+   "conf": 2,
+   "src": "Fortifications of Beijing; Hou Renzhi 1985, Historical Atlas of Beijing",
+   "area": [
+    [
+     116.341,
+     39.899
+    ],
+    [
+     116.342,
+     39.878
+    ],
+    [
+     116.36,
+     39.872
+    ],
+    [
+     116.39,
+     39.871
+    ],
+    [
+     116.398,
+     39.888
+    ],
+    [
+     116.42,
+     39.874
+    ],
+    [
+     116.444,
+     39.878
+    ],
+    [
+     116.445,
+     39.8985
+    ],
+    [
+     116.439,
+     39.9085
+    ],
+    [
+     116.44,
+     39.9245
+    ],
+    [
+     116.438,
+     39.9415
+    ],
+    [
+     116.434,
+     39.952
+    ],
+    [
+     116.364,
+     39.952
+    ],
+    [
+     116.351,
+     39.944
+    ],
+    [
+     116.352,
+     39.9075
+    ],
+    [
+     116.348,
+     39.8984
+    ],
+    [
+     116.341,
+     39.899
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Legation Quarter (Dongjiaominxiang)",
+   "t0": 1861,
+   "t1": 1900,
+   "conf": 1,
+   "src": "Beijing Legation Quarter",
+   "area": [
+    [
+     116.397,
+     39.901
+    ],
+    [
+     116.408,
+     39.901
+    ],
+    [
+     116.408,
+     39.904
+    ],
+    [
+     116.397,
+     39.904
+    ],
+    [
+     116.397,
+     39.901
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Legation Quarter (walled, after the Boxer Protocol)",
+   "t0": 1901,
+   "t1": 1959,
+   "conf": 2,
+   "src": "Beijing Legation Quarter (enlarged and walled under the 1901 Boxer Protocol)",
+   "area": [
+    [
+     116.396,
+     39.901
+    ],
+    [
+     116.411,
+     39.901
+    ],
+    [
+     116.411,
+     39.9065
+    ],
+    [
+     116.396,
+     39.9065
+    ],
+    [
+     116.396,
+     39.901
+    ]
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Temple of Heaven",
+   "t0": 1420,
+   "t1": null,
+   "conf": 2,
+   "src": "Temple of Heaven",
+   "at": [
+    116.4066,
+    39.8822
+   ],
+   "names": [
+    [
+     1420,
+     1534,
+     "Altar of Heaven and Earth"
+    ],
+    [
+     1534,
+     null,
+     "Temple of Heaven"
+    ]
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Circular Mound Altar",
+   "t0": 1530,
+   "t1": null,
+   "conf": 2,
+   "src": "Temple of Heaven",
+   "at": [
+    116.4065,
+    39.877
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Drum Tower of Beijing",
+   "t0": 1420,
+   "t1": null,
+   "conf": 2,
+   "src": "Drum Tower of Beijing (Yuan Qizheng Tower 1272 stood nearby)",
+   "at": [
+    116.3939,
+    39.9394
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Bell Tower of Beijing",
+   "t0": 1420,
+   "t1": null,
+   "conf": 2,
+   "src": "Bell Tower of Beijing (rebuilt in stone 1745)",
+   "at": [
+    116.3939,
+    39.9411
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Central Pavilion (Zhongxintai) of Dadu",
+   "t0": 1272,
+   "t1": 1368,
+   "conf": 1,
+   "src": "Khanbaliq; Steinhardt 1990, Chinese Imperial City Planning",
+   "at": [
+    116.3925,
+    39.94
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Dadu Palace City (Danei)",
+   "t0": 1274,
+   "t1": 1368,
+   "conf": 1,
+   "src": "Khanbaliq; Steinhardt 1990, Chinese Imperial City Planning (slightly north of the Forbidden City)",
+   "at": [
+    116.3925,
+    39.92
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Jingshan (Prospect Hill)",
+   "t0": 1420,
+   "t1": null,
+   "conf": 2,
+   "src": "Jingshan Park",
+   "at": [
+    116.3911,
+    39.9252
+   ],
+   "names": [
+    [
+     1420,
+     1655,
+     "Wansui Shan (Coal Hill)"
+    ],
+    [
+     1655,
+     null,
+     "Jingshan"
+    ]
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "White Dagoba (Beihai)",
+   "t0": 1651,
+   "t1": null,
+   "conf": 2,
+   "src": "Beihai Park",
+   "at": [
+    116.3835,
+    39.9255
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Wanning Bridge (Houmen Bridge)",
+   "t0": 1285,
+   "t1": null,
+   "conf": 2,
+   "src": "Shichahai (Yuan bridge on the Tonghui River)",
+   "at": [
+    116.3937,
+    39.937
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Jishuitan wharf (Grand Canal terminus)",
+   "t0": 1293,
+   "t1": 1420,
+   "conf": 1,
+   "src": "Shichahai; Tonghui River",
+   "at": [
+    116.388,
+    39.9405
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Dongbianmen wharf (Tonghui River terminus)",
+   "t0": 1528,
+   "t1": 1901,
+   "conf": 1,
+   "src": "Tonghui River",
+   "at": [
+    116.438,
+    39.9
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Fayuan Temple",
+   "t0": 645,
+   "t1": null,
+   "conf": 2,
+   "src": "Fayuan Temple",
+   "at": [
+    116.366,
+    39.883
+   ],
+   "names": [
+    [
+     645,
+     1734,
+     "Minzhong Temple"
+    ],
+    [
+     1734,
+     null,
+     "Fayuan Temple"
+    ]
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "White Cloud Temple (Baiyun Guan)",
+   "t0": 739,
+   "t1": null,
+   "conf": 2,
+   "src": "White Cloud Temple",
+   "at": [
+    116.34,
+    39.8995
+   ],
+   "names": [
+    [
+     739,
+     1203,
+     "Tianchang Guan"
+    ],
+    [
+     1203,
+     1227,
+     "Taiji Palace"
+    ],
+    [
+     1227,
+     1394,
+     "Changchun Palace"
+    ],
+    [
+     1394,
+     null,
+     "Baiyun Guan"
+    ]
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Legation Quarter",
+   "t0": 1861,
+   "t1": 1959,
+   "conf": 2,
+   "src": "Beijing Legation Quarter",
+   "at": [
+    116.403,
+    39.9035
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Central axis (Yongdingmen - Bell Tower)",
+   "t0": 1420,
+   "t1": null,
+   "conf": 2,
+   "src": "Beijing Central Axis",
+   "line": [
+    [
+     116.3923,
+     39.867
+    ],
+    [
+     116.3915,
+     39.8992
+    ],
+    [
+     116.3912,
+     39.901
+    ],
+    [
+     116.3908,
+     39.9072
+    ],
+    [
+     116.3911,
+     39.9252
+    ],
+    [
+     116.3935,
+     39.932
+    ],
+    [
+     116.3939,
+     39.9394
+    ],
+    [
+     116.3939,
+     39.9411
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Dadu central avenue (Lizhengmen - Zhongxintai)",
+   "t0": 1267,
+   "t1": 1368,
+   "conf": 1,
+   "src": "Khanbaliq; Steinhardt 1990, Chinese Imperial City Planning",
+   "line": [
+    [
+     116.3912,
+     39.907
+    ],
+    [
+     116.392,
+     39.93
+    ],
+    [
+     116.3925,
+     39.94
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Chang'an Street",
+   "t0": 1420,
+   "t1": null,
+   "conf": 2,
+   "src": "Chang'an Avenue (cut through the walls in the 20th century)",
+   "line": [
+    [
+     116.3555,
+     39.9072
+    ],
+    [
+     116.3908,
+     39.907
+    ],
+    [
+     116.4345,
+     39.908
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Tonghui River (Yuan course through Dadu)",
+   "t0": 1293,
+   "t1": 1420,
+   "conf": 1,
+   "src": "Tonghui River; Khanbaliq (Guo Shoujing 1292-93)",
+   "line": [
+    [
+     116.3937,
+     39.937
+    ],
+    [
+     116.399,
+     39.933
+    ],
+    [
+     116.404,
+     39.929
+    ],
+    [
+     116.4045,
+     39.915
+    ],
+    [
+     116.405,
+     39.907
+    ],
+    [
+     116.412,
+     39.904
+    ],
+    [
+     116.425,
+     39.901
+    ],
+    [
+     116.438,
+     39.9
+    ],
+    [
+     116.48,
+     39.896
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Inner City south moat (Qiansanmen moat)",
+   "t0": 1420,
+   "t1": 1965,
+   "conf": 2,
+   "src": "Fortifications of Beijing (covered for the subway and 2nd Ring Road)",
+   "line": [
+    [
+     116.3512,
+     39.8978
+    ],
+    [
+     116.3745,
+     39.8983
+    ],
+    [
+     116.3915,
+     39.8985
+    ],
+    [
+     116.417,
+     39.899
+    ],
+    [
+     116.4328,
+     39.8995
+    ],
+    [
+     116.44,
+     39.8992
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Jishuitan (Yuan harbour lake, larger than today's Shichahai)",
+   "t0": 1267,
+   "t1": 1420,
+   "conf": 1,
+   "src": "Shichahai; Tonghui River",
+   "area": [
+    [
+     116.364,
+     39.948
+    ],
+    [
+     116.372,
+     39.95
+    ],
+    [
+     116.38,
+     39.948
+    ],
+    [
+     116.387,
+     39.944
+    ],
+    [
+     116.393,
+     39.9395
+    ],
+    [
+     116.394,
+     39.9345
+    ],
+    [
+     116.3915,
+     39.931
+    ],
+    [
+     116.387,
+     39.932
+    ],
+    [
+     116.382,
+     39.9365
+    ],
+    [
+     116.376,
+     39.94
+    ],
+    [
+     116.37,
+     39.942
+    ],
+    [
+     116.364,
+     39.944
+    ],
+    [
+     116.364,
+     39.948
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q341718",
+   "name": "Temple of Agriculture (Xiannongtan)",
+   "names": [
+    [
+     1420,
+     1531,
+     "Temple of Mountains and Rivers"
+    ],
+    [
+     1531,
+     null,
+     "Temple of Agriculture (Xiannongtan)"
+    ]
+   ],
+   "src": "Temple of Agriculture",
+   "kinds": [
+    [
+     null,
+     null,
+     "temple"
+    ]
+   ],
+   "t0": 1420,
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q2298526",
+   "name": "Miaoying Temple (White Dagoba)",
+   "names": [
+    [
+     1279,
+     1457,
+     "Dasheng Shou Wan'an Temple"
+    ],
+    [
+     1457,
+     null,
+     "Miaoying Temple (White Dagoba)"
+    ]
+   ],
+   "src": "Miaoying Temple",
+   "t0": 1279,
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q692723",
+   "name": "Yonghe Temple (Lama Temple)",
+   "names": [
+    [
+     1694,
+     1725,
+     "Prince Yong's Mansion"
+    ],
+    [
+     1725,
+     1744,
+     "Yonghe Palace"
+    ],
+    [
+     1744,
+     null,
+     "Yonghe Temple (Lama Temple)"
+    ]
+   ],
+   "src": "Yonghe Temple",
+   "kinds": [
+    [
+     1694,
+     1744,
+     "palace"
+    ],
+    [
+     1744,
+     null,
+     "temple"
+    ]
+   ],
+   "t0": 1694,
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q434483",
+   "name": "Altar of Silkworms (Xiancantan)",
+   "names": [
+    [
+     1742,
+     null,
+     "Altar of Silkworms (Xiancantan)"
+    ]
+   ],
+   "src": "Xiancantan",
+   "kinds": [
+    [
+     null,
+     null,
+     "temple"
+    ]
+   ],
+   "t0": 1742,
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q2047427",
+   "name": "Palace Museum",
+   "names": [
+    [
+     1420,
+     1925,
+     "Forbidden City"
+    ],
+    [
+     1925,
+     null,
+     "Palace Museum"
+    ]
+   ],
+   "src": "Palace Museum",
+   "kinds": [
+    [
+     1420,
+     1925,
+     "palace"
+    ],
+    [
+     1925,
+     null,
+     "school"
+    ]
+   ],
+   "t0": 1420,
+   "conf": 1
+  }
+ ]
+}

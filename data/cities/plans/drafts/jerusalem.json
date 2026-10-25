@@ -1,0 +1,2530 @@
+{
+ "id": "jerusalem",
+ "note": "Claude draft for Jerusalem: the lost walls (City of David, Hezekiah, First, Second and Third Walls, Byzantine, Fatimid/Crusader) and the Ottoman wall that OpenStreetMap gives only as a point, built-up extents from the City of David to the 1890s, Temple Mount and Holy Sepulchre phases, gates by period, the Roman street grid and name/kind changes. The courses of the Second and Third Walls are disputed (the Third Wall is drawn on the line of the present north wall, not the Sukenik-Mayer line). Note: the Haram gates in the plan share the Southern Wall wikidata id (Q2912191) and its date -19, so they cannot be renamed here.",
+ "features": [
+  {
+   "k": "wall",
+   "name": "Ottoman walls of Suleiman the Magnificent",
+   "t0": 1537,
+   "t1": null,
+   "conf": 2,
+   "src": "Walls of Jerusalem",
+   "line": [
+    [
+     35.22754,
+     31.77663
+    ],
+    [
+     35.2268,
+     31.7776
+    ],
+    [
+     35.226,
+     31.7785
+    ],
+    [
+     35.2256,
+     31.7789
+    ],
+    [
+     35.22619,
+     31.7793
+    ],
+    [
+     35.228,
+     31.7807
+    ],
+    [
+     35.23037,
+     31.78165
+    ],
+    [
+     35.232,
+     31.7825
+    ],
+    [
+     35.23369,
+     31.78297
+    ],
+    [
+     35.2356,
+     31.783
+    ],
+    [
+     35.23632,
+     31.78241
+    ],
+    [
+     35.2372,
+     31.7816
+    ],
+    [
+     35.23694,
+     31.78084
+    ],
+    [
+     35.23713,
+     31.77898
+    ],
+    [
+     35.237,
+     31.7761
+    ],
+    [
+     35.2356,
+     31.7752
+    ],
+    [
+     35.23389,
+     31.77472
+    ],
+    [
+     35.232,
+     31.7738
+    ],
+    [
+     35.22952,
+     31.77286
+    ],
+    [
+     35.2275,
+     31.7732
+    ],
+    [
+     35.2272,
+     31.775
+    ],
+    [
+     35.2276,
+     31.7762
+    ],
+    [
+     35.22754,
+     31.77663
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Fatimid and Crusader walls",
+   "t0": 1033,
+   "t1": 1219,
+   "conf": 1,
+   "src": "Walls of Jerusalem",
+   "line": [
+    [
+     35.22754,
+     31.77663
+    ],
+    [
+     35.2268,
+     31.7776
+    ],
+    [
+     35.226,
+     31.7785
+    ],
+    [
+     35.2256,
+     31.7789
+    ],
+    [
+     35.22619,
+     31.7793
+    ],
+    [
+     35.228,
+     31.7807
+    ],
+    [
+     35.23037,
+     31.78165
+    ],
+    [
+     35.232,
+     31.7825
+    ],
+    [
+     35.23369,
+     31.78297
+    ],
+    [
+     35.2356,
+     31.783
+    ],
+    [
+     35.23632,
+     31.78241
+    ],
+    [
+     35.2372,
+     31.7816
+    ],
+    [
+     35.23694,
+     31.78084
+    ],
+    [
+     35.23713,
+     31.77898
+    ],
+    [
+     35.237,
+     31.7761
+    ],
+    [
+     35.2356,
+     31.7752
+    ],
+    [
+     35.23389,
+     31.77472
+    ],
+    [
+     35.232,
+     31.7738
+    ],
+    [
+     35.22952,
+     31.77286
+    ],
+    [
+     35.2275,
+     31.7732
+    ],
+    [
+     35.2272,
+     31.775
+    ],
+    [
+     35.2276,
+     31.7762
+    ],
+    [
+     35.22754,
+     31.77663
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Byzantine walls (Empress Eudocia)",
+   "t0": 440,
+   "t1": 1033,
+   "conf": 1,
+   "src": "Walls of Jerusalem",
+   "line": [
+    [
+     35.22754,
+     31.77663
+    ],
+    [
+     35.2268,
+     31.7776
+    ],
+    [
+     35.226,
+     31.7785
+    ],
+    [
+     35.2256,
+     31.7789
+    ],
+    [
+     35.22619,
+     31.7793
+    ],
+    [
+     35.228,
+     31.7807
+    ],
+    [
+     35.23037,
+     31.78165
+    ],
+    [
+     35.232,
+     31.7825
+    ],
+    [
+     35.23369,
+     31.78297
+    ],
+    [
+     35.2356,
+     31.783
+    ],
+    [
+     35.23632,
+     31.78241
+    ],
+    [
+     35.2372,
+     31.7816
+    ],
+    [
+     35.23694,
+     31.78084
+    ],
+    [
+     35.23713,
+     31.77898
+    ],
+    [
+     35.237,
+     31.7761
+    ],
+    [
+     35.2356,
+     31.7752
+    ],
+    [
+     35.23389,
+     31.77472
+    ],
+    [
+     35.232,
+     31.7738
+    ],
+    [
+     35.2365,
+     31.773
+    ],
+    [
+     35.2358,
+     31.7705
+    ],
+    [
+     35.2347,
+     31.7698
+    ],
+    [
+     35.232,
+     31.7699
+    ],
+    [
+     35.23,
+     31.7699
+    ],
+    [
+     35.228,
+     31.7706
+    ],
+    [
+     35.2272,
+     31.773
+    ],
+    [
+     35.2272,
+     31.775
+    ],
+    [
+     35.2276,
+     31.7762
+    ],
+    [
+     35.22754,
+     31.77663
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Wall of the City of David",
+   "t0": -1000,
+   "t1": -586,
+   "conf": 1,
+   "src": "City of David",
+   "line": [
+    [
+     35.2345,
+     31.7775
+    ],
+    [
+     35.234,
+     31.7755
+    ],
+    [
+     35.2339,
+     31.7735
+    ],
+    [
+     35.2341,
+     31.771
+    ],
+    [
+     35.2347,
+     31.7699
+    ],
+    [
+     35.2356,
+     31.7703
+    ],
+    [
+     35.2364,
+     31.7725
+    ],
+    [
+     35.2368,
+     31.775
+    ],
+    [
+     35.2369,
+     31.777
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Hezekiah's wall (Broad Wall and Western Hill)",
+   "t0": -701,
+   "t1": -586,
+   "conf": 1,
+   "src": "Broad Wall (Jerusalem)",
+   "line": [
+    [
+     35.2342,
+     31.778
+    ],
+    [
+     35.2325,
+     31.7776
+    ],
+    [
+     35.2316,
+     31.7761
+    ],
+    [
+     35.23,
+     31.777
+    ],
+    [
+     35.2285,
+     31.7768
+    ],
+    [
+     35.2277,
+     31.775
+    ],
+    [
+     35.2278,
+     31.772
+    ],
+    [
+     35.2295,
+     31.7703
+    ],
+    [
+     35.232,
+     31.7698
+    ],
+    [
+     35.2346,
+     31.7697
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "First Wall",
+   "t0": -140,
+   "t1": 70,
+   "conf": 1,
+   "src": "Levine, Jerusalem: Portrait of the City in the Second Temple Period (2002)",
+   "line": [
+    [
+     35.2338,
+     31.777
+    ],
+    [
+     35.2315,
+     31.7769
+    ],
+    [
+     35.2295,
+     31.7768
+    ],
+    [
+     35.2277,
+     31.7764
+    ],
+    [
+     35.2273,
+     31.7745
+    ],
+    [
+     35.2276,
+     31.772
+    ],
+    [
+     35.2295,
+     31.7702
+    ],
+    [
+     35.232,
+     31.7698
+    ],
+    [
+     35.2346,
+     31.7697
+    ],
+    [
+     35.2358,
+     31.7704
+    ],
+    [
+     35.2365,
+     31.773
+    ],
+    [
+     35.2369,
+     31.7758
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Second Wall",
+   "t0": -40,
+   "t1": 70,
+   "conf": 1,
+   "src": "Geva, \"Jerusalem: The Second Temple Period\", New Encyclopedia of Archaeological Excavations in the Holy Land (1993)",
+   "line": [
+    [
+     35.2295,
+     31.777
+    ],
+    [
+     35.2292,
+     31.778
+    ],
+    [
+     35.2296,
+     31.7795
+    ],
+    [
+     35.2305,
+     31.781
+    ],
+    [
+     35.232,
+     31.7809
+    ],
+    [
+     35.2335,
+     31.7803
+    ],
+    [
+     35.2343,
+     31.7801
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Third Wall (Agrippa I)",
+   "t0": 41,
+   "t1": 70,
+   "conf": 1,
+   "src": "Third Wall (Jerusalem)",
+   "line": [
+    [
+     35.2276,
+     31.7765
+    ],
+    [
+     35.2265,
+     31.778
+    ],
+    [
+     35.2254,
+     31.7789
+    ],
+    [
+     35.228,
+     31.7808
+    ],
+    [
+     35.23037,
+     31.7818
+    ],
+    [
+     35.2337,
+     31.7831
+    ],
+    [
+     35.2372,
+     31.7817
+    ],
+    [
+     35.237,
+     31.7795
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "City of David and the Temple Mount",
+   "t0": -1000,
+   "t1": -701,
+   "conf": 2,
+   "src": "City of David",
+   "area": [
+    [
+     35.234,
+     31.7785
+    ],
+    [
+     35.2365,
+     31.7788
+    ],
+    [
+     35.237,
+     31.777
+    ],
+    [
+     35.2368,
+     31.775
+    ],
+    [
+     35.2364,
+     31.7725
+    ],
+    [
+     35.2358,
+     31.7705
+    ],
+    [
+     35.2348,
+     31.7699
+    ],
+    [
+     35.234,
+     31.771
+    ],
+    [
+     35.2338,
+     31.7735
+    ],
+    [
+     35.2338,
+     31.776
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Hezekiah's Jerusalem (City of David and Western Hill)",
+   "t0": -701,
+   "t1": -586,
+   "conf": 2,
+   "src": "Bahat, The Illustrated Atlas of Jerusalem (1990)",
+   "area": [
+    [
+     35.2295,
+     31.778
+    ],
+    [
+     35.2325,
+     31.7778
+    ],
+    [
+     35.2342,
+     31.7787
+    ],
+    [
+     35.237,
+     31.7788
+    ],
+    [
+     35.2372,
+     31.776
+    ],
+    [
+     35.2366,
+     31.7725
+    ],
+    [
+     35.2358,
+     31.77
+    ],
+    [
+     35.2345,
+     31.7696
+    ],
+    [
+     35.2315,
+     31.77
+    ],
+    [
+     35.2295,
+     31.7705
+    ],
+    [
+     35.228,
+     31.772
+    ],
+    [
+     35.2278,
+     31.7745
+    ],
+    [
+     35.228,
+     31.7765
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Persian-period Jerusalem (Nehemiah's city)",
+   "t0": -538,
+   "t1": -140,
+   "conf": 1,
+   "src": "Nehemiah",
+   "area": [
+    [
+     35.234,
+     31.7785
+    ],
+    [
+     35.2365,
+     31.7788
+    ],
+    [
+     35.237,
+     31.777
+    ],
+    [
+     35.2368,
+     31.775
+    ],
+    [
+     35.2364,
+     31.7725
+    ],
+    [
+     35.2358,
+     31.7705
+    ],
+    [
+     35.2348,
+     31.7699
+    ],
+    [
+     35.234,
+     31.771
+    ],
+    [
+     35.2338,
+     31.7735
+    ],
+    [
+     35.2338,
+     31.776
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Hasmonean Jerusalem",
+   "t0": -140,
+   "t1": -37,
+   "conf": 2,
+   "src": "Levine, Jerusalem: Portrait of the City in the Second Temple Period (2002)",
+   "area": [
+    [
+     35.2277,
+     31.7765
+    ],
+    [
+     35.23,
+     31.777
+    ],
+    [
+     35.234,
+     31.7772
+    ],
+    [
+     35.2342,
+     31.7788
+    ],
+    [
+     35.237,
+     31.779
+    ],
+    [
+     35.2372,
+     31.776
+    ],
+    [
+     35.2366,
+     31.7725
+    ],
+    [
+     35.2358,
+     31.77
+    ],
+    [
+     35.2345,
+     31.7696
+    ],
+    [
+     35.2315,
+     31.7699
+    ],
+    [
+     35.229,
+     31.7703
+    ],
+    [
+     35.2276,
+     31.772
+    ],
+    [
+     35.2273,
+     31.7745
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Herodian Jerusalem",
+   "t0": -37,
+   "t1": 70,
+   "conf": 2,
+   "src": "Levine, Jerusalem: Portrait of the City in the Second Temple Period (2002)",
+   "area": [
+    [
+     35.2275,
+     31.7765
+    ],
+    [
+     35.229,
+     31.7775
+    ],
+    [
+     35.2295,
+     31.7795
+    ],
+    [
+     35.2305,
+     31.7812
+    ],
+    [
+     35.233,
+     31.781
+    ],
+    [
+     35.2345,
+     31.7805
+    ],
+    [
+     35.2372,
+     31.78
+    ],
+    [
+     35.2372,
+     31.776
+    ],
+    [
+     35.2366,
+     31.7725
+    ],
+    [
+     35.2358,
+     31.77
+    ],
+    [
+     35.2345,
+     31.7696
+    ],
+    [
+     35.2315,
+     31.7699
+    ],
+    [
+     35.229,
+     31.7703
+    ],
+    [
+     35.2276,
+     31.772
+    ],
+    [
+     35.2273,
+     31.7745
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Camp of the Tenth Legion among the ruins",
+   "t0": 70,
+   "t1": 135,
+   "conf": 1,
+   "src": "Legio X Fretensis",
+   "area": [
+    [
+     35.2275,
+     31.777
+    ],
+    [
+     35.2305,
+     31.777
+    ],
+    [
+     35.2305,
+     31.773
+    ],
+    [
+     35.2278,
+     31.773
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Aelia Capitolina",
+   "t0": 135,
+   "t1": 325,
+   "conf": 2,
+   "src": "Aelia Capitolina",
+   "area": [
+    [
+     35.22754,
+     31.77663
+    ],
+    [
+     35.2268,
+     31.7776
+    ],
+    [
+     35.226,
+     31.7785
+    ],
+    [
+     35.2256,
+     31.7789
+    ],
+    [
+     35.22619,
+     31.7793
+    ],
+    [
+     35.228,
+     31.7807
+    ],
+    [
+     35.23037,
+     31.78165
+    ],
+    [
+     35.232,
+     31.7825
+    ],
+    [
+     35.23369,
+     31.78297
+    ],
+    [
+     35.2356,
+     31.783
+    ],
+    [
+     35.23632,
+     31.78241
+    ],
+    [
+     35.2372,
+     31.7816
+    ],
+    [
+     35.23694,
+     31.78084
+    ],
+    [
+     35.23713,
+     31.77898
+    ],
+    [
+     35.237,
+     31.7761
+    ],
+    [
+     35.2356,
+     31.7752
+    ],
+    [
+     35.23389,
+     31.77472
+    ],
+    [
+     35.232,
+     31.7738
+    ],
+    [
+     35.22952,
+     31.77286
+    ],
+    [
+     35.2275,
+     31.7732
+    ],
+    [
+     35.2272,
+     31.775
+    ],
+    [
+     35.2276,
+     31.7762
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Byzantine and early Islamic Jerusalem (with Mount Zion and the City of David)",
+   "t0": 325,
+   "t1": 1033,
+   "conf": 2,
+   "src": "Madaba Map",
+   "area": [
+    [
+     35.22754,
+     31.77663
+    ],
+    [
+     35.2268,
+     31.7776
+    ],
+    [
+     35.226,
+     31.7785
+    ],
+    [
+     35.2256,
+     31.7789
+    ],
+    [
+     35.22619,
+     31.7793
+    ],
+    [
+     35.228,
+     31.7807
+    ],
+    [
+     35.23037,
+     31.78165
+    ],
+    [
+     35.232,
+     31.7825
+    ],
+    [
+     35.23369,
+     31.78297
+    ],
+    [
+     35.2356,
+     31.783
+    ],
+    [
+     35.23632,
+     31.78241
+    ],
+    [
+     35.2372,
+     31.7816
+    ],
+    [
+     35.23694,
+     31.78084
+    ],
+    [
+     35.23713,
+     31.77898
+    ],
+    [
+     35.237,
+     31.7761
+    ],
+    [
+     35.2356,
+     31.7752
+    ],
+    [
+     35.23389,
+     31.77472
+    ],
+    [
+     35.232,
+     31.7738
+    ],
+    [
+     35.2365,
+     31.773
+    ],
+    [
+     35.2358,
+     31.7705
+    ],
+    [
+     35.2347,
+     31.7698
+    ],
+    [
+     35.232,
+     31.7699
+    ],
+    [
+     35.23,
+     31.7699
+    ],
+    [
+     35.228,
+     31.7706
+    ],
+    [
+     35.2272,
+     31.773
+    ],
+    [
+     35.2272,
+     31.775
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Fatimid and Crusader Jerusalem",
+   "t0": 1033,
+   "t1": 1187,
+   "conf": 2,
+   "src": "Kingdom of Jerusalem",
+   "area": [
+    [
+     35.22754,
+     31.77663
+    ],
+    [
+     35.2268,
+     31.7776
+    ],
+    [
+     35.226,
+     31.7785
+    ],
+    [
+     35.2256,
+     31.7789
+    ],
+    [
+     35.22619,
+     31.7793
+    ],
+    [
+     35.228,
+     31.7807
+    ],
+    [
+     35.23037,
+     31.78165
+    ],
+    [
+     35.232,
+     31.7825
+    ],
+    [
+     35.23369,
+     31.78297
+    ],
+    [
+     35.2356,
+     31.783
+    ],
+    [
+     35.23632,
+     31.78241
+    ],
+    [
+     35.2372,
+     31.7816
+    ],
+    [
+     35.23694,
+     31.78084
+    ],
+    [
+     35.23713,
+     31.77898
+    ],
+    [
+     35.237,
+     31.7761
+    ],
+    [
+     35.2356,
+     31.7752
+    ],
+    [
+     35.23389,
+     31.77472
+    ],
+    [
+     35.232,
+     31.7738
+    ],
+    [
+     35.22952,
+     31.77286
+    ],
+    [
+     35.2275,
+     31.7732
+    ],
+    [
+     35.2272,
+     31.775
+    ],
+    [
+     35.2276,
+     31.7762
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ayyubid and Mamluk Jerusalem",
+   "t0": 1187,
+   "t1": 1517,
+   "conf": 2,
+   "src": "History of Jerusalem during the Mamluk period",
+   "area": [
+    [
+     35.22754,
+     31.77663
+    ],
+    [
+     35.2268,
+     31.7776
+    ],
+    [
+     35.226,
+     31.7785
+    ],
+    [
+     35.2256,
+     31.7789
+    ],
+    [
+     35.22619,
+     31.7793
+    ],
+    [
+     35.228,
+     31.7807
+    ],
+    [
+     35.23037,
+     31.78165
+    ],
+    [
+     35.232,
+     31.7825
+    ],
+    [
+     35.23369,
+     31.78297
+    ],
+    [
+     35.2356,
+     31.783
+    ],
+    [
+     35.23632,
+     31.78241
+    ],
+    [
+     35.2372,
+     31.7816
+    ],
+    [
+     35.23694,
+     31.78084
+    ],
+    [
+     35.23713,
+     31.77898
+    ],
+    [
+     35.237,
+     31.7761
+    ],
+    [
+     35.2356,
+     31.7752
+    ],
+    [
+     35.23389,
+     31.77472
+    ],
+    [
+     35.232,
+     31.7738
+    ],
+    [
+     35.22952,
+     31.77286
+    ],
+    [
+     35.2275,
+     31.7732
+    ],
+    [
+     35.2272,
+     31.775
+    ],
+    [
+     35.2276,
+     31.7762
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ottoman Old City",
+   "t0": 1517,
+   "t1": 1860,
+   "conf": 2,
+   "src": "Old City (Jerusalem)",
+   "area": [
+    [
+     35.22754,
+     31.77663
+    ],
+    [
+     35.2268,
+     31.7776
+    ],
+    [
+     35.226,
+     31.7785
+    ],
+    [
+     35.2256,
+     31.7789
+    ],
+    [
+     35.22619,
+     31.7793
+    ],
+    [
+     35.228,
+     31.7807
+    ],
+    [
+     35.23037,
+     31.78165
+    ],
+    [
+     35.232,
+     31.7825
+    ],
+    [
+     35.23369,
+     31.78297
+    ],
+    [
+     35.2356,
+     31.783
+    ],
+    [
+     35.23632,
+     31.78241
+    ],
+    [
+     35.2372,
+     31.7816
+    ],
+    [
+     35.23694,
+     31.78084
+    ],
+    [
+     35.23713,
+     31.77898
+    ],
+    [
+     35.237,
+     31.7761
+    ],
+    [
+     35.2356,
+     31.7752
+    ],
+    [
+     35.23389,
+     31.77472
+    ],
+    [
+     35.232,
+     31.7738
+    ],
+    [
+     35.22952,
+     31.77286
+    ],
+    [
+     35.2275,
+     31.7732
+    ],
+    [
+     35.2272,
+     31.775
+    ],
+    [
+     35.2276,
+     31.7762
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Jerusalem with the new neighbourhoods outside the walls",
+   "t0": 1860,
+   "t1": null,
+   "conf": 2,
+   "src": "Expansion of Jerusalem in the 19th century",
+   "area": [
+    [
+     35.237,
+     31.7761
+    ],
+    [
+     35.23389,
+     31.77472
+    ],
+    [
+     35.22952,
+     31.77286
+    ],
+    [
+     35.226,
+     31.7705
+    ],
+    [
+     35.2225,
+     31.765
+    ],
+    [
+     35.2195,
+     31.761
+    ],
+    [
+     35.2175,
+     31.7625
+    ],
+    [
+     35.22,
+     31.767
+    ],
+    [
+     35.222,
+     31.773
+    ],
+    [
+     35.223,
+     31.778
+    ],
+    [
+     35.216,
+     31.781
+    ],
+    [
+     35.212,
+     31.7845
+    ],
+    [
+     35.218,
+     31.789
+    ],
+    [
+     35.224,
+     31.7885
+    ],
+    [
+     35.2295,
+     31.7905
+    ],
+    [
+     35.232,
+     31.786
+    ],
+    [
+     35.23369,
+     31.78297
+    ],
+    [
+     35.2372,
+     31.7816
+    ],
+    [
+     35.23713,
+     31.77898
+    ]
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Gihon Spring and Hezekiah's Tunnel",
+   "t0": -1000,
+   "t1": null,
+   "conf": 1,
+   "src": "Hezekiah's Tunnel",
+   "at": [
+    35.2365,
+    31.7731
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Pool of Siloam",
+   "t0": -701,
+   "t1": null,
+   "conf": 2,
+   "src": "Pool of Siloam",
+   "at": [
+    35.2346,
+    31.7699
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Pool of Bethesda",
+   "t0": -200,
+   "t1": null,
+   "conf": 2,
+   "src": "Pool of Bethesda",
+   "at": [
+    35.2358,
+    31.7813
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Struthion Pool",
+   "t0": -30,
+   "t1": null,
+   "conf": 2,
+   "src": "Struthion Pool",
+   "at": [
+    35.2331,
+    31.7804
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Pool of Hezekiah (Pool of the Towers)",
+   "t0": -37,
+   "t1": null,
+   "conf": 2,
+   "src": "Hezekiah's Pool",
+   "at": [
+    35.2295,
+    31.777
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Baris (Hasmonean citadel)",
+   "t0": -150,
+   "t1": -37,
+   "conf": 2,
+   "src": "Antonia Fortress",
+   "at": [
+    35.2343,
+    31.78009
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Herod's Palace",
+   "t0": -23,
+   "t1": 70,
+   "conf": 2,
+   "src": "Herod's Palace (Jerusalem)",
+   "at": [
+    35.2285,
+    31.7745
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Royal Stoa",
+   "t0": -20,
+   "t1": 70,
+   "conf": 1,
+   "src": "Royal Stoa (Jerusalem)",
+   "at": [
+    35.2355,
+    31.7758
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Robinson's Arch",
+   "t0": -20,
+   "t1": 70,
+   "conf": 1,
+   "src": "Robinson's Arch",
+   "at": [
+    35.23455,
+    31.7756
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Wilson's Arch",
+   "t0": -20,
+   "t1": null,
+   "conf": 1,
+   "src": "Wilson's Arch (Jerusalem)",
+   "at": [
+    35.2339,
+    31.777
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Temple of Venus (Hadrian)",
+   "t0": 135,
+   "t1": 326,
+   "conf": 2,
+   "src": "Church of the Holy Sepulchre",
+   "at": [
+    35.22975,
+    31.77844
+   ]
+  },
+  {
+   "k": "column",
+   "name": "Ecce Homo Arch (Hadrian's eastern forum arch)",
+   "t0": 135,
+   "t1": null,
+   "conf": 1,
+   "src": "Ecce Homo Arch",
+   "at": [
+    35.2329,
+    31.7804
+   ]
+  },
+  {
+   "k": "church",
+   "name": "Hagia Sion basilica",
+   "t0": 390,
+   "t1": 1009,
+   "conf": 2,
+   "src": "Church of Hagia Sion",
+   "at": [
+    35.229,
+    31.7717
+   ]
+  },
+  {
+   "k": "church",
+   "name": "St Mary of Mount Sion (Crusader)",
+   "t0": 1100,
+   "t1": 1219,
+   "conf": 2,
+   "src": "Church of Hagia Sion",
+   "at": [
+    35.229,
+    31.7717
+   ]
+  },
+  {
+   "k": "church",
+   "name": "Cenacle (Room of the Last Supper)",
+   "t0": 1335,
+   "t1": 1524,
+   "conf": 1,
+   "src": "Cenacle",
+   "at": [
+    35.229,
+    31.7719
+   ]
+  },
+  {
+   "k": "mosque",
+   "name": "Nabi Daud mosque (Cenacle)",
+   "t0": 1524,
+   "t1": 1948,
+   "conf": 1,
+   "src": "Cenacle",
+   "at": [
+    35.229,
+    31.7719
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Royal palace of the Kings of Jerusalem",
+   "t0": 1119,
+   "t1": 1187,
+   "conf": 1,
+   "src": "Tower of David",
+   "at": [
+    35.228,
+    31.7756
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Suq al-Qattanin (Cotton Merchants' Market)",
+   "t0": 1336,
+   "t1": null,
+   "conf": 1,
+   "src": "Cotton Merchants' Market",
+   "at": [
+    35.233,
+    31.7782
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Mishkenot Sha'ananim",
+   "t0": 1860,
+   "t1": null,
+   "conf": 1,
+   "src": "Mishkenot Sha'ananim",
+   "at": [
+    35.2252,
+    31.7708
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Neapolis Gate (Aelia Capitolina)",
+   "t0": 135,
+   "t1": 638,
+   "conf": 2,
+   "src": "Damascus Gate",
+   "at": [
+    35.23037,
+    31.78165
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Amud",
+   "t0": 638,
+   "t1": 1099,
+   "conf": 2,
+   "src": "Damascus Gate",
+   "at": [
+    35.23037,
+    31.78165
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "St Stephen's Gate (Crusader north gate)",
+   "t0": 1099,
+   "t1": 1187,
+   "conf": 2,
+   "src": "Damascus Gate",
+   "at": [
+    35.23037,
+    31.78165
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Amud",
+   "t0": 1187,
+   "t1": 1537,
+   "conf": 2,
+   "src": "Damascus Gate",
+   "at": [
+    35.23037,
+    31.78165
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Gate of David (Bab Mihrab Dawud)",
+   "t0": 638,
+   "t1": 1099,
+   "conf": 2,
+   "src": "Jaffa Gate",
+   "at": [
+    35.22754,
+    31.77663
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "David's Gate (Crusader)",
+   "t0": 1099,
+   "t1": 1187,
+   "conf": 2,
+   "src": "Jaffa Gate",
+   "at": [
+    35.22754,
+    31.77663
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Khalil",
+   "t0": 1187,
+   "t1": 1538,
+   "conf": 2,
+   "src": "Jaffa Gate",
+   "at": [
+    35.22754,
+    31.77663
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Gate of Jehoshaphat (Crusader)",
+   "t0": 1099,
+   "t1": 1187,
+   "conf": 1,
+   "src": "Lions' Gate",
+   "at": [
+    35.23694,
+    31.78084
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Zion Gate (Crusader)",
+   "t0": 1099,
+   "t1": 1219,
+   "conf": 1,
+   "src": "Zion Gate",
+   "at": [
+    35.22952,
+    31.77286
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Cardo Maximus",
+   "t0": 135,
+   "t1": null,
+   "conf": 2,
+   "src": "Cardo",
+   "line": [
+    [
+     35.2304,
+     31.7815
+    ],
+    [
+     35.2305,
+     31.78
+    ],
+    [
+     35.2306,
+     31.7785
+    ],
+    [
+     35.2308,
+     31.777
+    ],
+    [
+     35.231,
+     31.7758
+    ],
+    [
+     35.2313,
+     31.7745
+    ],
+    [
+     35.2315,
+     31.7735
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Eastern Cardo (Tyropoeon valley street)",
+   "t0": 135,
+   "t1": null,
+   "conf": 2,
+   "src": "Aelia Capitolina",
+   "line": [
+    [
+     35.2304,
+     31.7815
+    ],
+    [
+     35.2318,
+     31.78
+    ],
+    [
+     35.233,
+     31.7785
+    ],
+    [
+     35.2338,
+     31.777
+    ],
+    [
+     35.234,
+     31.7755
+    ],
+    [
+     35.2338,
+     31.7745
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Decumanus (David Street and Chain Street)",
+   "t0": 135,
+   "t1": null,
+   "conf": 2,
+   "src": "Aelia Capitolina",
+   "line": [
+    [
+     35.2276,
+     31.7766
+    ],
+    [
+     35.229,
+     31.7768
+    ],
+    [
+     35.2305,
+     31.777
+    ],
+    [
+     35.232,
+     31.7773
+    ],
+    [
+     35.234,
+     31.7776
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Via Dolorosa",
+   "t0": 1350,
+   "t1": null,
+   "conf": 1,
+   "src": "Via Dolorosa",
+   "line": [
+    [
+     35.2369,
+     31.7808
+    ],
+    [
+     35.2345,
+     31.7805
+    ],
+    [
+     35.2328,
+     31.7803
+    ],
+    [
+     35.2318,
+     31.78
+    ],
+    [
+     35.231,
+     31.7792
+    ],
+    [
+     35.22975,
+     31.77844
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Jaffa Road",
+   "t0": 1869,
+   "t1": null,
+   "conf": 2,
+   "src": "Jaffa Road",
+   "line": [
+    [
+     35.227,
+     31.777
+    ],
+    [
+     35.2245,
+     31.7785
+    ],
+    [
+     35.2215,
+     31.7805
+    ],
+    [
+     35.218,
+     31.7825
+    ],
+    [
+     35.214,
+     31.7848
+    ],
+    [
+     35.21,
+     31.7875
+    ],
+    [
+     35.205,
+     31.79
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q172077",
+   "name": "Dome of the Rock",
+   "names": [
+    [
+     null,
+     1099,
+     "Dome of the Rock (Qubbat al-Sakhra)"
+    ],
+    [
+     1099,
+     1187,
+     "Templum Domini"
+    ],
+    [
+     1187,
+     null,
+     "Dome of the Rock"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Dome of the Rock",
+   "kinds": [
+    [
+     null,
+     1099,
+     "mosque"
+    ],
+    [
+     1099,
+     1187,
+     "church"
+    ],
+    [
+     1187,
+     null,
+     "mosque"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q12192963",
+   "name": "Al-Aqsa Mosque",
+   "names": [
+    [
+     null,
+     1099,
+     "Al-Aqsa Mosque"
+    ],
+    [
+     1099,
+     1119,
+     "Templum Salomonis (royal palace)"
+    ],
+    [
+     1119,
+     1187,
+     "Templum Salomonis (Knights Templar headquarters)"
+    ],
+    [
+     1187,
+     null,
+     "Al-Aqsa Mosque"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Al-Aqsa Mosque",
+   "kinds": [
+    [
+     null,
+     1099,
+     "mosque"
+    ],
+    [
+     1099,
+     1187,
+     "palace"
+    ],
+    [
+     1187,
+     null,
+     "mosque"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q187702",
+   "name": "Church of the Holy Sepulchre",
+   "names": [
+    [
+     null,
+     1009,
+     "Church of the Holy Sepulchre (Constantinian basilica)"
+    ],
+    [
+     1009,
+     1048,
+     "Church of the Holy Sepulchre (destroyed by al-Hakim)"
+    ],
+    [
+     1048,
+     1149,
+     "Church of the Holy Sepulchre (Byzantine rotunda)"
+    ],
+    [
+     1149,
+     null,
+     "Church of the Holy Sepulchre"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Church of the Holy Sepulchre"
+  },
+  {
+   "k": "rename",
+   "wd": "Q223644",
+   "name": "Solomon's Temple (First Temple)",
+   "names": [
+    [
+     null,
+     null,
+     "Solomon's Temple (First Temple)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Solomon's Temple",
+   "kinds": [
+    [
+     null,
+     null,
+     "temple"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q728428",
+   "name": "Herod's Temple",
+   "names": [
+    [
+     null,
+     -19,
+     "Second Temple"
+    ],
+    [
+     -19,
+     null,
+     "Herod's Temple"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Second Temple",
+   "kinds": [
+    [
+     null,
+     null,
+     "temple"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q1177765",
+   "name": "Citadel (Tower of David)",
+   "names": [
+    [
+     null,
+     -37,
+     "Hasmonean towers (First Wall)"
+    ],
+    [
+     -37,
+     70,
+     "Herod's towers: Phasael, Hippicus, Mariamne"
+    ],
+    [
+     70,
+     1310,
+     "Tower of David"
+    ],
+    [
+     1310,
+     null,
+     "Citadel (Tower of David)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Tower of David"
+  },
+  {
+   "k": "rename",
+   "wd": "Q947597",
+   "name": "Damascus Gate (Bab al-Amud)",
+   "names": [
+    [
+     null,
+     null,
+     "Damascus Gate (Bab al-Amud)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Damascus Gate"
+  },
+  {
+   "k": "rename",
+   "wd": "Q312812",
+   "name": "Jaffa Gate (Bab al-Khalil)",
+   "names": [
+    [
+     null,
+     null,
+     "Jaffa Gate (Bab al-Khalil)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Jaffa Gate"
+  },
+  {
+   "k": "rename",
+   "wd": "Q129278",
+   "name": "Lions' Gate (St Stephen's Gate, Bab al-Asbat)",
+   "names": [
+    [
+     null,
+     null,
+     "Lions' Gate (St Stephen's Gate, Bab al-Asbat)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Lions' Gate"
+  },
+  {
+   "k": "rename",
+   "wd": "Q204719",
+   "name": "Dung Gate (Bab al-Maghariba)",
+   "names": [
+    [
+     null,
+     null,
+     "Dung Gate (Bab al-Maghariba)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Dung Gate"
+  },
+  {
+   "k": "rename",
+   "wd": "Q205416",
+   "name": "Zion Gate (Bab an-Nabi Daud)",
+   "names": [
+    [
+     null,
+     null,
+     "Zion Gate (Bab an-Nabi Daud)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Zion Gate"
+  },
+  {
+   "k": "rename",
+   "wd": "Q1484405",
+   "name": "Herod's Gate (Bab az-Zahra)",
+   "names": [
+    [
+     null,
+     null,
+     "Herod's Gate (Bab az-Zahra)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Herod's Gate"
+  },
+  {
+   "k": "rename",
+   "wd": "Q1256221",
+   "name": "New Gate (Bab as-Sultan Abdulhamid)",
+   "names": [
+    [
+     null,
+     null,
+     "New Gate (Bab as-Sultan Abdulhamid)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "New Gate"
+  },
+  {
+   "k": "rename",
+   "wd": "Q1367167",
+   "name": "Golden Gate (sealed)",
+   "names": [
+    [
+     null,
+     1541,
+     "Golden Gate (Bab al-Rahma)"
+    ],
+    [
+     1541,
+     null,
+     "Golden Gate (sealed)"
+    ]
+   ],
+   "t0": 520,
+   "conf": 2,
+   "src": "Golden Gate (Jerusalem)"
+  },
+  {
+   "k": "rename",
+   "wd": "Q2920336",
+   "name": "Huldah Gates",
+   "names": [
+    [
+     null,
+     null,
+     "Huldah Gates"
+    ]
+   ],
+   "t0": -19,
+   "conf": 1,
+   "src": "Huldah Gates",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q773726",
+   "name": "Mosque of the Ascension",
+   "names": [
+    [
+     null,
+     1198,
+     "Chapel of the Ascension (Crusader)"
+    ],
+    [
+     1198,
+     null,
+     "Mosque of the Ascension"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Chapel of the Ascension",
+   "kinds": [
+    [
+     null,
+     1198,
+     "church"
+    ],
+    [
+     1198,
+     null,
+     "mosque"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q1551966",
+   "name": "St Anne's Church",
+   "names": [
+    [
+     null,
+     1192,
+     "St Anne's Church"
+    ],
+    [
+     1192,
+     1856,
+     "Madrasa al-Salahiyya (St Anne's)"
+    ],
+    [
+     1856,
+     null,
+     "St Anne's Church"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Church of Saint Anne, Jerusalem",
+   "kinds": [
+    [
+     null,
+     1192,
+     "church"
+    ],
+    [
+     1192,
+     1856,
+     "school"
+    ],
+    [
+     1856,
+     null,
+     "church"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q1936208",
+   "name": "Muristan (Aftimos market)",
+   "names": [
+    [
+     null,
+     1187,
+     "Hospital of St John (Knights Hospitaller)"
+    ],
+    [
+     1187,
+     1903,
+     "Muristan (bimaristan)"
+    ],
+    [
+     1903,
+     null,
+     "Muristan (Aftimos market)"
+    ]
+   ],
+   "t0": 1070,
+   "conf": 2,
+   "src": "Muristan",
+   "kinds": [
+    [
+     null,
+     1903,
+     "house"
+    ],
+    [
+     1903,
+     null,
+     "market"
+    ]
+   ],
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q907482",
+   "name": "Nea Ekklesia of the Theotokos",
+   "names": [
+    [
+     null,
+     null,
+     "Nea Ekklesia of the Theotokos"
+    ]
+   ],
+   "t0": 543,
+   "conf": 2,
+   "src": "Nea Church",
+   "fix_dates": true,
+   "t1": 746
+  },
+  {
+   "k": "rename",
+   "wd": "Q1151525",
+   "name": "Hurva Synagogue",
+   "names": [
+    [
+     null,
+     1948,
+     "Hurva Synagogue"
+    ],
+    [
+     1948,
+     2010,
+     "Hurva Synagogue (ruins)"
+    ],
+    [
+     2010,
+     null,
+     "Hurva Synagogue"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Hurva Synagogue"
+  },
+  {
+   "k": "rename",
+   "wd": "Q2151217",
+   "name": "Mosque of Omar (by the Holy Sepulchre)",
+   "names": [
+    [
+     null,
+     null,
+     "Mosque of Omar (by the Holy Sepulchre)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Mosque of Omar (Jerusalem)"
+  },
+  {
+   "k": "rename",
+   "wd": "Q6969966",
+   "name": "Kishle",
+   "names": [
+    [
+     null,
+     1917,
+     "Kishle (Ottoman barracks and prison)"
+    ],
+    [
+     1917,
+     null,
+     "Kishle"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Kishle (Jerusalem)",
+   "kinds": [
+    [
+     null,
+     1917,
+     "fort"
+    ],
+    [
+     1917,
+     null,
+     "school"
+    ]
+   ]
+  }
+ ]
+}
