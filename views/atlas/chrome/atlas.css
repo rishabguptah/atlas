@@ -8,7 +8,7 @@
   --paper: var(--vellum); --card: var(--vellum); --rule: var(--vellum-3); --accent: var(--lapis); --warn: var(--rubric);
   --display: var(--f-head); --fell: var(--f-head); --serif: var(--f-prose); --mono: var(--f-hud);
   --ink-fixed: #221f1a; --vellum-fixed: #f6f0dc;
-  --g: 12px; --pw: 404px; --rail: 168px; --timeh: 92px;
+  --g: 12px; --pw: clamp(320px, 23vw, 420px); --rail: 44px; --rail-open: 168px; --timeh: 76px;
   --t-codex: var(--gold-2);
 }
 html, body { height: 100%; }
@@ -28,7 +28,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .yearplate .yp-era::before { content: ""; width: 8px; height: 8px; flex: none; background: var(--era-2); box-shadow: 2px 2px 0 var(--ink-fixed); }
 
 /* ---- the one next thing ---- */
-.app .nextcard { all: unset; box-sizing: border-box; position: absolute; z-index: 6; left: max(var(--g), env(safe-area-inset-left, 0px)); top: 104px; width: calc(var(--rail) + 110px); cursor: pointer;
+.app .nextcard { all: unset; box-sizing: border-box; position: absolute; z-index: 6; left: max(var(--g), env(safe-area-inset-left, 0px)); top: 104px; width: 276px; cursor: pointer;
   display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 2px 8px; align-items: center; padding: 4px 10px 6px 6px; color: var(--ink);
   border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); transition: transform 140ms var(--ease); }
 .app .nextcard[hidden] { display: none; }
@@ -41,7 +41,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 @keyframes nudge { 50% { transform: translateX(2px); } }
 
 /* ---- ask well ---- */
-.app .askbar { position: absolute; z-index: 6; left: calc(var(--rail) + 130px); right: calc(var(--pw) + 2 * var(--g) + 300px); top: var(--g); max-width: 600px; min-width: 200px; align-items: center; gap: 8px; padding: 2px 2px 2px 6px;
+.app .askbar { position: absolute; z-index: 6; left: 300px; right: calc(var(--pw) + 2 * var(--g) + 300px); top: var(--g); max-width: 600px; min-width: 200px; align-items: center; gap: 8px; padding: 2px 2px 2px 6px;
   border: 6px solid transparent; border-image: var(--f-inset) 3 fill / 6px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); }
 .app .askbar .ico { --t: var(--ink-2); }
 .app .askbar input { border: 0; background: none; border-radius: 0; outline: none; font-family: var(--f-prose); font-size: 16px; padding: 6px 2px; }
@@ -85,7 +85,12 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .pxhud-br { right: calc(var(--pw) + 2 * var(--g)) !important; bottom: calc(var(--timeh) + 2 * var(--g)) !important; }
 
 /* ---- lens rail: the six families down the left, a family's lenses fly out beside it ---- */
-.app #layers { position: absolute; z-index: 5; left: max(var(--g), env(safe-area-inset-left, 0px)); top: 176px; width: var(--rail); display: flex; flex-direction: column; gap: 6px; align-items: stretch; }
+.app #layers { position: absolute; z-index: 7; left: max(var(--g), env(safe-area-inset-left, 0px)); top: 176px; width: var(--rail); display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+/* Emblems only until you reach for them: hover or keyboard focus opens the names. */
+.app #layers .chip.fam { width: var(--rail); overflow: hidden; white-space: nowrap; padding: 2px 4px; transition: width 150ms var(--ease), transform 120ms var(--ease); }
+.app #layers .chip.fam .nm { opacity: 0; transition: opacity 120ms var(--ease); }
+.app #layers:hover .chip.fam, .app #layers:focus-within .chip.fam { width: var(--rail-open); padding-right: 8px; }
+.app #layers:hover .chip.fam .nm, .app #layers:focus-within .chip.fam .nm { opacity: 1; }
 .app #layers .lab { display: none; }
 .app .chip { --t: var(--ink-2); border-radius: 0; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 2px 8px 2px 4px; cursor: pointer;
   font-family: var(--f-hud); font-size: 16px; line-height: 16px; letter-spacing: 0; text-transform: uppercase; color: var(--ink);
@@ -97,14 +102,16 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .chip[aria-pressed="true"] { background: color-mix(in srgb, var(--t) 18%, var(--vellum)); box-shadow: inset 4px 0 0 var(--t); border-color: transparent; }
 .app .chip.fam[aria-pressed="false"] .ico { opacity: .45; filter: grayscale(1); }
 .app .chip.fam.some { border-style: solid; }
-.app .chip.fam.some::after { content: "½"; font-size: 8px; margin-left: auto; color: var(--ink-soft); }
+.app .chip.fam.some { box-shadow: inset 4px 0 0 var(--t), inset 0 -4px 0 -2px var(--t); }
 .app .chip.fam.open { outline: 2px solid var(--gold); outline-offset: 2px; }
+.app .chip.fam.open::after { content: ""; position: absolute; right: -10px; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: var(--gold); box-shadow: 0 0 0 2px var(--ink-fixed); }
+.app .chip.fam { position: relative; overflow: visible; }
 .app .chip.fam[data-k="land"] { --t: var(--t-land); } .app .chip.fam[data-k="power"] { --t: var(--t-power); } .app .chip.fam[data-k="wealth"] { --t: var(--t-wealth); }
 .app .chip.fam[data-k="peoples"] { --t: var(--t-peoples); } .app .chip.fam[data-k="mind"] { --t: var(--t-mind); } .app .chip.fam[data-k="shocks"] { --t: var(--t-shocks); }
 .app .chip.fam > i { display: none; }
-.app #sublayers { position: absolute; z-index: 5; left: calc(var(--rail) + var(--g) + 14px); top: 176px; width: 236px; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: stretch;
+.app #sublayers { position: absolute; z-index: 6; left: calc(var(--rail) + var(--g) + 16px); top: 176px; width: 236px; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: stretch;
   border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); padding: 2px 4px 6px; }
-.app #sublayers:empty { display: none; }
+.app #sublayers:empty, .app.sub-shut #sublayers { display: none; }
 .app #sublayers .lab { font-family: var(--f-hud); font-size: 8px; line-height: 16px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding: 0 4px; }
 .app #sublayers .chip { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 8px; align-items: center; padding: 3px 6px; font-family: var(--f-prose); font-size: 14.5px; line-height: 1.25; color: var(--ink); }
 .app #sublayers .chip:hover { background: var(--wash); }
@@ -115,12 +122,12 @@ body { background: var(--sea); font-family: var(--f-prose); }
 
 /* ---- time ribbon ---- */
 .app .time { position: absolute; z-index: 5; left: max(var(--g), env(safe-area-inset-left, 0px)); right: calc(var(--pw) + 2 * var(--g)); bottom: var(--g); border-top: 0;
-  padding: 2px 8px 4px; gap: 2px 10px; border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
+  padding: 0 6px 2px; gap: 0 10px; border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
 .app .time .playbtn { width: auto; height: auto; border-radius: 0; background: none; color: var(--vellum-fixed); padding: 2px; border: 6px solid transparent; border-image: var(--f-button) 3 fill / 6px stretch;
   filter: drop-shadow(0 2px 0 var(--shade)); }
 .app .time .playbtn .ico { --t: var(--gold); width: 24px; height: 24px; }
 .app .time .playbtn:active { transform: translateY(2px); filter: none; }
-.app .strip { height: 20px; image-rendering: pixelated; }
+.app .strip { height: 14px; image-rendering: pixelated; }
 .app .strip line { stroke-width: 2; shape-rendering: crispEdges; }
 .app .time input[type=range] { appearance: none; -webkit-appearance: none; height: 16px; background:
   linear-gradient(var(--vellum-2), var(--vellum-2)) 0 4px / 100% 8px no-repeat; box-shadow: inset 0 4px 0 -2px transparent; cursor: pointer; position: relative; }
@@ -146,8 +153,12 @@ body { background: var(--sea); font-family: var(--f-prose); }
   font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); background: var(--vellum-3);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 6px), 0 100%); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .app .tab .ico { --t: var(--ink-soft); }
-.app .tab[aria-selected="true"] { background: var(--rubric); color: #fffaea; padding-bottom: 14px; margin-bottom: -4px; }
+.app .tab[aria-selected="true"] { background: var(--ink); color: var(--vellum); padding-bottom: 16px; margin-bottom: -4px; position: relative; }
+.app .tab[aria-selected="true"]::after { content: ""; position: absolute; left: 50%; bottom: 10px; width: 6px; height: 6px; margin-left: -3px; background: var(--gold); box-shadow: 0 0 0 2px var(--gold-2); }
+.app .tab[data-n]:not([data-n=""]) .nm::after { content: attr(data-n); }
+.app .tab .nm::after { margin-left: 4px; padding: 0 3px; background: var(--gold); color: var(--ink-fixed); }
 .app .tab[aria-selected="true"] .ico { --t: var(--gold-hi); }
+.app .tab[aria-selected="true"] .ico .k { fill: var(--ink-fixed); }
 .app .tab:hover:not([aria-selected="true"]) { background: var(--vellum-2); }
 .app .tab:focus-visible { outline: 2px dashed var(--gold); outline-offset: -4px; }
 .app .pane { padding: 8px 6px 20px 4px; gap: 12px; }
@@ -210,6 +221,32 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .wf .picks button, .app .examples .ex { border-radius: 0; }
 .app .wf .picks button { border: 0; box-shadow: 0 0 0 2px var(--vellum-3); font-size: 13px; }
 
+/* ---- the panel opens to about 60% of the height so the map stays the interface; the grip makes it tall ---- */
+@media (min-width: 861px) {
+  .app .panel { bottom: auto; height: min(calc(100% - 2 * var(--g)), max(420px, 62vh)); }
+  .app.panel-tall .panel { height: auto; bottom: var(--g); }
+}
+.app .grip { position: sticky; bottom: -2px; z-index: 3; margin-top: auto; align-self: stretch; display: flex; justify-content: center; align-items: center; gap: 6px; padding: 4px 0 2px; cursor: pointer;
+  border: 0; background: linear-gradient(transparent, var(--vellum) 40%); font-family: var(--f-hud); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.app .grip::before { content: ""; width: 24px; height: 6px; background: repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 0 / 24px 2px no-repeat, repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 4px / 24px 2px no-repeat; }
+.app .grip:hover { color: var(--ink); }
+.app .grip:focus-visible { outline: 2px dashed var(--gold); outline-offset: -2px; }
+@media (max-width: 860px) { .app .grip { display: none; } }
+
+/* ---- the panel folded to its ribbons (P): the map runs the full width ---- */
+@media (min-width: 861px) {
+.app.panel-min .panel { bottom: auto; overflow: hidden; }
+.app.panel-min .panel .pane, .app.panel-min .grip { display: none; }
+.app.panel-min .panel { height: auto; }
+.app.panel-min .tabs { padding-bottom: 0; box-shadow: none; margin: 0; }
+.app.panel-min .tab[aria-selected="true"] { background: var(--vellum-3); color: var(--ink-2); padding-bottom: 10px; margin: 0; }
+.app.panel-min .tab[aria-selected="true"]::after { display: none; }
+.app.panel-min .tab[aria-selected="true"] .ico { --t: var(--ink-soft); }
+.app.panel-min .time { right: max(var(--g), env(safe-area-inset-right, 0px)); }
+.app.panel-min .pxhud-br { right: max(var(--g), env(safe-area-inset-right, 0px)) !important; }
+
+}
+
 /* ---- focus mode: the map, the year and time only ---- */
 .app.focus .panel, .app.focus #layers, .app.focus #sublayers, .app.focus .askbar, .app.focus .nextcard { display: none; }
 .app.focus .time { right: max(var(--g), env(safe-area-inset-right, 0px)); }
@@ -219,7 +256,6 @@ body { background: var(--sea); font-family: var(--f-prose); }
 
 /* ---- narrower desktops: map buttons lose their words, the panel narrows ---- */
 @media (max-width: 1280px) and (min-width: 861px) {
-  :root { --pw: 360px; }
   .app .mapctl .btn > span:not(.ico) { display: none; }
   .app .askbar { right: calc(var(--pw) + 2 * var(--g) + 150px); }
 }
@@ -254,4 +290,24 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app .maphint { left: 8px; bottom: calc(42vh + var(--timeh) + 4px); }
   .app .pxhud-br { display: none; }
   .app.focus .time { right: 0; }
+}
+
+/* Icons inside the map's own layer are not the map's SVG. */
+.app .map svg.ico { position: static; inset: auto; width: 24px; height: 24px; cursor: inherit; display: block; }
+
+/* Family emblems on section heads and key groups. */
+.app .fi { display: inline-flex; flex: none; }
+.app .fi .ico { width: 24px; height: 24px; }
+.app .sec > h3 .fi { margin: -6px 0 -6px -2px; }
+.app .keycard .kg b { display: flex; align-items: center; gap: 6px; color: var(--ink); }
+.app .keycard .kr { grid-template-columns: 24px minmax(0, 1fr); }
+.app .keycard .keys kbd { line-height: 14px; display: inline-block; min-width: 14px; text-align: center; }
+
+/* Tabs: short names that fit seven ribbons; the full name is in the tooltip. */
+.app .tab .nm { letter-spacing: 0; overflow: hidden; text-overflow: clip; max-width: 100%; }
+
+/* With the panel at its usual height, the minimap and compass take the free corner under it. */
+@media (min-width: 861px) {
+  .app:not(.panel-tall):not(.panel-min) .pxhud-br { right: max(var(--g), env(safe-area-inset-right, 0px)) !important; bottom: var(--g) !important; }
+  .app:not(.panel-tall) .time { right: calc(var(--pw) + 2 * var(--g)); }
 }

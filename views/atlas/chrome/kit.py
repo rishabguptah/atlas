@@ -8,8 +8,8 @@ from urllib.parse import quote
 HERE = os.path.dirname(os.path.abspath(__file__))
 PALETTE = os.path.join(HERE, '..', '..', 'pixel', 'palette.js')
 
-# Heraldic tinctures, one per lens family (D4). palette.js carries them as TINCTURE when present.
-TINCTURES = {'land': '#3f8f5e', 'power': '#c0392b', 'wealth': '#d8a32c', 'peoples': '#d2742c', 'mind': '#3a6fb8', 'shocks': '#8a4fa0'}
+# Heraldic tinctures, one per lens family (D4): PIXEL_PALETTE.LENS in palette.js; these are only the fallback.
+TINCTURES = {'land': '#3f8f5e', 'power': '#c0392b', 'wealth': '#d8a32c', 'peoples': '#d2742c', 'mind': '#3a6fb8', 'shocks': '#903f85'}
 
 
 def palette():
@@ -18,7 +18,7 @@ def palette():
     def block(name):
         m = re.search(r'const ' + name + r'\s*=\s*\{(.*?)\};', src, re.S)
         return dict(re.findall(r'(\w+):\s*"(#[0-9a-fA-F]{6})"', m.group(1))) if m else {}
-    t = block('TINCTURE')
+    t = block('LENS')
     return {'keys': block('KEYS'), 'ui': block('UI'), 'tincture': {k: t.get(k, v) for k, v in TINCTURES.items()}}
 
 
@@ -165,116 +165,13 @@ def _cmap(t):
 
 
 # ---------- icons ----------
-# 12x12 art px (24 CSS px). x = the icon's tint (currentColor or a tincture), X = its shade, k ink, w vellum,
-# y gold-hi, g gold. Inline <svg> so the tint follows CSS.
-ICONS = {
-    'play': [
-        '............', '..kk........', '..kwk.......', '..kxxk......', '..kxxxk.....', '..kxxxxk....',
-        '..kxxxxk....', '..kxxxk.....', '..kxxk......', '..kXk.......', '..kk........', '............'],
-    'pause': [
-        '............', '..kkk..kkk..', '..kwk..kwk..', '..kxk..kxk..', '..kxk..kxk..', '..kxk..kxk..',
-        '..kxk..kxk..', '..kxk..kxk..', '..kxk..kxk..', '..kXk..kXk..', '..kkk..kkk..', '............'],
-    'back': [
-        '............', '.kk.....kk..', '.kxk...kxk..', '.kxxk.kxxk..', '.kxxxkxxxk..', '.kxxxxxxxk..',
-        '.kxxxxxxxk..', '.kxxxkxxxk..', '.kxxk.kxxk..', '.kXk...kXk..', '.kk.....kk..', '............'][::1],
-    # Land: a mountain with snow over a hill.
-    'land': [
-        '............', '.....kk.....', '....kwwk....', '...kwwxXk...', '...kxxxXk.k.', '..kxxxxXXkwk',
-        '..kxxxXXXkxk', '.kxxxxXXXXXk', '.kxxxXXXXXXk', 'kxxxXXXXXXXk', 'kkkkkkkkkkkk', '............'],
-    # Power: a crown.
-    'power': [
-        '............', '.k...kk...k.', 'kyk.kyyk.kyk', 'kxk.kxxk.kxk', 'kxxkxxxxkxxk', 'kxxxxxxxxxxk',
-        'kxxxxxxxxxxk', 'kxyxxyyxxyxk', 'kxxxxxxxxxxk', 'kXXXXXXXXXXk', 'kkkkkkkkkkkk', '............'],
-    # Wealth: a holed coin.
-    'wealth': [
-        '....kkkk....', '..kkyyyykk..', '.kyyxxxxxXk.', '.kyxxxxxxXk.', 'kyxxxkkxxxXk', 'kyxxk..kxxXk',
-        'kyxxk..kxxXk', 'kyxxxkkxxxXk', '.kxxxxxxxXk.', '.kXxxxxxXXk.', '..kkXXXXkk..', '....kkkk....'],
-    # Peoples: two figures.
-    'peoples': [
-        '............', '..kk....kk..', '.kwxk..kwxk.', '.kxxk..kxxk.', '..kk....kk..', '.kxxk..kxxk.',
-        'kxxxxkkxxxxk', 'kxxxxkkxxxxk', 'kxXXxkkxXXxk', '.kXk....kXk.', '.kXk....kXk.', '.kk......kk.'],
-    # Mind: an open book.
-    'mind': [
-        '............', '............', '.kkkk..kkkk.', 'kwwwwkkwwwwk', 'kwkkwxxwkkwk', 'kwwwwxxwwwwk',
-        'kwkkwxxwkkwk', 'kwwwwxxwwwwk', 'kxxxxxxxxxxk', 'kXXXXkkXXXXk', '.kkkk..kkkk.', '............'],
-    # Shocks: a lightning bolt.
-    'shocks': [
-        '......kkkk..', '.....kyxk...', '....kyxk....', '...kyxk.....', '..kyxxkkkk..', '.kxxxxxxk...',
-        '.kkkkxxk....', '....kxk.....', '...kxk......', '..kXk.......', '..kk........', '............'],
-    # Ask: a quill.
-    'ask': [
-        '.........kk.', '........kwk.', '.......kwxk.', '......kwxk..', '.....kwxk...', '....kwxk....',
-        '...kwxk.....', '...kxk......', '..kkk.......', '.kk.........', 'kk..kkkkkk..', '............'],
-    # This year: an hourglass.
-    'year': [
-        '.kkkkkkkkkk.', '.kggggggggk.', '..kwwwwwwk..', '...kxxxxk...', '....kxxk....', '.....kk.....',
-        '.....kk.....', '....kwxk....', '...kwxxxk...', '..kxxxxxxk..', '.kggggggggk.', '.kkkkkkkkkk.'],
-    # Here: a banner on a pole.
-    'here': [
-        '..kk........', '..kgkkkkk...', '..kgkxxxxk..', '..kgkxwxxxk.', '..kgkxxxxk..', '..kgkXXXk...',
-        '..kgkkkk....', '..kgk.......', '..kgk.......', '..kgk.......', '.kkkkk......', '............'],
-    # Codex: a closed book with a clasp.
-    'codex': [
-        '............', '.kkkkkkkkk..', '.kxxxxxxxkk.', '.kxyyyyyxkwk', '.kxyxxxyxkwk', '.kxyyyyyxkwk',
-        '.kxxxxxxxkgk', '.kxxxxxxxkwk', '.kxxxxxxxkwk', '.kXXXXXXXkwk', '.kkkkkkkkkk.', '............'],
-    # What if: a forked road.
-    'whatif': [
-        '.kk......kk.', 'kxxk....kxxk', '.kxxk..kxxk.', '..kxxkkxxk..', '...kxxxxk...', '....kxxk....',
-        '....kxxk....', '....kxxk....', '....kxxk....', '....kXXk....', '....kXXk....', '....kkkk....'],
-    # Surprise: a die.
-    'die': [
-        '............', '.kkkkkkkkkk.', '.kwwwwwwwwk.', '.kwkkwwwwwk.', '.kwkkwwwwwk.', '.kwwwkkwwwk.',
-        '.kwwwkkwwwk.', '.kwwwwwkkwk.', '.kwwwwwkkwk.', '.kWWWWWWWWk.', '.kkkkkkkkkk.', '............'],
-    # Key: a key.
-    'key': [
-        '............', '.kkkk.......', 'kyyyyk......', 'kykkyk......', 'kykkykkkkkk.', 'kyyyyyyyyyyk',
-        '.kkkkkkykyk.', '......kykyk.', '.......k.k..', '............', '............', '............'],
-    # Focus: an eye.
-    'focus': [
-        '............', '............', '...kkkkkk...', '.kkwwwwwwkk.', 'kwwwkkkkwwwk', 'kwwkxxwkkwwk',
-        'kwwkxxkkkwwk', 'kwwwkkkkwwwk', '.kkwwwwwwkk.', '...kkkkkk...', '............', '............'],
-    'close': [
-        '............', '.kk......kk.', 'kxxk....kxxk', '.kxxk..kxxk.', '..kxxkkxxk..', '...kxxxxk...',
-        '...kxxxxk...', '..kxxkkxxk..', '.kxxk..kxxk.', 'kXXk....kXXk', '.kk......kk.', '............'],
-    'star': [
-        '.....kk.....', '....kyyk....', '....kyyk....', 'kkkkkyykkkkk', 'kyyyyyyyyyyk', '.kyyyyyyyyk.',
-        '..kyyyyyyk..', '..kyygGyyk..', '.kyyGkkGyyk.', '.kyGk..kGyk.', 'kkkk....kkkk', '............'],
-    'next': [
-        '............', '....kk......', '....kxk.....', '....kxxk....', 'kkkkkxxxk...', 'kwwwwxxxxk..',
-        'kxxxxxxxxxk.', 'kXXXXxxxxk..', 'kkkkkxxxk...', '....kxxk....', '....kXk.....', '....kk......'],
-    'seal': [
-        '....kkkk....', '..kkxxxxkk..', '.kxxyxxyxxk.', '.kxxxyyxxxk.', 'kxxyyxxyyxxk', 'kxxxyyyyxxxk',
-        'kxxyyxxyyxxk', '.kxxxyyxxxk.', '.kxxyxxyxxk.', '..kkxxxxkk..', '...kXkkXk...', '...kk..kk...'],
-    'compass': [
-        '.....kk.....', '....kyyk....', '....kyyk....', '...kkyykk...', '.kkwkyykwkk.', 'kwwwwkkxxxxk',
-        'kwwwwkkxxxxk', '.kkwkXXkwkk.', '...kkXXkk...', '....kXXk....', '....kXXk....', '.....kk.....'],
-}
-
-for _n, _g in ICONS.items():
-    assert len(_g) == 12 and all(len(r) == 12 for r in _g), _n
+# The grids live in views/pixel/icons.js (PIXEL_ICONS), shared with the map threads; this reads them for the preview.
+ICONS_JS = os.path.join(HERE, '..', '..', 'pixel', 'icons.js')
 
 
-def icon_svg(name):
-    rows = ICONS[name]
-    cls = {'x': 'x', 'X': 'X', 'k': 'k', 'w': 'w', 'W': 'W', 'y': 'y', 'g': 'g', 'G': 'G'}
-    parts = ['<svg class="ico" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">']
-    for y, r in enumerate(rows):
-        x = 0
-        while x < 12:
-            ch = r[x]
-            if ch == '.':
-                x += 1; continue
-            x2 = x
-            while x2 < 12 and r[x2] == ch: x2 += 1
-            parts.append(f'<rect class="{cls[ch]}" x="{x}" y="{y}" width="{x2 - x}" height="1"/>')
-            x = x2
-    parts.append('</svg>')
-    return ''.join(parts)
-
-
-def icons_js():
-    """`window.PXICON = {name: '<svg ...>'}`: tint with CSS (`--t`), ink and vellum follow the theme."""
-    return 'window.PXICON = ' + json.dumps({n: icon_svg(n) for n in ICONS}, separators=(',', ':')) + ';'
+def icons():
+    src = open(ICONS_JS, encoding='utf-8').read()
+    return {n: re.findall(r'"([^"]*)"', body) for n, body in re.findall(r'^\s{4}(\w+): \[(.*?)\],$', src, re.M)}
 
 
 def css():

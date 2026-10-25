@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
 /* Layout: one sheet. The question goes across the top, the map and one shared year take the middle,
    and the margin column reads whatever the map is pointing at: this year, this place, or the guide's answer. */
@@ -393,6 +393,10 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .keycard { max-height: calc(100% - 60px); }
 }
 </style>
+<style>
+/* The chronicle chrome (views/atlas/chrome/): kit tokens and frames, components, then the HUD layout over this page. */
+/*__CHROME_CSS__*/
+</style>
 
 <div class="app">
   <header class="top">
@@ -413,7 +417,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
         <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="context-stroke"/></marker>
       </defs>
     </svg>
-    <div class="yearplate" id="yp"></div>
+    <div class="yearplate"><div class="yp" id="yp"></div><div class="yp-era" id="ypera"></div></div>
     <div class="maphint" id="maphint">Click anywhere to see every lens there</div>
     <div class="caption" id="caption" hidden></div>
     <div class="mapctl" role="toolbar" aria-label="Map controls">
@@ -477,7 +481,9 @@ const TOURS = /*__TOURS__*/;
 <script>
 // Plugins register here: lenses (views/atlas/lenses/*.js), a basemap, sprites. See views/atlas/LENSES.md.
 window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null,
-  lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); } };
+  lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); },
+  // The one next thing (the chrome's gold card): { id, pri, get() -> { kick, title, go } | null }. See chrome/chrome.js.
+  nexts: [], nextThing(d) { this.nexts.push(d); } };
 </script>
 <!--__LENS_SCRIPTS__-->
 <script>
@@ -493,8 +499,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   ];
   const LENS_LAYER = { geography: "places", military: "war", economy: "money", population: "money", disease: "disease", religion: "ideas", ideas: "ideas", literature: "ideas", people: "people", order: "order" };
   // Six families on the chip bar; each lens inside one is precise, a family is what you switch on together.
-  const FAMILIES = [{ id: "land", n: "Land", c: "var(--l-geography)" }, { id: "power", n: "Power", c: "var(--y-war)" }, { id: "wealth", n: "Wealth", c: "var(--y-money)" },
-    { id: "peoples", n: "Peoples", c: "var(--y-people)" }, { id: "mind", n: "Mind", c: "var(--y-ideas)" }, { id: "shocks", n: "Shocks", c: "var(--y-disease)" }];
+  // Each family has one heraldic tincture (art direction D4, PIXEL_PALETTE.LENS via the chrome's --t-* tokens).
+  const FAMILIES = [{ id: "land", n: "Land", c: "var(--t-land, var(--l-geography))" }, { id: "power", n: "Power", c: "var(--t-power, var(--y-war))" }, { id: "wealth", n: "Wealth", c: "var(--t-wealth, var(--y-money))" },
+    { id: "peoples", n: "Peoples", c: "var(--t-peoples, var(--y-people))" }, { id: "mind", n: "Mind", c: "var(--t-mind, var(--y-ideas))" }, { id: "shocks", n: "Shocks", c: "var(--t-shocks, var(--y-disease))" }];
+  // The family emblem (views/pixel/icons.js) for a layer or lens, tinted with its family's tincture.
+  const famIcon = k => { const f = FAMILIES.some(x => x.id === k) ? k : FAM_OF[k] || (ATLAS.lenses.find(d => d && d.id === k) || {}).family; return f && window.PIXEL_ICONS ? `<span class="fi" style="--t:var(--t-${f})">${PIXEL_ICONS.svg(f, "s")}</span>` : "<i></i>"; };
   const FAM_OF = { places: "land", war: "power", order: "power", money: "wealth", people: "peoples", ideas: "mind", disease: "shocks" };
   const PLUG = ATLAS.lenses.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !(d.id in FAM_OF) && FAMILIES.some(f => f.id === d.family) && a.findIndex(x => x && x.id === d.id) === i);
   for (const d of PLUG) {
@@ -1561,7 +1570,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const sec = (layer, title, items, n) => {
     if (!items.length) return "";
     const now = items.filter(x => !x.startsWith('<button class="it dim')), deep = items.filter(x => x.startsWith('<button class="it dim'));
-    return `<div class="sec${state.on[layer] === false ? " off" : ""}" style="--c:var(--y-${layer})"><h3><i></i>${esc(title)}${n != null ? `<span class="n">${esc(n)}</span>` : ""}</h3><div class="items${now.length ? "" : " only-deep"}">${now.join("")}</div>${deep.length ? `<details class="deep"><summary>${deep.length} from other times</summary><div class="items">${deep.join("")}</div></details>` : ""}</div>`;
+    return `<div class="sec${state.on[layer] === false ? " off" : ""}" data-layer="${layer}" style="--c:var(--y-${layer})"><h3>${famIcon(layer)}${esc(title)}${n != null ? `<span class="n">${esc(n)}</span>` : ""}</h3><div class="items${now.length ? "" : " only-deep"}">${now.join("")}</div>${deep.length ? `<details class="deep"><summary>${deep.length} from other times</summary><div class="items">${deep.join("")}</div></details>` : ""}</div>`;
   };
   const goCard = (c, setYear) => () => { select(c, { fly: true, setYear }); };
   const nearby = (list, lon, lat, r) => list.map(x => ({ x, d: km([lon, lat], [x.lon, x.lat]) })).filter(o => o.d <= r).sort((a, b) => a.d - b.d);
@@ -2473,7 +2482,7 @@ Where the specialists disagree, say who the evidence favours.`;
         // A basemap that paints marks itself (the pixel map) can draw the key's glyphs in the same style.
         return rs.map(([g, t]) => `<div class="kr" style="--c:${COLOR(k)}">${(ATLAS.keyGlyph && ATLAS.keyGlyph(g, k, COLOR(k))) || `<svg viewBox="0 0 22 16" aria-hidden="true">${G_[g] || G_.dot}</svg>`}<span>${d && !KEY[k] && !Array.isArray(d.key) ? "<b>" + esc(d.name) + "</b> " : ""}${esc(t)}</span></div>`);
       });
-      return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${esc(f.n)}</b>${rows.join("")}</div>` : "";
+      return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${famIcon(f.id)}${esc(f.n)}</b>${rows.join("")}</div>` : "";
     }).join("");
     keyEl.innerHTML = `<h4>On the map in ${esc(fmtYear(state.year))}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
       <h4>Keys</h4><div class="keys"><kbd>← →</kbd><span>Step through time (Shift for bigger steps)</span><kbd>Space</kbd><span>Play or pause time</span><kbd>/</kbd><span>Ask a question</span>
@@ -2637,3 +2646,4 @@ Where the specialists disagree, say who the evidence favours.`;
   } else flyTo({ lon: 45, lat: 35, span: 140 }, 0);
 })();
 </script>
+<!--__CHROME_JS__-->

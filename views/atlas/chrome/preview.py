@@ -10,7 +10,7 @@ s = open(os.path.join(here, 'preview.src.html'), encoding='utf-8').read()
 css = kit.css()
 for name, p in zip(('bg-wide',), bgs):
     css += ':root { --%s: url("data:image/webp;base64,%s"); }\n' % (name, base64.b64encode(open(p, 'rb').read()).decode())
-s = s.replace('/*__KIT__*/', css).replace('/*__CHROME__*/', open(os.path.join(here, 'chrome.css'), encoding='utf-8').read()).replace('/*__ICONS__*/', kit.icons_js())
+s = s.replace('/*__KIT__*/', css).replace('/*__CHROME__*/', open(os.path.join(here, 'chrome.css'), encoding='utf-8').read()).replace('/*__ICONS__*/', open(kit.ICONS_JS, encoding='utf-8').read())
 os.makedirs(out, exist_ok=True)
 open(os.path.join(out, 'index.html'), 'w', encoding='utf-8').write(s)
 print(os.path.join(out, 'index.html'), len(s))

@@ -33,5 +33,7 @@
   // Realm tints: muted heraldic colours that read on any terrain.
   const REALM = ["#c0504a", "#d89a3a", "#6a9a4a", "#4a7ab0", "#8a62a8", "#c87848", "#4a9a94", "#a8a040",
                  "#d47a6a", "#a85a88", "#6a80c8", "#b89058", "#7a5a3a", "#5a6a7a", "#b0486a", "#3a7a5a"];
-  global.PIXEL_PALETTE = { KEYS, TERRAIN, UI, REALM };
+  // Lens families as heraldic tinctures (art direction D4): one hue per family, used by marks, chips, key and panel.
+  const LENS = { land: "#3f8f5e", power: "#c0392b", wealth: "#d8a32c", peoples: "#d2742c", mind: "#3a6fb8", shocks: "#903f85" };
+  global.PIXEL_PALETTE = { KEYS, TERRAIN, UI, REALM, LENS };
 })(typeof window !== "undefined" ? window : globalThis);

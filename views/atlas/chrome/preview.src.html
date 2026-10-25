@@ -290,7 +290,7 @@ button, input, select { font: inherit; color: inherit; }
 /*__ICONS__*/
 (() => {
   const $ = s => document.querySelector(s), app = $("#app");
-  const ico = (n, cls) => (PXICON[n] || "").replace('class="ico"', `class="ico${cls ? " " + cls : ""}"`);
+  const ico = (n, cls) => PIXEL_ICONS.svg(n, cls);
   const fill = root => root.querySelectorAll("[data-ico]").forEach(e => { e.outerHTML = ico(e.dataset.ico); });
   fill(document);
 
