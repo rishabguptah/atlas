@@ -1996,11 +1996,14 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function updatePlayer() {
     const n = state.answer?.steps?.length || 0;
     const c = document.getElementById("count"); if (c) c.textContent = n ? `${state.active + 1 || "–"} of ${n}${state.answer.loading ? "+" : ""}` : "";
-    const p = document.getElementById("play"); if (p) p.textContent = state.playing ? "Pause" : "Play tour";
+    const p = document.getElementById("play"); if (p) p.textContent = state.playing ? "Pause" : ATLAS.world && ATLAS.world.director ? "▶ Play on the map" : "Play tour";
   }
   let playTimer;
   const STEP_MS = 9000;
   function startPlay() {
+    // With the Director on the page, a tour or answer plays as a Story on the map (views/atlas/world/director.js).
+    const dir = ATLAS.world && ATLAS.world.director;
+    if (dir && dir.play(ATLAS.world.stories.from.answer(state.answer), { at: Math.max(0, state.active) })) return;
     state.playing = true; updatePlayer();
     if (state.active < 0 || state.active >= (state.answer.steps.length - 1)) state.active = -1;
     const advance = () => { if (!step(1)) { if (!state.answer.loading) return stopPlay(); } runProgress(); playTimer = setTimeout(advance, STEP_MS); };
@@ -2400,6 +2403,9 @@ Where the specialists disagree, say who the evidence favours.`;
     },
     onView: fn => viewWatch.push(fn),  // called when a pan or zoom settles
     select: card => select(card, { fly: true }),
+    // The guide, for the Director's "Why?" and "Go deeper": ask the panel (or open a curated tour), and the answer on screen.
+    ask: q => { document.getElementById("qbox").value = q; setTab("guide"); document.getElementById("ask").requestSubmit(); },
+    get answer() { return state.answer; },
   };
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 

@@ -1,0 +1,133 @@
+{
+  "id": "story:constantinople_1453",
+  "title": "The fall of Constantinople, 1453",
+  "kind": "tour",
+  "cold_open": true,
+  "status": "draft",
+  "author": "Claude (curated), waiting for the judge",
+  "blurb": "Fifty-three days in 1453: a sultan of twenty-one, the biggest guns in the world, a fleet dragged over a hill, and the end of the Roman Empire.",
+  "next": "tour:rome_vs_constantinople",
+  "scenes": [
+    {
+      "id": "spring",
+      "t": 1453, "date": "1453-04",
+      "view": {"lon": 27.6, "lat": 41.2, "span": 9},
+      "lenses": ["war"], "by": "order",
+      "highlight": ["place:istanbul", "polity:byzantine", "polity:ottoman"],
+      "routes": [{"label": "Ottoman army from Edirne", "points": [[26.555, 41.677], [27.25, 41.4], [27.9, 41.15], [28.6, 41.03], [28.92, 41.02]]}],
+      "actors": ["person:mehmed_ii", "person:constantine_xi_palaiologos"],
+      "caption": "Spring 1453. All that is left of the Roman Empire is one city, and a sultan of twenty-one is marching on it.",
+      "text": "After eleven centuries the Eastern Roman Empire had shrunk to Constantinople, a few islands and the Morea in southern Greece. The Ottomans held almost everything around it and ruled from Edirne, three days' march away. Mehmed II had become sultan again in 1451 and wanted the city as his capital. Constantine XI Palaiologos, the last emperor, had walls, a small fleet and very few men: his secretary George Sphrantzes counted under 5,000 Greeks able to fight and about 2,000 foreigners. Mehmed brought something like 50,000 to 80,000.",
+      "conf": "estimated",
+      "sources": [
+        {"cite": "George Sphrantzes, Chronicon minus (the defenders' count)"},
+        {"cite": "Steven Runciman, The Fall of Constantinople 1453 (1965)"},
+        {"cite": "Marios Philippides and Walter K. Hanak, The Siege and the Fall of Constantinople in 1453 (2011)"}
+      ],
+      "ask": "How could a city of maybe 50,000 people and 7,000 defenders hold off the Ottoman army for seven weeks?"
+    },
+    {
+      "id": "throat_cutter",
+      "t": 1452, "date": "1452-08",
+      "view": {"lon": 29.06, "lat": 41.083, "span": 0.9},
+      "lenses": ["war"], "by": "military",
+      "pins": [{"name": "Rumeli Hisarı, built 1452", "lon": 29.0567, "lat": 41.0847}, {"name": "Anadolu Hisarı, built 1390s", "lon": 29.0664, "lat": 41.0825}],
+      "actors": ["person:mehmed_ii"],
+      "caption": "The year before, Mehmed builds the Throat-Cutter: a fortress that closes the Bosporus in four and a half months.",
+      "text": "Between April and August 1452 Mehmed's builders raised Rumeli Hisarı on the European shore, across from his great-grandfather's fort on the Asian side, at the narrowest point of the strait. Its guns could stop any ship bringing grain or soldiers from the Black Sea. The Ottomans called it Boğazkesen, which means both strait-cutter and throat-cutter. In November 1452 its gunners sank a Venetian ship that refused to stop.",
+      "conf": "attested",
+      "sources": [
+        {"cite": "Kritoboulos of Imbros, History of Mehmed the Conqueror"},
+        {"cite": "Nicolò Barbaro, Diary of the Siege of Constantinople 1453"},
+        {"cite": "Wikipedia, Rumelihisarı", "url": "https://en.wikipedia.org/wiki/Rumelihisar%C4%B1"}
+      ]
+    },
+    {
+      "id": "guns",
+      "t": 1453, "date": "1453-04-06",
+      "view": {"lon": 28.935, "lat": 41.018, "span": 4.2},
+      "lenses": ["war"], "by": "military",
+      "routes": [{"label": "Theodosian land walls, about 5.7 km", "style": "cut", "points": [[28.923, 40.994], [28.921, 41.004], [28.922, 41.018], [28.93, 41.025], [28.938, 41.03], [28.943, 41.037], [28.944, 41.042]]}],
+      "pins": [{"name": "Gate of St Romanus", "lon": 28.922, "lat": 41.018}, {"name": "Golden Gate", "lon": 28.9223, "lat": 40.9937}, {"name": "Blachernae", "lon": 28.943, "lat": 41.034}],
+      "actors": ["person:orban"],
+      "caption": "6 April: the guns open on walls that have held for a thousand years.",
+      "text": "The land walls were begun in 413 under Theodosius II: a moat, an outer wall and a taller inner wall with towers, never broken by assault. Mehmed answered with gunpowder. Orban, a founder from Hungary who had first offered his skills to the emperor, cast a bombard for the sultan that fired stone balls said to weigh over 500 pounds. It could only be fired a few times a day, but day after day the barrage broke the outer wall faster than the defenders could stack timber and earth in the gaps.",
+      "conf": "estimated",
+      "sources": [
+        {"cite": "Kelly DeVries, Gunpowder Weapons at the Siege of Constantinople, 1453, in Y. Lev (ed.), War and Society in the Eastern Mediterranean (1997)"},
+        {"cite": "Steven Runciman, The Fall of Constantinople 1453 (1965)"}
+      ],
+      "debate": "The size of Orban's gun and its shot comes from chroniclers who were impressed by it; modern estimates vary.",
+      "ask": "Did gunpowder really decide the siege of Constantinople, or would it have fallen anyway?"
+    },
+    {
+      "id": "ships_overland",
+      "t": 1453, "date": "1453-04-22",
+      "view": {"lon": 28.978, "lat": 41.03, "span": 0.75},
+      "lenses": ["war"], "by": "military",
+      "routes": [
+        {"label": "About 70 ships hauled over the hill", "points": [[29.0, 41.038], [28.988, 41.041], [28.975, 41.04], [28.965, 41.036]]},
+        {"label": "The chain", "style": "cut", "points": [[28.979, 41.016], [28.977, 41.022]]}
+      ],
+      "caption": "22 April: a chain blocks the harbour, so Mehmed drags his fleet over a hill.",
+      "text": "A great iron chain on floating logs closed the Golden Horn, the city's harbour, and the Ottoman fleet could not force it. So Mehmed had a road of greased timbers laid from the Bosporus up behind Galata and down the other side. In one night teams of oxen and men hauled about seventy ships over the ridge and slid them into the Golden Horn. Now the sea walls on the harbour had to be manned too, and the defenders were stretched even thinner.",
+      "conf": "attested",
+      "sources": [
+        {"cite": "Nicolò Barbaro, Diary of the Siege of Constantinople 1453"},
+        {"cite": "Kritoboulos of Imbros, History of Mehmed the Conqueror"}
+      ],
+      "debate": "Eyewitnesses give 67 to 80 ships, and the exact track over the hill is reconstructed."
+    },
+    {
+      "id": "assault",
+      "t": 1453, "date": "1453-05-29",
+      "view": {"lon": 28.928, "lat": 41.021, "span": 1.1},
+      "lenses": ["war"], "by": "military",
+      "pins": [{"name": "Gate of St Romanus: the main assault", "lon": 28.922, "lat": 41.018}, {"name": "Kerkoporta (legend)", "lon": 28.94, "lat": 41.032}],
+      "actors": ["person:constantine_xi_palaiologos", "person:giovanni_giustiniani"],
+      "caption": "29 May, before dawn: the third wave breaks through. Constantine XI dies at the walls.",
+      "text": "The final assault came in waves: irregulars first, then Anatolian troops, then the Janissaries. The Genoese commander Giovanni Giustiniani, who held the broken section by the Gate of St Romanus, was badly wounded and carried away, and the defence there gave way. One chronicler, Doukas, says Ottoman soldiers also got in through a small gate, the Kerkoporta, left open by mistake. The emperor was last seen fighting; his body was never surely identified.",
+      "conf": "approximate",
+      "sources": [
+        {"cite": "Doukas, Historia Turco-Byzantina (the Kerkoporta story)"},
+        {"cite": "Leonard of Chios, letter to Pope Nicholas V (1453)"},
+        {"cite": "Marios Philippides and Walter K. Hanak, The Siege and the Fall of Constantinople in 1453 (2011)"}
+      ],
+      "debate": "That the city fell on 29 May is certain. How the emperor died and whether the Kerkoporta mattered are not."
+    },
+    {
+      "id": "hagia_sophia",
+      "t": 1453, "date": "1453-05-29",
+      "view": {"lon": 28.975, "lat": 41.012, "span": 0.9},
+      "lenses": ["war"], "by": "religion",
+      "pins": [{"name": "Hagia Sophia", "lon": 28.9802, "lat": 41.0086}],
+      "actors": ["person:mehmed_ii"],
+      "caption": "That afternoon Mehmed rides to Hagia Sophia. The church becomes a mosque, and the city his capital.",
+      "text": "Mehmed let his soldiers plunder the city, then stopped them and rode to Hagia Sophia, the greatest church in Christendom for nine hundred years, and had it turned into a mosque. He repopulated the emptied city with people moved from across his lands, Muslims, Greeks, Armenians and Jews, and made it the Ottoman capital. The city, which Greeks and Turks alike already called Istanbul in speech, stayed the seat of the sultans until 1922.",
+      "conf": "attested",
+      "sources": [
+        {"cite": "Halil İnalcık, The Policy of Mehmed II toward the Greek Population of Istanbul and the Byzantine Buildings of the City, Dumbarton Oaks Papers 23/24 (1969/70)"},
+        {"cite": "Wikipedia, Fall of Constantinople", "url": "https://en.wikipedia.org/wiki/Fall_of_Constantinople"}
+      ]
+    },
+    {
+      "id": "myth",
+      "t": 1498, "date": "1498-05",
+      "view": {"lon": 20, "lat": 18, "span": 120},
+      "lenses": ["money"], "by": "economy",
+      "pins": [{"name": "Venice", "lon": 12.33, "lat": 45.44}, {"name": "Alexandria (Mamluk until 1517)", "lon": 29.92, "lat": 31.2}, {"name": "Lisbon", "lon": -9.14, "lat": 38.72}, {"name": "Calicut", "lon": 75.78, "lat": 11.25}],
+      "routes": [
+        {"label": "Spices to Venice via the Red Sea, still running", "points": [[75.78, 11.25], [60, 13], [45.03, 12.8], [39.2, 21.5], [32.55, 29.97], [31.24, 30.04], [29.92, 31.2], [22, 35], [12.33, 45.44]]},
+        {"label": "Vasco da Gama, 1497-98", "points": [[-9.14, 38.72], [-23.6, 15], [-12, -10], [18.47, -34.36], [40.12, -3.22], [75.78, 11.25]]}
+      ],
+      "caption": "What it did not do: close the road to the Indies. That part is a myth.",
+      "text": "A popular story says the Turks shut the spice road in 1453, so Europeans had to sail around Africa. Historians dropped it a century ago. Portugal had been pushing down the African coast since the 1410s. The spices came through Egypt and Syria, ruled by the Mamluks, not the Ottomans, until 1517, and Venice's spice imports through Alexandria and Beirut kept going and were near their peak around 1500. What 1453 did change: an Ottoman empire now sat on both sides of the straits, with the Black Sea in its hand and a capital that would make it a European power.",
+      "conf": "attested",
+      "sources": [
+        {"cite": "A. H. Lybyer, The Ottoman Turks and the Routes of Oriental Trade, English Historical Review 30 (1915)"},
+        {"cite": "Frederic C. Lane, The Mediterranean Spice Trade: Further Evidence of its Revival in the Sixteenth Century, American Historical Review 45 (1940)"}
+      ],
+      "deeper": {"story": "tour:rome_vs_constantinople", "label": "Why did it last a thousand years first?"}
+    }
+  ]
+}
