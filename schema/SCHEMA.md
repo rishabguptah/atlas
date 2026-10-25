@@ -15,7 +15,7 @@ bending an existing one, and say so in your PR.
 - Run `python3 tools/build.py` before you push. It fails on any error, and CI runs the same check.
 
 Workstream folders: `kernel`, `living-atlas`, `places-people`, `states-war`, `economy-trade`,
-`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`.
+`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`, `law`.
 
 ## Common fields (every record)
 
@@ -88,7 +88,7 @@ The current Living Atlas data lives in `data/living-atlas/` as stubs, so any own
 
 | Field | Rule |
 | --- | --- |
-| `type` | One of: `controls`, `capital_of`, `part_of`, `located_in`, `born_in`, `died_in`, `ruled`, `participant_in`, `fought`, `allied_with`, `trades_with`, `founded`, `destroyed`, `succeeded`, `influenced`, `teacher_of`, `translated`, `wrote`, `spread_to`, `migrated_to`, `caused`, `contributed_to`, `prevented`. Ask the kernel thread to add one. |
+| `type` | One of: `controls`, `capital_of`, `part_of`, `located_in`, `born_in`, `died_in`, `ruled`, `participant_in`, `fought`, `allied_with`, `trades_with`, `founded`, `destroyed`, `succeeded`, `influenced`, `teacher_of`, `translated`, `wrote`, `spread_to`, `migrated_to`, `caused`, `contributed_to`, `prevented`, `governed_as`. Ask the kernel thread to add one. |
 | `from`, `to` | Ids. Read as "from TYPE to": `place:damascus capital_of polity:umayyad`, `event:x caused event:y`. |
 | `start`, `end` | Optional time window. |
 | `weight` | Optional number: strength, volume, or troop count, depending on type. |
@@ -111,7 +111,7 @@ One measure record per (thing, metric, source), with id `m:<metric>:<thing slug>
 
 `geography` (land, rivers, chokepoints, climate) · `military` · `economy` (wealth, trade) ·
 `population` (size, migration) · `disease` · `religion` · `ideas` (philosophy, science, technology) ·
-`literature` · `people` · `order` (stability, crisis, collapse) · `art` (buildings, works of art, styles).
+`literature` · `people` · `order` (stability, crisis, collapse) · `art` (buildings, works of art, styles) · `law` (forms of government, law codes, rights and policies such as slavery and suffrage).
 
 ## Causes (for dead places, and anything that ended)
 
@@ -120,6 +120,7 @@ One measure record per (thing, metric, source), with id `m:<metric>:<thing slug>
 
 ## Changes
 
+v0.3 · 2026-10-25 · `law` workstream: lens `law`; relation `governed_as` (polity -> `idea:gov:<form>`, time-bounded, with `basis`: curated or wikidata); event subtype `law` with `by` (polity id), `policy` (`idea:policy:<slug>`) and `effect` (adopt, abolish, restrict, extend); `by` and `policy` are checked as references; measures `regime_lied` (Lexical Index class 0-7, `step: true` = value holds until the next point) and Seshat presence metrics (`legal_code`, `courts`, `judges`, `lawyers`, `bureaucrats`, `divine_rulers`, `divine_legitimation`, `exec_constraint_gov`, `exec_constraint_nongov`). See data/law/README.md.
 v0.2 · 2026-10-25 · `art-architecture` workstream: `art` lens; idea subtype `style` (`family`, `origin`, `spread`); work fields `styles`, `styled_from`, `made_at`.
 
 v0.1 · 2026-10-24 · `geography` workstream: physical-feature subtypes, `tier`, `label_line`, `elevation_m` on places.
