@@ -271,7 +271,7 @@ const LAND = /*__LAND__*/;
     document.getElementById("era").textContent = eraOf(state.year).toUpperCase();
     if (!fromSlider) slider.value = Math.round(yearToT(state.year) * 1000);
     const s = snapFor(state.year);
-    if (s !== curSnap) { curSnap = s; pm.render(T, { realms: realmsFor(s) }); }
+    if (s !== curSnap) { curSnap = s; pm.setRealms(realmsFor(s)); }
     placeSprites();
   }
   slider.addEventListener("input", () => setYear(tToYear(slider.value / 1000), true));

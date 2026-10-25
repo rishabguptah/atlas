@@ -47,14 +47,14 @@
     container.prepend(canvas);
     const ctx = canvas.getContext("2d");
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
-    let last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, list = [], realmsNow = [];
+    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, list = [], realmsNow = [];
 
     // Terrain tiles: levels coarse to fine, each {cell (degrees), tdeg (tile size in degrees), url(col, row)}.
     // Tiles load on demand; until a finer tile arrives the coarser level shows, then the map re-renders.
     const levels = opts.levels || [], tiles = {};
     let pending = 0, onTile = null;
     function tile(L, li, col, row) {
-      const key = li + ":" + col + ":" + row, t = tiles[key];
+      const key = li * 100000 + col * 100 + row, t = tiles[key];
       if (t) return t.data ? t : null;
       const rec = tiles[key] = { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
       const img = new Image(); pending++;
@@ -63,6 +63,7 @@
       img.src = L.url(col, row);
       return null;
     }
+    const OUT3 = [0, 0, 0];
     function sample(lon, lat, need, u, v, exact) {
       let r = null; lon = Math.min(179.9999, lon); lat = Math.max(-89.9999, lat);
       for (let li = 0; li < levels.length; li++) {
@@ -79,21 +80,28 @@
       const x = Math.min(r.w - 1, Math.max(0, Math.floor((lon - r.x0) / r.cell + (hash(u, v) - 0.5) * j)));
       const y = Math.min(r.h - 1, Math.max(0, Math.floor((r.y0 - lat) / r.cell + (hash(v, u) - 0.5) * j)));
       const i = (y * r.w + x) * 4;
-      return [r.data[i], r.data[i + 1], r.data[i + 2]];
+      OUT3[0] = r.data[i]; OUT3[1] = r.data[i + 1]; OUT3[2] = r.data[i + 2];
+      return OUT3;
     }
 
+    const pathCache = new WeakMap(), svgPath = d3.geoPath(projection);
     function maskFor(feats, fill) {
       octx.setTransform(1, 0, 0, 1, 0, 0); octx.clearRect(0, 0, w, h);
       const t = last;
       octx.setTransform(t.k / PX, 0, 0, t.k / PX, -U0, -V0);
-      const p = d3.geoPath(projection, octx);
-      feats.forEach((f, i) => { octx.beginPath(); p(f); octx.fillStyle = fill(f, i); octx.fill(); });
+      // Projected outlines are cached as Path2D per feature (and per projection), then filled through the zoom transform.
+      const pk = projection.scale() + "," + projection.translate().join(",");
+      feats.forEach((f, i) => {
+        let c = pathCache.get(f);
+        if (!c || c.pk !== pk) pathCache.set(f, c = { pk, p: new Path2D(svgPath(f) || "") });
+        octx.fillStyle = fill(f, i); octx.fill(c.p);
+      });
       octx.setTransform(1, 0, 0, 1, 0, 0);
       return octx.getImageData(0, 0, w, h).data;
     }
 
     function render(t, o = {}) {
-      const W = container.clientWidth, H = container.clientHeight;
+      const W = container.clientWidth, H = container.clientHeight; lastW = W; lastH = H;
       last = t; realmsNow = o.realms || realmsNow; if (o.mood) mood = o.mood;
       // Art pixel (i, j) covers screen x in [ox + i*PX, ox + (i+1)*PX); U0 + i is its column in the zoomed world grid.
       const ox = ((t.x % PX) + PX) % PX - PX, oy = ((t.y % PX) + PX) % PX - PX;
@@ -106,15 +114,31 @@
       const landM = maskFor([opts.land], () => "#fff");
       base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255);
       hs = new Uint8Array(w * h); band = new Uint8Array(w * h); NEED = need; lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h);
+      // Inverse projection on a coarse grid, interpolated inside cells whose corners are all on the globe and do not
+      // straddle the antimeridian; exact per pixel elsewhere (near the rim). Much cheaper than inverting every pixel.
+      const G = 4, gw = Math.ceil(w / G) + 1, gh = Math.ceil(h / G) + 1, gl = new Float64Array(gw * gh * 2), gok = new Uint8Array(gw * gh);
+      const inv = (i, j, outA, o) => {
+        const px = ((U0 + i + 0.5) * PX) / t.k, py = ((V0 + j + 0.5) * PX) / t.k;
+        const ll = projection.invert([px, py]);
+        if (!ll || !isFinite(ll[0]) || Math.abs(ll[0]) > 180 || Math.abs(ll[1]) > 90) return 0;
+        const back = projection(ll);
+        if (!back || Math.abs(back[0] - px) > 0.5 || Math.abs(back[1] - py) > 0.5) return 0;
+        outA[o] = ll[0]; outA[o + 1] = ll[1]; return 1;
+      };
+      for (let gj = 0; gj < gh; gj++) for (let gi = 0; gi < gw; gi++) gok[gj * gw + gi] = inv(gi * G, gj * G, gl, (gj * gw + gi) * 2);
+      const ll = [0, 0];
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, u = U0 + i, v = V0 + j;
-        const px = ((u + 0.5) * PX) / t.k, py = ((v + 0.5) * PX) / t.k;
-        const ll = projection.invert([px, py]);
-        if (!ll || !isFinite(ll[0]) || Math.abs(ll[0]) > 180 || Math.abs(ll[1]) > 90) { base[k] = OUTP; continue; }
-        const back = projection(ll);
-        if (!back || Math.abs(back[0] - px) > 0.5 || Math.abs(back[1] - py) > 0.5) { base[k] = OUTP; continue; }
+        const gi = (i / G) | 0, gj = (j / G) | 0, a = gj * gw + gi, b = a + 1, c2 = a + gw, d2 = c2 + 1;
+        if (gok[a] && gok[b] && gok[c2] && gok[d2] && Math.abs(gl[a * 2] - gl[b * 2]) < 90 && Math.abs(gl[a * 2] - gl[d2 * 2]) < 90) {
+          const fx = (i - gi * G) / G, fy = (j - gj * G) / G;
+          for (let q = 0; q < 2; q++) {
+            const top = gl[a * 2 + q] + (gl[b * 2 + q] - gl[a * 2 + q]) * fx, bot = gl[c2 * 2 + q] + (gl[d2 * 2 + q] - gl[c2 * 2 + q]) * fx;
+            ll[q] = top + (bot - top) * fy;
+          }
+        } else if (!inv(i, j, ll, 0)) { base[k] = OUTP; continue; }
         const s = sample(ll[0], ll[1], need, u, v) || [10, 128, 0];
-        let c = s[0];
+        let c = s[0]; const s1 = s[1], s2 = s[2];
         // Rivers stay thin lines when zoomed past the data: only the unjittered cell counts.
         if (c === 4 && sample(ll[0], ll[1], need, u, v, true)[0] !== 4) c = 10;
         const isLand = landM[k * 4 + 3] > 127;
@@ -122,7 +146,7 @@
         if (c === 4 && (need > 0.1 || !isLand)) c = 10;
         if (isLand && WATER(c) && c !== 3) c = 10;
         if (!isLand && !WATER(c)) c = 2;
-        cls[k] = c; hs[k] = s[1]; band[k] = s[2];
+        cls[k] = c; hs[k] = s1; band[k] = s2;
         latA[k] = ll[1];
         lowNoise[k] = Math.sin(ll[0] * 1.7 + Math.sin(ll[1] * 2.3)) * Math.sin(ll[1] * 2.1 + ll[0] * 0.6);
       }
@@ -159,6 +183,7 @@
       }
       drawRivers(t, need);
       stamps();
+      terrain = base.slice();
       drawRealms();
       paint();
     }
@@ -348,6 +373,10 @@
       render,
       move(t) { if (!last) return; const s = t.k / last.k; canvas.style.transform = `translate(${t.x - last.x * s}px,${t.y - last.y * s}px) scale(${s})`; canvas.style.transformOrigin = `${-parseFloat(canvas.style.left)}px ${-parseFloat(canvas.style.top)}px`; },
       sprites(l) { list = l; paint(); },
+      // A new year with the same view: keep the terrain pass, redo only realms and sprites.
+      setRealms(r) { realmsNow = r || []; if (!terrain) return; base.set(terrain); drawRealms(); paint(); },
+      // Is the last render for this transform (so a year change can use setRealms)?
+      same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === container.clientWidth && lastH === container.clientHeight; },
       setMood(m) { const re = (m === "winter") !== (mood === "winter"); mood = m; if (re && last) render(last); else paint(); },
       tick() { frame++; paint(); },
       setFrame(f) { frame = f; },

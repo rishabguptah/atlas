@@ -89,7 +89,8 @@
     render(t, y) {
       if (!pm) return;
       T = t; year = y;
-      pm.render(t, { realms: isOn("borders") ? realmsFor(y) : [] });
+      const realms = isOn("borders") ? realmsFor(y) : [];
+      if (pm.same(t)) pm.setRealms(realms); else pm.render(t, { realms });
       collect(y, t.k); draw();
     },
     move(t) { if (pm) pm.move(t); },
