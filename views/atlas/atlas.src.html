@@ -2483,6 +2483,8 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     // A scene is a guide step: {year, view: {lon, lat, span}, lens, layers, highlight, pins, routes, title}.
     scene: s => { stopPlay(); applyScene(s); },
     clearScene: () => { state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); showCaption(null); drawAll(); },
+    // The lenses that are on, so a mode can put them back the way it found them.
+    lenses: () => Object.keys(NAME).filter(isOn),
     fly: (v, ms) => flyTo(v, ms), setOn: (k, v = true) => { if (isOn(k) !== v) { setOn(k, v); redrawToggles(); syncChips(); } },
     redraw: () => drawAll(), setTab: t => setTab(t), fmtYear, onYear: fn => yearWatch.push(fn),
     // What the map shows now: the centre, the zoom and roughly how many degrees fit across and down.
