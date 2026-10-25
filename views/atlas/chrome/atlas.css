@@ -203,9 +203,9 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .wf .wst.alt { border-image-source: var(--f-card); outline: 2px dashed var(--y-whatif); outline-offset: -8px; }
 .app .step.on, .app .wf .wst.on { border-image-source: var(--f-card-gold); }
 .app .step .t, .app .wf .wst .t, .app .wf .sc b, .app .cx .quest b, .app .view .nm, .app .link .ends, .app .whatif b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 1.2; }
-.app .step .i, .app .step .y, .app .step .ln, .app .conf, .app .pnl .stt, .app .spk b, .app .view .st, .app .wf .sc .meta, .app .wf .wst .y, .app .cx ul.ent li .y, .app .player .count { font-family: var(--f-tiny); font-size: 8px; }
+.app .step .i, .app .step .y, .app .step .ln, .app .conf, .app .pnl .stt, .app .spk .role, .app .chair .by, .app .view .st, .app .wf .sc .meta, .app .wf .wst .y, .app .cx ul.ent li .y, .app .player .count { font-family: var(--f-tiny); font-size: 8px; }
 .app .view .st, .app .wf .tagr, .app .wf .tagb, .app .wf .badge2 { border-radius: 0; font-size: 8px; }
-.app .player { background: var(--vellum); border-bottom: 0; box-shadow: 0 2px 0 var(--vellum-3); top: 64px; }
+.app .player { background: var(--vellum); border-bottom: 0; box-shadow: 0 2px 0 var(--vellum-3); top: var(--tabs-h, 64px); }
 .app .mrow .bar, .app .wf .pl .bar, .app .cx .bar { border-radius: 0; height: 8px; background: repeating-linear-gradient(90deg, var(--wash) 0 6px, transparent 6px 8px); outline: 0; }
 .app .mrow .bar i, .app .wf .pl .bar i, .app .cx .bar i { border-radius: 0; background: repeating-linear-gradient(90deg, var(--c, var(--y-whatif, var(--gold))) 0 6px, transparent 6px 8px); }
 .app .cx .bar i { background: repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 8px); }
@@ -235,7 +235,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .grip::before { content: ""; width: 24px; height: 6px; background: repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 0 / 24px 2px no-repeat, repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 4px / 24px 2px no-repeat; }
 .app .grip:hover { color: var(--ink); }
 .app .grip:focus-visible { outline: 2px dashed var(--gold); outline-offset: -2px; }
-@media (max-width: 700px) { .app .grip { display: none; } }
+@media (max-width: 700px) { .app .grip { display: none; } .app .player { top: 0; } }
 
 /* ---- the panel folded to its ribbons (P): the map runs the full width ---- */
 @media (min-width: 701px) {
