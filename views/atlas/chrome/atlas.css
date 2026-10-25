@@ -421,7 +421,3 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app #layers .chip.fam .nm { display: none; }
   .app #sublayers { left: 56px; right: 8px; top: 128px; }
 }
-
-/* ---- the Ask answer's lens meter is a list of rows, not chrome.css's one-line pixel meter ---- */
-.app #answer .meter { height: auto; background: none; position: static; display: grid; gap: 3px; }
-.app #answer .meter i { position: static; inset: auto; }
