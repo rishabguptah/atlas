@@ -27,6 +27,7 @@
 
   // Precise borders from borders/l0|l1|l2 next to the page; the page's own simplified borders until they arrive.
   const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(borders.realms(year, T.k)); else pm.render(T, { realms: borders.realms(year, T.k) }); } } });
+  let geo = null, geoKey = "", el0 = null;
   let pm = null, proj = null, T = null, year = null, snap = null, timer = 0, frame = 0, statics = [], movers = [];
   const realmCache = {};
   function realmsFor(y) {
@@ -95,10 +96,12 @@
   ATLAS.basemap({
     id: "pixel", name: "Pixel map",
     mount(el, projection) {
-      proj = projection;
+      proj = projection; el0 = el;
       if (!document.getElementById("pixel-basemap-style")) { const st = document.createElement("style"); st.id = "pixel-basemap-style"; st.textContent = STYLE; document.head.appendChild(st); }
       const levels = [{ cell: 1 / 6, tdeg: 360, url: () => PIXEL.tile0 }, { cell: 1 / 15, tdeg: 30, url: (c, r) => `tiles/l1_${c}_${r}.png` }, { cell: 1 / 30, tdeg: 30, url: (c, r) => `tiles/l2_${c}_${r}.png` }];
       pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers });
+      // Names of seas, rivers, ranges and deserts in the pixel font, under the Land lens's terrain toggle.
+      if (typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => { if (document.hidden || !T) return; frame++; pm.setFrame(frame); draw(); }, 260);
     },
     render(t, y) {
@@ -106,10 +109,14 @@
       T = t; year = y;
       const realms = isOn("borders") ? (borders.realms(y, t.k) || realmsFor(y)) : [];
       if (pm.same(t)) pm.setRealms(realms); else pm.render(t, { realms });
+      if (geo) {
+        const on = isOn("terrain"), key = on ? [t.k, t.x, t.y, el0.clientWidth, el0.clientHeight].join() : "off";
+        if (key !== geoKey) { geoKey = key; if (on) geo.render(t, el0.clientWidth, el0.clientHeight); else geo.clear(); }
+      }
       collect(y, t.k); draw();
     },
-    move(t) { if (pm) pm.move(t); },
-    unmount() { clearInterval(timer); pm = null; },
-    setMood(m) { if (pm) pm.setMood(m); },
+    move(t) { if (pm) pm.move(t); if (geo) geo.move(t); },
+    unmount() { clearInterval(timer); pm = null; if (geo) geo.remove(); geo = null; },
+    setMood(m) { if (pm) pm.setMood(m); if (geo) geo.setMood(m); },
   });
 })();
