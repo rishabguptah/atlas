@@ -1,0 +1,21 @@
+{
+  "id": "penacho",
+  "name": "Penacho (the feather headdress in Vienna)",
+  "type": "single",
+  "sprite": "obj_feather",
+  "what": "A Mexica headdress of about 450 green quetzal tail feathers with blue cotinga, pink spoonbill and gold, from the time of the Spanish conquest. Popularly called Moctezuma's headdress.",
+  "why": "One of very few featherworks to survive the conquest, it has been in Austria for over four centuries. Mexico wants it back; Austrian conservators say the journey would shake it apart.",
+  "now": "Weltmuseum Wien, Vienna.",
+  "dispute": "Mexico has asked for its return several times since the 1990s; a 2012 joint study concluded it is too fragile to travel.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Haag, S., de María y Campos, A., Rivero Weber, L. & Feest, C. (eds.) (2012). El Penacho del México Antiguo. ZKF Publishers."},
+    {"cite": "Wikipedia: Penacho of Moctezuma", "url": "https://en.wikipedia.org/wiki/Penacho_of_Moctezuma"}
+  ],
+  "stops": [
+    {"y": 1520, "approx": true, "at": [-99.133, 19.433], "place": "Tenochtitlan", "owner": "Mexica nobility", "by": "made", "conf": "likely", "note": "Made by amanteca, the Mexica feather workers, in the early 16th century. That it belonged to Moctezuma II is a legend: no document links them.", "meet": "an amanteca featherworker of Tenochtitlan"},
+    {"y": 1596, "at": [11.432, 47.256], "place": "Ambras Castle, Innsbruck", "owner": "Archduke Ferdinand II of Austria", "by": "collected", "conf": "sure", "via": "sea", "note": "How it reached Europe is unknown, perhaps among the gifts Cortés sent to Charles V. It first appears in the 1596 inventory of Archduke Ferdinand's cabinet of curiosities at Ambras, listed as a \"Moorish hat\"."},
+    {"y": 1878, "at": [16.36, 48.206], "place": "Vienna", "owner": "Imperial natural history and ethnographic collections", "by": "carried", "conf": "sure", "via": "land", "note": "Moved to Vienna, recognised as Mexican and restored (badly) in 1878, and later the star of the Museum für Völkerkunde, now the Weltmuseum Wien."},
+    {"y": 2012, "at": [16.364, 48.206], "place": "Weltmuseum Wien, Vienna", "owner": "Republic of Austria", "by": "displayed", "conf": "sure", "note": "After a joint Austrian-Mexican conservation project it went back on show in a vibration-damped case.", "meet": "a Mexican visitor in the Weltmuseum"}
+  ]
+}

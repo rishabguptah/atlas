@@ -1,0 +1,26 @@
+{
+  "id": "black_princes_ruby",
+  "name": "Black Prince's Ruby",
+  "type": "single",
+  "sprite": "obj_gem_red",
+  "what": "A 170-carat red spinel (not a ruby), drilled through and plugged with a small ruby, set in the front of Britain's Imperial State Crown.",
+  "why": "A gem that changed hands by murder and war: from a Nasrid sultan of Granada to a king of Castile, to the Black Prince as payment, and into the English regalia.",
+  "now": "Imperial State Crown, Jewel House, Tower of London.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Keay, A. (2011). The Crown Jewels. Thames & Hudson."},
+    {"cite": "Royal Collection Trust: The Imperial State Crown", "url": "https://www.rct.uk/collection/31701/the-imperial-state-crown"},
+    {"cite": "Wikipedia: Black Prince's Ruby", "url": "https://en.wikipedia.org/wiki/Black_Prince%27s_Ruby"}
+  ],
+  "stops": [
+    {"y": 1360, "approx": true, "at": [-3.588, 37.176], "place": "Alhambra, Granada", "owner": "Nasrid sultans of Granada", "by": "held", "conf": "likely", "note": "Large spinels of this kind mostly came from the mines of Badakhshan, in today's Afghanistan and Tajikistan. Its first recorded owner was the Nasrid usurper Abu Said (Muhammad VI) of Granada."},
+    {"y": 1362, "at": [-5.99, 37.39], "place": "Seville", "owner": "Pedro the Cruel of Castile", "by": "seized", "conf": "likely", "via": "land", "note": "Abu Said came to Seville to seek terms; Pedro of Castile had him killed, the chronicler López de Ayala says, and took his jewels.", "meet": "a courtier of Pedro's Alcázar"},
+    {"y": 1367, "at": [-2.73, 42.42], "place": "Nájera", "owner": "Edward, the Black Prince", "by": "paid", "conf": "likely", "via": "land", "note": "The Black Prince won the battle of Nájera for Pedro in April 1367 and took the stone in part payment of the costs of the war."},
+    {"y": 1371, "approx": true, "at": [-0.0759, 51.5081], "place": "London", "owner": "English crown", "by": "carried", "conf": "likely", "via": "sea", "path": [[-2.73, 42.42], [-1.5, 43.5], [-1.1, 45.5], [-4.8, 47.8], [-3.5, 50], [1.4, 51.2], [-0.0759, 51.5081]], "note": "It came to England with the prince's household, sick and in debt after the Spanish campaign."},
+    {"y": 1415, "at": [2.14, 50.46], "place": "Agincourt", "owner": "Henry V", "by": "worn", "conf": "legend", "via": "sea", "note": "The story is that Henry V wore it in the crown on his helmet at Agincourt and it survived a blow from the Duke of Alençon. No contemporary source names the stone."},
+    {"y": 1416, "approx": true, "at": [-0.0759, 51.5081], "place": "London", "owner": "English crown", "by": "returned", "conf": "likely", "via": "sea", "note": "Back with the royal treasure. After Charles I's execution in 1649, the story goes, it was sold for £4 and bought back at the Restoration."},
+    {"y": 1838, "at": [-0.0759, 51.5081], "place": "Tower of London", "owner": "The crown", "by": "set", "conf": "sure", "note": "Set at the front of Queen Victoria's new Imperial State Crown, and again in the crown made for George VI in 1937.", "meet": "a visitor in the Jewel House queue"},
+    {"y": 1939, "at": [-0.604, 51.484], "place": "Windsor Castle", "owner": "The crown", "by": "hidden", "conf": "sure", "via": "land", "note": "In the Second World War the crown jewels were hidden at Windsor; the main stones were prised out and kept in a biscuit tin under the castle in case of invasion."},
+    {"y": 1945, "at": [-0.0759, 51.5081], "place": "Tower of London", "owner": "The crown", "by": "returned", "conf": "sure", "via": "land", "note": "Back in the Tower, worn at every State Opening of Parliament."}
+  ]
+}
