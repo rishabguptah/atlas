@@ -335,3 +335,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 /* Focus (and a story playing) gives the map the whole screen, the phone included. */
 .app.focus .map { height: auto; }
 @media (max-width: 700px) { .app.focus { padding-bottom: env(safe-area-inset-bottom, 0px); } }
+.app .tabs.many .tab .nm { display: none; }
+.app .tabs.many .tab[aria-selected="true"] { flex: 2.6; }
+.app .tabs.many .tab[aria-selected="true"] .nm { display: block; }
+@media (max-width: 700px) { .app .tabs.many .tab .nm { display: block; } }

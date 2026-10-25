@@ -12,7 +12,7 @@
   let rectT = 0;
 
   // ---------- icons on the existing controls ----------
-  const TAB_ICON = { now: "year", here: "here", guide: "ask", codex: "codex", whatif: "whatif", stories: "stories", objects: "objects", upclose: "lens" };
+  const TAB_ICON = { now: "year", here: "here", guide: "ask", codex: "codex", whatif: "whatif", stories: "stories", objects: "objects", upclose: "lens", compare: "compare", life: "life" };
   const TAB_SHORT = { now: "Year", upclose: "Close" };
   function dressTab(b) {
     if (b.querySelector(".ico")) return;
@@ -22,6 +22,9 @@
     b.title = name;
   }
   $$(".tab").forEach(dressTab);
+  // More than eight ribbons: only the open one keeps its name (the rest say theirs on hover).
+  const countTabs = () => $(".tabs").classList.toggle("many", $$(".tab").length > 8);
+  countTabs(); new MutationObserver(countTabs).observe($(".tabs"), { childList: true });
   new MutationObserver(ms => { for (const m of ms) for (const n of m.addedNodes) if (n.classList && n.classList.contains("tab")) dressTab(n); }).observe($(".tabs"), { childList: true });
   // A plugin that rewrites a tab's text (an old badge) gets its icon back.
   new MutationObserver(ms => { for (const m of ms) { const b = m.target.closest && m.target.closest(".tab") || m.target; if (b.classList && b.classList.contains("tab") && !b.querySelector(".ico")) dressTab(b); } }).observe($(".tabs"), { childList: true, subtree: true, characterData: true });
