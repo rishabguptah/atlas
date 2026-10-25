@@ -11,8 +11,19 @@
   const TITLE = /^(the\s+)?((grand|great|holy|high|united|federal|imperial|royal|serene|most serene)\s+)*(kingdom|empire|sultanate|caliphate|khanate|khaganate|emirate|duchy|archduchy|principality|republic|county|margraviate|landgraviate|electorate|despotate|tsardom|shogunate|beylik|imamate|confederation|state|realm|dominion|lordship|bishopric|prince-bishopric|patriarchate|exarchate|satrapy|chiefdom|polity|territory)\s+of\s+(the\s+)?/i;
   const measure = (text, fs) => (global.MapLabels ? global.MapLabels.measure(text, fs, 700) : text.length * fs * 0.62);
 
+  // Year steps inside one border frame give the same grid: the names are reused, not found again (a hash of the frame).
+  let lastKey = null, lastOut = [];
   function PixelRealmNames(grid) {
     if (!grid || !grid.ids) return [];
+    const { ids, cls, w, h, PX, left, top, realms } = grid, N = w * h;
+    let hsh = 2166136261;
+    for (let k = 0; k < N; k++) hsh = Math.imul(hsh ^ (ids[k] * 31 + cls[k]), 16777619);
+    const key = [hsh, w, h, PX, left, top, realms.map(r => r && r.name).join("|")].join();
+    if (key === lastKey) return lastOut;
+    lastKey = key; lastOut = findNames(grid);
+    return lastOut;
+  }
+  function findNames(grid) {
     const { ids, cls, w, h, PX, left, top, realms } = grid, N = w * h;
     // Land pixels of each realm, split into connected pieces; keep each realm's largest piece.
     const comp = new Int32Array(N).fill(-1), order = new Int32Array(N), stack = new Int32Array(N);
@@ -37,6 +48,8 @@
       if (n >= MIN_PX && (!b || n > b.n)) best.set(id, { c: nc, start, n });
       nc++;
     }
+    // The largest realms in view lead the hierarchy: never smaller than 16 px when the name fits along them.
+    const lead = new Set([...best.values()].sort((a, b) => b.n - a.n).slice(0, 8));
     const out = [];
     for (const [id, p] of best) {
       const r = realms[id - 1]; if (!r) continue;
@@ -88,8 +101,10 @@
       const { cx, cy, d, ux, uy, a, b } = p.deep;
       if (d < 3) return null;
       const half = Math.min(-a, b) * 0.95, Lf = half * 2, n = text.length, a1 = measure(text, 100) / 100;
-      let fs = Math.min(MAX_FS, d * PX, (0.9 * Lf * PX) / (a1 + n * 0.1));
+      const fit = (0.9 * Lf * PX) / (a1 + n * 0.1);
+      let fs = Math.min(MAX_FS, d * PX, fit);
       if (fs < MIN_FS) return null;
+      if (fs < 16 && fit >= 16 && lead.has(p)) fs = 16;
       fs = snap(fs);
       const spacing = Math.max(0.1, Math.min(0.9, (Math.min(0.82 * Lf * PX, (a1 + n * 0.9) * fs) / fs - a1) / n));
       const drop = (fs * 0.34) / PX, path = [];
@@ -156,8 +171,10 @@
       const a1 = measure(text, 100) / 100, n = text.length, curve0 = u => qa * u * u + qb * u + qc;
       for (const [frac, uc] of [[1, (ulo + uhi) / 2], [0.7, (ulo + uhi) / 2], [0.7, 0], [0.5, 0]]) {
         const Lf = L * frac;
-        let fs = Math.min(MAX_FS, thick * PX * 0.5, (0.9 * Lf * PX) / (a1 + n * 0.1));
+        const fit = (0.9 * Lf * PX) / (a1 + n * 0.1);
+        let fs = Math.min(MAX_FS, thick * PX * 0.5, fit);
         if (fs < MIN_FS) return null;
+        if (fs < 16 && fit >= 16 && lead.has(p)) fs = 16;
         fs = snap(fs);
         const spacing = Math.max(0.1, Math.min(0.9, (Math.min(0.82 * Lf * PX, (a1 + n * 0.9) * fs) / fs - a1) / n));
         const tw = (a1 + n * spacing) * fs, half = Math.min(Lf / 2, (tw / PX) * 0.56);
