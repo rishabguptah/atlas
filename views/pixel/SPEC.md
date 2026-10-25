@@ -90,3 +90,33 @@ time: open-field strips in medieval Europe, paddies in monsoon Asia, survey squa
 centuriation near Roman colonies. Data: `ingest/pixel/detail.py` writes `detail/d_<col>_<row>.json` (30-degree
 tiles), `pop.json` and `countries.png`; `views/pixel/tiles.py` copies them beside the page. Both passes are cached
 per view, so a year step replays pixels unless the decade or the set of standing things changed.
+
+## Terrain art (terrain-art.js)
+
+`PixelTerrainArt.paint(S)` paints every terrain pixel from the sampled classes, once per render (zoom end or a pan band),
+never on a year step. pixelmap.js marks rivers first (`cls` 4, `riv` 1 river / 2 great river), then calls it.
+
+- Ramps: `PIXEL_PALETTE.RAMPS`, five hue-shifted tones per biome and regional variant (Sahara, Arabia, Gobi, outback,
+  savanna, prairie, Mediterranean, monsoon). `TERRAIN` stays as the middle three tones for older callers.
+- Zoom tiers by degrees per art pixel: 0 world (> 0.4), 1 (> 0.15), 2 (> 0.06), 3 close. Detail arrives with the tier.
+- Mountains: one peak per world-anchored cell at its highest mountain pixel (prominence-gated), sized by height,
+  snow by a latitude snowline; slopes wear the local biome below the treeline (a 1 degree climate grid from L0),
+  rock or alpine steppe above it, snow above the snowline. Hills are lit domes in the ground's own ramp.
+- Water: chamfer distance to the coast; foam, a lit shallow band, two slow tones offshore, a cliff lip under coasts.
+- Forests: crowns stamped back to front on a staggered lattice, glades, a cast shadow under the forest edge.
+- `pm.art.anim` marks pixels the motion layer may palette-cycle: 1 foam, 2 wave glyph, 3 river, 4 volcano smoke.
+- Landmarks (`LANDMARKS`) replace generated peaks near them; green zones (`GREEN`) irrigate deserts at oases and deltas.
+- Pans redraw bands with a `SEAM` margin wide enough for the largest anchored piece; keep it if pieces grow.
+
+## Motion (views/pixel/motion.js)
+
+Everything that moves lives on small canvases above the map (season, fx, sky, dissolve), at the same art-pixel grid; the
+map raster is never repainted for animation. Steps at 10 fps in whole art pixels; pauses while scrubbing, zooming,
+panning, hidden or off screen; one still frame under reduced motion (or Motion off in the sky control). Water shimmer,
+surf and river flow are palette cycling on pixel lists; snow line, sea ice and autumn follow the month per hemisphere;
+the night is the real sun's terminator with city lights from Reba et al. (fire before 1800, gas to 1900, electric after).
+Meaning first: borders that changed ink in over three stepped frames when the year settles, the Black Death front
+crawls its routes month by month, armies march between consecutive battles of a war, ships and caravans travel active
+trade routes, smoke rises from battles and eruptions, a big instant year jump dissolves through a Bayer threshold.
+Hooks for other layers: `ATLAS.motion.layer(id, fn)`, `.onStep(fn)`, `.frame`, `.pulse(lon, lat, {color, r, repeat})`.
+City lights data: `python3 ingest/pixel/city_lights.py historical_urban_population.csv /mnt/project-files/atlas/pixel/city-lights.json`.

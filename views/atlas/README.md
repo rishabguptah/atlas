@@ -68,17 +68,29 @@ rows from the current time; rows from other centuries fold under "from other tim
 view and lenses (localStorage `atlas.resume.v1`, this browser only). The header question box steps aside while the Ask tab is open.
 Roadmap and critique: https://claude.ai/artifact/6saKUD2YsaVezRGC9M3z6o
 
-## Up close: Europe 1789-1914
+## Up close: any place, any period
 
-The Up close tab studies one region by the month: a month scrubber (1 month, 3 months or a year per second; `[` and
-`]` step a month), ten storylines with a Next button, what happened this month, wars under way, who was born and died.
-Its lenses: Chronicle (3,600 dated events, Power), Railways (26,000 stations by opening date, Wealth), Provinces
-(Land), Growing cities (Wealth), Lives (Peoples). Data: `data/europe-19c/`. The chronicle loads after the first paint
-like other big lens data; railways and lives load only when needed, from `atlas-files/e19-deep.json`, which has to be
-published beside the page:
+The Up close tab studies whatever the map shows, by the month: pan or zoom anywhere, pick a span (a dense pack's
+window, a decade, a lifetime, a century, five centuries, or a storyline's), and scrub or play (1 month, a year or ten
+years per second; `[` and `]` step a month). It reads the world index (`views/atlas/world/`, see WORLD.md L1):
+what happened here this month (widening to the year, five years, a generation when that is thin), wars under way,
+who was born, died, lived or worked here, a "how deep" meter with the dense pack that covers the view, and the
+study storylines that pass through (75 of them, from Sumer to 1991, each with a Next button and the journeys of the
+people it names drawn on the map). Where the data is thin, "Fill in with Claude" adds draft rows (dashed on the map,
+marked draft, kept in this browser) and "Write a storyline for here and now" drafts a storyline. Its lenses:
+Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces, Growing cities and railway numbers
+(`lenses/e19.*`). Everything loads after the first paint from `atlas-files/world/` and `atlas-files/packs/`, which
+`build.py` writes beside the page: publish them with it (about 20 MB, fetched a slice or pack at a time).
+
+## Travellers in motion
+
+Lenses Journeys and Middle Passage (Peoples) and VOC ships (Wealth), and the Who was there tab: famous journeys move
+along dated legs, every Dutch East India Company ship at sea, the forced crossing of enslaved Africans with the human
+toll, and real co-presence (who was in Vienna in 1913). Data: `data/travels/`. Presences and the slave voyages load
+only when needed, from a sidecar to publish beside the page:
 
 ```sh
-python3 views/atlas/lenses/e19.py pub          # writes pub/atlas-files/e19-deep.json (about 2 MB)
+python3 views/atlas/lenses/travels.py pub      # writes pub/atlas-files/travels-deep.json (about 2.7 MB)
 ```
 
 ## Lens families and plugins
@@ -100,3 +112,15 @@ tab (`lenses/stories.*`) lists them all. The Atlas opens on a cold open (Constan
 twelve hours away; `#story=<id>` plays any story on load and `#nostory` skips it. Other threads emit Stories and register
 them with `ATLAS.world.stories.add(story)` or a provider `{kind, list()}`; `ATLAS.world.director.play(story, {at, auto})`
 plays one.
+
+## Guess the past
+
+The Guess tab (`lenses/guess.*`) is a calibration game. The map flies to a moment and asks for a number the kernel
+holds: a city's size (Reba et al., after Chandler and Modelski), a continent's people (HYDE), a share of world GDP and
+income per head (Maddison Project 2020), an empire's land at its height (Cliopatria), railway kilometres (CHAT) or the
+days news took to travel. Every answer is read from a sourced measure or record at a year it actually gives, never
+interpolated. You give a range you are 80% sure of; the reveal plays as a Director story (the answer, a comparison or
+the motion model's own estimate for the same trip, then your calibration) with Why? and How do we know. The tab keeps
+calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five with streaks and a copyable
+result, Endless and About here modes, and finds; each reveal also visits the spot for the Codex. Progress stays in
+localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `calibration` and `play(id)`.

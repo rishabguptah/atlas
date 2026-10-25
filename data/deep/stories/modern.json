@@ -1,0 +1,2162 @@
+{
+ "stories": [
+  {
+   "id": "american_revolution",
+   "title": "The American Revolution",
+   "region": "Thirteen Colonies",
+   "start": 1765,
+   "end": 1791,
+   "view": {
+    "lon": -74.0,
+    "lat": 40.5,
+    "span": 14
+   },
+   "blurb": "How did a quarrel over taxes turn thirteen British colonies into a federal republic with a written constitution?",
+   "steps": [
+    {
+     "date": "1765-10-07",
+     "end_date": "1765-10-25",
+     "name": "Stamp Act Congress",
+     "place_name": "New York",
+     "lat": 40.71,
+     "lon": -74.01,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [],
+     "what": "Delegates from nine colonies met in New York and petitioned king and Parliament against the Stamp Act, a tax on printed paper.",
+     "why": "It was the first joint colonial protest and set out the claim of no taxation without representation; Parliament repealed the act in 1766.",
+     "wikipedia": "Stamp Act Congress",
+     "wikidata": "Q2915080"
+    },
+    {
+     "date": "1770-03-05",
+     "name": "Boston Massacre",
+     "place_name": "Boston",
+     "lat": 42.36,
+     "lon": -71.06,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "John Adams"
+     ],
+     "what": "British soldiers fired into a crowd on King Street, killing five men; John Adams later defended the soldiers in court.",
+     "why": "Patriot printers turned the killings into lasting propaganda against troops stationed in colonial towns.",
+     "wikipedia": "Boston Massacre",
+     "wikidata": "Q215687"
+    },
+    {
+     "date": "1773-12-16",
+     "name": "Boston Tea Party",
+     "place_name": "Griffin's Wharf, Boston",
+     "lat": 42.35,
+     "lon": -71.05,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Samuel Adams"
+     ],
+     "what": "Colonists boarded three ships and dumped 342 chests of East India Company tea into the harbour in protest at the Tea Act.",
+     "why": "Parliament answered with the Coercive Acts, closing Boston's port and pushing the colonies toward united resistance.",
+     "wikipedia": "Boston Tea Party",
+     "wikidata": "Q19024"
+    },
+    {
+     "date": "1775-04-19",
+     "name": "Battles of Lexington and Concord",
+     "place_name": "Lexington, Massachusetts",
+     "lat": 42.45,
+     "lon": -71.23,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Paul Revere"
+     ],
+     "what": "British regulars sent to seize militia arms at Concord exchanged fire with minutemen and were harried back to Boston.",
+     "why": "The first shots of the war turned protest into armed rebellion and led to the siege of Boston.",
+     "wikipedia": "Battles of Lexington and Concord",
+     "wikidata": "Q778010"
+    },
+    {
+     "date": "1776-01-10",
+     "name": "Common Sense",
+     "place_name": "Philadelphia",
+     "lat": 39.95,
+     "lon": -75.15,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Thomas Paine"
+     ],
+     "what": "Thomas Paine published a pamphlet arguing in plain language for independence and against monarchy; it sold tens of thousands of copies within months.",
+     "why": "It moved public opinion from reconciliation with the king toward a full break.",
+     "wikipedia": "Common Sense",
+     "wikidata": "Q843940"
+    },
+    {
+     "date": "1776-07-04",
+     "name": "United States Declaration of Independence",
+     "place_name": "Pennsylvania State House, Philadelphia",
+     "lat": 39.95,
+     "lon": -75.15,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Thomas Jefferson",
+      "John Adams",
+      "Benjamin Franklin"
+     ],
+     "what": "The Second Continental Congress adopted a declaration, drafted mainly by Thomas Jefferson, that the colonies were free and independent states.",
+     "why": "It turned a colonial rebellion into a war for a new country and stated its founding principles.",
+     "wikipedia": "United States Declaration of Independence",
+     "wikidata": "Q127912"
+    },
+    {
+     "date": "1777-09-19",
+     "end_date": "1777-10-17",
+     "name": "Battles of Saratoga",
+     "place_name": "Saratoga, New York",
+     "lat": 43.0,
+     "lon": -73.64,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "John Burgoyne",
+      "Horatio Gates",
+      "Benedict Arnold"
+     ],
+     "what": "After two battles, John Burgoyne surrendered about 6,000 British and German troops to Horatio Gates.",
+     "why": "The victory convinced France that the Americans could win.",
+     "wikipedia": "Battles of Saratoga",
+     "wikidata": "Q846674"
+    },
+    {
+     "date": "1777-12-19",
+     "end_date": "1778-06-19",
+     "name": "Valley Forge",
+     "place_name": "Valley Forge, Pennsylvania",
+     "lat": 40.1,
+     "lon": -75.44,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "George Washington",
+      "Friedrich Wilhelm von Steuben"
+     ],
+     "what": "About 12,000 Continental soldiers wintered in huts; perhaps 2,000 died of disease, while Steuben drilled the survivors.",
+     "why": "The army came out of the winter smaller but better trained and more professional.",
+     "wikipedia": "Valley Forge",
+     "wikidata": "Q1855211"
+    },
+    {
+     "date": "1778-02-06",
+     "name": "Treaty of Alliance (1778)",
+     "place_name": "Paris",
+     "lat": 48.86,
+     "lon": 2.35,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Benjamin Franklin"
+     ],
+     "what": "Benjamin Franklin and fellow commissioners signed a military alliance with France.",
+     "why": "French money, troops and above all the French navy made the final victory possible.",
+     "wikipedia": "Treaty of Alliance (1778)",
+     "wikidata": "Q2788282"
+    },
+    {
+     "date": "1781-09-28",
+     "end_date": "1781-10-19",
+     "name": "Siege of Yorktown",
+     "place_name": "Yorktown, Virginia",
+     "lat": 37.24,
+     "lon": -76.51,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "George Washington",
+      "Jean-Baptiste Donatien de Vimeur, comte de Rochambeau",
+      "Charles Cornwallis, 1st Marquess Cornwallis"
+     ],
+     "what": "American and French forces, with a French fleet blocking the bay, forced Cornwallis to surrender about 8,000 men.",
+     "why": "The surrender broke Britain's will to continue the land war in America.",
+     "wikipedia": "Siege of Yorktown",
+     "wikidata": "Q459447"
+    },
+    {
+     "date": "1783-09-03",
+     "name": "Treaty of Paris (1783)",
+     "place_name": "Paris",
+     "lat": 48.86,
+     "lon": 2.35,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Benjamin Franklin",
+      "John Adams",
+      "John Jay"
+     ],
+     "what": "Britain recognised the independence of the United States, with a western border on the Mississippi.",
+     "why": "It ended the war and gave the new country a huge territory to govern.",
+     "wikipedia": "Treaty of Paris (1783)",
+     "wikidata": "Q217450"
+    },
+    {
+     "date": "1786-08",
+     "end_date": "1787-02",
+     "name": "Shays's Rebellion",
+     "place_name": "Springfield, Massachusetts",
+     "lat": 42.1,
+     "lon": -72.59,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Daniel Shays"
+     ],
+     "what": "Indebted farmers in western Massachusetts closed courts and in January 1787 tried to seize the Springfield armory.",
+     "why": "The weak national government could do nothing, which persuaded many leaders that the Articles of Confederation had to be replaced.",
+     "wikipedia": "Shays's Rebellion"
+    },
+    {
+     "date": "1787-05-25",
+     "end_date": "1787-09-17",
+     "name": "Constitutional Convention (United States)",
+     "place_name": "Philadelphia",
+     "lat": 39.95,
+     "lon": -75.15,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "George Washington",
+      "James Madison",
+      "Benjamin Franklin"
+     ],
+     "what": "Fifty-five delegates met in secret and wrote a new constitution with a two-house Congress, a president and federal courts.",
+     "why": "It created the federal system that still governs the United States, including compromises over slavery.",
+     "wikipedia": "Constitutional Convention (United States)",
+     "wikidata": "Q405475"
+    },
+    {
+     "date": "1789-04-30",
+     "name": "First inauguration of George Washington",
+     "place_name": "Federal Hall, New York",
+     "lat": 40.71,
+     "lon": -74.01,
+     "family": "diplomacy",
+     "subtype": "reign",
+     "who": [
+      "George Washington"
+     ],
+     "what": "George Washington took the oath as the first president on the balcony of Federal Hall in New York, then the capital.",
+     "why": "The new constitution began to work as a government.",
+     "wikipedia": "First inauguration of George Washington",
+     "wikidata": "Q5454184"
+    },
+    {
+     "date": "1791-12-15",
+     "name": "United States Bill of Rights",
+     "place_name": "Richmond, Virginia",
+     "lat": 37.54,
+     "lon": -77.44,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "James Madison"
+     ],
+     "what": "Virginia's ratification completed adoption of the first ten amendments, drafted by James Madison, protecting speech, religion, the press and trial rights.",
+     "why": "It settled the main objection of opponents of the constitution and closed the founding period.",
+     "wikipedia": "United States Bill of Rights",
+     "wikidata": "Q862765"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "haitian_revolution",
+   "title": "The Haitian Revolution",
+   "region": "Saint-Domingue (Haiti)",
+   "start": 1789,
+   "end": 1825,
+   "view": {
+    "lon": -72.5,
+    "lat": 19.2,
+    "span": 6
+   },
+   "blurb": "How did enslaved people in France's richest colony destroy slavery and found the first Black republic?",
+   "steps": [
+    {
+     "date": "1789",
+     "name": "Saint-Domingue",
+     "place_name": "Cap-Français",
+     "lat": 19.76,
+     "lon": -72.2,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "On the eve of revolution about half a million enslaved Africans worked the sugar and coffee plantations of Saint-Domingue, outnumbering whites roughly ten to one.",
+     "why": "The colony was the most profitable in the Caribbean, and its brutal plantation system was what the revolution overthrew.",
+     "wikipedia": "Saint-Domingue",
+     "wikidata": "Q861551"
+    },
+    {
+     "date": "1790-10",
+     "end_date": "1791-02",
+     "name": "Ogé's revolt",
+     "place_name": "Cap-Français",
+     "lat": 19.76,
+     "lon": -72.2,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Vincent Ogé"
+     ],
+     "what": "Vincent Ogé, a free man of colour, led a small armed rising demanding equal rights for free people of colour; he was captured and broken on the wheel in February 1791.",
+     "why": "It showed that the French Revolution's talk of rights had reached the colony, and that the planters would answer with terror.",
+     "wikipedia": "Vincent Ogé",
+     "wikidata": "Q3559780"
+    },
+    {
+     "date": "1791-08-14",
+     "date_note": "traditional date",
+     "name": "Bois Caïman",
+     "place_name": "Bois Caïman, Northern Plain",
+     "lat": 19.7,
+     "lon": -72.25,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Dutty Boukman"
+     ],
+     "what": "Enslaved leaders, with Dutty Boukman prominent, met at a night ceremony in the woods to plan a rising.",
+     "why": "Tradition marks it as the moment the revolution was planned.",
+     "wikipedia": "Bois Caïman",
+     "wikidata": "Q3010371"
+    },
+    {
+     "date": "1791-08-22",
+     "name": "Haitian Revolution",
+     "place_name": "Plaine-du-Nord",
+     "lat": 19.68,
+     "lon": -72.27,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Dutty Boukman"
+     ],
+     "what": "Enslaved people of the Northern Plain rose together, burning hundreds of plantations within weeks.",
+     "why": "It was the largest slave revolt in the Americas and the start of a thirteen-year war.",
+     "wikipedia": "Haitian Revolution",
+     "wikidata": "Q689128"
+    },
+    {
+     "date": "1793-08-29",
+     "name": "Sonthonax's emancipation decree",
+     "place_name": "Cap-Français",
+     "lat": 19.76,
+     "lon": -72.2,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Léger-Félicité Sonthonax"
+     ],
+     "what": "French commissioner Léger-Félicité Sonthonax, facing Spanish and British invasion, declared all slaves in the northern province free.",
+     "why": "Freedom was granted on the ground before Paris approved it, to win Black soldiers to the French side.",
+     "wikipedia": "Léger-Félicité Sonthonax",
+     "wikidata": "Q1050194"
+    },
+    {
+     "date": "1794-02-04",
+     "name": "Law of 4 February 1794",
+     "place_name": "Paris",
+     "lat": 48.86,
+     "lon": 2.35,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [],
+     "what": "The National Convention abolished slavery in all French colonies and made former slaves citizens.",
+     "why": "It led Toussaint Louverture to leave Spanish service and fight for the French Republic that spring.",
+     "wikipedia": "Law of 4 February 1794",
+     "wikidata": "Q3042938"
+    },
+    {
+     "date": "1801-01",
+     "name": "Toussaint's occupation of Santo Domingo",
+     "place_name": "Santo Domingo",
+     "lat": 18.47,
+     "lon": -69.89,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Toussaint Louverture"
+     ],
+     "what": "Toussaint Louverture marched east and took over the Spanish part of the island, which Spain had ceded to France in 1795.",
+     "why": "It put the whole of Hispaniola under his command.",
+     "wikipedia": "Toussaint Louverture",
+     "wikidata": "Q205783"
+    },
+    {
+     "date": "1801-07",
+     "name": "Constitution of 1801",
+     "place_name": "Cap-Français",
+     "lat": 19.76,
+     "lon": -72.2,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Toussaint Louverture"
+     ],
+     "what": "Toussaint proclaimed a constitution that banned slavery for ever and made him governor for life, while keeping the colony nominally French.",
+     "why": "Napoleon read it as a bid for independence and decided to retake the colony.",
+     "wikipedia": "Constitution of Haiti",
+     "wikidata": "Q19883868"
+    },
+    {
+     "date": "1802-02",
+     "name": "Saint-Domingue expedition",
+     "place_name": "Cap-Français",
+     "lat": 19.76,
+     "lon": -72.2,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Charles Leclerc",
+      "Henri Christophe",
+      "Toussaint Louverture"
+     ],
+     "what": "General Charles Leclerc landed with over 20,000 French troops; Henri Christophe burned Cap-Français rather than hand it over.",
+     "why": "France aimed to restore control and, as later became clear, slavery.",
+     "wikipedia": "Saint-Domingue expedition",
+     "wikidata": "Q3062411"
+    },
+    {
+     "date": "1802-03-04",
+     "end_date": "1802-03-24",
+     "name": "Battle of Crête-à-Pierrot",
+     "place_name": "Petite-Rivière-de-l'Artibonite",
+     "lat": 19.13,
+     "lon": -72.48,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Jean-Jacques Dessalines",
+      "Charles Leclerc"
+     ],
+     "what": "A small garrison held a hill fort against much larger French forces for three weeks before breaking out.",
+     "why": "Heavy French losses showed that the reconquest would be costly.",
+     "wikipedia": "Battle of Crête-à-Pierrot",
+     "wikidata": "Q3486058"
+    },
+    {
+     "date": "1803-04-07",
+     "name": "Death of Toussaint Louverture",
+     "place_name": "Fort de Joux, France",
+     "lat": 46.87,
+     "lon": 6.37,
+     "family": "war",
+     "subtype": "death",
+     "who": [
+      "Toussaint Louverture"
+     ],
+     "what": "Seized by trickery in June 1802 and deported, Toussaint died in a cold cell in the Jura mountains.",
+     "why": "His capture did not end the war; news that France had restored slavery in Guadeloupe drove his former officers back into revolt.",
+     "wikipedia": "Toussaint Louverture",
+     "wikidata": "Q205783"
+    },
+    {
+     "date": "1803-11-18",
+     "name": "Battle of Vertières",
+     "place_name": "Vertières, near Cap-Français",
+     "lat": 19.74,
+     "lon": -72.21,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Jean-Jacques Dessalines",
+      "François Capois",
+      "Donatien-Marie-Joseph de Vimeur, vicomte de Rochambeau"
+     ],
+     "what": "Dessalines' army stormed the forts outside Cap-Français; Rochambeau agreed to evacuate the remaining French troops.",
+     "why": "It was the final defeat of the French army, already ruined by yellow fever.",
+     "wikipedia": "Battle of Vertières",
+     "wikidata": "Q2484240"
+    },
+    {
+     "date": "1804-01-01",
+     "name": "Haitian Declaration of Independence",
+     "place_name": "Gonaïves",
+     "lat": 19.45,
+     "lon": -72.69,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Jean-Jacques Dessalines"
+     ],
+     "what": "Dessalines proclaimed the independent state of Haiti, taking the island's Taíno name.",
+     "why": "Haiti became the first state founded by formerly enslaved people and the second independent republic in the Americas.",
+     "wikipedia": "Haitian Declaration of Independence",
+     "wikidata": "Q17502440"
+    },
+    {
+     "date": "1804-02",
+     "end_date": "1804-04",
+     "name": "1804 Haitian massacre",
+     "place_name": "Port-au-Prince",
+     "lat": 18.54,
+     "lon": -72.34,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Jean-Jacques Dessalines"
+     ],
+     "what": "On Dessalines' orders, most of the remaining white French population, several thousand people, were killed.",
+     "why": "It was used abroad for decades to justify isolating the new state.",
+     "wikipedia": "1804 Haitian massacre",
+     "wikidata": "Q3297506"
+    },
+    {
+     "date": "1805",
+     "name": "Citadelle Laferrière",
+     "place_name": "Milot",
+     "lat": 19.57,
+     "lon": -72.24,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Henri Christophe"
+     ],
+     "what": "Work began on a huge mountaintop fortress, built by thousands of labourers and finished under Henri Christophe around 1820.",
+     "why": "It shows how much the new state feared a French return.",
+     "wikipedia": "Citadelle Laferrière",
+     "wikidata": "Q206194"
+    },
+    {
+     "date": "1825-04-17",
+     "name": "Haitian independence debt",
+     "place_name": "Port-au-Prince",
+     "lat": 18.54,
+     "lon": -72.34,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Jean-Pierre Boyer"
+     ],
+     "what": "Under threat from French warships, President Jean-Pierre Boyer accepted a royal ordinance demanding 150 million francs in return for recognition.",
+     "why": "The indemnity and the loans taken to pay it weighed on Haiti's economy for over a century.",
+     "wikipedia": "Haitian independence debt",
+     "wikidata": "Q3062299"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "latin_american_independence",
+   "title": "Latin American independence",
+   "region": "Spanish and Portuguese America",
+   "start": 1808,
+   "end": 1826,
+   "view": {
+    "lon": -68.0,
+    "lat": -8.0,
+    "span": 75
+   },
+   "blurb": "How did Spain and Portugal lose nearly all of their American empires in less than twenty years?",
+   "steps": [
+    {
+     "date": "1808-03",
+     "name": "Transfer of the Portuguese court to Brazil",
+     "place_name": "Rio de Janeiro",
+     "lat": -22.91,
+     "lon": -43.17,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "John VI of Portugal"
+     ],
+     "what": "Fleeing Napoleon's invasion, the Portuguese royal family and thousands of courtiers sailed to Brazil and set up court in Rio de Janeiro; Brazil's ports were opened to foreign trade.",
+     "why": "Napoleon's occupation of Iberia left the colonies without a legitimate king in Europe, and in Brazil it put the monarchy itself in America.",
+     "wikipedia": "Transfer of the Portuguese court to Brazil",
+     "wikidata": "Q2670007"
+    },
+    {
+     "date": "1810-05-25",
+     "name": "May Revolution",
+     "place_name": "Buenos Aires",
+     "lat": -34.61,
+     "lon": -58.37,
+     "family": "unrest",
+     "subtype": "revolution",
+     "who": [],
+     "what": "After a week of meetings, a junta replaced the Spanish viceroy of the Río de la Plata.",
+     "why": "It started self-rule in the south, the base for San Martín's later campaigns.",
+     "wikipedia": "May Revolution",
+     "wikidata": "Q838980"
+    },
+    {
+     "date": "1810-09-16",
+     "name": "Grito de Dolores",
+     "place_name": "Dolores, Guanajuato",
+     "lat": 21.16,
+     "lon": -100.93,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Miguel Hidalgo y Costilla"
+     ],
+     "what": "The priest Miguel Hidalgo rang his church bell and called his parishioners to revolt; a mass peasant army followed.",
+     "why": "It began Mexico's war of independence, which was won in 1821.",
+     "wikipedia": "Grito de Dolores",
+     "wikidata": "Q1145411"
+    },
+    {
+     "date": "1811-07-05",
+     "name": "Venezuelan Declaration of Independence",
+     "place_name": "Caracas",
+     "lat": 10.5,
+     "lon": -66.91,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Francisco de Miranda",
+      "Simón Bolívar"
+     ],
+     "what": "A congress in Caracas declared Venezuela independent of Spain, the first Spanish colony to do so formally.",
+     "why": "The First Republic collapsed within a year, beginning Bolívar's long series of defeats and returns.",
+     "wikipedia": "Venezuelan Declaration of Independence",
+     "wikidata": "Q3382350"
+    },
+    {
+     "date": "1815-09-06",
+     "name": "Jamaica Letter",
+     "place_name": "Kingston, Jamaica",
+     "lat": 17.97,
+     "lon": -76.79,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Simón Bolívar"
+     ],
+     "what": "In exile after Spanish reconquest, Bolívar wrote a long letter setting out why Spanish America would and should be free.",
+     "why": "It is the clearest statement of his political vision, written at his lowest point.",
+     "wikipedia": "Jamaica Letter",
+     "wikidata": "Q633110"
+    },
+    {
+     "date": "1816-07-09",
+     "name": "Argentine Declaration of Independence",
+     "place_name": "San Miguel de Tucumán",
+     "lat": -26.83,
+     "lon": -65.2,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [],
+     "what": "The Congress of Tucumán declared the United Provinces of South America independent.",
+     "why": "It gave San Martín's planned invasion of Chile a declared state behind it.",
+     "wikipedia": "Argentine Declaration of Independence",
+     "wikidata": "Q3248484"
+    },
+    {
+     "date": "1817-01",
+     "end_date": "1817-02",
+     "name": "Crossing of the Andes",
+     "place_name": "Mendoza",
+     "lat": -32.89,
+     "lon": -68.83,
+     "family": "war",
+     "subtype": "journey",
+     "who": [
+      "José de San Martín",
+      "Bernardo O'Higgins"
+     ],
+     "what": "San Martín's route: the Army of the Andes, about 5,000 men, left Mendoza and crossed passes over 3,500 metres high, mainly Los Patos and Uspallata, into Chile.",
+     "why": "It turned the royalist position in Chile from behind instead of attacking through Upper Peru.",
+     "wikipedia": "Crossing of the Andes",
+     "wikidata": "Q968126"
+    },
+    {
+     "date": "1817-02-12",
+     "name": "Battle of Chacabuco",
+     "place_name": "Chacabuco, Chile",
+     "lat": -32.98,
+     "lon": -70.7,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "José de San Martín",
+      "Bernardo O'Higgins"
+     ],
+     "what": "Days after coming down from the mountains, San Martín and O'Higgins defeated the royalists and entered Santiago.",
+     "why": "Chile became the base for a seaborne attack on Peru, Spain's stronghold.",
+     "wikipedia": "Battle of Chacabuco",
+     "wikidata": "Q1425658"
+    },
+    {
+     "date": "1819-08-07",
+     "name": "Battle of Boyacá",
+     "place_name": "Boyacá, Colombia",
+     "lat": 5.45,
+     "lon": -73.41,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Simón Bolívar",
+      "Francisco de Paula Santander"
+     ],
+     "what": "Bolívar's route: from the Venezuelan plains his army crossed the flooded llanos and the Andes by the Páramo de Pisba, then routed the royalists at a bridge near Tunja.",
+     "why": "Bogotá fell days later, and New Granada gave Bolívar men and money for the rest of the war.",
+     "wikipedia": "Battle of Boyacá",
+     "wikidata": "Q1150410"
+    },
+    {
+     "date": "1821-06-24",
+     "name": "Battle of Carabobo",
+     "place_name": "Carabobo, Venezuela",
+     "lat": 10.04,
+     "lon": -68.19,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Simón Bolívar",
+      "José Antonio Páez"
+     ],
+     "what": "Bolívar's army broke the main royalist army in Venezuela.",
+     "why": "It secured Venezuela's independence inside Bolívar's Gran Colombia.",
+     "wikipedia": "Battle of Carabobo",
+     "wikidata": "Q388210"
+    },
+    {
+     "date": "1821-07-28",
+     "name": "Peruvian War of Independence",
+     "place_name": "Lima",
+     "lat": -12.05,
+     "lon": -77.03,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "José de San Martín"
+     ],
+     "what": "Having come by sea from Chile, San Martín proclaimed Peru's independence in Lima's main square.",
+     "why": "The viceroy's army still held the highlands, so the war in Peru was far from over.",
+     "wikipedia": "Peruvian War of Independence",
+     "wikidata": "Q68478"
+    },
+    {
+     "date": "1822-05-24",
+     "name": "Battle of Pichincha",
+     "place_name": "Quito",
+     "lat": -0.18,
+     "lon": -78.5,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Antonio José de Sucre"
+     ],
+     "what": "Antonio José de Sucre defeated the royalists on the slopes of the Pichincha volcano above Quito.",
+     "why": "It freed what is now Ecuador and brought it into Gran Colombia.",
+     "wikipedia": "Battle of Pichincha",
+     "wikidata": "Q1402751"
+    },
+    {
+     "date": "1822-07-26",
+     "name": "Guayaquil Conference",
+     "place_name": "Guayaquil",
+     "lat": -2.19,
+     "lon": -79.89,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Simón Bolívar",
+      "José de San Martín"
+     ],
+     "what": "The two liberators met privately; no record survives, but soon after San Martín resigned and left Peru.",
+     "why": "The northern and southern campaigns merged under Bolívar's leadership.",
+     "wikipedia": "Guayaquil Conference",
+     "wikidata": "Q1441451"
+    },
+    {
+     "date": "1822-09-07",
+     "name": "Independence of Brazil",
+     "place_name": "Ipiranga, São Paulo",
+     "lat": -23.58,
+     "lon": -46.61,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Pedro I of Brazil"
+     ],
+     "what": "Prince Pedro, ordered home by Lisbon, declared Brazil independent by the Ipiranga brook and was crowned emperor that December.",
+     "why": "Brazil became independent as a single monarchy, without breaking into republics as Spanish America did.",
+     "wikipedia": "Independence of Brazil",
+     "wikidata": "Q1548600"
+    },
+    {
+     "date": "1824-12-09",
+     "name": "Battle of Ayacucho",
+     "place_name": "Pampa de Quinua, Ayacucho",
+     "lat": -13.05,
+     "lon": -74.13,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Antonio José de Sucre"
+     ],
+     "what": "Sucre's army defeated and captured the last viceroy of Peru, José de la Serna.",
+     "why": "It effectively ended Spanish rule on the South American mainland.",
+     "wikipedia": "Battle of Ayacucho",
+     "wikidata": "Q934157"
+    },
+    {
+     "date": "1826-06-22",
+     "end_date": "1826-07-15",
+     "name": "Congress of Panama",
+     "place_name": "Panama City",
+     "lat": 8.95,
+     "lon": -79.54,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [],
+     "what": "At Bolívar's call, delegates from Gran Colombia, Peru, Mexico and Central America met to plan a league of the new states.",
+     "why": "Its treaties were ratified only by Gran Colombia; the hoped-for union never came.",
+     "wikipedia": "Congress of Panama",
+     "wikidata": "Q1164951"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "india_plassey_to_raj",
+   "title": "India from Plassey to the Raj",
+   "region": "India",
+   "start": 1757,
+   "end": 1858,
+   "view": {
+    "lon": 80.0,
+    "lat": 23.0,
+    "span": 30
+   },
+   "blurb": "How did a trading company become the ruler of India, and why did the Crown take over after 1857?",
+   "steps": [
+    {
+     "date": "1757-06-23",
+     "name": "Battle of Plassey",
+     "place_name": "Palashi, Bengal",
+     "lat": 23.8,
+     "lon": 88.25,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Robert Clive",
+      "Siraj-ud-Daulah",
+      "Mir Jafar"
+     ],
+     "what": "Robert Clive's small East India Company force beat the Nawab of Bengal after Mir Jafar, his commander, held back his troops.",
+     "why": "The Company installed Mir Jafar as a puppet and took control of Bengal's wealth.",
+     "wikipedia": "Battle of Plassey",
+     "wikidata": "Q203233"
+    },
+    {
+     "date": "1765-08-12",
+     "name": "Treaty of Allahabad",
+     "place_name": "Allahabad",
+     "lat": 25.44,
+     "lon": 81.85,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Robert Clive",
+      "Shah Alam II"
+     ],
+     "what": "After victory at Buxar, the Company received from the Mughal emperor the diwani, the right to collect revenue in Bengal, Bihar and Orissa.",
+     "why": "Land tax, not trade, now paid for the Company and its army.",
+     "wikipedia": "Treaty of Allahabad",
+     "wikidata": "Q4062556"
+    },
+    {
+     "date": "1770",
+     "name": "Great Bengal famine of 1770",
+     "place_name": "Murshidabad, Bengal",
+     "lat": 24.18,
+     "lon": 88.27,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [],
+     "what": "After failed rains, famine killed millions in Bengal, often estimated at about a third of the population, while revenue collection was kept up.",
+     "why": "It exposed the cost of Company rule for ordinary people and led to the first parliamentary controls on the Company.",
+     "wikipedia": "Great Bengal famine of 1770",
+     "wikidata": "Q2477522"
+    },
+    {
+     "date": "1793",
+     "name": "Permanent Settlement",
+     "place_name": "Calcutta",
+     "lat": 22.57,
+     "lon": 88.36,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Charles Cornwallis, 1st Marquess Cornwallis"
+     ],
+     "what": "Governor-General Cornwallis fixed Bengal's land tax for ever and made zamindars the owners of the land.",
+     "why": "It created a landlord class loyal to British rule and left peasants exposed to rising rents.",
+     "wikipedia": "Permanent Settlement",
+     "wikidata": "Q569762"
+    },
+    {
+     "date": "1799-05-04",
+     "name": "Siege of Seringapatam (1799)",
+     "place_name": "Srirangapatna",
+     "lat": 12.42,
+     "lon": 76.69,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Tipu Sultan",
+      "Arthur Wellesley, 1st Duke of Wellington"
+     ],
+     "what": "British and allied troops stormed Tipu Sultan's capital and Tipu was killed in the fighting, ending the fourth Anglo-Mysore war.",
+     "why": "The Company's strongest southern rival, who had sought French help, was gone.",
+     "wikipedia": "Siege of Seringapatam (1799)",
+     "wikidata": "Q815204"
+    },
+    {
+     "date": "1803-09-23",
+     "name": "Battle of Assaye",
+     "place_name": "Assaye, Maharashtra",
+     "lat": 20.25,
+     "lon": 75.88,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Arthur Wellesley, 1st Duke of Wellington"
+     ],
+     "what": "Arthur Wellesley's army of about 9,500 beat a much larger Maratha army of Scindia and Bhonsle.",
+     "why": "The Marathas, the last great Indian power, began to lose central and northern India to the Company.",
+     "wikipedia": "Battle of Assaye",
+     "wikidata": "Q2095678"
+    },
+    {
+     "date": "1830",
+     "date_note": "c.; the decline ran from about 1800 to 1840",
+     "name": "Decline of Dhaka muslin",
+     "place_name": "Dhaka",
+     "lat": 23.71,
+     "lon": 90.41,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Dhaka's famous fine muslin trade collapsed as cheap machine-made Lancashire cotton flooded India after the Company's trade monopoly ended in 1813, and the city's population fell sharply.",
+     "why": "India went from exporting cloth to the world to importing British cloth, a key part of its economic subordination.",
+     "wikipedia": "Dhaka muslin",
+     "wikidata": "Q139024599"
+    },
+    {
+     "date": "1849-03-29",
+     "name": "Annexation of the Punjab",
+     "place_name": "Lahore",
+     "lat": 31.55,
+     "lon": 74.34,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Duleep Singh",
+      "James Broun-Ramsay, 1st Marquess of Dalhousie"
+     ],
+     "what": "After the second Anglo-Sikh war, Dalhousie annexed the Sikh kingdom; the boy Maharaja Duleep Singh surrendered the Koh-i-Noor diamond.",
+     "why": "It completed British control of the subcontinent up to the Afghan frontier.",
+     "wikipedia": "Second Anglo-Sikh War",
+     "wikidata": "Q243590"
+    },
+    {
+     "date": "1853-04-16",
+     "name": "First passenger train in India",
+     "place_name": "Bori Bunder, Bombay",
+     "lat": 18.94,
+     "lon": 72.84,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [],
+     "what": "The first passenger train ran 34 km from Bombay to Thane.",
+     "why": "Railways bound India's economy to export trade and later moved troops in 1857.",
+     "wikipedia": "Rail transport in India",
+     "wikidata": "Q914913"
+    },
+    {
+     "date": "1856-02",
+     "name": "Annexation of Awadh",
+     "place_name": "Lucknow",
+     "lat": 26.85,
+     "lon": 80.95,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Wajid Ali Shah",
+      "James Broun-Ramsay, 1st Marquess of Dalhousie"
+     ],
+     "what": "The Company deposed Nawab Wajid Ali Shah, citing misrule, and annexed his kingdom.",
+     "why": "Awadh supplied many Bengal army sepoys, and its annexation fed the anger behind 1857.",
+     "wikipedia": "Wajid Ali Shah",
+     "wikidata": "Q3635804"
+    },
+    {
+     "date": "1857-05-10",
+     "name": "Indian Rebellion of 1857",
+     "place_name": "Meerut",
+     "lat": 28.98,
+     "lon": 77.71,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [],
+     "what": "Sepoys at Meerut, angered by the jailing of comrades who refused new cartridges, killed their officers and rode to Delhi.",
+     "why": "A mutiny became a wide rebellion across northern India.",
+     "wikipedia": "Indian Rebellion of 1857",
+     "wikidata": "Q129864"
+    },
+    {
+     "date": "1857-06-05",
+     "end_date": "1857-06-25",
+     "name": "Siege of Cawnpore",
+     "place_name": "Kanpur",
+     "lat": 26.45,
+     "lon": 80.33,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Nana Saheb Peshwa II"
+     ],
+     "what": "Rebels under Nana Saheb besieged the British entrenchment; after the surrender many were killed at the river and the women and children later at the Bibighar.",
+     "why": "The killings fuelled savage British reprisals across the region.",
+     "wikipedia": "Siege of Cawnpore",
+     "wikidata": "Q627881"
+    },
+    {
+     "date": "1857-06-08",
+     "end_date": "1857-09-21",
+     "name": "Siege of Delhi (1857)",
+     "place_name": "Delhi",
+     "lat": 28.66,
+     "lon": 77.23,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Bahadur Shah Zafar"
+     ],
+     "what": "Rebels proclaimed the aged Mughal Bahadur Shah Zafar their emperor; British forces on the Ridge stormed the city in September.",
+     "why": "The fall of Delhi ended the rebellion's symbolic centre and the Mughal dynasty with it.",
+     "wikipedia": "Siege of Delhi (1857)",
+     "wikidata": "Q2343263"
+    },
+    {
+     "date": "1857-07-01",
+     "end_date": "1857-11-27",
+     "name": "Siege of Lucknow",
+     "place_name": "Residency, Lucknow",
+     "lat": 26.86,
+     "lon": 80.93,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Henry Lawrence (Indian Army officer)",
+      "Begum Hazrat Mahal"
+     ],
+     "what": "The British Residency held out for months against rebels, while Begum Hazrat Mahal led resistance in Awadh.",
+     "why": "Awadh was the heart of the popular rising, not only of the mutiny.",
+     "wikipedia": "Siege of Lucknow",
+     "wikidata": "Q815165"
+    },
+    {
+     "date": "1858-06-18",
+     "name": "Death of Rani Lakshmibai",
+     "place_name": "Gwalior",
+     "lat": 26.22,
+     "lon": 78.18,
+     "family": "war",
+     "subtype": "death",
+     "who": [
+      "Lakshmibai, Rani of Jhansi"
+     ],
+     "what": "The Rani of Jhansi, whose state had been annexed under the doctrine of lapse, was killed fighting British troops near Gwalior.",
+     "why": "Her death marked the end of major resistance and made her a lasting nationalist symbol.",
+     "wikipedia": "Lakshmibai, Rani of Jhansi",
+     "wikidata": "Q181878"
+    },
+    {
+     "date": "1858-08-02",
+     "name": "Government of India Act 1858",
+     "place_name": "Westminster, London",
+     "lat": 51.5,
+     "lon": -0.13,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [],
+     "what": "Parliament transferred the East India Company's powers to the Crown, with a Secretary of State and a Viceroy.",
+     "why": "Company rule ended and the British Raj began.",
+     "wikipedia": "Government of India Act 1858",
+     "wikidata": "Q1359529"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "china_century_humiliation",
+   "title": "China's century of humiliation begins",
+   "region": "Qing China",
+   "start": 1839,
+   "end": 1901,
+   "view": {
+    "lon": 115.0,
+    "lat": 31.0,
+    "span": 30
+   },
+   "blurb": "How did opium, foreign wars and rebellion weaken the Qing empire, and why did its reforms fall short?",
+   "steps": [
+    {
+     "date": "1839-06-03",
+     "end_date": "1839-06-25",
+     "name": "Destruction of opium at Humen",
+     "place_name": "Humen, Guangdong",
+     "lat": 22.82,
+     "lon": 113.67,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Lin Zexu"
+     ],
+     "what": "Imperial commissioner Lin Zexu had over 1,000 tonnes of confiscated British opium mixed with lime and salt and washed into the sea.",
+     "why": "Britain used the seizure as the reason for the First Opium War.",
+     "wikipedia": "Destruction of opium at Humen",
+     "wikidata": "Q1825430"
+    },
+    {
+     "date": "1841-01-26",
+     "name": "British Hong Kong",
+     "place_name": "Possession Point, Hong Kong",
+     "lat": 22.29,
+     "lon": 114.15,
+     "family": "war",
+     "subtype": "founding",
+     "who": [],
+     "what": "British forces raised the flag and occupied Hong Kong Island during the war.",
+     "why": "Hong Kong became a British base and free port on China's coast for 156 years.",
+     "wikipedia": "British Hong Kong",
+     "wikidata": "Q1054923"
+    },
+    {
+     "date": "1842-08-29",
+     "name": "Treaty of Nanking",
+     "place_name": "Nanjing (aboard HMS Cornwallis)",
+     "lat": 32.07,
+     "lon": 118.78,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Henry Pottinger",
+      "Qiying"
+     ],
+     "what": "China ceded Hong Kong, opened five ports to British trade and paid 21 million silver dollars.",
+     "why": "It was the first of the unequal treaties that limited Chinese sovereignty.",
+     "wikipedia": "Treaty of Nanking",
+     "wikidata": "Q238262"
+    },
+    {
+     "date": "1851-01-11",
+     "name": "Jintian Uprising",
+     "place_name": "Jintian, Guangxi",
+     "lat": 23.47,
+     "lon": 110.03,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Hong Xiuquan"
+     ],
+     "what": "Hong Xiuquan, who believed he was the younger brother of Jesus, proclaimed the Taiping Heavenly Kingdom with an army of followers.",
+     "why": "It started the Taiping Rebellion, one of the deadliest wars in history.",
+     "wikipedia": "Jintian Uprising",
+     "wikidata": "Q1512810"
+    },
+    {
+     "date": "1853-03-19",
+     "name": "Taiping capture of Nanjing",
+     "place_name": "Nanjing",
+     "lat": 32.06,
+     "lon": 118.8,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Hong Xiuquan"
+     ],
+     "what": "Taiping armies took Nanjing and made it their capital, Tianjing.",
+     "why": "For eleven years a rival state held the rich lower Yangzi.",
+     "wikipedia": "Taiping Heavenly Kingdom",
+     "wikidata": "Q3486676"
+    },
+    {
+     "date": "1855",
+     "name": "Yellow River course change",
+     "place_name": "Tongwaxiang, Henan",
+     "lat": 34.82,
+     "lon": 114.82,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "Neglected dykes broke and the Yellow River shifted its course hundreds of kilometres north, flooding the plain and reaching the sea north of Shandong.",
+     "why": "A state absorbed by rebellion could no longer maintain the water works its legitimacy rested on.",
+     "wikipedia": "Yellow River",
+     "wikidata": "Q7355"
+    },
+    {
+     "date": "1860-10-18",
+     "name": "Burning of the Old Summer Palace",
+     "place_name": "Old Summer Palace, Beijing",
+     "lat": 40.01,
+     "lon": 116.3,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "James Bruce, 8th Earl of Elgin"
+     ],
+     "what": "In the Second Opium War, Lord Elgin ordered British troops to burn the imperial garden palace after looting it with French forces.",
+     "why": "The Convention of Peking days later opened more ports and legalised the opium trade.",
+     "wikipedia": "Old Summer Palace",
+     "wikidata": "Q907894"
+    },
+    {
+     "date": "1864-07-19",
+     "name": "Third Battle of Nanjing",
+     "place_name": "Nanjing",
+     "lat": 32.06,
+     "lon": 118.8,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Zeng Guofan"
+     ],
+     "what": "Zeng Guofan's Xiang Army stormed Nanjing, weeks after Hong Xiuquan's death.",
+     "why": "The war, which killed tens of millions, was won by provincial armies, not the old imperial forces.",
+     "wikipedia": "Third Battle of Nanjing",
+     "wikidata": "Q7784779"
+    },
+    {
+     "date": "1865",
+     "name": "Jiangnan Arsenal",
+     "place_name": "Shanghai",
+     "lat": 31.2,
+     "lon": 121.48,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Zeng Guofan",
+      "Li Hongzhang"
+     ],
+     "what": "Zeng Guofan and Li Hongzhang founded an arsenal in Shanghai to make guns and steamships, with a translation office for Western science.",
+     "why": "It is the emblem of the Self-Strengthening Movement: Western technology under Confucian rule.",
+     "wikipedia": "Jiangnan Shipyard",
+     "wikidata": "Q81472"
+    },
+    {
+     "date": "1876",
+     "end_date": "1879",
+     "name": "Northern Chinese Famine of 1876–1879",
+     "place_name": "Taiyuan, Shanxi",
+     "lat": 37.87,
+     "lon": 112.55,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [],
+     "what": "Drought caused famine across northern China, killing roughly 9 to 13 million people, worst in Shanxi.",
+     "why": "Relief was slow and poor, showing the limits of the state's reach.",
+     "wikipedia": "Northern Chinese Famine of 1876–1879",
+     "wikidata": "Q27675"
+    },
+    {
+     "date": "1894-09-17",
+     "name": "Battle of the Yalu River (1894)",
+     "place_name": "Mouth of the Yalu River",
+     "lat": 39.5,
+     "lon": 123.5,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Ding Ruchang"
+     ],
+     "what": "Japan's navy defeated China's Beiyang Fleet, sinking several ships.",
+     "why": "China's modern fleet, the pride of Self-Strengthening, lost to a smaller country that had modernised faster.",
+     "wikipedia": "Battle of the Yalu River (1894)",
+     "wikidata": "Q385180"
+    },
+    {
+     "date": "1898-06-11",
+     "end_date": "1898-09-21",
+     "name": "Hundred Days' Reform",
+     "place_name": "Beijing",
+     "lat": 39.92,
+     "lon": 116.39,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Guangxu Emperor",
+      "Kang Youwei",
+      "Empress Dowager Cixi"
+     ],
+     "what": "The Guangxu Emperor issued edicts on schools, exams and the army, advised by Kang Youwei, until Empress Dowager Cixi seized power and confined him.",
+     "why": "The failure of reform from the top left room for revolution.",
+     "wikipedia": "Hundred Days' Reform"
+    },
+    {
+     "date": "1900-06-20",
+     "end_date": "1900-08-14",
+     "name": "Siege of the International Legations",
+     "place_name": "Legation Quarter, Beijing",
+     "lat": 39.9,
+     "lon": 116.4,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Empress Dowager Cixi"
+     ],
+     "what": "Boxers and Qing troops besieged the foreign legations for 55 days until an eight-nation army took Beijing.",
+     "why": "Foreign troops occupied the capital and the court fled to Xi'an.",
+     "wikipedia": "Siege of the International Legations",
+     "wikidata": "Q4337436"
+    },
+    {
+     "date": "1901-09-07",
+     "name": "Boxer Protocol",
+     "place_name": "Beijing",
+     "lat": 39.9,
+     "lon": 116.4,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Li Hongzhang"
+     ],
+     "what": "China agreed to pay 450 million taels of silver over 39 years and to let foreign troops be stationed in Beijing.",
+     "why": "The indemnity crippled Qing finances in the dynasty's last decade.",
+     "wikipedia": "Boxer Protocol",
+     "wikidata": "Q672556"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "meiji_japan",
+   "title": "Meiji Japan",
+   "region": "Japan",
+   "start": 1853,
+   "end": 1912,
+   "view": {
+    "lon": 135.0,
+    "lat": 36.0,
+    "span": 22
+   },
+   "blurb": "How did Japan go from forced opening in 1853 to defeating a European great power in 1905?",
+   "steps": [
+    {
+     "date": "1853-07-08",
+     "name": "Perry Expedition",
+     "place_name": "Uraga",
+     "lat": 35.24,
+     "lon": 139.72,
+     "family": "diplomacy",
+     "subtype": "voyage",
+     "who": [
+      "Matthew C. Perry"
+     ],
+     "what": "Commodore Perry's four American warships anchored off Uraga and delivered a demand that Japan open its ports; he returned in 1854 and got the Convention of Kanagawa.",
+     "why": "The shogunate's inability to refuse destroyed its prestige.",
+     "wikipedia": "Perry Expedition",
+     "wikidata": "Q7169780"
+    },
+    {
+     "date": "1860-03-24",
+     "name": "Sakuradamon incident",
+     "place_name": "Sakurada Gate, Edo",
+     "lat": 35.68,
+     "lon": 139.75,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Ii Naosuke"
+     ],
+     "what": "Samurai from Mito killed the chief minister Ii Naosuke, who had signed trade treaties without imperial approval.",
+     "why": "Political violence against the shogunate grew under the slogan 'revere the emperor, expel the barbarians'.",
+     "wikipedia": "Sakuradamon incident",
+     "wikidata": "Q7403192"
+    },
+    {
+     "date": "1866-03-07",
+     "name": "Satchō Alliance",
+     "place_name": "Kyoto",
+     "lat": 35.02,
+     "lon": 135.76,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Sakamoto Ryōma",
+      "Saigō Takamori",
+      "Kido Takayoshi"
+     ],
+     "what": "Brokered by Sakamoto Ryōma, the rival domains of Satsuma and Chōshū agreed to cooperate against the shogunate.",
+     "why": "Their combined forces would topple the shogun two years later.",
+     "wikipedia": "Satchō Alliance",
+     "wikidata": "Q700896"
+    },
+    {
+     "date": "1868-01-03",
+     "name": "Meiji Restoration",
+     "place_name": "Kyoto Imperial Palace",
+     "lat": 35.03,
+     "lon": 135.76,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Emperor Meiji",
+      "Saigō Takamori"
+     ],
+     "what": "Satsuma and allied troops seized the palace gates and the court proclaimed the restoration of direct imperial rule under the teenage Emperor Meiji.",
+     "why": "It ended over 260 years of Tokugawa rule and opened a revolution from above.",
+     "wikipedia": "Meiji Restoration",
+     "wikidata": "Q8707"
+    },
+    {
+     "date": "1868-01-27",
+     "end_date": "1868-01-31",
+     "name": "Battle of Toba–Fushimi",
+     "place_name": "Fushimi",
+     "lat": 34.93,
+     "lon": 135.76,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Saigō Takamori"
+     ],
+     "what": "Smaller Satsuma and Chōshū forces with modern rifles defeated the shogunate's army south of Kyoto.",
+     "why": "It opened the Boshin War and the former shogun soon gave up Edo.",
+     "wikipedia": "Battle of Toba–Fushimi",
+     "wikidata": "Q1193959"
+    },
+    {
+     "date": "1868-12",
+     "end_date": "1869-06-27",
+     "name": "Battle of Hakodate",
+     "place_name": "Goryōkaku, Hakodate",
+     "lat": 41.8,
+     "lon": 140.76,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Enomoto Takeaki",
+      "Hijikata Toshizō"
+     ],
+     "what": "The last shogunate loyalists under Enomoto Takeaki held out in Hokkaido until they surrendered the star fort of Goryōkaku.",
+     "why": "The Boshin War ended and the new government ruled all Japan.",
+     "wikipedia": "Battle of Hakodate",
+     "wikidata": "Q716562"
+    },
+    {
+     "date": "1871-08-29",
+     "name": "Abolition of the han system",
+     "place_name": "Tokyo",
+     "lat": 35.68,
+     "lon": 139.75,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Ōkubo Toshimichi",
+      "Kido Takayoshi"
+     ],
+     "what": "The government abolished the feudal domains and replaced them with prefectures run by officials sent from Tokyo.",
+     "why": "It created a centralised state and ended the daimyo's power at a stroke.",
+     "wikipedia": "Abolition of the han system",
+     "wikidata": "Q331905"
+    },
+    {
+     "date": "1871-12-23",
+     "end_date": "1873-09-13",
+     "name": "Iwakura Mission",
+     "place_name": "Yokohama",
+     "lat": 35.44,
+     "lon": 139.64,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Iwakura Tomomi",
+      "Ōkubo Toshimichi",
+      "Itō Hirobumi",
+      "Kido Takayoshi"
+     ],
+     "what": "About half the government's leaders sailed on a near two-year tour of the United States and Europe to study factories, schools and constitutions.",
+     "why": "It shaped the leaders' plan to build industry and institutions before seeking equality abroad.",
+     "wikipedia": "Iwakura Mission",
+     "wikidata": "Q696860"
+    },
+    {
+     "date": "1872",
+     "name": "Tomioka Silk Mill",
+     "place_name": "Tomioka, Gunma",
+     "lat": 36.26,
+     "lon": 138.89,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "The state opened a model silk-reeling mill with French machinery, staffed mainly by young women.",
+     "why": "Silk was Japan's main export and paid for imported machines and warships.",
+     "wikipedia": "Tomioka Silk Mill",
+     "wikidata": "Q7818931"
+    },
+    {
+     "date": "1872-10-14",
+     "name": "Shimbashi–Yokohama railway",
+     "place_name": "Shimbashi, Tokyo",
+     "lat": 35.66,
+     "lon": 139.76,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Emperor Meiji"
+     ],
+     "what": "The emperor opened Japan's first railway, 29 km from Shimbashi to Yokohama, built with British engineers.",
+     "why": "Rail became a symbol and tool of rapid modernisation.",
+     "wikipedia": "History of rail transport in Japan",
+     "wikidata": "Q5868525"
+    },
+    {
+     "date": "1877-01-29",
+     "end_date": "1877-09-24",
+     "name": "Satsuma Rebellion",
+     "place_name": "Shiroyama, Kagoshima",
+     "lat": 31.6,
+     "lon": 130.55,
+     "family": "war",
+     "subtype": "revolt",
+     "who": [
+      "Saigō Takamori"
+     ],
+     "what": "Discontented samurai rose under Saigō Takamori; a conscript army defeated them and Saigō died at Shiroyama.",
+     "why": "A peasant conscript army beat the samurai, ending the warrior class as a political force.",
+     "wikipedia": "Satsuma Rebellion",
+     "wikidata": "Q714820"
+    },
+    {
+     "date": "1889-02-11",
+     "name": "Meiji Constitution",
+     "place_name": "Imperial Palace, Tokyo",
+     "lat": 35.68,
+     "lon": 139.75,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Itō Hirobumi",
+      "Emperor Meiji"
+     ],
+     "what": "The emperor granted a constitution, drafted by Itō Hirobumi on German lines, with an elected lower house.",
+     "why": "Japan became the first constitutional state in Asia, with power kept close to the throne.",
+     "wikipedia": "Meiji Constitution",
+     "wikidata": "Q122804"
+    },
+    {
+     "date": "1895-04-17",
+     "name": "Treaty of Shimonoseki",
+     "place_name": "Shimonoseki",
+     "lat": 33.96,
+     "lon": 130.94,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Itō Hirobumi",
+      "Li Hongzhang"
+     ],
+     "what": "After defeating China, Japan gained Taiwan and a large indemnity and China recognised Korean independence.",
+     "why": "Japan became a colonial power; Russia, Germany and France soon forced it to return the Liaodong peninsula.",
+     "wikipedia": "Treaty of Shimonoseki",
+     "wikidata": "Q269655"
+    },
+    {
+     "date": "1902-01-30",
+     "name": "Anglo-Japanese Alliance",
+     "place_name": "London",
+     "lat": 51.51,
+     "lon": -0.13,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [],
+     "what": "Britain and Japan signed a defensive alliance aimed mainly at Russia.",
+     "why": "It was the first alliance of equals between a European power and an Asian state.",
+     "wikipedia": "Anglo-Japanese Alliance",
+     "wikidata": "Q541195"
+    },
+    {
+     "date": "1905-05-27",
+     "end_date": "1905-05-28",
+     "name": "Battle of Tsushima",
+     "place_name": "Tsushima Strait",
+     "lat": 34.5,
+     "lon": 130.0,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Tōgō Heihachirō",
+      "Zinovy Rozhestvensky"
+     ],
+     "what": "Admiral Tōgō's fleet destroyed the Russian Baltic Fleet after its seven-month voyage around the world.",
+     "why": "Japan won the Russo-Japanese War, the first modern defeat of a European great power by an Asian one.",
+     "wikipedia": "Battle of Tsushima",
+     "wikidata": "Q208127"
+    },
+    {
+     "date": "1910-08-22",
+     "name": "Japan–Korea Treaty of 1910",
+     "place_name": "Seoul",
+     "lat": 37.57,
+     "lon": 126.98,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [],
+     "what": "Japan annexed Korea, which it had made a protectorate in 1905.",
+     "why": "Japan's modernisation ended in an empire of its own; the Emperor Meiji died two years later, in July 1912.",
+     "wikipedia": "Japan–Korea Treaty of 1910",
+     "wikidata": "Q495558"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "scramble_for_africa",
+   "title": "The scramble for Africa",
+   "region": "Africa",
+   "start": 1869,
+   "end": 1914,
+   "view": {
+    "lon": 20.0,
+    "lat": 2.0,
+    "span": 75
+   },
+   "blurb": "How did European powers carve up almost all of Africa in thirty years, and how did Africans resist?",
+   "steps": [
+    {
+     "date": "1869-11-17",
+     "name": "Opening of the Suez Canal",
+     "place_name": "Port Said",
+     "lat": 31.26,
+     "lon": 32.3,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ferdinand de Lesseps",
+      "Isma'il Pasha of Egypt"
+     ],
+     "what": "The 164 km canal, built by Ferdinand de Lesseps' company largely with Egyptian labour, opened between the Mediterranean and the Red Sea.",
+     "why": "It made Egypt strategically vital to Britain's route to India; Egypt's debts soon brought foreign control.",
+     "wikipedia": "Suez Canal",
+     "wikidata": "Q899"
+    },
+    {
+     "date": "1871",
+     "name": "Kimberley diamond rush",
+     "place_name": "Kimberley",
+     "lat": -28.74,
+     "lon": 24.76,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Cecil Rhodes"
+     ],
+     "what": "Diamond finds drew thousands of diggers to a hill that became the Big Hole, dug by hand; Cecil Rhodes later merged the claims into De Beers.",
+     "why": "Mineral wealth pulled Britain deeper into southern Africa and built a migrant labour system.",
+     "wikipedia": "Big Hole",
+     "wikidata": "Q19040"
+    },
+    {
+     "date": "1879-01-22",
+     "name": "Battle of Isandlwana",
+     "place_name": "Isandlwana",
+     "lat": -28.36,
+     "lon": 30.65,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Cetshwayo"
+     ],
+     "what": "A Zulu army of about 20,000 overran a British camp, killing over 1,300 soldiers.",
+     "why": "It was one of the worst colonial defeats, though Britain conquered the Zulu kingdom within months.",
+     "wikipedia": "Battle of Isandlwana",
+     "wikidata": "Q747589"
+    },
+    {
+     "date": "1882-09-13",
+     "name": "Battle of Tell El Kebir",
+     "place_name": "Tell El Kebir, Egypt",
+     "lat": 30.54,
+     "lon": 31.83,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Garnet Wolseley, 1st Viscount Wolseley",
+      "Ahmed Urabi"
+     ],
+     "what": "British forces crushed the army of Ahmed Urabi, who had led a nationalist movement against foreign control.",
+     "why": "Britain occupied Egypt, and other powers rushed to claim territory elsewhere.",
+     "wikipedia": "Battle of Tell El Kebir",
+     "wikidata": "Q1420382"
+    },
+    {
+     "date": "1884-11-15",
+     "end_date": "1885-02-26",
+     "name": "Berlin Conference",
+     "place_name": "Berlin",
+     "lat": 52.51,
+     "lon": 13.38,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Otto von Bismarck"
+     ],
+     "what": "Fourteen states met under Bismarck to set rules for claiming African land; no Africans were present. Leopold II's claim to the Congo was recognised.",
+     "why": "It set the rules for the partition that followed.",
+     "wikipedia": "Berlin Conference",
+     "wikidata": "Q13582"
+    },
+    {
+     "date": "1885-01-26",
+     "name": "Siege of Khartoum",
+     "place_name": "Khartoum",
+     "lat": 15.6,
+     "lon": 32.53,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Charles George Gordon",
+      "Muhammad Ahmad"
+     ],
+     "what": "The Mahdi's forces stormed Khartoum after a ten-month siege and killed General Gordon.",
+     "why": "A Sudanese Islamic state held off British rule for thirteen years.",
+     "wikipedia": "Siege of Khartoum",
+     "wikidata": "Q815159"
+    },
+    {
+     "date": "1886",
+     "name": "Witwatersrand Gold Rush",
+     "place_name": "Johannesburg",
+     "lat": -26.2,
+     "lon": 28.05,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Gold found on the Witwatersrand in the Boer South African Republic created Johannesburg almost overnight.",
+     "why": "The world's largest gold field set British mining interests against the Boer republics.",
+     "wikipedia": "Witwatersrand Gold Rush",
+     "wikidata": "Q2604396"
+    },
+    {
+     "date": "1896",
+     "date_note": "the epizootic spread 1887-1897; it reached southern Africa in 1896",
+     "name": "Rinderpest epizootic",
+     "place_name": "Bulawayo",
+     "lat": -20.15,
+     "lon": 28.58,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "A cattle plague brought from Asia swept the continent, killing perhaps 80 to 90 percent of cattle in many regions.",
+     "why": "Famine and the loss of herds weakened African societies just as conquest came.",
+     "wikipedia": "1890s African rinderpest epizootic",
+     "wikidata": "Q97163433"
+    },
+    {
+     "date": "1896-03-01",
+     "name": "Battle of Adwa",
+     "place_name": "Adwa",
+     "lat": 14.17,
+     "lon": 38.9,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Menelik II",
+      "Taytu Betul",
+      "Oreste Baratieri"
+     ],
+     "what": "Emperor Menelik II's army, armed with modern rifles, defeated an Italian invasion force of about 17,000.",
+     "why": "Ethiopia kept its independence, the main exception to the partition.",
+     "wikipedia": "Battle of Adwa",
+     "wikidata": "Q302519"
+    },
+    {
+     "date": "1898-09-02",
+     "name": "Battle of Omdurman",
+     "place_name": "Kerreri, near Omdurman",
+     "lat": 15.71,
+     "lon": 32.48,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Herbert Kitchener, 1st Earl Kitchener",
+      "Abdallahi ibn Muhammad"
+     ],
+     "what": "Kitchener's army, with Maxim guns, killed about 12,000 Mahdist soldiers for fewer than 50 of its own dead.",
+     "why": "Industrial firepower decided the conquest; Sudan came under Anglo-Egyptian rule.",
+     "wikipedia": "Battle of Omdurman",
+     "wikidata": "Q1137302"
+    },
+    {
+     "date": "1898-09-18",
+     "name": "Fashoda Incident",
+     "place_name": "Fashoda (Kodok)",
+     "lat": 9.89,
+     "lon": 32.12,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Jean-Baptiste Marchand",
+      "Herbert Kitchener, 1st Earl Kitchener"
+     ],
+     "what": "Kitchener's flotilla met a small French expedition under Marchand that had crossed from the Atlantic; France backed down in November.",
+     "why": "Britain's Cape-to-Cairo and France's east-west ambitions collided, and the crisis ended in a settlement of spheres.",
+     "wikipedia": "Fashoda Incident",
+     "wikidata": "Q722699"
+    },
+    {
+     "date": "1899-11-02",
+     "end_date": "1900-02-28",
+     "name": "Siege of Ladysmith",
+     "place_name": "Ladysmith",
+     "lat": -28.56,
+     "lon": 29.78,
+     "family": "war",
+     "subtype": "siege",
+     "who": [],
+     "what": "Boer forces besieged a British garrison for 118 days early in the Second Boer War.",
+     "why": "The Boer republics' early successes forced Britain to send a far larger army.",
+     "wikipedia": "Siege of Ladysmith",
+     "wikidata": "Q2543997"
+    },
+    {
+     "date": "1901",
+     "name": "Second Boer War concentration camps",
+     "place_name": "Bloemfontein",
+     "lat": -29.12,
+     "lon": 26.21,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [
+      "Emily Hobhouse"
+     ],
+     "what": "British scorched-earth tactics put Boer families and black Africans in camps, where about 26,000 Boer women and children and at least 14,000 black Africans died; Emily Hobhouse exposed conditions.",
+     "why": "Britain won the war in 1902, but at a huge civilian cost.",
+     "wikipedia": "Second Boer War concentration camps",
+     "wikidata": "Q55137114"
+    },
+    {
+     "date": "1904-02",
+     "name": "Casement Report",
+     "place_name": "Boma, Congo",
+     "lat": -5.85,
+     "lon": 13.05,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Roger Casement",
+      "Leopold II of Belgium"
+     ],
+     "what": "British consul Roger Casement reported the forced labour, hostage-taking and mutilation used to extract rubber in Leopold II's Congo Free State.",
+     "why": "International outcry forced Belgium to take the colony from Leopold in 1908.",
+     "wikipedia": "Casement Report",
+     "wikidata": "Q5048411"
+    },
+    {
+     "date": "1904-08-11",
+     "name": "Herero and Nama genocide",
+     "place_name": "Waterberg",
+     "lat": -20.52,
+     "lon": 17.24,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Lothar von Trotha",
+      "Samuel Maharero"
+     ],
+     "what": "After the battle of Waterberg, German troops under Lothar von Trotha drove the Herero into the Omaheke desert and later held survivors and the Nama in camps; tens of thousands died.",
+     "why": "It is widely called the first genocide of the twentieth century.",
+     "wikipedia": "Herero and Nama genocide",
+     "wikidata": "Q312492"
+    },
+    {
+     "date": "1905-07",
+     "end_date": "1907",
+     "name": "Maji Maji Rebellion",
+     "place_name": "Matumbi Hills",
+     "lat": -8.4,
+     "lon": 38.9,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Kinjikitile Ngwale"
+     ],
+     "what": "Peoples of southern German East Africa, angered by forced cotton growing, rose together, trusting a 'war medicine' water spread by Kinjikitile Ngwale.",
+     "why": "German scorched-earth repression and famine killed perhaps 75,000 to 300,000 people.",
+     "wikipedia": "Maji Maji Rebellion",
+     "wikidata": "Q705553"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "american_west_railroads",
+   "title": "The American West and its railroads",
+   "region": "North American West",
+   "start": 1803,
+   "end": 1890,
+   "view": {
+    "lon": -102.0,
+    "lat": 40.0,
+    "span": 45
+   },
+   "blurb": "How did the United States take the West from Native nations and Mexico, and what did railroads have to do with it?",
+   "steps": [
+    {
+     "date": "1803-12-20",
+     "name": "Louisiana Purchase",
+     "place_name": "New Orleans",
+     "lat": 29.96,
+     "lon": -90.06,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Thomas Jefferson"
+     ],
+     "what": "France formally handed over Louisiana, bought for 15 million dollars, doubling the size of the United States.",
+     "why": "It gave the young republic claim to the land between the Mississippi and the Rockies, home to many Native nations.",
+     "wikipedia": "Louisiana Purchase",
+     "wikidata": "Q193155"
+    },
+    {
+     "date": "1804-05-14",
+     "name": "Lewis and Clark Expedition",
+     "place_name": "Camp Dubois, Illinois",
+     "lat": 38.86,
+     "lon": -90.1,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Meriwether Lewis",
+      "William Clark"
+     ],
+     "what": "The Corps of Discovery set out up the Missouri River to find a route to the Pacific.",
+     "why": "It mapped the new territory and announced American sovereignty to the nations living there.",
+     "wikipedia": "Lewis and Clark Expedition",
+     "wikidata": "Q505802"
+    },
+    {
+     "date": "1804-11",
+     "end_date": "1805-04",
+     "name": "Fort Mandan",
+     "place_name": "Fort Mandan, North Dakota",
+     "lat": 47.3,
+     "lon": -101.03,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Meriwether Lewis",
+      "William Clark",
+      "Sacagawea"
+     ],
+     "what": "The expedition wintered beside the Mandan and Hidatsa villages and hired Toussaint Charbonneau and his Shoshone wife Sacagawea.",
+     "why": "The expedition depended on Native food, knowledge and guides.",
+     "wikipedia": "Fort Mandan",
+     "wikidata": "Q1147514"
+    },
+    {
+     "date": "1805-08-12",
+     "name": "Lemhi Pass",
+     "place_name": "Lemhi Pass",
+     "lat": 44.97,
+     "lon": -113.44,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Meriwether Lewis"
+     ],
+     "what": "Lewis crossed the Continental Divide and soon met the Shoshone, led by Sacagawea's brother, who traded horses.",
+     "why": "There was no easy water route to the Pacific, only mountains.",
+     "wikipedia": "Lemhi Pass",
+     "wikidata": "Q6521136"
+    },
+    {
+     "date": "1805-12",
+     "end_date": "1806-03",
+     "name": "Fort Clatsop",
+     "place_name": "Fort Clatsop, Oregon",
+     "lat": 46.13,
+     "lon": -123.88,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Meriwether Lewis",
+      "William Clark",
+      "Sacagawea"
+     ],
+     "what": "The expedition reached the Pacific and spent a wet winter in a log fort near the mouth of the Columbia.",
+     "why": "It strengthened the American claim to the Oregon Country.",
+     "wikipedia": "Fort Clatsop",
+     "wikidata": "Q1375324"
+    },
+    {
+     "date": "1821",
+     "name": "Santa Fe Trail",
+     "place_name": "Santa Fe",
+     "lat": 35.69,
+     "lon": -105.94,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "William Becknell"
+     ],
+     "what": "After Mexican independence, trader William Becknell took goods from Missouri to Santa Fe, opening a wagon trade route.",
+     "why": "Commerce drew Americans into Mexico's northern lands long before war.",
+     "wikipedia": "Santa Fe Trail",
+     "wikidata": "Q1856887"
+    },
+    {
+     "date": "1838",
+     "end_date": "1839",
+     "name": "Trail of Tears",
+     "place_name": "Fort Cass, Tennessee",
+     "lat": 35.29,
+     "lon": -84.76,
+     "family": "disaster",
+     "subtype": "journey",
+     "who": [
+      "John Ross (Cherokee chief)"
+     ],
+     "what": "Under the Indian Removal Act, the army forced about 16,000 Cherokee west to Indian Territory; perhaps 4,000 died.",
+     "why": "Removal cleared the Southeast for cotton and set the pattern of pushing Native nations west.",
+     "wikipedia": "Trail of Tears",
+     "wikidata": "Q750448"
+    },
+    {
+     "date": "1843-05",
+     "name": "Oregon Trail",
+     "place_name": "Independence, Missouri",
+     "lat": 39.09,
+     "lon": -94.42,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [],
+     "what": "About 1,000 settlers in the 'Great Migration' left by wagon for Oregon, a trip of some five months.",
+     "why": "Hundreds of thousands followed over the next decades, before the railroad replaced the trail.",
+     "wikipedia": "Oregon Trail",
+     "wikidata": "Q862312"
+    },
+    {
+     "date": "1848-01-24",
+     "name": "California gold rush",
+     "place_name": "Sutter's Mill, Coloma",
+     "lat": 38.8,
+     "lon": -120.89,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "James W. Marshall",
+      "John Sutter"
+     ],
+     "what": "James Marshall found gold at Sutter's sawmill; about 300,000 people reached California within a few years.",
+     "why": "California's native population collapsed under violence and disease, and a rich state grew on the Pacific.",
+     "wikipedia": "California gold rush",
+     "wikidata": "Q17550"
+    },
+    {
+     "date": "1848-02-02",
+     "name": "Treaty of Guadalupe Hidalgo",
+     "place_name": "Villa de Guadalupe Hidalgo",
+     "lat": 19.48,
+     "lon": -99.12,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [],
+     "what": "Defeated Mexico ceded California and the Southwest, about half its territory, for 15 million dollars.",
+     "why": "The United States now stretched to the Pacific.",
+     "wikipedia": "Treaty of Guadalupe Hidalgo",
+     "wikidata": "Q616109"
+    },
+    {
+     "date": "1864-11-29",
+     "name": "Sand Creek massacre",
+     "place_name": "Sand Creek, Colorado",
+     "lat": 38.54,
+     "lon": -102.51,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "John Chivington"
+     ],
+     "what": "Colorado volunteers under John Chivington attacked a peaceful Cheyenne and Arapaho camp, killing about 150 to 200 people, mostly women, children and the old.",
+     "why": "It hardened war on the Plains for a decade.",
+     "wikipedia": "Sand Creek massacre",
+     "wikidata": "Q2164344"
+    },
+    {
+     "date": "1869-05-10",
+     "name": "Golden spike",
+     "place_name": "Promontory Summit, Utah",
+     "lat": 41.62,
+     "lon": -112.55,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Leland Stanford"
+     ],
+     "what": "The Union Pacific and Central Pacific lines met, completing the first transcontinental railroad, built in the west largely by Chinese workers.",
+     "why": "The railroad brought settlers, soldiers and markets onto the Plains.",
+     "wikipedia": "Golden spike",
+     "wikidata": "Q4384193"
+    },
+    {
+     "date": "1872",
+     "name": "Bison hide trade at Dodge City",
+     "place_name": "Dodge City, Kansas",
+     "lat": 37.75,
+     "lon": -100.02,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Dodge City grew on the new Santa Fe railroad as a shipping point for buffalo hides; hunters killed millions of bison in a few years.",
+     "why": "Destroying the herds destroyed the economic base of the Plains nations.",
+     "wikipedia": "Dodge City, Kansas",
+     "wikidata": "Q647127"
+    },
+    {
+     "date": "1876-06-25",
+     "end_date": "1876-06-26",
+     "name": "Battle of the Little Bighorn",
+     "place_name": "Little Bighorn River, Montana",
+     "lat": 45.57,
+     "lon": -107.43,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Sitting Bull",
+      "Crazy Horse",
+      "George Armstrong Custer"
+     ],
+     "what": "Lakota, Northern Cheyenne and Arapaho warriors killed Custer and about 260 soldiers of the 7th Cavalry.",
+     "why": "The victory brought a massive army response, and within a year most Lakota were forced onto reservations.",
+     "wikipedia": "Battle of the Little Bighorn",
+     "wikidata": "Q205422"
+    },
+    {
+     "date": "1890-12-29",
+     "name": "Wounded Knee Massacre",
+     "place_name": "Wounded Knee Creek, South Dakota",
+     "lat": 43.14,
+     "lon": -102.36,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Spotted Elk"
+     ],
+     "what": "The 7th Cavalry, disarming Spotted Elk's band of Lakota, opened fire and killed about 250 or more men, women and children.",
+     "why": "It marked the end of armed Native resistance on the Plains, the same year the census declared the frontier closed.",
+     "wikipedia": "Wounded Knee Massacre",
+     "wikidata": "Q108413"
+    }
+   ],
+   "status": "draft"
+  }
+ ]
+}

@@ -1,0 +1,2094 @@
+{
+ "stories": [
+  {
+   "id": "opening_the_oceans",
+   "title": "Opening the oceans",
+   "region": "Atlantic, Indian and Pacific oceans",
+   "start": 1487,
+   "end": 1522,
+   "view": {
+    "lon": -10.0,
+    "lat": 5.0,
+    "span": 260
+   },
+   "blurb": "How did Iberian sailors, in a single generation, link Europe by sea to Africa, India, the Americas and the Pacific?",
+   "steps": [
+    {
+     "date": "1488-02",
+     "date_note": "landed at Mossel Bay on 3 February 1488 after rounding the Cape out of sight of land",
+     "name": "Bartolomeu Dias rounds the Cape of Good Hope",
+     "place_name": "Mossel Bay",
+     "lat": -34.18,
+     "lon": 22.14,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Bartolomeu Dias"
+     ],
+     "what": "Dias, sent by John II of Portugal with two caravels and a supply ship, was blown south past the tip of Africa and landed at Mossel Bay on the Indian Ocean side before his crew forced him to turn back.",
+     "why": "It proved that the Atlantic and Indian Oceans were connected and that a sea route to India around Africa was possible.",
+     "wikipedia": "Bartolomeu Dias",
+     "wikidata": "Q130377"
+    },
+    {
+     "date": "1492-08-03",
+     "name": "Columbus sails from Palos",
+     "place_name": "Palos de la Frontera",
+     "lat": 37.23,
+     "lon": -6.89,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Christopher Columbus",
+      "Martín Alonso Pinzón"
+     ],
+     "what": "Columbus left Palos with three ships, the Santa María, the Pinta and the Niña, and about 90 men, funded by Isabella I of Castile and Ferdinand II of Aragon to reach Asia by sailing west.",
+     "why": "Castile backed a westward gamble because Portugal already controlled the route south around Africa.",
+     "wikipedia": "Voyages of Christopher Columbus",
+     "wikidata": "Q18578423"
+    },
+    {
+     "date": "1492-10-12",
+     "date_note": "which Bahamian island was Guanahani is disputed",
+     "name": "Columbus reaches Guanahani",
+     "place_name": "San Salvador Island, Bahamas",
+     "lat": 24.05,
+     "lon": -74.48,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Christopher Columbus",
+      "Martín Alonso Pinzón"
+     ],
+     "what": "After 33 days at sea from the Canary Islands, the fleet made landfall on an island the Lucayan people called Guanahani and Columbus named San Salvador.",
+     "why": "This first lasting contact joined the Americas to Europe and began the exchange of people, crops, animals and diseases between the hemispheres.",
+     "wikipedia": "Guanahani",
+     "wikidata": "Q1144797"
+    },
+    {
+     "date": "1492-12-25",
+     "name": "Wreck of the Santa María and La Navidad",
+     "place_name": "La Navidad, Hispaniola",
+     "lat": 19.72,
+     "lon": -72.08,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [
+      "Christopher Columbus"
+     ],
+     "what": "The Santa María ran aground off northern Hispaniola on Christmas Day, and Columbus left 39 men in a fort built from its timbers, all of whom were dead when he returned in November 1493.",
+     "why": "La Navidad was the first European settlement attempt in the Americas, and its fate foreshadowed the violence of the colonial encounter.",
+     "wikipedia": "La Navidad",
+     "wikidata": "Q1798978"
+    },
+    {
+     "date": "1494-06-07",
+     "name": "Treaty of Tordesillas",
+     "place_name": "Tordesillas",
+     "lat": 41.5,
+     "lon": -5.0,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [],
+     "what": "Castile and Portugal divided the newly found lands outside Europe along a meridian 370 leagues west of the Cape Verde islands, Portugal taking the east and Castile the west.",
+     "why": "Two kingdoms claimed the right to split the world's oceans between them, which shaped where each would explore and later why Brazil became Portuguese.",
+     "wikipedia": "Treaty of Tordesillas",
+     "wikidata": "Q180897"
+    },
+    {
+     "date": "1498-05-20",
+     "name": "Vasco da Gama reaches Calicut",
+     "place_name": "Calicut",
+     "lat": 11.25,
+     "lon": 75.78,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Vasco da Gama"
+     ],
+     "what": "Da Gama, having sailed from Lisbon in July 1497 with four ships and picked up a pilot at Malindi, anchored near Calicut, the leading pepper port of the Malabar Coast ruled by the Zamorin.",
+     "why": "It opened the first all-sea route from Europe to Asia, letting Portugal bypass the Venetian and Middle Eastern middlemen of the spice trade.",
+     "wikipedia": "Vasco da Gama",
+     "wikidata": "Q7328"
+    },
+    {
+     "date": "1500-04-22",
+     "name": "Cabral lands in Brazil",
+     "place_name": "Porto Seguro",
+     "lat": -16.45,
+     "lon": -39.07,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Pedro Álvares Cabral"
+     ],
+     "what": "Cabral's fleet of 13 ships, bound for India, swung far west into the Atlantic and sighted the coast of Brazil, which he claimed for Portugal before continuing to Calicut.",
+     "why": "Brazil fell on the Portuguese side of the Tordesillas line, giving Portugal its foothold in South America.",
+     "wikipedia": "Pedro Álvares Cabral",
+     "wikidata": "Q174432"
+    },
+    {
+     "date": "1503-01-20",
+     "name": "Founding of the Casa de Contratación",
+     "place_name": "Seville",
+     "lat": 37.38,
+     "lon": -5.99,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Isabella I of Castile"
+     ],
+     "what": "The Castilian crown set up a House of Trade in Seville to license ships, collect duties, train pilots and keep the master map of the routes to the Indies.",
+     "why": "Ocean exploration turned into a state-run business, and Seville became the monopoly port for all trade with Spanish America.",
+     "wikipedia": "Casa de Contratación",
+     "wikidata": "Q1046537"
+    },
+    {
+     "date": "1507",
+     "name": "Waldseemüller map names America",
+     "place_name": "Saint-Dié-des-Vosges",
+     "lat": 48.28,
+     "lon": 6.95,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Martin Waldseemüller"
+     ],
+     "what": "Waldseemüller and his colleagues printed a large world map of 12 woodcut sheets that showed the new lands as a separate continent and labelled it America after Amerigo Vespucci.",
+     "why": "Printed maps spread the idea of a 'New World' distinct from Asia across Europe within a few years.",
+     "wikipedia": "Waldseemüller map",
+     "wikidata": "Q195801"
+    },
+    {
+     "date": "1511-08",
+     "date_note": "the city fell on about 24 August 1511",
+     "name": "Capture of Malacca",
+     "place_name": "Malacca",
+     "lat": 2.19,
+     "lon": 102.25,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Afonso de Albuquerque"
+     ],
+     "what": "Albuquerque, with about 18 ships and some 1,000 Portuguese soldiers, took the sultanate of Malacca, the port that controlled the strait between the Indian Ocean and the South China Sea.",
+     "why": "Portugal turned its sea route into a chain of armed trading forts reaching toward the spice islands and China.",
+     "wikipedia": "Capture of Malacca (1511)",
+     "wikidata": "Q4110453"
+    },
+    {
+     "date": "1513-09",
+     "date_note": "traditionally 25 or 27 September 1513",
+     "name": "Balboa sights the Pacific",
+     "place_name": "Isthmus of Panama",
+     "lat": 8.4,
+     "lon": -78.3,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Vasco Núñez de Balboa"
+     ],
+     "what": "Balboa crossed the Isthmus of Panama with Spanish soldiers and Indigenous guides and became the first European known to see the Pacific from the Americas, claiming it for Castile.",
+     "why": "It showed that a second ocean lay beyond the Americas, so a western route to Asia would need a passage through or around them.",
+     "wikipedia": "Vasco Núñez de Balboa",
+     "wikidata": "Q19080"
+    },
+    {
+     "date": "1519-09-20",
+     "name": "Magellan expedition sails",
+     "place_name": "Sanlúcar de Barrameda",
+     "lat": 36.78,
+     "lon": -6.35,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Ferdinand Magellan",
+      "Juan Sebastián Elcano",
+      "Antonio Pigafetta"
+     ],
+     "what": "Magellan, a Portuguese captain sailing for Charles I of Spain, left with five ships and about 270 men to reach the Spice Islands by sailing west.",
+     "why": "The aim was to prove the Moluccas lay on Castile's side of the Tordesillas line by reaching them westward.",
+     "wikipedia": "Magellan expedition",
+     "wikidata": "Q1225170"
+    },
+    {
+     "date": "1520-10-21",
+     "end_date": "1520-11-28",
+     "name": "Passage of the Strait of Magellan",
+     "place_name": "Strait of Magellan",
+     "lat": -53.5,
+     "lon": -70.9,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Ferdinand Magellan",
+      "Antonio Pigafetta"
+     ],
+     "what": "After a mutiny and the loss of one ship, the fleet spent over five weeks threading the strait at the tip of South America; the San Antonio deserted and sailed home.",
+     "why": "Finding the strait opened the Pacific to European ships, though its width shocked the crews who then sailed for three months without landfall.",
+     "wikipedia": "Strait of Magellan",
+     "wikidata": "Q48365"
+    },
+    {
+     "date": "1521-04-27",
+     "name": "Battle of Mactan",
+     "place_name": "Mactan",
+     "lat": 10.3,
+     "lon": 123.98,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Ferdinand Magellan",
+      "Lapulapu",
+      "Antonio Pigafetta"
+     ],
+     "what": "Magellan, intervening in local politics after converting the ruler of Cebu, attacked the chief Lapulapu on Mactan and was killed with several of his men.",
+     "why": "The leader died halfway round the world, and the voyage had to be finished by others.",
+     "wikipedia": "Battle of Mactan",
+     "wikidata": "Q2091449"
+    },
+    {
+     "date": "1522-09-06",
+     "name": "Victoria completes the circumnavigation",
+     "place_name": "Sanlúcar de Barrameda",
+     "lat": 36.78,
+     "lon": -6.35,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Juan Sebastián Elcano",
+      "Antonio Pigafetta"
+     ],
+     "what": "Elcano brought the Victoria home by way of the Indian Ocean and the Cape of Good Hope with 18 survivors and a cargo of cloves that more than paid for the voyage.",
+     "why": "The first circumnavigation joined all the oceans into one connected sea and showed how large the Earth really was.",
+     "wikipedia": "Juan Sebastián Elcano",
+     "wikidata": "Q201510"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "the_reformation",
+   "title": "The Reformation",
+   "region": "Central Europe",
+   "start": 1517,
+   "end": 1555,
+   "view": {
+    "lon": 9.0,
+    "lat": 49.5,
+    "span": 16
+   },
+   "blurb": "How did one monk's protest split Western Christianity, and why could printing presses and princes make it stick?",
+   "steps": [
+    {
+     "date": "1517-10-31",
+     "date_note": "whether the theses were nailed to the church door is debated; the date is when Luther sent them to Archbishop Albert",
+     "name": "Ninety-five Theses",
+     "place_name": "Wittenberg",
+     "lat": 51.87,
+     "lon": 12.65,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Martin Luther"
+     ],
+     "what": "Luther, a professor of theology, wrote 95 propositions attacking the sale of indulgences being preached by Johann Tetzel, and printed copies spread across Germany within weeks.",
+     "why": "A local academic dispute became a public controversy because printers in several cities reproduced it quickly.",
+     "wikipedia": "Ninety-five Theses",
+     "wikidata": "Q157506"
+    },
+    {
+     "date": "1519-06",
+     "end_date": "1519-07",
+     "name": "Leipzig Debate",
+     "place_name": "Leipzig",
+     "lat": 51.34,
+     "lon": 12.37,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Martin Luther",
+      "Johann Eck"
+     ],
+     "what": "In a public disputation at Pleissenburg castle, Johann Eck pushed Luther into saying that popes and church councils could err.",
+     "why": "Luther's position moved from criticizing abuses to challenging the authority of the papacy itself.",
+     "wikipedia": "Leipzig Debate",
+     "wikidata": "Q688998"
+    },
+    {
+     "date": "1521-04",
+     "date_note": "Luther appeared on 17 and 18 April; the Edict of Worms followed on 25 May",
+     "name": "Diet of Worms",
+     "place_name": "Worms",
+     "lat": 49.63,
+     "lon": 8.36,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Martin Luther",
+      "Charles V, Holy Roman Emperor"
+     ],
+     "what": "Before the young emperor Charles V and the imperial estates, Luther refused to recant his writings, and the Edict of Worms then declared him an outlaw.",
+     "why": "Luther survived only because his prince, Frederick the Wise of Saxony, protected him, showing that the movement depended on political backing.",
+     "wikipedia": "Diet of Worms",
+     "wikidata": "Q536822"
+    },
+    {
+     "date": "1521-05",
+     "end_date": "1522-03",
+     "name": "Luther at the Wartburg",
+     "place_name": "Wartburg Castle, Eisenach",
+     "lat": 50.97,
+     "lon": 10.31,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Martin Luther"
+     ],
+     "what": "Hidden in the Wartburg under a false name, Luther translated the New Testament from Greek into German in about eleven weeks; it was printed in Wittenberg in September 1522.",
+     "why": "A cheap German Bible let ordinary readers judge scripture for themselves and helped shape a common written German.",
+     "wikipedia": "Luther Bible",
+     "wikidata": "Q1571095"
+    },
+    {
+     "date": "1523-01-29",
+     "name": "First Zurich Disputation",
+     "place_name": "Zürich",
+     "lat": 47.37,
+     "lon": 8.54,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Huldrych Zwingli"
+     ],
+     "what": "Zurich's city council heard Zwingli defend 67 theses and ruled that he could go on preaching, putting the city on the path to its own reform.",
+     "why": "Reform began independently in the Swiss cities, run by town councils rather than princes, and soon diverged from Luther.",
+     "wikipedia": "Huldrych Zwingli",
+     "wikidata": "Q123034"
+    },
+    {
+     "date": "1525-03",
+     "name": "Twelve Articles",
+     "place_name": "Memmingen",
+     "lat": 47.99,
+     "lon": 10.18,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [],
+     "what": "Peasant bands in Swabia met in Memmingen and adopted twelve demands, including the right to choose their pastors and an end to serfdom, citing scripture as justification.",
+     "why": "Printed in some 25,000 copies, the articles showed how the reformers' appeal to the Bible could be turned against lords.",
+     "wikipedia": "Twelve Articles",
+     "wikidata": "Q245173"
+    },
+    {
+     "date": "1525-05-15",
+     "name": "Battle of Frankenhausen",
+     "place_name": "Bad Frankenhausen",
+     "lat": 51.36,
+     "lon": 11.1,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Thomas Müntzer"
+     ],
+     "what": "Princely armies routed a peasant army led by the radical preacher Thomas Müntzer, killing thousands; Müntzer was captured and executed.",
+     "why": "The crushing of the Peasants' War, which Luther urged on, tied the Lutheran Reformation firmly to the princes.",
+     "wikipedia": "Battle of Frankenhausen",
+     "wikidata": "Q703363"
+    },
+    {
+     "date": "1529-10",
+     "name": "Marburg Colloquy",
+     "place_name": "Marburg",
+     "lat": 50.81,
+     "lon": 8.77,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Martin Luther",
+      "Huldrych Zwingli",
+      "Philip Melanchthon",
+      "Philip I, Landgrave of Hesse"
+     ],
+     "what": "Philip of Hesse brought Luther and Zwingli together to form a Protestant alliance, and they agreed on 14 of 15 points but not on the Lord's Supper.",
+     "why": "The Protestant movement split into Lutheran and Reformed branches that never reunited.",
+     "wikipedia": "Marburg Colloquy",
+     "wikidata": "Q672138"
+    },
+    {
+     "date": "1530-06-25",
+     "name": "Augsburg Confession",
+     "place_name": "Augsburg",
+     "lat": 48.37,
+     "lon": 10.9,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Philip Melanchthon",
+      "Charles V, Holy Roman Emperor"
+     ],
+     "what": "Lutheran princes and cities read a statement of faith drafted by Melanchthon before Charles V at the Diet of Augsburg; the emperor rejected it.",
+     "why": "Lutheranism now had a defined creed, and its princes soon formed the Schmalkaldic League to defend it.",
+     "wikipedia": "Augsburg Confession",
+     "wikidata": "Q154483"
+    },
+    {
+     "date": "1531-10-11",
+     "name": "Second War of Kappel",
+     "place_name": "Kappel am Albis",
+     "lat": 47.23,
+     "lon": 8.53,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Huldrych Zwingli"
+     ],
+     "what": "Catholic Swiss cantons defeated Zurich's forces at Kappel, and Zwingli, serving as chaplain, was killed on the field.",
+     "why": "The Swiss Confederation settled into a patchwork of Catholic and Reformed cantons, a pattern repeated across Europe.",
+     "wikipedia": "Second War of Kappel",
+     "wikidata": "Q233594"
+    },
+    {
+     "date": "1534-02",
+     "end_date": "1535-06-25",
+     "name": "Münster rebellion",
+     "place_name": "Münster",
+     "lat": 51.96,
+     "lon": 7.63,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "John of Leiden"
+     ],
+     "what": "Radical Anabaptists took over the city of Münster and declared a new Jerusalem with shared property and polygamy until the besieging bishop's troops stormed it.",
+     "why": "The episode frightened Catholic and Protestant rulers alike and led to fierce persecution of Anabaptists.",
+     "wikipedia": "Münster rebellion",
+     "wikidata": "Q691882"
+    },
+    {
+     "date": "1534-11",
+     "name": "Act of Supremacy",
+     "place_name": "Westminster",
+     "lat": 51.5,
+     "lon": -0.13,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Henry VIII"
+     ],
+     "what": "After the pope refused to annul his marriage to Catherine of Aragon, Henry VIII had Parliament declare him Supreme Head of the Church of England.",
+     "why": "England broke with Rome for dynastic and political reasons, showing that kings could use the Reformation to take control of their churches.",
+     "wikipedia": "Acts of Supremacy",
+     "wikidata": "Q392226"
+    },
+    {
+     "date": "1541-09",
+     "name": "Calvin returns to Geneva",
+     "place_name": "Geneva",
+     "lat": 46.2,
+     "lon": 6.15,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "John Calvin"
+     ],
+     "what": "Recalled after an earlier expulsion, Calvin persuaded the city to adopt Ecclesiastical Ordinances creating a consistory of pastors and elders to supervise morals.",
+     "why": "Geneva became the training centre of a Reformed Protestantism that spread to France, Scotland, the Netherlands and later New England.",
+     "wikipedia": "John Calvin",
+     "wikidata": "Q37577"
+    },
+    {
+     "date": "1545-12-13",
+     "end_date": "1563-12-04",
+     "name": "Council of Trent",
+     "place_name": "Trento",
+     "lat": 46.07,
+     "lon": 11.12,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Pope Paul III"
+     ],
+     "what": "The Catholic Church opened a general council that over 18 years restated its doctrines against the Protestants and ordered reforms such as seminaries for training priests.",
+     "why": "The Catholic answer to the Reformation fixed the doctrinal lines and ended hopes of reunion.",
+     "wikipedia": "Council of Trent",
+     "wikidata": "Q172991"
+    },
+    {
+     "date": "1547-04-24",
+     "name": "Battle of Mühlberg",
+     "place_name": "Mühlberg",
+     "lat": 51.43,
+     "lon": 13.22,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Charles V, Holy Roman Emperor",
+      "John Frederick I, Elector of Saxony"
+     ],
+     "what": "Charles V defeated the Schmalkaldic League on the Elbe and captured the Lutheran Elector John Frederick of Saxony.",
+     "why": "Even a total military victory could not restore religious unity, as renewed Protestant resistance soon showed.",
+     "wikipedia": "Battle of Mühlberg",
+     "wikidata": "Q661327"
+    },
+    {
+     "date": "1555-09-25",
+     "name": "Peace of Augsburg",
+     "place_name": "Augsburg",
+     "lat": 48.37,
+     "lon": 10.9,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Ferdinand I, Holy Roman Emperor"
+     ],
+     "what": "The imperial diet allowed each prince of the Empire to choose Lutheranism or Catholicism for his territory, a rule later summarized as cuius regio, eius religio.",
+     "why": "The split in Western Christianity was made legal and permanent, though Calvinists were left out, a gap that fed later wars.",
+     "wikipedia": "Peace of Augsburg",
+     "wikidata": "Q154577"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "mughal_empire",
+   "title": "The Mughal empire",
+   "region": "South Asia",
+   "start": 1526,
+   "end": 1707,
+   "view": {
+    "lon": 77.0,
+    "lat": 24.0,
+    "span": 26
+   },
+   "blurb": "How did a Central Asian prince's dynasty come to rule most of India, and why had it overstretched by 1707?",
+   "steps": [
+    {
+     "date": "1526-04-21",
+     "name": "First Battle of Panipat",
+     "place_name": "Panipat",
+     "lat": 29.39,
+     "lon": 76.97,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Babur",
+      "Ibrahim Lodi"
+     ],
+     "what": "Babur, a Timurid prince from Kabul, used field guns and mounted archers to defeat the much larger army of Ibrahim Lodi, Sultan of Delhi, who died on the field.",
+     "why": "The victory gave Babur Delhi and Agra and founded the Mughal dynasty.",
+     "wikipedia": "First Battle of Panipat",
+     "wikidata": "Q605321"
+    },
+    {
+     "date": "1540-05-17",
+     "name": "Battle of Kannauj",
+     "place_name": "Kannauj",
+     "lat": 27.05,
+     "lon": 79.92,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Humayun",
+      "Sher Shah Suri"
+     ],
+     "what": "The Afghan leader Sher Shah Suri defeated Babur's son Humayun, who fled to Persia; Sher Shah then reorganized revenue collection and issued the silver rupiya.",
+     "why": "The Mughals nearly vanished after one generation, and their later administration borrowed heavily from Sher Shah's reforms.",
+     "wikipedia": "Battle of Kannauj",
+     "wikidata": "Q108485662"
+    },
+    {
+     "date": "1556-11-05",
+     "name": "Second Battle of Panipat",
+     "place_name": "Panipat",
+     "lat": 29.39,
+     "lon": 76.97,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Akbar",
+      "Bairam Khan",
+      "Hemu"
+     ],
+     "what": "Months after Humayun's return and death, the forces of the 13-year-old Akbar and his regent Bairam Khan defeated Hemu, who was struck by an arrow and captured.",
+     "why": "The Mughals secured north India for good and Akbar's long reign began.",
+     "wikipedia": "Second Battle of Panipat",
+     "wikidata": "Q233414"
+    },
+    {
+     "date": "1571",
+     "end_date": "1585",
+     "name": "Building of Fatehpur Sikri",
+     "place_name": "Fatehpur Sikri",
+     "lat": 27.09,
+     "lon": 77.66,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Akbar"
+     ],
+     "what": "Akbar built a new red sandstone capital at Sikri, near the shrine of the Sufi Salim Chishti, and held court there until about 1585.",
+     "why": "The city displayed a blended Persian, Central Asian and Indian style that matched Akbar's effort to rule a diverse empire.",
+     "wikipedia": "Fatehpur Sikri",
+     "wikidata": "Q179046"
+    },
+    {
+     "date": "1575",
+     "name": "Ibadat Khana debates",
+     "place_name": "Fatehpur Sikri",
+     "lat": 27.09,
+     "lon": 77.66,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Akbar"
+     ],
+     "what": "Akbar built a House of Worship where Sunni and Shia scholars, and later Hindus, Jains, Zoroastrians and Jesuit priests from Goa, debated religion before him.",
+     "why": "The debates fed Akbar's policy of tolerance, including his 1564 abolition of the jizya tax on non-Muslims.",
+     "wikipedia": "Ibadat Khana",
+     "wikidata": "Q4021737"
+    },
+    {
+     "date": "1598",
+     "date_note": "c.; completed in the late 1590s",
+     "name": "Ain-i-Akbari",
+     "place_name": "Lahore",
+     "lat": 31.58,
+     "lon": 74.31,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Abu'l-Fazl ibn Mubarak",
+      "Akbar"
+     ],
+     "what": "Akbar's minister Abu'l-Fazl compiled a detailed record of the empire, listing provinces, crop yields, prices, revenue rates and the ranks of the mansabdar officials.",
+     "why": "It documents the revenue machine, based on measured land and cash taxes, that paid for the Mughal army and court.",
+     "wikipedia": "Ain-i-Akbari",
+     "wikidata": "Q3344867"
+    },
+    {
+     "date": "1612-11",
+     "name": "Battle of Swally",
+     "place_name": "Suvali, near Surat",
+     "lat": 21.13,
+     "lon": 72.65,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Thomas Best"
+     ],
+     "what": "Four English East India Company ships under Thomas Best beat off a Portuguese fleet off Surat, and the Mughal authorities then allowed the English to open a trading post in the city.",
+     "why": "Surat, the empire's chief port, became the English company's first base in India.",
+     "wikipedia": "Battle of Swally",
+     "wikidata": "Q2092338"
+    },
+    {
+     "date": "1616",
+     "date_note": "Roe reached Ajmer in December 1615 or January 1616 and stayed at court until 1619",
+     "end_date": "1619",
+     "name": "Thomas Roe at the court of Jahangir",
+     "place_name": "Ajmer",
+     "lat": 26.45,
+     "lon": 74.64,
+     "family": "diplomacy",
+     "subtype": "journey",
+     "who": [
+      "Thomas Roe",
+      "Jahangir"
+     ],
+     "what": "James I's ambassador spent three years following Jahangir's court and won permission for English trade, though not the formal treaty he wanted.",
+     "why": "The English came as petitioners to one of the richest states in the world, a reversal of the later balance of power.",
+     "wikipedia": "Thomas Roe",
+     "wikidata": "Q983131"
+    },
+    {
+     "date": "1632",
+     "end_date": "1653",
+     "name": "Building of the Taj Mahal",
+     "place_name": "Agra",
+     "lat": 27.18,
+     "lon": 78.04,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Shah Jahan",
+      "Mumtaz Mahal"
+     ],
+     "what": "Shah Jahan began a white marble tomb on the Yamuna for his wife Mumtaz Mahal, who died in childbirth in 1631; the mausoleum was finished around 1643 and the whole complex around 1653.",
+     "why": "The Taj shows the wealth and artistic peak of the empire under Shah Jahan.",
+     "wikipedia": "Taj Mahal",
+     "wikidata": "Q9141"
+    },
+    {
+     "date": "1639",
+     "end_date": "1648",
+     "name": "Building of the Red Fort",
+     "place_name": "Delhi",
+     "lat": 28.66,
+     "lon": 77.24,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Shah Jahan"
+     ],
+     "what": "Shah Jahan moved the capital from Agra to a new walled city at Delhi, Shahjahanabad, built around the Red Fort palace and the Chandni Chowk market street.",
+     "why": "The new capital, with its markets and mosques, became the centre of Mughal government and of a large urban economy.",
+     "wikipedia": "Red Fort",
+     "wikidata": "Q45957"
+    },
+    {
+     "date": "1658-05-29",
+     "name": "Battle of Samugarh",
+     "place_name": "Samugarh, near Agra",
+     "lat": 27.15,
+     "lon": 78.0,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Aurangzeb",
+      "Dara Shikoh",
+      "Murad Bakhsh"
+     ],
+     "what": "In the war of succession among Shah Jahan's sons, Aurangzeb defeated his elder brother Dara Shikoh, then imprisoned his father in Agra fort until his death in 1666.",
+     "why": "Aurangzeb, a stricter Sunni ruler, took the throne and set the course of the empire's last great expansion.",
+     "wikipedia": "Battle of Samugarh",
+     "wikidata": "Q4087464"
+    },
+    {
+     "date": "1664-01",
+     "name": "Sack of Surat",
+     "place_name": "Surat",
+     "lat": 21.17,
+     "lon": 72.83,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Shivaji"
+     ],
+     "what": "The Maratha leader Shivaji plundered the rich Mughal port of Surat for several days, while the English and Dutch factories defended themselves.",
+     "why": "Maratha power in the western Deccan grew into the most serious challenge to Mughal rule.",
+     "wikipedia": "Sack of Surat",
+     "wikidata": "Q4872468"
+    },
+    {
+     "date": "1687-01",
+     "end_date": "1687-09",
+     "name": "Siege of Golconda",
+     "place_name": "Golconda",
+     "lat": 17.38,
+     "lon": 78.4,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Aurangzeb"
+     ],
+     "what": "Aurangzeb, campaigning in the Deccan since 1681, took the diamond-trading fortress of Golconda after eight months, a year after annexing Bijapur.",
+     "why": "The empire reached its greatest size, but the long Deccan wars drained its treasury and nobility.",
+     "wikipedia": "Siege of Golconda",
+     "wikidata": "Q16931432"
+    },
+    {
+     "date": "1707-03",
+     "name": "Death of Aurangzeb",
+     "place_name": "Ahmednagar",
+     "lat": 19.09,
+     "lon": 74.74,
+     "family": "disaster",
+     "subtype": "death",
+     "who": [
+      "Aurangzeb"
+     ],
+     "what": "Aurangzeb died aged 88 in camp in the Deccan after more than 25 years of war against the Marathas, which he had not won.",
+     "why": "Succession wars followed, and within decades provincial governors and the Marathas held real power while emperors in Delhi became figureheads.",
+     "wikipedia": "Aurangzeb",
+     "wikidata": "Q485547"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "thirty_years_war",
+   "title": "The Thirty Years' War",
+   "region": "Central Europe",
+   "start": 1618,
+   "end": 1648,
+   "view": {
+    "lon": 11.5,
+    "lat": 51.0,
+    "span": 14
+   },
+   "blurb": "How did a Bohemian revolt grow into a war that drew in most of Europe and killed millions in the German lands?",
+   "steps": [
+    {
+     "date": "1618-05-23",
+     "name": "Defenestration of Prague",
+     "place_name": "Prague Castle",
+     "lat": 50.09,
+     "lon": 14.4,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [],
+     "what": "Protestant Bohemian nobles threw two Catholic imperial governors and their secretary out of a window of Prague Castle; all three survived the fall.",
+     "why": "The act launched a Bohemian revolt against the Habsburgs that became the first phase of the war.",
+     "wikipedia": "Defenestrations of Prague",
+     "wikidata": "Q374696"
+    },
+    {
+     "date": "1620-11-08",
+     "name": "Battle of White Mountain",
+     "place_name": "White Mountain, Prague",
+     "lat": 50.08,
+     "lon": 14.32,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Johann Tserclaes, Count of Tilly",
+      "Frederick V of the Palatinate"
+     ],
+     "what": "Imperial and Catholic League troops under Tilly routed the Bohemian army in about two hours, and the rebels' elected king, Frederick V of the Palatinate, fled.",
+     "why": "Bohemia was forced back under Habsburg and Catholic rule, but the war spread to Frederick's lands in the Rhineland.",
+     "wikipedia": "Battle of White Mountain",
+     "wikidata": "Q4373"
+    },
+    {
+     "date": "1621-06-21",
+     "name": "Old Town Square execution",
+     "place_name": "Old Town Square, Prague",
+     "lat": 50.09,
+     "lon": 14.42,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Ferdinand II, Holy Roman Emperor"
+     ],
+     "what": "Twenty-seven leaders of the Bohemian revolt were executed in Prague's main square, and the heads of twelve were displayed on the Old Town Bridge Tower.",
+     "why": "Mass confiscations of land and forced conversions followed, which drove many Protestants into exile.",
+     "wikipedia": "Old Town Square execution",
+     "wikidata": "Q3565105"
+    },
+    {
+     "date": "1626-08-27",
+     "name": "Battle of Lutter",
+     "place_name": "Lutter am Barenberge",
+     "lat": 51.99,
+     "lon": 10.27,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Christian IV of Denmark",
+      "Johann Tserclaes, Count of Tilly"
+     ],
+     "what": "Tilly defeated the army of Christian IV of Denmark, who had entered the war to protect the Protestant states of northern Germany.",
+     "why": "The Danish intervention failed, leaving the emperor dominant in the north.",
+     "wikipedia": "Battle of Lutter",
+     "wikidata": "Q629302"
+    },
+    {
+     "date": "1628-05",
+     "end_date": "1628-08",
+     "name": "Siege of Stralsund",
+     "place_name": "Stralsund",
+     "lat": 54.31,
+     "lon": 13.09,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Albrecht von Wallenstein"
+     ],
+     "what": "Wallenstein's imperial army besieged the Baltic port of Stralsund, which held out with Danish and Swedish help until he gave up.",
+     "why": "Habsburg ambitions on the Baltic coast alarmed Sweden and drew it toward the war.",
+     "wikipedia": "Siege of Stralsund (1628)",
+     "wikidata": "Q2612839"
+    },
+    {
+     "date": "1629-03-06",
+     "name": "Edict of Restitution",
+     "place_name": "Vienna",
+     "lat": 48.21,
+     "lon": 16.37,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Ferdinand II, Holy Roman Emperor"
+     ],
+     "what": "Ferdinand II ordered the return to the Catholic Church of all church lands taken by Protestants since 1552.",
+     "why": "The edict alarmed even Protestant princes who had stayed loyal and made a negotiated peace harder.",
+     "wikipedia": "Edict of Restitution",
+     "wikidata": "Q703097"
+    },
+    {
+     "date": "1630-07",
+     "name": "Swedish landing in Pomerania",
+     "place_name": "Peenemünde",
+     "lat": 54.14,
+     "lon": 13.77,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Gustavus Adolphus"
+     ],
+     "what": "Gustavus Adolphus of Sweden landed on the island of Usedom with about 13,000 men, later backed by French subsidies.",
+     "why": "The war turned into an international contest in which Catholic France paid a Lutheran king to fight the Habsburgs.",
+     "wikipedia": "Swedish intervention in the Thirty Years' War"
+    },
+    {
+     "date": "1631-05-20",
+     "name": "Sack of Magdeburg",
+     "place_name": "Magdeburg",
+     "lat": 52.13,
+     "lon": 11.63,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Johann Tserclaes, Count of Tilly",
+      "Gottfried Heinrich Graf zu Pappenheim"
+     ],
+     "what": "Imperial troops stormed the Protestant city, and in the massacre and fire that followed about 20,000 of its 25,000 inhabitants died.",
+     "why": "Magdeburg became a byword for the war's cruelty toward civilians and pushed hesitant Protestant states toward Sweden.",
+     "wikipedia": "Sack of Magdeburg",
+     "wikidata": "Q698045"
+    },
+    {
+     "date": "1631-09-17",
+     "name": "Battle of Breitenfeld",
+     "place_name": "Breitenfeld, near Leipzig",
+     "lat": 51.4,
+     "lon": 12.38,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Gustavus Adolphus",
+      "Johann Tserclaes, Count of Tilly",
+      "John George I, Elector of Saxony"
+     ],
+     "what": "The Swedish and Saxon army destroyed Tilly's veteran force using flexible lines of musketeers and light field guns.",
+     "why": "It was the first major Protestant victory of the war and opened southern Germany to Swedish armies.",
+     "wikipedia": "Battle of Breitenfeld (1631)",
+     "wikidata": "Q205379"
+    },
+    {
+     "date": "1632-11-16",
+     "name": "Battle of Lützen",
+     "place_name": "Lützen",
+     "lat": 51.26,
+     "lon": 12.14,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Gustavus Adolphus",
+      "Albrecht von Wallenstein",
+      "Gottfried Heinrich Graf zu Pappenheim"
+     ],
+     "what": "The Swedes drove Wallenstein from the field in fog, but Gustavus Adolphus and the imperial general Pappenheim were both killed.",
+     "why": "Sweden lost its king and leader, and the war dragged on without a decisive winner.",
+     "wikipedia": "Battle of Lützen (1632)",
+     "wikidata": "Q167259"
+    },
+    {
+     "date": "1633",
+     "name": "Oberammergau plague vow",
+     "place_name": "Oberammergau",
+     "lat": 47.6,
+     "lon": 11.07,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "After plague spread by the war reached their Bavarian village, the people of Oberammergau vowed to stage a play of Christ's Passion every ten years, first performing it in 1634.",
+     "why": "Disease and hunger that followed the armies killed far more people than battles did, and the vow is still kept today.",
+     "wikipedia": "Oberammergau Passion Play",
+     "wikidata": "Q2008913"
+    },
+    {
+     "date": "1634-02-25",
+     "name": "Assassination of Wallenstein",
+     "place_name": "Cheb (Eger)",
+     "lat": 50.08,
+     "lon": 12.37,
+     "family": "unrest",
+     "subtype": "death",
+     "who": [
+      "Albrecht von Wallenstein",
+      "Ferdinand II, Holy Roman Emperor"
+     ],
+     "what": "Wallenstein, the military contractor who had raised huge armies for the emperor, was killed by his own officers after Ferdinand II suspected him of secret talks with the enemy.",
+     "why": "His career shows how the war was run by private enterprisers who fed their troops by taxing and plundering the land.",
+     "wikipedia": "Albrecht von Wallenstein",
+     "wikidata": "Q153545"
+    },
+    {
+     "date": "1634-09-06",
+     "name": "Battle of Nördlingen",
+     "place_name": "Nördlingen",
+     "lat": 48.85,
+     "lon": 10.49,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Ferdinand III, Holy Roman Emperor",
+      "Cardinal-Infante Ferdinand",
+      "Bernhard of Saxe-Weimar"
+     ],
+     "what": "A combined Spanish and imperial army crushed the Swedish and German Protestant forces in southern Germany.",
+     "why": "The defeat pushed France to enter the war openly in 1635, turning it into a Bourbon-Habsburg struggle that lasted another 13 years.",
+     "wikipedia": "Battle of Nördlingen (1634)",
+     "wikidata": "Q312212"
+    },
+    {
+     "date": "1648-10-24",
+     "name": "Peace of Westphalia",
+     "place_name": "Münster",
+     "lat": 51.96,
+     "lon": 7.63,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Ferdinand III, Holy Roman Emperor"
+     ],
+     "what": "Treaties signed at Münster and Osnabrück ended the war, recognized Calvinism alongside Lutheranism and Catholicism, gave Sweden and France territory and confirmed the independence of the Dutch Republic and Switzerland.",
+     "why": "The settlement closed Europe's wars of religion in the Empire after a conflict estimated to have killed 4.5 to 8 million people, mostly through disease and famine.",
+     "wikipedia": "Peace of Westphalia",
+     "wikidata": "Q150995"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "dutch_golden_age",
+   "title": "The Dutch golden age",
+   "region": "Netherlands and the Dutch seaborne empire",
+   "start": 1585,
+   "end": 1672,
+   "view": {
+    "lon": 50.0,
+    "lat": 15.0,
+    "span": 260
+   },
+   "blurb": "How did a small, rebellious republic become the center of world trade and finance in the seventeenth century?",
+   "steps": [
+    {
+     "date": "1585-08-17",
+     "name": "Fall of Antwerp",
+     "place_name": "Antwerp",
+     "lat": 51.22,
+     "lon": 4.4,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Alexander Farnese, Duke of Parma"
+     ],
+     "what": "Spanish forces under Parma took Antwerp after a 14-month siege; Protestants were given time to leave, and the Dutch rebels closed the Scheldt to shipping.",
+     "why": "Tens of thousands of merchants and craftsmen moved north, carrying capital and skills to Amsterdam.",
+     "wikipedia": "Fall of Antwerp",
+     "wikidata": "Q697823"
+    },
+    {
+     "date": "1596-06",
+     "name": "First Dutch voyage reaches Banten",
+     "place_name": "Banten",
+     "lat": -6.03,
+     "lon": 106.16,
+     "family": "culture",
+     "subtype": "voyage",
+     "who": [
+      "Cornelis de Houtman"
+     ],
+     "what": "Four ships under Cornelis de Houtman reached the pepper port of Banten on Java after 14 months, and returned in 1597 with only 87 of 249 men alive.",
+     "why": "The voyage barely paid, but it proved Dutch ships could reach the spice islands, setting off a rush of rival companies.",
+     "wikipedia": "First Dutch Expedition to the East Indies",
+     "wikidata": "Q2787168"
+    },
+    {
+     "date": "1602-03-20",
+     "name": "Founding of the Dutch East India Company",
+     "place_name": "Amsterdam",
+     "lat": 52.37,
+     "lon": 4.89,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Johan van Oldenbarnevelt"
+     ],
+     "what": "The States General merged the competing companies into the United East India Company (VOC), with a monopoly on Dutch trade east of the Cape and the right to wage war and make treaties.",
+     "why": "The VOC sold shares to the public that could be traded, creating a new kind of permanent, armed joint-stock company.",
+     "wikipedia": "Dutch East India Company",
+     "wikidata": "Q159766"
+    },
+    {
+     "date": "1609-01-31",
+     "name": "Founding of the Bank of Amsterdam",
+     "place_name": "Amsterdam",
+     "lat": 52.37,
+     "lon": 4.89,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "The city founded the Amsterdamsche Wisselbank, where merchants could deposit coins of uncertain quality and pay each other by transfer in reliable bank money.",
+     "why": "Stable money and cheap credit made Amsterdam the clearing house of European trade.",
+     "wikipedia": "Bank of Amsterdam",
+     "wikidata": "Q478744"
+    },
+    {
+     "date": "1611",
+     "name": "Amsterdam Exchange building opens",
+     "place_name": "Amsterdam",
+     "lat": 52.37,
+     "lon": 4.89,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Hendrick de Keyser"
+     ],
+     "what": "A purpose-built exchange designed by Hendrick de Keyser opened on the Rokin, where VOC shares and commodities were traded at fixed hours.",
+     "why": "Regular trading in company shares, including forward contracts, made Amsterdam home to the first modern stock market.",
+     "wikipedia": "Euronext Amsterdam",
+     "wikidata": "Q478720"
+    },
+    {
+     "date": "1619-05-30",
+     "name": "Founding of Batavia",
+     "place_name": "Batavia (Jakarta)",
+     "lat": -6.13,
+     "lon": 106.81,
+     "family": "war",
+     "subtype": "founding",
+     "who": [
+      "Jan Pieterszoon Coen"
+     ],
+     "what": "Governor-General Coen destroyed the town of Jayakarta and built Batavia on its ruins as the VOC's headquarters in Asia.",
+     "why": "Batavia became the hub of a Dutch trading network stretching from Persia to Japan, governed by force.",
+     "wikipedia": "Batavia, Dutch East Indies",
+     "wikidata": "Q1199713"
+    },
+    {
+     "date": "1623-03",
+     "date_note": "executions on 9 March 1623",
+     "name": "Amboyna massacre",
+     "place_name": "Ambon",
+     "lat": -3.7,
+     "lon": 128.17,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "VOC officials on Ambon tortured and executed ten Englishmen, nine Japanese and one Portuguese accused of plotting to seize the fort.",
+     "why": "The English largely withdrew from the spice islands, leaving the Dutch in control of cloves and nutmeg.",
+     "wikipedia": "Amboyna massacre",
+     "wikidata": "Q2081717"
+    },
+    {
+     "date": "1626",
+     "name": "Purchase of Manhattan",
+     "place_name": "New Amsterdam",
+     "lat": 40.7,
+     "lon": -74.01,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Peter Minuit"
+     ],
+     "what": "Peter Minuit of the Dutch West India Company bought Manhattan from the Lenape for goods valued at 60 guilders, and the settlement of New Amsterdam grew at its southern tip.",
+     "why": "The Dutch built an Atlantic trading network for furs, sugar and enslaved people alongside their Asian one.",
+     "wikipedia": "New Amsterdam",
+     "wikidata": "Q223308"
+    },
+    {
+     "date": "1637-02",
+     "name": "Collapse of tulip mania",
+     "place_name": "Haarlem",
+     "lat": 52.38,
+     "lon": 4.64,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Prices for rare tulip bulbs, traded in taverns through contracts for future delivery, collapsed in early February 1637 when buyers stopped appearing at an auction in Haarlem.",
+     "why": "The episode, smaller than its legend, shows how much wealth and speculative trading the Dutch economy generated.",
+     "wikipedia": "Tulip mania",
+     "wikidata": "Q219217"
+    },
+    {
+     "date": "1641",
+     "name": "Dutch moved to Dejima",
+     "place_name": "Dejima, Nagasaki",
+     "lat": 32.74,
+     "lon": 129.87,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "The Tokugawa shogunate ordered the VOC to move its trading post from Hirado to Dejima, a small artificial island in Nagasaki harbor.",
+     "why": "For two centuries the Dutch were the only Europeans allowed to trade with Japan, earning silver and copper for the Asian trade.",
+     "wikipedia": "Dejima",
+     "wikidata": "Q640267"
+    },
+    {
+     "date": "1642",
+     "name": "The Night Watch",
+     "place_name": "Amsterdam",
+     "lat": 52.37,
+     "lon": 4.89,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Rembrandt"
+     ],
+     "what": "Rembrandt completed a large group portrait of an Amsterdam civic militia company commanded by Frans Banninck Cocq, commissioned for their meeting hall.",
+     "why": "Wealthy citizens, not just princes and churches, paid for art, and Dutch painting flourished on an open market.",
+     "wikipedia": "The Night Watch",
+     "wikidata": "Q219831"
+    },
+    {
+     "date": "1652-04-06",
+     "name": "Founding of Cape Town",
+     "place_name": "Cape Town",
+     "lat": -33.92,
+     "lon": 18.42,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Jan van Riebeeck"
+     ],
+     "what": "Jan van Riebeeck landed with about 90 VOC employees to build a fort and gardens to supply fresh food to ships sailing between Europe and Asia.",
+     "why": "A supply station became a settler colony that pushed onto Khoekhoe land and imported enslaved workers.",
+     "wikipedia": "Jan van Riebeeck",
+     "wikidata": "Q294769"
+    },
+    {
+     "date": "1667-06",
+     "name": "Raid on the Medway",
+     "place_name": "Chatham",
+     "lat": 51.38,
+     "lon": 0.53,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Michiel de Ruyter"
+     ],
+     "what": "A Dutch fleet under De Ruyter sailed up the Thames estuary and the Medway, burned English warships at anchor and towed away the flagship Royal Charles.",
+     "why": "Dutch naval power peaked, forcing England to accept a favourable peace at Breda.",
+     "wikipedia": "Raid on the Medway",
+     "wikidata": "Q331740"
+    },
+    {
+     "date": "1672-08-20",
+     "name": "Rampjaar and the lynching of the De Witt brothers",
+     "place_name": "The Hague",
+     "lat": 52.08,
+     "lon": 4.31,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Johan de Witt",
+      "William III of England"
+     ],
+     "what": "In the 'disaster year' when France, England, Münster and Cologne invaded at once, a mob in The Hague killed the Grand Pensionary Johan de Witt and his brother Cornelis, and William III of Orange took power.",
+     "why": "The Republic survived by flooding the land, but 1672 is usually taken as the end of its golden age.",
+     "wikipedia": "Rampjaar",
+     "wikidata": "Q1779786"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "japan_unified_closed",
+   "title": "Japan unified and closed",
+   "region": "Japan and Korea",
+   "start": 1560,
+   "end": 1639,
+   "view": {
+    "lon": 134.0,
+    "lat": 35.0,
+    "span": 18
+   },
+   "blurb": "How did three warlords end a century of civil war in Japan, and why did their successors close the country to most foreigners?",
+   "steps": [
+    {
+     "date": "1560-06-12",
+     "name": "Battle of Okehazama",
+     "place_name": "Okehazama",
+     "lat": 35.05,
+     "lon": 136.99,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Oda Nobunaga",
+      "Imagawa Yoshimoto"
+     ],
+     "what": "Oda Nobunaga, with perhaps 2,000 to 3,000 men, surprised the far larger army of Imagawa Yoshimoto in a rainstorm and killed him.",
+     "why": "A minor lord from Owari became a major contender in the wars of the Sengoku period.",
+     "wikipedia": "Battle of Okehazama",
+     "wikidata": "Q349422"
+    },
+    {
+     "date": "1568",
+     "name": "Nobunaga enters Kyoto",
+     "place_name": "Kyoto",
+     "lat": 35.01,
+     "lon": 135.77,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Oda Nobunaga",
+      "Ashikaga Yoshiaki"
+     ],
+     "what": "Nobunaga marched on the capital and installed Ashikaga Yoshiaki as shogun, whom he later drove out in 1573.",
+     "why": "Control of Kyoto gave Nobunaga the prestige to claim to act for the whole realm.",
+     "wikipedia": "Oda Nobunaga",
+     "wikidata": "Q171411"
+    },
+    {
+     "date": "1575-06-28",
+     "name": "Battle of Nagashino",
+     "place_name": "Nagashino",
+     "lat": 34.92,
+     "lon": 137.56,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Oda Nobunaga",
+      "Tokugawa Ieyasu",
+      "Takeda Katsuyori"
+     ],
+     "what": "Behind wooden palisades, the arquebusiers of Nobunaga and Ieyasu shattered the charges of Takeda Katsuyori's cavalry.",
+     "why": "Firearms, introduced by Portuguese traders in 1543, had become decisive in Japanese warfare.",
+     "wikipedia": "Battle of Nagashino",
+     "wikidata": "Q428369"
+    },
+    {
+     "date": "1576",
+     "end_date": "1579",
+     "name": "Building of Azuchi Castle",
+     "place_name": "Azuchi",
+     "lat": 35.16,
+     "lon": 136.14,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Oda Nobunaga"
+     ],
+     "what": "Nobunaga built a castle with a seven-storey keep on Lake Biwa and declared the town below a free market, open to merchants without guild fees.",
+     "why": "Unifiers paired military force with policies that encouraged commerce in their castle towns.",
+     "wikipedia": "Azuchi Castle",
+     "wikidata": "Q786888"
+    },
+    {
+     "date": "1582-06-21",
+     "name": "Honnō-ji Incident",
+     "place_name": "Honnō-ji, Kyoto",
+     "lat": 35.01,
+     "lon": 135.76,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Oda Nobunaga",
+      "Akechi Mitsuhide",
+      "Toyotomi Hideyoshi"
+     ],
+     "what": "Nobunaga's general Akechi Mitsuhide attacked him at the Honnō-ji temple, where Nobunaga died; Hideyoshi defeated Mitsuhide 11 days later.",
+     "why": "Leadership of the unification passed to Toyotomi Hideyoshi, a commander of humble birth.",
+     "wikipedia": "Honnō-ji Incident",
+     "wikidata": "Q169598"
+    },
+    {
+     "date": "1588",
+     "name": "Hideyoshi's sword hunt",
+     "place_name": "Kyoto",
+     "lat": 35.02,
+     "lon": 135.75,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Toyotomi Hideyoshi"
+     ],
+     "what": "Hideyoshi ordered farmers to hand over swords and guns, alongside land surveys that recorded the yield of every field and the household responsible for it.",
+     "why": "The measures fixed a line between armed samurai and taxpaying farmers that structured Japanese society for nearly three centuries.",
+     "wikipedia": "Sword hunt",
+     "wikidata": "Q1133763"
+    },
+    {
+     "date": "1590",
+     "date_note": "siege from May to August 1590",
+     "name": "Siege of Odawara",
+     "place_name": "Odawara",
+     "lat": 35.25,
+     "lon": 139.15,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Toyotomi Hideyoshi",
+      "Tokugawa Ieyasu"
+     ],
+     "what": "Hideyoshi surrounded the Hōjō clan's castle with a huge army until it surrendered, and gave the Hōjō lands in the Kantō to Ieyasu.",
+     "why": "The last major independent warlord fell, completing the political unification of Japan.",
+     "wikipedia": "Siege of Odawara (1590)",
+     "wikidata": "Q2622890"
+    },
+    {
+     "date": "1592-05",
+     "name": "Siege of Busanjin",
+     "place_name": "Busan",
+     "lat": 35.1,
+     "lon": 129.04,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Konishi Yukinaga",
+      "Toyotomi Hideyoshi"
+     ],
+     "what": "Japanese troops landed at Busan and took the fortress in a day, beginning an invasion of Korea by about 150,000 men aiming eventually at Ming China.",
+     "why": "Hideyoshi turned the armies of a unified Japan outward, in a war that devastated Korea.",
+     "wikipedia": "Siege of Busanjin",
+     "wikidata": "Q497046"
+    },
+    {
+     "date": "1592-08-14",
+     "name": "Battle of Hansan Island",
+     "place_name": "Hansan Island",
+     "lat": 34.79,
+     "lon": 128.49,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Yi Sun-sin"
+     ],
+     "what": "Admiral Yi Sun-sin lured a Japanese fleet into open water and destroyed most of its ships.",
+     "why": "Korean control of the sea cut Japanese supply lines, and with Ming intervention the invasion stalled; Japan withdrew after Hideyoshi's death in 1598.",
+     "wikipedia": "Battle of Hansan Island",
+     "wikidata": "Q487332"
+    },
+    {
+     "date": "1600-10-21",
+     "name": "Battle of Sekigahara",
+     "place_name": "Sekigahara",
+     "lat": 35.37,
+     "lon": 136.46,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Tokugawa Ieyasu",
+      "Ishida Mitsunari",
+      "Kobayakawa Hideaki"
+     ],
+     "what": "Ieyasu's eastern army defeated the western coalition led by Ishida Mitsunari after Kobayakawa Hideaki switched sides mid-battle.",
+     "why": "Ieyasu became the unchallenged power in Japan.",
+     "wikipedia": "Battle of Sekigahara",
+     "wikidata": "Q234188"
+    },
+    {
+     "date": "1603-03",
+     "name": "Tokugawa shogunate founded",
+     "place_name": "Edo",
+     "lat": 35.69,
+     "lon": 139.75,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Tokugawa Ieyasu"
+     ],
+     "what": "The emperor appointed Ieyasu shogun, and he governed from his castle town of Edo, which grew into one of the world's largest cities.",
+     "why": "The Tokugawa regime lasted until 1868, giving Japan more than 250 years without major war.",
+     "wikipedia": "Tokugawa shogunate",
+     "wikidata": "Q205662"
+    },
+    {
+     "date": "1614-11",
+     "end_date": "1615-06",
+     "name": "Siege of Osaka",
+     "place_name": "Osaka Castle",
+     "lat": 34.69,
+     "lon": 135.53,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Tokugawa Ieyasu",
+      "Toyotomi Hideyori"
+     ],
+     "what": "In winter and summer campaigns Ieyasu besieged and burned Osaka Castle; Hideyoshi's son Hideyori and his mother died by suicide.",
+     "why": "The destruction of the Toyotomi removed the last rival to Tokugawa rule.",
+     "wikipedia": "Siege of Osaka",
+     "wikidata": "Q475780"
+    },
+    {
+     "date": "1635",
+     "name": "Sankin-kōtai made compulsory",
+     "place_name": "Edo",
+     "lat": 35.69,
+     "lon": 139.75,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Tokugawa Iemitsu"
+     ],
+     "what": "Shogun Iemitsu required the daimyo to spend alternate years in Edo and to leave their wives and heirs there permanently.",
+     "why": "The costly processions kept lords in check and built up the roads, inns and markets that linked the country.",
+     "wikipedia": "Sankin-kōtai",
+     "wikidata": "Q1151844"
+    },
+    {
+     "date": "1637-12",
+     "end_date": "1638-04",
+     "name": "Shimabara Rebellion",
+     "place_name": "Hara Castle",
+     "lat": 32.63,
+     "lon": 130.26,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Amakusa Shirō",
+      "Tokugawa Iemitsu"
+     ],
+     "what": "Overtaxed peasants, many of them Christian, rose under the teenage Amakusa Shirō and held Hara Castle until a shogunate army of over 100,000 stormed it and killed the defenders.",
+     "why": "The shogunate blamed Christianity and its Portuguese carriers, hardening its policy against foreign influence.",
+     "wikipedia": "Shimabara Rebellion",
+     "wikidata": "Q696217"
+    },
+    {
+     "date": "1639",
+     "name": "Expulsion of the Portuguese",
+     "place_name": "Nagasaki",
+     "lat": 32.75,
+     "lon": 129.88,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Tokugawa Iemitsu"
+     ],
+     "what": "The last of a series of edicts banned Portuguese ships from Japan, completing measures that already forbade Japanese to travel abroad.",
+     "why": "Japan's foreign contact was limited to the Dutch and Chinese at Nagasaki and to Korea, the Ryukyus and the Ainu through intermediaries.",
+     "wikipedia": "Sakoku",
+     "wikidata": "Q332075"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "atlantic_slave_trade",
+   "title": "The Atlantic slave trade",
+   "region": "Atlantic world",
+   "start": 1518,
+   "end": 1807,
+   "view": {
+    "lon": -30.0,
+    "lat": 10.0,
+    "span": 120
+   },
+   "blurb": "How did sugar drive the forced migration of millions of Africans across the Atlantic, and how did Britain come to ban the trade?",
+   "steps": [
+    {
+     "date": "1518",
+     "name": "First licence for direct shipment from Africa",
+     "place_name": "Seville",
+     "lat": 37.38,
+     "lon": -5.99,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Charles V, Holy Roman Emperor"
+     ],
+     "what": "Charles I of Spain granted a licence to ship 4,000 enslaved Africans directly from Africa to the Spanish Indies; such licences later became the asiento contracts.",
+     "why": "The Spanish crown turned the supply of enslaved labour to its colonies into a regulated, taxed business.",
+     "wikipedia": "Asiento de Negros",
+     "wikidata": "Q21099469"
+    },
+    {
+     "date": "1549",
+     "name": "Founding of Salvador da Bahia",
+     "place_name": "Salvador",
+     "lat": -12.97,
+     "lon": -38.51,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Tomé de Sousa"
+     ],
+     "what": "Tomé de Sousa founded Salvador as the capital of Portuguese Brazil, at the centre of the sugar-growing lands around the Bay of All Saints.",
+     "why": "Brazil's sugar mills, first worked by Indigenous people and then by enslaved Africans, made it the world's leading sugar producer by 1600.",
+     "wikipedia": "Salvador, Bahia",
+     "wikidata": "Q36947"
+    },
+    {
+     "date": "1576",
+     "name": "Founding of Luanda",
+     "place_name": "Luanda",
+     "lat": -8.84,
+     "lon": 13.23,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Paulo Dias de Novais"
+     ],
+     "what": "Paulo Dias de Novais founded Luanda on the coast of Angola as a Portuguese base.",
+     "why": "West Central Africa, through Luanda and nearby ports, became the largest single source of people taken across the Atlantic.",
+     "wikipedia": "Luanda",
+     "wikidata": "Q3897"
+    },
+    {
+     "date": "1630",
+     "end_date": "1654",
+     "name": "Dutch Brazil",
+     "place_name": "Recife",
+     "lat": -8.05,
+     "lon": -34.88,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "John Maurice, Prince of Nassau-Siegen"
+     ],
+     "what": "The Dutch West India Company seized Olinda and Recife in Pernambuco and ran the sugar colony until Portuguese colonists drove them out in 1654.",
+     "why": "The Dutch learned sugar production and the slave trade in Brazil and carried that knowledge to the Caribbean.",
+     "wikipedia": "Dutch Brazil",
+     "wikidata": "Q221357"
+    },
+    {
+     "date": "1637-08",
+     "name": "Dutch capture of Elmina",
+     "place_name": "Elmina",
+     "lat": 5.08,
+     "lon": -1.35,
+     "family": "war",
+     "subtype": "siege",
+     "who": [],
+     "what": "The Dutch West India Company took São Jorge da Mina, the fort the Portuguese had built on the Gold Coast in 1482.",
+     "why": "Forts on the West African coast, first built for gold, became holding places for enslaved captives awaiting ships.",
+     "wikipedia": "Elmina Castle",
+     "wikidata": "Q55264655"
+    },
+    {
+     "date": "1640",
+     "date_note": "c.; the shift to sugar happened during the 1640s",
+     "name": "Barbados turns to sugar",
+     "place_name": "Barbados",
+     "lat": 13.1,
+     "lon": -59.62,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "English planters on Barbados switched from tobacco and cotton to sugar, using methods learned from Dutch Brazil, and replaced indentured servants with enslaved Africans.",
+     "why": "By the 1660s Barbados was England's richest colony and the model for the plantation system across the Caribbean.",
+     "wikipedia": "History of Barbados",
+     "wikidata": "Q2206741"
+    },
+    {
+     "date": "1672",
+     "name": "Royal African Company chartered",
+     "place_name": "London",
+     "lat": 51.51,
+     "lon": -0.09,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "James II of England"
+     ],
+     "what": "Charles II granted a new company headed by his brother James, Duke of York, a monopoly on English trade with West Africa; it branded captives with its initials.",
+     "why": "The company shipped more enslaved Africans than any other single British institution in the trade's history.",
+     "wikipedia": "Royal African Company",
+     "wikidata": "Q769519"
+    },
+    {
+     "date": "1713-04",
+     "name": "Peace of Utrecht and the British asiento",
+     "place_name": "Utrecht",
+     "lat": 52.09,
+     "lon": 5.12,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [],
+     "what": "Among the treaties ending the War of the Spanish Succession, Spain granted Britain the asiento, the right to supply 4,800 enslaved Africans a year to Spanish America for 30 years.",
+     "why": "European powers treated the slave trade as a prize of war, and the contract passed to the South Sea Company.",
+     "wikipedia": "Peace of Utrecht",
+     "wikidata": "Q154674"
+    },
+    {
+     "date": "1727",
+     "name": "Dahomey conquers Ouidah",
+     "place_name": "Ouidah",
+     "lat": 6.36,
+     "lon": 2.09,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Agaja"
+     ],
+     "what": "King Agaja of Dahomey conquered the coastal kingdom of Hueda and its port of Ouidah.",
+     "why": "African states controlled the supply of captives on the coast, and Ouidah became one of the busiest slave ports in Africa.",
+     "wikipedia": "Ouidah",
+     "wikidata": "Q850031"
+    },
+    {
+     "date": "1750",
+     "date_note": "representative date; the trade peaked in the second half of the 18th century",
+     "name": "The Middle Passage",
+     "place_name": "Central Atlantic",
+     "lat": 8.0,
+     "lon": -30.0,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "Between 1501 and 1866 about 12.5 million Africans were put on ships for the Americas and about 10.7 million survived the crossing, which usually took one to two months.",
+     "why": "The crossing itself killed well over a million people and was the core of a trade built on sugar, tobacco, cotton and coffee.",
+     "wikipedia": "Middle Passage",
+     "wikidata": "Q2500942"
+    },
+    {
+     "date": "1781-11",
+     "date_note": "killings began on 29 November 1781 and continued over several days",
+     "name": "Zong massacre",
+     "place_name": "Caribbean Sea near Jamaica",
+     "lat": 18.0,
+     "lon": -78.5,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [
+      "Luke Collingwood",
+      "Olaudah Equiano",
+      "Granville Sharp"
+     ],
+     "what": "The crew of the Liverpool-owned slave ship Zong threw about 130 or more Africans overboard, and the owners then claimed insurance for them as lost cargo.",
+     "why": "When Olaudah Equiano told Granville Sharp, the 1783 insurance case became a rallying point for the abolition movement.",
+     "wikipedia": "Zong massacre",
+     "wikidata": "Q211582"
+    },
+    {
+     "date": "1787-05-22",
+     "name": "Society for Effecting the Abolition of the Slave Trade founded",
+     "place_name": "London",
+     "lat": 51.51,
+     "lon": -0.09,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Thomas Clarkson",
+      "Granville Sharp"
+     ],
+     "what": "Twelve men, nine of them Quakers, met at a printing shop in George Yard and formed a committee to campaign against the slave trade.",
+     "why": "It began one of the first mass public campaigns, using petitions, boycotts of slave-grown sugar and printed evidence.",
+     "wikipedia": "Society for Effecting the Abolition of the Slave Trade",
+     "wikidata": "Q2157093"
+    },
+    {
+     "date": "1788",
+     "name": "Diagram of the slave ship Brooks",
+     "place_name": "Plymouth",
+     "lat": 50.37,
+     "lon": -4.14,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Thomas Clarkson"
+     ],
+     "what": "Abolitionists in Plymouth printed a plan of the Liverpool slave ship Brooks showing how hundreds of captives were packed below deck; thousands of copies circulated.",
+     "why": "The image made the Middle Passage visible to the public and became the movement's most famous print.",
+     "wikipedia": "Brooks (1781 ship)",
+     "wikidata": "Q2926123"
+    },
+    {
+     "date": "1791-08",
+     "name": "Haitian Revolution begins",
+     "place_name": "Northern plain of Saint-Domingue",
+     "lat": 19.7,
+     "lon": -72.2,
+     "family": "unrest",
+     "subtype": "revolution",
+     "who": [
+      "Toussaint Louverture",
+      "Dutty Boukman"
+     ],
+     "what": "Enslaved people in northern Saint-Domingue, the world's richest sugar colony with about half a million enslaved, rose up and burned plantations.",
+     "why": "The only successful large-scale slave revolt created the free state of Haiti in 1804 and shook every slave society in the Americas.",
+     "wikipedia": "Haitian Revolution",
+     "wikidata": "Q689128"
+    },
+    {
+     "date": "1807-03-25",
+     "name": "Slave Trade Act 1807",
+     "place_name": "Westminster",
+     "lat": 51.5,
+     "lon": -0.13,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "William Wilberforce",
+      "Thomas Clarkson"
+     ],
+     "what": "After two decades of campaigning led in Parliament by William Wilberforce, Britain banned the slave trade within its empire, with effect for ships from 1 May 1807.",
+     "why": "Britain, the leading slave-trading nation of the late 1700s, now used its navy against the trade, though slavery itself lasted in British colonies until 1834.",
+     "wikipedia": "Slave Trade Act 1807",
+     "wikidata": "Q770832"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "qing_conquest_high_qing",
+   "title": "The Qing conquest and High Qing",
+   "region": "China and Inner Asia",
+   "start": 1644,
+   "end": 1799,
+   "view": {
+    "lon": 108.0,
+    "lat": 35.0,
+    "span": 50
+   },
+   "blurb": "How did Manchu invaders conquer Ming China and build the largest and richest empire in its history, and what strains showed by 1799?",
+   "steps": [
+    {
+     "date": "1644-04-25",
+     "name": "Fall of Beijing to Li Zicheng",
+     "place_name": "Beijing",
+     "lat": 39.92,
+     "lon": 116.39,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Chongzhen Emperor",
+      "Li Zicheng"
+     ],
+     "what": "The rebel army of Li Zicheng entered Beijing and the last Ming emperor, Chongzhen, hanged himself on Coal Hill behind the palace.",
+     "why": "The Ming fell to internal rebellion driven by famine and fiscal collapse, opening the way for the Manchus.",
+     "wikipedia": "Jiashen Incident",
+     "wikidata": "Q4870442"
+    },
+    {
+     "date": "1644-05-27",
+     "name": "Battle of Shanhai Pass",
+     "place_name": "Shanhai Pass",
+     "lat": 40.01,
+     "lon": 119.75,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Wu Sangui",
+      "Dorgon",
+      "Li Zicheng"
+     ],
+     "what": "The Ming general Wu Sangui opened the eastern end of the Great Wall to the Manchu regent Dorgon, and their combined army defeated Li Zicheng.",
+     "why": "The Qing entered Beijing in June 1644 and claimed the Mandate of Heaven.",
+     "wikipedia": "Battle of Shanhai Pass",
+     "wikidata": "Q4520158"
+    },
+    {
+     "date": "1645-05",
+     "name": "Yangzhou massacre",
+     "place_name": "Yangzhou",
+     "lat": 32.39,
+     "lon": 119.42,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Shi Kefa",
+      "Dodo, Prince Yu"
+     ],
+     "what": "After the Ming loyalist Shi Kefa refused to surrender, Qing troops under Dodo took Yangzhou and killed a large part of its population over ten days.",
+     "why": "The massacre, followed by the order that all men shave their heads in the Manchu queue, showed the price of resistance in the south.",
+     "wikipedia": "Yangzhou massacre",
+     "wikidata": "Q8048675"
+    },
+    {
+     "date": "1661-04",
+     "end_date": "1662-02",
+     "name": "Siege of Fort Zeelandia",
+     "place_name": "Tainan",
+     "lat": 23.0,
+     "lon": 120.16,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Koxinga",
+      "Frederick Coyett"
+     ],
+     "what": "The Ming loyalist Koxinga crossed to Taiwan with a large fleet and forced the Dutch governor Frederick Coyett to surrender Fort Zeelandia after nine months.",
+     "why": "Koxinga's family made Taiwan a loyalist base and a maritime trading state outside Qing control.",
+     "wikipedia": "Siege of Fort Zeelandia",
+     "wikidata": "Q697621"
+    },
+    {
+     "date": "1673",
+     "end_date": "1681",
+     "name": "Revolt of the Three Feudatories",
+     "place_name": "Kunming",
+     "lat": 25.04,
+     "lon": 102.71,
+     "family": "war",
+     "subtype": "revolt",
+     "who": [
+      "Wu Sangui",
+      "Kangxi Emperor"
+     ],
+     "what": "When the young Kangxi Emperor moved to abolish their semi-independent fiefs in the south, Wu Sangui and two other Chinese generals rebelled; the Qing won after eight years.",
+     "why": "Kangxi's victory consolidated direct Qing rule over all of China proper.",
+     "wikipedia": "Revolt of the Three Feudatories",
+     "wikidata": "Q112501"
+    },
+    {
+     "date": "1683",
+     "date_note": "imperial kilns restored in the early 1680s",
+     "name": "Revival of the Jingdezhen imperial kilns",
+     "place_name": "Jingdezhen",
+     "lat": 29.29,
+     "lon": 117.21,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Kangxi Emperor"
+     ],
+     "what": "After war damage, the imperial porcelain works at Jingdezhen were rebuilt under supervisors sent from court, and the town's thousands of kilns again produced for both palace and export.",
+     "why": "Porcelain, with silk and tea, brought silver from Europe and the Americas into China.",
+     "wikipedia": "Jingdezhen porcelain",
+     "wikidata": "Q3406666"
+    },
+    {
+     "date": "1683-07",
+     "name": "Battle of Penghu",
+     "place_name": "Penghu",
+     "lat": 23.57,
+     "lon": 119.58,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Shi Lang",
+      "Kangxi Emperor"
+     ],
+     "what": "The Qing admiral Shi Lang destroyed the Zheng fleet in the Penghu islands, and the Zheng regime on Taiwan surrendered soon after.",
+     "why": "Taiwan became part of the Qing empire, and the coast was reopened to trade in 1684.",
+     "wikipedia": "Battle of Penghu",
+     "wikidata": "Q276656"
+    },
+    {
+     "date": "1689-08",
+     "name": "Treaty of Nerchinsk",
+     "place_name": "Nerchinsk",
+     "lat": 51.98,
+     "lon": 116.58,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Kangxi Emperor",
+      "Fyodor Golovin"
+     ],
+     "what": "Qing and Russian envoys, with Jesuits translating in Latin, fixed the border along the Argun River and the Stanovoy mountains and allowed trade.",
+     "why": "The first treaty between China and a European power stopped Russia's advance into the Amur valley and freed Kangxi to turn on the Dzungars.",
+     "wikipedia": "Treaty of Nerchinsk",
+     "wikidata": "Q696094"
+    },
+    {
+     "date": "1716",
+     "name": "Kangxi Dictionary",
+     "place_name": "Beijing",
+     "lat": 39.92,
+     "lon": 116.39,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Kangxi Emperor"
+     ],
+     "what": "Scholars commissioned by the emperor completed a dictionary of about 47,000 characters, which remained the standard reference for two centuries.",
+     "why": "The Manchu rulers won over Chinese scholar elites by sponsoring large works of classical learning.",
+     "wikipedia": "Kangxi Dictionary",
+     "wikidata": "Q850590"
+    },
+    {
+     "date": "1755",
+     "end_date": "1758",
+     "name": "Dzungar genocide",
+     "place_name": "Ili valley",
+     "lat": 43.91,
+     "lon": 81.33,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Qianlong Emperor",
+      "Amursana"
+     ],
+     "what": "After the Dzungar leader Amursana rebelled, the Qianlong Emperor ordered the Dzungars destroyed; war, killings and smallpox wiped out most of a population of several hundred thousand.",
+     "why": "The last great steppe empire was eliminated, and the conquered lands became Xinjiang, doubling the empire's area.",
+     "wikipedia": "Dzungar genocide",
+     "wikidata": "Q4462644"
+    },
+    {
+     "date": "1757",
+     "name": "Canton System",
+     "place_name": "Guangzhou",
+     "lat": 23.13,
+     "lon": 113.26,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Qianlong Emperor"
+     ],
+     "what": "Qianlong restricted European seaborne trade to Guangzhou, where foreigners had to deal only through licensed merchants of the Cohong.",
+     "why": "The Qing kept Western trade under tight control while the tea trade with Britain grew enormously.",
+     "wikipedia": "Canton System",
+     "wikidata": "Q2617767"
+    },
+    {
+     "date": "1773",
+     "end_date": "1782",
+     "name": "Compilation of the Siku Quanshu",
+     "place_name": "Beijing",
+     "lat": 39.92,
+     "lon": 116.39,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Qianlong Emperor",
+      "Ji Yun"
+     ],
+     "what": "Qianlong had hundreds of scholars copy about 3,500 works into a collection of some 36,000 volumes, while books judged hostile to the Manchus were destroyed.",
+     "why": "The project shows both the scale of High Qing patronage and its censorship.",
+     "wikipedia": "Siku Quanshu",
+     "wikidata": "Q699477"
+    },
+    {
+     "date": "1793-09-14",
+     "name": "Macartney Embassy received by Qianlong",
+     "place_name": "Chengde",
+     "lat": 40.99,
+     "lon": 117.94,
+     "family": "diplomacy",
+     "subtype": "journey",
+     "who": [
+      "George Macartney, 1st Earl Macartney",
+      "Qianlong Emperor"
+     ],
+     "what": "Lord Macartney presented George III's letter to the 82-year-old emperor at his summer residence; Qianlong refused requests for wider trade and a resident ambassador.",
+     "why": "The confident refusal reflected Qing power, but Britain's growing demand for trade would return with force in the Opium War.",
+     "wikipedia": "Macartney Embassy",
+     "wikidata": "Q6722675"
+    },
+    {
+     "date": "1796",
+     "end_date": "1804",
+     "name": "White Lotus Rebellion",
+     "place_name": "Hubei",
+     "lat": 32.0,
+     "lon": 111.0,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Jiaqing Emperor"
+     ],
+     "what": "Followers of the White Lotus sect in the poor hill country where Hubei, Sichuan and Shaanxi meet rose against taxes and officials and held out for nine years.",
+     "why": "Rapid population growth to around 300 million and corrupt government were straining the empire.",
+     "wikipedia": "White Lotus Rebellion",
+     "wikidata": "Q997220"
+    },
+    {
+     "date": "1799-02",
+     "name": "Death of Qianlong and fall of Heshen",
+     "place_name": "Beijing",
+     "lat": 39.92,
+     "lon": 116.39,
+     "family": "unrest",
+     "subtype": "death",
+     "who": [
+      "Qianlong Emperor",
+      "Heshen",
+      "Jiaqing Emperor"
+     ],
+     "what": "Days after the retired Qianlong Emperor died, his son the Jiaqing Emperor arrested Qianlong's favourite minister Heshen, ordered him to commit suicide and seized a fortune said to rival years of state revenue.",
+     "why": "The scandal exposed the corruption that had grown at the top during the High Qing.",
+     "wikipedia": "Heshen",
+     "wikidata": "Q700179"
+    }
+   ],
+   "status": "draft"
+  }
+ ]
+}

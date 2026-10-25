@@ -57,6 +57,15 @@ Wikidata, Pantheon, Cliopatria, raw/), never hand-built per region. Europe 1789-
 pack. A window with no pack can be filled by a live AI draft (marked `status: draft`, `conf: estimated` or
 worse), cached, and queued for the judge.
 
+Implemented (v1): `views/atlas/world/world.js`, `build_index.py` (time slices of the whole world plus packs, written by
+`views/atlas/build.py` beside the page), `assemble.py` and `packs.json` (one line per pack). Every record is one row
+`[k, f, sub, name, lon, lat, date, end, ref, rank, conf, extra]` (see assemble.py); the API returns them as
+`{k, f, sub, name, lon, lat, d, e, m, me, ref, rank, conf, x, id, src}` with `m` the month index. `t` is a year,
+`{y, m}` or `{m0, m1}` (month indexes). Extra hooks: `onLoad(fn)`, `load(t, bbox)`, `packs()`, `stories()` (study
+storylines; `asStory(s)` gives the L4 Story shape), `draft(rows, {key})` for live AI rows, `addLifeline(fn)` for
+presences and journeys from the travellers layer, `addMeasure(fn)` for measure providers. Consumers so far: the
+Up close tab (`lenses/deep.js`) and the Here tab's "born here" list.
+
 ## L2 Motion (owner: "Build a live-a-life history RPG", extracted from its router)
 
 ```js

@@ -1,0 +1,2411 @@
+{
+ "stories": [
+  {
+   "id": "first_world_war",
+   "title": "The First World War",
+   "region": "Europe and the Middle East",
+   "start": 1914,
+   "end": 1918,
+   "view": {
+    "lon": 15.0,
+    "lat": 48.0,
+    "span": 45
+   },
+   "blurb": "How did a shooting in Sarajevo become a four-year war that killed millions and broke four empires?",
+   "steps": [
+    {
+     "date": "1914-06-28",
+     "name": "Assassination of Archduke Franz Ferdinand",
+     "place_name": "Sarajevo",
+     "lat": 43.86,
+     "lon": 18.43,
+     "family": "unrest",
+     "subtype": "death",
+     "who": [
+      "Gavrilo Princip",
+      "Archduke Franz Ferdinand of Austria"
+     ],
+     "what": "Gavrilo Princip, a Bosnian Serb student, shot the heir to the Austro-Hungarian throne and his wife Sophie as their car stopped on a Sarajevo street.",
+     "why": "Austria-Hungary's ultimatum to Serbia set off a chain of alliance mobilisations that brought Russia, Germany, France and Britain into war by early August.",
+     "wikipedia": "Assassination of Archduke Franz Ferdinand",
+     "wikidata": "Q192050"
+    },
+    {
+     "date": "1914-09-06",
+     "end_date": "1914-09-12",
+     "name": "First Battle of the Marne",
+     "place_name": "Marne valley, east of Paris",
+     "lat": 48.96,
+     "lon": 2.88,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Joseph Joffre",
+      "Helmuth von Moltke the Younger"
+     ],
+     "what": "French and British armies counter-attacked the German advance about 50 km from Paris and forced it back to the Aisne river.",
+     "why": "The German plan for a quick victory in the west failed, and both sides dug the trench lines that would barely move for four years.",
+     "wikipedia": "First Battle of the Marne",
+     "wikidata": "Q190712"
+    },
+    {
+     "date": "1914-12-24",
+     "end_date": "1914-12-26",
+     "name": "Christmas truce",
+     "place_name": "Near Ypres, Flanders",
+     "lat": 50.75,
+     "lon": 2.9,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "Along parts of the Western Front, British and German soldiers stopped firing, sang carols, buried their dead and met in no man's land.",
+     "why": "It showed how ordinary soldiers saw the enemy, and commanders made sure it was not repeated on that scale.",
+     "wikipedia": "Christmas truce",
+     "wikidata": "Q163730"
+    },
+    {
+     "date": "1915-04-24",
+     "name": "Armenian genocide",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "Ottoman authorities arrested about 235 to 270 Armenian community leaders in Constantinople, beginning deportations and massacres that killed most of the Ottoman Armenian population.",
+     "why": "The war gave cover for the destruction of a whole people, one of the first modern genocides.",
+     "wikipedia": "Armenian genocide",
+     "wikidata": "Q80034"
+    },
+    {
+     "date": "1915-04-25",
+     "end_date": "1916-01-09",
+     "name": "Gallipoli campaign",
+     "place_name": "ANZAC Cove, Gallipoli",
+     "lat": 40.24,
+     "lon": 26.28,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Mustafa Kemal Atatürk"
+     ],
+     "what": "British, French, Australian and New Zealand troops landed on the Gallipoli peninsula to open the Dardanelles but were held by Ottoman forces and withdrew after about eight months.",
+     "why": "The failure kept the sea route to Russia closed and made Mustafa Kemal's name as a commander.",
+     "wikipedia": "Gallipoli campaign",
+     "wikidata": "Q164983"
+    },
+    {
+     "date": "1915-05-07",
+     "name": "Sinking of the RMS Lusitania",
+     "place_name": "Off the Old Head of Kinsale, Ireland",
+     "lat": 51.42,
+     "lon": -8.55,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "The German submarine U-20 torpedoed the British liner Lusitania, killing 1,197 people, 128 of them Americans.",
+     "why": "U-boat attacks on shipping turned American opinion against Germany long before the United States entered the war.",
+     "wikipedia": "Sinking of the RMS Lusitania"
+    },
+    {
+     "date": "1916-02-21",
+     "end_date": "1916-12-18",
+     "name": "Battle of Verdun",
+     "place_name": "Verdun",
+     "lat": 49.16,
+     "lon": 5.38,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Philippe Pétain",
+      "Erich von Falkenhayn"
+     ],
+     "what": "Germany attacked the fortress city of Verdun; over ten months the French held it at the cost of roughly 300,000 dead on both sides.",
+     "why": "It became the model of attrition warfare, where the aim was to bleed the enemy rather than to win ground.",
+     "wikipedia": "Battle of Verdun",
+     "wikidata": "Q130847"
+    },
+    {
+     "date": "1916-05-31",
+     "end_date": "1916-06-01",
+     "name": "Battle of Jutland",
+     "place_name": "North Sea off Jutland",
+     "lat": 56.7,
+     "lon": 5.85,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "John Jellicoe, 1st Earl Jellicoe",
+      "Reinhard Scheer"
+     ],
+     "what": "About 250 British and German warships fought the war's largest naval battle; Britain lost more ships, but the German fleet returned to port.",
+     "why": "The German surface fleet never seriously challenged the British blockade again, pushing Germany towards submarine warfare.",
+     "wikipedia": "Battle of Jutland",
+     "wikidata": "Q156554"
+    },
+    {
+     "date": "1916-07-01",
+     "end_date": "1916-11-18",
+     "name": "Battle of the Somme",
+     "place_name": "Somme, near Albert",
+     "lat": 50.0,
+     "lon": 2.68,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Douglas Haig"
+     ],
+     "what": "The British army lost about 57,000 casualties on the first day alone; by November the Allies had advanced about 10 km for over a million casualties on both sides.",
+     "why": "It came to stand for the human cost of trench warfare and also saw the first use of tanks in battle.",
+     "wikipedia": "Battle of the Somme",
+     "wikidata": "Q132568"
+    },
+    {
+     "date": "1916-12",
+     "date_note": "winter of 1916-17",
+     "end_date": "1917-03",
+     "name": "Turnip Winter",
+     "place_name": "Berlin",
+     "lat": 52.52,
+     "lon": 13.4,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [],
+     "what": "After a failed potato harvest and under the British blockade, German city dwellers lived largely on turnips, normally animal feed, and civilian deaths from hunger and disease rose.",
+     "why": "Hunger at home wore down German morale and fed the unrest that ended the empire in 1918.",
+     "wikipedia": "Turnip Winter",
+     "wikidata": "Q1525064"
+    },
+    {
+     "date": "1917-04-06",
+     "name": "American entry into World War I",
+     "place_name": "Washington, D.C.",
+     "lat": 38.89,
+     "lon": -77.01,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Woodrow Wilson"
+     ],
+     "what": "After Germany resumed unrestricted submarine warfare on 1 February and the Zimmermann Telegram was published, Congress declared war on Germany.",
+     "why": "American men, money and supplies shifted the balance against Germany in 1918.",
+     "wikipedia": "American entry into World War I",
+     "wikidata": "Q4745451"
+    },
+    {
+     "date": "1917-10-24",
+     "end_date": "1917-11-19",
+     "name": "Battle of Caporetto",
+     "place_name": "Kobarid (Caporetto)",
+     "lat": 46.25,
+     "lon": 13.58,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Erwin Rommel"
+     ],
+     "what": "Austro-Hungarian and German troops broke the Italian line on the Isonzo and drove the Italians back about 100 km to the Piave, taking some 265,000 prisoners.",
+     "why": "The near collapse of Italy led the Allies to create a unified command structure.",
+     "wikipedia": "Battle of Caporetto",
+     "wikidata": "Q242644"
+    },
+    {
+     "date": "1918-03",
+     "date_note": "first widely recorded outbreak; the origin of the pandemic is disputed",
+     "end_date": "1920",
+     "name": "Spanish flu",
+     "place_name": "Camp Funston, Fort Riley, Kansas",
+     "lat": 39.06,
+     "lon": -96.79,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "An influenza outbreak among army recruits in Kansas was among the first recorded cases of a pandemic that troopships spread worldwide and that killed perhaps 25 to 50 million people.",
+     "why": "The war's mass movements of soldiers helped spread a disease that killed more people than the fighting did.",
+     "wikipedia": "Spanish flu",
+     "wikidata": "Q178275"
+    },
+    {
+     "date": "1918-03-03",
+     "name": "Treaty of Brest-Litovsk",
+     "place_name": "Brest-Litovsk",
+     "lat": 52.1,
+     "lon": 23.69,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Grigori Sokolnikov"
+     ],
+     "what": "Soviet Russia signed a separate peace with the Central Powers, giving up Poland, the Baltic lands, Finland and Ukraine.",
+     "why": "Germany could move dozens of divisions west for one last offensive in the spring of 1918.",
+     "wikipedia": "Treaty of Brest-Litovsk",
+     "wikidata": "Q122371"
+    },
+    {
+     "date": "1918-11-11",
+     "name": "Armistice of 11 November 1918",
+     "place_name": "Forest of Compiègne",
+     "lat": 49.43,
+     "lon": 2.91,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Ferdinand Foch",
+      "Matthias Erzberger"
+     ],
+     "what": "In a railway carriage in the forest of Compiègne, German delegates signed an armistice that took effect at 11 a.m.",
+     "why": "The fighting ended with Germany's army still on foreign soil, which later fed the myth that it had been betrayed at home.",
+     "wikipedia": "Armistice of 11 November 1918",
+     "wikidata": "Q253224"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "russian_revolutions",
+   "title": "The Russian revolutions",
+   "region": "Russia",
+   "start": 1917,
+   "end": 1922,
+   "view": {
+    "lon": 45.0,
+    "lat": 55.0,
+    "span": 60
+   },
+   "blurb": "How did the Romanov empire fall, and how did the Bolsheviks win the civil war that followed?",
+   "steps": [
+    {
+     "date": "1917-03-08",
+     "date_note": "23 February in the Russian Old Style calendar",
+     "end_date": "1917-03-16",
+     "name": "February Revolution",
+     "place_name": "Petrograd",
+     "lat": 59.94,
+     "lon": 30.31,
+     "family": "unrest",
+     "subtype": "revolution",
+     "who": [],
+     "what": "Women queuing for bread on International Women's Day began strikes that spread to over 200,000 workers; within days the garrison mutinied.",
+     "why": "War shortages turned bread riots into a revolution that ended three centuries of Romanov rule.",
+     "wikipedia": "February Revolution",
+     "wikidata": "Q101534"
+    },
+    {
+     "date": "1917-03-15",
+     "name": "Abdication of Nicholas II",
+     "place_name": "Pskov",
+     "lat": 57.82,
+     "lon": 28.33,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Nicholas II of Russia"
+     ],
+     "what": "Stranded in his train at Pskov, Tsar Nicholas II signed his abdication for himself and his son.",
+     "why": "Power passed to a weak Provisional Government that shared authority with the Petrograd Soviet.",
+     "wikipedia": "February Revolution",
+     "wikidata": "Q101534"
+    },
+    {
+     "date": "1917-04-09",
+     "name": "Lenin's sealed train",
+     "place_name": "Zurich",
+     "lat": 47.38,
+     "lon": 8.54,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Vladimir Lenin"
+     ],
+     "what": "With German permission, Lenin and about 30 other exiles left Zurich in a train that crossed Germany, then went on by ferry and rail through Sweden and Finland.",
+     "why": "Germany helped bring home the leader most committed to taking Russia out of the war.",
+     "wikipedia": "Vladimir Lenin",
+     "wikidata": "Q1394"
+    },
+    {
+     "date": "1917-04-16",
+     "name": "April Theses",
+     "place_name": "Finland Station, Petrograd",
+     "lat": 59.96,
+     "lon": 30.36,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Vladimir Lenin"
+     ],
+     "what": "Arriving at the Finland Station, Lenin called for no support to the Provisional Government and all power to the soviets.",
+     "why": "His programme turned the Bolsheviks from partners in the revolution into its rivals.",
+     "wikipedia": "April Theses",
+     "wikidata": "Q622099"
+    },
+    {
+     "date": "1917-11-07",
+     "date_note": "25 October in the Old Style calendar",
+     "name": "October Revolution",
+     "place_name": "Winter Palace, Petrograd",
+     "lat": 59.94,
+     "lon": 30.31,
+     "family": "unrest",
+     "subtype": "revolution",
+     "who": [
+      "Vladimir Lenin",
+      "Leon Trotsky"
+     ],
+     "what": "Red Guards and soldiers led by the Bolsheviks seized Petrograd's key points and the Winter Palace, arresting the Provisional Government's ministers.",
+     "why": "It put the world's first communist party in power.",
+     "wikipedia": "October Revolution",
+     "wikidata": "Q42976"
+    },
+    {
+     "date": "1917-11-08",
+     "name": "Decree on Land",
+     "place_name": "Smolny Institute, Petrograd",
+     "lat": 59.95,
+     "lon": 30.4,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Vladimir Lenin"
+     ],
+     "what": "The Congress of Soviets abolished private ownership of land and handed estates to peasant committees.",
+     "why": "It approved the land seizures peasants were already making and kept the countryside from turning against the new regime at first.",
+     "wikipedia": "Decree on Land",
+     "wikidata": "Q1183736"
+    },
+    {
+     "date": "1918-01-19",
+     "name": "Dissolution of the Russian Constituent Assembly",
+     "place_name": "Tauride Palace, Petrograd",
+     "lat": 59.95,
+     "lon": 30.38,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Vladimir Lenin"
+     ],
+     "what": "The freely elected assembly, where the Socialist Revolutionaries had won the most seats, met for one day before the Bolsheviks closed it.",
+     "why": "It ended the hope of a multi-party Russia and pushed opponents towards armed resistance.",
+     "wikipedia": "Russian Constituent Assembly",
+     "wikidata": "Q1468062"
+    },
+    {
+     "date": "1918-03-03",
+     "name": "Treaty of Brest-Litovsk",
+     "place_name": "Brest-Litovsk",
+     "lat": 52.1,
+     "lon": 23.69,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Grigori Sokolnikov"
+     ],
+     "what": "The Soviet government made peace with Germany, giving up territory holding about a third of the old empire's population.",
+     "why": "Lenin traded land for time to hold power, and many Russians saw the treaty as a betrayal.",
+     "wikipedia": "Treaty of Brest-Litovsk",
+     "wikidata": "Q122371"
+    },
+    {
+     "date": "1918-05",
+     "name": "Revolt of the Czechoslovak Legion",
+     "place_name": "Chelyabinsk",
+     "lat": 55.16,
+     "lon": 61.4,
+     "family": "war",
+     "subtype": "revolt",
+     "who": [],
+     "what": "About 40,000 Czech and Slovak soldiers travelling east along the Trans-Siberian Railway clashed with Soviet authorities and took control of much of the line.",
+     "why": "Their revolt opened the way for anti-Bolshevik governments across the Volga, Urals and Siberia.",
+     "wikipedia": "Czechoslovak Legion",
+     "wikidata": "Q605324"
+    },
+    {
+     "date": "1918-07-17",
+     "name": "Execution of the Romanov family",
+     "place_name": "Ipatiev House, Yekaterinburg",
+     "lat": 56.84,
+     "lon": 60.61,
+     "family": "unrest",
+     "subtype": "death",
+     "who": [
+      "Nicholas II of Russia"
+     ],
+     "what": "Bolshevik guards shot the former tsar, his wife, their five children and four servants in a cellar as White forces approached the city.",
+     "why": "It removed any rallying figure for a restored monarchy.",
+     "wikipedia": "Execution of the Romanov family"
+    },
+    {
+     "date": "1918-11-18",
+     "name": "Kolchak takes power in Omsk",
+     "place_name": "Omsk",
+     "lat": 54.99,
+     "lon": 73.37,
+     "family": "war",
+     "subtype": "coup",
+     "who": [
+      "Alexander Kolchak"
+     ],
+     "what": "Admiral Alexander Kolchak took power in Omsk as Supreme Ruler of the White movement in Siberia.",
+     "why": "The Whites gained a single leader in the east, but their armies stayed divided and far apart.",
+     "wikipedia": "Alexander Kolchak",
+     "wikidata": "Q185718"
+    },
+    {
+     "date": "1920-08-12",
+     "end_date": "1920-08-25",
+     "name": "Battle of Warsaw (1920)",
+     "place_name": "Warsaw",
+     "lat": 52.23,
+     "lon": 21.01,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Józef Piłsudski",
+      "Mikhail Tukhachevsky"
+     ],
+     "what": "Polish forces under Piłsudski counter-attacked the Red Army at the gates of Warsaw and drove it back east.",
+     "why": "It stopped the spread of the revolution into central Europe by force.",
+     "wikipedia": "Battle of Warsaw (1920)",
+     "wikidata": "Q821283"
+    },
+    {
+     "date": "1921-03-01",
+     "end_date": "1921-03-18",
+     "name": "Kronstadt rebellion",
+     "place_name": "Kronstadt",
+     "lat": 59.99,
+     "lon": 29.77,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Mikhail Tukhachevsky"
+     ],
+     "what": "Sailors at the Kronstadt naval base, once Bolshevik heroes, demanded free soviets and an end to grain requisitions; the Red Army crushed them across the ice.",
+     "why": "A revolt from the regime's own base showed that war communism had lost popular support.",
+     "wikipedia": "Kronstadt rebellion",
+     "wikidata": "Q208300"
+    },
+    {
+     "date": "1921-03-15",
+     "name": "New Economic Policy",
+     "place_name": "Moscow",
+     "lat": 55.75,
+     "lon": 37.62,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Vladimir Lenin"
+     ],
+     "what": "The Tenth Party Congress replaced grain requisitioning with a tax in kind and let peasants and small traders sell for profit again.",
+     "why": "Lenin retreated to a partly market economy to rebuild a country ruined by seven years of war.",
+     "wikipedia": "New Economic Policy",
+     "date_note": "tax in kind adopted at the Tenth Party Congress, 8-16 March",
+     "wikidata": "Q45745"
+    },
+    {
+     "date": "1921-07",
+     "date_note": "famine lasted 1921-1922",
+     "end_date": "1922",
+     "name": "Russian famine of 1921–1922",
+     "place_name": "Samara, Volga region",
+     "lat": 53.2,
+     "lon": 50.15,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [],
+     "what": "Drought on top of years of requisitioning caused famine along the Volga that killed around five million people, despite American Relief Administration food aid.",
+     "why": "The famine was the civil war's final cost to ordinary peasants.",
+     "wikipedia": "Russian famine of 1921–1922",
+     "wikidata": "Q2172846"
+    },
+    {
+     "date": "1922-12-30",
+     "name": "Treaty on the Creation of the USSR",
+     "place_name": "Moscow",
+     "lat": 55.75,
+     "lon": 37.62,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [],
+     "what": "Delegates of the Russian, Ukrainian, Belarusian and Transcaucasian soviet republics formally joined in the Union of Soviet Socialist Republics.",
+     "why": "The Bolsheviks rebuilt most of the old empire as a federal communist state.",
+     "wikipedia": "Treaty on the Creation of the Union of Soviet Socialist Republics",
+     "wikidata": "Q1443926"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "road_to_ww2",
+   "title": "The road to the Second World War",
+   "region": "Europe and East Asia",
+   "start": 1919,
+   "end": 1939,
+   "view": {
+    "lon": 20.0,
+    "lat": 45.0,
+    "span": 70
+   },
+   "blurb": "How did the peace of 1919 give way, step by step, to a second world war twenty years later?",
+   "steps": [
+    {
+     "date": "1919-06-28",
+     "name": "Treaty of Versailles",
+     "place_name": "Hall of Mirrors, Versailles",
+     "lat": 48.8,
+     "lon": 2.12,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Georges Clemenceau",
+      "Woodrow Wilson",
+      "David Lloyd George"
+     ],
+     "what": "Germany signed a peace that took about 13 percent of its territory, limited its army to 100,000 men and made it accept responsibility for the war and pay reparations.",
+     "why": "Many Germans saw the treaty as unjust, and overturning it became the aim of nationalist politics.",
+     "wikipedia": "Treaty of Versailles",
+     "wikidata": "Q8736"
+    },
+    {
+     "date": "1922-10-28",
+     "name": "March on Rome",
+     "place_name": "Rome",
+     "lat": 41.9,
+     "lon": 12.5,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Benito Mussolini"
+     ],
+     "what": "Thousands of Fascist blackshirts converged on Rome, and King Victor Emmanuel III invited Mussolini to form a government rather than resist.",
+     "why": "Fascism came to power and became a model for Hitler.",
+     "wikipedia": "March on Rome",
+     "wikidata": "Q468823"
+    },
+    {
+     "date": "1923-01-11",
+     "end_date": "1925-08-25",
+     "name": "Occupation of the Ruhr",
+     "place_name": "Essen",
+     "lat": 51.46,
+     "lon": 7.01,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "French and Belgian troops occupied Germany's industrial heartland after Germany fell behind on reparations; workers answered with passive resistance.",
+     "why": "The government printed money to pay striking workers, tipping inflation into collapse.",
+     "wikipedia": "Occupation of the Ruhr",
+     "wikidata": "Q40625"
+    },
+    {
+     "date": "1923-11-08",
+     "end_date": "1923-11-09",
+     "name": "Beer Hall Putsch",
+     "place_name": "Munich",
+     "lat": 48.14,
+     "lon": 11.58,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Adolf Hitler",
+      "Erich Ludendorff"
+     ],
+     "what": "Hitler and his Nazi Party tried to seize power in Munich; police fire killed 16 marchers and Hitler was later jailed, where he wrote Mein Kampf.",
+     "why": "The failure taught Hitler to seek power through elections rather than force.",
+     "wikipedia": "Beer Hall Putsch",
+     "wikidata": "Q36749"
+    },
+    {
+     "date": "1923-11-15",
+     "name": "Hyperinflation in the Weimar Republic",
+     "place_name": "Berlin",
+     "lat": 52.52,
+     "lon": 13.4,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "By November one US dollar cost 4.2 trillion marks; on 15 November the new Rentenmark replaced the paper mark at one trillion to one.",
+     "why": "The wiping out of savings left the middle class bitter and distrustful of the republic.",
+     "wikipedia": "Hyperinflation in the Weimar Republic",
+     "wikidata": "Q695052"
+    },
+    {
+     "date": "1929-10-24",
+     "end_date": "1929-10-29",
+     "name": "Wall Street crash of 1929",
+     "place_name": "New York Stock Exchange",
+     "lat": 40.71,
+     "lon": -74.01,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "Share prices on the New York exchange collapsed over a week of panic selling, from Black Thursday to Black Tuesday.",
+     "why": "The Great Depression that followed spread unemployment worldwide and helped extremists win votes, above all in Germany.",
+     "wikipedia": "Wall Street crash of 1929",
+     "wikidata": "Q201684"
+    },
+    {
+     "date": "1931-09-18",
+     "name": "Mukden incident",
+     "place_name": "Mukden (Shenyang)",
+     "lat": 41.8,
+     "lon": 123.43,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "Japanese officers set off a small bomb on a Japanese-owned railway and blamed China, using it as a pretext to occupy all of Manchuria.",
+     "why": "The League of Nations condemned Japan but did nothing, and Japan left the League in 1933.",
+     "wikipedia": "Mukden incident",
+     "wikidata": "Q242099"
+    },
+    {
+     "date": "1933-01-30",
+     "name": "Hitler appointed chancellor",
+     "place_name": "Berlin",
+     "lat": 52.51,
+     "lon": 13.38,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Adolf Hitler",
+      "Paul von Hindenburg"
+     ],
+     "what": "President Hindenburg appointed Hitler chancellor; within months the Reichstag fire decree and the Enabling Act let him rule as a dictator.",
+     "why": "Germany came under a government set on overturning Versailles by force.",
+     "wikipedia": "Adolf Hitler's rise to power"
+    },
+    {
+     "date": "1935-09-15",
+     "name": "Nuremberg Laws",
+     "place_name": "Nuremberg",
+     "lat": 49.45,
+     "lon": 11.08,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Adolf Hitler"
+     ],
+     "what": "At the Nazi Party rally, the Reichstag passed laws stripping German Jews of citizenship and banning marriage between Jews and other Germans.",
+     "why": "Persecution of Jews became written law, a step on the road to genocide.",
+     "wikipedia": "Nuremberg Laws",
+     "wikidata": "Q27906"
+    },
+    {
+     "date": "1935-10-03",
+     "end_date": "1936-05-05",
+     "name": "Second Italo-Ethiopian War",
+     "place_name": "Adwa, Ethiopia",
+     "lat": 14.17,
+     "lon": 38.9,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Haile Selassie",
+      "Emilio De Bono"
+     ],
+     "what": "Italy invaded Ethiopia, using poison gas, and took Addis Ababa in May 1936; League sanctions left out oil.",
+     "why": "The League's failure to protect a member state showed aggressors they had little to fear.",
+     "wikipedia": "Second Italo-Ethiopian War",
+     "wikidata": "Q94916"
+    },
+    {
+     "date": "1936-08-01",
+     "end_date": "1936-08-16",
+     "name": "1936 Summer Olympics",
+     "place_name": "Olympiastadion, Berlin",
+     "lat": 52.51,
+     "lon": 13.24,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Jesse Owens"
+     ],
+     "what": "Nazi Germany hosted the Olympic Games as a showcase, while the African American sprinter Jesse Owens won four gold medals.",
+     "why": "The regime used the Games to look peaceful and modern to the world while it rearmed.",
+     "wikipedia": "1936 Summer Olympics",
+     "wikidata": "Q8150"
+    },
+    {
+     "date": "1937-04-26",
+     "name": "Bombing of Guernica",
+     "place_name": "Guernica",
+     "lat": 43.32,
+     "lon": -2.68,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "During the Spanish Civil War, German Condor Legion and Italian aircraft bombed the Basque town of Guernica on market day, killing hundreds of civilians.",
+     "why": "Spain became a testing ground for the weapons and alliances of the coming war, and Picasso's painting made the raid a symbol.",
+     "wikipedia": "Bombing of Guernica",
+     "wikidata": "Q170351"
+    },
+    {
+     "date": "1938-03-12",
+     "name": "Anschluss",
+     "place_name": "Vienna",
+     "lat": 48.21,
+     "lon": 16.37,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Adolf Hitler"
+     ],
+     "what": "German troops marched into Austria unopposed, and Hitler announced its union with Germany to crowds in Vienna three days later.",
+     "why": "Hitler broke Versailles openly and the Western powers only protested.",
+     "wikipedia": "Anschluss",
+     "wikidata": "Q154681"
+    },
+    {
+     "date": "1938-09-30",
+     "name": "Munich Agreement",
+     "place_name": "Munich",
+     "lat": 48.15,
+     "lon": 11.57,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Neville Chamberlain",
+      "Adolf Hitler",
+      "Édouard Daladier",
+      "Benito Mussolini"
+     ],
+     "what": "Britain, France and Italy agreed that Germany could annex the Sudetenland from Czechoslovakia, which was not invited to the talks.",
+     "why": "It became the textbook case of appeasement; in March 1939 Hitler took the rest of Czechoslovakia.",
+     "wikipedia": "Munich Agreement",
+     "wikidata": "Q154255"
+    },
+    {
+     "date": "1938-11-09",
+     "end_date": "1938-11-10",
+     "name": "Kristallnacht",
+     "place_name": "Berlin",
+     "lat": 52.5,
+     "lon": 13.33,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "Nazi mobs burned over 1,000 synagogues and wrecked thousands of Jewish shops across Germany and Austria; about 30,000 Jewish men were sent to camps.",
+     "why": "The regime moved from legal discrimination to open state violence against Jews.",
+     "wikipedia": "Kristallnacht",
+     "wikidata": "Q36756"
+    },
+    {
+     "date": "1939-08-23",
+     "name": "Molotov–Ribbentrop Pact",
+     "place_name": "Kremlin, Moscow",
+     "lat": 55.75,
+     "lon": 37.62,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Vyacheslav Molotov",
+      "Joachim von Ribbentrop",
+      "Joseph Stalin"
+     ],
+     "what": "Germany and the Soviet Union signed a non-aggression pact with a secret protocol dividing Poland and eastern Europe between them.",
+     "why": "Freed from the risk of a two-front war, Hitler invaded Poland nine days later.",
+     "wikipedia": "Molotov–Ribbentrop Pact",
+     "wikidata": "Q130796"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "ww2_europe",
+   "title": "The Second World War in Europe",
+   "region": "Europe",
+   "start": 1939,
+   "end": 1945,
+   "view": {
+    "lon": 18.0,
+    "lat": 51.0,
+    "span": 50
+   },
+   "blurb": "How did Germany conquer most of Europe, and how was it defeated from east and west?",
+   "steps": [
+    {
+     "date": "1939-09-01",
+     "end_date": "1939-10-06",
+     "name": "Invasion of Poland",
+     "place_name": "Westerplatte, Danzig",
+     "lat": 54.41,
+     "lon": 18.67,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [],
+     "what": "Germany invaded Poland, the Soviet Union attacked from the east on 17 September, and Poland was divided within five weeks.",
+     "why": "Britain and France declared war on Germany on 3 September, beginning the war in Europe.",
+     "wikipedia": "Invasion of Poland",
+     "wikidata": "Q150812"
+    },
+    {
+     "date": "1940-05-26",
+     "end_date": "1940-06-04",
+     "name": "Dunkirk evacuation",
+     "place_name": "Dunkirk",
+     "lat": 51.03,
+     "lon": 2.38,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "After the German breakthrough in France, warships and hundreds of small civilian boats carried about 338,000 British and French soldiers across the Channel.",
+     "why": "Britain saved its army to fight on, even as France fell.",
+     "wikipedia": "Dunkirk evacuation",
+     "wikidata": "Q911972"
+    },
+    {
+     "date": "1940-06-22",
+     "name": "Armistice of 22 June 1940",
+     "place_name": "Forest of Compiègne",
+     "lat": 49.43,
+     "lon": 2.91,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Adolf Hitler"
+     ],
+     "what": "France signed an armistice in the same railway carriage used in 1918, leaving the north occupied and the south under the Vichy regime.",
+     "why": "Britain was left to fight Germany alone in the west.",
+     "wikipedia": "Armistice of 22 June 1940",
+     "wikidata": "Q170360"
+    },
+    {
+     "date": "1940-09-07",
+     "end_date": "1941-05-11",
+     "name": "The Blitz",
+     "place_name": "London",
+     "lat": 51.51,
+     "lon": -0.08,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [],
+     "what": "The Luftwaffe bombed London on 57 nights in a row and then struck other cities, killing about 43,000 civilians; Londoners sheltered in Underground stations.",
+     "why": "The bombing failed to break British morale or to prepare an invasion.",
+     "wikipedia": "The Blitz",
+     "wikidata": "Q6900329"
+    },
+    {
+     "date": "1941-06-22",
+     "name": "Operation Barbarossa",
+     "place_name": "Brest Fortress",
+     "lat": 52.08,
+     "lon": 23.65,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [],
+     "what": "About three million Axis soldiers invaded the Soviet Union along a front from the Baltic to the Black Sea.",
+     "why": "It opened the largest and deadliest theatre of the war, where most German soldiers would die.",
+     "wikipedia": "Operation Barbarossa",
+     "wikidata": "Q83055"
+    },
+    {
+     "date": "1941-09-08",
+     "end_date": "1944-01-27",
+     "name": "Siege of Leningrad",
+     "place_name": "Leningrad",
+     "lat": 59.94,
+     "lon": 30.31,
+     "family": "war",
+     "subtype": "siege",
+     "who": [],
+     "what": "German and Finnish forces cut off Leningrad for 872 days; bread rations fell to 125 grams a day and some 800,000 civilians died, mostly of starvation.",
+     "why": "Hunger was used as a weapon against a whole city, which was supplied only across frozen Lake Ladoga.",
+     "wikipedia": "Siege of Leningrad",
+     "wikidata": "Q151860"
+    },
+    {
+     "date": "1942-01-20",
+     "name": "Wannsee Conference",
+     "place_name": "Wannsee, Berlin",
+     "lat": 52.43,
+     "lon": 13.17,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Reinhard Heydrich",
+      "Adolf Eichmann"
+     ],
+     "what": "Fifteen senior Nazi officials met in a lakeside villa to coordinate the deportation and murder of Europe's Jews.",
+     "why": "The killing already under way in the east became an organised continent-wide programme.",
+     "wikipedia": "Wannsee Conference",
+     "wikidata": "Q152120"
+    },
+    {
+     "date": "1942-08-23",
+     "end_date": "1943-02-02",
+     "name": "Battle of Stalingrad",
+     "place_name": "Stalingrad",
+     "lat": 48.71,
+     "lon": 44.51,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Friedrich Paulus",
+      "Vasily Chuikov"
+     ],
+     "what": "After months of street fighting, a Soviet counter-offensive encircled the German Sixth Army, whose 91,000 survivors surrendered.",
+     "why": "It is widely seen as the turning point of the war in Europe.",
+     "wikipedia": "Battle of Stalingrad",
+     "wikidata": "Q38789"
+    },
+    {
+     "date": "1943-04-19",
+     "end_date": "1943-05-16",
+     "name": "Warsaw Ghetto Uprising",
+     "place_name": "Warsaw Ghetto",
+     "lat": 52.25,
+     "lon": 20.99,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Mordechai Anielewicz"
+     ],
+     "what": "Jewish fighters with a few pistols and homemade bombs resisted the final deportation from the ghetto for almost a month.",
+     "why": "It was the largest Jewish revolt against the Holocaust.",
+     "wikipedia": "Warsaw Ghetto Uprising",
+     "wikidata": "Q160161"
+    },
+    {
+     "date": "1943-07-05",
+     "end_date": "1943-08-23",
+     "name": "Battle of Kursk",
+     "place_name": "Kursk salient, near Prokhorovka",
+     "lat": 51.04,
+     "lon": 36.74,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Georgy Zhukov"
+     ],
+     "what": "A German offensive against the Kursk salient broke on deep Soviet defences in one of the largest tank battles in history.",
+     "why": "After Kursk, Germany never again launched a major offensive in the east.",
+     "wikipedia": "Battle of Kursk",
+     "wikidata": "Q130861"
+    },
+    {
+     "date": "1944-06-06",
+     "name": "Normandy landings",
+     "place_name": "Omaha Beach, Normandy",
+     "lat": 49.37,
+     "lon": -0.87,
+     "family": "war",
+     "subtype": "battle",
+     "who": [],
+     "what": "About 156,000 American, British, Canadian and other Allied troops landed on five Normandy beaches on the first day.",
+     "why": "It opened the western front that Stalin had demanded since 1942.",
+     "wikipedia": "Normandy landings",
+     "wikidata": "Q16470"
+    },
+    {
+     "date": "1944-06-22",
+     "end_date": "1944-08-19",
+     "name": "Operation Bagration",
+     "place_name": "Minsk",
+     "lat": 53.9,
+     "lon": 27.56,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [],
+     "what": "The Red Army destroyed Germany's Army Group Centre in Belarus, freeing Minsk on 3 July and advancing to the Vistula.",
+     "why": "It was Germany's greatest defeat of the war and brought Soviet troops to Poland.",
+     "wikipedia": "Operation Bagration",
+     "wikidata": "Q151052"
+    },
+    {
+     "date": "1944-09",
+     "end_date": "1945-05",
+     "name": "Dutch famine of 1944–1945",
+     "place_name": "Amsterdam",
+     "lat": 52.37,
+     "lon": 4.9,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [],
+     "what": "After a Dutch railway strike in September 1944, German restrictions on food transport and a hard winter brought famine to the western Netherlands, killing about 20,000.",
+     "why": "Civilians in occupied Europe paid for the war's last year in hunger.",
+     "wikipedia": "Dutch famine of 1944–1945",
+     "wikidata": "Q2562594"
+    },
+    {
+     "date": "1945-01-27",
+     "name": "Liberation of Auschwitz",
+     "place_name": "Auschwitz, Oświęcim",
+     "lat": 50.03,
+     "lon": 19.18,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "Soviet soldiers reached Auschwitz and found about 7,000 prisoners left behind; around 1.1 million people, most of them Jews, had been murdered there.",
+     "why": "The largest Nazi death camp revealed the scale of the Holocaust.",
+     "wikipedia": "Auschwitz concentration camp",
+     "wikidata": "Q7341"
+    },
+    {
+     "date": "1945-04-16",
+     "end_date": "1945-05-02",
+     "name": "Battle of Berlin",
+     "place_name": "Berlin",
+     "lat": 52.52,
+     "lon": 13.38,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Adolf Hitler",
+      "Georgy Zhukov"
+     ],
+     "what": "Soviet armies stormed Berlin; Hitler killed himself in his bunker on 30 April and the city surrendered on 2 May.",
+     "why": "Germany surrendered unconditionally on 8 May, ending the war in Europe.",
+     "wikipedia": "Battle of Berlin",
+     "wikidata": "Q154182"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "pacific_war",
+   "title": "The Pacific war",
+   "region": "East Asia and the Pacific",
+   "start": 1937,
+   "end": 1945,
+   "view": {
+    "lon": 135.0,
+    "lat": 20.0,
+    "span": 90
+   },
+   "blurb": "How did Japan's war in China grow into a Pacific war against the United States, and how did it end?",
+   "steps": [
+    {
+     "date": "1937-07-07",
+     "name": "Marco Polo Bridge incident",
+     "place_name": "Marco Polo Bridge, near Beijing",
+     "lat": 39.85,
+     "lon": 116.21,
+     "family": "war",
+     "subtype": "battle",
+     "who": [],
+     "what": "A night clash between Japanese and Chinese troops at the Marco Polo Bridge grew into full-scale war within weeks.",
+     "why": "It began the Second Sino-Japanese War, which merged into the Second World War.",
+     "wikipedia": "Marco Polo Bridge incident",
+     "wikidata": "Q219230"
+    },
+    {
+     "date": "1937-12-13",
+     "end_date": "1938-01",
+     "name": "Nanjing Massacre",
+     "place_name": "Nanjing",
+     "lat": 32.06,
+     "lon": 118.8,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "John Rabe"
+     ],
+     "what": "After taking China's capital, Japanese troops killed tens of thousands to perhaps 200,000 or more civilians and prisoners and raped many thousands of women.",
+     "why": "The massacre hardened Chinese resistance and remains a bitter issue between China and Japan.",
+     "wikipedia": "Nanjing Massacre",
+     "wikidata": "Q192055"
+    },
+    {
+     "date": "1938",
+     "date_note": "built 1937-1938",
+     "name": "Burma Road",
+     "place_name": "Kunming",
+     "lat": 25.04,
+     "lon": 102.71,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "About 200,000 Chinese labourers cut a road of over 1,100 km through mountains from Kunming to Lashio in British Burma, largely by hand.",
+     "why": "With its coast occupied, China depended on this road for outside supplies.",
+     "wikipedia": "Burma Road",
+     "wikidata": "Q478684"
+    },
+    {
+     "date": "1941-12-07",
+     "name": "Attack on Pearl Harbor",
+     "place_name": "Pearl Harbor, Oahu",
+     "lat": 21.36,
+     "lon": -157.95,
+     "family": "war",
+     "subtype": "battle",
+     "who": [],
+     "what": "Japanese carrier aircraft sank or damaged eight US battleships and killed about 2,400 Americans in a surprise attack.",
+     "why": "It brought the United States into the war against Japan, and Germany declared war on the US four days later.",
+     "wikipedia": "Attack on Pearl Harbor",
+     "wikidata": "Q52418"
+    },
+    {
+     "date": "1942-02-15",
+     "name": "Fall of Singapore",
+     "place_name": "Singapore",
+     "lat": 1.29,
+     "lon": 103.85,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Tomoyuki Yamashita",
+      "Arthur Percival"
+     ],
+     "what": "About 80,000 British, Indian and Australian troops surrendered to a smaller Japanese army after a campaign of ten weeks.",
+     "why": "It was the largest British surrender in history and damaged European prestige across Asia.",
+     "wikipedia": "Fall of Singapore",
+     "wikidata": "Q296754"
+    },
+    {
+     "date": "1942-06-04",
+     "end_date": "1942-06-07",
+     "name": "Battle of Midway",
+     "place_name": "North Pacific, northwest of Midway Atoll",
+     "lat": 30.5,
+     "lon": -178.5,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Chester W. Nimitz"
+     ],
+     "what": "Forewarned by broken codes, US carrier aircraft sank four Japanese fleet carriers for the loss of one American carrier.",
+     "why": "Japan lost the naval initiative six months after Pearl Harbor.",
+     "wikipedia": "Battle of Midway",
+     "wikidata": "Q173034"
+    },
+    {
+     "date": "1942-08-07",
+     "end_date": "1943-02-09",
+     "name": "Guadalcanal campaign",
+     "place_name": "Henderson Field, Guadalcanal",
+     "lat": -9.43,
+     "lon": 160.05,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [],
+     "what": "US Marines seized an unfinished Japanese airfield and held it through six months of land, sea and air battles until Japan withdrew.",
+     "why": "It was the first major Allied land offensive against Japan and began the long advance across the Pacific.",
+     "wikipedia": "Guadalcanal campaign",
+     "wikidata": "Q217145"
+    },
+    {
+     "date": "1942-09",
+     "date_note": "work began at both ends in autumn 1942; some sources give June 1942",
+     "end_date": "1943-10-17",
+     "name": "Burma Railway",
+     "place_name": "Kanchanaburi, Thailand",
+     "lat": 14.04,
+     "lon": 99.5,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "Japan forced about 60,000 Allied prisoners and over 200,000 Asian labourers to build a 415 km railway from Thailand to Burma; some 12,000 prisoners and up to 90,000 Asian workers died.",
+     "why": "It shows the forced labour on which Japan's wartime empire relied.",
+     "wikipedia": "Burma Railway",
+     "wikidata": "Q11718"
+    },
+    {
+     "date": "1943",
+     "name": "Bengal famine of 1943",
+     "place_name": "Calcutta",
+     "lat": 22.57,
+     "lon": 88.36,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [],
+     "what": "After the loss of Burmese rice imports, a cyclone and wartime price inflation, famine killed an estimated 2 to 3 million people in Bengal.",
+     "why": "War policies and slow official relief turned a food shortage into one of the century's worst famines.",
+     "wikipedia": "Bengal famine of 1943",
+     "wikidata": "Q522837"
+    },
+    {
+     "date": "1944-10-23",
+     "end_date": "1944-10-26",
+     "name": "Battle of Leyte Gulf",
+     "place_name": "Leyte Gulf, Philippines",
+     "lat": 10.9,
+     "lon": 125.35,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Douglas MacArthur"
+     ],
+     "what": "Covering MacArthur's return to the Philippines, the US Navy defeated the Japanese fleet in what may have been the largest naval battle in history; organised kamikaze attacks began here.",
+     "why": "The Japanese navy ceased to exist as a fighting force.",
+     "wikipedia": "Battle of Leyte Gulf",
+     "wikidata": "Q308999"
+    },
+    {
+     "date": "1945-02-19",
+     "end_date": "1945-03-26",
+     "name": "Battle of Iwo Jima",
+     "place_name": "Iwo Jima",
+     "lat": 24.78,
+     "lon": 141.32,
+     "family": "war",
+     "subtype": "battle",
+     "who": [],
+     "what": "US Marines took the small volcanic island in five weeks; almost all of its 21,000 Japanese defenders and about 6,800 Americans were killed.",
+     "why": "The cost of each island fed American fears about invading Japan itself.",
+     "wikipedia": "Battle of Iwo Jima",
+     "wikidata": "Q180182"
+    },
+    {
+     "date": "1945-03-10",
+     "date_note": "night of 9-10 March",
+     "name": "Bombing of Tokyo (10 March 1945)",
+     "place_name": "Tokyo",
+     "lat": 35.7,
+     "lon": 139.8,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Curtis LeMay"
+     ],
+     "what": "Some 279 B-29 bombers dropped incendiaries on Tokyo's wooden districts at night, killing around 90,000 to 100,000 people and leaving over a million homeless.",
+     "why": "It was the deadliest single air raid of the war and began the firebombing of Japan's cities.",
+     "wikipedia": "Bombing of Tokyo (10 March 1945)",
+     "wikidata": "Q51881408"
+    },
+    {
+     "date": "1945-04-01",
+     "end_date": "1945-06-22",
+     "name": "Battle of Okinawa",
+     "place_name": "Okinawa",
+     "lat": 26.33,
+     "lon": 127.8,
+     "family": "war",
+     "subtype": "battle",
+     "who": [],
+     "what": "In the Pacific war's bloodiest battle, over 12,000 Americans, about 100,000 Japanese soldiers and a large share of Okinawa's civilians died.",
+     "why": "Okinawa was meant as the base for invading Japan's home islands.",
+     "wikipedia": "Battle of Okinawa",
+     "wikidata": "Q192660"
+    },
+    {
+     "date": "1945-08-06",
+     "name": "Atomic bombing of Hiroshima",
+     "place_name": "Hiroshima",
+     "lat": 34.39,
+     "lon": 132.45,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Paul Tibbets"
+     ],
+     "what": "The B-29 Enola Gay dropped a uranium bomb on Hiroshima, killing about 70,000 to 80,000 people at once and many more by the end of the year.",
+     "why": "It was the first use of a nuclear weapon in war.",
+     "wikipedia": "Atomic bombings of Hiroshima and Nagasaki",
+     "wikidata": "Q488"
+    },
+    {
+     "date": "1945-08-09",
+     "name": "Atomic bombing of Nagasaki",
+     "place_name": "Nagasaki",
+     "lat": 32.77,
+     "lon": 129.86,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "A plutonium bomb destroyed much of Nagasaki, killing about 40,000 people at once, on the same day the Soviet Union invaded Manchuria.",
+     "why": "Together these shocks led Emperor Hirohito to accept surrender on 15 August.",
+     "wikipedia": "Atomic bombings of Hiroshima and Nagasaki",
+     "wikidata": "Q488"
+    },
+    {
+     "date": "1945-09-02",
+     "name": "Surrender of Japan",
+     "place_name": "USS Missouri, Tokyo Bay",
+     "lat": 35.35,
+     "lon": 139.76,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Douglas MacArthur",
+      "Mamoru Shigemitsu"
+     ],
+     "what": "Japanese representatives signed the instrument of surrender aboard the battleship Missouri in Tokyo Bay.",
+     "why": "The signing formally ended the Second World War.",
+     "wikipedia": "Surrender of Japan",
+     "wikidata": "Q6540361"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "partition_of_india",
+   "title": "The partition of India",
+   "region": "South Asia",
+   "start": 1940,
+   "end": 1948,
+   "view": {
+    "lon": 80.0,
+    "lat": 25.0,
+    "span": 32
+   },
+   "blurb": "Why did British India become two states in 1947, and why did it cost so many lives?",
+   "steps": [
+    {
+     "date": "1940-03-23",
+     "name": "Lahore Resolution",
+     "place_name": "Minto Park, Lahore",
+     "lat": 31.59,
+     "lon": 74.31,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Muhammad Ali Jinnah"
+     ],
+     "what": "The All-India Muslim League called for independent states in the Muslim-majority northwest and east of India.",
+     "why": "It made a separate Muslim homeland, Pakistan, the League's official goal.",
+     "wikipedia": "Lahore Resolution",
+     "wikidata": "Q1800631"
+    },
+    {
+     "date": "1942-03",
+     "name": "Cripps Mission",
+     "place_name": "New Delhi",
+     "lat": 28.61,
+     "lon": 77.21,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Stafford Cripps"
+     ],
+     "what": "Stafford Cripps offered dominion status after the war in return for Indian support, with a clause letting provinces opt out; Congress rejected it.",
+     "why": "The opt-out clause gave the idea of partition official standing for the first time.",
+     "wikipedia": "Cripps Mission",
+     "wikidata": "Q2512311"
+    },
+    {
+     "date": "1942-08-08",
+     "name": "Quit India Movement",
+     "place_name": "Gowalia Tank, Bombay",
+     "lat": 18.96,
+     "lon": 72.81,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Mahatma Gandhi",
+      "Jawaharlal Nehru"
+     ],
+     "what": "Gandhi called on the British to quit India with the slogan 'Do or Die'; within hours the Congress leaders were arrested and held for most of the war.",
+     "why": "With Congress in jail, the Muslim League grew in strength while it cooperated with the British.",
+     "wikipedia": "Quit India Movement",
+     "wikidata": "Q1992677"
+    },
+    {
+     "date": "1946-02-18",
+     "end_date": "1946-02-23",
+     "name": "Royal Indian Navy mutiny",
+     "place_name": "Bombay harbour",
+     "lat": 18.93,
+     "lon": 72.84,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [],
+     "what": "Indian sailors struck over pay, food and racism, and the strike spread to about 78 ships and 20,000 men before it was ended.",
+     "why": "Britain could no longer count on Indian armed forces to keep its rule.",
+     "wikipedia": "Royal Indian Navy mutiny",
+     "wikidata": "Q3519518"
+    },
+    {
+     "date": "1946-03-24",
+     "end_date": "1946-06-29",
+     "name": "1946 Cabinet Mission to India",
+     "place_name": "New Delhi",
+     "lat": 28.61,
+     "lon": 77.21,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Stafford Cripps",
+      "Muhammad Ali Jinnah",
+      "Jawaharlal Nehru"
+     ],
+     "what": "Three British cabinet ministers proposed a loose united India with groups of provinces; the plan collapsed over Congress and League distrust.",
+     "why": "It was the last serious attempt to keep India united.",
+     "wikipedia": "1946 Cabinet Mission to India",
+     "wikidata": "Q2352021"
+    },
+    {
+     "date": "1946-08-16",
+     "name": "Direct Action Day",
+     "place_name": "Calcutta",
+     "lat": 22.57,
+     "lon": 88.36,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "A Muslim League protest day turned into the Great Calcutta Killings, in which about 4,000 Hindus and Muslims died in four days.",
+     "why": "Communal killing began to spread from city to city and made a peaceful united settlement seem impossible.",
+     "wikipedia": "Direct Action Day",
+     "wikidata": "Q2096814"
+    },
+    {
+     "date": "1946-10",
+     "end_date": "1947-03",
+     "name": "Noakhali riots",
+     "place_name": "Noakhali, Bengal",
+     "lat": 22.87,
+     "lon": 91.1,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Mahatma Gandhi"
+     ],
+     "what": "Attacks on Hindus in rural Noakhali were followed by Gandhi walking from village to village for four months to restore calm.",
+     "why": "Violence reached the countryside, and Gandhi's personal peace mission became his answer to it.",
+     "wikipedia": "Noakhali riots",
+     "wikidata": "Q7045496"
+    },
+    {
+     "date": "1947-06-03",
+     "name": "Mountbatten Plan",
+     "place_name": "New Delhi",
+     "lat": 28.61,
+     "lon": 77.21,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Louis Mountbatten, 1st Earl Mountbatten of Burma",
+      "Jawaharlal Nehru",
+      "Muhammad Ali Jinnah"
+     ],
+     "what": "The last viceroy announced that British India would be divided into two dominions, with Punjab and Bengal split, and brought independence forward to August 1947.",
+     "why": "With barely ten weeks to prepare, the haste of the handover contributed to the chaos that followed.",
+     "wikipedia": "Indian Independence Act 1947",
+     "wikidata": "Q1661579"
+    },
+    {
+     "date": "1947-08-14",
+     "name": "Independence of Pakistan",
+     "place_name": "Karachi",
+     "lat": 24.86,
+     "lon": 67.01,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Muhammad Ali Jinnah",
+      "Louis Mountbatten, 1st Earl Mountbatten of Burma"
+     ],
+     "what": "Mountbatten handed power to Pakistan's Constituent Assembly in Karachi, and Jinnah became governor-general of a state split into two wings 1,600 km apart.",
+     "why": "The Muslim League's goal of 1940 became a state.",
+     "wikipedia": "Independence Day (Pakistan)",
+     "wikidata": "Q2007314"
+    },
+    {
+     "date": "1947-08-15",
+     "name": "Tryst with Destiny",
+     "place_name": "Constituent Assembly, New Delhi",
+     "lat": 28.62,
+     "lon": 77.21,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Jawaharlal Nehru"
+     ],
+     "what": "At midnight Nehru told India's Constituent Assembly that India would 'awake to life and freedom', as it became independent with him as prime minister.",
+     "why": "Independence came at the same moment as partition, while Gandhi stayed in Calcutta and did not celebrate.",
+     "wikipedia": "Tryst with Destiny",
+     "wikidata": "Q3532336"
+    },
+    {
+     "date": "1947-08-17",
+     "name": "Radcliffe Line",
+     "place_name": "Wagah, Punjab border",
+     "lat": 31.6,
+     "lon": 74.57,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [],
+     "what": "The border drawn in five weeks by the lawyer Cyril Radcliffe, who had never been to India, was published two days after independence.",
+     "why": "Millions learned only after independence on which side of the border they lived.",
+     "wikipedia": "Radcliffe Line",
+     "wikidata": "Q1419358"
+    },
+    {
+     "date": "1947-09",
+     "date_note": "migrations and killings ran from August to late 1947",
+     "name": "Partition migrations",
+     "place_name": "Amritsar",
+     "lat": 31.63,
+     "lon": 74.87,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "About 12 to 20 million people crossed the new borders; trains of refugees were attacked in Punjab, and estimates of the dead range from several hundred thousand to two million.",
+     "why": "This is the human cost that made partition one of the century's great tragedies.",
+     "wikipedia": "Partition of India",
+     "wikidata": "Q129053"
+    },
+    {
+     "date": "1947-09-01",
+     "end_date": "1947-09-04",
+     "name": "Gandhi's Calcutta fast",
+     "place_name": "Beliaghata, Calcutta",
+     "lat": 22.56,
+     "lon": 88.39,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Mahatma Gandhi"
+     ],
+     "what": "When riots broke out again in Calcutta, Gandhi fasted until leaders of both communities pledged to keep the peace, and the city stayed largely calm.",
+     "why": "It showed what moral pressure could do while Punjab burned.",
+     "wikipedia": "Mahatma Gandhi",
+     "wikidata": "Q1001"
+    },
+    {
+     "date": "1947-10-27",
+     "end_date": "1949-01-01",
+     "name": "Indo-Pakistani war of 1947–1948",
+     "place_name": "Srinagar",
+     "lat": 34.08,
+     "lon": 74.8,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Hari Singh"
+     ],
+     "what": "After tribal fighters from Pakistan invaded Kashmir, its Hindu maharaja signed accession to India, and Indian troops were flown into Srinagar on 27 October.",
+     "why": "Kashmir became a divided and lasting cause of conflict between India and Pakistan.",
+     "wikipedia": "Indo-Pakistani war of 1947–1948"
+    },
+    {
+     "date": "1948-01-30",
+     "name": "Assassination of Mahatma Gandhi",
+     "place_name": "Birla House, New Delhi",
+     "lat": 28.6,
+     "lon": 77.21,
+     "family": "unrest",
+     "subtype": "death",
+     "who": [
+      "Mahatma Gandhi",
+      "Nathuram Godse"
+     ],
+     "what": "Nathuram Godse, a Hindu nationalist who blamed Gandhi for favouring Muslims and Pakistan, shot him at a prayer meeting.",
+     "why": "The shock helped calm communal violence in India and discredited Hindu extremists for a time.",
+     "wikipedia": "Assassination of Mahatma Gandhi",
+     "wikidata": "Q3350154"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "cold_war_crises",
+   "title": "The Cold War's crises",
+   "region": "Europe and the world",
+   "start": 1946,
+   "end": 1991,
+   "view": {
+    "lon": 20.0,
+    "lat": 40.0,
+    "span": 160
+   },
+   "blurb": "How did the rivalry between the United States and the Soviet Union nearly lead to war, and why did it end so quietly?",
+   "steps": [
+    {
+     "date": "1946-03-05",
+     "name": "Iron Curtain speech",
+     "place_name": "Westminster College, Fulton, Missouri",
+     "lat": 38.85,
+     "lon": -91.95,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Winston Churchill",
+      "Harry S. Truman"
+     ],
+     "what": "Churchill told an American audience that an 'iron curtain' had descended across Europe from Stettin to Trieste.",
+     "why": "It gave the new division of Europe its name and urged an Anglo-American alliance against the Soviets.",
+     "wikipedia": "Fulton Speech",
+     "wikidata": "Q2102143"
+    },
+    {
+     "date": "1947-06-05",
+     "name": "Marshall Plan",
+     "place_name": "Harvard University, Cambridge, Massachusetts",
+     "lat": 42.37,
+     "lon": -71.12,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "George C. Marshall"
+     ],
+     "what": "In a Harvard speech, Secretary of State Marshall offered aid to rebuild Europe; about 13 billion dollars went to Western Europe from 1948 to 1952.",
+     "why": "Stalin kept Eastern Europe out, so economic aid deepened the split into two blocs.",
+     "wikipedia": "Marshall Plan",
+     "wikidata": "Q4576"
+    },
+    {
+     "date": "1948-06-24",
+     "end_date": "1949-05-12",
+     "name": "Berlin Blockade",
+     "place_name": "Tempelhof Airport, Berlin",
+     "lat": 52.47,
+     "lon": 13.4,
+     "family": "war",
+     "subtype": "siege",
+     "who": [],
+     "what": "The Soviets cut road and rail links to West Berlin; American and British planes flew in about 2.3 million tons of food and coal over eleven months.",
+     "why": "The first Cold War crisis ended without shots and led to NATO and two German states in 1949.",
+     "wikipedia": "Berlin Blockade",
+     "wikidata": "Q151349"
+    },
+    {
+     "date": "1950-06-25",
+     "end_date": "1953-07-27",
+     "name": "Korean War",
+     "place_name": "Panmunjom, 38th parallel",
+     "lat": 37.96,
+     "lon": 126.68,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Kim Il Sung",
+      "Douglas MacArthur"
+     ],
+     "what": "North Korea invaded the South; US-led UN forces and then Chinese armies joined in, and an armistice signed at Panmunjom left the border near where it began.",
+     "why": "The Cold War became a hot war in Asia, killing millions and leaving Korea divided.",
+     "wikipedia": "Korean War",
+     "wikidata": "Q8663"
+    },
+    {
+     "date": "1956-10-23",
+     "end_date": "1956-11-10",
+     "name": "Hungarian Revolution of 1956",
+     "place_name": "Budapest",
+     "lat": 47.5,
+     "lon": 19.04,
+     "family": "unrest",
+     "subtype": "revolution",
+     "who": [
+      "Imre Nagy"
+     ],
+     "what": "A student protest became a national uprising; Imre Nagy announced Hungary would leave the Warsaw Pact, and Soviet tanks crushed the revolt.",
+     "why": "The West did not intervene, showing that each side would not fight inside the other's sphere.",
+     "wikipedia": "Hungarian Revolution of 1956",
+     "wikidata": "Q164348"
+    },
+    {
+     "date": "1957-10-04",
+     "name": "Sputnik 1",
+     "place_name": "Baikonur Cosmodrome",
+     "lat": 45.92,
+     "lon": 63.34,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Sergei Korolev"
+     ],
+     "what": "The Soviet Union launched the first artificial satellite, a 58 cm sphere that circled the Earth every 96 minutes.",
+     "why": "It showed Soviet rockets could reach America and began the space race.",
+     "wikipedia": "Sputnik 1",
+     "wikidata": "Q80811"
+    },
+    {
+     "date": "1961-08-13",
+     "name": "Construction of the Berlin Wall",
+     "place_name": "Bernauer Strasse, Berlin",
+     "lat": 52.54,
+     "lon": 13.39,
+     "family": "war",
+     "subtype": "building",
+     "who": [
+      "Walter Ulbricht"
+     ],
+     "what": "East German troops sealed the border through Berlin overnight with barbed wire, later replaced by a concrete wall.",
+     "why": "It stopped the flight of millions of East Germans west and became the Cold War's main symbol.",
+     "wikipedia": "Berlin Wall",
+     "wikidata": "Q5086"
+    },
+    {
+     "date": "1962-10-16",
+     "end_date": "1962-10-28",
+     "name": "Cuban Missile Crisis",
+     "place_name": "San Cristóbal, Cuba",
+     "lat": 22.72,
+     "lon": -83.05,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Fidel Castro"
+     ],
+     "what": "US spy planes found Soviet nuclear missile sites in Cuba; after a naval quarantine and 13 days of tension, Khrushchev agreed to remove them.",
+     "why": "It was the closest the world came to nuclear war, and led to a hotline between Washington and Moscow.",
+     "wikipedia": "Cuban Missile Crisis",
+     "wikidata": "Q128160"
+    },
+    {
+     "date": "1968-01-30",
+     "name": "Tet Offensive",
+     "place_name": "Huế",
+     "lat": 16.46,
+     "lon": 107.59,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [],
+     "what": "North Vietnamese and Viet Cong forces attacked over 100 towns in South Vietnam; the battle for Huế lasted almost a month.",
+     "why": "Although a military defeat for the attackers, it turned American opinion against the Vietnam War.",
+     "wikipedia": "Tet Offensive",
+     "wikidata": "Q82542"
+    },
+    {
+     "date": "1968-08-20",
+     "date_note": "night of 20-21 August",
+     "name": "Warsaw Pact invasion of Czechoslovakia",
+     "place_name": "Prague",
+     "lat": 50.08,
+     "lon": 14.43,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Alexander Dubček"
+     ],
+     "what": "About 250,000 Warsaw Pact troops entered Czechoslovakia to end Dubček's Prague Spring reforms.",
+     "why": "The Brezhnev Doctrine made clear Moscow would use force to keep its bloc communist.",
+     "wikipedia": "Warsaw Pact invasion of Czechoslovakia",
+     "wikidata": "Q1773668"
+    },
+    {
+     "date": "1975-08-01",
+     "name": "Helsinki Accords",
+     "place_name": "Finlandia Hall, Helsinki",
+     "lat": 60.18,
+     "lon": 24.94,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Leonid Brezhnev",
+      "Gerald Ford"
+     ],
+     "what": "Thirty-five states, including the US and USSR, accepted Europe's postwar borders and promised to respect human rights.",
+     "why": "The high point of détente; dissidents in the East later used its human rights clauses against their governments.",
+     "wikipedia": "Helsinki Accords",
+     "wikidata": "Q318161"
+    },
+    {
+     "date": "1979-12-24",
+     "end_date": "1989-02-15",
+     "name": "Soviet–Afghan War",
+     "place_name": "Kabul",
+     "lat": 34.53,
+     "lon": 69.17,
+     "family": "war",
+     "subtype": "war",
+     "who": [],
+     "what": "Soviet troops entered Afghanistan to prop up a communist government and fought a nine-year war against US-backed mujahideen.",
+     "why": "It ended détente and drained Soviet resources and morale.",
+     "wikipedia": "Soviet–Afghan War",
+     "wikidata": "Q83085"
+    },
+    {
+     "date": "1980-08-14",
+     "end_date": "1980-08-31",
+     "name": "Gdańsk shipyard strike",
+     "place_name": "Lenin Shipyard, Gdańsk",
+     "lat": 54.36,
+     "lon": 18.65,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Lech Wałęsa"
+     ],
+     "what": "Shipyard workers led by the electrician Lech Wałęsa struck and won the right to form Solidarity, the first independent trade union in the Soviet bloc.",
+     "why": "A workers' movement in a workers' state challenged communist rule from below.",
+     "wikipedia": "Solidarity (Polish trade union)",
+     "wikidata": "Q1003"
+    },
+    {
+     "date": "1986-04-26",
+     "name": "Chernobyl disaster",
+     "place_name": "Chernobyl Nuclear Power Plant",
+     "lat": 51.39,
+     "lon": 30.1,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "Reactor No. 4 exploded during a safety test, spreading radioactive fallout across Europe; over 100,000 people were evacuated.",
+     "why": "The early cover-up and later admissions weakened faith in the Soviet system and pushed Gorbachev's openness policy.",
+     "wikipedia": "Chernobyl disaster",
+     "wikidata": "Q486"
+    },
+    {
+     "date": "1989-11-09",
+     "name": "Fall of the Berlin Wall",
+     "place_name": "Bornholmer Strasse checkpoint, Berlin",
+     "lat": 52.55,
+     "lon": 13.4,
+     "family": "unrest",
+     "subtype": "revolution",
+     "who": [
+      "Günter Schabowski"
+     ],
+     "what": "After an official mistakenly announced that travel rules were lifted at once, crowds forced the border guards to open the crossings.",
+     "why": "Without Soviet tanks to stop it, communist rule in Eastern Europe collapsed within weeks, and Germany reunited in 1990.",
+     "wikipedia": "Fall of the Berlin Wall",
+     "wikidata": "Q69163529"
+    },
+    {
+     "date": "1991-12-26",
+     "name": "Dissolution of the Soviet Union",
+     "place_name": "Kremlin, Moscow",
+     "lat": 55.75,
+     "lon": 37.62,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Mikhail Gorbachev"
+     ],
+     "what": "A day after Gorbachev resigned and the red flag was lowered over the Kremlin, the Supreme Soviet voted the USSR out of existence, leaving 15 states.",
+     "why": "The Cold War ended with the peaceful break-up of one of the two superpowers.",
+     "wikipedia": "Dissolution of the Soviet Union",
+     "wikidata": "Q5167679"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "africa_independence",
+   "title": "Africa's independence",
+   "region": "Africa",
+   "start": 1956,
+   "end": 1994,
+   "view": {
+    "lon": 18.0,
+    "lat": 2.0,
+    "span": 75
+   },
+   "blurb": "How did most of Africa win independence from European rule, and what came after?",
+   "steps": [
+    {
+     "date": "1956-10-29",
+     "end_date": "1956-11-07",
+     "name": "Suez Crisis",
+     "place_name": "Port Said",
+     "lat": 31.26,
+     "lon": 32.3,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Gamal Abdel Nasser"
+     ],
+     "what": "After Nasser nationalised the Suez Canal, Israel, Britain and France invaded Egypt, then withdrew under American and Soviet pressure.",
+     "why": "It showed that Britain and France could no longer act as imperial powers against US wishes.",
+     "wikipedia": "Suez Crisis",
+     "wikidata": "Q49101"
+    },
+    {
+     "date": "1957-03-06",
+     "name": "Independence of Ghana",
+     "place_name": "Accra",
+     "lat": 5.55,
+     "lon": -0.2,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Kwame Nkrumah"
+     ],
+     "what": "The Gold Coast became Ghana, the first colony in sub-Saharan Africa to gain independence, with Kwame Nkrumah as prime minister.",
+     "why": "Ghana became a model and a base for independence movements across the continent.",
+     "wikipedia": "Kwame Nkrumah",
+     "wikidata": "Q8620"
+    },
+    {
+     "date": "1960-03-21",
+     "name": "Sharpeville massacre",
+     "place_name": "Sharpeville",
+     "lat": -26.68,
+     "lon": 27.87,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [],
+     "what": "South African police opened fire on a crowd protesting the pass laws, killing 69 people.",
+     "why": "The ANC and PAC were banned and turned to armed struggle, while South Africa moved against the tide of independence.",
+     "wikipedia": "Sharpeville massacre",
+     "wikidata": "Q518753"
+    },
+    {
+     "date": "1960-06-30",
+     "name": "Congo Crisis",
+     "place_name": "Léopoldville (Kinshasa)",
+     "lat": -4.32,
+     "lon": 15.31,
+     "family": "unrest",
+     "subtype": "founding",
+     "who": [
+      "Patrice Lumumba"
+     ],
+     "what": "The Belgian Congo became independent with Lumumba as prime minister; within weeks the army mutinied and Katanga seceded.",
+     "why": "A rushed handover drew in Belgium, the UN and both superpowers, a pattern of Cold War meddling in Africa.",
+     "wikipedia": "Congo Crisis",
+     "wikidata": "Q1773926"
+    },
+    {
+     "date": "1960-10-01",
+     "name": "Year of Africa",
+     "place_name": "Lagos",
+     "lat": 6.45,
+     "lon": 3.39,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [],
+     "what": "Nigeria, Africa's most populous country, became independent, one of 17 African states to do so in 1960, most of them former French colonies.",
+     "why": "In a single year most of the continent's colonial map was redrawn.",
+     "wikipedia": "Year of Africa",
+     "wikidata": "Q387647"
+    },
+    {
+     "date": "1961-01-17",
+     "name": "Killing of Patrice Lumumba",
+     "place_name": "Near Élisabethville, Katanga",
+     "lat": -11.66,
+     "lon": 27.48,
+     "family": "unrest",
+     "subtype": "death",
+     "who": [
+      "Patrice Lumumba"
+     ],
+     "what": "Deposed and handed to Katangan secessionists, Lumumba was shot by a firing squad with Belgian officers present.",
+     "why": "His death became a symbol of foreign interference in Africa's new states.",
+     "wikipedia": "Patrice Lumumba",
+     "wikidata": "Q161672"
+    },
+    {
+     "date": "1962-07-05",
+     "name": "Algerian independence",
+     "place_name": "Algiers",
+     "lat": 36.75,
+     "lon": 3.06,
+     "family": "war",
+     "subtype": "founding",
+     "who": [
+      "Charles de Gaulle"
+     ],
+     "what": "After eight years of war that killed hundreds of thousands, Algeria became independent and about 800,000 European settlers left for France.",
+     "why": "It was the bloodiest of Africa's wars of independence and brought down France's Fourth Republic.",
+     "wikipedia": "Algerian War",
+     "wikidata": "Q200790"
+    },
+    {
+     "date": "1963-05-25",
+     "name": "Founding of the Organisation of African Unity",
+     "place_name": "Addis Ababa",
+     "lat": 9.03,
+     "lon": 38.74,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Haile Selassie",
+      "Kwame Nkrumah"
+     ],
+     "what": "Leaders of 32 independent African states founded the OAU, agreeing to respect the borders inherited from colonial rule.",
+     "why": "Keeping colonial borders avoided border wars but left many divided peoples inside them.",
+     "wikipedia": "Organisation of African Unity",
+     "wikidata": "Q191703"
+    },
+    {
+     "date": "1964-06-12",
+     "name": "Rivonia Trial",
+     "place_name": "Pretoria",
+     "lat": -25.75,
+     "lon": 28.19,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Nelson Mandela"
+     ],
+     "what": "Nelson Mandela and seven other ANC leaders were sentenced to life imprisonment for sabotage; Mandela was sent to Robben Island.",
+     "why": "Apartheid's opponents were jailed for decades, and Mandela became the world's best-known prisoner.",
+     "wikipedia": "Rivonia Trial",
+     "wikidata": "Q1639868"
+    },
+    {
+     "date": "1965",
+     "date_note": "completed 1965",
+     "name": "Akosombo Dam",
+     "place_name": "Akosombo, Ghana",
+     "lat": 6.3,
+     "lon": 0.06,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Kwame Nkrumah"
+     ],
+     "what": "Ghana dammed the Volta River, creating Lake Volta, one of the world's largest reservoirs, to power an aluminium smelter; about 80,000 people were resettled.",
+     "why": "New states bet on big projects to turn political independence into economic development.",
+     "wikipedia": "Akosombo Dam",
+     "wikidata": "Q1282314"
+    },
+    {
+     "date": "1967-07-06",
+     "end_date": "1970-01-15",
+     "name": "Nigerian Civil War",
+     "place_name": "Enugu, Biafra",
+     "lat": 6.44,
+     "lon": 7.49,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Odumegwu Ojukwu"
+     ],
+     "what": "The southeastern region declared itself the Republic of Biafra; in the war and blockade that followed, between one and two million people died, many from starvation.",
+     "why": "It tested whether colonial borders could hold, and images of its famine shaped modern humanitarian aid.",
+     "wikipedia": "Nigerian Civil War",
+     "wikidata": "Q829875"
+    },
+    {
+     "date": "1976-06-16",
+     "name": "Soweto uprising",
+     "place_name": "Soweto",
+     "lat": -26.24,
+     "lon": 27.86,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Hector Pieterson"
+     ],
+     "what": "Police fired on thousands of schoolchildren protesting the forced use of Afrikaans in their schools; at least 176 people were killed.",
+     "why": "A new generation joined the struggle and international pressure on apartheid grew.",
+     "wikipedia": "Soweto uprising",
+     "wikidata": "Q153081"
+    },
+    {
+     "date": "1980-04-18",
+     "name": "Independence of Zimbabwe",
+     "place_name": "Salisbury (Harare)",
+     "lat": -17.83,
+     "lon": 31.05,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Robert Mugabe"
+     ],
+     "what": "After a guerrilla war against the white minority regime of Rhodesia and the Lancaster House talks, Zimbabwe became independent under Robert Mugabe.",
+     "why": "Southern Africa's white-ruled states were reduced to South Africa and its Namibian territory.",
+     "wikipedia": "Robert Mugabe",
+     "wikidata": "Q10707"
+    },
+    {
+     "date": "1990-02-11",
+     "name": "Release of Nelson Mandela",
+     "place_name": "Victor Verster Prison, Paarl",
+     "lat": -33.8,
+     "lon": 18.97,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Nelson Mandela",
+      "F. W. de Klerk"
+     ],
+     "what": "Nine days after President de Klerk lifted the ban on the ANC, Mandela walked free after 27 years in prison.",
+     "why": "It opened negotiations to end apartheid.",
+     "wikipedia": "Nelson Mandela",
+     "wikidata": "Q8023"
+    },
+    {
+     "date": "1994-04-07",
+     "end_date": "1994-07-15",
+     "name": "Rwandan genocide",
+     "place_name": "Kigali",
+     "lat": -1.95,
+     "lon": 30.06,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "Hutu extremist militias and soldiers killed about 500,000 to 800,000 Tutsi and moderate Hutu in about 100 days while UN peacekeepers were withdrawn.",
+     "why": "The world's failure to act became a lasting reproach.",
+     "wikipedia": "Rwandan genocide",
+     "wikidata": "Q131297"
+    },
+    {
+     "date": "1994-04-27",
+     "name": "1994 South African general election",
+     "place_name": "Ohlange High School, Inanda",
+     "lat": -29.7,
+     "lon": 30.94,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Nelson Mandela"
+     ],
+     "what": "In South Africa's first election open to all races, voters queued for hours; the ANC won 62 percent and Mandela became president.",
+     "why": "The end of apartheid closed the era of white minority rule in Africa.",
+     "wikipedia": "1994 South African general election",
+     "wikidata": "Q957012"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "china_mao_to_deng",
+   "title": "China from Mao to Deng",
+   "region": "China",
+   "start": 1934,
+   "end": 1992,
+   "view": {
+    "lon": 108.0,
+    "lat": 32.0,
+    "span": 40
+   },
+   "blurb": "How did the Communists win China, and how did the country move from Mao's revolutions to Deng's markets?",
+   "steps": [
+    {
+     "date": "1934-10-16",
+     "date_note": "commonly given start date",
+     "end_date": "1935-10-19",
+     "name": "Long March",
+     "place_name": "Yudu, near Ruijin, Jiangxi",
+     "lat": 25.95,
+     "lon": 115.41,
+     "family": "war",
+     "subtype": "journey",
+     "who": [
+      "Mao Zedong",
+      "Zhou Enlai"
+     ],
+     "what": "About 86,000 Red Army soldiers broke out of the Nationalist encirclement of their Jiangxi base and began a retreat that would cover about 10,000 km.",
+     "why": "The retreat saved the Communist movement and became its founding legend.",
+     "wikipedia": "Long March",
+     "wikidata": "Q46333"
+    },
+    {
+     "date": "1935-01-15",
+     "end_date": "1935-01-17",
+     "name": "Zunyi Conference",
+     "place_name": "Zunyi",
+     "lat": 27.69,
+     "lon": 106.92,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Mao Zedong",
+      "Zhou Enlai"
+     ],
+     "what": "At a party meeting in a captured town, leaders blamed the Comintern advisers for the defeats and gave Mao a leading role in military command.",
+     "why": "It began Mao's rise to the top of the party.",
+     "wikipedia": "Zunyi Conference",
+     "wikidata": "Q30341"
+    },
+    {
+     "date": "1935-10-19",
+     "name": "End of the Long March",
+     "place_name": "Wuqi, northern Shaanxi",
+     "lat": 36.93,
+     "lon": 108.18,
+     "family": "war",
+     "subtype": "journey",
+     "who": [
+      "Mao Zedong"
+     ],
+     "what": "Mao's column, reduced to about 8,000 people, reached the Communist base in northern Shaanxi after a year of marching.",
+     "why": "The northwest, later centred on Yan'an, became the base from which the Communists grew.",
+     "wikipedia": "Long March",
+     "wikidata": "Q46333"
+    },
+    {
+     "date": "1936-12-12",
+     "name": "Xi'an Incident",
+     "place_name": "Huaqing Pool, near Xi'an",
+     "lat": 34.36,
+     "lon": 109.21,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Chiang Kai-shek",
+      "Zhang Xueliang"
+     ],
+     "what": "The Nationalist general Zhang Xueliang detained Chiang Kai-shek until he agreed to stop fighting the Communists and unite against Japan.",
+     "why": "The second united front gave the Communists room to survive and expand during the war with Japan.",
+     "wikipedia": "Xi'an Incident"
+    },
+    {
+     "date": "1949-10-01",
+     "name": "Proclamation of the People's Republic of China",
+     "place_name": "Tiananmen, Beijing",
+     "lat": 39.91,
+     "lon": 116.39,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Mao Zedong",
+      "Zhou Enlai"
+     ],
+     "what": "After winning the civil war, Mao proclaimed the People's Republic from the Tiananmen gate; Chiang's government retreated to Taiwan in December.",
+     "why": "The Communist Party took control of the world's most populous country.",
+     "wikipedia": "Proclamation of the People's Republic of China"
+    },
+    {
+     "date": "1958-04",
+     "name": "Great Leap Forward",
+     "place_name": "Chayashan commune, Suiping County, Henan",
+     "lat": 33.15,
+     "lon": 114.0,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "An experimental commune merged farms in Suiping County into one huge unit; by the end of 1958 most of rural China was in people's communes with communal kitchens and backyard steel furnaces.",
+     "why": "Mao's plan to overtake Britain in industry within 15 years reorganised the lives of 500 million peasants.",
+     "wikipedia": "Great Leap Forward",
+     "wikidata": "Q58715"
+    },
+    {
+     "date": "1959",
+     "end_date": "1961",
+     "name": "Great Chinese Famine",
+     "place_name": "Xinyang, Henan",
+     "lat": 32.13,
+     "lon": 114.07,
+     "family": "disaster",
+     "subtype": "famine",
+     "who": [],
+     "what": "Inflated harvest reports, grain requisitions and the collapse of farming caused famine; over a million died in Xinyang prefecture alone, and estimates nationally range from 15 to 55 million.",
+     "why": "It was probably the deadliest famine in history and weakened Mao's standing for a time.",
+     "wikipedia": "Great Chinese Famine",
+     "wikidata": "Q2454958"
+    },
+    {
+     "date": "1966-08-18",
+     "date_note": "the Cultural Revolution was launched in May 1966",
+     "end_date": "1976",
+     "name": "Cultural Revolution",
+     "place_name": "Tiananmen Square, Beijing",
+     "lat": 39.9,
+     "lon": 116.39,
+     "family": "unrest",
+     "subtype": "revolution",
+     "who": [
+      "Mao Zedong"
+     ],
+     "what": "Mao greeted about a million Red Guards in Tiananmen Square, the first of eight mass rallies; across China, students attacked teachers, officials and temples.",
+     "why": "Mao used the young to destroy his rivals in the party, at the cost of a decade of chaos and persecution.",
+     "wikipedia": "Cultural Revolution",
+     "wikidata": "Q8690"
+    },
+    {
+     "date": "1968-12",
+     "date_note": "Mao's directive of 22 December 1968 began the mass movement",
+     "name": "Down to the Countryside Movement",
+     "place_name": "Yan'an region, Shaanxi",
+     "lat": 36.6,
+     "lon": 109.49,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "Mao ordered educated urban youth to go to the countryside to learn from peasants; about 17 million were sent to villages over the next decade.",
+     "why": "It ended the Red Guard phase and shaped a 'lost generation' that later included many reform-era leaders.",
+     "wikipedia": "Down to the Countryside Movement",
+     "wikidata": "Q3054413"
+    },
+    {
+     "date": "1972-02-21",
+     "end_date": "1972-02-28",
+     "name": "1972 visit by Richard Nixon to China",
+     "place_name": "Beijing",
+     "lat": 39.91,
+     "lon": 116.4,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Richard Nixon",
+      "Mao Zedong",
+      "Zhou Enlai"
+     ],
+     "what": "Nixon became the first US president to visit the People's Republic, meeting Mao and signing the Shanghai Communiqué.",
+     "why": "China and the US lined up against the Soviet Union, and China began to come out of isolation.",
+     "wikipedia": "1972 visit by Richard Nixon to China",
+     "wikidata": "Q862054"
+    },
+    {
+     "date": "1976-07-28",
+     "name": "1976 Tangshan earthquake",
+     "place_name": "Tangshan",
+     "lat": 39.63,
+     "lon": 118.18,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [],
+     "what": "An earthquake levelled the industrial city of Tangshan, killing at least 242,000 people by the official count; Mao died six weeks later on 9 September.",
+     "why": "Many Chinese saw the disaster as an omen of the end of the Mao era.",
+     "wikipedia": "1976 Tangshan earthquake",
+     "wikidata": "Q462195"
+    },
+    {
+     "date": "1978-11",
+     "date_note": "c.",
+     "name": "Household responsibility system",
+     "place_name": "Xiaogang, Fengyang County, Anhui",
+     "lat": 32.77,
+     "lon": 117.56,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "Eighteen farmers in Xiaogang village secretly divided the collective's land into family plots, each household keeping what it grew above its quota.",
+     "why": "Their harvests jumped, and the practice spread nationwide, ending the communes.",
+     "wikipedia": "Household responsibility system",
+     "wikidata": "Q1050169"
+    },
+    {
+     "date": "1978-12-18",
+     "end_date": "1978-12-22",
+     "name": "Third plenary session of the 11th Central Committee",
+     "place_name": "Jingxi Hotel, Beijing",
+     "lat": 39.91,
+     "lon": 116.32,
+     "family": "diplomacy",
+     "subtype": "council",
+     "who": [
+      "Deng Xiaoping"
+     ],
+     "what": "The party shifted its focus from class struggle to economic modernisation, and Deng Xiaoping emerged as China's paramount leader.",
+     "why": "This meeting is taken as the start of reform and opening up.",
+     "wikipedia": "Third plenary session of the 11th Central Committee of the Chinese Communist Party",
+     "wikidata": "Q6148996"
+    },
+    {
+     "date": "1980-08-26",
+     "name": "Shenzhen Special Economic Zone",
+     "place_name": "Shenzhen",
+     "lat": 22.54,
+     "lon": 114.06,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [],
+     "what": "A border town of about 30,000 people next to Hong Kong became a special economic zone open to foreign investment and market prices.",
+     "why": "Shenzhen became the test bed for capitalism under party rule and grew into a city of millions.",
+     "wikipedia": "Shenzhen Special Economic Zone",
+     "wikidata": "Q7494384"
+    },
+    {
+     "date": "1989-06-04",
+     "date_note": "protests began 15 April",
+     "name": "1989 Tiananmen Square protests and massacre",
+     "place_name": "Tiananmen Square, Beijing",
+     "lat": 39.9,
+     "lon": 116.39,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Deng Xiaoping"
+     ],
+     "what": "After seven weeks of student-led protests, troops and tanks cleared central Beijing; hundreds, possibly thousands, were killed.",
+     "why": "The party showed it would allow economic reform but not political change.",
+     "wikipedia": "1989 Tiananmen Square protests and massacre",
+     "wikidata": "Q99717"
+    },
+    {
+     "date": "1992-01-18",
+     "end_date": "1992-02-21",
+     "name": "Deng Xiaoping's southern tour",
+     "place_name": "Shenzhen",
+     "lat": 22.54,
+     "lon": 114.06,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Deng Xiaoping"
+     ],
+     "what": "At 87 and holding no formal office, Deng toured Shenzhen, Zhuhai, Guangzhou and Shanghai, urging faster market reform.",
+     "why": "It restarted reforms stalled after 1989 and set the course for China's rapid growth.",
+     "wikipedia": "Deng Xiaoping's southern tour"
+    }
+   ],
+   "status": "draft"
+  }
+ ]
+}
