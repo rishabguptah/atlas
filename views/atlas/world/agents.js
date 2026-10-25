@@ -245,14 +245,14 @@
   function islamicT(ah, month, day) { const jd = day + Math.ceil(29.5 * (month - 1)) + (ah - 1) * 354 + Math.floor((3 + 11 * ah) / 30) + 1948439.5 - 1; return 1 + (jd - 1721423.5) / 365.25; }
   const ISLAMIC = { muharram: 1, safar: 2, rabi_al_awwal: 3, rabi_al_thani: 4, jumada_al_awwal: 5, jumada_al_thani: 6, rajab: 7, shaban: 8, ramadan: 9, shawwal: 10, dhu_al_qadah: 11, dhu_al_hijjah: 12 };
   // DENSITY scales trips a year: groups on the map per flow are capped so a busy system does not bury the map.
-  W.density = 1;
+  W.crowd = 1;  // multiplier on trips a year (W.density is world.js coverage)
   function trips(f, y) {
     const key = f.i + ":" + y;
     if (memo.has(key)) return memo.get(key);
     const out = [];
     if (y < f.start || y > f.end) { memo.set(key, out); return out; }
     const r0 = rng(f.id + ":" + y);
-    let n = f.per * W.density; n = Math.floor(n) + (r0() < n % 1 ? 1 : 0); n = Math.min(n, 12);
+    let n = f.per * (typeof W.crowd === "number" ? W.crowd : 1); n = Math.floor(n) + (r0() < n % 1 ? 1 : 0); n = Math.min(n, 12);
     for (let k = 0; k < n; k++) {
       const r = rng(f.id + ":" + y + ":" + k);
       const dur = (f.days_range ? f.days_range[0] + r() * (f.days_range[1] - f.days_range[0]) : f.days * (0.85 + 0.3 * r())) * DAY;

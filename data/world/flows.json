@@ -71,7 +71,7 @@
     "silver",
     "gold"
    ],
-   "culture": "old_assyrian",
+   "culture": "assyrian_babylonian",
    "region": "mena",
    "note": "Family firms in Assur sent black donkeys loaded with about 65 kg of tin and textiles each across the Jazira and the Taurus; agents in the karum at Kanesh sold the cargo, the donkeys too, and sent silver home; winter snows closed the passes.",
    "sources": [
@@ -94,7 +94,8 @@
     2,
     30
    ],
-   "estimate_note": "Trip of about six weeks from the letters; caravans per year and party size estimated from the 23,000 tablets (Larsen)."
+   "estimate_note": "Trip of about six weeks from the letters; caravans per year and party size estimated from the 23,000 tablets (Larsen).",
+   "culture_group": "old_assyrian"
   },
   {
    "id": "dilmun_magan_meluhha",
@@ -165,7 +166,7 @@
     "timber",
     "pearls"
    ],
-   "culture": "sumerian",
+   "culture": "sumerian_oldbabylonian",
    "region": "mena",
    "note": "Alik-Dilmun merchants of Ur, like Ea-nasir, shipped textiles and silver down the Gulf and brought back copper bought at Dilmun; ships from Meluhha (the Indus) are said in Sargon's inscription to moor at Akkad. Counts are estimates.",
    "sources": [
@@ -181,7 +182,8 @@
      "url": "https://en.wikipedia.org/wiki/Meluhha"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "sumerian"
   },
   {
    "id": "egypt_punt_expeditions",
@@ -250,7 +252,7 @@
     "baboons",
     "leopard skins"
    ],
-   "culture": "egyptian",
+   "culture": "egyptian_new_late",
    "region": "africa",
    "note": "Ships were built on the Nile, carried in pieces across the desert from Coptos to the Red Sea shore and reassembled; Hatshepsut's fleet of five ships (c. 1470 BCE) is shown at Deir el-Bahari. Expeditions came years or decades apart, so per_year is an average.",
    "sources": [
@@ -262,7 +264,8 @@
      "url": "https://en.wikipedia.org/wiki/Land_of_Punt"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "egyptian"
   },
   {
    "id": "late_bronze_age_east_med",
@@ -336,7 +339,7 @@
     "fine pottery",
     "textiles"
    ],
-   "culture": "canaanite",
+   "culture": "phoenician_punic",
    "region": "europe",
    "note": "Coasting ships like the Uluburun wreck (c. 1320 BCE, ten tons of copper, a ton of tin) worked round the eastern Mediterranean in the sailing season; numbers of ships are estimated.",
    "sources": [
@@ -348,7 +351,8 @@
      "url": "https://en.wikipedia.org/wiki/Uluburun_shipwreck"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "canaanite"
   },
   {
    "id": "phoenician_tartessos",
@@ -432,7 +436,7 @@
     "lead",
     "copper"
    ],
-   "culture": "phoenician",
+   "culture": "phoenician_punic",
    "region": "europe",
    "note": "Tyrian ships coasted west by stages, wintering at colonies if need be, to buy the silver of the Rio Tinto through Gadir; voyage counts and times are estimates (the Old Testament 'ships of Tarshish' made the trip in a three-year cycle).",
    "sources": [
@@ -444,7 +448,8 @@
      "url": "https://en.wikipedia.org/wiki/Tartessos"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "phoenician"
   },
   {
    "id": "greek_colonists",
@@ -501,7 +506,7 @@
     "sacred fire from the mother city"
    ],
    "goods_back": [],
-   "culture": "greek_archaic",
+   "culture": "greek_classical",
    "region": "europe",
    "note": "A founder (oikistes) sent with Delphi's sanction led a few hundred young men in penteconters to found a new city, as Archias did from Corinth to Syracuse in 733 BCE; party size and frequency are estimates.",
    "sources": [
@@ -513,7 +518,8 @@
      "url": "https://en.wikipedia.org/wiki/Greek_colonisation"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "greek_archaic"
   },
   {
    "id": "athens_pontic_grain",
@@ -866,7 +872,7 @@
     "textiles",
     "wine"
    ],
-   "culture": "nabataean",
+   "culture": "arabic_early_islamic",
    "region": "mena",
    "note": "Pliny says frankincense went from Thomna to Gaza in 65 camel stages, 2,437 Roman miles, paying dues all the way; caravan counts and size are estimates.",
    "sources": [
@@ -878,7 +884,8 @@
      "url": "https://en.wikipedia.org/wiki/Incense_route"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "nabataean"
   },
   {
    "id": "roman_annona_alexandria_ostia",
@@ -1354,7 +1361,7 @@
     "glass",
     "grapes and alfalfa"
    ],
-   "culture": "han",
+   "culture": "chinese_han",
    "region": "central_asia",
    "note": "After Zhang Qian, Sima Qian says, the court sent embassies of several hundred, or at least a hundred, men; 'in one year as many as ten or more, and as few as five or six'; the far ones took eight or nine years to come back. The one-way time is an estimate.",
    "sources": [
@@ -1365,7 +1372,8 @@
      "cite": "Valerie Hansen, The Silk Road: A New History (2012)"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "han"
   },
   {
    "id": "sogdian_caravans",
@@ -1547,7 +1555,7 @@
     "horses",
     "reports"
    ],
-   "culture": "tang",
+   "culture": "chinese_tang",
    "region": "central_asia",
    "note": "The Tang paid its Anxi garrisons largely in silk cloth; Hansen cites documents showing roughly 900,000 bolts sent a year to the northwest around 730-755, which in turn fed the oasis markets. Convoy counts are estimates.",
    "sources": [
@@ -1558,7 +1566,8 @@
      "cite": "Eric Trombert, 'Textiles et tissus sur la route de la soie', in La Serinde, terre d'échanges (2000)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "tang"
   },
   {
    "id": "buddhist_pilgrim_overland",
@@ -1648,7 +1657,7 @@
     "relics",
     "images"
    ],
-   "culture": "chinese_buddhist",
+   "culture": "chinese_tang",
    "region": "central_asia",
    "note": "Monks like Faxian (399) and Xuanzang (629) went in small groups to find complete texts, taking a year or more to reach the Ganges; Faxian set out with four companions. Group counts are estimates.",
    "sources": [
@@ -1662,7 +1671,8 @@
      "cite": "Tansen Sen, Buddhism, Diplomacy and Trade (2003)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "chinese_buddhist"
   },
   {
    "id": "buddhist_pilgrim_sea",
@@ -1734,7 +1744,7 @@
     "sutras",
     "relics"
    ],
-   "culture": "chinese_buddhist",
+   "culture": "chinese_tang",
    "region": "southeast_asia",
    "note": "Yijing sailed from Guangzhou in the eleventh month of 671 on a Persian ship, studied Sanskrit at Srivijaya and reached Tamralipti in 673; his memoir lists 56 monks who made such journeys, so traffic was a few a year. Times include monsoon waits.",
    "sources": [
@@ -1746,7 +1756,8 @@
      "url": "https://en.wikipedia.org/wiki/Yijing_(monk)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "chinese_buddhist"
   },
   {
    "id": "tang_kentoshi",
@@ -1829,7 +1840,7 @@
     "medicines",
     "Tang coin and luxury goods"
    ],
-   "culture": "japanese_nara",
+   "culture": "japanese_classical",
    "region": "east_asia",
    "note": "About fifteen embassies actually sailed, usually four ships with 500-650 people in all (557 in 717, 651 in 838), carrying students and monks such as Kukai and Ennin; many ships were wrecked. per_year is ships per year averaged over the period.",
    "sources": [
@@ -1841,7 +1852,8 @@
      "url": "https://en.wikipedia.org/wiki/Japanese_missions_to_Tang_China"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "japanese_nara"
   },
   {
    "id": "aksum_adulis_trade",
@@ -1912,7 +1924,7 @@
     "spices",
     "Roman wine and coin"
    ],
-   "culture": "aksumite",
+   "culture": "ethiopian",
    "region": "africa",
    "note": "The Periplus calls Adulis the port of the ivory trade, and Cosmas Indicopleustes (c. 550) tells of Aksumite merchants trading at Taprobane; numbers are estimates.",
    "sources": [
@@ -1926,7 +1938,8 @@
      "cite": "Stuart Munro-Hay, Aksum: An African Civilisation of Late Antiquity (1991)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "aksumite"
   },
   {
    "id": "abbasid_barid",
@@ -2003,7 +2016,7 @@
    "goods_back": [
     "reports of the sahib al-barid on governors, prices and weather"
    ],
-   "culture": "arabic_abbasid",
+   "culture": "arabic_medieval",
    "region": "mena",
    "note": "Ibn Khurradadhbih, himself a postmaster, lists the barid stations (930 in all) along the empire's roads; relays of mules and riders carried official mail and intelligence. Times and counts are estimates.",
    "sources": [
@@ -2019,7 +2032,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "rider"
+   "sprite_want": "rider",
+   "culture_group": "arabic_abbasid"
   },
   {
    "id": "radhanite_merchants",
@@ -2101,7 +2115,7 @@
     "camphor",
     "cinnamon"
    ],
-   "culture": "jewish_radhanite",
+   "culture": "jewish_sephardic",
    "region": "global",
    "note": "Ibn Khurradadhbih describes Jewish merchants speaking Arabic, Persian, Greek, Frankish, Spanish and Slavic who sailed from the land of the Franks to Farama, carried goods by camel to the Red Sea and sailed on to India and China. Counts and times are estimates.",
    "sources": [
@@ -2113,7 +2127,8 @@
      "url": "https://en.wikipedia.org/wiki/Radhanite"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "jewish_radhanite"
   },
   {
    "id": "rus_volga_route",
@@ -2460,7 +2475,7 @@
     "ivory",
     "enslaved people"
    ],
-   "culture": "berber_sanhaja",
+   "culture": "maghrebi_andalusi",
    "region": "africa",
    "note": "Al-Bakri (1068) gives about two months from Sijilmasa to Awdaghust across the desert; Ibn Hawqal saw a cheque of 42,000 dinars drawn there; caravans set out in the cool season. Caravan counts are estimates.",
    "sources": [
@@ -2472,7 +2487,8 @@
      "url": "https://en.wikipedia.org/wiki/Trans-Saharan_trade"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "berber_sanhaja"
   },
   {
    "id": "trans_saharan_walata_mali",
@@ -2610,7 +2626,7 @@
    "goods_back": [
     "salt slabs"
    ],
-   "culture": "tuareg",
+   "culture": "maghrebi_andalusi",
    "region": "africa",
    "note": "After Moroccan troops destroyed Taghaza (1585) the mines moved to Taoudenni; the great azalai went twice a year, early winter and spring, and the French counted 20,000 camels in 1906 and 8,000 in 1948. party counts people (about one driver for 4 camels, estimated).",
    "sources": [
@@ -2626,7 +2642,8 @@
    "animals_per_group": [
     8000,
     20000
-   ]
+   ],
+   "culture_group": "tuareg"
   },
   {
    "id": "bornu_tripoli_route",
@@ -2695,7 +2712,7 @@
     "ostrich feathers",
     "natron"
    ],
-   "culture": "kanuri",
+   "culture": "hausa",
    "region": "africa",
    "note": "The shortest Sahara crossing ran through Fezzan and Kawar to Lake Chad; Barth and Nachtigal travelled it in the 1850s-1860s, and it carried many of the enslaved people taken north across the desert. Caravan counts are estimates.",
    "sources": [
@@ -2710,7 +2727,8 @@
    "roles": [
     "merchant",
     "enslaved"
-   ]
+   ],
+   "culture_group": "kanuri"
   },
   {
    "id": "darb_al_arbain",
@@ -2779,7 +2797,7 @@
     "beads",
     "metalware"
    ],
-   "culture": "fur_darfur",
+   "culture": "nubian",
    "region": "africa",
    "note": "W. G. Browne crossed with the Darfur caravan in 1793; the yearly caravan could reach several thousand camels and carried thousands of enslaved Sudanese north to Egypt. party counts traders, drivers and captives together (estimated).",
    "sources": [
@@ -2798,7 +2816,8 @@
    "roles": [
     "merchant",
     "enslaved"
-   ]
+   ],
+   "culture_group": "fur_darfur"
   },
   {
    "id": "hausa_kola_caravans",
@@ -2939,7 +2958,7 @@
     "glass beads",
     "Chinese porcelain"
    ],
-   "culture": "shona",
+   "culture": "nguni",
    "region": "africa",
    "note": "Gold from the plateau went down to Sofala, where Kilwa's agents shipped it north; the trip was made on foot in the dry season with head porters. Group counts and times are estimates.",
    "sources": [
@@ -2952,7 +2971,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "porters"
+   "sprite_want": "porters",
+   "culture_group": "shona"
   },
   {
    "id": "swahili_gujarat_dhows",
@@ -3120,7 +3140,7 @@
     "camphor",
     "sandalwood"
    ],
-   "culture": "tamil_chola",
+   "culture": "tamil",
    "region": "southeast_asia",
    "note": "Guilds such as the Ainnurruvar and Manigramam left inscriptions from Sumatra to Quanzhou; the Cholas sent embassies to the Song and raided Srivijaya in 1025. Ship counts are estimates.",
    "sources": [
@@ -3135,7 +3155,8 @@
      "url": "https://en.wikipedia.org/wiki/Ainnurruvar"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "tamil_chola"
   },
   {
    "id": "song_yuan_quanzhou_calicut",
@@ -3214,7 +3235,7 @@
     "incense",
     "horses (via Hormuz)"
    ],
-   "culture": "chinese_yuan",
+   "culture": "chinese_song_yuan",
    "region": "indian_ocean",
    "note": "Junks left Quanzhou on the winter northeast monsoon and came back in summer; Ibn Battuta saw 13 Chinese junks at Calicut and says the biggest carried 1,000 men, 600 sailors and 400 soldiers. Junk counts are estimates.",
    "sources": [
@@ -3228,7 +3249,8 @@
      "cite": "John Chaffee, The Muslim Merchants of Premodern China (2018)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "chinese_yuan"
   },
   {
    "id": "song_ningbo_hakata",
@@ -3292,7 +3314,7 @@
     "swords",
     "lacquer"
    ],
-   "culture": "song",
+   "culture": "chinese_song_yuan",
    "region": "east_asia",
    "note": "Private Chinese merchants settled at Hakata and sailed the East China Sea with the summer monsoon; the Shinan wreck (1323) carried 20,000 ceramics and 28 tons of Chinese coin. Ship counts are estimates.",
    "sources": [
@@ -3304,7 +3326,8 @@
      "url": "https://en.wikipedia.org/wiki/Shinan_shipwreck"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "song"
   },
   {
    "id": "hajj_baghdad_darb_zubayda",
@@ -3370,7 +3393,7 @@
     "Meccan goods",
     "Zamzam water"
    ],
-   "culture": "arabic_abbasid",
+   "culture": "arabic_medieval",
    "region": "mena",
    "note": "Zubayda, wife of Harun al-Rashid, had wells, cisterns and stations built along the 1,400 km road; Ibn Jubayr returned with this caravan in 1184. Party size is an estimate.",
    "sources": [
@@ -3386,7 +3409,8 @@
     }
    ],
    "conf": "estimated",
-   "return_islamic": "dhu_al_hijja"
+   "return_islamic": "dhu_al_hijja",
+   "culture_group": "arabic_abbasid"
   },
   {
    "id": "hajj_cairo_mahmal",
@@ -3465,7 +3489,7 @@
     "Indian goods",
     "Zamzam water"
    ],
-   "culture": "arabic_mamluk",
+   "culture": "arabic_medieval",
    "region": "mena",
    "note": "From Baybars' time the caravan, led by the amir al-hajj with the mahmal litter, left Cairo in mid-Shawwal and took about 37-40 stages along Sinai and the Hijaz coast; it carried tens of thousands in good years. Party size is an estimate.",
    "sources": [
@@ -3481,7 +3505,8 @@
     }
    ],
    "conf": "estimated",
-   "return_islamic": "dhu_al_hijja"
+   "return_islamic": "dhu_al_hijja",
+   "culture_group": "arabic_mamluk"
   },
   {
    "id": "hajj_damascus_ottoman",
@@ -3554,7 +3579,7 @@
     "coffee",
     "Zamzam water"
    ],
-   "culture": "ottoman",
+   "culture": "ottoman_turkish",
    "region": "mena",
    "note": "The governor of Damascus led the caravan, which gathered at Muzayrib and left around mid-Shawwal; it spent about 40 days on the road and was guarded by Ottoman forts and paid-off Bedouin. Pilgrim numbers varied from a few thousand to tens of thousands.",
    "sources": [
@@ -3566,7 +3591,8 @@
     }
    ],
    "conf": "attested",
-   "return_islamic": "dhu_al_hijja"
+   "return_islamic": "dhu_al_hijja",
+   "culture_group": "ottoman"
   },
   {
    "id": "hajj_west_african_takruri",
@@ -3721,7 +3747,7 @@
     "coffee",
     "pilgrims returning"
    ],
-   "culture": "mughal",
+   "culture": "north_india_medieval",
    "region": "indian_ocean",
    "note": "Surat's big ships sailed for the Red Sea with the northeast monsoon and came back in August-September with the silver that paid for Gujarat's cloth; the emperor's Ganj-i-Sawai, taken by Henry Every in 1695, carried some 600 people. Ship counts follow Das Gupta.",
    "sources": [
@@ -3738,7 +3764,8 @@
     "pilgrim",
     "merchant",
     "crew"
-   ]
+   ],
+   "culture_group": "mughal"
   },
   {
    "id": "champagne_fairs",
@@ -3829,7 +3856,7 @@
     "Flemish and French woollen cloth",
     "linen"
    ],
-   "culture": "italian_communal",
+   "culture": "italian_medieval",
    "region": "europe",
    "note": "Six fairs a year at Lagny, Bar-sur-Aube, Provins and Troyes drew Italian and Flemish merchants under the Count of Champagne's protection; Sienese couriers covered the road in about three weeks. Group counts are estimates.",
    "sources": [
@@ -3844,7 +3871,8 @@
      "url": "https://en.wikipedia.org/wiki/Champagne_fairs"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "italian_communal"
   },
   {
    "id": "hanse_lubeck_novgorod",
@@ -3924,7 +3952,7 @@
     "flax",
     "hides"
    ],
-   "culture": "hanseatic",
+   "culture": "german_medieval",
    "region": "europe",
    "note": "German merchants lived in the Peterhof in two seasonal groups, summer travellers by sea and winter travellers who came over the ice by sledge; Ivan III closed the Kontor in 1494. Group counts are estimates.",
    "sources": [
@@ -3936,7 +3964,8 @@
      "url": "https://en.wikipedia.org/wiki/Peterhof_(Novgorod)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "hanseatic"
   },
   {
    "id": "hanse_bergen_stockfish",
@@ -3997,7 +4026,7 @@
     "stockfish (dried cod from Lofoten)",
     "cod liver oil"
    ],
-   "culture": "hanseatic",
+   "culture": "german_medieval",
    "region": "europe",
    "note": "German merchants at the Bryggen Kontor bought dried cod that northern fishermen brought down to Bergen in summer, paying in grain; ship counts are estimates (Bergen customs records of the 1500s list a few hundred ship visits a year).",
    "sources": [
@@ -4012,7 +4041,8 @@
      "url": "https://en.wikipedia.org/wiki/Bryggen"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "hanseatic"
   },
   {
    "id": "hanse_bruges_umlandfahrt",
@@ -4092,7 +4122,7 @@
     "wax",
     "amber"
    ],
-   "culture": "hanseatic",
+   "culture": "german_medieval",
    "region": "europe",
    "note": "Ships increasingly sailed round Jutland instead of portaging Lubeck-Hamburg; the Sound Toll registers from 1497 record thousands of passages a year by the 1500s. Earlier counts are estimates.",
    "sources": [
@@ -4104,7 +4134,8 @@
      "url": "https://www.soundtoll.nl"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "hanseatic"
   },
   {
    "id": "genoa_black_sea_caffa",
@@ -4182,7 +4213,7 @@
     "silk (via Tabriz)",
     "enslaved people"
    ],
-   "culture": "genoese",
+   "culture": "italian_medieval",
    "region": "europe",
    "note": "Caffa was Genoa's Black Sea capital from 1266 until the Ottoman conquest of 1475, collecting Crimean grain, steppe goods and slaves; Mamluk Egypt's mamluk soldiers were largely bought here. Ship counts are estimates.",
    "sources": [
@@ -4194,7 +4225,8 @@
      "url": "https://en.wikipedia.org/wiki/Feodosia"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "genoese"
   },
   {
    "id": "venice_muda_alexandria",
@@ -4271,7 +4303,7 @@
     "cotton",
     "alum"
    ],
-   "culture": "venetian",
+   "culture": "italian_medieval",
    "region": "mena",
    "note": "The Senate auctioned the charter of a few great galleys each year, which sailed in convoy in late summer to meet the spice caravans and were back for the Christmas fair; crews of about 200 included oarsmen who traded on their own account.",
    "sources": [
@@ -4286,7 +4318,8 @@
      "url": "https://en.wikipedia.org/wiki/Muda_(convoy)"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "venetian"
   },
   {
    "id": "venice_muda_beirut",
@@ -4368,7 +4401,7 @@
     "cotton",
     "Damascus goods"
    ],
-   "culture": "venetian",
+   "culture": "italian_medieval",
    "region": "mena",
    "note": "Sailed with the Alexandria galleys as far as Crete or Cyprus, then to Beirut, the port of Damascus, where the autumn spice caravans arrived.",
    "sources": [
@@ -4379,7 +4412,8 @@
      "cite": "Eliyahu Ashtor, Levant Trade in the Later Middle Ages (1983)"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "venetian"
   },
   {
    "id": "venice_muda_flanders",
@@ -4476,7 +4510,7 @@
     "Flemish cloth",
     "lead"
    ],
-   "culture": "venetian",
+   "culture": "italian_medieval",
    "region": "europe",
    "note": "From 1314, regularly from the 1370s, three to five great galleys left in spring, wintered in England or Flanders and returned the next year; the voyage out took two to three months.",
    "sources": [
@@ -4487,7 +4521,8 @@
      "cite": "Alwyn A. Ruddock, Italian Merchants and Shipping in Southampton, 1270-1600 (1951)"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "venetian"
   },
   {
    "id": "venice_muda_romania",
@@ -4570,7 +4605,7 @@
     "salt fish",
     "enslaved people"
    ],
-   "culture": "venetian",
+   "culture": "italian_medieval",
    "region": "europe",
    "note": "Galleys sailed in midsummer to Constantinople, then on to Tana at the mouth of the Don and Trebizond for goods from Tabriz and the steppe; the route faded with the Ottoman conquests.",
    "sources": [
@@ -4581,7 +4616,8 @@
      "cite": "Freddy Thiriet, La Romanie vénitienne au Moyen Âge (1959)"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "venetian"
   },
   {
    "id": "venice_jaffa_pilgrim_galleys",
@@ -4663,7 +4699,7 @@
    "goods_back": [
     "relics and souvenirs"
    ],
-   "culture": "venetian",
+   "culture": "italian_medieval",
    "region": "europe",
    "note": "Private patrons licensed by the state left after Ascension with a hundred or so pilgrims; Felix Fabri's 1483 galley left Venice on 1 June and reached Jaffa on 1 July, and the round trip including the Holy Land tour took about four months.",
    "sources": [
@@ -4674,7 +4710,8 @@
      "cite": "H. F. M. Prescott, Jerusalem Journey: Pilgrimage to the Holy Land in the Fifteenth Century (1954)"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "venetian"
   },
   {
    "id": "camino_santiago",
@@ -5045,7 +5082,7 @@
     "silk",
     "spices"
    ],
-   "culture": "genoese",
+   "culture": "italian_medieval",
    "region": "central_asia",
    "note": "Pegolotti's handbook gives the legs: Tana to Astrakhan 25 days by ox-wagon, Sarai to Saraichuk 8, to Urgench 20 by camel, to Otrar 35-40, to Almaliq 45 by donkey, to Ganzhou 70, then 45 to the river and on to Khanbaliq; 'the road is perfectly safe by day and night'. Group counts are estimates.",
    "sources": [
@@ -5057,7 +5094,8 @@
      "url": "https://en.wikipedia.org/wiki/Francesco_Balducci_Pegolotti"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "genoese"
   },
   {
    "id": "mongol_yam_couriers",
@@ -5255,7 +5293,7 @@
     "gems",
     "giraffes and exotic animals"
    ],
-   "culture": "chinese_ming",
+   "culture": "chinese_ming_qing",
    "region": "indian_ocean",
    "note": "Seven voyages in 28 years, each with about 250 ships and up to 27,800 men; they gathered at Changle and sailed on the winter monsoon, returning in summer. per_year is the average rate of whole fleets, party the whole fleet.",
    "sources": [
@@ -5270,7 +5308,8 @@
      "url": "https://en.wikipedia.org/wiki/Ming_treasure_voyages"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "chinese_ming"
   },
   {
    "id": "joseon_yeonhaengsa",
@@ -5356,7 +5395,7 @@
     "medicines",
     "calendar"
    ],
-   "culture": "korean_joseon",
+   "culture": "korean",
    "region": "east_asia",
    "note": "Joseon sent regular embassies three or four times a year (New Year, the emperor's birthday, the solstice) plus special ones; diaries such as Pak Chiwon's Yeolha Ilgi (1780) record parties of about 250 and roughly 50 days each way.",
    "sources": [
@@ -5368,7 +5407,8 @@
      "url": "https://en.wikipedia.org/wiki/Joseon_missions_to_Imperial_China"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "korean_joseon"
   },
   {
    "id": "ming_ryukyu_tribute",
@@ -5435,7 +5475,7 @@
     "copper coin",
     "books"
    ],
-   "culture": "ryukyuan",
+   "culture": "japanese_medieval_edo",
    "region": "east_asia",
    "note": "Ryukyu was the most frequent Ming tributary (171 missions recorded in the Ming annals), first yearly and later every two years; ships sailed for Fuzhou in autumn and envoys went overland to Beijing. Ship counts per year are estimates.",
    "sources": [
@@ -5447,7 +5487,8 @@
      "url": "https://en.wikipedia.org/wiki/Ryukyu_Kingdom"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "ryukyuan"
   },
   {
    "id": "ming_japan_tally_trade",
@@ -5525,7 +5566,7 @@
     "books",
     "porcelain"
    ],
-   "culture": "japanese_muromachi",
+   "culture": "japanese_medieval_edo",
    "region": "east_asia",
    "note": "Seventeen official missions of up to ten ships sailed under Ming tallies, landing at Ningbo; the 1523 Ningbo incident between rival Hosokawa and Ouchi missions nearly ended them. per_year is ships per year averaged.",
    "sources": [
@@ -5537,7 +5578,8 @@
      "url": "https://en.wikipedia.org/wiki/Japanese_missions_to_Ming_China"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "japanese_muromachi"
   },
   {
    "id": "ming_qing_exam_candidates",
@@ -5617,7 +5659,7 @@
     "degrees",
     "appointments"
    ],
-   "culture": "chinese_ming",
+   "culture": "chinese_ming_qing",
    "region": "east_asia",
    "note": "Every three years thousands of provincial graduates (juren) travelled to the metropolitan exam held in Beijing in spring, often by Grand Canal boat; the Ming and Qing admitted roughly 200-400 jinshi per session from about 5,000-10,000 candidates. per_year averages one session in three.",
    "sources": [
@@ -5629,7 +5671,8 @@
      "url": "https://en.wikipedia.org/wiki/Imperial_examination"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "chinese_ming"
   },
   {
    "id": "grand_canal_grain_ming",
@@ -5718,7 +5761,7 @@
     "salt",
     "northern goods"
    ],
-   "culture": "chinese_ming",
+   "culture": "chinese_ming_qing",
    "region": "east_asia",
    "note": "From 1415 all tax grain for Beijing went by canal: Ray Huang counts 11,775 boats crewed by about 120,000 soldiers, leaving the Yangzi in early spring to reach Tongzhou by summer.",
    "sources": [
@@ -5734,7 +5777,8 @@
     }
    ],
    "conf": "attested",
-   "sprite_want": "barge"
+   "sprite_want": "barge",
+   "culture_group": "chinese_ming"
   },
   {
    "id": "grand_canal_grain_qing",
@@ -5822,7 +5866,7 @@
    "goods_back": [
     "northern goods"
    ],
-   "culture": "chinese_qing",
+   "culture": "chinese_ming_qing",
    "region": "east_asia",
    "note": "The Qing kept about 6,000-7,000 grain junks on the canal, crewed by hired boatmen whose brotherhoods became the Green Gang; the Yellow River's shift in 1855 cut the canal and shipping moved to sea.",
    "sources": [
@@ -5835,7 +5879,8 @@
     }
    ],
    "conf": "attested",
-   "sprite_want": "barge"
+   "sprite_want": "barge",
+   "culture_group": "chinese_qing"
   },
   {
    "id": "tea_horse_road",
@@ -5986,7 +6031,7 @@
    "goods_back": [
     "Ganga water"
    ],
-   "culture": "hindu",
+   "culture": "north_india_medieval",
    "region": "south_asia",
    "note": "Xuanzang described a great bathing gathering at Prayag under Harsha in 643; the annual Magh Mela in January-February swells every twelfth year into the Kumbh, with millions of pilgrims by the 19th century. Group counts are estimates, and pilgrims came from all over India (the stops are one feeder route).",
    "sources": [
@@ -5998,7 +6043,8 @@
      "url": "https://en.wikipedia.org/wiki/Kumbh_Mela"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "hindu"
   },
   {
    "id": "banjara_bullock_caravans",
@@ -6069,7 +6115,7 @@
     "cotton",
     "salt"
    ],
-   "culture": "banjara",
+   "culture": "north_india_medieval",
    "region": "south_asia",
    "note": "Banjara clans moved grain and salt on pack oxen in herds of thousands, supplying Mughal and later British armies; Tavernier saw caravans of 10,000-12,000 oxen. They travelled in the dry season. Counts are estimates.",
    "sources": [
@@ -6085,7 +6131,8 @@
    "animals_per_group": [
     1000,
     12000
-   ]
+   ],
+   "culture_group": "banjara"
   },
   {
    "id": "aleppo_basra_desert_caravan",
@@ -6159,7 +6206,7 @@
     "spices",
     "coffee"
    ],
-   "culture": "ottoman",
+   "culture": "ottoman_turkish",
    "region": "mena",
    "note": "Large caravans of up to several thousand camels crossed the Syrian desert with Bedouin escorts, taking 40-70 days; travellers' accounts from Teixeira (1605) to the 1750s are collected by Carruthers. Caravan counts are estimates.",
    "sources": [
@@ -6171,7 +6218,8 @@
    "animals_per_group": [
     1000,
     5000
-   ]
+   ],
+   "culture_group": "ottoman"
   },
   {
    "id": "armenian_julfa_merchants",
@@ -6336,7 +6384,7 @@
    "goods_back": [
     "governors' reports"
    ],
-   "culture": "ottoman",
+   "culture": "ottoman_turkish",
    "region": "mena",
    "note": "Couriers (ulak) changed horses at menzil stations on the 'right arm' road through Anatolia to Syria and Iraq; ordinary travel took months, express couriers a few weeks. Times and counts are estimates.",
    "sources": [
@@ -6348,7 +6396,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "rider"
+   "sprite_want": "rider",
+   "culture_group": "ottoman"
   },
   {
    "id": "ottoman_campaign_march",
@@ -6427,7 +6476,7 @@
     "captives",
     "booty"
    ],
-   "culture": "ottoman",
+   "culture": "ottoman_turkish",
    "region": "europe",
    "note": "The army left Istanbul in spring and needed two to three months on the military road to reach Hungary, leaving a short fighting season; Murphey reconstructs marching rates from campaign diaries. Counts are estimates.",
    "sources": [
@@ -6435,7 +6484,8 @@
      "cite": "Rhoads Murphey, Ottoman Warfare, 1500-1700 (1999)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "ottoman"
   },
   {
    "id": "spanish_road",
@@ -7112,7 +7162,7 @@
     "saltpetre",
     "silk"
    ],
-   "culture": "english",
+   "culture": "english_early_modern",
    "region": "indian_ocean",
    "note": "East Indiamen left the Downs early in the year to catch the monsoon and spent about six months outward; by the late 18th century some 30-50 a year sailed. Counts follow Farrington's register.",
    "sources": [
@@ -7124,7 +7174,8 @@
      "url": "https://en.wikipedia.org/wiki/East_Indiaman"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "english"
   },
   {
    "id": "japan_red_seal_ships",
@@ -7199,7 +7250,7 @@
     "sugar",
     "sharkskin"
    ],
-   "culture": "japanese_edo",
+   "culture": "japanese_medieval_edo",
    "region": "southeast_asia",
    "note": "The shogunate licensed about 356 voyages between 1604 and 1635, roughly 11 a year, before the seclusion edicts; ships of 200-300 men sailed south on the winter monsoon.",
    "sources": [
@@ -7211,7 +7262,8 @@
      "url": "https://en.wikipedia.org/wiki/Red_seal_ships"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "japanese_edo"
   },
   {
    "id": "tojin_junks_nagasaki",
@@ -7274,7 +7326,7 @@
     "silver",
     "dried sea products"
    ],
-   "culture": "chinese_qing",
+   "culture": "chinese_ming_qing",
    "region": "east_asia",
    "note": "Chinese junks were the main channel of Edo Japan's foreign trade; arrivals peaked near 190 in 1688, then the 1715 Shotoku regulations cut licences to 30 a year. Crews lived in the Tojin yashiki compound.",
    "sources": [
@@ -7286,7 +7338,8 @@
      "url": "https://en.wikipedia.org/wiki/Sakoku"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "chinese_qing"
   },
   {
    "id": "makassan_trepang",
@@ -7350,7 +7403,7 @@
     "turtle shell",
     "pearl shell"
    ],
-   "culture": "makassarese",
+   "culture": "javanese_malay",
    "region": "oceania",
    "note": "Each December fleets of 30-60 praus with about 1,000 men sailed with the northwest monsoon to the Australian coast to boil and dry sea cucumber for the China market, staying until the southeast winds took them home in April; Yolngu people traded and some sailed with them.",
    "sources": [
@@ -7362,7 +7415,8 @@
      "url": "https://en.wikipedia.org/wiki/Makassan_contact_with_Australia"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "makassarese"
   },
   {
    "id": "middle_passage_benin_bahia",
@@ -7433,7 +7487,7 @@
     "sugar",
     "tobacco"
    ],
-   "culture": "yoruba_fon",
+   "culture": "yoruba",
    "region": "atlantic",
    "note": "Bahian ships bartered tobacco for captives at Ouidah and the Slave Coast; about 1.1 million people were carried from the Bight of Benin to Bahia. The party is the people held aboard (about 380) plus a crew of about 30; render them as people, each with a name and a home.",
    "sources": [
@@ -7451,7 +7505,8 @@
     "crew"
    ],
    "crew": 30,
-   "dignity": "Generated people here were enslaved. Give them names, origins and fates; never list them as goods."
+   "dignity": "Generated people here were enslaved. Give them names, origins and fates; never list them as goods.",
+   "culture_group": "yoruba_fon"
   },
   {
    "id": "middle_passage_luanda_rio",
@@ -7517,7 +7572,7 @@
     "sugar",
     "coffee (later)"
    ],
-   "culture": "kimbundu_ovimbundu",
+   "culture": "kongo",
    "region": "atlantic",
    "note": "West Central Africa was the largest source of the trade; Brazilian ships made the crossing in about five weeks and carried over two million people to Rio and its region. The party is the people held aboard plus about 30 crew.",
    "sources": [
@@ -7535,7 +7590,8 @@
     "crew"
    ],
    "crew": 30,
-   "dignity": "Generated people here were enslaved. Give them names, origins and fates; never list them as goods."
+   "dignity": "Generated people here were enslaved. Give them names, origins and fates; never list them as goods.",
+   "culture_group": "kimbundu_ovimbundu"
   },
   {
    "id": "middle_passage_liverpool_triangle",
@@ -7600,7 +7656,7 @@
     "rum",
     "cotton"
    ],
-   "culture": "igbo_ibibio",
+   "culture": "yoruba",
    "region": "atlantic",
    "note": "Liverpool ships traded at Bonny and Old Calabar for months, then crossed to the Caribbean in about two months; in the 1790s Liverpool sent over 100 voyages a year. Mortality on the passage averaged around 12-15 per cent. The party is the people held aboard plus about 35 crew; Olaudah Equiano's account describes the passage.",
    "sources": [
@@ -7621,7 +7677,8 @@
     "crew"
    ],
    "crew": 35,
-   "dignity": "Generated people here were enslaved. Give them names, origins and fates; never list them as goods."
+   "dignity": "Generated people here were enslaved. Give them names, origins and fates; never list them as goods.",
+   "culture_group": "igbo_ibibio"
   },
   {
    "id": "indentured_calcutta_mauritius",
@@ -7689,7 +7746,7 @@
     "returning migrants",
     "remittances"
    ],
-   "culture": "hindustani_bhojpuri",
+   "culture": "indian_modern",
    "region": "indian_ocean",
    "note": "After abolition about 1.3 million Indians signed indentures for the sugar colonies; sailing ships from the Calcutta depots took about two months to Mauritius and three to the Caribbean, and departures were restricted to the cooler months. Counts are averages.",
    "sources": [
@@ -7705,7 +7762,8 @@
    "roles": [
     "migrant",
     "crew"
-   ]
+   ],
+   "culture_group": "hindustani_bhojpuri"
   },
   {
    "id": "inca_chasqui",
@@ -7789,7 +7847,7 @@
    "goods_back": [
     "khipu reports"
    ],
-   "culture": "inca",
+   "culture": "quechua",
    "region": "americas",
    "note": "Runners posted in pairs at huts every few kilometres along the Qhapaq Nan passed messages and khipu at a sprint; chroniclers claim Cusco-Quito, about 2,000 km, in under two weeks. Time and frequency are estimates.",
    "sources": [
@@ -7805,7 +7863,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "runner"
+   "sprite_want": "runner",
+   "culture_group": "inca"
   },
   {
    "id": "inca_llama_caravans",
@@ -7880,7 +7939,7 @@
     "salt",
     "freeze-dried potatoes (chuño)"
    ],
-   "culture": "aymara_quechua",
+   "culture": "quechua",
    "region": "americas",
    "note": "Herders drove llama trains of a few dozen animals, each carrying 25-30 kg about 20 km a day, swapping highland and valley products in the dry season; the practice survived into the 20th century. Counts are estimates.",
    "sources": [
@@ -7892,7 +7951,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "llama_train"
+   "sprite_want": "llama_train",
+   "culture_group": "aymara_quechua"
   },
   {
    "id": "potosi_mita",
@@ -7961,7 +8021,7 @@
    "goods_back": [
     "survivors returning"
    ],
-   "culture": "aymara_quechua",
+   "culture": "quechua",
    "region": "americas",
    "note": "Viceroy Toledo's mita required 16 highland provinces to send about 13,500 men a year to the silver mines; they walked with families and llamas for up to two months, and many never returned home. party is a provincial contingent.",
    "sources": [
@@ -7976,7 +8036,8 @@
      "url": "https://en.wikipedia.org/wiki/Mit%27a"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "aymara_quechua"
   },
   {
    "id": "aztec_pochteca",
@@ -8050,7 +8111,7 @@
     "jaguar skins",
     "amber"
    ],
-   "culture": "aztec",
+   "culture": "nahuatl",
    "region": "americas",
    "note": "Sahagún's informants describe pochteca caravans leaving Tlatelolco on an auspicious day sign, travelling by night with tlameme porters each carrying about 23 kg, and doubling as spies; numbers and timing are estimates.",
    "sources": [
@@ -8063,7 +8124,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "porters"
+   "sprite_want": "porters",
+   "culture_group": "aztec"
   },
   {
    "id": "maya_canoe_trade",
@@ -8142,7 +8204,7 @@
     "jade",
     "feathers"
    ],
-   "culture": "maya_postclassic",
+   "culture": "maya",
    "region": "americas",
    "note": "In 1502 Columbus's men met off Guanaja a Maya trading canoe 'as long as a galley', eight feet wide, with about 25 rowers and cargo of cloth, copper, obsidian swords and cacao; counts are estimates.",
    "sources": [
@@ -8154,7 +8216,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "canoe"
+   "sprite_want": "canoe",
+   "culture_group": "maya_postclassic"
   },
   {
    "id": "hopewell_interaction",
@@ -8221,7 +8284,7 @@
     "mica",
     "marine shell"
    ],
-   "culture": "hopewell",
+   "culture": "eastern_woodlands",
    "region": "americas",
    "note": "Ohio Hopewell earthworks hold Yellowstone obsidian, Lake Superior copper, Appalachian mica and Gulf shell; whether by traders, pilgrims or relays is debated. Everything here is a rough order of magnitude.",
    "sources": [
@@ -8234,7 +8297,8 @@
     }
    ],
    "conf": "approximate",
-   "sprite_want": "canoe"
+   "sprite_want": "canoe",
+   "culture_group": "hopewell"
   },
   {
    "id": "mississippian_cahokia_canoes",
@@ -8300,7 +8364,7 @@
     "galena",
     "Mill Creek chert"
    ],
-   "culture": "mississippian",
+   "culture": "eastern_woodlands",
    "region": "americas",
    "note": "Cahokia's population of perhaps 10,000-20,000 drew goods by dugout along the Mississippi system; Mill Creek hoes and Gulf shell spread across the Southeast. Counts are rough orders of magnitude.",
    "sources": [
@@ -8313,7 +8377,8 @@
     }
    ],
    "conf": "approximate",
-   "sprite_want": "canoe"
+   "sprite_want": "canoe",
+   "culture_group": "mississippian"
   },
   {
    "id": "hbc_york_factory_ships",
@@ -8374,7 +8439,7 @@
     "beaver pelts",
     "marten and other furs"
    ],
-   "culture": "english",
+   "culture": "english_early_modern",
    "region": "americas",
    "note": "Two or three ships sailed each June, often recruiting Orkneymen at Stromness, and reached the Bay in August when the ice allowed; they had to leave by September. Counts are attested in the Company's archives.",
    "sources": [
@@ -8386,7 +8451,8 @@
      "url": "https://en.wikipedia.org/wiki/York_Factory"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "english"
   },
   {
    "id": "canadian_voyageurs",
@@ -8463,7 +8529,7 @@
    "goods_back": [
     "beaver pelts"
    ],
-   "culture": "canadien",
+   "culture": "french_early_modern",
    "region": "americas",
    "note": "Each May canots de maître of 8-10 paddlers left Lachine, paddling 14-16 hours a day and portaging packs of 40 kg, to reach the rendezvous at Grand Portage (later Fort William) in about seven or eight weeks and return before freeze-up.",
    "sources": [
@@ -8479,7 +8545,8 @@
     }
    ],
    "conf": "attested",
-   "sprite_want": "canoe"
+   "sprite_want": "canoe",
+   "culture_group": "canadien"
   },
   {
    "id": "santa_fe_trail",
@@ -8560,7 +8627,7 @@
     "furs",
     "wool"
    ],
-   "culture": "american",
+   "culture": "english_modern",
    "region": "americas",
    "note": "Josiah Gregg tallied the yearly trade: in 1831 some 130 wagons and 320 men went out; caravans formed at Council Grove and took about seven or eight weeks. Counts vary widely by year.",
    "sources": [
@@ -8572,7 +8639,8 @@
      "url": "https://en.wikipedia.org/wiki/Santa_Fe_Trail"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "american"
   },
   {
    "id": "oregon_trail",
@@ -8649,7 +8717,7 @@
     "livestock"
    ],
    "goods_back": [],
-   "culture": "american",
+   "culture": "english_modern",
    "region": "americas",
    "note": "About 400,000 people went west on the trails between 1841 and the railroad in 1869, leaving the Missouri in late April or May as the grass came up and taking four to six months; companies of 20-60 wagons were typical. Emigration peaked in the 1849-52 gold rush.",
    "sources": [
@@ -8661,7 +8729,8 @@
      "url": "https://en.wikipedia.org/wiki/Oregon_Trail"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "american"
   },
   {
    "id": "russian_fur_siberia",
@@ -8736,7 +8805,7 @@
     "fox and ermine",
     "yasak tribute"
    ],
-   "culture": "russian",
+   "culture": "russian_modern",
    "region": "central_asia",
    "note": "Bands of hunters and traders went by river and portage, wintering in ostrogs, to take sable themselves or collect yasak from Siberian peoples; Yakutsk was reached in 1632. A journey east often took more than a year. Counts are estimates.",
    "sources": [
@@ -8748,7 +8817,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "boat_river"
+   "sprite_want": "boat_river",
+   "culture_group": "russian"
   },
   {
    "id": "kyakhta_tea_caravans",
@@ -8815,7 +8885,7 @@
     "leather",
     "silver"
    ],
-   "culture": "chinese_qing",
+   "culture": "chinese_ming_qing",
    "region": "central_asia",
    "note": "After the Treaty of Kyakhta (1727) all Russo-Chinese trade went through one border market; Shanxi merchants sent tea by camel across the Gobi in the cool season, about 40 days from Kalgan. Caravan counts are estimates.",
    "sources": [
@@ -8827,7 +8897,8 @@
      "url": "https://en.wikipedia.org/wiki/Kyakhta_trade"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "chinese_qing"
   },
   {
    "id": "bukhara_orenburg_caravans",
@@ -8900,7 +8971,7 @@
     "sugar",
     "furs"
    ],
-   "culture": "uzbek_bukharan",
+   "culture": "central_asian_turkic",
    "region": "central_asia",
    "note": "Caravans of up to a few thousand camels crossed the Kazakh steppe to the Orenburg exchange; nineteenth-century Russian accounts give about two to three months. Counts are estimates.",
    "sources": [
@@ -8912,7 +8983,8 @@
      "url": "https://en.wikipedia.org/wiki/Orenburg"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "uzbek_bukharan"
   },
   {
    "id": "polynesian_tahiti_hawaii",
@@ -8977,7 +9049,7 @@
     "voyaging chants",
     "people"
    ],
-   "culture": "polynesian",
+   "culture": "maori_polynesian",
    "region": "oceania",
    "note": "Hawaiian tradition remembers two-way voyages in the voyaging era, and Hokule'a's 1976 replica voyage from Hawaii to Tahiti took 33 days without instruments; frequency and timing are rough estimates.",
    "sources": [
@@ -8993,7 +9065,8 @@
     }
    ],
    "conf": "approximate",
-   "sprite_want": "canoe"
+   "sprite_want": "canoe",
+   "culture_group": "polynesian"
   },
   {
    "id": "tongan_maritime_network",
@@ -9061,7 +9134,7 @@
     "red feathers",
     "pottery"
    ],
-   "culture": "tongan",
+   "culture": "maori_polynesian",
    "region": "oceania",
    "note": "Tongan chiefs kept ties of marriage and tribute with Samoa and Fiji, and Tongans built big double canoes (kalia) from Lau timber; Cook and Mariner (1806-10) describe frequent crossings. Counts are estimates.",
    "sources": [
@@ -9073,7 +9146,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "canoe"
+   "sprite_want": "canoe",
+   "culture_group": "tongan"
   },
   {
    "id": "kula_ring",
@@ -9135,7 +9209,7 @@
     "pottery",
     "betel nut"
    ],
-   "culture": "massim",
+   "culture": "maori_polynesian",
    "region": "oceania",
    "note": "Malinowski described fleets of decorated canoes sailing to exchange necklaces clockwise and armbands anticlockwise round the island ring; a big uvalaku expedition of dozens of canoes from Sinaketa reached Dobu in a few days. Start date is approximate (the ring is at least several centuries old).",
    "sources": [
@@ -9148,7 +9222,8 @@
     }
    ],
    "conf": "estimated",
-   "sprite_want": "canoe"
+   "sprite_want": "canoe",
+   "culture_group": "massim"
   },
   {
    "id": "mesta_transhumance",
@@ -9302,7 +9377,7 @@
     "wool",
     "dairy"
    ],
-   "culture": "persian",
+   "culture": "persian_modern",
    "region": "mena",
    "note": "Whole Bakhtiari tribes move up to summer pastures in spring and down in autumn, swimming flocks across the Karun on inflated skins; the 1925 film Grass followed one migration of about 50,000 people over 46 days. Group counts are estimates.",
    "sources": [
@@ -9317,7 +9392,8 @@
      "url": "https://en.wikipedia.org/wiki/Bakhtiari_people"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "persian"
   },
   {
    "id": "rwala_bedouin_migration",
@@ -9382,7 +9458,7 @@
     "grain bought in Syria",
     "dates"
    ],
-   "culture": "bedouin",
+   "culture": "arabic_modern",
    "region": "mena",
    "note": "Alois Musil lived with the Rwala in 1908-15 and describes them wintering in the Nafud and moving north in late spring to wells and markets near the Syrian sown land, returning south in autumn. Group counts are estimates.",
    "sources": [
@@ -9394,7 +9470,8 @@
      "url": "https://en.wikipedia.org/wiki/Rwala"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "bedouin"
   },
   {
    "id": "maasai_seasonal_grazing",
@@ -9453,7 +9530,7 @@
     "cattle",
     "milk"
    ],
-   "culture": "maasai",
+   "culture": "swahili",
    "region": "africa",
    "note": "Maasai age-sets of young men (ilmurran) took herds to distant wet-season grasslands and back to permanent water in the dry season; distances and group sizes here are rough orders of magnitude.",
    "sources": [
@@ -9465,7 +9542,8 @@
      "url": "https://en.wikipedia.org/wiki/Maasai_people"
     }
    ],
-   "conf": "approximate"
+   "conf": "approximate",
+   "culture_group": "maasai"
   },
   {
    "id": "sami_reindeer_migration",
@@ -9522,7 +9600,7 @@
    "goods_back": [
     "reindeer herds"
    ],
-   "culture": "sami",
+   "culture": "baltic_finnic",
    "region": "europe",
    "note": "Reindeer-herding siida families move herds from inland winter pastures to coastal islands for calving and summer, swimming them across sounds, and back in autumn. Group counts are estimates.",
    "sources": [
@@ -9534,7 +9612,8 @@
      "url": "https://en.wikipedia.org/wiki/Reindeer_herding"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "sami"
   },
   {
    "id": "fulani_transhumance",
@@ -9596,7 +9675,7 @@
    "goods_back": [
     "cattle"
    ],
-   "culture": "fulani",
+   "culture": "mande",
    "region": "africa",
    "note": "Seku Amadu's Masina state (1818) fixed the dates and routes by which herds re-entered the flooded delta pastures (the bourgou) as the water fell, crossing the river at set points; group counts are estimates.",
    "sources": [
@@ -9608,7 +9687,8 @@
      "url": "https://en.wikipedia.org/wiki/Massina_Empire"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "fulani"
   },
   {
    "id": "edo_sankin_kotai_tokaido",
@@ -9708,7 +9788,7 @@
    "goods_back": [
     "retainers returning"
    ],
-   "culture": "japanese_edo",
+   "culture": "japanese_medieval_edo",
    "region": "east_asia",
    "note": "From 1635 daimyo spent alternate years in Edo, travelling in processions of a few hundred to several thousand retainers, mostly in the fourth month; the Tokaido's 53 stations took about two weeks from Kyoto. Per-year counts on this road are estimates.",
    "sources": [
@@ -9720,7 +9800,8 @@
      "url": "https://en.wikipedia.org/wiki/Sankin-k%C5%8Dtai"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "japanese_edo"
   },
   {
    "id": "ise_pilgrimage",
@@ -9796,7 +9877,7 @@
     "amulets (ofuda)",
     "souvenirs"
    ],
-   "culture": "japanese_edo",
+   "culture": "japanese_medieval_edo",
    "region": "east_asia",
    "note": "Villages pooled money in Ise-ko confraternities and sent members in turn; perhaps 400,000 pilgrims came in an ordinary year, and in the okage mairi surges of 1705, 1771 and 1830 several million went in a few months. Groups and size are estimates.",
    "sources": [
@@ -9808,7 +9889,8 @@
      "url": "https://en.wikipedia.org/wiki/Ise_Grand_Shrine"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "japanese_edo"
   },
   {
    "id": "dejima_dutch_ships",
@@ -9978,7 +10060,7 @@
     "paintings and antiquities",
     "books"
    ],
-   "culture": "english",
+   "culture": "english_early_modern",
    "region": "europe",
    "note": "Young gentlemen spent one to three years abroad with a tutor; they typically crossed the Alps in autumn to winter in Rome, spent Holy Week there and went south to Naples. Counts are estimates (Ingamells' dictionary lists about 6,000 British travellers to Italy, 1701-1800).",
    "sources": [
@@ -9993,7 +10075,8 @@
      "url": "https://en.wikipedia.org/wiki/Grand_Tour"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "english"
   },
   {
    "id": "black_ball_packets",
@@ -10078,7 +10161,7 @@
     "mail",
     "emigrants (steerage)"
    ],
-   "culture": "american",
+   "culture": "english_modern",
    "region": "atlantic",
    "note": "The Black Ball Line began the first fixed-date sailings in January 1818, at first monthly, then twice a month; its packets averaged 23 days eastward and 40 days westward against the wind.",
    "sources": [
@@ -10091,7 +10174,8 @@
     }
    ],
    "conf": "attested",
-   "return_days": 40
+   "return_days": 40,
+   "culture_group": "american"
   },
   {
    "id": "clipper_cape_horn",
@@ -10167,7 +10251,7 @@
     "gold",
     "passengers"
    ],
-   "culture": "american",
+   "culture": "english_modern",
    "region": "atlantic",
    "note": "The gold rush filled the clippers; average passages were about 120 days and Flying Cloud made it in 89 days in 1851 and 1854. Counts are estimates from San Francisco arrivals.",
    "sources": [
@@ -10179,7 +10263,8 @@
      "url": "https://en.wikipedia.org/wiki/Flying_Cloud_(clipper)"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "american"
   },
   {
    "id": "tea_clippers",
@@ -10249,7 +10334,7 @@
     "first-season tea"
    ],
    "goods_back": [],
-   "culture": "british_victorian",
+   "culture": "english_modern",
    "region": "indian_ocean",
    "note": "Clippers raced to bring the new season's tea from Fuzhou; in the Great Tea Race of 1866 Ariel, Taeping and Serica left the Min River together on 30 May and docked in London 99 days later. The Suez Canal and steam ended the trade.",
    "sources": [
@@ -10261,7 +10346,8 @@
      "url": "https://en.wikipedia.org/wiki/Great_Tea_Race_of_1866"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "british_victorian"
   },
   {
    "id": "pony_express",
@@ -10338,7 +10424,7 @@
    "goods_back": [
     "mail"
    ],
-   "culture": "american",
+   "culture": "english_modern",
    "region": "americas",
    "note": "From April 1860 to October 1861 riders changing horses at about 190 stations carried mail the 1,900 miles in about ten days, weekly then twice weekly, until the transcontinental telegraph made it obsolete.",
    "sources": [
@@ -10351,7 +10437,8 @@
     }
    ],
    "conf": "attested",
-   "sprite_want": "rider"
+   "sprite_want": "rider",
+   "culture_group": "american"
   },
   {
    "id": "p_and_o_overland_route",
@@ -10456,7 +10543,7 @@
     "opium and indigo (as freight)",
     "returning officers"
    ],
-   "culture": "british_victorian",
+   "culture": "english_modern",
    "region": "mena",
    "note": "P&O steamers carried the India mail to Alexandria, passengers crossed Egypt by canal boat, Nile steamer and desert van to Suez, and another steamer ran on to Bombay; the journey shrank from about four months round the Cape to about a month.",
    "sources": [
@@ -10468,7 +10555,8 @@
      "url": "https://en.wikipedia.org/wiki/Overland_route"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "british_victorian"
   },
   {
    "id": "emigrant_steamers_liverpool_ny",
@@ -10547,7 +10635,7 @@
     "returning migrants",
     "cotton and grain"
    ],
-   "culture": "irish",
+   "culture": "gaelic",
    "region": "atlantic",
    "note": "Cunard, Inman and White Star liners called at Queenstown for Irish emigrants; crossings fell from about two weeks in the 1850s to about a week by 1900, and steerage carried most of the more than 4 million who sailed from Liverpool. Ship counts are estimates.",
    "sources": [
@@ -10559,7 +10647,8 @@
      "url": "https://en.wikipedia.org/wiki/Ellis_Island"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "irish"
   },
   {
    "id": "emigrant_steamers_hamburg_ny",
@@ -10641,7 +10730,7 @@
    "goods_back": [
     "returning migrants"
    ],
-   "culture": "german",
+   "culture": "german_modern",
    "region": "atlantic",
    "note": "HAPAG and Norddeutscher Lloyd carried most Central and Eastern European emigrants, whom Hamburg housed in its Ballinstadt halls before sailing; about a third of all migrants to the US in 1900-14 left from these two ports. Ship counts are estimates.",
    "sources": [
@@ -10653,7 +10742,8 @@
      "url": "https://en.wikipedia.org/wiki/BallinStadt"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "german"
   },
   {
    "id": "emigrant_steamers_naples_ny",
@@ -10735,7 +10825,7 @@
    "goods_back": [
     "returning migrants (ritornati)"
    ],
-   "culture": "italian",
+   "culture": "italian_modern",
    "region": "atlantic",
    "note": "About 4 million Italians went to the US and 2 million to Argentina in 1880-1914, many as seasonal 'golondrinas'; Naples-New York took about two weeks. An alternate destination for each ship is Buenos Aires (about three weeks). Ship counts are estimates.",
    "sources": [
@@ -10752,7 +10842,8 @@
     "name": "Buenos Aires",
     "lon": -58.37,
     "lat": -34.61
-   }
+   },
+   "culture_group": "italian"
   },
   {
    "id": "chinese_pacific_steamers",
@@ -10838,7 +10929,7 @@
     "returning migrants",
     "remains of the dead for burial at home"
    ],
-   "culture": "cantonese",
+   "culture": "chinese_modern",
    "region": "pacific",
    "note": "Pacific Mail's monthly, later twice-monthly, steamers took Taishanese and other Cantonese men to the gold fields and railroads; about 100,000 came before the Exclusion Act of 1882 stopped most immigration.",
    "sources": [
@@ -10850,7 +10941,8 @@
      "url": "https://en.wikipedia.org/wiki/Chinese_Exclusion_Act"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "cantonese"
   },
   {
    "id": "zanzibar_ujiji_caravans",
@@ -10918,7 +11010,7 @@
     "copper",
     "enslaved captives"
    ],
-   "culture": "nyamwezi",
+   "culture": "swahili",
    "region": "africa",
    "note": "Caravans of hundreds of porters, many Nyamwezi professionals carrying 30-35 kg tusks, walked the central route in the dry season; Burton and Speke went with one in 1857 and took about four and a half months to Ujiji. Counts are estimates.",
    "sources": [
@@ -10935,7 +11027,8 @@
     "crew",
     "merchant",
     "enslaved"
-   ]
+   ],
+   "culture_group": "nyamwezi"
   },
   {
    "id": "cape_mail_steamers",
@@ -11021,7 +11114,7 @@
     "wool",
     "returning colonists"
    ],
-   "culture": "british_victorian",
+   "culture": "english_modern",
    "region": "africa",
    "note": "The Union Line's mail contract of 1857 began monthly sailings of about 42 days; by 1900 the weekly mail ships ran Southampton-Madeira-Cape Town in about 17 days, leaving every Thursday afternoon at 4.",
    "sources": [
@@ -11033,7 +11126,8 @@
      "url": "https://en.wikipedia.org/wiki/Union-Castle_Line"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "british_victorian"
   },
   {
    "id": "suez_canal_steamers",
@@ -11134,7 +11228,7 @@
     "tea",
     "returning officials"
    ],
-   "culture": "british_victorian",
+   "culture": "english_modern",
    "region": "mena",
    "note": "After 1869 London-Bombay by P&O and its rivals fell to about three weeks; the canal handled 486 ships in 1870 and over 3,000 a year by 1885. per_year here counts passenger liners on the India run (estimated).",
    "sources": [
@@ -11146,7 +11240,8 @@
      "cite": "Freda Harcourt, Flagships of Imperialism (2006)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "british_victorian"
   },
   {
    "id": "hejaz_railway_pilgrims",
@@ -11217,7 +11312,7 @@
    "goods_back": [
     "returning pilgrims"
    ],
-   "culture": "ottoman",
+   "culture": "ottoman_turkish",
    "region": "mena",
    "note": "The railway reached Medina in 1908 and cut the 40-day caravan trip to about five days; it carried tens of thousands of pilgrims a year until T. E. Lawrence and the Arab Revolt wrecked the line in 1916-18. Train counts are estimates.",
    "sources": [
@@ -11231,7 +11326,8 @@
    ],
    "conf": "attested",
    "return_islamic": "muharram",
-   "sprite_want": "train"
+   "sprite_want": "train",
+   "culture_group": "ottoman"
   },
   {
    "id": "trans_siberian_settlers",
@@ -11307,7 +11403,7 @@
    "goods_back": [
     "returning settlers (khodoki and failures)"
    ],
-   "culture": "russian",
+   "culture": "russian_modern",
    "region": "central_asia",
    "note": "About 4 million peasants moved east to Siberia in 1896-1914, peaking with the Stolypin reforms in 1907-09; they rode slow 'teplushka' freight cars and were registered at the Chelyabinsk resettlement point. Train counts are estimates.",
    "sources": [
@@ -11320,7 +11416,8 @@
     }
    ],
    "conf": "attested",
-   "sprite_want": "train"
+   "sprite_want": "train",
+   "culture_group": "russian"
   },
   {
    "id": "trans_siberian_express",
@@ -11419,7 +11516,7 @@
     "passengers",
     "mail"
    ],
-   "culture": "russian",
+   "culture": "russian_modern",
    "region": "east_asia",
    "note": "With the Chinese Eastern Railway open across Manchuria, the weekly, later twice-weekly, international express took about ten days from Moscow, making London to Tokyo two weeks faster than by sea.",
    "sources": [
@@ -11432,7 +11529,8 @@
     }
    ],
    "conf": "attested",
-   "sprite_want": "train"
+   "sprite_want": "train",
+   "culture_group": "russian"
   },
   {
    "id": "imperial_airways_india",
@@ -11540,7 +11638,7 @@
     "airmail",
     "passengers"
    ],
-   "culture": "british_interwar",
+   "culture": "english_modern",
    "region": "mena",
    "note": "The weekly service opened on 30 March 1929 and took seven days, with the Paris-Basle leg by rail at first; it was later extended to Calcutta, Singapore and, with Qantas, Brisbane (1935).",
    "sources": [
@@ -11553,7 +11651,8 @@
     }
    ],
    "conf": "attested",
-   "sprite_want": "aircraft"
+   "sprite_want": "aircraft",
+   "culture_group": "british_interwar"
   },
   {
    "id": "pan_am_clipper_pacific",
@@ -11651,7 +11750,7 @@
     "airmail",
     "passengers"
    ],
-   "culture": "american",
+   "culture": "english_modern",
    "region": "pacific",
    "note": "The China Clipper opened the San Francisco-Manila airmail in November 1935, flying by day and staying overnight on the islands; the trip took about six days. Weekly service is the documented rate.",
    "sources": [
@@ -11664,7 +11763,8 @@
     }
    ],
    "conf": "attested",
-   "sprite_want": "aircraft"
+   "sprite_want": "aircraft",
+   "culture_group": "american"
   },
   {
    "id": "kilwa_sofala_gold_ships",
@@ -11813,7 +11913,7 @@
     "European cloth",
     "coral"
    ],
-   "culture": "arabic_mamluk",
+   "culture": "arabic_medieval",
    "region": "mena",
    "note": "Karimi merchant houses sailed spices up the Red Sea to Aydhab, carried them by camel 12-15 days to Qus on the Nile and floated them down to Fustat; Ibn Battuta and the Geniza letters describe the route. Counts are estimates.",
    "sources": [
@@ -11828,7 +11928,8 @@
      "url": "https://en.wikipedia.org/wiki/Aidhab"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "arabic_mamluk"
   },
   {
    "id": "gujarat_malacca_ships",
@@ -11896,7 +11997,7 @@
     "Chinese porcelain and silk",
     "sandalwood"
    ],
-   "culture": "gujarati",
+   "culture": "north_india_medieval",
    "region": "southeast_asia",
    "note": "Tomé Pires (1512-15) says four big Gujarati ships came to Malacca each year, a thousand Gujarati merchants lived there and four or five thousand Gujarati sailors came and went; cloth from Cambay was the main import.",
    "sources": [
@@ -11908,7 +12009,8 @@
      "url": "https://en.wikipedia.org/wiki/Malacca_Sultanate"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "gujarati"
   },
   {
    "id": "srivijaya_china_tribute",
@@ -11975,7 +12077,7 @@
     "porcelain",
     "imperial gifts"
    ],
-   "culture": "malay_srivijaya",
+   "culture": "javanese_malay",
    "region": "southeast_asia",
    "note": "Chinese annals record dozens of Srivijayan missions (about 20 to the Song alone); envoys sailed with the southwest monsoon to Guangzhou and went overland to the capital. Group counts are approximate averages.",
    "sources": [
@@ -11987,7 +12089,8 @@
      "url": "https://en.wikipedia.org/wiki/Srivijaya"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "malay_srivijaya"
   },
   {
    "id": "angkor_pilgrims_traders",
@@ -12063,7 +12166,7 @@
     "beeswax",
     "cardamom"
    ],
-   "culture": "song",
+   "culture": "chinese_song_yuan",
    "region": "southeast_asia",
    "note": "Zhou Daguan left Wenzhou in February 1296 and reached Angkor via Champa, the Mekong and the Tonle Sap by about August; he lists what Chinese traders sold and bought there. Counts are estimates.",
    "sources": [
@@ -12071,7 +12174,8 @@
      "cite": "Zhou Daguan, A Record of Cambodia: The Land and Its People (Peter Harris, trans., 2007)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "song"
   },
   {
    "id": "tibetan_ladakh_wool",
@@ -12139,7 +12243,7 @@
     "charas",
     "silver"
    ],
-   "culture": "ladakhi",
+   "culture": "tibetan",
    "region": "central_asia",
    "note": "The 1684 Treaty of Tingmosgang tied Ladakh's wool trade to Kashmir, and summer caravans crossed the Karakoram, the highest trade route in the world, to Yarkand; British trade reports of the 1870s count hundreds of animals a year. Counts are estimates.",
    "sources": [
@@ -12147,7 +12251,8 @@
      "cite": "Janet Rizvi, Trans-Himalayan Caravans: Merchant Princes and Peasant Traders in Ladakh (1999)"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "ladakhi"
   },
   {
    "id": "ming_qing_junk_manila",
@@ -12213,7 +12318,7 @@
    "goods_back": [
     "Mexican silver pesos"
    ],
-   "culture": "hokkien",
+   "culture": "chinese_ming_qing",
    "region": "southeast_asia",
    "note": "When the Ming lifted the sea ban in 1567, junks from Yuegang carried the silk the Manila galleons took to Acapulco; arrivals of 30-50 a year are recorded in Manila's customs (almojarifazgo) in the decades around 1600.",
    "sources": [
@@ -12225,7 +12330,8 @@
      "url": "https://en.wikipedia.org/wiki/Sangley"
     }
    ],
-   "conf": "attested"
+   "conf": "attested",
+   "culture_group": "hokkien"
   },
   {
    "id": "indian_hajj_steamers",
@@ -12279,7 +12385,7 @@
    "goods_back": [
     "returning pilgrims"
    ],
-   "culture": "indian_muslim",
+   "culture": "indian_modern",
    "region": "indian_ocean",
    "note": "Steamers made the sea Hajj quick and crowded; British India regulated pilgrim ships after cholera outbreaks and the Kamaran quarantine station opened in 1882. Tens of thousands sailed from Bombay in a typical year. Ship counts are estimates.",
    "sources": [
@@ -12292,7 +12398,8 @@
     }
    ],
    "conf": "estimated",
-   "return_islamic": "muharram"
+   "return_islamic": "muharram",
+   "culture_group": "indian_muslim"
   },
   {
    "id": "abbasid_basra_china_dhows",
@@ -12375,7 +12482,7 @@
     "camphor",
     "musk"
    ],
-   "culture": "persian_abbasid",
+   "culture": "new_persian",
    "region": "indian_ocean",
    "note": "The Akhbar al-Sin wa'l-Hind (851) describes the run from Siraf to Guangzhou in about five legs over some months, timed to the monsoons; the Belitung wreck (c. 830) carried 60,000 Changsha bowls. Counts are estimates.",
    "sources": [
@@ -12387,7 +12494,8 @@
      "url": "https://en.wikipedia.org/wiki/Belitung_shipwreck"
     }
    ],
-   "conf": "estimated"
+   "conf": "estimated",
+   "culture_group": "persian_abbasid"
   }
  ]
 }
