@@ -1,0 +1,78 @@
+# Adding a lens to the one-page Atlas
+
+Every new lens plugs into `views/atlas/` as two files. Do not edit `atlas.src.html` or `build.py`;
+the page loads every lens in `views/atlas/lenses/` on its own.
+
+```
+data/<workstream>/*.jsonl          kernel records, checked by tools/build.py as usual
+views/atlas/lenses/<id>.py         def build(repo) -> dict   (JSON-able, small: compact rows, rounded coords)
+views/atlas/lenses/<id>.js         ATLAS.lens({...})          (draws the layer and answers Here / This year)
+```
+
+`build(repo)` gets the repo root path and returns the data the page needs; it lands in the page as
+`ctx.data`. Keep it under about 1 MB; drop fields the map never shows.
+
+## Families
+
+The chip bar shows six families. Each family has its lenses inside it, so the bar never grows past six.
+Pick the one your lens belongs to:
+
+| family    | lenses                                                       |
+|-----------|--------------------------------------------------------------|
+| `land`    | Terrain, Cities, Borders                                     |
+| `power`   | Rule & law, War & chokepoints, Order & chaos                 |
+| `wealth`  | Trade & migration, Technology, food & energy                 |
+| `peoples` | People, Peoples & languages                                  |
+| `mind`    | Ideas & faith, Art & architecture                            |
+| `shocks`  | Plague & climate                                             |
+
+A lens is precise (one question, one kind of record); a family is a group you switch on together.
+
+## The lens object
+
+```js
+ATLAS.lens({
+  id: "law",                       // same as the file name
+  name: "Rule & law",              // chip label
+  family: "power",
+  color: "#b0744f",                // one hue; the page derives light/dark variants
+  on: false,                       // on by default?
+  guide: ["law", "government"],    // kernel lens names the AI guide may use to switch this lens on
+  index: d => "...",               // optional: a few-KB text index of your records for the guide prompt
+
+  // Draw what is true in ctx.year. Called on year change and when a zoom settles.
+  draw(ctx) {
+    ctx.pins(ctx.data.events.filter(e => Math.abs(e.y - ctx.year) <= 10), {
+      key: e => e.id, shape: "square", label: e => e.name, title: e => e.name,
+      card: e => ({ kick: "Law", title: e.name, year: e.y, meta: e.by, body: e.what, why: e.why, sources: e.sources }),
+    });
+    // ctx.paths(list, {key, coords, card, cls}) for lines; ctx.g, ctx.d3, ctx.projection, ctx.path for anything custom.
+  },
+
+  // Items for the Here tab: what this lens knows within r km of the clicked point in ctx.year.
+  here(ctx, at) {   // at = {lon, lat, r, polity}   polity = name of the state drawn under the click
+    return ctx.near(ctx.data.events, at).map(e => ({ title: e.name, year: e.y, why: e.effect, card: { /* as above */ } }));
+  },
+
+  // Lines for the This year tab (a world digest). Return the few that matter most.
+  now(ctx) { return []; },
+
+  // Optional: years worth a tick on the time strip.
+  strip: d => d.events.map(e => e.y),
+});
+```
+
+A **card** is `{kick, title, meta, body, why, year, lon, lat, sources: [{cite, url}], line?: [[lon,lat],...]}`.
+Records without coordinates can still appear in Here and This year; give the card the polity's
+capital or leave lon/lat out.
+
+`ctx` gives: `data, year, k (zoom), g, d3, projection, path, pins, paths, near(list, at), km(a,b), fmtYear,
+fmtSpan, select(card), ruledBy(lon, lat, year)`. Records passed to `ctx.pins` need `lon` and `lat`.
+
+`shape` is one of `circle | square | diamond | cross | triangle`, or a sprite name once the art-style
+work adds them (`army`, `temple`, `ship`, ...); unknown sprite names fall back to a circle.
+
+## Precision
+
+The guide and the Here tab quote your cards, so make each card say exactly what the record says, with
+its year and source. Prefer one record per real event or span over a summary record.
