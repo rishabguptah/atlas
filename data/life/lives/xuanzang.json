@@ -1,0 +1,70 @@
+{
+  "id": "xuanzang", "name": "Xuanzang", "pid": "Xuanzang", "born": 602, "died": 664, "role": "Buddhist monk and translator", "sprite": "person_monk", "team": "#b8742a",
+  "intro": "You are Xuanzang, 27, a Buddhist monk in Chang'an, the Tang capital. The Chinese translations of the scriptures contradict each other and you want the originals, from India. The emperor Taizong has forbidden anyone to leave the empire westward.",
+  "sources": [
+    {"cite": "Huili and Yancong, A Biography of the Tripitaka Master of the Great Ci'en Monastery of the Great Tang Dynasty, tr. Li Rongxi (1995)"},
+    {"cite": "Xuanzang, The Great Tang Dynasty Record of the Western Regions, tr. Li Rongxi (1996)"},
+    {"cite": "Sally Hovey Wriggins, The Silk Road Journey with Xuanzang (2004)"},
+    {"cite": "Wikipedia: Xuanzang", "url": "https://en.wikipedia.org/wiki/Xuanzang"}
+  ],
+  "chapters": [
+    {"y": 629, "m": 8, "at": {"n": "Chang'an", "lon": 108.94, "lat": 34.27}, "title": "The forbidden road",
+     "text": "Your petition to travel was refused. The frontier has just been at war with the Eastern Turks and the passes are watched.",
+     "choices": [
+       {"t": "Slip out of the capital without permission", "real": true, "out": "You go west with a few companions, then alone. At Guazhou an official reads the warrant for your arrest, and tears it up in front of you.", "fx": {"renown": 1}},
+       {"t": "Wait for the emperor's permission", "out": "Permission never comes. You become a learned teacher in Chang'an, and Chinese Buddhism waits another generation for its texts.", "end": "A respected monk in Chang'an who never saw India.", "p": 0.6}
+     ]},
+    {"y": 630, "m": 1, "at": {"n": "Mokhayen desert, beyond Yumen", "lon": 93.5, "lat": 41.5},
+     "via": [[108.94, 34.27], [103.83, 36.06], [102.64, 37.93], [98.5, 39.73], [95.78, 40.52], [93.5, 41.5]],
+     "title": "The spilled water",
+     "text": "Past the last watchtower, your guide has deserted you. In the gravel desert you drop your waterskin and lose it all. Four nights and five days without water lie ahead.",
+     "choices": [
+       {"t": "Turn back east for water", "out": "You did turn back, for about ten li. Then you remembered your vow never to take a step east until you reached India, and turned your horse west again.", "fx": {"health": -1}},
+       {"t": "Keep going west, as you vowed", "real": true, "out": "On the fifth night, half-dead, your old horse smells grass and pulls you to a spring. You reach the oasis of Hami.", "fx": {"health": -2, "renown": 1}}
+     ]},
+    {"y": 630, "m": 3, "at": {"n": "Gaochang (Turfan)", "lon": 89.53, "lat": 42.85},
+     "via": [[93.5, 41.5], [93.51, 42.83], [89.53, 42.85]],
+     "title": "A king who will not let you go",
+     "text": "King Qu Wentai of Gaochang is a devout Buddhist. He wants you as the master of his kingdom's monks and says he will send you back to China under guard rather than let you leave.",
+     "choices": [
+       {"t": "Refuse food until he relents", "real": true, "out": "After three days of your fast he gives in. You become sworn brothers. He gives you four novices, thirty horses, two dozen servants, gold, silk, and letters to twenty-four kings along the road.", "fx": {"wealth": 3, "health": -1}},
+       {"t": "Stay and serve as his master", "out": "Gaochang is rich, but in 640 a Tang army arrives to punish Qu Wentai; he dies of fear as it nears and his kingdom is annexed.", "end": "Master of Gaochang's monks, swept up in the Tang conquest of 640.", "p": 0.3}
+     ]},
+    {"y": 630, "m": 6, "at": {"n": "Suyab, camp of the Western Turks", "lon": 75.2, "lat": 42.8},
+     "via": [[89.53, 42.85], [86.15, 41.76], [82.97, 41.17], [80.2, 41.3], [78.3, 42.0], [75.2, 42.8]],
+     "title": "The khagan's camp",
+     "text": "Crossing the Tian Shan by the Bedel pass, a third or more of your party freezes to death. At Suyab the Western Turkic khagan, Tong Yabghu, receives you in a great tent. He warns you that India is too hot and its people are naked.",
+     "choices": [
+       {"t": "Ask the khagan for safe-conduct south", "real": true, "out": "He gives you an interpreter and letters. You go on to Tashkent, Samarkand, the Iron Gate, Balkh and the great Buddhas at Bamiyan.", "fx": {"renown": 1}},
+       {"t": "Stay and preach at his court", "out": "Tong Yabghu was killed soon after by a rival in his own family, and his khaganate broke apart.", "end": "A monk in the camp of a falling khaganate.", "p": 0.2}
+     ]},
+    {"y": 633, "m": 1, "at": {"n": "Nalanda", "lon": 85.44, "lat": 25.14},
+     "via": [[75.2, 42.8], [69.24, 41.31], [66.97, 39.65], [66.9, 36.76], [67.82, 34.82], [69.2, 34.95], [71.57, 34.0], [74.8, 34.08], [77.6, 27.5], [80.0, 27.0], [82.97, 25.32], [85.44, 25.14]],
+     "took": "From the Tian Shan through Central Asia and Kashmir to Nalanda: he arrived around 631-633 after long stays in Kashmir and elsewhere.",
+     "title": "The great monastery",
+     "text": "Nalanda has thousands of monks and the abbot Silabhadra, over a hundred years old by legend, who says he had dreamed of your coming.",
+     "choices": [
+       {"t": "Stay years and master Yogacara with Silabhadra", "real": true, "out": "You study about five years at Nalanda, then travel around India, debating and collecting texts.", "fx": {"learning": 3}},
+       {"t": "Copy what you can and hurry home", "out": "You save years, but you go home a collector rather than a master, and Chinese Yogacara is thinner for it.", "fx": {"learning": 1}}
+     ]},
+    {"y": 643, "m": 2, "at": {"n": "Kannauj", "lon": 79.92, "lat": 27.05},
+     "via": [[85.44, 25.14], [88.0, 22.6], [80.0, 16.0], [77.6, 13.0], [73.0, 21.0], [85.44, 25.14], [79.92, 27.05]],
+     "title": "Harsha's assembly",
+     "text": "King Harsha holds a great assembly at Kannauj where you defend your teaching for eighteen days and nobody refutes you. Harsha and King Bhaskaravarman of Kamarupa both press you to stay in India.",
+     "choices": [
+       {"t": "Go home by land with your texts", "real": true, "out": "You go back the way of the Pamirs, Kashgar and Khotan, with 657 texts and images. Crossing the Indus, a boat overturns and some fifty manuscripts are lost.", "fx": {"renown": 1}},
+       {"t": "Stay in India under Harsha's protection", "out": "Harsha died in 647 without an heir and his realm broke up. Your Chinese students would never get your translations.", "end": "An honoured foreign master in India, whose books never reached China.", "p": 0.3},
+       {"t": "Go home by sea, from Bengal", "out": "The sea route through Southeast Asia was used by later pilgrims like Yijing. It was faster but you would have missed Khotan and its texts.", "fx": {"health": 1}}
+     ]},
+    {"y": 645, "m": 2, "at": {"n": "Chang'an", "lon": 108.94, "lat": 34.27},
+     "via": [[79.92, 27.05], [74.8, 34.08], [72.3, 34.8], [75.0, 37.7], [75.99, 39.47], [79.92, 37.11], [93.0, 40.0], [98.5, 39.73], [108.94, 34.27]],
+     "took": "Kannauj to Chang'an overland, about two years (643 to early 645), including months in Khotan waiting for the emperor's answer to his letter.",
+     "title": "The emperor's offer",
+     "text": "You wrote ahead asking pardon for leaving. Crowds line the road into Chang'an. Taizong forgives you and asks you to give up the robe and become one of his ministers.",
+     "choices": [
+       {"t": "Decline, and spend your life translating", "real": true, "out": "You translate 75 works in 1,335 scrolls and dictate the Great Tang Records on the Western Regions in 646, which archaeologists still use to find sites in India and Central Asia.", "fx": {"learning": 2, "renown": 2}},
+       {"t": "Accept: become the emperor's adviser on the West", "out": "Taizong wanted intelligence on the lands he meant to rule. You would have mapped them for his armies instead of translating the sutras.", "end": "A minister at the Tang court, his texts untranslated in their boxes.", "p": 0.2}
+     ]}
+  ],
+  "epilogue": "Xuanzang died in 664 and was buried with honours outside Chang'an. His journey became the 16th-century novel Journey to the West, in which a monkey king guards him."
+}

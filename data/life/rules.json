@@ -1,0 +1,1118 @@
+{
+ "about": "Rules for the Live a life tab (views/atlas/lenses/life.js): life tables, plague and famine risk, who you were likely to be, names. Travel rules live in data/motion/rules.json. Money is counted in day-wages.",
+ "life_table": {
+  "about": "Gompertz-Makeham hazard h(age) = A + B*exp(G*age) for adults, calibrated to remaining life expectancy at 15 (e15). Before 1800 e15 is set near 31 to 33 years, as in model life tables for populations with life expectancy at birth of 25 to 35; after 1800 it follows the global rise.",
+  "rows": [
+   [
+    -3000,
+    0.012,
+    0.000515,
+    0.085,
+    31
+   ],
+   [
+    1700,
+    0.011,
+    0.000488,
+    0.085,
+    32
+   ],
+   [
+    1800,
+    0.01,
+    0.000465,
+    0.085,
+    33
+   ],
+   [
+    1850,
+    0.008,
+    0.00038,
+    0.085,
+    36
+   ],
+   [
+    1900,
+    0.006,
+    0.000287,
+    0.085,
+    40
+   ],
+   [
+    1950,
+    0.0025,
+    0.00015,
+    0.085,
+    50
+   ],
+   [
+    2000,
+    0.001,
+    8.78e-05,
+    0.085,
+    58
+   ],
+   [
+    2025,
+    0.0008,
+    6.91e-05,
+    0.085,
+    61
+   ]
+  ],
+  "child_survival": [
+   [
+    -3000,
+    0.5
+   ],
+   [
+    1800,
+    0.55
+   ],
+   [
+    1900,
+    0.65
+   ],
+   [
+    1950,
+    0.8
+   ],
+   [
+    2000,
+    0.93
+   ],
+   [
+    2025,
+    0.96
+   ]
+  ],
+  "maternal": [
+   [
+    -3000,
+    0.012
+   ],
+   [
+    1800,
+    0.01
+   ],
+   [
+    1900,
+    0.006
+   ],
+   [
+    1950,
+    0.003
+   ],
+   [
+    2000,
+    0.0004
+   ]
+  ],
+  "src": [
+   {
+    "cite": "Coale and Demeny, Regional Model Life Tables and Stable Populations (2nd ed., 1983)"
+   },
+   {
+    "cite": "Volk and Atkinson, 'Infant and child death in the human environment of evolutionary adaptation', Evolution and Human Behavior 34 (2013): about half of children died before 15"
+   },
+   {
+    "cite": "Riley, 'Estimates of regional and global life expectancy, 1800-2001', Population and Development Review 31 (2005)"
+   },
+   {
+    "cite": "Loudon, Death in Childbirth (1992): roughly 1 maternal death per 100 births before modern obstetrics"
+   }
+  ]
+ },
+ "plague": {
+  "km": 60,
+  "black_death": [
+   1346,
+   1353,
+   0.35
+  ],
+  "later": 0.12,
+  "flee": 0.4,
+  "rich": 0.7,
+  "why": "In a town struck by plague a person had roughly a one in three chance of dying in the Black Death and about one in eight in later outbreaks. Those who could fled ('quickly, far, and come back late') and the rich died less.",
+  "src": [
+   {
+    "cite": "Biraben, Les hommes et la peste en France et dans les pays europeens et mediterraneens (1975-76): the dated outbreak list behind the map"
+   },
+   {
+    "cite": "Benedictow, The Black Death 1346-1353: The Complete History (2004)"
+   },
+   {
+    "cite": "Alfani, 'Plague in seventeenth-century Europe and the decline of Italy', European Review of Economic History 17 (2013)"
+   }
+  ]
+ },
+ "famine": {
+  "km": 700,
+  "risk": 0.05,
+  "why": "A famine year raised deaths several times over, mostly through hunger-driven disease.",
+  "src": [
+   {
+    "cite": "Ó Gráda, Famine: A Short History (2009)"
+   }
+  ]
+ },
+ "battle": {
+  "km": 120,
+  "risk": 0.02,
+  "soldier": 0.12,
+  "sack": 0.2
+ },
+ "agri_share": {
+  "rows": [
+   [
+    -3000,
+    0.8
+   ],
+   [
+    1750,
+    0.75
+   ],
+   [
+    1850,
+    0.68
+   ],
+   [
+    1950,
+    0.64
+   ],
+   [
+    1991,
+    0.44
+   ],
+   [
+    2019,
+    0.27
+   ]
+  ],
+  "src": [
+   {
+    "cite": "Allen, 'Economic structure and agricultural productivity in Europe, 1300-1800', European Review of Economic History 4 (2000)"
+   },
+   {
+    "cite": "ILO modelled estimates via Our World in Data: share of employment in agriculture (1991 44 percent, 2019 27 percent)",
+    "url": "https://ourworldindata.org/employment-in-agriculture"
+   }
+  ]
+ },
+ "roles": [
+  {
+   "id": "farmer",
+   "n": "Farmer",
+   "w": "agri",
+   "pay": 8,
+   "risk": 0,
+   "sprite": "person_farmer",
+   "what": "You work the land, owe rent, tax or labour to someone above you, and live by the harvest."
+  },
+  {
+   "id": "herder",
+   "n": "Herder",
+   "w": "agri",
+   "terrain": [
+    4,
+    9,
+    10,
+    11,
+    13
+   ],
+   "pay": 8,
+   "sprite": "person_farmer",
+   "what": "You follow your animals between pastures; your wealth walks on four legs."
+  },
+  {
+   "id": "artisan",
+   "n": "Artisan",
+   "w": 0.07,
+   "pay": 20,
+   "sprite": "person_merchant",
+   "what": "You are a smith, potter, weaver or builder in a town, with a trade you learned as an apprentice."
+  },
+  {
+   "id": "merchant",
+   "n": "Merchant",
+   "w": 0.03,
+   "pay": 40,
+   "risk": 0.4,
+   "sprite": "person_merchant",
+   "what": "You buy cheap in one place and sell dear in another; one good voyage can make you, one bad one break you."
+  },
+  {
+   "id": "sailor",
+   "n": "Sailor",
+   "w": 0.02,
+   "coast": true,
+   "pay": 14,
+   "risk": 0.02,
+   "sprite": "person_sailor",
+   "what": "You work ships out of your home port for wages and a share of the cargo."
+  },
+  {
+   "id": "soldier",
+   "n": "Soldier",
+   "w": 0.03,
+   "pay": 12,
+   "risk": 0.03,
+   "sprite": "army_levy",
+   "what": "You serve a lord or a state for pay, food and the hope of plunder."
+  },
+  {
+   "id": "scholar",
+   "n": "Scholar or cleric",
+   "w": 0.02,
+   "pay": 14,
+   "sprite": "person_scholar",
+   "what": "You can read, which few around you can; you serve a temple, church, mosque, court or school."
+  },
+  {
+   "id": "noble",
+   "n": "Noble",
+   "w": 0.01,
+   "pay": 150,
+   "sprite": "person_ruler",
+   "what": "You were born to land and rank; you live on rents, and politics can kill you."
+  },
+  {
+   "id": "worker",
+   "n": "Factory worker",
+   "w": "industry",
+   "from": 1780,
+   "pay": 14,
+   "sprite": "person_farmer",
+   "what": "You work long shifts in a mill, mine or workshop for a weekly wage."
+  },
+  {
+   "id": "clerk",
+   "n": "Clerk or professional",
+   "w": "office",
+   "from": 1850,
+   "pay": 30,
+   "sprite": "person_scholar",
+   "what": "You work with paper: an office, a shop, a school or a government desk."
+  }
+ ],
+ "start_wealth": {
+  "farmer": 20,
+  "herder": 25,
+  "artisan": 60,
+  "merchant": 300,
+  "sailor": 30,
+  "soldier": 20,
+  "scholar": 60,
+  "noble": 3000,
+  "worker": 15,
+  "clerk": 80
+ },
+ "names": [
+  {
+   "id": "roman",
+   "box": [
+    -10,
+    30,
+    40,
+    55
+   ],
+   "from": -500,
+   "to": 500,
+   "m": [
+    "Marcus",
+    "Gaius",
+    "Lucius",
+    "Publius",
+    "Quintus",
+    "Titus",
+    "Sextus",
+    "Decimus"
+   ],
+   "f": [
+    "Julia",
+    "Cornelia",
+    "Claudia",
+    "Valeria",
+    "Livia",
+    "Antonia",
+    "Flavia",
+    "Aemilia"
+   ]
+  },
+  {
+   "id": "greek",
+   "box": [
+    19,
+    34,
+    32,
+    42
+   ],
+   "from": -1200,
+   "to": -500,
+   "m": [
+    "Nikias",
+    "Kleon",
+    "Demetrios",
+    "Philippos",
+    "Lysandros",
+    "Theron",
+    "Alkibiades",
+    "Menon"
+   ],
+   "f": [
+    "Aspasia",
+    "Kallisto",
+    "Theano",
+    "Phaedra",
+    "Eirene",
+    "Lysistrata",
+    "Agathe",
+    "Melissa"
+   ]
+  },
+  {
+   "id": "byzantine",
+   "box": [
+    19,
+    30,
+    45,
+    45
+   ],
+   "from": 500,
+   "to": 1453,
+   "m": [
+    "Ioannes",
+    "Konstantinos",
+    "Michael",
+    "Basileios",
+    "Nikephoros",
+    "Theodoros",
+    "Leon",
+    "Alexios"
+   ],
+   "f": [
+    "Anna",
+    "Theodora",
+    "Eudokia",
+    "Zoe",
+    "Irene",
+    "Maria",
+    "Helena",
+    "Sophia"
+   ]
+  },
+  {
+   "id": "egyptian",
+   "box": [
+    24,
+    22,
+    36,
+    32
+   ],
+   "from": -3500,
+   "to": -30,
+   "m": [
+    "Ahmose",
+    "Djehuty",
+    "Amenemhat",
+    "Senenmut",
+    "Khaemwaset",
+    "Paneb",
+    "Nebamun",
+    "Ramose"
+   ],
+   "f": [
+    "Nefertari",
+    "Meritamun",
+    "Tiye",
+    "Henutsen",
+    "Iset",
+    "Hatnefer",
+    "Nebet",
+    "Tawosret"
+   ]
+  },
+  {
+   "id": "mesopotamian",
+   "box": [
+    38,
+    28,
+    50,
+    38
+   ],
+   "from": -3500,
+   "to": -500,
+   "m": [
+    "Enlil-bani",
+    "Shamash-nasir",
+    "Nabu-zuqup",
+    "Ur-Nanshe",
+    "Iddin-Sin",
+    "Ea-nasir",
+    "Ashur-iddin",
+    "Sin-leqi"
+   ],
+   "f": [
+    "Enheduanna",
+    "Ninshatapada",
+    "Shibtu",
+    "Iltani",
+    "Beltani",
+    "Amat-Shamash",
+    "Tabni-Ishtar",
+    "Kubaba"
+   ]
+  },
+  {
+   "id": "arabic",
+   "box": [
+    -17,
+    10,
+    60,
+    40
+   ],
+   "from": 630,
+   "to": 2100,
+   "m": [
+    "Ahmad",
+    "Ali",
+    "Hasan",
+    "Yusuf",
+    "Ibrahim",
+    "Umar",
+    "Khalid",
+    "Idris"
+   ],
+   "f": [
+    "Fatima",
+    "Aisha",
+    "Maryam",
+    "Khadija",
+    "Zaynab",
+    "Amina",
+    "Ruqayya",
+    "Safiyya"
+   ]
+  },
+  {
+   "id": "persian",
+   "box": [
+    44,
+    25,
+    70,
+    40
+   ],
+   "from": -550,
+   "to": 2100,
+   "m": [
+    "Dariush",
+    "Bahram",
+    "Rostam",
+    "Firuz",
+    "Hormoz",
+    "Kaveh",
+    "Shapur",
+    "Farhad"
+   ],
+   "f": [
+    "Shirin",
+    "Roxana",
+    "Parisa",
+    "Mahin",
+    "Azadeh",
+    "Golnar",
+    "Nasrin",
+    "Taraneh"
+   ]
+  },
+  {
+   "id": "turkic",
+   "box": [
+    45,
+    36,
+    120,
+    55
+   ],
+   "from": 550,
+   "to": 2100,
+   "m": [
+    "Timur",
+    "Arslan",
+    "Togrul",
+    "Bayezid",
+    "Kutlug",
+    "Orhan",
+    "Batu",
+    "Temur"
+   ],
+   "f": [
+    "Altun",
+    "Sevinch",
+    "Ay",
+    "Khatun",
+    "Tolun",
+    "Gulbahar",
+    "Aysel",
+    "Borte"
+   ]
+  },
+  {
+   "id": "indian",
+   "box": [
+    66,
+    6,
+    92,
+    35
+   ],
+   "from": -1500,
+   "to": 2100,
+   "m": [
+    "Arjun",
+    "Devadatta",
+    "Vikram",
+    "Govinda",
+    "Harsha",
+    "Mohan",
+    "Ravi",
+    "Kesava"
+   ],
+   "f": [
+    "Sita",
+    "Lakshmi",
+    "Padmini",
+    "Savitri",
+    "Gauri",
+    "Radha",
+    "Kamala",
+    "Meera"
+   ]
+  },
+  {
+   "id": "chinese",
+   "box": [
+    98,
+    18,
+    125,
+    45
+   ],
+   "from": -2000,
+   "to": 2100,
+   "m": [
+    "Li Wei",
+    "Zhang Bao",
+    "Wang Jian",
+    "Chen Liang",
+    "Liu Ming",
+    "Zhao Kuo",
+    "Sun Hao",
+    "Zhou Yu"
+   ],
+   "f": [
+    "Li Hua",
+    "Wang Lan",
+    "Zhang Mei",
+    "Chen Jing",
+    "Liu Yun",
+    "Zhao Xiu",
+    "Sun Yu",
+    "Zhou Ling"
+   ]
+  },
+  {
+   "id": "japanese",
+   "box": [
+    129,
+    30,
+    146,
+    46
+   ],
+   "from": 500,
+   "to": 2100,
+   "m": [
+    "Taro",
+    "Jiro",
+    "Kiyomori",
+    "Masashige",
+    "Hideo",
+    "Yoshitsune",
+    "Saburo",
+    "Kenji"
+   ],
+   "f": [
+    "Hana",
+    "Murasaki",
+    "Tomoe",
+    "Sayo",
+    "Kiku",
+    "Haru",
+    "Yuki",
+    "Chiyo"
+   ]
+  },
+  {
+   "id": "mande",
+   "box": [
+    -18,
+    4,
+    10,
+    20
+   ],
+   "from": 300,
+   "to": 2100,
+   "m": [
+    "Sundiata",
+    "Musa",
+    "Mamadou",
+    "Sekou",
+    "Bakary",
+    "Fode",
+    "Moussa",
+    "Kankou"
+   ],
+   "f": [
+    "Sogolon",
+    "Kadiatou",
+    "Mariam",
+    "Fanta",
+    "Nana",
+    "Aminata",
+    "Djeneba",
+    "Oumou"
+   ]
+  },
+  {
+   "id": "swahili",
+   "box": [
+    30,
+    -15,
+    52,
+    5
+   ],
+   "from": 800,
+   "to": 2100,
+   "m": [
+    "Juma",
+    "Bakari",
+    "Hamisi",
+    "Salim",
+    "Mwinyi",
+    "Rashidi",
+    "Omari",
+    "Faraji"
+   ],
+   "f": [
+    "Mwanaisha",
+    "Zawadi",
+    "Rehema",
+    "Amani",
+    "Mwajuma",
+    "Saida",
+    "Neema",
+    "Halima"
+   ]
+  },
+  {
+   "id": "nahua",
+   "box": [
+    -110,
+    13,
+    -86,
+    25
+   ],
+   "from": 1000,
+   "to": 1550,
+   "m": [
+    "Cuauhtli",
+    "Itzcoatl",
+    "Tochtli",
+    "Mazatl",
+    "Xochitl",
+    "Ehecatl",
+    "Ocelotl",
+    "Coatl"
+   ],
+   "f": [
+    "Citlali",
+    "Xochiquetzal",
+    "Itzel",
+    "Yaretzi",
+    "Necahual",
+    "Papan",
+    "Tlalli",
+    "Atzi"
+   ]
+  },
+  {
+   "id": "andean",
+   "box": [
+    -82,
+    -40,
+    -60,
+    2
+   ],
+   "from": 1000,
+   "to": 1600,
+   "m": [
+    "Inti",
+    "Amaru",
+    "Huaman",
+    "Yupanqui",
+    "Kusi",
+    "Atoc",
+    "Sinchi",
+    "Huayna"
+   ],
+   "f": [
+    "Kusi Qoyllur",
+    "Mama Ocllo",
+    "Chaska",
+    "Killa",
+    "Sisa",
+    "Urpi",
+    "Ima",
+    "Nina"
+   ]
+  },
+  {
+   "id": "slavic",
+   "box": [
+    14,
+    44,
+    60,
+    65
+   ],
+   "from": 600,
+   "to": 2100,
+   "m": [
+    "Ivan",
+    "Dmitri",
+    "Yaroslav",
+    "Boris",
+    "Mstislav",
+    "Vasily",
+    "Oleg",
+    "Pavel"
+   ],
+   "f": [
+    "Olga",
+    "Anastasia",
+    "Yelena",
+    "Darya",
+    "Marfa",
+    "Ksenia",
+    "Lyudmila",
+    "Vera"
+   ]
+  },
+  {
+   "id": "norse",
+   "box": [
+    4,
+    54,
+    32,
+    72
+   ],
+   "from": 500,
+   "to": 1300,
+   "m": [
+    "Bjorn",
+    "Leif",
+    "Harald",
+    "Ragnar",
+    "Sigurd",
+    "Thorstein",
+    "Olaf",
+    "Eirik"
+   ],
+   "f": [
+    "Astrid",
+    "Gudrun",
+    "Ingrid",
+    "Freydis",
+    "Sigrid",
+    "Thora",
+    "Helga",
+    "Ragnhild"
+   ]
+  },
+  {
+   "id": "english",
+   "box": [
+    -11,
+    49.5,
+    2,
+    59
+   ],
+   "from": 1066,
+   "to": 2100,
+   "m": [
+    "John",
+    "William",
+    "Thomas",
+    "Richard",
+    "Henry",
+    "Robert",
+    "Edward",
+    "George"
+   ],
+   "f": [
+    "Mary",
+    "Elizabeth",
+    "Anne",
+    "Margaret",
+    "Alice",
+    "Jane",
+    "Catherine",
+    "Agnes"
+   ]
+  },
+  {
+   "id": "french",
+   "box": [
+    -5,
+    42,
+    8,
+    51
+   ],
+   "from": 900,
+   "to": 2100,
+   "m": [
+    "Jean",
+    "Pierre",
+    "Guillaume",
+    "Jacques",
+    "Louis",
+    "Etienne",
+    "Philippe",
+    "Nicolas"
+   ],
+   "f": [
+    "Marie",
+    "Jeanne",
+    "Isabelle",
+    "Marguerite",
+    "Catherine",
+    "Anne",
+    "Louise",
+    "Madeleine"
+   ]
+  },
+  {
+   "id": "iberian",
+   "box": [
+    -10,
+    35.5,
+    3.5,
+    44
+   ],
+   "from": 800,
+   "to": 2100,
+   "m": [
+    "Diego",
+    "Rodrigo",
+    "Juan",
+    "Alfonso",
+    "Fernando",
+    "Pedro",
+    "Gonzalo",
+    "Sancho"
+   ],
+   "f": [
+    "Isabel",
+    "Juana",
+    "Leonor",
+    "Urraca",
+    "Teresa",
+    "Ines",
+    "Beatriz",
+    "Catalina"
+   ]
+  },
+  {
+   "id": "italian",
+   "box": [
+    6.5,
+    37,
+    19,
+    47.5
+   ],
+   "from": 600,
+   "to": 2100,
+   "m": [
+    "Giovanni",
+    "Marco",
+    "Francesco",
+    "Lorenzo",
+    "Niccolo",
+    "Pietro",
+    "Antonio",
+    "Matteo"
+   ],
+   "f": [
+    "Caterina",
+    "Lucrezia",
+    "Isabella",
+    "Beatrice",
+    "Giovanna",
+    "Chiara",
+    "Francesca",
+    "Lucia"
+   ]
+  },
+  {
+   "id": "german",
+   "box": [
+    5,
+    45.5,
+    20,
+    55
+   ],
+   "from": 500,
+   "to": 2100,
+   "m": [
+    "Heinrich",
+    "Konrad",
+    "Friedrich",
+    "Otto",
+    "Johann",
+    "Albrecht",
+    "Ludwig",
+    "Karl"
+   ],
+   "f": [
+    "Margarethe",
+    "Adelheid",
+    "Gertrud",
+    "Hildegard",
+    "Katharina",
+    "Elisabeth",
+    "Mechthild",
+    "Anna"
+   ]
+  },
+  {
+   "id": "american",
+   "box": [
+    -170,
+    15,
+    -50,
+    72
+   ],
+   "from": 1700,
+   "to": 2100,
+   "m": [
+    "James",
+    "John",
+    "William",
+    "Samuel",
+    "Joseph",
+    "Henry",
+    "Charles",
+    "Daniel"
+   ],
+   "f": [
+    "Mary",
+    "Sarah",
+    "Elizabeth",
+    "Hannah",
+    "Abigail",
+    "Martha",
+    "Rebecca",
+    "Ruth"
+   ]
+  },
+  {
+   "id": "latin_american",
+   "box": [
+    -120,
+    -56,
+    -34,
+    25
+   ],
+   "from": 1550,
+   "to": 2100,
+   "m": [
+    "Jose",
+    "Juan",
+    "Francisco",
+    "Manuel",
+    "Antonio",
+    "Luis",
+    "Miguel",
+    "Carlos"
+   ],
+   "f": [
+    "Maria",
+    "Ana",
+    "Rosa",
+    "Josefa",
+    "Juana",
+    "Teresa",
+    "Carmen",
+    "Isabel"
+   ]
+  },
+  {
+   "id": "southeast_asian",
+   "box": [
+    92,
+    -11,
+    141,
+    25
+   ],
+   "from": 500,
+   "to": 2100,
+   "m": [
+    "Suryavarman",
+    "Hayam",
+    "Gajah",
+    "Ananda",
+    "Bayin",
+    "Sri",
+    "Tun",
+    "Raden"
+   ],
+   "f": [
+    "Dewi",
+    "Sri",
+    "Ratna",
+    "Kencana",
+    "Mya",
+    "Suriya",
+    "Intan",
+    "Melati"
+   ]
+  },
+  {
+   "id": "any",
+   "box": [
+    -180,
+    -90,
+    180,
+    90
+   ],
+   "from": -100000,
+   "to": 2100,
+   "m": [
+    "Ari",
+    "Tamar",
+    "Noor",
+    "Kai",
+    "Sami",
+    "Daran",
+    "Ilo",
+    "Remi"
+   ],
+   "f": [
+    "Ana",
+    "Mira",
+    "Lina",
+    "Saba",
+    "Nia",
+    "Ena",
+    "Tali",
+    "Iris"
+   ]
+  }
+ ]
+}

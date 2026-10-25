@@ -72,6 +72,13 @@ and technology (galley, junk, carrack, steam, rail, air). Every consumer uses th
 Living world, Objects (unknown legs), trade, news, plague and idea diffusion. Target: < 300 ms for a
 continental route, worker-friendly.
 
+Shipped in `views/atlas/world/route.js` (data: `data/motion/`, lens data `motion`, which may load late, so check
+`ATLAS.world.motionReady()`). `a`, `b` are `[lon, lat]` or `{lon, lat}` for now; `when` is a year, `"YYYY-MM"` or
+`{y, m}`; `opts.pref` is `fast | land | sea`. The result also has `pts` (simplified path), `cost` (day-wages),
+`notes` (seasons, canals, roads used) and `meet` (borders, battles and plague on the way). `ATLAS.world.reach`
+returns `{days: Float32Array(720 * 360), at(lon, lat)}`. A continental route takes about 0.1 to 0.6 s warm.
+`ATLAS.world.motion` exposes the grid helpers (`cellOf`, `cls`, `isWater`, `polity`, `plagueAt`, `battles`, `rules()`).
+
 ## L3 Agents and causes (agents: "Simulate people meeting and traveling"; `why`: "Bring scholar-level depth to the atlas")
 
 ```js
