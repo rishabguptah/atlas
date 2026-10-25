@@ -523,7 +523,7 @@
     ".ttkkntttttttnttn",
     "NNNNNNNNNNNNNNNNN",
   ];
-  def("city_town_adobe", { kind: "city", label: "Mudbrick town", size: 2, era: [-4000, 2100], regions: ["middle_east", "africa", "south_asia", "steppe", "americas"] }, [adobe]);
+  def("city_town_adobe", { kind: "city", label: "Mudbrick town", size: 2, era: [-4000, 2100], regions: ["middle_east", "africa", "south_asia", "steppe", "americas", "islamic", "near_east", "sahel", "meso", "andes", "deccan"] }, [adobe]);
 
   const asianTown = [
     "L.........L.....",
@@ -576,6 +576,307 @@
     "WWWWWWWWkkkkWWWWWWWW",
   ];
   def("city_metropolis", { kind: "city", label: "Great city", size: 4, era: [-700, 1900], regions: ANY }, [metropolis]);
+
+  // ---------------------------------------------------------------- regional settlements
+  // Cities look like where they are: PixelEra.culture() names the building tradition, and these carry it as a region.
+  // Islamic world (after 650): mudbrick walls, a tiled dome and a minaret.
+  const islamicCity = [
+    ".............w....",
+    "............www...",
+    ".............w....",
+    ".....cc......w....",
+    "....ccccb....w....",
+    "...ccccccb...w....",
+    "...cccccbb...w....",
+    "..wwwwwwwww..w....",
+    "..wkwwkwwkw.www...",
+    "t.t.t.t.t.t.t.t.tn",
+    "tttttttttttttttttn",
+    "ttkttttttttttktttn",
+    "tttttttkkttttttttn",
+    "ttttttkkkkttttttnn",
+    "nnnnnnkkkknnnnnnnn",
+  ];
+  def("city_islamic", { kind: "city", label: "City (Islamic world)", size: 3, era: [650, 2100], regions: ["islamic"] }, [islamicCity]);
+
+  const islamicGreat = [
+    "..w..............w..",
+    "..w......cc......w..",
+    ".www....ccccb...www.",
+    "..w....ccccccb...w..",
+    "..w...cccccccbb..w..",
+    "..w...ccccccbbb..w..",
+    "..w..wwwwwwwwwWW.w..",
+    "..w..wkwwkwwkwWW.w..",
+    "wwwWwwwwwwwwwwwWwwwW",
+    "wkwWwkkwwwwwwkkWwkwW",
+    "t.t.t.t.t.t.t.t.t.t.",
+    "tttttttttttttttttttt",
+    "ttkttttttkkttttttktt",
+    "ttttttttkkkktttttttt",
+    "ttttttttkkkktttttttt",
+  ];
+  def("city_islamic_great", { kind: "city", label: "Great city (Islamic world)", size: 4, era: [650, 2100], regions: ["islamic"] }, [islamicGreat]);
+
+  // Near East before Islam: flat-roofed mudbrick and a stepped temple platform.
+  const nearEastCity = [
+    ".......WWWW.......",
+    ".......tttn.......",
+    ".....WWtttnWW.....",
+    ".....ttttttnn.....",
+    "...WWttkkttnnWW...",
+    "...tttttttttnnn...",
+    "WW..ttkkttkknn..WW",
+    "tn.t.t.t.t.t.t.ttn",
+    "tntttttttttttttttn",
+    "kntttttttttttttktn",
+    "tnttttttttkktttttn",
+    "tntttttttkkkkttttn",
+    "NNNNNNNNNkkkkNNNNN",
+  ];
+  def("city_near_east", { kind: "city", label: "City (ancient Near East)", size: 3, era: [-3500, 650], regions: ["near_east"] }, [nearEastCity]);
+
+  const nearEastGreat = [
+    "........WWWW........",
+    "........tttn........",
+    "......WWtttnWW......",
+    "......NNNNNNNN......",
+    "....WWttttttnnWW....",
+    "....NNNNNNNNNNNN....",
+    "..WWttttttttnnnnWW..",
+    "..ttttkkttttkknnnn..",
+    "WW.tttttttttnnnnn.WW",
+    "tnt.t.t.t.t.t.t.t.tn",
+    "tnttttttttttttttttNn",
+    "kntttttttttttttttkNn",
+    "tnttttttttkkttttttNn",
+    "tntttttttkkkktttttNn",
+    "NNNNNNNNNkkkkNNNNNNN",
+  ];
+  def("city_near_east_great", { kind: "city", label: "Great city (ancient Near East)", size: 4, era: [-3000, 650], regions: ["near_east"] }, [nearEastGreat]);
+
+  // East Asia: a grey wall and a gate tower under curved, upturned tile roofs.
+  const asianCity = [
+    ".....e.......e....",
+    ".....eeeeeeeee....",
+    "......eeeeeee.....",
+    ".......rwrwr......",
+    "...e...rwrwr...e..",
+    "...eeeeeeeeeeeee..",
+    "....eeeeeeeeeee...",
+    ".....rwrrrrrwr....",
+    "m.m.mrwrrkrrwrm.m.",
+    "mmmmmmmmmmmmmmmmmM",
+    "mmkmmmmmmmmmmmkmmM",
+    "mmmmmmmkkkmmmmmmmM",
+    "mmmmmmkkkkkmmmmmmM",
+    "MMMMMMkkkkkMMMMMMM",
+  ];
+  def("city_asian", { kind: "city", label: "Walled city (East Asia)", size: 3, era: [-1000, 1911], regions: ["east_asia", "southeast_asia"] }, [asianCity]);
+
+  const asianGreat = [
+    "......g.......g.....",
+    "......ggggggggg.....",
+    ".......GGGGGGG......",
+    "........rkrkr.......",
+    "....g...rrrrr...g...",
+    "....ggggggggggggg...",
+    ".g...GGGGGGGGGGG..g.",
+    ".ggg..rkrrkrrkr..ggg",
+    ".GGG..rrrrrrrrr..GGG",
+    ".rkr.............rkr",
+    "rrrrrrrrrrrrrrrrrrrR",
+    "rrkrrrrrrrrrrrrrrkrR",
+    "rrrrrrrrkkkkrrrrrrrR",
+    "rrrrrrrkkkkkkrrrrrrR",
+    "RRRRRRRkkkkkkRRRRRRR",
+  ];
+  def("city_asian_great", { kind: "city", label: "Imperial city (East Asia)", size: 4, era: [-221, 1911], regions: ["east_asia"] }, [asianGreat]);
+
+  // Steppe: felt yurts, and a khan's golden tent under a horse-tail standard.
+  const yurts = [
+    "......1x.....",
+    "......1xx....",
+    "..www.1......",
+    ".wwwwW1..ww..",
+    "wwwwwwW.wwwW.",
+    "nnnnnnN.nnnN.",
+    "wwkkwwW.wkwW.",
+  ];
+  def("city_yurts", { kind: "city", label: "Yurt camp", size: 1, era: [-3000, 2100], regions: ["steppe"], map: { 1: "N" } }, [yurts]);
+
+  const yurtTown = [
+    ".........1......",
+    ".........1x.....",
+    "...www...1xx....",
+    "..wwwwW..1..www.",
+    ".wwwwwwW.1.wwwwW",
+    ".nnnnnnN.1.nnnnN",
+    ".wwkkwwW...wkkwW",
+    "www....www......",
+    "wwwW..wwwwW.....",
+    "nnnN..nnnnN.....",
+    "wkwW..wwkkW.....",
+  ];
+  def("city_yurt_town", { kind: "city", label: "Yurt town", size: 2, era: [-3000, 2100], regions: ["steppe"], map: { 1: "N" } }, [yurtTown]);
+
+  const ordu = [
+    "........1.........",
+    ".......1xx........",
+    "........1.........",
+    ".......ggg........",
+    ".....gggggG.......",
+    "...gggggggGGG.....",
+    "..ggggggggGGGG....",
+    "..nnnnnnnnnnnn....",
+    "..ggggkkkgGGGG....",
+    "..ggggkkkgGGGG.ww.",
+    ".www..........wwww",
+    "wwwww..www....nnnn",
+    "nnnnn.wwwww...wkww",
+    "wkkww.nnnnn.......",
+    "......wwkkw.......",
+  ];
+  def("city_ordu", { kind: "city", label: "Khan's camp", size: 3, era: [-1000, 1800], regions: ["steppe"], map: { 1: "n" } }, [ordu]);
+
+  // Africa south of the Sahara: round mud houses under conical thatch, inside a mud wall.
+  const africaCity = [
+    "........g.........",
+    ".......ggG........",
+    "......gggGG.......",
+    ".....gggggGG......",
+    "....gggggggGG.....",
+    "..g...tttnn...g...",
+    ".ggG..tkknn..ggG..",
+    "gggGG.tkknn.gggGG.",
+    ".ttn........ttn...",
+    "nt.t.t.t.t.t.t.t.n",
+    "ttttttttttttttttnn",
+    "ttttttttkkttttttnn",
+    "tttttttkkkkttttttn",
+    "NNNNNNNkkkkNNNNNNN",
+  ];
+  def("city_africa", { kind: "city", label: "Walled town (Africa)", size: 3, era: [-1000, 2100], regions: ["africa", "sahel"] }, [africaCity]);
+
+  // The Sahel after 1000: a Djenne-style mud mosque, its towers bristling with palm-wood spikes.
+  const sahelCity = [
+    "...w......w......w...",
+    "..ttn....ttn....ttn..",
+    "1.ttn1..1ttn1..1ttn1.",
+    "..ttn....ttn....ttn..",
+    "1.ttn1..1ttn1..1ttn1.",
+    "..ttntttttttnttttttn.",
+    "..ttntkktttkkttkkttn.",
+    "..ttntttttttnttttttn.",
+    "..ttntkktttkkttkkttn.",
+    "..ttntttttttnttttttn.",
+    "nnnnnnnnnnnnnnnnnnnnN",
+  ];
+  def("city_sahel", { kind: "city", label: "Mud mosque city (Sahel)", size: 3, era: [1000, 2100], regions: ["sahel"], map: { 1: "N" } }, [sahelCity]);
+
+  // South Asia: a temple spire (shikhara) over the walls; Mughal domes and minarets after 1500.
+  const indianCity = [
+    "........o.........",
+    ".......nnn........",
+    ".......ttn........",
+    "......tttnn.......",
+    "......NNNNN.......",
+    ".....ttttnnn......",
+    ".....NNNNNNN......",
+    "....tttttnnnn.....",
+    "....ttkktnkkn.....",
+    "t.t.t.t.t.t.t.t.tn",
+    "tttttttttttttttttn",
+    "ttkttttttttttktttn",
+    "tttttttkkkktttttnn",
+    "NNNNNNNkkkkNNNNNNN",
+  ];
+  def("city_india", { kind: "city", label: "Temple city (South Asia)", size: 3, era: [-500, 2100], regions: ["south_asia", "deccan"] }, [indianCity]);
+
+  const indianGreat = [
+    ".........o..........",
+    "........nnn.........",
+    "........ttn.........",
+    "...o...tttnn....o...",
+    "..nnn..NNNNN...nnn..",
+    "..ttn.ttttnnn..ttn..",
+    ".tttnnNNNNNNN.tttnn.",
+    ".NNNNtttttnnnnNNNNN.",
+    ".ttkntttkktnnnttkkn.",
+    "t.t.t.t.t.t.t.t.t.tn",
+    "ttttttttttttttttttnn",
+    "ttkttttttttttttkttnn",
+    "tttttttttkkktttttttn",
+    "ttttttttkkkkkttttttn",
+    "NNNNNNNNkkkkkNNNNNNN",
+  ];
+  def("city_india_great", { kind: "city", label: "Great temple city (South Asia)", size: 4, era: [-600, 2100], regions: ["south_asia", "deccan"] }, [indianGreat]);
+
+  const mughal = [
+    ".g........g........g",
+    ".w.......www.......w",
+    "www....wwwwwW.....ww",
+    ".w....wwwwwwWW.....w",
+    ".w...wwwwwwwWWW....w",
+    ".w...wwwwwwwWWW....w",
+    ".w..g.wwwwwWWW.g...w",
+    ".w.wwW.SSSSSS.wwW..w",
+    ".wSSSSSSSSSSSSSSSS.w",
+    ".wSsSSsSSkkSSsSSsS.w",
+    ".wSsSSsSkkkkSsSSsS.w",
+    "SSSSSSSSkkkkSSSSSSSS",
+    "SSSSSSSSSSSSSSSSSSSS",
+  ];
+  def("city_mughal", { kind: "city", label: "Mughal city", size: 4, era: [1500, 1900], regions: ["south_asia"] }, [mughal]);
+
+  // Mesoamerica before 1550: a stepped pyramid with a temple on top among white plastered houses.
+  const mesoCity = [
+    "........rrR.......",
+    ".......rkkR.......",
+    "......MMMMMM......",
+    "......mmwmmM......",
+    ".....MMMwMMMM.....",
+    ".....mmmwmmmM.....",
+    "....MMMMwMMMMM....",
+    "....mmmmwmmmmM....",
+    ".ww.MMMMwMMMMMww..",
+    "wwwwmmmmwmmmmMwww.",
+    "wkwwMMMMwMMMMMwkw.",
+    "MMMMMMMMMMMMMMMMMM",
+  ];
+  def("city_meso", { kind: "city", label: "Pyramid city (Mesoamerica)", size: 3, era: [-1500, 1550], regions: ["meso"] }, [mesoCity]);
+
+  const mesoGreat = [
+    ".........rrR.........",
+    "........rkkR.........",
+    ".......MMMMMM........",
+    ".......mmwmmM........",
+    "......MMMwMMMM.......",
+    "......mmmwmmmM.......",
+    ".rR..MMMMwMMMMM......",
+    ".mM..mmmmwmmmmM......",
+    "MMMMMMMMMwMMMMMM.ww..",
+    "mmmmmmmmmwmmmmmMwwww.",
+    "mMwmMMMMMwMMMMMMwwkw.",
+    "MMMMMMMMMMMMMMMMMMMMM",
+  ];
+  def("city_meso_great", { kind: "city", label: "Great pyramid city (Mesoamerica)", size: 4, era: [-1500, 1550], regions: ["meso"] }, [mesoGreat]);
+
+  // The Andes before 1560: fitted grey stone terraces and thatched halls.
+  const andesCity = [
+    "......ggg.........",
+    ".....gggGG........",
+    "....gggggGG.......",
+    "....mmkmmmM..ggg..",
+    "....mmmmmmM.gggGG.",
+    "..MMMMMMMMMMMmkmM.",
+    "..mmmmmmmmmmmmmmM.",
+    "MMMMMMMMMMMMMMMMMM",
+    "mmmmmmmmmmmmmmmmmM",
+    "mMmmMmmmMmmmMmmMmM",
+    "MMMMMMMMMMMMMMMMMM",
+  ];
+  def("city_andes", { kind: "city", label: "Stone city (Andes)", size: 3, era: [600, 1560], regions: ["andes"] }, [andesCity]);
 
   const industrial = [
     "..3.....3...........",
