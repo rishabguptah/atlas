@@ -93,3 +93,15 @@ tab (`lenses/stories.*`) lists them all. The Atlas opens on a cold open (Constan
 twelve hours away; `#story=<id>` plays any story on load and `#nostory` skips it. Other threads emit Stories and register
 them with `ATLAS.world.stories.add(story)` or a provider `{kind, list()}`; `ATLAS.world.director.play(story, {at, auto})`
 plays one.
+
+## Guess the past
+
+The Guess tab (`lenses/guess.*`) is a calibration game. The map flies to a moment and asks for a number the kernel
+holds: a city's size (Reba et al., after Chandler and Modelski), a continent's people (HYDE), a share of world GDP and
+income per head (Maddison Project 2020), an empire's land at its height (Cliopatria), railway kilometres (CHAT) or the
+days news took to travel. Every answer is read from a sourced measure or record at a year it actually gives, never
+interpolated. You give a range you are 80% sure of; the reveal plays as a Director story (the answer, a comparison or
+the motion model's own estimate for the same trip, then your calibration) with Why? and How do we know. The tab keeps
+calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five with streaks and a copyable
+result, Endless and About here modes, and finds; each reveal also visits the spot for the Codex. Progress stays in
+localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `calibration` and `play(id)`.
