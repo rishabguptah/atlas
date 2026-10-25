@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: one sheet. The question goes across the top, the map and one shared year take the middle,
    and the margin column reads whatever the map is pointing at: this year, this place, or the guide's answer. */
@@ -76,6 +76,12 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .grat { fill: none; stroke: var(--sea-line); stroke-width: calc(0.6px / var(--k, 1)); }
 .land { fill: var(--land); stroke: var(--land-edge); stroke-width: calc(0.6px / var(--k, 1)); }
 .terrain-on .land { fill-opacity: .25; }
+/* Political style: flat realm colours multiplied over the painted texture, so our own land and border fills step aside. */
+.political-map .land { fill-opacity: 0; stroke-opacity: .5; }
+.political-map .poly, .political-map .poly.emp { fill-opacity: 0; stroke: none; }
+.political-map .poly.hi { fill-opacity: .18; fill: var(--paper); stroke: var(--ink); }
+.political-map .polylab { display: none; }
+.political-map .sphere { fill: #3d6b7f; }
 .terrain-on .poly { fill-opacity: calc(var(--oth-op) * .8); }
 .terrain-on .poly.emp { fill-opacity: calc(var(--emp-op) * .75); }
 .war-on .terrain .pt-strait, .war-on .terrain .pt-pass { display: none; }
@@ -263,6 +269,23 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .maphint { top: 40px; }
   .caption { font-size: 13px; }
 }
+.moving text { display: none; }
+.layers.sub { margin-top: -3px; min-height: 0; }
+.layers.sub:empty { display: none; }
+.layers.sub .chip { font-size: 12px; padding: 2px 9px 2px 7px; }
+.layers.sub .lab { color: var(--c); }
+.chip.fam.some { border-style: dashed; }
+.chip.fam.open { box-shadow: 0 0 0 1.5px var(--c, var(--ink)) inset; }
+.basemap { position: absolute; inset: 0; pointer-events: none; }
+.basemap-on .sphere, .basemap-on .land, .basemap-on .grat { fill: none; stroke: none; }
+.map.basemap-on .poly, .map.basemap-on .poly.emp { fill-opacity: 0; stroke-opacity: 0; }
+.map.basemap-on .poly.hi { fill-opacity: .2; stroke-opacity: 1; }
+.basemap-on .g-relief, .basemap-on .g-realms, .basemap-on .g-terrain.hide { display: none; }
+.pt.lp circle, .pt.lp rect, .pt.lp path { fill: var(--c); fill-opacity: .85; stroke: var(--paper); stroke-width: .8; }
+.pt.lp path.x { fill: none; stroke: var(--c); stroke-width: 2.2; stroke-linecap: round; }
+.pt.lp image { image-rendering: pixelated; }
+.pt.lp.lbl text { fill: var(--c); font-weight: 600; }
+.line.lpath { stroke: var(--c); stroke-width: 2px; vector-effect: non-scaling-stroke; stroke-opacity: .75; }
 </style>
 
 <div class="app">
@@ -273,10 +296,12 @@ a { color: var(--accent); text-underline-offset: 2px; }
       <button class="btn primary" id="go" type="submit">Ask</button>
       <button class="btn" id="stop" type="button" hidden>Stop</button>
     </form>
-    <div class="layers" id="layers" role="group" aria-label="Lenses on the map"><span class="lab">Lenses</span></div>
+    <div class="layers" id="layers" role="group" aria-label="Lens families on the map"><span class="lab">Lenses</span></div>
+    <div class="layers sub" id="sublayers" role="group" aria-label="Lenses in this family"></div>
   </header>
 
   <section class="map" id="map" aria-label="World map. Click anywhere to see everything there.">
+    <div class="basemap" id="basemap"></div>
     <svg id="svg">
       <defs>
         <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="context-stroke"/></marker>
@@ -323,6 +348,12 @@ const LAND = /*__LAND__*/;
 const TOURS = /*__TOURS__*/;
 </script>
 <script>
+// Plugins register here: lenses (views/atlas/lenses/*.js), a basemap, sprites. See views/atlas/LENSES.md.
+window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
+  lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; } };
+</script>
+<!--__LENS_SCRIPTS__-->
+<script>
 (() => {
   // ---------- basics ----------
   const NOW = 2025, MIN = -4000, SPAN = NOW - MIN, CURVE = 1.6;
@@ -334,6 +365,20 @@ const TOURS = /*__TOURS__*/;
     { k: "disease", n: "Plague & climate" }, { k: "ideas", n: "Ideas & faith" }, { k: "order", n: "Order & chaos" }, { k: "war", n: "War & chokepoints" },
   ];
   const LENS_LAYER = { geography: "places", military: "war", economy: "money", population: "money", disease: "disease", religion: "ideas", ideas: "ideas", literature: "ideas", people: "people", order: "order" };
+  // Six families on the chip bar; each lens inside one is precise, a family is what you switch on together.
+  const FAMILIES = [{ id: "land", n: "Land", c: "var(--l-geography)" }, { id: "power", n: "Power", c: "var(--y-war)" }, { id: "wealth", n: "Wealth", c: "var(--y-money)" },
+    { id: "peoples", n: "Peoples", c: "var(--y-people)" }, { id: "mind", n: "Mind", c: "var(--y-ideas)" }, { id: "shocks", n: "Shocks", c: "var(--y-disease)" }];
+  const FAM_OF = { places: "land", war: "power", order: "power", money: "wealth", people: "peoples", ideas: "mind", disease: "shocks" };
+  const PLUG = ATLAS.lenses.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !(d.id in FAM_OF) && FAMILIES.some(f => f.id === d.family) && a.findIndex(x => x && x.id === d.id) === i);
+  for (const d of PLUG) {
+    document.documentElement.style.setProperty("--y-" + d.id, d.color || "#999");
+    LAYERS.push({ k: d.id, n: d.name || d.id });
+    for (const l of d.guide || []) {
+      if (!LENSES.includes(l)) { LENSES.push(l); LENS_NAME[l] = d.name || l; document.documentElement.style.setProperty("--l-" + l, d.color || "#999"); }
+      if (!LENS_LAYER[l]) LENS_LAYER[l] = d.id;
+    }
+  }
+  const BASEMAP0 = ATLAS.basemaps.find(b => b && typeof b.mount === "function") || null;
   const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
   const fmtSpan = (s, e) => `${s == null ? "?" : fmtYear(s)}–${e == null ? "today" : fmtYear(e)}`;
   const tToYear = t => Math.round(NOW - SPAN * Math.pow(1 - t, CURVE));
@@ -406,10 +451,11 @@ const TOURS = /*__TOURS__*/;
 
   // ---------- state ----------
   const state = {
-    year: 1348, k: 1, borders: true, terrain: !!TERRAIN, hi: new Set(), muted: new Set(), answer: null, active: -1, playing: false,
+    year: 1348, k: 1, borders: true, terrain: !!TERRAIN, political: false, hi: new Set(), muted: new Set(), answer: null, active: -1, playing: false,
     on: { places: true, people: true, money: true, disease: true, ideas: true, order: false, war: true },
-    sel: null, tab: "now",
+    sel: null, tab: "now", basemap: !!BASEMAP0, fam: null,
   };
+  for (const d of PLUG) state.on[d.id] = !!d.on;
 
   // ---------- map ----------
   const mapEl = document.getElementById("map");
@@ -420,14 +466,15 @@ const TOURS = /*__TOURS__*/;
   const land = topojson.feature(LAND, LAND.objects.land);
   const gSphere = root.append("path").attr("class", "sphere");
   const gGrat = root.append("path").attr("class", "grat");
-  const gRelief = root.append("g");
+  const gRelief = root.append("g").attr("class", "g-relief");
   const gLand = root.append("path").attr("class", "land");
+  const gRealms = root.append("g").attr("class", "g-realms");
   const gPoly = root.append("g");
-  const gTerrain = root.append("g");
+  const gTerrain = root.append("g").attr("class", "g-terrain");
   const gPolyLab = root.append("g");
   const gSelRing = root.append("path").attr("class", "selring");
   const G = {};
-  for (const k of ["order", "money", "ideas", "disease", "war", "places", "people"]) G[k] = root.append("g").attr("data-layer", k);
+  for (const k of ["order", "money", "ideas", "disease", "war", ...PLUG.map(d => "lens:" + d.id), "places", "people"]) G[k] = root.append("g").attr("data-layer", k);
   const gRoutes = root.append("g");
   const gPins = root.append("g");
   const gSel = root.append("g");
@@ -452,6 +499,7 @@ const TOURS = /*__TOURS__*/;
   let curSnap;
   function drawPolys(force) {
     const s = state.borders ? snapFor(state.year) : null;
+    drawRealmsLayer();
     if (force || s !== curSnap) {
       curSnap = s;
       const list = s == null ? [] : featuresFor(s);
@@ -464,12 +512,28 @@ const TOURS = /*__TOURS__*/;
     gPolyLab.selectAll("text").data([...best.values()], d => d.emp.id).join("text").attr("class", "polylab").text(d => d.emp.name);
   }
   // Terrain basemap: painted relief, rivers and named ranges, deserts, seas, straits and passes.
-  let terrainT = null;
+  let terrainT = null, realmsT = null, realmSnap;
+  const isPolitical = () => !!(state.political && state.terrain && TERRAIN && RELIEF_POL && window.drawRealms);
+  // Paradox-style realms: one flat colour per state, thick borders, the name curved across its largest piece.
+  function drawRealmsLayer(force) {
+    const s = isPolitical() && state.borders ? snapFor(state.year) : null;
+    if (!force && s === realmSnap) return;
+    realmSnap = s; gRealms.selectAll("*").remove(); realmsT = null;
+    if (s == null) return;
+    const list = featuresFor(s);
+    const meta = new Map(list.map(d => [d.f, d]));
+    realmsT = drawRealms(gRealms, projection, path, list.map(d => d.f), state.k, {
+      colorOf: f => { const d = meta.get(f); return d && d.name ? (d.emp ? d.emp.color : hashColor(d.name)) : null; },
+      nameOf: f => { const d = meta.get(f); return d ? (d.emp ? d.emp.name : d.name) : ""; },
+    });
+  }
   function drawTerrainLayer() {
     gRelief.selectAll("*").remove(); gTerrain.selectAll("*").remove(); terrainT = null;
+    const pol = isPolitical();
     mapEl.classList.toggle("terrain-on", !!(TERRAIN && state.terrain));
+    mapEl.classList.toggle("political-map", pol);
     if (!TERRAIN || !state.terrain) return;
-    if (RELIEF) drawRelief(gRelief, path, RELIEF);
+    if (pol) drawRelief(gRelief, path, RELIEF_POL); else if (RELIEF) drawRelief(gRelief, path, RELIEF);
     terrainT = drawTerrain(gTerrain, projection, path, TERRAIN, state.k, { onSelect: d => {
       const at = d.at || d.line[Math.floor(d.line.length / 2)];
       select({ kind: "terrain", c: "var(--l-geography)", lon: at[0], lat: at[1], name: d.name, kick: (d.t || "").replace(/_/g, " "), title: d.name, body: d.what, why: d.why,
@@ -493,15 +557,23 @@ const TOURS = /*__TOURS__*/;
     mapEl.classList.toggle("zoomed", k >= 4);
     mapEl.classList.toggle("close", k >= 14);
   }
-  const zoom = d3.zoom().scaleExtent([1, 80]).on("zoom", ev => {
+  // Each zoom frame only moves the root group; labels hide while the scale changes and the
+  // counter-scaling, thinning and label layout run once per frame at most, the rest when it settles.
+  let zoomK0 = 1, zoomRaf = 0, drawnK = 1;
+  const zoomFrame = () => { zoomRaf = 0; svg.style("--k", state.k); placeScaled(); };
+  const zoom = d3.zoom().scaleExtent([1, 80]).on("start", ev => { zoomK0 = ev.transform.k; }).on("zoom", ev => {
     root.attr("transform", ev.transform);
-    const changed = Math.abs(Math.log(ev.transform.k / state.k)) > 0.15;
     state.k = ev.transform.k;
-    svg.style("--k", ev.transform.k);
-    if (changed) { drawPeople(); drawWar(); }
-    placeScaled();
+    if (state.k !== zoomK0) mapEl.classList.add("moving");
+    if (!zoomRaf) zoomRaf = requestAnimationFrame(zoomFrame);
+    if (BASEMAP && BASEMAP.move) try { BASEMAP.move(ev.transform); } catch (err) { console.error(err); }
   });
-  zoom.on("end", () => { if (terrainT) terrainT.update(state.k); });
+  zoom.on("end", () => {
+    mapEl.classList.remove("moving");
+    if (Math.abs(Math.log(state.k / drawnK)) > 0.15) { drawnK = state.k; drawPeople(); drawWar(); drawLenses(); }
+    if (terrainT) terrainT.update(state.k); if (realmsT) realmsT.update(state.k);
+    renderBasemap();
+  });
   svg.call(zoom).on("dblclick.zoom", null);
 
   function layout() {
@@ -516,7 +588,7 @@ const TOURS = /*__TOURS__*/;
     gLand.attr("d", path(land));
     for (const k in featCache) delete featCache[k];
     zoom.translateExtent([[-W, -H], [W * 2, H * 2]]);
-    drawTerrainLayer(); drawPolys(true); drawAll(true); drawOverlay(); drawSel();
+    drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(true); drawOverlay(); drawSel(); renderBasemap();
     if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had); svg.call(zoom.transform, d3.zoomIdentity.translate(W / 2 - t0.k * x, H / 2 - t0.k * y).scale(t0.k)); }
     else if (t0.k > 1 || t0.x || t0.y) svg.call(zoom.transform, d3.zoomIdentity);
   }
@@ -657,9 +729,93 @@ const TOURS = /*__TOURS__*/;
     c.select("text").text(d => d.name);
     c.select("title").text(d => { const h = holderAt(d.id, y); return `${d.name} · ${h.length ? "held by " + h.join(", ") : "no state holds it"} in ${fmtYear(y)}`; });
   }
+  // ---------- plugin lenses and basemap ----------
+  const SHAPES = {
+    circle: e => e.append("circle").attr("r", 4),
+    square: e => e.append("rect").attr("x", -3.5).attr("y", -3.5).attr("width", 7).attr("height", 7),
+    diamond: e => e.append("path").attr("d", "M0-4.5L4.5 0 0 4.5-4.5 0z"),
+    cross: e => e.append("path").attr("class", "x").attr("d", "M-4-4L4 4M4-4L-4 4"),
+    triangle: e => e.append("path").attr("d", "M0-5L4.5 3.5-4.5 3.5z"),
+  };
+  // Sprites are drawn 3 screen pixels per art pixel, anchored at (ax, ay).
+  function spriteEl(e, name) {
+    const sp = ATLAS.sprites[name], f = sp && (sp.href || (Array.isArray(sp.frames) && typeof sp.frames[0] === "string" && sp.frames[0].startsWith("data:") ? sp.frames[0] : null));
+    if (!f || !sp.w || !sp.h) return false;
+    e.append("image").attr("href", f).attr("width", sp.w * 3).attr("height", sp.h * 3).attr("x", -(sp.ax ?? sp.w / 2) * 3).attr("y", -(sp.ay ?? sp.h) * 3);
+    return true;
+  }
+  const lensCard = (d, c, at) => ({ lon: at ? at.lon : undefined, lat: at ? at.lat : undefined, name: null, ...c, kind: "lens:" + d.id, c: `var(--y-${d.id})`, kick: c.kick || d.name,
+    sources: (c.sources || []).map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c || x.url, url: x.url || x.u }) });
+  const lensGo = (d, c, at) => () => { const card = lensCard(d, c, at); if (isFinite(card.lon) && isFinite(card.lat)) select(card, { fly: !at, setYear: card.year != null && !at }); else if (card.year != null) animateYear(card.year); };
+  const lensItem = (d, r, at) => item(`<b>${esc(r.title)}</b>${r.tag ? ` <span class="tag">${esc(r.tag)}</span>` : ""}`, typeof r.year === "number" ? fmtYear(r.year) : r.year ?? "", r.why || "",
+    r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim);
+  function lensCtx(d) {
+    const g = G["lens:" + d.id]; let n = 0;
+    const sub = () => { const id = "s" + n++; let s = g.select(`g[data-s="${id}"]`); if (s.empty()) s = g.append("g").attr("data-s", id); return s; };
+    const ok = x => x && isFinite(x.lon) && isFinite(x.lat);
+    return {
+      data: (typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}, year: state.year, k: state.k, g, d3, projection, path, km, fmtYear, fmtSpan,
+      select: c => select(lensCard(d, c), { fly: true }),
+      ruledBy: (lon, lat, y) => { const r = ruledBy(lon, lat, y ?? state.year); return r ? (r.emp ? r.emp.name : r.name) : null; },
+      near: (list, at, r) => nearby(list.filter(ok), at.lon, at.lat, r ?? at.r ?? R_KM).map(o => o.x),
+      pins(list, o = {}) {
+        const key = o.key || (x => x.id), lb = o.label, tt = o.title || lb;
+        const sel = points(sub(), "lp" + (lb ? " lbl" : "") + (o.always ? " always" : "") + (o.cls ? " " + o.cls : ""), list.filter(ok), key, e => {
+          if (!spriteEl(e, o.shape)) (SHAPES[o.shape] || SHAPES.circle)(e);
+          if (lb) e.append("text").attr("x", 7).attr("y", 4);
+        }).style("--c", `var(--y-${d.id})`);
+        if (lb) sel.select("text").text(x => lb(x));
+        if (tt) sel.select("title").text(x => tt(x));
+        if (o.card) sel.on("click", onClickSel(x => lensCard(d, o.card(x))));
+        return sel;
+      },
+      paths(list, o = {}) {
+        const key = o.key || (x => x.id), co = o.coords || (x => x.pts);
+        const rows = list.map(x => ({ x, id: key(x), pts: co(x) })).filter(r => Array.isArray(r.pts) && r.pts.length > 1);
+        const sel = lines(sub(), "lpath" + (o.cls ? " " + o.cls : ""), rows, r => r.id).style("--c", `var(--y-${d.id})`);
+        if (o.title) sel.selectAll("title").data(r => [r]).join("title").text(r => o.title(r.x));
+        if (o.card) sel.on("click", onClickSel(r => lensCard(d, { line: r.pts, lon: r.pts[Math.floor(r.pts.length / 2)][0], lat: r.pts[Math.floor(r.pts.length / 2)][1], ...o.card(r.x) })));
+        return sel;
+      },
+      _end() { g.selectAll(":scope > g[data-s]").filter(function () { return +this.dataset.s.slice(1) >= n; }).remove(); },
+    };
+  }
+  function drawLenses() {
+    for (const d of PLUG) {
+      const g = G["lens:" + d.id];
+      if (!state.on[d.id] || typeof d.draw !== "function") { g.selectAll("*").remove(); continue; }
+      try { const c = lensCtx(d); d.draw(c); c._end(); } catch (err) { console.error("lens " + d.id, err); }
+    }
+  }
+  // Rows a plugin lens adds to the Here or This year tab, grouped under the lens name.
+  function lensRows(fam, fn, at) {
+    return PLUG.filter(d => d.family === fam && typeof d[fn] === "function").map(d => {
+      let rows = [];
+      try { rows = (fn === "here" ? d.here(lensCtx(d), at) : d.now(lensCtx(d))) || []; } catch (err) { console.error("lens " + d.id, err); }
+      return sec(d.id, d.name, rows.filter(r => r && r.title).slice(0, 8).map(r => lensItem(d, r, at)));
+    }).join("");
+  }
+  ATLAS.polityAt = (lon, lat, y) => { const r = ruledBy(lon, lat, y ?? state.year); return r ? { name: r.emp ? r.emp.name : r.name, color: r.emp ? r.emp.color : hashColor(r.name || "") } : null; };
+  const bmEl = document.getElementById("basemap");
+  let BASEMAP = null, bmYear = null;
+  function renderBasemap() {
+    if (!BASEMAP || !BASEMAP.render) return;
+    bmYear = state.year;
+    try { BASEMAP.render(d3.zoomTransform(svg.node()), state.year); } catch (err) { console.error("basemap", err); }
+  }
+  function setBasemap() {
+    const want = state.basemap ? BASEMAP0 : null;
+    if (want === BASEMAP) return;
+    if (BASEMAP && BASEMAP.unmount) try { BASEMAP.unmount(); } catch (err) { console.error(err); }
+    bmEl.innerHTML = ""; BASEMAP = want;
+    mapEl.classList.toggle("basemap-on", !!BASEMAP);
+    gTerrain.classed("hide", !!BASEMAP && BASEMAP.keepTerrain !== true);
+    if (BASEMAP) { try { BASEMAP.mount(bmEl, projection); } catch (err) { console.error("basemap", err); BASEMAP = null; mapEl.classList.remove("basemap-on"); return; } renderBasemap(); }
+  }
+
   let rafAll = 0;
   function drawAll(now) {
-    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawPlaces(); drawPeople(); placeScaled(); };
+    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); if (BASEMAP && bmYear !== state.year) renderBasemap(); };
     if (now) { cancelAnimationFrame(rafAll); run(); } else if (!rafAll) rafAll = requestAnimationFrame(run);
   }
 
@@ -844,16 +1000,16 @@ const TOURS = /*__TOURS__*/;
       <div><p class="kick">The world in</p><h2 class="ttl">${esc(fmtYear(y))}</h2>
       <p class="sub">${pols.length} states on the map${total.shaky ? `, ${total.shaky} of them fragile` : ""} · ${ppl.length ? PPL.filter(p => adult(p, y)).length + " famous people alive" : "no famous people recorded yet"} · ${tr.length} trade routes running</p></div>
       ${sec("places", "Happening now", evs.slice(0, 6).map(o => item(`<b>${esc(nameAt(o.e, o.yy))}</b>: ${esc(o.t)}`, fmtYear(o.yy), "", goCard(cityCard(o.e)))))}
-      ${sec("places", "Biggest cities", cities.map(o => item(`<b>${esc(nameAt(o.e, y))}</b>`, "~" + fmtN(o.p), "", goCard(cityCard(o.e)))))}
-      ${sec("people", "Alive and grown up", ppl.map(p => item(`<b>${esc(p.name)}</b> · ${esc(p.occ)}`, fmtSpan(p.b, p.d), "", goCard(personCard(p)))))}
+      ${lensRows("land", "now")}${sec("places", "Biggest cities", cities.map(o => item(`<b>${esc(nameAt(o.e, y))}</b>`, "~" + fmtN(o.p), "", goCard(cityCard(o.e)))))}
+      ${sec("people", "Alive and grown up", ppl.map(p => item(`<b>${esc(p.name)}</b> · ${esc(p.occ)}`, fmtSpan(p.b, p.d), "", goCard(personCard(p)))))}${lensRows("peoples", "now")}
       ${sec("money", "Money moving", [
         ...hubs.map(h => item(`<b>${esc(h.name)}</b> <span class="tag">richest crossroads</span>`, fmtSpan(h.start, h.end), "", goCard(hubCard(h)))),
         ...tr.map(t => item(`<b>${esc(t.name)}</b>`, t.goods.slice(0, 3).join(", "), "", goCard(tradeCard(t)))),
         ...mg.map(m => item(`<b>${esc(m.name)}</b> <span class="tag">${m.forced ? "forced" : "migration"}</span>`, fmtSpan(m.start, m.end), "", goCard(migCard(m)))),
         ...(gi || gu ? [item(`GDP per person: India <b>$${gi ? Math.round(gi).toLocaleString() : "?"}</b>, Britain <b>$${gu ? Math.round(gu).toLocaleString() : "?"}</b>`, "Maddison", "", () => {})] : []),
       ])}
-      ${sec("disease", "Plague, famine and climate", sh.map(e => item(`<b>${esc(e.name)}</b> <span class="tag">${esc(SHOCK_N[e.subtype] || e.subtype)}</span>`, fmtSpan(e.start, e.end), "", goCard(shockCard(e)))))}
-      ${sec("ideas", "Ideas on the move", moving.slice(0, 6).map(o => item(`<b>${esc(o.j.n)}</b> reaches ${esc(o.s.at.name)}`, fmtYear(o.s.y), o.s.text, goCard(journeyCard(o.j, o.s)))))}
+      ${lensRows("wealth", "now")}${sec("disease", "Plague, famine and climate", sh.map(e => item(`<b>${esc(e.name)}</b> <span class="tag">${esc(SHOCK_N[e.subtype] || e.subtype)}</span>`, fmtSpan(e.start, e.end), "", goCard(shockCard(e)))))}
+      ${lensRows("shocks", "now")}${sec("ideas", "Ideas on the move", moving.slice(0, 6).map(o => item(`<b>${esc(o.j.n)}</b> reaches ${esc(o.s.at.name)}`, fmtYear(o.s.y), o.s.text, goCard(journeyCard(o.j, o.s)))))}${lensRows("mind", "now")}
       ${sec("war", "War and chokepoints", [
         ...(nb > 1 ? [item(`<b>${nb}</b> battles and sieges recorded within a year of ${esc(fmtYear(y))}`, "Wikidata", "", () => {})] : []),
         ...fights.map(b => item(`<b>${esc(b.name)}</b>`, fmtYear(b.start), sideNames(b).join(" vs "), goCard(battleCard(b)))),
@@ -862,7 +1018,7 @@ const TOURS = /*__TOURS__*/;
       ${sec("order", "Most fragile big states", [
         ...shaky.map(o => item(`<b>${esc(o.p.n)}</b> <span class="band" style="--bc:var(--b-${band(o.f)})">${band(o.f)}</span>`, Math.round(o.f * 100) + "%", "", goCard(polityCard(o.p)))),
         ...broke.map(p => item(`<b>${esc(p.n)}</b> broke apart`, fmtYear(p.e), "", goCard(polityCard(p)))),
-      ])}
+      ])}${lensRows("power", "now")}
       <div class="row"><button class="btn" data-a="${act(() => { document.getElementById("qbox").value = `What was the world like in ${fmtYear(y)}, and what was about to change?`; document.getElementById("ask").requestSubmit(); })}">Ask the guide about ${esc(fmtYear(y))}</button></div>
       ${footHTML()}`;
   }
@@ -937,18 +1093,20 @@ const TOURS = /*__TOURS__*/;
     nearby(SCHOOLS, lon, lat, 250).slice(0, 3).forEach(o => { const on = y >= o.x.s && (o.x.e == null || y <= o.x.e); iItems.push(item(`${esc(o.x.n)} ${on ? '<span class="tag now">open</span>' : ""}`, fmtSpan(o.x.s, o.x.e), "", goCard(ideaCard(o.x)), !on)); });
     nearby(WORKS, lon, lat, 250).sort((a, b) => Math.abs(a.x.s - y) - Math.abs(b.x.s - y)).slice(0, 3).forEach(o => iItems.push(item(`<i>${esc(o.x.n)}</i> written`, fmtYear(o.x.s), "", goCard(workCard(o.x)), o.x.s > y)));
 
+    const at = { lon, lat, r: R_KM, polity: rb ? (rb.emp ? rb.emp.name : rb.name) : null, name };
+    const P = fam => lensRows(fam, "here", at);
     el.innerHTML = `
       <div><p class="kick">Here, in ${esc(fmtYear(y))}</p><h2 class="ttl">${esc(name)}</h2>
       ${rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(snapFor(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(snapFor(y)))} border map</p>`}</div>
       ${cardHTML(s)}
       ${rb && rb.emp ? `<div class="focus" style="--c:${rb.emp.color}"><span class="fk">Empire</span><span class="ft">${esc(rb.emp.name)}</span><span class="sub">${esc(fmtSpan(rb.emp.start, rb.emp.end))}${rb.emp.peak ? ` · peak ${rb.emp.peak[1]} million km² in ${esc(fmtYear(rb.emp.peak[0]))}` : ""}</span><p>${esc(rb.emp.what || "")}</p>${rb.emp.why ? `<p class="why">${esc(rb.emp.why)}</p>` : ""}</div>` : ""}
-      ${sec("places", "The place", cityItems)}
+      ${sec("places", "The place", cityItems)}${P("land")}
       ${sec("order", "Order & chaos", orderItems)}
-      ${sec("people", "People", pItems, meet ? "" : null)}${meet ? `<p class="note">${esc(meet)}</p>` : ""}
-      ${sec("money", "Money & migration", mItems)}
-      ${sec("war", "War & chokepoints", wItems)}
-      ${sec("disease", "Plague & climate", dItems)}
-      ${sec("ideas", "Ideas & faith", iItems)}
+      ${sec("people", "People", pItems, meet ? "" : null)}${meet ? `<p class="note">${esc(meet)}</p>` : ""}${P("peoples")}
+      ${sec("money", "Money & migration", mItems)}${P("wealth")}
+      ${sec("war", "War & chokepoints", wItems)}${P("power")}
+      ${sec("disease", "Plague & climate", dItems)}${P("shocks")}
+      ${sec("ideas", "Ideas & faith", iItems)}${P("mind")}
       <p class="note">Within about ${R_KM} km of the marked spot (people: born within 60 km). Faded rows belong to other centuries; tap one to jump there.</p>
       <div class="row"><button class="btn primary" data-a="${act(() => askAbout({ title: name, year: y, here: true }))}">Ask the guide about ${esc(name)} in ${esc(fmtYear(y))}</button></div>`;
   }
@@ -965,18 +1123,47 @@ const TOURS = /*__TOURS__*/;
   function refreshPanel() { clearTimeout(panelTimer); panelTimer = setTimeout(() => { if (state.tab === "now") renderNow(); else if (state.tab === "here") renderHere(); }, 140); }
 
   // ---------- lens chips ----------
-  const layersEl = document.getElementById("layers");
-  const chip = (k, n, c) => { const b = document.createElement("button"); b.className = "chip"; b.dataset.k = k; b.style.setProperty("--c", c); b.innerHTML = `<i></i>${esc(n)}`; layersEl.appendChild(b); return b; };
-  const chips = {};
-  for (const L of LAYERS) chips[L.k] = chip(L.k, L.n, `var(--y-${L.k})`);
-  chips.borders = chip("borders", "Borders", "var(--land-edge)");
-  if (TERRAIN) chips.terrain = chip("terrain", "Terrain", "var(--l-geography)");
-  function syncChips() { for (const k in chips) chips[k].setAttribute("aria-pressed", k === "borders" ? state.borders : k === "terrain" ? state.terrain : state.on[k]); mapEl.classList.toggle("war-on", state.on.war); }
+  const layersEl = document.getElementById("layers"), subEl = document.getElementById("sublayers");
+  // Switches that are not data lenses live in state directly; the rest in state.on.
+  const FLAG = { basemap: 1, terrain: 1, borders: 1, political: 1 };
+  const isOn = k => k in FLAG ? !!state[k] : !!state.on[k];
+  const setOn = (k, v) => { if (k in FLAG) state[k] = v; else state.on[k] = v; };
+  const NAME = { basemap: BASEMAP0 ? BASEMAP0.name || "Pixel map" : "", terrain: "Terrain", borders: "Borders", political: "Political colours", ...Object.fromEntries(LAYERS.map(l => [l.k, l.n])) };
+  const COLOR = k => k === "borders" ? "var(--land-edge)" : k === "terrain" || k === "basemap" ? "var(--l-geography)" : k === "political" ? "var(--y-order)" : `var(--y-${k})`;
+  const MEMBERS = Object.fromEntries(FAMILIES.map(f => [f.id, [
+    ...(f.id === "land" ? [...(BASEMAP0 ? ["basemap"] : []), ...(TERRAIN ? ["terrain"] : []), "places", "borders", ...(TERRAIN && RELIEF_POL && window.drawRealms ? ["political"] : [])] : []),
+    ...LAYERS.filter(l => FAM_OF[l.k] === f.id).map(l => l.k), ...PLUG.filter(d => d.family === f.id).map(d => d.id)].filter((k, i, a) => a.indexOf(k) === i)]));
+  const chip = (el, k, n, c, cls) => { const b = document.createElement("button"); b.className = "chip" + (cls ? " " + cls : ""); b.dataset.k = k; b.style.setProperty("--c", c); b.innerHTML = `<i></i>${esc(n)}`; el.appendChild(b); return b; };
+  const famChips = {};
+  for (const f of FAMILIES) famChips[f.id] = chip(layersEl, f.id, f.n, f.c, "fam");
+  function syncChips() {
+    for (const f of FAMILIES) {
+      const m = MEMBERS[f.id], n = m.filter(isOn).length, b = famChips[f.id];
+      b.setAttribute("aria-pressed", n > 0); b.classList.toggle("some", n > 0 && n < m.length); b.classList.toggle("open", state.fam === f.id);
+      b.title = m.map(k => (isOn(k) ? "● " : "○ ") + NAME[k]).join("\n");
+    }
+    subEl.innerHTML = "";
+    if (state.fam) {
+      const f = FAMILIES.find(x => x.id === state.fam);
+      subEl.style.setProperty("--c", f.c);
+      subEl.insertAdjacentHTML("beforeend", `<span class="lab">${esc(f.n)}</span>`);
+      for (const k of MEMBERS[f.id]) chip(subEl, k, NAME[k], COLOR(k)).setAttribute("aria-pressed", isOn(k));
+    }
+    mapEl.classList.toggle("war-on", state.on.war);
+  }
+  function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); }
+  // Tap a family: open its lenses below, and switch the family on or off. Tap a lens: just that one.
   layersEl.addEventListener("click", ev => {
     const b = ev.target.closest(".chip"); if (!b) return;
-    const k = b.dataset.k;
-    if (k === "borders") { state.borders = !state.borders; drawPolys(); } else if (k === "terrain") { state.terrain = !state.terrain; drawTerrainLayer(); } else { state.on[k] = !state.on[k]; drawAll(); }
+    const f = b.dataset.k, m = MEMBERS[f];
+    if (state.fam !== f && m.some(isOn)) state.fam = f;
+    else { const on = !m.some(isOn); m.forEach(k => setOn(k, on && !(k === "political" || (k === "terrain" && BASEMAP0)))); state.fam = f; redrawToggles(); }
     syncChips(); refreshPanel();
+  });
+  subEl.addEventListener("click", ev => {
+    const b = ev.target.closest(".chip"); if (!b) return;
+    const k = b.dataset.k; setOn(k, !isOn(k));
+    redrawToggles(); syncChips(); refreshPanel();
   });
   function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); } }
 
@@ -1028,9 +1215,11 @@ const TOURS = /*__TOURS__*/;
       ["ideas", JOURNEYS.flatMap(j => j.steps.map(s => s.y))],
       ["war", BATTLES.map(b => b.start)],
     ];
+    for (const d of PLUG) if (typeof d.strip === "function") try { rows.push([d.id, (d.strip((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}) || []).filter(Number.isFinite)]); } catch (err) { console.error("lens " + d.id, err); }
+    const rh = 21 / rows.length;
     rows.forEach(([k, ys], i) => {
       st.append("g").selectAll("line").data(ys.filter(y => y >= MIN && y <= NOW)).join("line")
-        .attr("x1", y => yearToT(y) * 1000).attr("x2", y => yearToT(y) * 1000).attr("y1", 1 + i * 5.3).attr("y2", 5 + i * 5.3)
+        .attr("x1", y => yearToT(y) * 1000).attr("x2", y => yearToT(y) * 1000).attr("y1", 1 + i * rh).attr("y2", Math.max(1.6, rh - 1.3) + 1 + i * rh)
         .style("stroke", `var(--y-${k})`).style("stroke-opacity", k === "order" ? 0.35 : 0.7);
     });
     st.on("click", ev => { const r = st.node().getBoundingClientRect(); stopTime(); animateYear(tToYear((ev.clientX - r.left) / r.width), 700); });
@@ -1216,12 +1405,12 @@ const TOURS = /*__TOURS__*/;
 Rishi wants the feeling of seeing history from a perspective nobody has had. Mix: 55% rigorous, 45% fun.
 Answer through several lenses: ${LENSES.join(", ")}. Give competing explanations from named historians or schools, say which the evidence favours, and say plainly what is not known. "We don't know" is a fine answer.
 
-The map has data layers the reader can see under your tour: places (cities and wonders with population), people (3,000 famous people at their birthplaces), money (trade routes, trade hubs, migrations, India and UK GDP), disease (epidemics, famines, eruptions, climate shifts, the Black Death month by month), ideas (idea and faith journeys, schools, books) order (every state in Cliopatria with a fragility score) and war (battles, sieges, and who held each strait and pass). A step's lens switches on its layer; add "layers":[...] to switch on others that show the evidence.
+The map has data layers the reader can see under your tour: places (cities and wonders with population), people (3,000 famous people at their birthplaces), money (trade routes, trade hubs, migrations, India and UK GDP), disease (epidemics, famines, eruptions, climate shifts, the Black Death month by month), ideas (idea and faith journeys, schools, books) order (every state in Cliopatria with a fragility score) and war (battles, sieges, and who held each strait and pass)${PLUG.map(d => `, ${d.id} (${d.name})`).join("")}. A step's lens switches on its layer; add "layers":[...] to switch on others that show the evidence.
 
 OUTPUT: JSON Lines only. One JSON object per line, no prose, no markdown, no code fences. Lines in this order:
 1. {"t":"answer","short":"2-4 sentence direct answer","lenses":{"geography":0.0-1.0, ...how much each relevant lens explains}}
 2. 6 to 10 step lines, a guided tour in time order where possible:
-{"t":"step","lens":"one lens","title":"short vivid title","year":integer (negative = BCE),"view":{"lon":number,"lat":number,"span":degrees of longitude across the screen},"layers":["places|people|money|disease|ideas|order|war"],"highlight":["place:<id>","polity:<id>"],"pins":[{"name":"label","lon":number,"lat":number}],"routes":[{"label":"what moved","points":[[lon,lat],[lon,lat],...]}],"text":"2-4 sentences, concrete, with numbers and names","confidence":0.0-1.0,"sources":[{"cite":"Author, Title (year)","url":"optional"}]}
+{"t":"step","lens":"one lens","title":"short vivid title","year":integer (negative = BCE),"view":{"lon":number,"lat":number,"span":degrees of longitude across the screen},"layers":["${LAYERS.map(l => l.k).join("|")}"],"highlight":["place:<id>","polity:<id>"],"pins":[{"name":"label","lon":number,"lat":number}],"routes":[{"label":"what moved","points":[[lon,lat],[lon,lat],...]}],"text":"2-4 sentences, concrete, with numbers and names","confidence":0.0-1.0,"sources":[{"cite":"Author, Title (year)","url":"optional"}]}
 3. 2 to 5 lines: {"t":"view","name":"historian or school","school":"short label","lens":"lens","strength":"strong|medium|weak","claim":"one sentence","for":"evidence for","against":"evidence against","sources":[{"cite":"..."}]}
 4. 1 or 2 lines: {"t":"whatif","q":"a counterfactual question","a":"2-3 sentences","confidence":0.0-1.0,"year":integer,"view":{"lon":number,"lat":number,"span":number}}
 5. 1 line: {"t":"unknowns","items":["what historians cannot settle", "..."]}
@@ -1233,7 +1422,7 @@ PLACE INDEX (id|name|lat,lon|start..end):
 ${placeIndex}
 
 POLITY INDEX (id|name|start..end):
-${polityIndex}`;
+${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try { return `\n\n${d.name.toUpperCase()} (lens ${d.id}):\n${d.index((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {})}`; } catch { return ""; } }).join("")}`;
   (async () => {
     try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; }
     if (!sample) hint.textContent = "Live answers need this page open in Claude. Curated tours work anywhere.";
@@ -1329,6 +1518,7 @@ ${polityIndex}`;
 
   // ---------- start: 1348, the Black Death year, where five lenses overlap ----------
   syncChips();
+  setBasemap();
   new ResizeObserver(() => layout()).observe(mapEl);
   layout();
   setYear(1348);

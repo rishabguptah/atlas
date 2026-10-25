@@ -18,3 +18,10 @@ python3 views/atlas/build.py atlas.html                 # ATLAS_DIR defaults to 
 
 Order & chaos reads `data/order-chaos/lab.json`, War & chokepoints reads `data/states-war/` (curated plus Wikidata battles); Terrain reads terrain.json, terrain.js and terrain-relief.webp from LAYERS_DIR when present; tours come from `data/guide/tours/`. Next step: read
 `dist/kernel.json` for every layer once each workstream's records are merged.
+
+## Lens families and plugins
+
+The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
+in a second row. New lenses plug in from `views/atlas/lenses/<id>.py` (data) and `<id>.js` (drawing,
+Here and This year rows), a basemap and sprites register the same way; see [LENSES.md](LENSES.md).
+Zoom frames only move the map: labels hide while the scale changes and thinning runs when it settles.
