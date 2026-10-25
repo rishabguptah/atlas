@@ -21,8 +21,8 @@ Pick the one your lens belongs to:
 |-----------|--------------------------------------------------------------|
 | `land`    | Terrain, Cities, Borders                                     |
 | `power`   | Rule & law, War & chokepoints, Order & chaos                 |
-| `wealth`  | Trade & migration, Technology, food & energy, Object journeys |
-| `peoples` | People, Peoples & languages                                  |
+| `wealth`  | Trade & migration, Technology, food & energy, Object journeys, VOC ships |
+| `peoples` | People, Peoples & languages, Journeys, Middle Passage        |
 | `mind`    | Ideas & faith, Art & architecture                            |
 | `shocks`  | Plague & climate, Epidemics, Eruptions, famine & cold          |
 
@@ -123,6 +123,10 @@ centre, zoom and about how many degrees fit across and down), `onView(fn)` (call
 The Objects tab (`lenses/objects.js`) is the example of a tab that plays a sequence on the map (fly, step the year,
 animate along a leg with `api.redraw()` each frame, caption with `api.scene`). It also exposes `ATLAS.objects` (`list`,
 `journey`, `at(year)`, `near(lon, lat, year, km)`, `follow(id)`) for other plugins.
+
+The Who was there tab (`lenses/travels.js`) is the Contemporaries finder and exposes `ATLAS.travel` (`journeys`,
+`journey(id)` in the shared itinerary format, `positionAt(id, t)`, `travellers(t)`, `ships(t)`, and the promises
+`presentAt(lon, lat, km, y0, y1)`, `contemporaries(personId)`, `lifeline(personId)`). Times are fractional years.
 
 The Codex tab (`lenses/codex.js`) is the example of a plugin that keeps the viewer's progress: it uses `localStorage`
 (wrapped in try/catch, so the page works without it) and never sends it anywhere.
