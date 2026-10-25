@@ -61,6 +61,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
 }
 .brand { font-family: var(--display); font-size: 30px; line-height: 1; margin: 0; font-weight: 400; }
 .askbar { display: flex; gap: 8px; min-width: 0; }
+.askbig { display: grid; gap: 6px; }
+.askbig textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 64px; border: 1.5px solid var(--accent); background: var(--card); padding: 10px 12px; border-radius: 6px; font-size: 17px; font-family: var(--fell); }
 .askbar input { flex: 1; min-width: 0; border: 1px solid var(--rule); background: var(--card); padding: 7px 12px; border-radius: 999px; font-size: 15.5px; font-family: var(--fell); }
 .layers { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .layers .lab { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-right: 2px; }
@@ -321,13 +323,18 @@ a { color: var(--accent); text-underline-offset: 2px; }
 
   <aside class="panel" id="panel">
     <div class="tabs" role="tablist">
-      <button class="tab" role="tab" data-tab="now" aria-selected="true">This year</button>
+      <button class="tab" role="tab" data-tab="guide" aria-selected="true">Ask</button>
+      <button class="tab" role="tab" data-tab="now" aria-selected="false">This year</button>
       <button class="tab" role="tab" data-tab="here" aria-selected="false">Here</button>
-      <button class="tab" role="tab" data-tab="guide" aria-selected="false">Guide</button>
     </div>
     <div class="pane" id="pane-now"></div>
     <div class="pane" id="pane-here" hidden></div>
     <div class="pane" id="pane-guide" hidden>
+      <form class="askbig" id="ask2">
+        <label for="qbox2" class="kick">Ask the Atlas a question</label>
+        <textarea id="qbox2" rows="2" placeholder="Why did Rome fall but Constantinople last?"></textarea>
+        <div class="row"><button class="btn primary" type="submit">Ask, and let the map answer</button></div>
+      </form>
       <span class="hint" id="askhint"></span>
       <div class="examples" id="examples"></div>
       <div class="answer" id="answer" hidden></div>
@@ -1358,7 +1365,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     if (ev.target.id === "prev") { stopPlay(); step(-1); }
     if (ev.target.id === "next") { stopPlay(); step(1); }
     if (ev.target.id === "play") { state.playing ? stopPlay() : startPlay(); }
-    if (ev.target.id === "newq") { abortLive(); stopPlay(); state.answer = null; state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); drawAll(); showCaption(null); answerEl.hidden = true; document.getElementById("examples").hidden = false; document.getElementById("qbox").focus(); }
+    if (ev.target.id === "newq") { abortLive(); stopPlay(); state.answer = null; state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); drawAll(); showCaption(null); answerEl.hidden = true; document.getElementById("examples").hidden = false; const q2b = document.getElementById("qbox2"); q2b.value = ""; q2b.focus(); }
   });
   answerEl.addEventListener("submit", ev => {
     if (ev.target.id !== "follow") return;
@@ -1436,7 +1443,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
 
   // ---------- live AI ----------
   const goBtn = document.getElementById("go"), stopBtn = document.getElementById("stop"), hint = document.getElementById("askhint");
-  let sample = null, ctl = null, convo = [];
+  let sample = null, ctl = null, convo = [], sampleReady;
   const placeIndex = ENTRIES.map(e => `${e.id}|${e.name}|${e.lat.toFixed(2)},${e.lon.toFixed(2)}|${e.start}..${e.end ?? ""}`).join("\n");
   const polityIndex = EMPIRES.map(e => `${e.id}|${e.name}|${e.start}..${e.end ?? ""}`).join("\n");
   const RULES = `You are the Atlas Guide, a history guide that answers by driving an interactive world map for Rishi.
@@ -1461,7 +1468,8 @@ ${placeIndex}
 
 POLITY INDEX (id|name|start..end):
 ${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try { return `\n\n${d.name.toUpperCase()} (lens ${d.id}):\n${d.index((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {})}`; } catch { return ""; } }).join("")}`;
-  (async () => {
+  // use() resolves after the viewer answers; ask() waits for it so an early question is not turned away.
+  sampleReady = (async () => {
     try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; }
     if (!sample) hint.textContent = "Live answers need this page open in Claude. Curated tours work anywhere.";
   })();
@@ -1504,6 +1512,8 @@ ${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try {
   }
   async function ask(q, followUp) {
     setTab("guide");
+    document.getElementById("qbox2").value = q;
+    if (!sample) { hint.textContent = "Connecting to Claude…"; await sampleReady; hint.textContent = ""; }
     if (!sample) {
       const t = TOURS.find(t => t.question.toLowerCase() === q.toLowerCase());
       if (t) return openTour(t);
@@ -1553,6 +1563,14 @@ ${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try {
     t ? openTour(t) : ask(q, false);
   });
   stopBtn.onclick = () => abortLive();
+  const q2 = document.getElementById("qbox2");
+  document.getElementById("ask2").addEventListener("submit", ev => {
+    ev.preventDefault();
+    const q = q2.value.trim(); if (!q) return;
+    document.getElementById("qbox").value = q;
+    document.getElementById("ask").requestSubmit();
+  });
+  q2.addEventListener("keydown", ev => { if (ev.key === "Enter" && !ev.shiftKey) { ev.preventDefault(); document.getElementById("ask2").requestSubmit(); } });
 
   // ---------- start: 1348, the Black Death year, where five lenses overlap ----------
   syncChips();
@@ -1560,7 +1578,7 @@ ${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try {
   new ResizeObserver(() => layout()).observe(mapEl);
   layout();
   setYear(1348);
-  setTab("now");
+  setTab("guide");
   flyTo({ lon: 45, lat: 35, span: 140 }, 0);
 })();
 </script>
