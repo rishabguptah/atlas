@@ -86,4 +86,4 @@ frame `{out, w, h, px, cls, ids, realms, U0, V0, k}`.
 
 ## Budget (measured 2026-10-25)
 
-Page 3.65 MB. Year step with the choropleth on: 8.5 ms median, 13 ms p90 (budget 16 / 33).
+Page 3.80 MB. Year step: 6.2 ms median, 11 ms p90 without the choropleth; 13.5 ms median, 22 ms p90 with it (budget 16 / 33).
