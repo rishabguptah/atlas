@@ -612,11 +612,17 @@
         else g.base.set(graded);
         if (g.ids) realms(g, new Uint8Array(g.base.buffer, g.base.byteOffset, g.base.length * 4));
       },
+      // Map content (sea creatures): drawn into the map's own pixels, so it pans with the land.
       over(g) {
         if (s.creatures) creatures(g, s);
+      },
+      // Screen chrome (the neatline and the title plate): drawn on the pixel map's fixed frame layer, which stays put
+      // while the map pans and zooms under it. chromeKey changes whenever the plate's text does.
+      chrome(g) {
         frame(g, s.frame);
         plate(g, s);
       },
+      chromeKey() { return JSON.stringify(s.title ? s.title(curYear) : null); },
     };
   }
 

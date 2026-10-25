@@ -65,7 +65,17 @@
   // Names go to the page's one label engine (views/pixel/labels.js): realm names curved across what you can see of
   // each realm, and the terrain names; both step back when a lens has focus.
   const LBL = window.ATLAS && ATLAS.labels;
-  let realmItems = [];
+  let realmItems = [], realmAt = null;
+  // Realm names and sprite boxes are found in the screen pixels of the last pixel-map frame. While the map pans or
+  // zooms the queue lays labels out again every frame, so carry them along with the land (a frame drawn at transform
+  // a, shown at transform b), instead of leaving them pinned to the screen until the map settles.
+  const carry = (a, b) => {
+    if (!a || !b || (a.k === b.k && a.x === b.x && a.y === b.y)) return null;
+    const s = b.k / a.k;
+    return (x, y) => [b.x + (x - a.x) * s, b.y + (y - a.y) * s];
+  };
+  const carriedItems = (items, a, b) => { const f = carry(a, b); return f ? items.map(it => it.path ? { ...it, path: it.path.map(p => f(p[0], p[1])) } : it) : items; };
+  const carriedBoxes = (boxes, a, b) => { const f = carry(a, b); if (!f) return boxes; return boxes.map(q => { const p0 = f(q[0], q[1]), p1 = f(q[2], q[3]); return [p0[0], p0[1], p1[0], p1[1]]; }); };
   // Finding the curves takes a few ms, so it waits for an idle moment instead of sitting in a year step's frame.
   let nameJob = 0;
   const idle = window.requestIdleCallback ? fn => requestIdleCallback(fn, { timeout: 150 }) : fn => setTimeout(fn, 30);
@@ -73,13 +83,14 @@
     if (nameJob) return;
     nameJob = idle(() => {
       nameJob = 0;
-      realmItems = pm && typeof PixelRealmNames === "function" && isOn("borders") ? PixelRealmNames(pm.labelGrid()) : [];
+      const grid = pm && typeof PixelRealmNames === "function" && isOn("borders") ? pm.labelGrid() : null;
+      realmItems = grid ? PixelRealmNames(grid) : []; realmAt = grid && grid.t;
       if (LBL) LBL.refresh();
     });
   }
   if (LBL) {
-    LBL.add("realms", () => pm && isOn("borders") ? realmItems : [], { base: true });
-    LBL.add("sprites", () => pm ? pm.spriteBoxes().map(block => ({ block })) : [], { base: true });
+    LBL.add("realms", v => pm && isOn("borders") ? carriedItems(realmItems, realmAt, v && v.t) : [], { base: true });
+    LBL.add("sprites", v => pm ? carriedBoxes(pm.spriteBoxes(), pm.drawnAt, v && v.t).map(block => ({ block })) : [], { base: true });
     if (typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) LBL.add("geo", () => pm && isOn("terrain") ? PixelGeoLabels.items(TERRAIN) : [], { base: true });
   }
   let pm = null, proj = null, T = null, year = null, snap = null, statics = [], movers = [], motion = null, lastRender = 0;

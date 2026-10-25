@@ -831,9 +831,22 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (!zoomRaf) zoomRaf = requestAnimationFrame(zoomFrame);
     if (BASEMAP && BASEMAP.move) try { BASEMAP.move(ev.transform); } catch (err) { console.error(err); }
     if (LQ) LQ.move(ev.transform);
+    if (ev.sourceEvent) panFill(ev.transform);  // a hand on the map, not a fly-to
   });
+  // A pan at one zoom slides the last basemap frame with CSS, which uncovers bare paper at the leading edge. A redraw
+  // mid-pan costs several frames (only the newly exposed bands are painted), so it never runs while the hand is
+  // moving: it waits for a short rest mid-drag, and the land then fills in under the cursor.
+  let bmT = null, panTimer = 0;
+  function panFill(t) {
+    clearTimeout(panTimer); panTimer = 0;
+    if (!BASEMAP || !bmT || t.k !== bmT.k) return;
+    const off = Math.max(Math.abs(t.x - bmT.x), Math.abs(t.y - bmT.y));
+    if (off < 24) return;
+    panTimer = setTimeout(() => { panTimer = 0; const c = d3.zoomTransform(svg.node()); if (bmT && c.k === bmT.k && (c.x !== bmT.x || c.y !== bmT.y)) renderBasemap(); }, 90);
+  }
   const viewWatch = [];  // plugin tabs listening for pans and zooms (ATLAS.api.onView)
   zoom.on("end", () => {
+    clearTimeout(panTimer); panTimer = 0;
     mapEl.classList.remove("moving");
     for (const fn of viewWatch) try { fn(); } catch (err) { console.error(err); }
     if (Math.abs(Math.log(state.k / drawnK)) > 0.15) { drawnK = state.k; drawPeople(); drawWar(); drawLenses(); marksChanged(); }
@@ -1347,9 +1360,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   let BASEMAP = null, bmYear = null;
   function renderBasemap() {
     if (!BASEMAP || !BASEMAP.render) return;
-    bmYear = state.year;
+    bmYear = state.year; bmT = d3.zoomTransform(svg.node());
     const t0 = performance.now();
-    try { BASEMAP.render(d3.zoomTransform(svg.node()), state.year); } catch (err) { console.error("basemap", err); }
+    try { BASEMAP.render(bmT, state.year); } catch (err) { console.error("basemap", err); }
     bmCost = bmCost * 0.6 + (performance.now() - t0) * 0.4;
   }
   // Year changes (slider, play) re-render the basemap in the same frame while that is cheap (a cached border frame,

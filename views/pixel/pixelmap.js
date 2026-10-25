@@ -55,6 +55,15 @@
     Object.assign(canvas.style, { position: "absolute", left: 0, top: 0, imageRendering: "pixelated", transformOrigin: "0 0", pointerEvents: "none" });
     container.prepend(canvas);
     const ctx = canvas.getContext("2d");
+    // The era's neatline and title plate sit on their own canvas over the map (and over the motion layers, which
+    // insert themselves right after the map canvas). move() never shifts it, so the frame stays on the screen's edge
+    // while the land slides under it.
+    const chromeC = document.createElement("canvas");
+    chromeC.className = "pixelmap-frame";
+    Object.assign(chromeC.style, { position: "absolute", left: 0, top: 0, imageRendering: "pixelated", pointerEvents: "none", display: "none" });
+    canvas.after(chromeC);
+    const cctx = chromeC.getContext("2d");
+    let chromeKey = "";
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
     let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, elevA = null, riv = null, anim = null, art = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [], paleo = null, paleoKey = "";
 
@@ -478,6 +487,7 @@
       if (overlay) try { overlay(frameInfo()); } catch (err) { console.error("pixel overlay", err); }
       const vis = [Math.ceil(-parseFloat(canvas.style.left) / PX), Math.ceil(-parseFloat(canvas.style.top) / PX), Math.floor((lastW - parseFloat(canvas.style.left)) / PX) - 1, Math.floor((lastH - parseFloat(canvas.style.top)) / PX) - 1];
       if (era && era.over) try { era.over({ out, pre, w, h, px: PX, frame, vis, cls, sprite: spriteMask, U0, V0, k: t.k, projection, at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] }); } catch (err) { console.error("pixel era", err); }
+      paintChrome(vis);
       // Era crossfade: the old frame dissolves into the new one through an ordered-dither mask, in a few steps.
       if (fade) { if (fade.prev.length === out.length && fade.U0 === U0 && fade.V0 === V0) { const m = fade.mask, p = fade.prev, f = fade.t; for (let k = 0; k < out.length; k++) if (m[k] >= f) out[k] = p[k]; } }
       lastOut = out;
@@ -486,8 +496,23 @@
       emit("paint");
     }
 
+    // The era frame layer: redrawn only when the view's size, the era or the plate's text changes.
+    function paintChrome(vis) {
+      const on = !!(era && era.chrome);
+      const key = on ? [era.id, w, h, vis.join(), canvas.style.left, canvas.style.top, era.chromeKey ? era.chromeKey() : ""].join("|") : "";
+      if (key === chromeKey) return;
+      chromeKey = key;
+      if (!on) { chromeC.style.display = "none"; return; }
+      if (chromeC.width !== w || chromeC.height !== h) { chromeC.width = w; chromeC.height = h; }
+      Object.assign(chromeC.style, { left: canvas.style.left, top: canvas.style.top, width: canvas.style.width, height: canvas.style.height, display: "" });
+      const cimg = cctx.createImageData(w, h), cout = new Uint32Array(cimg.data.buffer);
+      try { era.chrome({ out: cout, w, h, px: PX, vis }); } catch (err) { console.error("pixel era frame", err); }
+      cctx.putImageData(cimg, 0, 0);
+    }
+
     return {
       canvas,
+      frameCanvas: chromeC,
       render,
       warm,
       move(t) { if (!last) return; const s = t.k / last.k; canvas.style.transform = `translate(${t.x - last.x * s}px,${t.y - last.y * s}px) scale(${s})`; canvas.style.transformOrigin = `${-parseFloat(canvas.style.left)}px ${-parseFloat(canvas.style.top)}px`; },
@@ -542,7 +567,9 @@
         return out;
       },
       // The last frame's realm ids and terrain classes per art pixel, for naming realms (realmnames.js).
-      labelGrid() { return ids && last ? { ids, cls, w, h, PX, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top), realms: realmsNow } : null; },
+      labelGrid() { return ids && last ? { ids, cls, w, h, PX, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top), realms: realmsNow, t: last } : null; },
+      // The transform the last frame was drawn at (screen boxes from spriteBoxes and labelGrid are in its pixels).
+      get drawnAt() { return last; },
       toPixel(lon, lat) { const p = projection([lon, lat]); return p && [Math.floor((p[0] * last.k) / PX) - U0, Math.floor((p[1] * last.k) / PX) - V0]; },
       get size() { return { w, h, PX }; },
       // Terrain art of the last render: { anim (1 foam, 2 wave glyph, 3 river, 4 smoke), tier, ms } (terrain-art.js).
