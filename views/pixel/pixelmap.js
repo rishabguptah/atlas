@@ -63,7 +63,7 @@
       img.src = L.url(col, row);
       return null;
     }
-    function sample(lon, lat, need, u, v) {
+    function sample(lon, lat, need, u, v, exact) {
       let r = null; lon = Math.min(179.9999, lon); lat = Math.max(-89.9999, lat);
       for (let li = 0; li < levels.length; li++) {
         const L = levels[li];
@@ -75,7 +75,7 @@
       }
       if (!r) return null;
       // Jitter by up to half a cell so cell edges read as organic shapes, not blocks, when zoomed past the data.
-      const j = r.cell > need ? 0.9 : 0.5;
+      const j = exact ? 0 : r.cell > need ? 0.9 : 0.5;
       const x = Math.min(r.w - 1, Math.max(0, Math.floor((lon - r.x0) / r.cell + (hash(u, v) - 0.5) * j)));
       const y = Math.min(r.h - 1, Math.max(0, Math.floor((r.y0 - lat) / r.cell + (hash(v, u) - 0.5) * j)));
       const i = (y * r.w + x) * 4;
@@ -115,8 +115,11 @@
         if (!back || Math.abs(back[0] - px) > 0.5 || Math.abs(back[1] - py) > 0.5) { base[k] = OUTP; continue; }
         const s = sample(ll[0], ll[1], need, u, v) || [10, 128, 0];
         let c = s[0];
+        // Rivers stay thin lines when zoomed past the data: only the unjittered cell counts.
+        if (c === 4 && sample(ll[0], ll[1], need, u, v, true)[0] !== 4) c = 10;
         const isLand = landM[k * 4 + 3] > 127;
-        if (c === 4) c = 10;
+        // Rasterised rivers only once zoomed in far enough that a cell is about a pixel; vector lines cover the rest.
+        if (c === 4 && (need > 0.1 || !isLand)) c = 10;
         if (isLand && WATER(c) && c !== 3) c = 10;
         if (!isLand && !WATER(c)) c = 2;
         cls[k] = c; hs[k] = s[1]; band[k] = s[2];
@@ -126,6 +129,7 @@
       // Base colours: three tones per class, picked by hillshade (land) or depth (sea), with a world-anchored Bayer dither.
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, c = cls[k]; if (c === 255) continue;
+        if (c === 4) { base[k] = RIVER[0]; continue; }
         const d = BAYER[((V0 + j) & 3) * 4 + ((U0 + i) & 3)];
         let tone;
         if (c <= 2) tone = c === 2 ? (band[k] < 1 ? 2 : 1) : 1 + Math.round(d * 0.8 - (band[k] - 60) / 120);
@@ -216,7 +220,7 @@
     }
     let NEED = 1, mood = opts.mood || "day";
     function stamps() {
-      const ink = pack(rgb("#3a3028")), trunk = pack(rgb("#5e3a1e")), snow = pack(rgb("#fbfaf4")), snow2 = pack(rgb("#c8d0d8"));
+      const ink = pack(rgb("#3a3028")), trunk = pack(rgb("#3e2a1a")), snow = pack(rgb("#fbfaf4")), snow2 = pack(rgb("#c8d0d8"));
       const big = NEED < 0.09;
       const mu = big ? 10 : 5, mv = big ? 5 : 3;
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {

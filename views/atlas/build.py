@@ -84,8 +84,22 @@ pixel_dir = os.path.join(repo, 'views/pixel')
 pixel_src = atlas + 'pixel/'
 if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
     import base64
-    rv = [{'rank': r['rank'], 'line': r['line']} for r in json.load(open(pixel_src + 'rivers.json')) if r['rank'] <= 5] if os.path.exists(pixel_src + 'rivers.json') else []
-    data += 'const PIXEL = ' + J({'tile0': 'data:image/png;base64,' + base64.b64encode(open(pixel_src + 'terrain/terrain_l0.png', 'rb').read()).decode(), 'rivers': rv}) + ';\n'
+    # Keep the inline part small: L0 as lossless WebP, only the great rivers at 0.1 degree (finer rivers come in the tiles).
+    try:
+        import io
+        from PIL import Image
+        buf = io.BytesIO(); Image.open(pixel_src + 'terrain/terrain_l0.png').save(buf, 'WEBP', lossless=True, quality=100, method=6)
+        tile0 = 'data:image/webp;base64,' + base64.b64encode(buf.getvalue()).decode()
+    except ImportError:
+        tile0 = 'data:image/png;base64,' + base64.b64encode(open(pixel_src + 'terrain/terrain_l0.png', 'rb').read()).decode()
+    rv = []
+    for r in (json.load(open(pixel_src + 'rivers.json')) if os.path.exists(pixel_src + 'rivers.json') else []):
+        pts = []
+        for x, y in r['line']:
+            q = [round(x, 1), round(y, 1)]
+            if not pts or pts[-1] != q: pts.append(q)
+        if r['rank'] <= 4 and len(pts) > 1: rv.append({'rank': r['rank'], 'line': pts})
+    data += 'const PIXEL = ' + J({'tile0': tile0, 'rivers': rv}) + ';\n'
     for f in ('palette.js', 'sprites-library.js', 'sprites.js', 'pixelmap.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
