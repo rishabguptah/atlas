@@ -1,0 +1,438 @@
+<meta charset="utf-8">
+<title>Atlas Interface Directions</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen:wght@400;700&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/*__KIT__*/
+/*__CHROME__*/
+/* Layout concept: the map fills the screen; the chronicle floats over it at the edges like a game HUD.
+   Three compositions of the same parts: A corners (overworld HUD), B codex (a bound book at the side), C console (a JRPG command bar). */
+:root { --ink-fixed: #221f1a; --vellum-fixed: #f6f0dc; --g: 12px; --pw: 400px; }
+html, body { height: 100%; }
+[hidden] { display: none !important; }
+body { background: var(--sea); color: var(--ink); font-family: var(--f-prose); margin: 0; overflow: hidden; }
+button, input, select { font: inherit; color: inherit; }
+.app { position: relative; height: 100%; overflow: hidden; }
+.map { position: absolute; inset: 0; background: var(--sea) var(--bg-wide) center / cover no-repeat; image-rendering: pixelated; }
+.app > * { box-sizing: border-box; }
+
+/* Year cartouche: the hero. Pixel numerals, the era under them, a rubric rule in the era's colour. */
+.plate { position: absolute; display: grid; justify-items: start; gap: 2px; padding: 4px 12px 6px; color: var(--ink); min-width: 168px; }
+.plate .yr { font-family: var(--f-head); font-size: 48px; line-height: 44px; font-weight: 600; letter-spacing: .01em; font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 6px; }
+.plate .yr small { font-family: var(--f-hud); font-size: 16px; line-height: 16px; font-weight: 400; color: var(--ink-soft); }
+.plate .era { font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--era); display: flex; gap: 6px; align-items: center; }
+.plate .era::before { content: ""; width: 8px; height: 8px; background: var(--era-2); box-shadow: 2px 2px 0 var(--ink); }
+
+/* One obvious next thing: a gold-ruled card that always sits in the same place. */
+.next { all: unset; box-sizing: border-box; position: absolute; cursor: pointer; display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 2px 8px; align-items: center; padding: 4px 10px 6px 6px; color: var(--ink);
+  border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); transition: transform 120ms var(--ease); }
+.next .ico { --t: var(--gold); grid-row: 1 / 3; }
+.next .kick { color: var(--gold-2); }
+.next b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 18px; }
+.next:hover { transform: translateX(2px); }
+@media (prefers-reduced-motion: no-preference) { .next .ico { animation: nudge 1.2s steps(2) infinite; } }
+@keyframes nudge { 50% { transform: translateX(2px); } }
+
+/* Ask: a sunk well with a quill. */
+.ask { position: absolute; display: flex; align-items: center; gap: 8px; padding: 2px 2px 2px 6px; }
+.ask .ico { --t: var(--ink-2); }
+.ask input { flex: 1; min-width: 0; border: 0; background: none; outline: none; font-family: var(--f-prose); font-size: 16px; padding: 6px 2px; color: var(--ink); }
+.ask input::placeholder { color: var(--ink-soft); font-style: italic; }
+
+.mapctl { position: absolute; display: flex; gap: 6px; }
+.mapctl .pbtn .ico { --t: var(--gold); }
+
+/* Lens families. */
+.lenses { position: absolute; display: flex; gap: 6px; }
+.lens .ico { width: 24px; height: 24px; }
+.lens .ico .x { fill: var(--t); }
+.lens .cnt { font-family: var(--f-hud); font-size: 8px; opacity: .8; margin-left: auto; }
+.sub { position: absolute; display: grid; gap: 6px; padding: 6px 8px 8px; min-width: 220px; }
+.sub .kick { color: var(--t); }
+.sub .opt { all: unset; cursor: pointer; display: grid; grid-template-columns: 14px auto minmax(0, 1fr); gap: 8px; align-items: center; font-family: var(--f-prose); font-size: 14.5px; padding: 1px 4px; }
+.sub .opt i { width: 10px; height: 10px; box-shadow: 0 0 0 2px var(--ink); background: var(--vellum); }
+.sub .opt[aria-pressed="true"] i { background: var(--t); }
+.sub .opt span.g { font-family: var(--f-hud); font-size: 8px; color: var(--ink-soft); justify-self: end; }
+.sub .opt:hover { background: var(--wash); }
+
+/* Time: play, the ribbon of events, the track, eras. */
+.time { position: absolute; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto auto; gap: 2px 10px; align-items: center; padding: 4px 8px 6px; }
+.time .play { grid-row: 1 / 4; }
+.time .play .ico { --t: var(--gold); width: 24px; height: 24px; }
+.strip { grid-column: 2; height: 20px; width: 100%; display: block; image-rendering: pixelated; }
+.track { grid-column: 2; position: relative; height: 16px; }
+.track input { position: absolute; inset: 0; width: 100%; margin: 0; appearance: none; -webkit-appearance: none; background: none; cursor: pointer; height: 16px; }
+.track .rail { position: absolute; left: 0; right: 0; top: 4px; height: 8px; box-shadow: 0 0 0 2px var(--line, var(--ink-fixed)); background: var(--vellum-2); }
+.track .fill { position: absolute; left: 0; top: 4px; height: 8px; background: repeating-linear-gradient(90deg, var(--era) 0 6px, var(--era-2) 6px 8px); }
+.track input::-webkit-slider-runnable-track { height: 16px; background: none; }
+.track input::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 22px; margin-top: -3px; background: var(--knob) center / 16px 22px no-repeat; image-rendering: pixelated; border: 0; }
+.track input::-moz-range-thumb { width: 16px; height: 22px; background: var(--knob) center / 16px 22px no-repeat; border: 0; border-radius: 0; image-rendering: pixelated; }
+.track input::-moz-range-track { background: none; }
+.track input:focus-visible { outline: 2px dashed var(--gold); outline-offset: 4px; }
+.eras { grid-column: 2; position: relative; height: 14px; }
+.eras button { all: unset; position: absolute; top: 0; height: 14px; box-sizing: border-box; padding: 1px 3px 0; overflow: hidden; white-space: nowrap; cursor: pointer;
+  font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); border-left: 2px solid var(--ink-soft); }
+.eras button:hover { color: var(--ink); background: var(--wash); }
+.eras button[aria-current="true"] { color: var(--vellum); background: var(--era); border-left-color: var(--era-2); }
+.time .readout { grid-column: 3; grid-row: 1 / 3; display: grid; justify-items: end; gap: 4px; }
+.time .readout b { font-family: var(--f-hud); font-size: 16px; line-height: 16px; font-weight: 400; }
+.time select { font-family: var(--f-hud); font-size: 8px; text-transform: uppercase; border: 0; box-shadow: 0 0 0 2px var(--ink); background: var(--vellum-hi); padding: 2px 4px; }
+
+/* Tabs and the panel. */
+.tabs { position: absolute; display: flex; }
+.tabk .ico { width: 24px; height: 24px; --t: var(--ink-soft); }
+.tabk[aria-selected="true"] .ico { --t: var(--rubric); }
+.tabk .badge { font-family: var(--f-hud); font-size: 8px; background: var(--rubric); color: #fffaea; padding: 0 3px; }
+.panel { position: absolute; display: flex; flex-direction: column; min-height: 0; }
+.pane { overflow-y: auto; min-height: 0; flex: 1; padding: 6px 8px 16px 6px; display: flex; flex-direction: column; gap: 12px; scrollbar-width: thin; scrollbar-color: var(--ink-soft) transparent; }
+.pane[hidden] { display: none; }
+.pane .lead { display: grid; gap: 4px; }
+.pane .lead p { margin: 0; color: var(--ink-2); }
+.sec { display: grid; gap: 2px; }
+.sec .sech .ico.s { --t: var(--c); }
+.focus { display: grid; gap: 6px; padding: 6px 10px 8px; }
+.focus .fk { color: var(--c); }
+.focus p { margin: 0; }
+.focus .why { font-style: italic; color: var(--ink-soft); }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.tile { padding: 4px 8px 6px; display: grid; gap: 2px; }
+.tile b { font-family: var(--f-head); font-size: 24px; line-height: 24px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.quest { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 2px 8px; align-items: center; padding: 6px 8px; }
+.quest .meter { grid-column: 2 / 4; }
+.quest b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 18px; }
+.qa { display: grid; gap: 8px; }
+.qa .well { display: grid; gap: 8px; padding: 6px 8px; }
+.qa textarea { border: 0; background: none; resize: vertical; min-height: 52px; font-family: var(--f-prose); font-size: 17px; line-height: 1.35; outline: none; color: var(--ink); }
+.qa textarea::placeholder { color: var(--ink-soft); font-style: italic; }
+.ex { all: unset; cursor: pointer; box-sizing: border-box; display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 6px 6px 6px 2px; font-family: var(--f-prose); font-size: 15px; line-height: 1.35; }
+.ex::before { content: ""; width: 12px; height: 12px; opacity: 0; background: var(--hand) center / 12px 12px no-repeat; image-rendering: pixelated; align-self: center; }
+.ex:hover::before, .ex:focus-visible::before { opacity: 1; }
+.ex:hover { background: var(--wash); }
+.foot { font-size: 12.5px; color: var(--ink-soft); margin: 0; padding-top: 8px; background: linear-gradient(90deg, var(--ink-soft) 50%, transparent 0) top left / 4px 2px repeat-x; }
+.riddle { padding: 8px 10px; display: grid; gap: 6px; }
+.riddle b { font-family: var(--f-head); font-weight: 500; font-size: 20px; line-height: 1.15; }
+.wi { padding: 6px 10px 8px; display: grid; gap: 4px; }
+.wi b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 1.2; }
+.wi .m { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; }
+
+/* Map key toast, a caption on the map, the selection. */
+.caption { position: absolute; display: grid; gap: 4px; padding: 6px 10px 8px; max-width: 360px; }
+.caption .kick { color: var(--t-shocks); }
+.caption b { font-family: var(--f-head); font-weight: 500; font-size: 20px; line-height: 1.1; }
+.caption p { margin: 0; font-size: 14px; }
+.selmark { position: absolute; width: 24px; height: 24px; margin: -12px 0 0 -12px; pointer-events: none; background:
+  linear-gradient(var(--gold-hi), var(--gold-hi)) 0 0 / 8px 2px no-repeat, linear-gradient(var(--gold-hi), var(--gold-hi)) 0 0 / 2px 8px no-repeat,
+  linear-gradient(var(--gold-hi), var(--gold-hi)) 100% 0 / 8px 2px no-repeat, linear-gradient(var(--gold-hi), var(--gold-hi)) 100% 0 / 2px 8px no-repeat,
+  linear-gradient(var(--gold-hi), var(--gold-hi)) 0 100% / 8px 2px no-repeat, linear-gradient(var(--gold-hi), var(--gold-hi)) 0 100% / 2px 8px no-repeat,
+  linear-gradient(var(--gold-hi), var(--gold-hi)) 100% 100% / 8px 2px no-repeat, linear-gradient(var(--gold-hi), var(--gold-hi)) 100% 100% / 2px 8px no-repeat;
+  filter: drop-shadow(2px 2px 0 var(--ink-fixed)); }
+@media (prefers-reduced-motion: no-preference) { .selmark { animation: sel 1s steps(2) infinite; } }
+@keyframes sel { 50% { transform: scale(1.25); } }
+
+/* ---------- A: corners (overworld HUD) ---------- */
+[data-dir="a"] .plate { left: max(var(--g), env(safe-area-inset-left, 0px)); top: var(--g); }
+[data-dir="a"] .next { left: max(var(--g), env(safe-area-inset-left, 0px)); top: 112px; width: 268px; }
+[data-dir="a"] .ask { left: 300px; right: calc(var(--pw) + 2 * var(--g) + 150px); top: var(--g); max-width: 560px; }
+[data-dir="a"] .mapctl { right: calc(var(--pw) + 2 * var(--g)); top: calc(var(--g) + 6px); }
+[data-dir="a"] .lenses { left: max(var(--g), env(safe-area-inset-left, 0px)); top: 200px; flex-direction: column; width: 140px; }
+[data-dir="a"] .lens { width: 100%; font-size: 16px; line-height: 16px; letter-spacing: 0; }
+[data-dir="a"] .lenses { width: 168px; }
+[data-dir="a"] .sub { left: 194px; top: 200px; }
+[data-dir="a"] .time { left: max(var(--g), env(safe-area-inset-left, 0px)); right: calc(var(--pw) + 2 * var(--g)); bottom: var(--g); }
+[data-dir="a"] .tabs { right: max(var(--g), env(safe-area-inset-right, 0px)); width: var(--pw); top: var(--g); z-index: 2; gap: 2px; padding: 0 12px; }
+[data-dir="a"] .tabs .tabk { flex: 1; flex-direction: column; gap: 2px; padding: 6px 2px 8px; background: var(--vellum-3); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 6px), 0 100%); }
+[data-dir="a"] .tabs .tabk[aria-selected="true"] { background: var(--rubric); color: #fffaea; padding-bottom: 14px; }
+[data-dir="a"] .tabs .tabk[aria-selected="true"] .ico { --t: var(--gold-hi); }
+[data-dir="a"] .panel { right: max(var(--g), env(safe-area-inset-right, 0px)); width: var(--pw); top: 34px; bottom: var(--g); padding-top: 34px; }
+[data-dir="a"] .caption { left: 180px; bottom: 132px; }
+
+/* ---------- B: codex (a bound book at the side) ---------- */
+[data-dir="b"] { --pw: 420px; }
+[data-dir="b"] .panel { right: max(var(--g), env(safe-area-inset-right, 0px)); top: var(--g); bottom: var(--g); width: var(--pw); padding-left: 14px; padding-top: 70px; }
+[data-dir="b"] .panel::before { content: ""; position: absolute; left: -4px; top: -4px; bottom: -4px; width: 14px; background:
+  repeating-linear-gradient(180deg, transparent 0 10px, var(--gold) 10px 12px, transparent 12px 22px) 6px 0 / 2px 100% no-repeat, var(--t-power-dkk);
+  box-shadow: 0 0 0 2px var(--ink-fixed); }
+[data-dir="b"] .ask { right: calc(max(var(--g), env(safe-area-inset-right, 0px)) + 18px); top: calc(var(--g) + 14px); width: calc(var(--pw) - 34px); z-index: 2; }
+[data-dir="b"] .tabs { right: calc(var(--pw) + var(--g) - 2px); top: 90px; flex-direction: column; gap: 4px; z-index: 1; }
+[data-dir="b"] .tabs .tabk { width: 112px; padding: 6px 10px 6px 12px; background: var(--vellum-3); color: var(--ink-2); clip-path: polygon(8px 0, 100% 0, 100% 100%, 8px 100%, 0 50%); filter: none; justify-content: flex-start; }
+[data-dir="b"] .tabs .tabk[aria-selected="true"] { background: var(--rubric); color: #fffaea; transform: translateX(-8px); }
+[data-dir="b"] .tabs .tabk[aria-selected="true"] .ico { --t: var(--gold-hi); }
+[data-dir="b"] .plate { left: max(var(--g), env(safe-area-inset-left, 0px)); top: var(--g); }
+[data-dir="b"] .lenses { left: 300px; right: calc(var(--pw) + 140px); top: 0; justify-content: center; gap: 4px; }
+[data-dir="b"] .lens { flex-direction: column; gap: 4px; width: 72px; padding: 8px 4px 16px; border: 0; border-image: none; background: var(--vellum);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 75% calc(100% - 4px), 50% calc(100% - 10px), 25% calc(100% - 4px), 0 100%);
+  box-shadow: inset 0 0 0 2px var(--ink-fixed), inset 0 -2px 0 2px var(--ink-fixed); }
+[data-dir="b"] .lens[aria-pressed="true"] { background: var(--t); padding-bottom: 26px; }
+[data-dir="b"] .lens .cnt { margin: 0; }
+[data-dir="b"] .sub { left: 50%; top: 118px; transform: translateX(-60%); }
+[data-dir="b"] .mapctl { left: max(var(--g), env(safe-area-inset-left, 0px)); top: 116px; flex-direction: column; align-items: flex-start; }
+[data-dir="b"] .mapctl .pbtn { justify-content: flex-start; }
+[data-dir="b"] .next { left: max(var(--g), env(safe-area-inset-left, 0px)); bottom: 118px; width: 300px; }
+[data-dir="b"] .time { left: max(var(--g), env(safe-area-inset-left, 0px)); right: calc(var(--pw) + 140px); bottom: var(--g); }
+[data-dir="b"] .caption { left: max(var(--g), env(safe-area-inset-left, 0px)); bottom: 200px; }
+
+/* ---------- C: console (a JRPG command bar) ---------- */
+[data-dir="c"] .console-bg { position: absolute; left: 0; right: 0; bottom: 0; height: 158px; background: linear-gradient(transparent, rgba(16, 14, 12, .45)); pointer-events: none; }
+[data-dir="c"] .tabs { left: max(var(--g), env(safe-area-inset-left, 0px)); bottom: var(--g); width: 196px; height: 140px; flex-direction: column; gap: 0; padding: 6px 4px; border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); image-rendering: pixelated; justify-content: center; }
+[data-dir="c"] .tabs .tabk { padding: 1px 6px 1px 20px; position: relative; font-size: 16px; line-height: 20px; letter-spacing: 0; color: var(--ink); }
+[data-dir="c"] .tabs .tabk[aria-selected="true"] { color: var(--rubric); }
+[data-dir="c"] .lens { font-size: 16px; line-height: 16px; letter-spacing: 0; }
+[data-dir="c"] .tabs .tabk .ico { width: 18px; height: 18px; }
+[data-dir="c"] .tabs .tabk[aria-selected="true"]::before { content: ""; position: absolute; left: 0; top: 50%; width: 14px; height: 14px; margin-top: -7px; background: var(--hand) center / 14px no-repeat; image-rendering: pixelated; }
+[data-dir="c"] .time { left: 220px; right: 404px; bottom: var(--g); height: 140px; grid-template-columns: auto auto minmax(0, 1fr) auto; }
+[data-dir="c"] .time .play { grid-column: 1; }
+[data-dir="c"] .time .cyear { display: grid; grid-row: 1 / 4; grid-column: 2; padding-right: 6px; }
+[data-dir="c"] .time .cyear b { font-family: var(--f-head); font-size: 48px; line-height: 44px; font-weight: 600; }
+[data-dir="c"] .time .cyear span { font-family: var(--f-hud); font-size: 8px; text-transform: uppercase; letter-spacing: .1em; color: var(--era); }
+[data-dir="c"] .strip, [data-dir="c"] .track, [data-dir="c"] .eras { grid-column: 3; }
+[data-dir="c"] .time .readout { grid-column: 4; }
+[data-dir="c"] .time .readout b { display: none; }
+[data-dir="c"] .plate { display: none; }
+[data-dir="c"] .lenses { right: max(var(--g), env(safe-area-inset-right, 0px)); bottom: var(--g); width: 380px; height: 140px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 6px; padding: 6px 8px;
+  border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); image-rendering: pixelated; align-content: center; }
+[data-dir="c"] .lens { padding: 0 6px 0 2px; }
+[data-dir="c"] .sub { right: max(var(--g), env(safe-area-inset-right, 0px)); bottom: 168px; width: 380px; }
+[data-dir="c"] .panel { right: max(var(--g), env(safe-area-inset-right, 0px)); width: var(--pw); top: 72px; bottom: 168px; }
+[data-dir="c"] .app:not(.sheet-open) .panel { display: none; }
+[data-dir="c"] .ask { left: 50%; transform: translateX(-50%); top: var(--g); width: min(620px, calc(100% - 520px)); }
+[data-dir="c"] .next { left: max(var(--g), env(safe-area-inset-left, 0px)); top: var(--g); width: 290px; }
+[data-dir="c"] .mapctl { right: max(var(--g), env(safe-area-inset-right, 0px)); top: calc(var(--g) + 6px); }
+[data-dir="c"] .caption { left: 220px; bottom: 172px; }
+[data-dir="c"] .panel .closep { display: inline-flex; }
+.closep { display: none; position: absolute; right: 4px; top: 4px; z-index: 2; }
+.cyear { display: none; }
+.console-bg { display: none; }
+[data-dir="c"] .console-bg { display: block; }
+
+/* ---------- Phone: the map, a top bar, lenses in a row, time at the bottom, the chronicle as a sheet. ---------- */
+@media (max-width: 760px) {
+  .map { background-position: 38% 30%; background-size: auto 140%; }
+  .app[data-dir] .plate { display: grid; left: max(8px, env(safe-area-inset-left, 0px)); top: 8px; min-width: 0; padding: 2px 8px 4px; }
+  .app[data-dir] .plate .yr { font-size: 32px; line-height: 30px; }
+  .app[data-dir] .ask { display: none; }
+  .app[data-dir] .mapctl { right: max(8px, env(safe-area-inset-right, 0px)); top: 8px; left: auto; flex-direction: row; }
+  .app[data-dir] .mapctl .pbtn span { display: none; }
+  .app[data-dir] .next { left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); top: 128px; bottom: auto; width: auto; padding: 2px 8px 2px 4px; }
+  .app[data-dir] .next .kick { display: none; }
+  .app[data-dir] .next b { font-size: 12px; line-height: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .app[data-dir] .next .ico { grid-row: 1; }
+  .app[data-dir] .lenses { left: 0; right: 0; top: 76px; bottom: auto; width: auto; height: auto; display: flex; flex-direction: row; overflow-x: auto; padding: 4px max(8px, env(safe-area-inset-left, 0px)) 8px; border: 0; filter: none; gap: 6px; scrollbar-width: none; justify-content: flex-start; }
+  .app[data-dir] .lens { width: auto; flex: none; flex-direction: row; padding: 2px 8px 2px 4px; clip-path: none; border: 6px solid transparent; border-image: var(--f-chip) 3 / 6px stretch; box-shadow: none; }
+  .app[data-dir] .sub { left: 8px; right: 8px; top: 170px; transform: none; width: auto; bottom: auto; }
+  .app[data-dir] .time { left: 0; right: 0; bottom: 0; height: auto; padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); grid-template-columns: auto minmax(0, 1fr) auto; }
+  .app[data-dir] .time .cyear { display: none; }
+  .app[data-dir] .strip, .app[data-dir] .track, .app[data-dir] .eras { grid-column: 2; }
+  .app[data-dir] .time .readout { grid-column: 3; }
+  .app[data-dir] .time .readout b { display: none; }
+  .app[data-dir] .eras button:not([aria-current="true"]) { color: transparent; }
+  .app[data-dir] .tabs { left: 0; right: 0; top: auto; bottom: calc(36vh + 88px); width: auto; height: auto; flex-direction: row; padding: 0 8px; border: 0; filter: none; z-index: 2; gap: 2px; }
+  .app[data-dir] .tabs .tabk { flex: 1; flex-direction: column; width: auto; padding: 4px 2px 6px; transform: none; clip-path: none; background: var(--vellum-3); }
+  .app[data-dir] .tabs .tabk[aria-selected="true"] { background: var(--rubric); color: #fffaea; }
+  .app[data-dir] .tabs .tabk::before { display: none; }
+  .app[data-dir] .panel { display: flex; left: 0; right: 0; width: auto; top: auto; bottom: 88px; height: 36vh; padding: 0; }
+  .app[data-dir] .panel::before { display: none; }
+  .app[data-dir] .caption, .console-bg { display: none; }
+  .app[data-dir] + .switch { left: 50%; bottom: auto; top: 172px; }
+}
+
+/* The direction switcher (this preview only). */
+.switch { position: fixed; left: 50%; transform: translateX(-50%); bottom: 110px; z-index: 50; display: flex; gap: 4px; align-items: center; padding: 4px 6px; background: var(--hud); color: var(--hud-ink);
+  box-shadow: 0 0 0 2px var(--gold-2), 4px 4px 0 2px rgba(0,0,0,.5); font-family: var(--f-hud); font-size: 8px; text-transform: uppercase; letter-spacing: .08em; }
+.switch button { all: unset; cursor: pointer; padding: 4px 6px; }
+.switch button[aria-pressed="true"] { background: var(--gold); color: var(--ink-fixed); }
+.switch .sep { width: 2px; align-self: stretch; background: var(--gold-2); margin: 0 4px; }
+.app[data-dir="c"] + .switch { bottom: 176px; left: 40%; }
+.app[data-dir="b"] + .switch { left: 36%; }
+</style>
+
+<div class="app" id="app" data-dir="a">
+  <div class="map" id="map" aria-label="World map, 1348 (a picture of the pixel map in this preview)"></div>
+  <div class="console-bg"></div>
+  <div class="selmark" style="left: 46%; top: 44%"></div>
+  <div class="plate fr fr-plate" id="plate"><div class="yr" id="yr">1348<small>CE</small></div><div class="era" id="eraname">High Middle Ages · the Black Death</div></div>
+  <button class="next" id="next" type="button"><span data-ico="next"></span><span class="kick">Next</span><b>Follow the Black Death from Kaffa to Bergen</b></button>
+  <form class="ask fr fr-inset" id="ask"><span data-ico="ask"></span><input id="q" placeholder="Ask anything: why did Rome fall but Constantinople last?" aria-label="Ask the atlas" autocomplete="off"><button class="pbtn" type="submit">Ask</button></form>
+  <div class="mapctl" role="toolbar" aria-label="Map controls">
+    <button class="pbtn q" type="button" title="Surprise me (S)"><span data-ico="die"></span><span>Surprise</span></button>
+    <button class="pbtn q" type="button" title="Key (K)"><span data-ico="key"></span><span>Key</span></button>
+    <button class="pbtn q" type="button" title="Focus (F)"><span data-ico="focus"></span><span>Focus</span></button>
+  </div>
+  <nav class="lenses" id="lenses" aria-label="Lens families"></nav>
+  <div class="sub fr fr-panel" id="sub" hidden></div>
+  <div class="time fr fr-panel" id="time">
+    <button class="pbtn sq play" id="play" type="button" aria-label="Play through time"><span data-ico="play"></span></button>
+    <div class="cyear"><b id="cyr">1348</b><span id="cera">High Middle Ages</span></div>
+    <canvas class="strip" id="strip" width="600" height="10" aria-hidden="true"></canvas>
+    <div class="track"><div class="rail"></div><div class="fill" id="fill"></div><input type="range" id="year" min="-3000" max="2025" value="1348" aria-label="Year"></div>
+    <div class="eras" id="eras"></div>
+    <div class="readout"><b id="yout">1348</b><select id="speed" aria-label="Playback speed"><option>¼×</option><option>½×</option><option selected>1×</option><option>2×</option><option>5×</option><option>10 yr/s</option></select></div>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Chronicle"></nav>
+  <aside class="panel fr fr-panel" id="panel">
+    <button class="pbtn q sq closep" type="button" aria-label="Close" id="closep"><span data-ico="close"></span></button>
+    <div class="pane" id="pane-now"></div>
+    <div class="pane" id="pane-here" hidden></div>
+    <div class="pane" id="pane-ask" hidden></div>
+    <div class="pane" id="pane-codex" hidden></div>
+    <div class="pane" id="pane-whatif" hidden></div>
+  </aside>
+  <div class="caption fr fr-card" id="caption"><span class="kick">Shocks · Plague</span><b>The Black Death reaches Florence</b><p>Spring 1348. Within a year the city loses perhaps half its people; Boccaccio sets the Decameron here.</p></div>
+</div>
+<div class="switch" role="toolbar" aria-label="Preview controls">
+  <button data-dir="a" aria-pressed="true">A Corners</button><button data-dir="b" aria-pressed="false">B Codex</button><button data-dir="c" aria-pressed="false">C Console</button>
+  <span class="sep"></span><button id="theme" aria-pressed="false">Night</button>
+  <span class="sep"></span><button id="eracyc" aria-pressed="false">Era accent</button>
+</div>
+
+<script>
+/*__ICONS__*/
+(() => {
+  const $ = s => document.querySelector(s), app = $("#app");
+  const ico = (n, cls) => (PXICON[n] || "").replace('class="ico"', `class="ico${cls ? " " + cls : ""}"`);
+  const fill = root => root.querySelectorAll("[data-ico]").forEach(e => { e.outerHTML = ico(e.dataset.ico); });
+  fill(document);
+
+  const FAM = [
+    { id: "land", n: "Land", lenses: [["Pixel map", 1], ["Terrain", 0], ["Cities", 1], ["Borders", 1]] },
+    { id: "power", n: "Power", lenses: [["War & chokepoints", 1], ["Order & chaos", 1], ["Rule & law", 0], ["Border changes", 0]] },
+    { id: "wealth", n: "Wealth", lenses: [["Trade & migration", 1], ["Tech, food & energy", 0]] },
+    { id: "peoples", n: "Peoples", lenses: [["People", 1], ["Peoples & languages", 0]] },
+    { id: "mind", n: "Mind", lenses: [["Ideas & faith", 1], ["Art & architecture", 0]] },
+    { id: "shocks", n: "Shocks", lenses: [["Plague & climate", 1]] },
+  ];
+  const lensesEl = $("#lenses"), sub = $("#sub");
+  let open = null;
+  for (const f of FAM) {
+    const b = document.createElement("button");
+    b.className = "lens"; b.type = "button"; b.dataset.f = f.id; b.style.setProperty("--t", `var(--t-${f.id})`);
+    b.innerHTML = ico(f.id) + `<span>${f.n}</span><span class="cnt">${f.lenses.filter(l => l[1]).length}/${f.lenses.length}</span>`;
+    b.setAttribute("aria-pressed", f.lenses.some(l => l[1]));
+    lensesEl.appendChild(b);
+  }
+  function drawSub() {
+    lensesEl.querySelectorAll(".lens").forEach(b => { b.classList.toggle("open", b.dataset.f === open); const f = FAM.find(x => x.id === b.dataset.f); b.setAttribute("aria-pressed", f.lenses.some(l => l[1])); b.querySelector(".cnt").textContent = `${f.lenses.filter(l => l[1]).length}/${f.lenses.length}`; });
+    if (!open) { sub.hidden = true; return; }
+    const f = FAM.find(x => x.id === open);
+    sub.hidden = false; sub.style.setProperty("--t", `var(--t-${f.id})`);
+    sub.innerHTML = `<p class="kick">${f.n}: tap a lens</p>` + f.lenses.map((l, i) => `<button class="opt" type="button" data-i="${i}" aria-pressed="${!!l[1]}"><i></i><span>${l[0]}</span><span class="g">${l[1] ? "on" : "off"}</span></button>`).join("");
+  }
+  lensesEl.addEventListener("click", e => { const b = e.target.closest(".lens"); if (!b) return; open = open === b.dataset.f ? null : b.dataset.f; drawSub(); });
+  sub.addEventListener("click", e => { const b = e.target.closest(".opt"); if (!b) return; const f = FAM.find(x => x.id === open); f.lenses[+b.dataset.i][1] ^= 1; drawSub(); });
+  open = matchMedia("(max-width: 760px)").matches ? null : "shocks"; drawSub();
+
+  // Tabs and panes.
+  const TABS = [["now", "This year", "year"], ["here", "Here", "here"], ["ask", "Ask", "ask"], ["codex", "Codex", "codex", 3], ["whatif", "What if", "whatif"]];
+  const tabs = $("#tabs");
+  tabs.innerHTML = TABS.map(([k, n, i, badge]) => `<button class="tabk" role="tab" data-tab="${k}" aria-selected="${k === "now"}">${ico(i)}<span>${n}</span>${badge ? `<span class="badge">${badge}</span>` : ""}</button>`).join("");
+  function setTab(k) {
+    tabs.querySelectorAll(".tabk").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === k));
+    document.querySelectorAll(".pane").forEach(p => p.hidden = p.id !== "pane-" + k);
+    app.classList.add("sheet-open");
+  }
+  tabs.addEventListener("click", e => { const b = e.target.closest(".tabk"); if (b) setTab(b.dataset.tab); });
+  $("#closep").addEventListener("click", () => app.classList.remove("sheet-open"));
+
+  const sec = (fam, title, n, rows) => `<section class="sec" style="--c: var(--t-${fam})"><h3 class="sech">${ico(fam, "s")}${title}<span class="n">${n}</span></h3>${rows.map(r => `<button class="row-it" type="button"><span><b>${r[0]}</b>${r[3] ? ` <span class="ptag ${r[3] === "now" ? "now" : ""}">${r[3]}</span>` : ""}</span><span class="y">${r[1]}</span>${r[2] ? `<span class="w">${r[2]}</span>` : ""}</button>`).join("")}</section>`;
+  $("#pane-now").innerHTML = `
+    <div class="lead"><p class="kick">The world in</p><h2 class="h1">1348</h2><p class="prose">The plague that left Kaffa two years ago is in every Mediterranean port. Europe and the Middle East lose between a third and a half of their people by 1351.</p></div>
+    <div class="tiles"><div class="tile fr fr-card"><span class="kick">Realms</span><b>142</b></div><div class="tile fr fr-card"><span class="kick">Battles</span><b>9</b></div><div class="tile fr fr-card"><span class="kick">Shocks</span><b>2</b></div></div>
+    ${sec("shocks", "Shocks", "2", [["Black Death reaches Florence, Paris and London", "1348", "Spread along the sea lanes of the Genoese and Venetian trade.", "now"], ["Little Ice Age cooling", "1300–1850", "Cold summers and failed harvests across the north."]])}
+    ${sec("power", "Power", "4", [["Order of the Garter founded", "1348", "Edward III makes a chivalric order in the middle of the Hundred Years' War."], ["Hundred Years' War", "1337–1453", "A truce holds while the plague passes.", "running"], ["Mali under Mansa Sulayman", "1341–1360"]])}
+    ${sec("mind", "Mind", "1", [["Charles University founded in Prague", "1348", "The first university in central Europe.", "now"]])}
+    ${sec("peoples", "Peoples", "1", [["Ibn Battuta crosses Syria in the plague year", "1348", "He records 2,400 dead a day in Damascus."]])}
+    ${sec("wealth", "Wealth", "2", [["Hanseatic League", "1356 formal", "Bergen, Lübeck, Bruges and Novgorod in one trading web."], ["Silk Roads", "130 BCE–1450", "", "running"]])}`;
+  $("#pane-here").innerHTML = `
+    <div class="lead"><p class="kick">Here, in 1348</p><h2 class="h1">Erbil</h2><p class="prose">Inside the Jalayirid Sultanate on the 1344 border map.</p></div>
+    <article class="focus fr fr-card" style="--c: var(--t-land)"><span class="kick fk">City</span><h3 class="h2">Erbil</h3><p class="prose">Arbela, a city on a citadel mound ruled by Assyrians, Persians and Arabs in turn.</p><p class="prose why">Its citadel has been lived on for at least 6,000 years; Alexander beat Darius nearby at Gaugamela in 331 BCE.</p><div><button class="pbtn q" type="button">${ico("ask")}Ask about this</button></div></article>
+    ${sec("land", "The place", "1", [["Erbil", "5000 BCE–today", "Arbela, a city on a citadel mound."]])}
+    ${sec("power", "Order & chaos", "1", [["Jalayirid Sultanate", "1344–1401", "Fragile: watch band."]])}
+    ${sec("wealth", "Money & migration", "1", [["Silk Roads", "130 BCE–1450", "", "running"]])}`;
+  $("#pane-ask").innerHTML = `
+    <form class="qa"><label class="kick" for="q2">Ask the Atlas a question</label><div class="well fr fr-inset"><textarea id="q2" placeholder="Why did the Black Death hit Europe so much harder than China?"></textarea></div><div><button class="pbtn big" type="button">${ico("ask")}Ask, and let the map answer</button></div></form>
+    <section class="sec"><h3 class="sech">Try one</h3>
+      <button class="ex" type="button"><span>Why did Rome fall but Constantinople last another thousand years?</span><span class="ptag">tour</span></button>
+      <button class="ex" type="button"><span>What did the end of the world look like in 1177 BCE?</span><span class="ptag">live</span></button>
+      <button class="ex" type="button"><span>Why did India rarely unite while China kept reuniting?</span><span class="ptag">live</span></button>
+      <button class="ex" type="button"><span>When did Western Europe actually start to become rich?</span><span class="ptag">live</span></button></section>
+    <p class="foot">Rule of the house: AI drafts, sources decide. Live answers name sources the model believes exist; they are marked <span class="ptag unchecked">unchecked</span>.</p>`;
+  $("#pane-codex").innerHTML = `
+    <div class="lead"><p class="kick">Your codex</p><h2 class="h2">3 new finds since yesterday</h2></div>
+    <div class="tiles"><div class="tile fr fr-card"><span class="kick">Discoveries</span><b>14<small class="kick"> /250</small></b></div><div class="tile fr fr-card"><span class="kick">Quests</span><b>2<small class="kick"> /12</small></b></div><div class="tile fr fr-card"><span class="kick">Streak</span><b>4</b></div></div>
+    <article class="riddle fr fr-card-gold"><span class="kick" style="color: var(--gold-2)">Today's riddle</span><b>I am a battle, fought in the 7th century, that decided who would rule Persia.</b><div><button class="pbtn" type="button">${ico("star")}Solve it</button></div></article>
+    <section class="sec"><h3 class="sech">Quests</h3>
+      <div class="quest fr fr-card" style="--t: var(--t-shocks)">${ico("shocks")}<b>Outrun the plague</b><span class="kick">3/7</span><div class="meter"><i style="width: 43%"></i></div></div>
+      <div class="quest fr fr-card" style="--t: var(--t-wealth)">${ico("wealth")}<b>Every hub from Dilmun to New York</b><span class="kick">5/18</span><div class="meter"><i style="width: 28%"></i></div></div>
+      <div class="quest fr fr-card" style="--t: var(--t-land)">${ico("land")}<b>Lost cities of the Bronze Age</b><span class="kick">1/9</span><div class="meter"><i style="width: 11%"></i></div></div></section>`;
+  const wi = (q, y, p, toy) => `<button class="wi fr fr-card row-it" type="button" style="display:grid;grid-template-columns:1fr"><b>${q}</b><span class="m"><span class="kick">turns in ${y}</span><span class="meter" style="--t: var(--t-shocks)"><i style="width:${p}%"></i></span><span class="kick">${p}%${toy ? " · model" : ""}</span></span></button>`;
+  $("#pane-whatif").innerHTML = `
+    <div class="lead"><p class="kick">What if</p><h2 class="h2">Pick a turning point</h2><p class="prose">The map plays real history up to the moment it changes, then the branch. Branch steps are dashed and marked speculative.</p></div>
+    ${wi("What if the Black Death never reached Europe?", "1347", 25, 1)}${wi("What if the Mongols had kept riding west in 1242?", "1241", 45)}${wi("What if Ming China had kept sailing after 1433?", "1433", 35)}${wi("What if the Plague of Justinian never happened?", "541", 40, 1)}`;
+
+  // Time: eras, the event strip, the year.
+  const ERAS = [[-3000, "Bronze Age", "#a0522d", "#d8a32c"], [-1200, "Iron Age", "#7a5a3a", "#c0392b"], [-500, "Classical", "#a0522d", "#e2c682"], [500, "Early Middle Ages", "#25466a", "#b8382a"],
+    [1000, "High Middle Ages", "#25466a", "#b8382a"], [1450, "Early modern", "#6e5a48", "#a08a72"], [1789, "Long 19th century", "#7a8fb0", "#d89a3a"], [1914, "20th century", "#3a3a3a", "#c0392b"], [1991, "Now", "#3a6fb8", "#3f8f5e"]];
+  const Y0 = -3000, Y1 = 2025;
+  // Time is not linear in the slider: recent centuries get more room, as in the Atlas.
+  const f = y => Math.pow((y - Y0) / (Y1 - Y0), 1.6);
+  const erasEl = $("#eras");
+  erasEl.innerHTML = ERAS.map((e, i) => { const a = f(e[0]), b = i + 1 < ERAS.length ? f(ERAS[i + 1][0]) : 1; return `<button type="button" data-y="${e[0]}" style="left:${a * 100}%;width:${(b - a) * 100}%">${e[1]}</button>`; }).join("");
+  const range = $("#year");
+  range.min = 0; range.max = 1000;
+  const toY = v => Math.round(Y0 + Math.pow(v / 1000, 1 / 1.6) * (Y1 - Y0));
+  const toV = y => Math.round(f(y) * 1000);
+  let eraAccent = false;
+  function setYear(y) {
+    range.value = toV(y);
+    const e = [...ERAS].reverse().find(x => y >= x[0]);
+    const label = y < 0 ? `${-y}<small>BCE</small>` : `${y}<small>CE</small>`;
+    $("#yr").innerHTML = label; $("#cyr").textContent = y < 0 ? -y + " BCE" : y; $("#yout").textContent = y < 0 ? -y + " BCE" : y + " CE";
+    $("#eraname").textContent = e[1] + (y >= 1346 && y <= 1353 ? " · the Black Death" : ""); $("#cera").textContent = e[1];
+    erasEl.querySelectorAll("button").forEach(b => b.setAttribute("aria-current", +b.dataset.y === e[0]));
+    $("#fill").style.width = (range.value / 10) + "%";
+    if (eraAccent) { document.documentElement.style.setProperty("--era", e[2]); document.documentElement.style.setProperty("--era-2", e[3]); }
+  }
+  range.addEventListener("input", () => setYear(toY(+range.value)));
+  erasEl.addEventListener("click", e => { const b = e.target.closest("button"); if (b) setYear(+b.dataset.y); });
+  // The event strip: one pixel column per slot, tinted by the lens family of the densest record there.
+  const cv = $("#strip"), cx = cv.getContext("2d"), W = cv.width;
+  const tc = getComputedStyle(document.documentElement);
+  const cols = ["land", "power", "wealth", "peoples", "mind", "shocks"].map(k => tc.getPropertyValue("--t-" + k).trim());
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  for (let x = 0; x < W; x += 2) {
+    const dens = Math.pow(x / W, 1.2) * 9 + 1;
+    const h = Math.min(10, Math.floor(rnd() * dens));
+    if (h < 1) continue;
+    const r = rnd(); cx.fillStyle = r < .12 ? cols[5] : r < .2 ? cols[1] : tc.getPropertyValue("--ink-soft").trim();
+    cx.fillRect(x, 10 - h, 2, h);
+  }
+  setYear(1348);
+
+  let playing = null;
+  $("#play").addEventListener("click", () => {
+    if (playing) { clearInterval(playing); playing = null; $("#play").innerHTML = ico("play"); return; }
+    $("#play").innerHTML = ico("pause");
+    playing = setInterval(() => { let y = toY(+range.value) + 1; if (y > Y1) y = Y0; setYear(y); }, 120);
+  });
+
+  document.querySelectorAll(".switch [data-dir]").forEach(b => b.addEventListener("click", () => {
+    app.dataset.dir = b.dataset.dir;
+    document.querySelectorAll(".switch [data-dir]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    if (b.dataset.dir === "c") app.classList.add("sheet-open");
+    try { localStorage.setItem("atlas-ui-dir", b.dataset.dir); } catch (e) {}
+  }));
+  $("#theme").addEventListener("click", e => {
+    const night = document.documentElement.dataset.theme !== "dark" && !(matchMedia("(prefers-color-scheme: dark)").matches && document.documentElement.dataset.theme !== "light");
+    document.documentElement.dataset.theme = night ? "dark" : "light"; e.currentTarget.setAttribute("aria-pressed", night);
+  });
+  $("#eracyc").addEventListener("click", e => {
+    eraAccent = !eraAccent; e.currentTarget.setAttribute("aria-pressed", eraAccent);
+    if (!eraAccent) { document.documentElement.style.removeProperty("--era"); document.documentElement.style.removeProperty("--era-2"); }
+    setYear(toY(+range.value));
+  });
+  app.classList.add("sheet-open");
+  const want = location.hash.slice(1);
+  try { const d = ["a", "b", "c"].includes(want) ? want : localStorage.getItem("atlas-ui-dir"); if (d) document.querySelector(`.switch [data-dir="${d}"]`).click(); } catch (e) {}
+})();
+</script>

@@ -1,0 +1,91 @@
+/* Atlas chrome components: the chronicle around the pixel world (art direction v0, D1-D2).
+   Tokens and frames come from kit.py (generated from views/pixel/palette.js). 1 art px = 2 CSS px.
+   Type: Pixelify Sans (headings, year), Silkscreen 8/16 (kickers, tabs, chips, numbers), Spectral (prose). */
+:root {
+  --px: 2px;
+  --f-head: "Pixelify Sans", "Silkscreen", ui-monospace, monospace;
+  --f-hud: "Silkscreen", "Pixelify Sans", ui-monospace, monospace;
+  --f-prose: "Spectral", Georgia, "Times New Roman", serif;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --era: var(--lapis); --era-2: var(--rubric);
+}
+
+/* Frames: a 9-slice pixel border. The slice and width come from the kit; 2 CSS px per art px. */
+.fr { border-style: solid; border-color: transparent; image-rendering: pixelated; }
+.fr-panel { border-width: 10px; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
+.fr-card { border-width: 6px; border-image: var(--f-card) 3 fill / 6px stretch; }
+.fr-card-gold { border-width: 6px; border-image: var(--f-card-gold) 3 fill / 6px stretch; }
+.fr-plate { border-width: 10px; border-image: var(--f-plate) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
+.fr-hud { border-width: 8px; border-image: var(--f-hud) 4 fill / 8px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
+.fr-inset { border-width: 6px; border-image: var(--f-inset) 3 fill / 6px stretch; }
+
+.ico { width: 24px; height: 24px; display: block; flex: none; image-rendering: pixelated; }
+.ico.s { width: 12px; height: 12px; }
+.ico .k { fill: var(--ink-fixed, #221f1a); }
+.ico .w { fill: var(--vellum-fixed, #f6f0dc); }
+.ico .W { fill: #d9cfb2; }
+.ico .x { fill: var(--t, var(--ink-2)); }
+.ico .X { fill: var(--td, var(--t, var(--ink-2))); filter: brightness(.72); }
+.ico .y { fill: var(--gold-hi); }
+.ico .g { fill: var(--gold); }
+.ico .G { fill: var(--gold-2); }
+
+.kick { font-family: var(--f-hud); font-size: 8px; line-height: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); margin: 0; font-weight: 400; }
+.h1 { font-family: var(--f-head); font-size: 32px; line-height: 1; margin: 0; font-weight: 500; text-wrap: balance; }
+.h2 { font-family: var(--f-head); font-size: 24px; line-height: 1.05; margin: 0; font-weight: 500; text-wrap: balance; }
+.h3 { font-family: var(--f-head); font-size: 16px; line-height: 1.15; margin: 0; font-weight: 500; }
+.prose { font-family: var(--f-prose); font-size: 15px; line-height: 1.5; }
+.num { font-family: var(--f-hud); font-variant-numeric: tabular-nums; }
+
+/* Buttons: ink face with a gold rule (primary) or vellum (quiet). Press = 1 art px down, no shadow. */
+.pbtn { font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px; color: var(--vellum-fixed, #f6f0dc); background: none; padding: 2px 6px;
+  border-style: solid; border-color: transparent; border-width: 6px; border-image: var(--f-button) 3 fill / 6px stretch; image-rendering: pixelated;
+  filter: drop-shadow(0 2px 0 var(--shade)); transition: transform 120ms var(--ease); }
+.pbtn.q { color: var(--ink); border-image-source: var(--f-button-q); }
+.pbtn.big { font-size: 16px; line-height: 18px; padding: 4px 10px; }
+.pbtn:hover { transform: translateY(-2px); filter: drop-shadow(0 4px 0 var(--shade)); }
+.pbtn:active { transform: translateY(2px); filter: none; }
+.pbtn:focus-visible, .lens:focus-visible, .tabk:focus-visible, .row-it:focus-visible { outline: 2px dashed var(--gold); outline-offset: 2px; }
+.pbtn.sq { padding: 2px; }
+
+/* A lens family: a heraldic chip. Off = hollow ink octagon; on = filled with its tincture; open = gold bracket. */
+.lens { --t: var(--ink-2); all: unset; box-sizing: border-box; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px 2px 4px;
+  font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink);
+  border: 6px solid transparent; border-image: var(--f-chip) 3 / 6px stretch; image-rendering: pixelated; background: var(--vellum) padding-box; background-clip: padding-box;
+  position: relative; transition: transform 120ms var(--ease); }
+.lens[aria-pressed="false"] { color: var(--ink-soft); }
+.lens[aria-pressed="false"] .ico { opacity: .45; filter: grayscale(1); }
+.lens[aria-pressed="true"] { background: color-mix(in srgb, var(--t) 18%, var(--vellum)) padding-box; box-shadow: inset 4px 0 0 var(--t); }
+.lens:hover { transform: translateY(-2px); }
+.lens.open::after { content: ""; position: absolute; inset: -10px; border: 2px solid var(--gold); border-image: none; pointer-events: none; }
+
+/* Tabs as bookmark ribbons. */
+.tabk { all: unset; box-sizing: border-box; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: var(--f-hud); font-size: 8px; line-height: 12px;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding: 6px 8px; }
+.tabk[aria-selected="true"] { color: var(--ink); }
+
+/* Rows in a pane: a list you scan. The hand cursor marks the one under the pointer or keyboard (JRPG menu). */
+.row-it { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; gap: 0 8px; padding: 4px 6px 4px 2px; font-family: var(--f-prose); font-size: 14.5px; line-height: 1.35; }
+.row-it::before { content: ""; width: 12px; height: 12px; margin-top: 3px; opacity: 0; background: var(--hand) center / 12px 12px no-repeat; image-rendering: pixelated; }
+.row-it:hover::before, .row-it:focus-visible::before, .row-it.cur::before { opacity: 1; }
+.row-it:hover, .row-it:focus-visible { background: var(--wash); }
+.row-it b { font-weight: 600; }
+.row-it .y { font-family: var(--f-hud); font-size: 8px; color: var(--ink-soft); white-space: nowrap; align-self: center; }
+.row-it .w { grid-column: 2 / -1; font-size: 13px; color: var(--ink-soft); }
+
+/* Section heads inside a pane: tincture glyph, Silkscreen kicker, a dotted pixel rule. */
+.sech { display: flex; align-items: center; gap: 6px; font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); margin: 0;
+  padding-top: 10px; background: linear-gradient(90deg, var(--ink-soft) 50%, transparent 0) top left / 4px 2px repeat-x; }
+.sech .n { margin-left: auto; }
+
+/* Pixel meters: a stepped bar, 2 art px tall, in steps of 4 art px. */
+.meter { height: 8px; background: repeating-linear-gradient(90deg, var(--wash) 0 6px, transparent 6px 8px); position: relative; }
+.meter i { position: absolute; inset: 0 auto 0 0; background: repeating-linear-gradient(90deg, var(--t, var(--ink)) 0 6px, transparent 6px 8px); }
+
+/* Tags: tiny Silkscreen caps on a tinted plate. */
+.ptag { font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .06em; text-transform: uppercase; padding: 0 4px; background: var(--wash); color: var(--ink-2); display: inline-block; }
+.ptag.now { background: var(--ink); color: var(--vellum); }
+.ptag.unchecked { background: none; color: var(--rubric); box-shadow: inset 0 0 0 2px var(--rubric); }
+
+@media (prefers-reduced-motion: reduce) { .pbtn, .lens { transition: none; } .pbtn:hover, .lens:hover { transform: none; } }
