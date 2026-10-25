@@ -1,0 +1,25 @@
+{
+  "id": "codex_sinaiticus",
+  "name": "Codex Sinaiticus",
+  "type": "single",
+  "sprite": "obj_codex",
+  "what": "A fourth-century Greek Bible handwritten on parchment, with the oldest complete New Testament. About 400 large leaves survive.",
+  "why": "It is now split between four places in three countries, and how it left Sinai (gift, loan or theft) is still argued between the monastery and the libraries that hold it.",
+  "now": "Split: 347 leaves at the British Library in London, 43 at Leipzig University Library, parts of 6 at the National Library of Russia in St Petersburg, and 12 leaves plus fragments at Saint Catherine's Monastery, Sinai. Reunited online since 2009.",
+  "dispute": "Saint Catherine's Monastery holds that Tischendorf took the main part on loan in 1859. A document of 1869 records it as a gift to the Tsar; the monastery says it was signed under pressure.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Parker, D. C. (2010). Codex Sinaiticus: The Story of the World's Oldest Bible. British Library."},
+    {"cite": "Codex Sinaiticus Project: History of the Codex", "url": "https://codexsinaiticus.org/en/codex/history.aspx"},
+    {"cite": "Wikipedia: Codex Sinaiticus", "url": "https://en.wikipedia.org/wiki/Codex_Sinaiticus"}
+  ],
+  "stops": [
+    {"y": 350, "approx": true, "at": [34.89, 32.5], "place": "Caesarea Maritima", "owner": "A Christian scriptorium", "by": "made", "conf": "likely", "note": "Copied by at least three scribes around 330-360. Caesarea, with its great library and Eusebius's links to Constantine's order for fifty Bibles, is the favoured guess; Alexandria is the other candidate. The script dates it; the place is unproven.", "meet": "a scribe or reader in the Christian library at Caesarea"},
+    {"y": 565, "approx": true, "at": [33.976, 28.556], "place": "Saint Catherine's Monastery, Sinai", "owner": "Saint Catherine's Monastery", "by": "carried", "conf": "legend", "via": "land", "note": "No record says when it arrived. It may have come soon after Justinian walled the monastery (548-565), or centuries later; it sat in the library unnoticed for over a thousand years.", "meet": "a monk at Saint Catherine's"},
+    {"y": 1844, "at": [12.37, 51.34], "place": "Leipzig", "owner": "Leipzig University Library", "by": "taken", "conf": "sure", "via": "land", "path": [[33.976, 28.556], [32.55, 29.97], [31.24, 30.04], [29.92, 31.2], [24, 34.5], [19, 39.5], [13.77, 45.65], [12.37, 51.34]], "note": "The German scholar Constantin von Tischendorf took 43 leaves in 1844. His own story that he rescued them from a basket of scraps for the fire is doubted. He named them Codex Friderico-Augustanus after his patron, the King of Saxony.", "split": true},
+    {"y": 1859, "at": [30.31, 59.94], "place": "St Petersburg", "owner": "Tsar Alexander II", "by": "taken", "conf": "sure", "via": "land", "path": [[33.976, 28.556], [32.55, 29.97], [29.92, 31.2], [26, 36.5], [26.4, 40.2], [29, 41], [30.7, 46.5], [30.5, 50.45], [30.31, 59.94]], "note": "On a trip paid for by the Tsar, Tischendorf was shown the rest of the codex in 1859 and took it, through the monastery's house in Cairo, to St Petersburg. It was presented to Alexander II, and an 1869 deed records the monastery giving it to him.", "meet": "a librarian at the Imperial Public Library in St Petersburg"},
+    {"y": 1933, "at": [-0.127, 51.53], "place": "London", "owner": "British Museum", "by": "sold", "conf": "sure", "via": "land", "note": "Stalin's government, short of foreign currency, sold it to the British Museum for £100,000, the most ever paid for a book at the time; half was raised by public appeal. It reached London on 27 December 1933 and moved to the new British Library in 1973.", "meet": "anyone in the crowds who queued to see it at the British Museum in 1934"},
+    {"y": 1975, "at": [33.976, 28.556], "place": "Saint Catherine's Monastery, Sinai", "owner": "Saint Catherine's Monastery", "by": "found", "conf": "sure", "note": "In 1975 monks clearing a room damaged by fire found a store of old manuscripts, the \"New Finds\", among them 12 more leaves and many fragments of the codex. They have stayed at the monastery.", "split": true, "from": -1},
+    {"y": 2009, "at": [-0.127, 51.53], "place": "Online (and the British Library)", "owner": "Four libraries together", "by": "displayed", "conf": "sure", "note": "The four holders put every surviving page online together in 2009, the first time the codex could be read whole since 1844."}
+  ]
+}

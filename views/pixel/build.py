@@ -18,7 +18,7 @@ J = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':'))
 b64 = lambda p, mime: f'data:{mime};base64,' + base64.b64encode(open(p, 'rb').read()).decode()
 
 s = open(os.path.join(here, 'preview.src.html'), encoding='utf-8').read()
-js = '\n'.join(open(os.path.join(here, f), encoding='utf-8').read() for f in ('palette.js', 'sprites.js', 'pixelmap.js'))
+js = '\n'.join(open(os.path.join(here, f), encoding='utf-8').read() for f in ('palette.js', 'sprites.js', 'era.js', 'pixelmap.js', 'borders.js', 'geolabels.js'))
 lib = os.path.join(here, 'sprites-library.js')
 if os.path.exists(lib):
     js = open(lib, encoding='utf-8').read() + '\n' + js
@@ -42,9 +42,12 @@ battles = [{k: e.get(k) for k in ('name', 'start', 'lat', 'lon', 'sides', 'winne
 money = json.load(open(atlas + 'unified/layers/money.json'))
 plague = json.load(open(atlas + 'unified/layers/plague.json'))
 shocks = [{k: e.get(k) for k in ('name', 'subtype', 'start', 'end', 'lat', 'lon', 'what')} for e in plague['events'] if e.get('lat') is not None]
+# Geographic names (views/terrain/export.py): label lines and peaks only, for views/pixel/geolabels.js.
+tj = atlas + 'unified/layers/terrain.json'
+terrain = {k: v for k, v in json.load(open(tj)).items() if k in ('labels', 'points')} if os.path.exists(tj) else None
 
 data = (ent + '\nconst POLITIES = ' + J(pol) + ';\nconst RASTERS = ' + J(rasters) + ';\nconst RIVERS = ' + J(rivers) +
-        ';\nconst BATTLES = ' + J(battles) + ';\nconst TRADE = ' + J(money['trade']) + ';\nconst SHOCKS = ' + J(shocks) + ';\n')
+        ';\nconst BATTLES = ' + J(battles) + ';\nconst TRADE = ' + J(money['trade']) + ';\nconst SHOCKS = ' + J(shocks) + ';\nconst TERRAIN = ' + J(terrain) + ';\n')
 land = J(json.load(open(atlas + 'borders/land-50m.json')))
 s = s.replace('/*__PIXEL_JS__*/', js).replace('/*__DATA__*/', data).replace('/*__LAND__*/', land)
 if local:

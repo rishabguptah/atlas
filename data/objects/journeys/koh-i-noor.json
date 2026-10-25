@@ -1,0 +1,30 @@
+{
+  "id": "koh_i_noor",
+  "name": "Koh-i-Noor",
+  "type": "single",
+  "sprite": "obj_gem",
+  "what": "A colourless diamond of 105.6 carats today, 186 carats before it was recut in London in 1852. Its name is Persian for \"Mountain of Light\".",
+  "why": "It moved only by conquest or coercion: every owner after the Mughals took it from the last, so its path is a map of who held power between Delhi, Persia, Afghanistan, Punjab and Britain.",
+  "now": "Set in the Crown of Queen Elizabeth the Queen Mother (1937), Jewel House, Tower of London.",
+  "dispute": "India, Pakistan, Afghanistan and Iran have each claimed it. The British government's position is that it was ceded lawfully under the 1849 Treaty of Lahore.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Dalrymple, W. & Anand, A. (2017). Koh-i-Noor: The History of the World's Most Infamous Diamond. Bloomsbury."},
+    {"cite": "Wikipedia: Koh-i-Noor", "url": "https://en.wikipedia.org/wiki/Koh-i-Noor"},
+    {"cite": "Royal Collection Trust: The Koh-i-Nûr diamond", "url": "https://www.rct.uk/collection/themes/trails/the-koh-i-noor-diamond"}
+  ],
+  "stops": [
+    {"y": 1300, "approx": true, "at": [80.05, 16.7], "place": "Kollur mines, Golconda", "owner": "Unknown miners", "by": "made", "conf": "legend", "note": "Probably dug from the alluvial gravels of the Krishna river around Kollur, the source of most great Indian diamonds. Nobody recorded its finding; stories tying it to the Kakatiya kings or to Alauddin Khalji's raids are later inventions.", "meet": "a diamond digger or dealer in the Golconda country"},
+    {"y": 1526, "at": [78.01, 27.18], "place": "Agra", "owner": "Babur (Mughal)", "by": "looted", "conf": "legend", "note": "Babur's memoir describes a great diamond handed to his son Humayun at Agra after the battle of Panipat, said to be worth a day's food for the whole world. Whether it is the Koh-i-Noor is unproven; Dalrymple and Anand doubt it.", "meet": "a soldier or courtier in Babur's camp at Agra"},
+    {"y": 1648, "at": [77.24, 28.66], "place": "Red Fort, Delhi", "owner": "Shah Jahan (Mughal)", "by": "carried", "conf": "likely", "note": "Set into Shah Jahan's jewelled Peacock Throne (finished 1635 at Agra), which moved to the new Red Fort in Delhi in 1648. The earliest firm description of a stone matching it is the French jeweller Tavernier's, who saw a great diamond in the Mughal treasury in 1665.", "meet": "a noble at the Mughal court in Delhi"},
+    {"y": 1739, "at": [59.6, 36.3], "place": "Mashhad", "owner": "Nader Shah (Afsharid Persia)", "by": "looted", "conf": "sure", "via": "land", "note": "Nader Shah sacked Delhi in 1739 and carried off the Peacock Throne and the diamond. The story that he named it \"Koh-i-Noor\" on first seeing it comes from a later chronicler and may be legend.", "meet": "a soldier in Nader Shah's army on the road home from Delhi"},
+    {"y": 1747, "at": [65.71, 31.61], "place": "Kandahar", "owner": "Ahmad Shah Durrani", "by": "seized", "conf": "sure", "via": "land", "note": "When Nader Shah was murdered in 1747, his Afghan commander Ahmad Shah Durrani took the diamond and founded the Durrani empire with Kandahar as its first capital."},
+    {"y": 1809, "at": [71.58, 34.01], "place": "Peshawar", "owner": "Shah Shuja Durrani", "by": "carried", "conf": "sure", "via": "land", "note": "Mountstuart Elphinstone, the first British envoy to Afghanistan, saw Shah Shuja wearing it on a bracelet at Peshawar in 1809. Weeks later Shuja lost his throne and fled east with it.", "meet": "a member of Elphinstone's mission or of Shah Shuja's court at Peshawar"},
+    {"y": 1813, "at": [74.31, 31.59], "place": "Lahore", "owner": "Ranjit Singh (Sikh empire)", "by": "seized", "conf": "sure", "via": "land", "note": "Ranjit Singh, Maharaja of Punjab, kept the exiled Shah Shuja as a near-prisoner until he gave up the diamond in 1813. Ranjit wore it on his arm at festivals and willed it to a Hindu temple, a wish his heirs never carried out.", "meet": "a courtier at Ranjit Singh's darbar in Lahore"},
+    {"y": 1849, "at": [74.31, 31.59], "place": "Lahore", "owner": "East India Company", "by": "seized", "conf": "sure", "note": "After the Second Anglo-Sikh War, the Treaty of Lahore made the ten-year-old Maharaja Duleep Singh surrender the Koh-i-Noor to the Queen of England. Governor-General Dalhousie arranged it as a spoil of war."},
+    {"y": 1850, "at": [-0.13, 51.5], "place": "London", "owner": "Queen Victoria", "by": "carried", "conf": "sure", "via": "sea", "path": [[72.83, 18.95], [65, 0], [57.5, -20.2], [40, -34], [18, -36], [12, -25], [5, -8], [-10, 2], [-18, 12], [-20, 25], [-12, 37], [-9, 44], [-5, 48.5], [-1.1, 50.8]], "note": "Shipped from Bombay on HMS Medea in April 1850 in a locked box; cholera broke out on board and the ship was turned away at Mauritius. It was presented to Queen Victoria on 3 July 1850.", "meet": "a sailor on HMS Medea"},
+    {"y": 1851, "at": [-0.17, 51.5], "place": "Great Exhibition, Hyde Park", "owner": "Queen Victoria", "by": "displayed", "conf": "sure", "note": "Shown to the public at the Great Exhibition in the Crystal Palace. Visitors found it dull: the old Mughal cut threw back little light.", "meet": "anyone in the queue at the Crystal Palace"},
+    {"y": 1852, "at": [-0.14, 51.51], "place": "Garrard's, London", "owner": "Queen Victoria", "by": "recut", "conf": "sure", "note": "Prince Albert had it recut by the Dutch cutter Levie Benjamin Voorzanger of Coster's for the Crown Jewellers Garrard. It went from 186 to 105.6 carats, brighter but less than half its old weight."},
+    {"y": 1937, "at": [-0.076, 51.508], "place": "Tower of London", "owner": "British Crown", "by": "displayed", "conf": "sure", "note": "Set in the crown made for Queen Elizabeth (later the Queen Mother) for the coronation of 1937; on display in the Jewel House. Royal tradition has only queens wear it.", "meet": "a visitor to the Jewel House"}
+  ]
+}

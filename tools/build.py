@@ -26,6 +26,7 @@ CAUSES = {'war', 'fire', 'earthquake', 'river', 'sea', 'climate', 'trade', 'capi
           'silt', 'faith', 'disease', 'unknown'}
 STATUS = {'sourced', 'draft'}
 ID_RE = re.compile(r'^([a-z]+)(?::[a-z0-9_]+)+$')
+DATE_RE = re.compile(r'^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$')
 
 
 def year(v):
@@ -59,6 +60,13 @@ def check(r):
             errs.append(f'{f}_range must be [low, high]')
     if year(r.get('start')) and year(r.get('end')) and r['start'] > r['end']:
         errs.append('start is after end')
+    for f, y in (('date', 'start'), ('end_date', 'end')):
+        if f in r:
+            v = r[f]
+            if not (isinstance(v, str) and DATE_RE.match(v)):
+                errs.append(f'{f} must be YYYY, YYYY-MM or YYYY-MM-DD')
+            elif year(r.get(y)) and int(v[:4]) != r[y]:
+                errs.append(f'{f} {v} is not in {y} year {r[y]}')
     if 'lat' in r or 'lon' in r:
         lat, lon = r.get('lat'), r.get('lon')
         if not (isinstance(lat, (int, float)) and isinstance(lon, (int, float)) and -90 <= lat <= 90 and -180 <= lon <= 180):

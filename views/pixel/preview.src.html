@@ -59,6 +59,9 @@ input[type=range]::-moz-range-thumb { width: 14px; height: 20px; background: var
 .dlg .more { font-family: var(--pix); color: var(--gold); font-size: 13px; animation: blink 1s steps(1) infinite; float: right; }
 @keyframes blink { 50% { opacity: 0; } }
 .lbl { font-family: var(--pix); font-weight: 600; fill: var(--paper); paint-order: stroke; stroke: var(--ink); stroke-width: 3px; stroke-linejoin: miter; pointer-events: none; }
+.realms text.realm { font-family: var(--pix); font-weight: 600; letter-spacing: .32em; fill: rgba(44, 28, 18, .78); stroke: rgba(246, 240, 220, .62); stroke-width: 3px; paint-order: stroke; pointer-events: none; }
+body[data-mood="night"] .realms text.realm { fill: rgba(246, 236, 200, .78); stroke: rgba(14, 18, 34, .7); }
+body[data-mood="chronicle"] .realms text.realm { fill: rgba(70, 36, 14, .85); stroke: rgba(240, 226, 196, .7); font-style: italic; }
 .lbl.big { font-size: 15px; } .lbl.mid { font-size: 13px; } .lbl.sm { font-size: 11px; font-weight: 500; }
 .lbl.ruin { fill: #d8c8a8; font-style: italic; }
 .lbl.realm { font-family: var(--tiny); fill: rgba(246, 240, 220, .92); stroke: rgba(34, 31, 26, .75); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; }
@@ -152,17 +155,59 @@ const LAND = /*__LAND__*/;
   const sideColor = side => hashC((side && side[0] && (side[0].name || "")) || "x");
 
   // ---------- map ----------
-  const gHit = svg.append("g"), gLab = svg.append("g");
+  const gRealm = svg.append("g").attr("class", "realms"), gHit = svg.append("g"), gLab = svg.append("g");
   let W = 0, H = 0, T = d3.zoomIdentity, curSnap = null, settleTimer = 0;
   const zoom = d3.zoom().scaleExtent([1, 64]).on("zoom", ev => {
-    T = ev.transform; pm.move(T);
-    gHit.attr("transform", T); gLab.attr("transform", T);
+    T = ev.transform; pm.move(T); if (geo) geo.move(T);
+    gHit.attr("transform", T); gLab.attr("transform", T); gRealm.attr("transform", T);
     gLab.selectAll("text").attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / T.k})`);
+    gRealm.selectAll("text").attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / T.k})`);
     gHit.selectAll("circle").attr("r", 9 / T.k);
     clearTimeout(settleTimer); settleTimer = setTimeout(settle, 140);
   });
   svg.call(zoom).on("dblclick.zoom", null);
-  function settle() { pm.render(T, { realms: curSnap == null ? [] : realmsFor(curSnap) }); placeSprites(); labels(); }
+  const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm.same(T)) { pm.setRealms(realmsNow()); realmLabels(); } else settle(); } });
+  const realmsNow = () => borders.realms(state.year, T.k) || realmsFor(curSnap);
+  let shownRealms = null;
+  let geo = null;
+  function settle() { pm.render(T, { realms: shownRealms = realmsNow() }); if (geo) geo.render(T, W, H); placeSprites(); labels(); realmLabels(); }
+
+  // Realm names in wide-spaced capitals across their land, like an old atlas: sized by the realm's area on screen.
+  const realmGeo = new WeakMap();
+  function geoOf(realms) {
+    if (realmGeo.has(realms)) return realmGeo.get(realms);
+    const path = d3.geoPath(projection), best = {};
+    for (const r of realms) {
+      const name = (r.name || "").trim(); if (!name || name.length > 28) continue;
+      const g = r.feature.geometry; if (!g) continue;
+      const polys = g.type === "MultiPolygon" ? g.coordinates.map(c => ({ type: "Polygon", coordinates: c })) : [g];
+      let big = null, ba = 0, tot = 0;
+      for (const q of polys) { const a = path.area(q); tot += a; if (a > ba) { ba = a; big = q; } }
+      if (!big || (best[name] && best[name].area >= tot)) continue;
+      const c = path.centroid(big);
+      if (c.every(Number.isFinite)) best[name] = { name, area: tot, core: ba, x: c[0], y: c[1] };
+    }
+    const out = Object.values(best).sort((a, b) => b.area - a.area);
+    realmGeo.set(realms, out);
+    return out;
+  }
+  function realmLabels() {
+    const realms = realmsNow() || [], k = T.k, boxes = [], out = [];
+    for (const d of geoOf(realms)) {
+      if (out.length >= 40) break;
+      const side = Math.sqrt(d.area * 0.6 + d.core * 0.4) * k, n = d.name.length;
+      const fs = Math.min(34, Math.round(side * 1.5 / (n * 0.9 + 2)));
+      if (fs < 11) continue;
+      const sx = d.x * k + T.x, sy = d.y * k + T.y;
+      if (sx < 0 || sy < 0 || sx > W || sy > H) continue;
+      const wpx = n * fs * 0.95, bx = [sx - wpx / 2, sy - fs, sx + wpx / 2, sy + 4];
+      if (bx[0] < 8 || bx[2] > W - 8 || bx[1] < 8 || bx[3] > H - 140) continue;
+      if (boxes.some(b => !(bx[2] < b[0] || bx[0] > b[2] || bx[3] < b[1] || bx[1] > b[3]))) continue;
+      boxes.push(bx); out.push({ ...d, fs });
+    }
+    gRealm.selectAll("text").data(out, d => d.name).join("text").attr("class", "realm").attr("text-anchor", "middle")
+      .style("font-size", d => d.fs + "px").attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / k})`).text(d => d.name.toUpperCase());
+  }
 
   function layout() {
     W = mapEl.clientWidth; H = mapEl.clientHeight;
@@ -170,6 +215,7 @@ const LAND = /*__LAND__*/;
     svg.attr("viewBox", `0 0 ${W} ${H}`);
     zoom.translateExtent([[-W * 0.2, -H * 0.2], [W * 1.2, H * 1.2]]);
     if (!pm) pm = PixelMap(mapEl, projection, { px: 3, levels, land, rivers });
+    if (!geo && TERRAIN) geo = PixelGeoLabels(mapEl, projection, TERRAIN);
     curSnap = snapFor(state.year);
     settle();
   }
@@ -182,28 +228,29 @@ const LAND = /*__LAND__*/;
     for (const e of ENTRIES) {
       if (y < e.start) continue;
       const lost = e.end != null && y >= e.end;
-      const sp = lost ? "ruin" : tier(e, y);
-      // Declutter by zoom: great cities always, towns and ruins as you come closer.
-      const minK = sp === "city_metropolis" ? 1 : sp.startsWith("wonder") ? 2.5 : sp === "city_city" ? 2.2 : sp === "ruin" ? 4 : sp === "city_town" ? 3.6 : 6;
+      // Era- and region-aware sprite (era.js); declutter by zoom: great cities always, towns and ruins as you come closer.
+      const { sprite: sp, minK, pri } = PixelEra.place(e, y, popAt(e, y));
       if (T.k < minK && !(state.sel && state.sel.e === e)) continue;
-      statics.push({ lon: e.lon, lat: e.lat, sprite: sp });
+      statics.push({ lon: e.lon, lat: e.lat, sprite: sp, pri });
       hits.push({ lon: e.lon, lat: e.lat, kind: lost ? "Lost city" : e.layer === "wonders" ? "Wonder" : "City", name: nameAt(e, y), what: e.what, why: e.why, pop: lost ? null : popAt(e, y), lost, e });
     }
     for (const b of BATTLES) {
       if (Math.abs(b.start - y) > 3) continue;
       const a = sideColor(b.sides && b.sides[0]), c = sideColor(b.sides && b.sides[1]);
-      statics.push({ lon: b.lon, lat: b.lat, sprite: "army", team: a, dx: -4 }, { lon: b.lon, lat: b.lat, sprite: "army_flip", team: c, dx: 4, frame: 1 }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -5 });
+      const ar = PixelEra.army(b.start, b.lon, b.lat);
+      const grp = "b:" + b.name + b.start;
+      statics.push({ lon: b.lon, lat: b.lat, sprite: ar, team: a, dx: -5, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: ar, flip: true, team: c, dx: 5, frame: 1, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -7, pri: 5, grp });
       hits.push({ lon: b.lon, lat: b.lat, kind: "Battle · " + fmtYear(b.start), name: b.name, what: (b.sides || []).map(s => s.map(x => x.name).join(", ")).join("  vs  "), why: b.why });
     }
     for (const s of SHOCKS) {
       if (y < s.start - 1 || y > (s.end ?? s.start) + 3) continue;
-      const sp = s.subtype === "epidemic" || s.subtype === "pandemic" ? "plague" : s.subtype === "famine" ? "skull" : s.subtype === "eruption" ? "volcano" : "fire";
-      statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2 });
+      const sp = PixelEra.shock(s.subtype);
+      statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2, pri: 3.8 });
       hits.push({ lon: s.lon, lat: s.lat, kind: s.subtype, name: s.name, what: s.what });
     }
     TRADE.filter(t => y >= t.start && y <= t.end).forEach((t, i) => {
       const len = d3.geoLength({ type: "LineString", coordinates: t.line });
-      const n = Math.max(1, Math.min(4, Math.round(len / 0.6)));
+      const n = T.k < 2 ? 1 : Math.max(1, Math.min(4, Math.round(len / 0.6)));
       for (let q = 0; q < n; q++) movers.push({ t, len, phase: q / n, interp: d3.geoInterpolate });
     });
     const P = d => projection([d.lon, d.lat]);
@@ -214,6 +261,7 @@ const LAND = /*__LAND__*/;
       .on("click", (ev, d) => { ev.stopPropagation(); open(d); });
     labels(hits);
     draw();
+    legend();
   }
   // Along-route position for a moving sprite: walk the route at constant speed.
   function moverAt(m) {
@@ -227,10 +275,10 @@ const LAND = /*__LAND__*/;
     const list = statics.slice();
     for (const m of movers) {
       const [lon, lat] = moverAt(m);
-      list.push({ lon, lat, sprite: pm.isWater(lon, lat) ? "ship" : "caravan" });
+      list.push({ lon, lat, sprite: PixelEra.mover(state.year, lon, lat, pm.isWater(lon, lat)), pri: 0.5 });
     }
     list.sort((a, b) => b.lat - a.lat);
-    pm.sprites(list);
+    pm.sprites(list, PixelEra.budget(T.k));
   }
   let lastHits = [];
   function labels(hits) {
@@ -271,7 +319,9 @@ const LAND = /*__LAND__*/;
     document.getElementById("era").textContent = eraOf(state.year).toUpperCase();
     if (!fromSlider) slider.value = Math.round(yearToT(state.year) * 1000);
     const s = snapFor(state.year);
-    if (s !== curSnap) { curSnap = s; pm.render(T, { realms: realmsFor(s) }); }
+    curSnap = s;
+    const r = realmsNow();
+    if (r !== shownRealms) { shownRealms = r; pm.setRealms(r); realmLabels(); }
     placeSprites();
   }
   slider.addEventListener("input", () => setYear(tToYear(slider.value / 1000), true));
@@ -293,7 +343,7 @@ const LAND = /*__LAND__*/;
   const moods = document.getElementById("moods");
   const MOOD_LIST = [["day", "Day"], ["dusk", "Dusk"], ["night", "Night"], ["winter", "Winter"], ["chronicle", "Chronicle"]];
   function setMood(m) {
-    pm.setMood(m); moods.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.m === m));
+    pm.setMood(m); if (geo) geo.setMood(m); moods.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.m === m));
     document.body.dataset.mood = m;
   }
   MOOD_LIST.forEach(([m, n]) => { const b = document.createElement("button"); b.className = "btn"; b.dataset.m = m; b.textContent = n; b.onclick = () => setMood(m); moods.appendChild(b); });
@@ -309,8 +359,19 @@ const LAND = /*__LAND__*/;
     S.frames[0].forEach((row, j) => [...row].forEach((ch, i) => { const col = ch === "x" ? (team || "#b8382a") : ch === "X" ? "#7c2018" : K[ch]; if (ch !== "." && col) { x.fillStyle = col; x.fillRect(i, j, 1, 1); } }));
     return c.toDataURL();
   };
-  document.getElementById("legend").innerHTML = [["city_metropolis", "Great city"], ["city_town", "Town"], ["ruin", "Lost city"], ["army", "Battle"], ["ship", "Sea trade"], ["caravan", "Caravan"], ["plague", "Plague"]]
-    .map(([s, n]) => `<span><img src="${sheet(s)}" alt="">${n}</span>`).join("");
+  // The legend shows the sprites of the year and of the region at the centre of the view.
+  let legendKey = "";
+  function legend() {
+    const c = projection.invert(T.invert([W / 2, H / 2])) || [20, 40], [lon, lat] = c, y = state.year;
+    const big = PixelEra.place({ lon, lat }, y, 5e5).sprite, town = PixelEra.place({ lon, lat }, y, 3e4).sprite;
+    const ruin = PixelEra.place({ lon, lat, end: y - 1 }, y).sprite;
+    const items = [[big, "Great city"], [town, "Town"], [ruin, "Lost city"], [PixelEra.army(y, lon, lat), "Battle"],
+      [PixelEra.mover(y, lon, lat, true), "Sea trade"], [PixelEra.mover(y, lon, lat, false), "Caravan"], [PixelEra.shock("plague"), "Plague"]];
+    const key = items.map(i => i[0]).join();
+    if (key === legendKey) return;
+    legendKey = key;
+    document.getElementById("legend").innerHTML = items.map(([s, n]) => `<span><img src="${sheet(s)}" alt="">${n}</span>`).join("");
+  }
   (function compass() {
     const c = document.getElementById("compass").getContext("2d"), K = PIXEL_PALETTE.KEYS;
     const rows = ["...........k............", "..........kgk...........", "..........kgGk..........", ".........kygGk..........", ".........kygGGk.........", "........kyygGGk.........", "....k...kyygGGk...k.....", ".....kk.kyygGGGk.kk.....", "......kkkyygGGGkkk......", "......kwkkygGGkkwk......", "...kkkkwwkkgGkkwwkkkk...", "kkkwwwwwwwwkkwwwwwwWWkkk", "...kkkkWWkkGgkkWWkkkk...", "......kWkkGGgykkWk......", "......kkkGGGgyykkk......", ".....kk.kGGGgyyk.kk.....", "....k...kGGgyyk...k.....", "........kGGgyyk.........", ".........kGGgyk.........", ".........kGGgyk.........", "..........kGgyk.........", "..........kGgk..........", "...........kk...........", "........................"];

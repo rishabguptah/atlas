@@ -1,0 +1,26 @@
+{
+  "id": "ark_of_the_covenant",
+  "name": "Ark of the Covenant",
+  "type": "single",
+  "sprite": "obj_ark",
+  "what": "The gold-covered chest that, in the Hebrew Bible, held the tablets of the Ten Commandments. No trace of it has ever been found; every stop here comes from scripture or tradition.",
+  "why": "A journey that is almost all legend, shown on purpose: the path is drawn as faint dots because nothing on it can be checked, and the trail ends in fog in 587 BCE.",
+  "now": "Unknown. The Ethiopian Orthodox Church says it is kept in the Chapel of the Tablet at Aksum, seen only by one guardian monk.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Hebrew Bible: Exodus 25-40; 1 Samuel 4-7; 2 Samuel 6; 1 Kings 8; 2 Kings 25."},
+    {"cite": "Day, J. (ed.) (2005). Temple and Worship in Biblical Israel. T&T Clark."},
+    {"cite": "Finkelstein, I. et al. (2017). Excavations at Kiriath-Jearim. Tel Aviv University."},
+    {"cite": "Wikipedia: Ark of the Covenant", "url": "https://en.wikipedia.org/wiki/Ark_of_the_Covenant"},
+    {"cite": "Wikipedia: Kebra Nagast", "url": "https://en.wikipedia.org/wiki/Kebra_Nagast"}
+  ],
+  "stops": [
+    {"y": -1250, "approx": true, "at": [33.975, 28.539], "place": "Mount Sinai (by tradition)", "owner": "Israelites (in the Exodus story)", "by": "made", "conf": "legend", "note": "Exodus says Bezalel built the ark in the wilderness at Sinai to God's design. Most historians doubt an Exodus on the scale described, and where Sinai was is itself a tradition."},
+    {"y": -1100, "approx": true, "at": [35.29, 32.05], "place": "Shiloh", "owner": "Priests of Shiloh", "by": "carried", "conf": "legend", "via": "land", "note": "The Book of Samuel places the ark in a sanctuary at Shiloh under the priest Eli. Shiloh was a real Iron Age town, destroyed in the 11th century BCE."},
+    {"y": -1050, "approx": true, "at": [34.65, 31.75], "place": "Ashdod", "owner": "Philistines", "by": "looted", "conf": "legend", "via": "land", "note": "1 Samuel 4-6: the Philistines capture the ark in battle at Ebenezer and set it in the temple of Dagon at Ashdod, whose statue falls on its face. Plagues follow and they send it back."},
+    {"y": -1040, "approx": true, "at": [35.1, 31.81], "place": "Kiriath-Jearim", "owner": "Abinadab's house", "by": "returned", "conf": "legend", "via": "land", "note": "The ark rests twenty years at Kiriath-Jearim. Excavations there since 2017 found a large 8th-century BCE platform, which says something about when the story was written, not about the ark."},
+    {"y": -960, "approx": true, "at": [35.235, 31.778], "place": "Temple, Jerusalem", "owner": "Kings of Judah", "by": "carried", "conf": "legend", "via": "land", "note": "David dances before it into Jerusalem; Solomon sets it in the Holy of Holies of the first Temple. The Temple was real; no source outside the Bible mentions the ark."},
+    {"y": -587, "at": [35.235, 31.778], "place": "Jerusalem", "owner": "Unknown", "by": "lost", "conf": "legend", "end": true, "note": "Nebuchadnezzar's army burned the Temple in 587 or 586 BCE. The list of loot taken to Babylon in 2 Kings 25 does not name the ark. After this nobody knows: Jeremiah hiding it on Mount Nebo (2 Maccabees), buried under the Temple Mount, or carried south.", "meet": "a Judahite in Jerusalem during the siege"},
+    {"y": 1320, "approx": true, "at": [38.72, 14.13], "place": "Aksum", "owner": "Ethiopian Orthodox Church", "by": "claimed", "conf": "legend", "gap": true, "note": "The Kebra Nagast, written down in the early 14th century, says Menelik I, son of Solomon and the Queen of Sheba, brought the ark to Ethiopia. The church at Aksum says it holds it; every Ethiopian church keeps a tabot, a copy of the tablets.", "meet": "a pilgrim at Timkat in Aksum"}
+  ]
+}

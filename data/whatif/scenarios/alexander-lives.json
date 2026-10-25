@@ -1,0 +1,43 @@
+{
+  "id": "whatif:alexander_lives",
+  "question": "What if Alexander the Great had lived past 323 BCE?",
+  "short": "Alexander died at Babylon in June 323 BCE, aged 32, with an Arabian campaign about to sail. Living on, he very likely invades Arabia, may well turn west toward Carthage, and keeps the empire in one piece for as long as he lives. Whether it survives him is another matter: his only heir was born after he died, and empires built by one conqueror usually split at the funeral.",
+  "divergence": { "year": -323, "text": "Alexander recovers from the fever that killed him in Babylon in June 323 BCE." },
+  "plausibility": 0.5,
+  "plausibility_note": "Medium for the next steps (his plans are in the sources), low for anything after his eventual death.",
+  "lenses": ["people", "military", "order"],
+  "steps": [
+    { "branch": false, "lens": "people", "title": "Death in Babylon", "year": -323, "view": { "lon": 44.4, "lat": 32.5, "span": 12 },
+      "pins": [{ "name": "Babylon", "lon": 44.42, "lat": 32.54 }],
+      "text": "Alexander fell ill after a banquet and died on 10 or 11 June 323 BCE, aged 32. Fever, malaria, typhoid and poison have all been argued; nobody knows. He had conquered from Greece to the Indus in eleven years.",
+      "confidence": 0.85, "sources": [{ "cite": "A. B. Bosworth, Conquest and Empire: The Reign of Alexander the Great (1988)" }, { "cite": "Wikipedia, Death of Alexander the Great", "url": "https://en.wikipedia.org/wiki/Death_of_Alexander_the_Great" }] },
+    { "branch": false, "lens": "military", "title": "The plans on the table", "year": -323, "view": { "lon": 30, "lat": 30, "span": 70 },
+      "text": "Arrian says a fleet was being built at Babylon for a campaign around Arabia. Diodorus reports 'last plans' found in his papers: a thousand warships against Carthage and the western Mediterranean, a road along North Africa, huge temples. Historians argue over whether those papers were real or a later invention.",
+      "confidence": 0.6, "sources": [{ "cite": "Arrian, Anabasis of Alexander 7.19-20" }, { "cite": "Diodorus Siculus, Library of History 18.4" }] },
+    { "branch": false, "lens": "order", "title": "What really happened: the split", "year": -301, "view": { "lon": 35, "lat": 34, "span": 50 }, "layers": ["order"],
+      "pins": [{ "name": "Ipsus, 301 BCE", "lon": 30.98, "lat": 38.7 }],
+      "text": "With no adult heir (his son Alexander IV was born after his death), his generals fought for forty years. After the battle of Ipsus in 301 BCE the empire was split for good among the Ptolemies in Egypt, the Seleucids in Asia and the Antigonids in Macedon.",
+      "confidence": 0.9, "sources": [{ "cite": "Wikipedia, Wars of the Diadochi", "url": "https://en.wikipedia.org/wiki/Wars_of_the_Diadochi" }] },
+    { "branch": true, "lens": "military", "title": "Around Arabia", "year": -321, "view": { "lon": 50, "lat": 22, "span": 35 },
+      "routes": [{ "label": "planned Arabian expedition", "points": [[47.8, 30.5], [50.5, 26.2], [56.3, 26.5], [58.6, 23.6], [55, 17.5], [45, 12.8], [43.3, 13.5]] }],
+      "text": "The most certain step of the branch. Alexander sails down the Gulf and around Arabia, aiming at the incense ports of the south. The coast is harsh and the payoff is trade control, not cities to rule; expect a costly coastal campaign and garrisons, not a conquered peninsula.",
+      "confidence": 0.6, "sources": [{ "cite": "Arrian, Anabasis of Alexander 7.19-20" }] },
+    { "branch": true, "lens": "military", "title": "West against Carthage", "year": -315, "view": { "lon": 12, "lat": 35, "span": 40 },
+      "pins": [{ "name": "Carthage", "lon": 10.32, "lat": 36.85 }],
+      "text": "If the 'last plans' were genuine, Carthage was next. Macedon had the best siege train in the world; Carthage had the best navy in the west and a strong wall. Tyre fell to Alexander in 332 BCE after seven months, so a long siege and a likely win is a fair guess.",
+      "confidence": 0.3, "sources": [{ "cite": "Diodorus Siculus, Library of History 18.4" }] },
+    { "branch": true, "lens": "military", "title": "Alexander against Rome", "year": -310, "view": { "lon": 13, "lat": 41.5, "span": 14 },
+      "pins": [{ "name": "Rome", "lon": 12.5, "lat": 41.9 }],
+      "text": "Livy, writing three centuries later, broke off his history to argue that Rome would have beaten Alexander: many good consuls against one man, and legions used to hard mountain wars with the Samnites. It is patriotic, but it is the oldest what-if essay we have. Rome in 320 BCE was a regional power that had just lost to the Samnites at the Caudine Forks.",
+      "confidence": 0.2, "sources": [{ "cite": "Livy, History of Rome 9.17-19" }] },
+    { "branch": true, "lens": "order", "title": "And then he dies anyway", "year": -290, "view": { "lon": 45, "lat": 33, "span": 70 },
+      "text": "Say he lives to sixty, dying around 296 BCE. His son would be in his twenties, half-Bactrian, facing the same marshals' sons. The Mongol empire after Chinggis and Timur's after Timur both split along their generals' and sons' lines. More years of Alexander mostly means a bigger empire to divide.",
+      "confidence": 0.5, "sources": [] }
+  ],
+  "views": [
+    { "name": "Livy", "school": "Roman", "strength": "weak", "claim": "Rome would have defeated him.", "for": "Rome's depth of manpower and command.", "against": "Written with hindsight and patriotism." },
+    { "name": "Arnold Toynbee", "school": "Playful counterfactual", "strength": "weak", "claim": "In his essay 'If Alexander the Great had lived on' a long-lived Alexander founds a world state that lasts.", "for": "A fun, deliberate thought experiment.", "against": "Toynbee himself meant it as a game." },
+    { "name": "A. B. Bosworth", "school": "Sceptical", "strength": "strong", "claim": "Alexander's empire was held by force and terror; his methods were not built to last.", "for": "Constant revolts and purges even in his lifetime.", "against": "Persian administration largely kept running under him." }
+  ],
+  "unknowns": ["What killed him.", "Whether the 'last plans' were his.", "How loyal the Macedonian army would have stayed after more years of marching."]
+}
