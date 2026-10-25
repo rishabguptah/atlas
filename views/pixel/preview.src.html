@@ -31,7 +31,7 @@ body[data-mood=night] .lbl { fill: #ffe2a0; }
 .cart .year { font-family: var(--pix); font-size: 44px; line-height: 1; margin-top: 10px; color: var(--text); text-shadow: 3px 3px 0 var(--ink); }
 .cart .era { font-family: var(--tiny); font-size: 10px; color: var(--gold); letter-spacing: .08em; }
 .go { position: absolute; right: 18px; top: 18px; padding: 8px; display: flex; flex-direction: column; gap: 4px; }
-.eras { top: auto; bottom: 200px; flex-direction: row; flex-wrap: wrap; max-width: 260px; }
+.eras { top: auto; bottom: 200px; flex-direction: row; flex-wrap: wrap; max-width: 300px; }
 .moods { top: auto; bottom: 120px; flex-direction: row; flex-wrap: wrap; max-width: 260px; }
 .go b { font-family: var(--tiny); font-weight: 400; font-size: 9px; color: var(--muted); letter-spacing: .12em; padding: 0 4px 2px; }
 button { font: inherit; cursor: pointer; }
@@ -361,8 +361,21 @@ const LAND = /*__LAND__*/;
   }
   [["auto", "Auto"], ...PixelEras.LIST.map(s => [s.id, s.name]), ["now", "Now"]].forEach(([e, n]) => {
     const b = document.createElement("button"); b.className = "btn"; b.dataset.e = e; b.textContent = n;
-    b.onclick = () => { eraChoice = e; applyEra(); }; erasEl.appendChild(b);
+    b.title = e === "auto" ? "Follow the year (and the region, zoomed in)" : e === "now" ? "Today's look" : (s => `${s.family}, ${fmtYear(s.from)} to ${fmtYear(s.to)}${s.region ? " (regional)" : ""}. ${s.note}`)(PixelEras.STYLES[e]);
+    b.onclick = () => { stopTour(); eraChoice = e; applyEra(); }; erasEl.appendChild(b);
   });
+  // A tour through every era in Auto: each stop sets a year and flies to a place where that style shows best.
+  const TOUR = [[-1750, 42, 31, 3], [-250, 24, 35, 3], [117, 14, 40, 3.2], [1100, 8, 46, 3], [1375, -2, 36, 2.6], [1154, 36, 29, 3],
+    [1100, 114, 33, 3], [1600, -35, 15, 1.5], [1750, -60, 18, 1.6], [1890, 15, 48, 4], [1955, 12, 8, 1.3], [2020, 10, 20, 1]];
+  let tourTimer = 0, tourAt = 0;
+  const tourBtn = document.createElement("button"); tourBtn.className = "btn"; tourBtn.textContent = "▶ Tour the eras"; erasEl.insertBefore(tourBtn, erasEl.children[1]);
+  function stopTour() { clearTimeout(tourTimer); tourTimer = 0; tourBtn.textContent = "▶ Tour the eras"; }
+  function tourStep() {
+    const [y, lon, lat, k] = TOUR[tourAt % TOUR.length]; tourAt++;
+    eraChoice = "auto"; setYear(y); flyTo(lon, lat, k);
+    tourTimer = setTimeout(tourStep, 5200);
+  }
+  tourBtn.onclick = () => { if (tourTimer) return stopTour(); tourBtn.textContent = "❚❚ Stop the tour"; tourAt = 0; tourStep(); };
   function flyTo(lon, lat, k) {
     const [x, y] = projection([lon, lat]);
     svg.transition().duration(matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1200).call(zoom.transform, d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
@@ -403,6 +416,7 @@ const LAND = /*__LAND__*/;
   if (q.get("y")) setYear(+q.get("y"));
   setMood(q.get("mood") || "day");
   if (q.get("era")) { eraChoice = q.get("era"); applyEra(true); }
+  if (q.has("tour")) tourBtn.click();
   if (q.get("at")) { const [lon, lat, k] = q.get("at").split(",").map(Number); svg.call(zoom.transform, d3.zoomIdentity.translate(W / 2 - k * projection([lon, lat])[0], H / 2 - k * projection([lon, lat])[1]).scale(k)); }
   window.PIX = { pm, setYear, flyTo };
 })();

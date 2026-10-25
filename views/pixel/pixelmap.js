@@ -6,6 +6,7 @@
 //   pm.sprites(list, {max, pad}?)           [{lon, lat, sprite, frame?, team?, flip?, pri?, grp?}] drawn into the pixel grid; with pri, decluttered
 //   pm.tick()                                advance sprite and water animation by one frame (call ~4 fps)
 //   pm.overlay(fn) / pm.repaint()            fn(g) paints last, into the same grid (lens marks, see marks.js); repaint redraws
+//   pm.setEra(style, {quiet?})               era map style from eras.js (null = today's look): grades the cached raster, draws the frame, ~400 ms dither crossfade
 //   pm.setDetail(fn)                         fn(G, phase) draws zoom detail into the grid: "under" before realm tints, "over" after; "key" names the under pass (see detail.js)
 //   pm.labelGrid()                           realm id and terrain class per art pixel of the last frame (for realm names)
 //   pm.spriteBoxes()                         screen boxes of the prioritised sprites last painted (labels keep off them)
@@ -539,7 +540,8 @@
         if ((st && st.id) === (era && era.id)) return;
         const prev = lastOut && !o.instant ? lastOut.slice() : null;
         era = st; realmRaster.clear();
-        if (!terrain) return;
+        // quiet: the caller is about to re-render anyway (a new view), so no regrade and no crossfade here.
+        if (!terrain || o.quiet) { fade = null; return; }
         applyRealms(); clearTimeout(fadeTimer);
         if (!prev || matchMedia("(prefers-reduced-motion: reduce)").matches) { fade = null; realmsDone(); return; }
         const mask = new Float32Array(w * h);
