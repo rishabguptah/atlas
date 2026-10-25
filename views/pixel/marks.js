@@ -10,6 +10,9 @@
 //     kind  city | person | hub | shock | reached | school | work | stop | order | broke | battle | choke | lens | sel | pin
 //     shape circle | square | diamond | cross | triangle (kind "lens"); size is the old SVG radius in CSS px
 //   lines  {poly: [[x, y], ...] projected, or pts: [[lon, lat], ...], color, kind, dash, arrow, ghost, fade, conf?}  conf: sure | likely | legend
+// Data grammar (grammar.js, views/atlas/VIZ.md): any record may carry conf (0 solid, 1 hatched, 2 dashed, 3 fog; else read off
+// the record); a line with w (art px) is a Minard flow ribbon (progress 0..1 fills it as it happens, forced flips its chevrons);
+// a city point with tier (0..5) is drawn at its size, with grow (+1 / -1) as a small up or down tick.
 // Colours are CSS colours; city and battle marks step aside where a sprite already stands for them.
 (function (global) {
   const rgbOf = s => { const m = String(s).match(/[\d.]+/g); return m && m.length >= 3 ? [+m[0], +m[1], +m[2]] : [128, 128, 128]; };
@@ -32,6 +35,12 @@
     book: [".kk.kk.", "kwwkwwk", "kwwkwwk", "kwwkwwk", "kcckcdk", ".kk.kk."],
     page: ["kkkkk.", "kwwwkk", "kcccwk", "kwwwwk", "kccwwk", "kwwwwk", "kkkkkk"],
     swords: ["kk...kk", "kwk.kwk", ".kwkwk.", "..kwk..", ".kdkdk.", "kck.kck", "kk...kk"],
+    // City tiers: hamlet, town, city, great city (walls), metropolis (walls and a keep).
+    city1: [".k.", "klk", ".k."],
+    city2: [".kkk.", "kllck", "klcck", "kccdk", ".kkk."],
+    city3: ["..kkk..", ".kllck.", "kllccck", "klcccdk", "kcccddk", ".kcddk.", "..kkk.."],
+    city4: ["kkk.kkk", "klkkkck", "kllccck", ".klccdk", "kccccdk", "kcdkddk", "kkk.kkk"],
+    city5: ["k.k.k.k.k", "kkkkkkkkk", "klllwccck", "kllwwwcck", ".klcwcdk.", "kllcwccdk", "klccwcddk", "kccdddddk", "kkkkkkkkk"],
     flag: [["kk....", "kcck..", "kcccck", "kccck.", "kck...", "kk....", "k.....", "kk...."], 0, 7],
     arrow: [["kkkkkkk", "kwwwwwk", ".kwwwk.", "..kwk..", "...k..."], 3, 4],
   };
@@ -45,6 +54,7 @@
   const DASH = { trade: [4, 2, 1], mig: [2, 2, 1], bd: [1, 1, 0], leg: [3, 2, 1], lpath: [3, 2, 0], route: [5, 2, 1], ring: [2, 2, 0] };
   const ORDER = { city: 1, person: 2, school: 3, work: 3, stop: 3, hub: 4, reached: 4, lens: 5, broke: 6, choke: 6, battle: 6, pin: 9, sel: 10 };
 
+  const GR = typeof PixelGrammar !== "undefined" ? PixelGrammar : null;
   function PixelMarks(svg, projection) {
     let points = [], lines = [], dirty = true;
     const colorCache = new Map(), polyCache = new WeakMap();
@@ -123,13 +133,18 @@
       const c = tone(color);
       return { k: pack(INK), c: pack(c), d: pack(mix(c, [20, 16, 14], 0.42)), l: pack(mix(c, [255, 255, 255], 0.38)), w: pack(PAPER) };
     }
-    function icon(name, i, j, T, a = 1, ghost = false) {
+    // cf: confidence (grammar.js). 1 estimated: the body in 2-px diagonal stripes; 2 approximate or disputed: a broken outline;
+    // 3 unknown or speculative: a dotted outline over a dissolving body.
+    function icon(name, i, j, T, a = 1, ghost = false, cf = 0) {
       const I = ICON[name]; if (!I) return;
+      if (ghost) cf = 3;
+      const U0 = G.U0 || 0, V0 = G.V0 || 0;
       I.rows.forEach((row, y) => { for (let x = 0; x < row.length; x++) {
         const ch = row[x]; if (ch === ".") continue;
-        // Speculative marks are drawn as a dotted outline only.
-        if (ghost && (ch !== "k" || ((x + y) & 1))) continue;
-        put(i + x - I.ax, j + y - I.ay, ghost ? T.c : T[ch], a);
+        const px = i + x - I.ax, py = j + y - I.ay, u = px + U0, v = py + V0;
+        if (cf === 3) { if (ch === "k" ? (x + y) & 1 : !(GR && GR.fogOn(u, v, 0.3))) continue; put(px, py, T.c, a); continue; }
+        if (cf === 2 && ch === "k" && ((x + y) % 3 === 0)) continue;
+        put(px, py, cf === 1 && ch !== "k" && ch !== "w" ? (GR && GR.hatchOn(u, v) ? T.c : T.d) : T[ch], a);
       } });
     }
     // Corner brackets that blink: the highlighted mark.
@@ -151,12 +166,15 @@
         else if (q < R2i && fill && ((i + j) & 1) === 0 && (fill > 0.4 || ((i >> 1) + j) & 1)) put(i, j, T.c, o.a * 0.6);
       }
     }
-    // Lines: a 1-px dash in the colour over a 1-px shadow, walked pixel by pixel; the pattern counter runs along the line.
+    // Lines: a 1-px line in the tincture with an ink edge under it, walked pixel by pixel. One dash language (art direction
+    // critique): the pattern says only how sure the line is (grammar.js): solid attested, stitched estimated (every third pixel
+    // in the shade), dashed approximate or disputed, dotted unknown. The selection ring alone keeps its own dots.
     function line(L) {
-      // Confidence (house rule 5): documented is a near-solid marching line, likely a dash, legend or unknown route dots.
-      const T = tones(L.color), a = Math.max(0.25, L.fade ?? (L.alpha != null ? Math.min(1, L.alpha / 0.75) : 1));
-      const dash = L.conf === "legend" || L.ghost ? [1, 3, 0] : L.conf === "likely" || L.dashed ? [3, 3, 1] : L.conf === "sure" ? [6, 1, 1] : DASH[L.kind] || [3, 2, 0];
+      const cf = L.kind === "ring" ? null : L.conf != null ? (GR ? GR.conf(L) : 0) : L.ghost ? 3 : L.dashed ? 2 : 0;
+      const T = tones(L.color), a = Math.max(0.25, L.fade ?? (L.alpha != null ? Math.min(1, L.alpha / 0.75) : 1)),
+        dash = cf == null ? DASH.ring : [[1, 0, 0], [3, 0, 0], [3, 2, 1], [1, 3, 0]][cf];
       const per = dash[0] + dash[1], march = dash[2] ? G.frame : 0, shadow = L.kind !== "ring";
+      const stitch = cf === 1;
       const pix = [];
       let s = 0, lastDir = null, end = null;
       for (const poly of L.polys) {
@@ -169,7 +187,8 @@
             if (!((x0 < -50 && x < -50) || (y0 < -50 && y < -50) || (x0 > G.w + 50 && x > G.w + 50) || (y0 > G.h + 50 && y > G.h + 50) || dx > 4000 || -dy > 4000)) {
               let e = dx + dy;
               for (;;) {
-                if (((s - march) % per + per) % per < dash[0]) pix.push(x0, y0);
+                const ph = ((s - march) % per + per) % per;
+                if (ph < dash[0]) pix.push(x0, y0, stitch && ph === 2 ? 1 : 0);
                 s++;
                 if (x0 === x && y0 === y) break;
                 const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; }
@@ -180,8 +199,8 @@
           prev = [x, y]; end = prev;
         }
       }
-      if (shadow) for (let n = 0; n < pix.length; n += 2) put(pix[n], pix[n + 1] + 1, T.d, a * 0.9);
-      for (let n = 0; n < pix.length; n += 2) put(pix[n], pix[n + 1], T.c, a);
+      if (shadow) for (let n = 0; n < pix.length; n += 3) put(pix[n], pix[n + 1] + 1, T.k, a * 0.85);
+      for (let n = 0; n < pix.length; n += 3) put(pix[n], pix[n + 1], pix[n + 2] ? T.d : T.c, a);
       // Arrowhead: a pixel chevron at the end of the last segment.
       if (L.arrow && end && lastDir) {
         const len = Math.hypot(lastDir[0], lastDir[1]) || 1, ux = lastDir[0] / len, uy = lastDir[1] / len;
@@ -211,14 +230,27 @@
         const c = keyColor(ch); if (c) put(i - S.ax + (flip ? S.w - 1 - x : x), j - S.ay + y, c, a);
       }
     }
+    // A tiny tick beside a city: up if it grew by a quarter or more over the last 50 years, down if it shrank.
+    function growTick(i, j, dir, a) {
+      const k = pack(INK), w = pack(PAPER), x = i + 4, y = j - 4;
+      const rows = dir > 0 ? [".w.", "www"] : ["www", ".w."];
+      rows.forEach((r, dy) => { for (let dx = 0; dx < 3; dx++) if (r[dx] === "w") { put(x + dx, y + dy, w, a); put(x + dx, y + dy + 1, k, a * 0.8); } });
+    }
     function point(m, i, j) {
-      const T = tones(m.color), a = Math.max(0.2, Math.min(1, m.fade ?? 1)), PX = G.px;
+      const T = tones(m.color), a = Math.max(0.2, Math.min(1, m.fade ?? 1)), PX = G.px, cf = GR && (m.conf != null || m.approx) ? GR.conf(m) : 0;
       const S = m.sprite && global.PIXEL_SPRITES && global.PIXEL_SPRITES[m.sprite];
       if (S && S.frames) { sprite(S, i, j, a, m.ghost, m.flip); if (m.hi) brackets(i, j - (S.ay >> 1), Math.max(4, S.w >> 1), a); return; }
       switch (m.kind) {
-        case "city": case "battle":
-          if (!m.hi && covered(i, j, 2)) return; // the city or army sprite already marks it
-          icon(KIND_ICON[m.kind], i, j, T, a); if (m.hi) brackets(i, j, 4, a); return;
+        case "city": {
+          if (!m.hi && covered(i, j, 2)) return; // the city sprite already marks it (and shows its size)
+          const nm = m.tier != null ? "city" + Math.max(1, m.tier) : KIND_ICON.city;
+          icon(nm, i, j, T, a, false, m.tier === 0 ? 2 : cf);
+          if (m.grow) growTick(i, j, m.grow, a);
+          if (m.hi) brackets(i, j, m.tier >= 4 ? 5 : 4, a); return;
+        }
+        case "battle":
+          if (!m.hi && covered(i, j, 2)) return; // the army sprite already marks it
+          icon(KIND_ICON[m.kind], i, j, T, a, false, cf); if (m.hi) brackets(i, j, 4, a); return;
         case "person": icon(m.size >= 4 ? "dot7" : "dot5", i, j, T, a); if (m.hi && m.size >= 5) brackets(i, j, 4, a); return;
         case "stop": icon(m.hi ? "dot7" : "ring7", i, j, T, a); if (m.hi) brackets(i, j, 4, a); return;
         case "order": circle(i, j, Math.max(2, Math.round(m.size / PX)), T, { a: a * 0.95, ink: true, fill: m.critical ? 0.5 : 0.25 }); return;
@@ -229,22 +261,30 @@
           const f = G.frame % 4; if (f) circle(i, j, R + f, T, { a: a * (0.6 - f * 0.12), dotted: true });
           icon("dot3", i, j, T, a); return;
         }
-        case "lens": icon(SHAPE_ICON[m.shape] || "dot5", i, j, T, a, m.ghost); if (m.hi) brackets(i, j, 4, a); return;
+        case "lens": icon(SHAPE_ICON[m.shape] || "dot5", i, j, T, a, m.ghost, cf); if (m.hi) brackets(i, j, 4, a); return;
         case "pin": icon("flag", i, j, { ...T, c: pack([200, 64, 48]), d: pack([124, 32, 24]) }, 1); return;
         case "sel": {
-          // You are here: a bobbing cursor over the clicked spot, and a small cross on the spot itself.
+          // You are here: a ring of marching ants (ink and vellum, stepping with the frame), a bobbing cursor and a small cross.
+          for (let q = 0; q < 40; q++) {
+            const ang = q / 40 * 2 * Math.PI, x = Math.round(i + Math.cos(ang) * 7), y = Math.round(j + Math.sin(ang) * 7);
+            put(x, y, ((q + G.frame) >> 1) & 1 ? pack(INK) : pack(PAPER), 1);
+          }
           icon("arrow", i, j - 4 - (G.frame & 1), tones("#f6f0dc"), 1);
           put(i, j, pack(INK), 1); put(i - 1, j, pack(PAPER), 1); put(i + 1, j, pack(PAPER), 1); put(i, j - 1, pack(PAPER), 1); put(i, j + 1, pack(PAPER), 1);
           return;
         }
-        default: icon(KIND_ICON[m.kind] || "dot5", i, j, T, a); if (m.hi) brackets(i, j, 4, a);
+        default: icon(KIND_ICON[m.kind] || "dot5", i, j, T, a, false, cf); if (m.hi) brackets(i, j, 4, a);
       }
     }
 
     function paint(g) {
       if (dirty && svg) fromSvg();
       G = g;
-      for (const L of lines) { if (!L.polys) L.polys = project(L.pts); line(L); }
+      for (const L of lines) {
+      if (!L.polys) L.polys = project(L.pts);
+      if (L.w && GR) GR.ribbon(g, L.polys, { w: L.w, color: L.color, conf: GR.conf(L), progress: L.progress, forced: L.forced, alpha: Math.max(0.3, L.fade ?? 1), frame: g.frame });
+      else line(L);
+    }
       const proj = projection;
       const list = [];
       for (const m of points) {
@@ -253,10 +293,52 @@
         if (i < -12 || j < -12 || i > g.w + 12 || j > g.h + 12) continue;
         list.push([m, i, j]);
       }
+      // World zoom (below 2x): marks of one family that crowd one cell fold into a count badge (art direction critique 1).
+      if (g.k && g.k < 2) aggregate(list);
       // Big rings first, then small icons north to south, then the selection and guide pins on top.
       list.sort((A, B) => (ORDER[A[0].kind] || (A[0].kind === "order" || A[0].kind === "shock" ? 0 : 5)) - (ORDER[B[0].kind] || (B[0].kind === "order" || B[0].kind === "shock" ? 0 : 5)) || A[2] - B[2]);
       for (const [m, i, j] of list) point(m, i, j);
+      for (const b of badges) badge(b);
+      badges = [];
       G = null;
+    }
+    // Which lens family a mark belongs to, for its tincture and for folding.
+    const KIND_FAM = { city: "land", person: "peoples", hub: "wealth", shock: "shocks", reached: "shocks", school: "mind", work: "mind", stop: "mind", battle: "power", broke: "power", choke: "power" };
+    const FOLD = { city: 1, person: 1, school: 1, work: 1, stop: 1, battle: 1, reached: 1, lens: 1, hub: 1 };
+    let badges = [];
+    function aggregate(list) {
+      const cell = 22, groups = new Map();
+      for (let n = 0; n < list.length; n++) {
+        const [m, i, j] = list[n];
+        if (!FOLD[m.kind] || m.hi || m.always) continue;
+        const fam = m.kind === "lens" ? (GR && GR.FAMILY[m.lens]) || m.lens : KIND_FAM[m.kind];
+        const key = fam + ":" + Math.floor(i / cell) + ":" + Math.floor(j / cell);
+        let gr = groups.get(key); if (!gr) groups.set(key, gr = { fam, idx: [], si: 0, sj: 0, color: m.color });
+        gr.idx.push(n); gr.si += i; gr.sj += j;
+      }
+      const drop = new Set();
+      for (const gr of groups.values()) {
+        if (gr.idx.length < 4) continue;
+        for (const n of gr.idx) drop.add(n);
+        badges.push({ n: gr.idx.length, i: Math.round(gr.si / gr.idx.length), j: Math.round(gr.sj / gr.idx.length), color: GR && GR.LENS[gr.fam] ? GR.LENS[gr.fam] : gr.color });
+      }
+      if (!drop.size) return;
+      let w = 0; for (let n = 0; n < list.length; n++) if (!drop.has(n)) list[w++] = list[n];
+      list.length = w;
+    }
+    // 3x5 pixel digits for count badges.
+    const DIGIT = ["111101101101111", "010110010010111", "111001111100111", "111001111001111", "101101111001001", "111100111001111", "111100111101111", "111001010010010", "111101111101111", "111101111001111"];
+    function badge(b) {
+      const T = tones(b.color), txt = b.n > 99 ? "99" : String(b.n), plus = b.n > 99, wd = txt.length * 4 + (plus ? 4 : 0) + 3, ht = 9;
+      const x0 = b.i - (wd >> 1), y0 = b.j - (ht >> 1);
+      for (let y = 0; y < ht; y++) for (let x = 0; x < wd; x++) {
+        const edge = x === 0 || y === 0 || x === wd - 1 || y === ht - 1, corner = (x === 0 || x === wd - 1) && (y === 0 || y === ht - 1);
+        if (corner) continue;
+        put(x0 + x, y0 + y, edge ? T.k : y === 1 ? T.l : T.c, 1);
+      }
+      for (let x = 1; x < wd; x++) put(x0 + x, y0 + ht, T.k, 0.6);   // a hard one-step shadow
+      [...txt].forEach((d, n) => { const G5 = DIGIT[+d]; for (let q = 0; q < 15; q++) if (G5[q] === "1") put(x0 + 2 + n * 4 + (q % 3), y0 + 2 + ((q / 3) | 0), T.w, 1); });
+      if (plus) { const px = x0 + 2 + txt.length * 4; put(px + 1, y0 + 3, T.w, 1); put(px, y0 + 4, T.w, 1); put(px + 1, y0 + 4, T.w, 1); put(px + 2, y0 + 4, T.w, 1); put(px + 1, y0 + 5, T.w, 1); }
     }
 
     return {
