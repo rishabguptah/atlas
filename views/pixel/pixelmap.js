@@ -6,7 +6,10 @@
 //   pm.sprites(list, {max, pad}?)           [{lon, lat, sprite, frame?, team?, flip?, pri?, grp?}] drawn into the pixel grid; with pri, decluttered
 //   pm.tick()                                advance sprite and water animation by one frame (call ~4 fps)
 //   pm.overlay(fn) / pm.repaint()            fn(g) paints last, into the same grid (lens marks, see marks.js); repaint redraws
+//   pm.setEra(style, {quiet?})               era map style from eras.js (null = today's look): grades the cached raster, draws the frame, ~400 ms dither crossfade
 //   pm.setDetail(fn)                         fn(G, phase) draws zoom detail into the grid: "under" before realm tints, "over" after; "key" names the under pass (see detail.js)
+//   pm.labelGrid()                           realm id and terrain class per art pixel of the last frame (for realm names)
+//   pm.spriteBoxes()                         screen boxes of the prioritised sprites last painted (labels keep off them)
 //   pm.on(fn) / pm.view() / pm.ownWater(on)  for an animation layer above the map (motion.js): fn('layout'|'realms'|'paint') after
 //                                            each pass; view() reads this frame's buffers; ownWater(false) leaves water shimmer to it
 //
@@ -105,7 +108,7 @@
 
     // Build the projected outlines of features ahead of time, in idle slices, so the first visit to a border frame
     // only fills paths. warm(features) queues them; already-built ones are skipped.
-    let warmQ = [], warmOn = false;
+    let warmQ = [], warmOn = false, fadeTimer = 0;
     const idle = global.requestIdleCallback || (fn => setTimeout(() => fn({ timeRemaining: () => 8 }), 30));
     function pathOf(f, pk) {
       let c = pathCache.get(f);
@@ -227,7 +230,7 @@
 
     function render(t, o = {}) {
       const W = container.clientWidth, H = container.clientHeight; lastW = W; lastH = H;
-      last = t; realmsNow = o.realms || realmsNow; if (o.mood) mood = o.mood;
+      last = t; realmsNow = o.realms || realmsNow; if (o.mood) mood = o.mood; rv++; fade = null;
       // Art pixel (i, j) covers screen x in [ox + i*PX, ox + (i+1)*PX); U0 + i is its column in the zoomed world grid.
       const ox = ((t.x % PX) + PX) % PX - PX, oy = ((t.y % PX) + PX) % PX - PX;
       U0 = Math.round((ox - t.x) / PX); V0 = Math.round((oy - t.y) / PX);
@@ -329,6 +332,12 @@
       }
     }
     let NEED = 1, mood = opts.mood || "day";
+    // Era style (eras.js): grades the cached raster per border frame and draws a frame after everything else.
+    let era = opts.era || null, rv = 0, fade = null;
+    // terrain: the raster before realms (terrain plus the zoom detail's under pass, which drawRealms leaves untouched
+    // when an era is on); key changes whenever that raster does.
+    const eraCtx = dk => ({ base, terrain: base, key: rv + "|" + dk, cls, hs, band, latA, ids, realms: realmsNow, w, h, U0, V0, PX, k: last.k, need: NEED, rv, mood, projection,
+      at: (x, y) => [(x * last.k) / PX - U0, (y * last.k) / PX - V0] });
     function stamps() {
       const ink = pack(rgb("#3a3028")), trunk = pack(rgb("#3e2a1a")), snow = pack(rgb("#fbfaf4")), snow2 = pack(rgb("#c8d0d8"));
       const big = NEED < 0.09;
@@ -376,6 +385,8 @@
       const hit = realmRaster.get(realmsNow), dk = detail("key") || "";
       if (hit && hit.dk === dk) { base.set(hit.base); ids = hit.ids; realmRaster.delete(realmsNow); realmRaster.set(realmsNow, hit); return; }
       base.set(terrain); detail("under"); drawRealms();
+      // An era style grades the raster (terrain plus the under detail) and draws realms its own way (eras.js).
+      if (era) era.grade(eraCtx(dk));
       realmRaster.delete(realmsNow);
       realmRaster.set(realmsNow, { base: base.slice(), ids, dk });
       if (realmRaster.size > RASTER_MAX) realmRaster.delete(realmRaster.keys().next().value);
@@ -403,6 +414,8 @@
       }
       // Anti-aliased edge pixels take the id of a clean neighbour.
       for (let k = 0; k < w * h; k++) if (ids[k] === -1) ids[k] = ids[k - 1] > 0 ? ids[k - 1] : ids[k - w] > 0 ? ids[k - w] : 0;
+      // An era style draws realms its own way from the id buffer (eras.js), so the default tint is skipped.
+      if (era) return;
       const tint = realmsNow.map(r => rgb(r.color));
       const view = new Uint8Array(base.buffer);
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
@@ -436,7 +449,8 @@
     }
     // Declutter: when sprites carry a priority (pri), keep the most important ones that fit without touching,
     // up to max; sprites sharing a grp (a battle's two armies and clash) are kept or dropped together.
-    let spriteOpts = {}, spriteMask = null, overlay = null, kept = [], outNow = null, water = true;
+    let spriteOpts = {}, spriteMask = null, overlay = null, shown = [], lastOut = null, kept = [], outNow = null, water = true;
+    const GLINT = pack(rgb("#8ab8c4"));
     function declutter(src, t) {
       if (!src.some(s => s.pri != null)) return src;
       const pad = spriteOpts.pad == null ? 2 : spriteOpts.pad, max = spriteOpts.max || Infinity, groups = new Map();
@@ -460,12 +474,13 @@
     }
     function paint() {
       if (!base) return;
-      const list = kept = declutter(allSprites, last);
+      const list = declutter(allSprites, last);
+      shown = kept = list;
       const img = ctx.createImageData(w, h), out = new Uint32Array(img.data.buffer);
       out.set(base);
       // Water shimmer: a few world-anchored wave glints that move with the frame.
-      const glint = pack(rgb("#8ab8c4"));
-      if (water) for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+      const glint = era && era.glint !== undefined ? era.glint : GLINT;
+      if (water && glint !== null) for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, c = cls[k]; if (c > 1) continue;
         const u = U0 + i, v = V0 + j;
         if (v % 5 === 0 && hash(u >> 2, v) < 0.035 && ((u + frame) & 3) < 2) out[k] = glint;
@@ -500,11 +515,18 @@
           if (i >= 0 && j >= 0 && i < w && j < h) { out[j * w + i] = px[q + 2]; spriteMask[j * w + i] = 1; }
         }
       }
+      // The frame before lens marks, so era ornaments can keep clear of marks.
+      const pre = era && era.over ? out.slice() : null;
       if (overlay) try {
         overlay({ out, w, h, px: PX, frame, night, sprite: spriteMask, cls,
           // Projected (pre-zoom) coordinates to this frame's art pixel, as floats.
           at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] });
       } catch (err) { console.error("pixel overlay", err); }
+      const vis = [Math.ceil(-parseFloat(canvas.style.left) / PX), Math.ceil(-parseFloat(canvas.style.top) / PX), Math.floor((lastW - parseFloat(canvas.style.left)) / PX) - 1, Math.floor((lastH - parseFloat(canvas.style.top)) / PX) - 1];
+      if (era && era.over) try { era.over({ out, pre, w, h, px: PX, frame, vis, cls, sprite: spriteMask, U0, V0, k: t.k, projection, at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] }); } catch (err) { console.error("pixel era", err); }
+      // Era crossfade: the old frame dissolves into the new one through an ordered-dither mask, in a few steps.
+      if (fade) { if (fade.prev.length === out.length && fade.U0 === U0 && fade.V0 === V0) { const m = fade.mask, p = fade.prev, f = fade.t; for (let k = 0; k < out.length; k++) if (m[k] >= f) out[k] = p[k]; } }
+      lastOut = out;
       ctx.putImageData(img, 0, 0);
       outNow = out;
       emit("paint");
@@ -520,6 +542,22 @@
       setRealms(r) { realmsNow = r || NONE; if (!terrain) return; applyRealms(); realmsDone(); },
       // Is the last render for this transform (so a year change can use setRealms)?
       same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === container.clientWidth && lastH === container.clientHeight; },
+      // Switch era style (null = today's look): regrade, then dissolve from the old frame over about 400 ms.
+      setEra(st, o = {}) {
+        if ((st && st.id) === (era && era.id)) return;
+        const prev = lastOut && !o.instant ? lastOut.slice() : null;
+        era = st; realmRaster.clear();
+        // quiet: the caller is about to re-render anyway (a new view), so no regrade and no crossfade here.
+        if (!terrain || o.quiet) { fade = null; return; }
+        applyRealms(); clearTimeout(fadeTimer);
+        if (!prev || matchMedia("(prefers-reduced-motion: reduce)").matches) { fade = null; realmsDone(); return; }
+        const mask = new Float32Array(w * h);
+        for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) { const u = U0 + i, v = V0 + j; mask[j * w + i] = (BAYER[(v & 3) * 4 + (u & 3)] + 0.47) * 0.45 + hash(u >> 3, v >> 3) * 0.55; }
+        fade = { prev, mask, U0, V0, t: 0.2 };
+        const step = () => { if (!fade) return; fade.t += 0.2; if (fade.t > 1.01) { fade = null; paint(); return; } paint(); fadeTimer = setTimeout(step, 80); };
+        paint(); fadeTimer = setTimeout(step, 80);
+      },
+      get era() { return era && era.id; },
       setMood(m) { const re = (m === "winter") !== (mood === "winter"); mood = m; if (re && last) render(last); else paint(); },
       tick() { frame++; paint(); },
       overlay(fn) { overlay = fn; },
@@ -535,6 +573,20 @@
       isWater(lon, lat) { if (!cls || !last) return false; const q = this.toPixel(lon, lat); if (!q || q[0] < 0 || q[1] < 0 || q[0] >= w || q[1] >= h) return false; return cls[q[1] * w + q[0]] <= 2; },
       // Which realm is drawn under a screen point (for hover and click), from the id buffer.
       realmAt(sx, sy) { if (!ids || !last) return null; const i = Math.floor((sx - parseFloat(canvas.style.left)) / PX), j = Math.floor((sy - parseFloat(canvas.style.top)) / PX); const n = ids[j * w + i]; return n > 0 ? realmsNow[n - 1] : null; },
+      // Screen boxes of the sprites last painted with a priority (towns, armies, landmarks), so names can keep off them.
+      spriteBoxes() {
+        if (!last) return [];
+        const out = [], L = parseFloat(canvas.style.left), Tp = parseFloat(canvas.style.top);
+        for (const s of shown) {
+          if (s.pri == null || s.pri < 1) continue;
+          const S = (global.PIXEL_SPRITES || {})[s.sprite], p = S && projection([s.lon, s.lat]); if (!p) continue;
+          const i0 = Math.floor((p[0] * last.k) / PX) - U0 + (s.dx || 0), j0 = Math.floor((p[1] * last.k) / PX) - V0 + (s.dy || 0);
+          out.push([L + (i0 - S.ax) * PX, Tp + (j0 - S.ay) * PX, L + (i0 - S.ax + S.w) * PX, Tp + (j0 - S.ay + S.h) * PX]);
+        }
+        return out;
+      },
+      // The last frame's realm ids and terrain classes per art pixel, for naming realms (realmnames.js).
+      labelGrid() { return ids && last ? { ids, cls, w, h, PX, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top), realms: realmsNow } : null; },
       toPixel(lon, lat) { const p = projection([lon, lat]); return p && [Math.floor((p[0] * last.k) / PX) - U0, Math.floor((p[1] * last.k) / PX) - V0]; },
       get size() { return { w, h, PX }; },
     };
