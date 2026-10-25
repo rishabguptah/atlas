@@ -158,10 +158,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .time { grid-area: time; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; border-top: 1px solid var(--rule);
   padding-block: 6px 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; }
 .time .playbtn { grid-row: 1 / 3; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; font-size: 13px; }
-.strip { height: 22px; display: block; width: 100%; cursor: pointer; }
+.strip { height: 22px; display: block; width: 100%; cursor: pointer; will-change: transform; } /* own layer: the slider thumb moving must not repaint thousands of ticks */
 .strip line { stroke-width: 1; vector-effect: non-scaling-stroke; }
 .time input { width: 100%; min-width: 0; accent-color: var(--ink); margin: 0; }
-.time output { grid-row: 1 / 3; grid-column: 3; font-family: var(--mono); font-size: 13px; min-width: 76px; text-align: right; }
+.time output { grid-row: 1; grid-column: 3; font-family: var(--mono); font-size: 13px; min-width: 76px; text-align: right; }
+.time .speed { grid-row: 2; grid-column: 3; justify-self: end; max-width: 84px; font-family: var(--mono); font-size: 11.5px; border: 1px solid var(--rule); background: var(--card); border-radius: 4px; padding: 1px 4px; cursor: pointer; }
 
 .panel { grid-area: panel; border-left: 1px solid var(--rule); overflow-y: auto; min-height: 0; display: flex; flex-direction: column; }
 .tabs { position: sticky; top: 0; z-index: 3; background: var(--paper); display: flex; gap: 2px; border-bottom: 1px solid var(--rule); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 12px; }
@@ -342,6 +343,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .app.asking #qbox, .app.asking #go { visibility: hidden; }
 @media (max-width: 860px) { .mapctl kbd { display: none; } .app.focus .map { height: 80vh; } .app.asking #qbox, .app.asking #go { display: none; } }
 @media (max-width: 600px) { .eras button:not([aria-current="true"]) { color: transparent; } .eras button[aria-current="true"] { overflow: visible; z-index: 1; } }
+.map canvas.marks { position: absolute; left: 0; top: 0; pointer-events: none; }
+.maptip { position: absolute; z-index: 5; max-width: 280px; pointer-events: none; background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 8px; font-size: 12.5px; line-height: 1.35; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
 </style>
 
 <div class="app">
@@ -380,6 +383,14 @@ a { color: var(--accent); text-underline-offset: 2px; }
     <input type="range" id="year" min="0" max="1000" step="1" aria-label="Year">
     <output id="yout"></output>
     <div class="eras" id="eras" role="group" aria-label="Eras: tap one to jump there"></div>
+    <select class="speed" id="speed" aria-label="Playback speed" title="Playback speed">
+      <optgroup label="Paced by history (slower where it is dense)">
+        <option value="x0.25">¼×</option><option value="x0.5">½×</option><option value="x1" selected>1×</option><option value="x2">2×</option><option value="x5">5×</option><option value="x10">10×</option>
+      </optgroup>
+      <optgroup label="Steady, years per second">
+        <option value="y1">1 yr/s</option><option value="y2">2 yr/s</option><option value="y5">5 yr/s</option><option value="y10">10 yr/s</option><option value="y25">25 yr/s</option><option value="y100">100 yr/s</option>
+      </optgroup>
+    </select>
   </div>
 
   <aside class="panel" id="panel">
@@ -558,6 +569,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // every year a border changed, about 500 from 3400 BCE to 2024. A frame key is "t<year>" once that chunk has loaded,
   // else "s<snapshot>" for the historical-basemaps snapshots below.
   const TL = typeof PixelBorders === "function" ? PixelBorders({ base: "borders/", onLoad: () => onBorders() }) : null;
+  ATLAS.borders = TL;
   const tlFor = y => { const ix = TL && TL.timeline(); return !!ix && y >= ix.years[0]; };
   const frameOf = y => tlFor(y) && TL.realms(y, 1) ? "t" + TL.snapFor(y) : "s" + snapFor(y);
   const frameYear = y => +frameOf(y).slice(1);
@@ -613,27 +625,32 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       if (FEAT.has(f)) return FEAT.get(f);
       const p = f.properties || {}, name = (p.name || p.NAME || "").trim(), subj = (p.subject_of || p.SUBJECTO || "").trim(), at = p.s ?? y;
       const emp = (p.la && EMPIRES.find(e => e.id === p.la)) || EMPIRES.find(e => at >= e.start && at <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj))) || null;
-      const d = { f, id: p.id, name: name || subj, emp, wiki: p.wiki, s: p.s, e: p.e, d: path(f),
+      // The SVG outline is only built when a frame is drawn as SVG (no basemap, or a highlighted state).
+      const d = { f, id: p.id, name: name || subj, emp, wiki: p.wiki, s: p.s, e: p.e,
+        get d() { return this._d ?? (this._d = path(f) || ""); },
         get area() { return this._a ?? (this._a = path.area(f)); }, get c() { return this._c ?? (this._c = path.centroid(f)); } };
       if (fk[0] === "t") FEAT.set(f, d);
       return d;
-    }).filter(d => d.d);
+    }).filter(d => d.f.geometry);
     // Playing through time visits hundreds of frames; keep the most recent ones.
     if (featCache.size > 80) featCache.delete(featCache.keys().next().value);
     featCache.set(fk, list);
     return list;
   }
-  let curSnap;
+  let curSnap, curHi = "";
   function drawPolys(force) {
     const s = state.borders ? frameOf(state.year) : null;
     drawRealmsLayer();
-    if (force || s !== curSnap) {
-      curSnap = s;
-      const list = s == null ? [] : featuresFor(s);
+    // Under the pixel basemap the fills are invisible, so only highlighted states get an SVG outline.
+    const isHi = d => !!d.emp && state.hi.has("polity:" + d.emp.id), onlyHi = !!BASEMAP && !isPolitical();
+    const hiKey = onlyHi ? [...state.hi].join() : "";
+    if (force || s !== curSnap || hiKey !== curHi) {
+      curSnap = s; curHi = hiKey;
+      const list = s == null ? [] : onlyHi ? featuresFor(s).filter(isHi) : featuresFor(s);
       gPoly.selectAll("path").data(list).join("path").attr("class", "poly").attr("d", d => d.d)
         .attr("fill", d => d.emp ? d.emp.color : hashColor(d.name)).classed("emp", d => !!d.emp);
     }
-    gPoly.selectAll("path").classed("hi", d => d.emp && state.hi.has("polity:" + d.emp.id));
+    gPoly.selectAll("path").classed("hi", isHi);
     const best = new Map();
     (s == null ? [] : featuresFor(s)).forEach(d => { if (d.emp && state.hi.has("polity:" + d.emp.id) && (!best.has(d.emp.id) || best.get(d.emp.id).area < d.area)) best.set(d.emp.id, d); });
     gPolyLab.selectAll("text").data([...best.values()], d => d.emp.id).join("text").attr("class", "polylab").text(d => d.emp.name);
@@ -659,7 +676,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const pol = isPolitical();
     mapEl.classList.toggle("terrain-on", !!(TERRAIN && state.terrain));
     mapEl.classList.toggle("political-map", pol);
-    if (!TERRAIN || !state.terrain) return;
+    // A basemap that paints its own terrain hides this layer, so it is not built at all.
+    if (!TERRAIN || !state.terrain || (BASEMAP && BASEMAP.keepTerrain !== true && !pol)) return;
     if (pol) drawRelief(gRelief, path, RELIEF_POL); else if (RELIEF) drawRelief(gRelief, path, RELIEF);
     terrainT = drawTerrain(gTerrain, projection, path, TERRAIN, state.k, { onSelect: d => {
       const at = d.at || d.line[Math.floor(d.line.length / 2)];
@@ -687,7 +705,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // Each zoom frame only moves the root group; labels hide while the scale changes and the
   // counter-scaling, thinning and label layout run once per frame at most, the rest when it settles.
   let zoomK0 = 1, zoomRaf = 0, drawnK = 1;
-  const zoomFrame = () => { zoomRaf = 0; svg.style("--k", state.k); placeScaled(); };
+  const zoomFrame = () => { zoomRaf = 0; svg.style("--k", state.k); placeScaled(); paintMarks(); };
   const zoom = d3.zoom().scaleExtent([1, 80]).on("start", ev => { zoomK0 = ev.transform.k; }).on("zoom", ev => {
     root.attr("transform", ev.transform);
     state.k = ev.transform.k;
@@ -699,7 +717,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   zoom.on("end", () => {
     mapEl.classList.remove("moving");
     for (const fn of viewWatch) try { fn(); } catch (err) { console.error(err); }
-    if (Math.abs(Math.log(state.k / drawnK)) > 0.15) { drawnK = state.k; drawPeople(); drawWar(); drawLenses(); }
+    if (Math.abs(Math.log(state.k / drawnK)) > 0.15) { drawnK = state.k; drawPeople(); drawWar(); drawLenses(); marksChanged(); }
+    paintMarks();
     if (terrainT) terrainT.update(state.k); if (realmsT) realmsT.update(state.k);
     renderBasemap();
   });
@@ -716,6 +735,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     gGrat.attr("d", path(d3.geoGraticule10()));
     gLand.attr("d", path(land));
     for (const k in featCache) delete featCache[k];
+    projV++;
     zoom.translateExtent([[-W, -H], [W * 2, H * 2]]);
     drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(true); drawOverlay(); drawSel(); renderBasemap();
     if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had); svg.call(zoom.transform, d3.zoomIdentity.translate(W / 2 - t0.k * x, H / 2 - t0.k * y).scale(t0.k)); }
@@ -736,151 +756,383 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (sx < 30 || sy < 30 || sx > W - 30 || sy > H - 30) flyTo({ lon, lat, zoom: Math.max(t.k, 2) }, 900);
   }
 
-  // ---------- layers ----------
-  const onClickSel = fn => function (ev, d) { ev.stopPropagation(); select(fn(d)); };
-  function points(g, cls, data, key, build) {
-    return g.selectAll(`g.${cls.split(" ")[0]}`).data(data, key).join(enter => {
-      const e = enter.append("g").attr("class", "pt " + cls);
-      build(e); e.append("title");
-      return e;
+  // ---------- layers: every lens mark is a record on one canvas ----------
+  // Each draw* function rebuilds its layer's list of plain records for the year; paintMarks() projects, culls and paints
+  // them all in one pass (no DOM per mark), and markAt() answers clicks and hovers. Records (shared with a basemap that
+  // paints marks itself, see ATLAS.marks):
+  //   point {lon, lat, kind, shape, color, pri, hi, ghost, size, fade, label, always, sprite, title, card}
+  //   line  {pts, color, kind, dash, arrow, ghost, width, alpha, label, title, card}
+  // card is a function returning the card to select; title is a function for the hover tip.
+  const MK = {};
+  const LAYER_ORDER = ["order", "money", "ideas", "disease", "war", ...PLUG.map(d => "lens:" + d.id), "places", "people"];
+  for (const k of LAYER_ORDER) MK[k] = { points: [], lines: [] };
+  const marksCv = document.createElement("canvas");
+  marksCv.className = "marks";
+  mapEl.insertBefore(marksCv, svg.node());
+  const mctx = marksCv.getContext("2d");
+  const tipEl = document.createElement("div");
+  tipEl.className = "maptip"; tipEl.hidden = true; mapEl.appendChild(tipEl);
+  let projV = 0;  // bumps when the projection changes (resize), so cached projected positions and outlines refresh
+  // Colours come from the page's CSS variables, read once per theme.
+  let colorCache = {};
+  const rootStyle = () => getComputedStyle(document.documentElement);
+  const cssColor = c => {
+    if (!c || c[0] !== "v") return c || "#888";
+    if (colorCache[c]) return colorCache[c];
+    const m = /var\((--[\w-]+)(?:,\s*([^)]+))?\)/.exec(c);
+    const v = m ? rootStyle().getPropertyValue(m[1]).trim() || (m[2] ? cssColor(m[2].trim()) : "") : "";
+    return colorCache[c] = v || "#888";
+  };
+  const onTheme = () => { colorCache = {}; paintMarks(); };
+  if (document.fonts) document.fonts.addEventListener("loadingdone", () => paintSoon());
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  const posCache = new WeakMap();
+  // Projected (unzoomed) position of a record, cached on its source object when it has one.
+  function proj(r) {
+    const src = r.src;
+    if (src) { const c = posCache.get(src); if (c && c.v === projV) return c.p; }
+    const p = projection([r.lon, r.lat]);
+    if (src) posCache.set(src, { v: projV, p });
+    return p;
+  }
+  const lineCache = new WeakMap();
+  function linePath(pts) {
+    const c = lineCache.get(pts);
+    if (c && c.v === projV) return c;
+    const s = path({ type: "LineString", coordinates: pts }), p = new Path2D(s || "");
+    // The last projected segment, for the arrowhead.
+    const a = projection(pts[pts.length - 2]), b = projection(pts[pts.length - 1]), m = projection(pts[Math.floor(pts.length / 2)]);
+    const out = { v: projV, p, a, b, m };
+    lineCache.set(pts, out);
+    return out;
+  }
+  const spriteImg = {};
+  function spriteOf(name) {
+    if (!name) return null;
+    if (spriteImg[name] !== undefined) return spriteImg[name];
+    const sp = ATLAS.sprites[name], f = sp && (sp.href || (Array.isArray(sp.frames) && typeof sp.frames[0] === "string" && sp.frames[0].startsWith("data:") ? sp.frames[0] : null));
+    if (!f || !sp.w || !sp.h) return spriteImg[name] = null;
+    const img = new Image(); img.onload = () => paintMarks(); img.src = f;
+    return spriteImg[name] = { img, w: sp.w, h: sp.h, ax: sp.ax ?? sp.w / 2, ay: sp.ay ?? sp.h };
+  }
+  const SHAPE_PATH = {
+    circle: (c, r) => { c.arc(0, 0, r, 0, 2 * Math.PI); },
+    square: (c, r) => { c.rect(-r * .875, -r * .875, r * 1.75, r * 1.75); },
+    diamond: (c, r) => { const q = r * 1.125; c.moveTo(0, -q); c.lineTo(q, 0); c.lineTo(0, q); c.lineTo(-q, 0); c.closePath(); },
+    cross: (c, r) => { c.moveTo(-r, -r); c.lineTo(r, r); c.moveTo(r, -r); c.lineTo(-r, r); },
+    triangle: (c, r) => { c.moveTo(0, -r * 1.25); c.lineTo(r * 1.125, r * .875); c.lineTo(-r * 1.125, r * .875); c.closePath(); },
+    hourglass: (c, r) => { c.moveTo(-4, -5); c.lineTo(4, -5); c.lineTo(0, 0); c.lineTo(4, 5); c.lineTo(-4, 5); c.lineTo(0, 0); c.closePath(); },
+  };
+  // How each kind looks: fill, stroke, label font and colour, label offset. Mirrors the old SVG styles.
+  const KIND = {
+    city: { lbl: [7, 4] }, person: { lbl: [6, -4] }, hub: { lbl: [8, 4], bold: 1 }, shock: { lbl: [8, 14], italic: 1 }, reached: {},
+    school: { lbl: [7, 10] }, work: { lbl: [7, -3] }, stop: { lbl: [7, 4] }, order: { lbl: [0, 0], center: 1, display: 1 },
+    broke: { lbl: [7, 4], mono: 1 }, battle: { lbl: [7, -4], bold: 1 }, choke: { lbl: [7, 4], italic: 1 }, lens: { lbl: [7, 4], bold: 1 },
+  };
+  const FONT = {
+    serif: getComputedStyle(document.body).fontFamily || "Spectral, Georgia, serif",
+    display: '"IM Fell English SC", "IM Fell English", Georgia, serif', fell: '"IM Fell English", Georgia, serif', mono: '"IBM Plex Mono", ui-monospace, monospace',
+    pixel: '"Pixelify Sans", "Silkscreen", ui-monospace, monospace',
+  };
+  function paintShape(c, r, alphaF) {
+    const col = cssColor(r.color), paper = cssColor("var(--paper)");
+    const sz = r.size || 4, shape = r.shape || "circle";
+    c.globalAlpha = alphaF;
+    if (r.kind === "battle") {
+      c.beginPath(); c.arc(0, 0, 6, 0, 2 * Math.PI); c.fillStyle = paper; c.globalAlpha = alphaF * .7; c.fill(); c.globalAlpha = alphaF;
+      c.beginPath(); SHAPE_PATH.cross(c, 4.5); c.strokeStyle = col; c.lineWidth = 2.2; c.lineCap = "round"; c.stroke(); return;
+    }
+    if (r.kind === "broke") { c.beginPath(); SHAPE_PATH.cross(c, 5); c.strokeStyle = col; c.lineWidth = 2.4; c.lineCap = "round"; c.stroke(); return; }
+    if (r.kind === "shock") {
+      c.beginPath(); c.arc(0, 0, sz, 0, 2 * Math.PI); c.strokeStyle = col; c.lineWidth = 2; if (r.dash) c.setLineDash(r.dash); c.stroke(); c.setLineDash([]);
+      c.beginPath(); c.arc(0, 0, 2.5, 0, 2 * Math.PI); c.fillStyle = col; c.fill(); return;
+    }
+    if (r.kind === "order") {
+      c.beginPath(); c.arc(0, 0, sz, 0, 2 * Math.PI); c.fillStyle = col; c.globalAlpha = alphaF * (r.hi ? .3 : .18); c.fill();
+      c.globalAlpha = alphaF; c.strokeStyle = col; c.lineWidth = r.hi ? 2 : 1.3; c.stroke(); return;
+    }
+    if (r.kind === "school") { c.beginPath(); SHAPE_PATH.square(c, 4); c.strokeStyle = col; c.lineWidth = 1.4; c.stroke(); return; }
+    if (r.kind === "stop") { c.beginPath(); c.arc(0, 0, 3.2, 0, 2 * Math.PI); c.fillStyle = r.hi ? col : paper; c.fill(); c.strokeStyle = col; c.lineWidth = 1.8; c.stroke(); return; }
+    if (r.kind === "city" && r.hi) {
+      c.beginPath(); c.arc(0, 0, 9, 0, 2 * Math.PI); c.strokeStyle = cssColor("var(--warn)"); c.lineWidth = 1.6; c.stroke();
+    }
+    if (shape === "cross") { c.beginPath(); SHAPE_PATH.cross(c, sz); c.strokeStyle = col; c.lineWidth = r.heavy ? 3 : 2.2; c.lineCap = "round"; c.stroke(); return; }
+    c.beginPath(); (SHAPE_PATH[shape] || SHAPE_PATH.circle)(c, sz);
+    c.fillStyle = col; c.globalAlpha = alphaF * (r.ghost ? .25 : r.fill ?? .85); c.fill(); c.globalAlpha = alphaF;
+    if (r.ghost) { c.strokeStyle = col; c.lineWidth = 1.4; c.setLineDash([3, 2]); c.stroke(); c.setLineDash([]); }
+    else if (r.stroke !== false) { c.strokeStyle = r.hi ? cssColor("var(--ink)") : paper; c.lineWidth = r.hi ? 1.4 : .8; c.stroke(); }
+  }
+  // Labels: highest priority first, each placed only where it does not overlap one already placed.
+  function placeLabels(c, labels, W, H) {
+    labels.sort((a, b) => b.pri - a.pri);
+    const boxes = [], cell = 64, grid = new Map();
+    const hits = (x0, y0, x1, y1) => {
+      for (let gx = Math.floor(x0 / cell); gx <= Math.floor(x1 / cell); gx++) for (let gy = Math.floor(y0 / cell); gy <= Math.floor(y1 / cell); gy++) {
+        const g = grid.get(gx * 4096 + gy); if (g) for (const b of g) if (x0 < b[2] && x1 > b[0] && y0 < b[3] && y1 > b[1]) return true;
+      }
+      return false;
+    };
+    const add = b => { for (let gx = Math.floor(b[0] / cell); gx <= Math.floor(b[2] / cell); gx++) for (let gy = Math.floor(b[1] / cell); gy <= Math.floor(b[3] / cell); gy++) { const k = gx * 4096 + gy; if (!grid.has(k)) grid.set(k, []); grid.get(k).push(b); } };
+    c.lineJoin = "round";
+    for (const L of labels) {
+      c.font = L.font;
+      const w = c.measureText(L.text).width, h = L.px;
+      const x0 = L.center ? L.x - w / 2 : L.x, y1 = L.y + h * .25, y0 = y1 - h;
+      if (x0 > W || x0 + w < 0 || y1 < 0 || y0 > H) continue;
+      if (!L.force && hits(x0 - 1, y0, x0 + w + 1, y1)) continue;
+      const b = [x0 - 1, y0, x0 + w + 1, y1]; boxes.push(b); add(b);
+      c.globalAlpha = L.alpha;
+      c.textAlign = L.center ? "center" : "left";
+      c.strokeStyle = L.halo; c.lineWidth = L.haloW; c.strokeText(L.text, L.x, L.y);
+      c.fillStyle = L.fill; c.fillText(L.text, L.x, L.y);
+    }
+    c.globalAlpha = 1; c.textAlign = "left";
+    return boxes.length;
+  }
+  let paintRaf = 0, lastPaint = { labels: [] };
+  const paintSoon = () => { if (!paintRaf) paintRaf = requestAnimationFrame(() => { paintRaf = 0; paintMarks(); }); };
+  // Paint every layer's records for the current zoom transform.
+  function paintMarks() {
+    cancelAnimationFrame(paintRaf); paintRaf = 0;
+    const dpr = window.devicePixelRatio || 1, Wc = Math.round(W * dpr), Hc = Math.round(H * dpr);
+    if (marksCv.width !== Wc || marksCv.height !== Hc) { marksCv.width = Wc; marksCv.height = Hc; marksCv.style.width = W + "px"; marksCv.style.height = H + "px"; }
+    const c = mctx, t = d3.zoomTransform(svg.node()), k = t.k;
+    c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, Wc, Hc);
+    const selfPaint = !!(BASEMAP && BASEMAP.paintsMarks), hideKinds = (BASEMAP && BASEMAP.hideMarks) || [];
+    const pixel = !!BASEMAP, moving = mapEl.classList.contains("moving"), zoomed = k >= 4;
+    const paper = cssColor("var(--paper)"), soft = cssColor("var(--ink-soft)"), ink = cssColor("var(--ink)");
+    const labels = [];
+    // Lines first (all layers), in world coordinates through the zoom transform.
+    if (!selfPaint) {
+      c.setTransform(dpr * k, 0, 0, dpr * k, dpr * t.x, dpr * t.y);
+      c.lineCap = "round"; c.lineJoin = "round";
+      for (const key of LAYER_ORDER) for (const l of MK[key].lines) {
+        const lp = linePath(l.pts);
+        c.globalAlpha = l.alpha ?? .75; c.strokeStyle = cssColor(l.color); c.lineWidth = (l.width || 2) / k;
+        c.setLineDash(l.dash ? l.dash.map(v => v / k) : []);
+        c.stroke(lp.p);
+        if (l.arrow && lp.a && lp.b) {
+          const ang = Math.atan2(lp.b[1] - lp.a[1], lp.b[0] - lp.a[0]), s = 3.6 * (l.width || 2) / k;
+          c.setLineDash([]); c.beginPath(); c.moveTo(lp.b[0] + Math.cos(ang) * s * .4, lp.b[1] + Math.sin(ang) * s * .4);
+          c.lineTo(lp.b[0] - Math.cos(ang - .5) * s, lp.b[1] - Math.sin(ang - .5) * s); c.lineTo(lp.b[0] - Math.cos(ang + .5) * s, lp.b[1] - Math.sin(ang + .5) * s);
+          c.closePath(); c.fillStyle = c.strokeStyle; c.fill();
+        }
+      }
+      c.setLineDash([]); c.globalAlpha = 1;
+    }
+    // Points, in screen pixels (they keep their size while the map zooms).
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    for (const key of LAYER_ORDER) {
+      const L = MK[key];
+      if (!moving) for (const l of L.lines) if (l.label) {
+        const lp = linePath(l.pts); if (!lp.m) continue;
+        labels.push({ text: l.label, x: lp.m[0] * k + t.x + 4, y: lp.m[1] * k + t.y - 5, px: 12, font: `italic 12px ${pixel ? FONT.pixel : FONT.fell}`, fill: cssColor(l.color), halo: paper, haloW: 3, alpha: 1, pri: 3 });
+      }
+      for (const r of L.points) {
+        const p = proj(r); if (!p) continue;
+        const x = p[0] * k + t.x, y = p[1] * k + t.y;
+        r._x = x; r._y = y;
+        if (x < -40 || y < -40 || x > W + 40 || y > H + 40) continue;
+        const a = r.fade ?? 1;
+        if (!selfPaint && !hideKinds.includes(r.kind)) {
+          const img = r.sprite && spriteOf(r.sprite);
+          c.setTransform(dpr, 0, 0, dpr, dpr * x, dpr * y);
+          if (img && img.img.complete && img.img.naturalWidth) { c.imageSmoothingEnabled = false; c.globalAlpha = a; c.drawImage(img.img, -img.ax * 3, -img.ay * 3, img.w * 3, img.h * 3); }
+          else paintShape(c, r, a);
+        }
+        if (moving || !r.label) continue;
+        const show = r.hi || r.always || (r.lbl && zoomed);
+        if (!show) continue;
+        const K = KIND[r.kind] || KIND.lens, off = r.lblAt || K.lbl || [7, 4];
+        const big = r.kind === "city" && r.hi, pxs = r.fontPx || (big ? 13.5 : 11);
+        const fam = pixel ? FONT.pixel : K.display ? FONT.display : K.mono ? FONT.mono : FONT.serif;
+        const onArt = pixel && (r.kind === "city" || r.kind === "battle");
+        labels.push({
+          text: r.label, x: x + off[0], y: y + (r.lblDy ?? off[1]), center: K.center, px: pxs, alpha: Math.max(.35, a),
+          font: `${!pixel && (K.italic || r.ghost) ? "italic " : ""}${big || K.bold || onArt ? 600 : 400} ${pxs}px ${fam}`,
+          fill: onArt ? "#f6f0dc" : big ? ink : r.lblColor ? cssColor(r.lblColor) : K.bold || K.italic || K.mono || r.kind === "stop" ? cssColor(r.color) : r.kind === "order" ? ink : soft,
+          halo: onArt ? "#221f1a" : paper, haloW: 3, pri: (r.hi ? 100 : 0) + (r.always ? 20 : 0) + (r.pri || 0), force: r.hi,
+        });
+      }
+    }
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    placeLabels(c, labels, W, H);
+    lastPaint = { labels };
+  }
+  // Which record is under a screen point: points first (top layer down), then lines within 5 px.
+  function markAt(sx, sy) {
+    const t = d3.zoomTransform(svg.node());
+    for (let i = LAYER_ORDER.length - 1; i >= 0; i--) {
+      const pts = MK[LAYER_ORDER[i]].points;
+      for (let j = pts.length - 1; j >= 0; j--) {
+        const r = pts[j]; if (r._x == null || !r.card) continue;
+        const rad = Math.max(6, (r.size || 4) + 3);
+        if (Math.abs(r._x - sx) <= rad && Math.abs(r._y - sy) <= rad && Math.hypot(r._x - sx, r._y - sy) <= rad) return r;
+      }
+    }
+    const [wx, wy] = t.invert([sx, sy]), tol = 5 / t.k;
+    for (let i = LAYER_ORDER.length - 1; i >= 0; i--) for (const l of MK[LAYER_ORDER[i]].lines) {
+      if (!l.card) continue;
+      let prev = null;
+      for (const q of l.pts) {
+        const p = projection(q); if (!p) { prev = null; continue; }
+        if (prev) {
+          const dx = p[0] - prev[0], dy = p[1] - prev[1], L2 = dx * dx + dy * dy, u = L2 ? Math.max(0, Math.min(1, ((wx - prev[0]) * dx + (wy - prev[1]) * dy) / L2)) : 0;
+          if (Math.hypot(prev[0] + u * dx - wx, prev[1] + u * dy - wy) <= tol) return l;
+        }
+        prev = p;
+      }
+    }
+    return null;
+  }
+  // The selection and the guide's pins and routes stay SVG on the page; a basemap that paints marks gets them as records too.
+  let overlayMarks = { points: [], lines: [] };
+  ATLAS.marks = () => {
+    const points = [], lines = [];
+    for (const k of LAYER_ORDER) { points.push(...MK[k].points); lines.push(...MK[k].lines); }
+    points.push(...overlayMarks.points); lines.push(...overlayMarks.lines);
+    const s = state.sel;
+    if (s) { points.push({ lon: s.lon, lat: s.lat, kind: "sel", color: "var(--ink)" }); lines.push({ kind: "ring", color: "var(--ink)", pts: d3.geoCircle().center([s.lon, s.lat]).radius(R_KM / 111.2)().coordinates[0] }); }
+    return { points, lines, labels: lastPaint.labels, year: state.year };
+  };
+  const markWatch = [];
+  ATLAS.onMarks = fn => { if (typeof fn === "function") markWatch.push(fn); };
+  const marksChanged = () => { for (const fn of markWatch) try { fn(ATLAS.marks()); } catch (err) { console.error(err); } };
+  // Hover: a tip with the record's title, and a pointer cursor over anything clickable.
+  let hoverRaf = 0, hoverEv = null;
+  svg.on("mousemove.marks", ev => {
+    hoverEv = ev;
+    if (hoverRaf) return;
+    hoverRaf = requestAnimationFrame(() => {
+      hoverRaf = 0; if (mapEl.classList.contains("moving")) return;
+      const [sx, sy] = d3.pointer(hoverEv, svg.node()), r = markAt(sx, sy);
+      svg.style("cursor", r ? "pointer" : null);
+      const tt = r && (typeof r.title === "function" ? r.title() : r.title);
+      if (!tt) { tipEl.hidden = true; return; }
+      tipEl.textContent = tt; tipEl.hidden = false;
+      tipEl.style.left = Math.min(W - 10, sx + 14) + "px"; tipEl.style.top = (sy + 16) + "px";
     });
-  }
-  function lines(g, cls, data, key) {
-    return g.selectAll(`path.${cls.split(" ")[0]}`).data(data, key).join("path").attr("class", "line " + cls).attr("d", d => path({ type: "LineString", coordinates: d.pts }));
-  }
-  const lab = (g, data, key, color) => g.selectAll("text.linelab").data(data, key).join("text").attr("class", "linelab")
-    .style("fill", color).text(d => d.name).each(d => { const m = projection(d.pts[Math.floor(d.pts.length / 2)]) || [0, 0]; d.lx = m[0] + 4; d.ly = m[1] - 5; });
+  }).on("mouseleave.marks", () => { tipEl.hidden = true; });
 
+  const P = (src, o) => Object.assign({ src, lon: src.lon, lat: src.lat }, o);
+  const cardFn = (fn, d) => () => fn(d);
   function drawPlaces() {
-    const y = state.year, g = G.places;
+    const y = state.year, out = MK.places.points = [];
     const list = state.on.places ? ENTRIES.filter(e => alive(e, y) || state.hi.has("place:" + e.id)) : ENTRIES.filter(e => state.hi.has("place:" + e.id));
-    const sel = points(g, "city lbl", list, d => d.id, e => { e.append("circle").attr("class", "ring").attr("r", 9); e.append("circle").attr("class", "dot"); e.append("text").attr("x", 7).attr("y", 4); })
-      .classed("wonder", d => d.layer === "wonders").classed("hi", d => state.hi.has("place:" + d.id)).on("click", onClickSel(cityCard));
-    sel.select(".dot").attr("r", d => { const p = popAt(d, y); return p ? Math.max(2.6, Math.min(10, Math.sqrt(p) / 100)) : 2.6; });
-    sel.select("text").text(d => nameAt(d, y));
-    sel.select("title").text(d => { const p = popAt(d, y); return `${nameAt(d, y)}${p ? ` · about ${fmtN(p)} people` : ""}`; });
-    sel.filter(".hi").raise();
+    for (const e of list) {
+      const p = popAt(e, y), hi = state.hi.has("place:" + e.id), wonder = e.layer === "wonders";
+      out.push(P(e, { kind: "city", shape: "circle", color: wonder ? "var(--y-money)" : "var(--y-places)", fill: hi ? 1 : .55, hi, lbl: true,
+        size: p ? Math.max(2.6, Math.min(10, Math.sqrt(p) / 100)) : 2.6, label: nameAt(e, y), pri: 6 + (p ? Math.log10(p) : 0),
+        title: () => `${nameAt(e, y)}${p ? ` · about ${fmtN(p)} people` : ""}`, card: cardFn(cityCard, e) }));
+    }
+    out.sort((a, b) => a.hi - b.hi);
   }
   function drawPeople() {
-    const y = state.year, g = G.people;
+    const y = state.year, out = MK.people.points = [];
     const n = Math.min(450, Math.round(14 + 22 * Math.pow(state.k, 1.25)));
     const list = state.on.people ? PPL.filter(p => adult(p, y)).slice(0, n) : [];
-    const sel = points(g, "person lbl", list, d => d.i, e => { e.append("circle"); e.append("text").attr("x", 6).attr("y", -4); })
-      .classed("top", (d, i) => i < 6).on("click", onClickSel(personCard));
-    sel.select("circle").attr("r", d => 2 + Math.max(0, d.hpi - 60) / 9);
-    sel.select("text").text(d => d.name);
-    sel.select("title").text(d => `${d.name} · ${d.occ} · ${fmtSpan(d.b, d.d)} · born ${d.place}`);
-    placeScaled();
+    list.forEach((d, i) => out.push(P(d, { kind: "person", shape: "circle", color: "var(--y-people)", fill: .8, size: 2 + Math.max(0, d.hpi - 60) / 9,
+      label: d.name, lbl: true, always: i < 6, pri: d.hpi / 20, title: () => `${d.name} · ${d.occ} · ${fmtSpan(d.b, d.d)} · born ${d.place}`, card: cardFn(personCard, d) })));
   }
   function drawMoney() {
-    const y = state.year, g = G.money, on = state.on.money;
+    const y = state.year, on = state.on.money, L = MK.money;
     const tr = on ? TRADE.filter(t => y >= t.start && y <= t.end) : [];
     const mg = on ? MIGS.filter(m => y >= m.start && y <= m.end) : [];
     const hb = on ? HUBS.filter(h => y >= h.start && y <= h.end) : [];
-    lines(g, "trade", tr, d => d.id).on("click", onClickSel(tradeCard)).selectAll("title").data(d => [d]).join("title").text(d => d.name);
-    g.selectAll("path.trade").raise();
-    lines(g, "mig", mg, d => d.id).classed("forced", d => d.forced).attr("marker-end", "url(#arrow)").on("click", onClickSel(migCard))
-      .selectAll("title").data(d => [d]).join("title").text(d => d.name);
-    lab(g, [...tr, ...mg], d => d.id, d => d.start != null && MIGS.includes(d) ? "var(--y-people)" : "var(--y-money)");
-    const s = points(g, "hub lbl always", hb, d => d.name, e => { e.append("rect").attr("x", -4).attr("y", -4).attr("width", 8).attr("height", 8).attr("transform", "rotate(45)"); e.append("text").attr("x", 8).attr("y", 4); })
-      .on("click", onClickSel(hubCard));
-    s.select("text").text(d => d.name.replace(/ \(.*\)/, ""));
-    s.select("title").text(d => `${d.name} · trade hub ${fmtSpan(d.start, d.end)}`);
+    L.lines = [
+      ...mg.map(d => ({ src: d, pts: d.pts, kind: "mig", color: d.forced ? "var(--warn)" : "var(--y-people)", width: 2, dash: [5, 4], dashed: !!d.forced, alpha: .8, arrow: true, label: d.name, title: () => d.name, card: cardFn(migCard, d) })),
+      ...tr.map(d => ({ src: d, pts: d.pts, kind: "trade", color: "var(--y-money)", width: 2, alpha: .75, label: d.name, title: () => d.name, card: cardFn(tradeCard, d) })),
+    ];
+    L.points = hb.map(d => P(d, { kind: "hub", shape: "diamond", size: 5, fill: 1, color: "var(--y-money)", label: d.name.replace(/ \(.*\)/, ""), always: true, pri: 8,
+      title: () => `${d.name} · trade hub ${fmtSpan(d.start, d.end)}`, card: cardFn(hubCard, d) }));
   }
   function drawDisease() {
-    const y = state.year, g = G.disease, on = state.on.disease;
+    const y = state.year, on = state.on.disease, L = MK.disease;
     const ev = on ? SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 2 && y <= (e.end ?? NOW) + 8) : [];
-    const s = points(g, "shock", ev, d => d.id, e => { e.append("circle").attr("class", "halo"); e.append("circle").attr("class", "core").attr("r", 2.5); e.append("text").attr("x", 8).attr("y", 14); })
-      .attr("class", d => "pt shock " + d.subtype).style("--sc", d => SHOCK_C[d.subtype] || "var(--y-disease)").on("click", onClickSel(shockCard));
-    s.select(".halo").attr("r", d => d.deaths ? 5 + Math.max(0, Math.log10(d.deaths[1]) - 3) * 2.6 : 7);
-    s.select("text").text(d => d.name);
-    s.select("title").text(d => `${d.name} · ${SHOCK_N[d.subtype] || d.subtype} · ${fmtSpan(d.start, d.end)}`);
+    L.points = ev.map(d => P(d, { kind: "shock", color: SHOCK_C[d.subtype] || "var(--y-disease)", size: d.deaths ? 5 + Math.max(0, Math.log10(d.deaths[1]) - 3) * 2.6 : 7,
+      dash: d.subtype === "famine" ? [3, 2] : null, famine: d.subtype === "famine", label: d.name, always: true, pri: 9, title: () => `${d.name} · ${SHOCK_N[d.subtype] || d.subtype} · ${fmtSpan(d.start, d.end)}`, card: cardFn(shockCard, d) }));
     // The Black Death month by month, from the Plague & Climate workstream.
     const bdOn = on && y >= 1338 && y <= 1365;
-    const routes = bdOn ? BD.filter(r => r.year <= y) : [];
-    lines(g, "bd", routes, d => d.from + d.to).on("click", onClickSel(() => shockCard(SHOCKS.find(e => e.id === "event:black_death"))));
-    const reached = bdOn ? Object.entries(ARRIVE).filter(([id, a]) => a.y <= y && PL[id]).map(([id, a]) => ({ id, ...a, lon: PL[id].lon, lat: PL[id].lat, name: PL[id].name })) : [];
-    const r = points(g, "reached", reached, d => d.id, e => { e.append("circle").attr("r", 2.6); e.append("text").attr("x", 5).attr("y", 3); }).on("click", onClickSel(d => ({ lon: d.lon, lat: d.lat, name: d.name })));
-    r.select("text").text(d => d.name);
-    r.select("title").text(d => `${d.name} · plague arrives ${MONTHS[(d.m || 1) - 1]} ${d.y}`);
+    const bd = () => shockCard(SHOCKS.find(e => e.id === "event:black_death"));
+    L.lines = (bdOn ? BD.filter(r => r.year <= y) : []).map(d => ({ src: d, pts: d.pts, kind: "bd", color: "var(--y-disease)", width: 1.6, alpha: .7, card: bd }));
+    const reached = bdOn ? Object.entries(ARRIVE).filter(([id, a]) => a.y <= y && PL[id]) : [];
+    for (const [id, a] of reached) {
+      const pl = PL[id];
+      L.points.push(P(pl, { kind: "reached", shape: "circle", size: 2.6, fill: 1, color: "var(--y-disease)", title: () => `${pl.name} · plague arrives ${MONTHS[(a.m || 1) - 1]} ${a.y}`,
+        card: () => ({ lon: pl.lon, lat: pl.lat, name: pl.name }) }));
+    }
   }
   function drawIdeas() {
-    const y = state.year, g = G.ideas, on = state.on.ideas;
+    const y = state.year, on = state.on.ideas, L = MK.ideas;
     const legs = [], stops = [];
     if (on) for (const j of JOURNEYS) {
       if (y < j.y0 || y > j.y1 + 150) continue;
       const vis = j.steps.filter(s => s.y <= y && y - s.y < 400);
       const last = vis[vis.length - 1];
       vis.forEach(s => {
-        if (s.from && (s.from.lon !== s.at.lon || s.from.lat !== s.at.lat)) legs.push({ id: j.id + s.i, j, s, pts: [[s.from.lon, s.from.lat], [s.at.lon, s.at.lat]], fresh: y - s.y < 40 });
-        stops.push({ id: j.id + s.i, j, s, lon: s.at.lon, lat: s.at.lat, now: s === last && y - s.y < 60 });
+        const go = () => journeyCard(j, s);
+        if (s.from && (s.from.lon !== s.at.lon || s.from.lat !== s.at.lat)) {
+          const fresh = y - s.y < 40;
+          s._pts = s._pts || [[s.from.lon, s.from.lat], [s.at.lon, s.at.lat]];
+          legs.push({ src: s, pts: s._pts, kind: "leg", color: "var(--y-ideas)", width: fresh ? 2.6 : 1.8, alpha: fresh ? 1 : .55, arrow: fresh, title: () => `${j.n}: ${s.text}`, card: go });
+        }
+        const now = s === last && y - s.y < 60;
+        stops.push(P(s.at, { kind: "stop", color: "var(--y-ideas)", hi: now, label: now ? j.n : s.at.name, lbl: true, always: now, pri: now ? 9 : 2,
+          title: () => `${j.n} · ${s.at.name}, ${fmtYear(s.y)}`, card: go }));
       });
     }
-    lines(g, "leg", legs, d => d.id).classed("fresh", d => d.fresh).attr("marker-end", d => d.fresh ? "url(#arrow)" : null).on("click", onClickSel(d => journeyCard(d.j, d.s)))
-      .selectAll("title").data(d => [d]).join("title").text(d => `${d.j.n}: ${d.s.text}`);
-    g.selectAll("text.linelab").remove();
+    L.lines = legs;
     const sc = on ? SCHOOLS.filter(x => y >= x.s && (x.e == null || y <= x.e)) : [];
-    const ss = points(g, "school lbl", sc, d => d.id, e => { e.append("rect").attr("x", -3.5).attr("y", -3.5).attr("width", 7).attr("height", 7); e.append("text").attr("x", 7).attr("y", 10); }).on("click", onClickSel(ideaCard));
-    ss.select("text").text(d => d.n); ss.select("title").text(d => `${d.n} · ${d.sub} · ${fmtSpan(d.s, d.e)}`);
     const wk = on ? WORKS.filter(w => w.s <= y && w.s > y - 100) : [];
-    const ws = points(g, "work lbl", wk, d => d.id, e => { e.append("path").attr("d", "M0-4.5L4.5 0 0 4.5-4.5 0z"); e.append("text").attr("x", 7).attr("y", -3); }).on("click", onClickSel(workCard));
-    ws.select("text").text(d => d.n); ws.select("title").text(d => `${d.n} · written ${fmtYear(d.s)}`);
-    const st = points(g, "stop lbl", stops, d => d.id, e => { e.append("circle").attr("r", 3.2); e.append("text").attr("x", 7).attr("y", 4); })
-      .classed("now", d => d.now).on("click", onClickSel(d => journeyCard(d.j, d.s)));
-    st.select("text").text(d => d.now ? d.j.n : d.s.at.name); st.select("title").text(d => `${d.j.n} · ${d.s.at.name}, ${fmtYear(d.s.y)}`);
-    st.filter(".now").raise();
+    L.points = [
+      ...sc.map(d => P(d, { kind: "school", label: d.n, lbl: true, color: "var(--y-ideas)", pri: 4, title: () => `${d.n} · ${d.sub} · ${fmtSpan(d.s, d.e)}`, card: cardFn(ideaCard, d) })),
+      ...wk.map(d => P(d, { kind: "work", shape: "diamond", size: 4, fill: .7, stroke: false, color: "var(--y-ideas)", label: d.n, lbl: true, pri: 3, title: () => `${d.n} · written ${fmtYear(d.s)}`, card: cardFn(workCard, d) })),
+      ...stops.sort((a, b) => a.hi - b.hi),
+    ];
   }
   function drawOrder() {
-    const y = state.year, g = G.order, on = state.on.order;
+    const y = state.year, on = state.on.order, L = MK.order;
     const list = on ? POLS.filter(p => polAlive(p, y)) : [];
     list.forEach(p => { p._a = areaAt(p, y); p._f = fragAt(p, y); p._b = band(p._f); });
     list.sort((a, b) => b._a - a._a);
-    const s = points(g, "order lbl", list, d => d.id, e => { e.append("circle"); e.append("text").attr("text-anchor", "middle"); })
-      .attr("class", (d, i) => `pt order lbl ${d._b}${i < 8 ? " big" : ""}`).style("--bc", d => `var(--b-${d._b === "none" ? "calm" : d._b})`).on("click", onClickSel(polityCard));
-    s.select("circle").attr("r", d => 3 + Math.sqrt(d._a) * 7);
-    s.select("text").attr("y", d => -(5 + Math.sqrt(d._a) * 7)).style("font-size", d => 10 + Math.min(4, Math.sqrt(d._a) * 2) + "px").text(d => d.n);
-    s.select("title").text(d => `${d.n} · ${d._b === "none" ? "no score yet" : d._b + ", " + Math.round(d._f * 100) + "% risk of breaking within 50 years"}`);
+    L.points = list.map((d, i) => {
+      const r = 3 + Math.sqrt(d._a) * 7;
+      return P(d, { kind: "order", color: `var(--b-${d._b === "none" ? "calm" : d._b})`, hi: d._b === "critical", critical: d._b === "critical", size: r, label: d.n, lbl: true, always: i < 8, pri: 10 - i / 10,
+        lblDy: -(5 + r), fontPx: 10 + Math.min(4, Math.sqrt(d._a) * 2),
+        title: () => `${d.n} · ${d._b === "none" ? "no score yet" : d._b + ", " + Math.round(d._f * 100) + "% risk of breaking within 50 years"}`, card: cardFn(polityCard, d) });
+    });
     const broke = on ? POLS.filter(p => p.b && p.e <= y && p.e > y - 20) : [];
-    const b = points(g, "broke lbl", broke, d => d.id, e => { e.append("path").attr("d", "M-5-5L5 5M5-5L-5 5"); e.append("text").attr("x", 7).attr("y", 4); }).on("click", onClickSel(polityCard));
-    b.select("text").text(d => `${d.n} breaks`); b.select("title").text(d => `${d.n} ended ${fmtYear(d.e)} without a successor (${d.st})`);
+    for (const d of broke) L.points.push(P(d, { kind: "broke", color: "var(--b-critical)", label: `${d.n} breaks`, lbl: true, pri: 7, title: () => `${d.n} ended ${fmtYear(d.e)} without a successor (${d.st})`, card: cardFn(polityCard, d) }));
   }
   function drawWar() {
-    const y = state.year, g = G.war, on = state.on.war;
+    const y = state.year, on = state.on.war, L = MK.war;
     // Curated battles linger 12 years; Wikidata ones show for their own year and two either side, thinned by zoom.
     const cap = Math.round(40 * Math.pow(state.k, 1.3));
     const bs = on ? [...battlesNear(y, 12).filter(b => b.cur), ...battlesNear(y, 2).filter(b => !b.cur).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y) || (b.parts || "").length - (a.parts || "").length).slice(0, cap)] : [];
-    const s = points(g, "battle lbl", bs, d => d.id, e => { e.append("circle").attr("r", 6); e.append("path").attr("d", "M-4.5-4.5L4.5 4.5M4.5-4.5L-4.5 4.5"); e.append("text").attr("x", 7).attr("y", -4); })
-      .classed("always", d => d.cur && Math.abs(d.start - y) <= 2).style("opacity", d => 1 - Math.abs(d.start - y) / 16).on("click", onClickSel(battleCard));
-    s.select("text").text(d => d.name.replace(/^(Battle|Siege|Sack) of /, ""));
-    s.select("title").text(d => `${d.name} · ${fmtYear(d.start)}${d.war ? " · " + d.war : ""} · ${sideNames(d).join(" vs ")}`);
-    const cs = on ? CHOKES : [];
-    const c = points(g, "choke lbl", cs, d => d.id, e => { e.append("path").attr("d", "M-4-5L4-5 0 0 4 5-4 5 0 0z"); e.append("text").attr("x", 7).attr("y", 4); }).on("click", onClickSel(chokeCard));
-    c.select("text").text(d => d.name);
-    c.select("title").text(d => { const h = holderAt(d.id, y); return `${d.name} · ${h.length ? "held by " + h.join(", ") : "no state holds it"} in ${fmtYear(y)}`; });
+    L.points = bs.map(d => P(d, { kind: "battle", color: "var(--y-war)", size: 6, label: d.name.replace(/^(Battle|Siege|Sack) of /, ""), lbl: true, always: d.cur && Math.abs(d.start - y) <= 2,
+      fade: 1 - Math.abs(d.start - y) / 16, pri: d.cur ? 8 : 2, title: () => `${d.name} · ${fmtYear(d.start)}${d.war ? " · " + d.war : ""} · ${sideNames(d).join(" vs ")}`, card: cardFn(battleCard, d) }));
+    if (on) for (const d of CHOKES) L.points.push(P(d, { kind: "choke", shape: "hourglass", color: "var(--y-war)", fill: 1, label: d.name, lbl: true, pri: 5,
+      title: () => { const h = holderAt(d.id, state.year); return `${d.name} · ${h.length ? "held by " + h.join(", ") : "no state holds it"} in ${fmtYear(state.year)}`; }, card: cardFn(chokeCard, d) }));
   }
   // ---------- plugin lenses and basemap ----------
-  const SHAPES = {
-    circle: e => e.append("circle").attr("r", 4),
-    square: e => e.append("rect").attr("x", -3.5).attr("y", -3.5).attr("width", 7).attr("height", 7),
-    diamond: e => e.append("path").attr("d", "M0-4.5L4.5 0 0 4.5-4.5 0z"),
-    cross: e => e.append("path").attr("class", "x").attr("d", "M-4-4L4 4M4-4L-4 4"),
-    triangle: e => e.append("path").attr("d", "M0-5L4.5 3.5-4.5 3.5z"),
-  };
-  // Sprites are drawn 3 screen pixels per art pixel, anchored at (ax, ay).
-  function spriteEl(e, name) {
-    const sp = ATLAS.sprites[name], f = sp && (sp.href || (Array.isArray(sp.frames) && typeof sp.frames[0] === "string" && sp.frames[0].startsWith("data:") ? sp.frames[0] : null));
-    if (!f || !sp.w || !sp.h) return false;
-    e.append("image").attr("href", f).attr("width", sp.w * 3).attr("height", sp.h * 3).attr("x", -(sp.ax ?? sp.w / 2) * 3).attr("y", -(sp.ay ?? sp.h) * 3);
-    return true;
-  }
   const lensCard = (d, c, at) => ({ lon: at ? at.lon : undefined, lat: at ? at.lat : undefined, name: null, ...c, kind: "lens:" + d.id, c: `var(--y-${d.id})`, kick: c.kick || d.name,
     sources: (c.sources || []).map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c || x.url, url: x.url || x.u }) });
   const lensGo = (d, c, at) => () => { const card = lensCard(d, c, at); if (isFinite(card.lon) && isFinite(card.lat)) select(card, { fly: !at, setYear: card.year != null && !at }); else if (card.year != null) animateYear(card.year); };
   const lensItem = (d, r, at) => item(`<b>${esc(r.title)}</b>${r.tag ? ` <span class="tag">${esc(r.tag)}</span>` : ""}`, typeof r.year === "number" ? fmtYear(r.year) : r.year ?? "", r.why || "",
     r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim || (typeof r.year === "number" && Math.abs(r.year - state.year) > 150));
+  // What ctx.pins and ctx.paths return: enough of a d3 selection for the calls lenses chain on it (style("--c", ...)).
+  function markSel(recs) {
+    const s = {
+      style(name, v) { if (name === "--c") for (const r of recs) r.color = typeof v === "function" ? v(r.x) : v; return s; },
+      classed(cls, on) { if (cls === "ghost") for (const r of recs) r.ghost = typeof on === "function" ? !!on(r.x) : !!on; return s; },
+      attr() { return s; }, on() { return s; }, text() { return s; }, raise() { return s; }, select() { return s; }, selectAll() { return s; }, filter() { return s; },
+      each(fn) { recs.forEach((r, i) => fn.call(null, r.x, i)); return s; }, size: () => recs.length, nodes: () => [], empty: () => !recs.length,
+    };
+    return s;
+  }
   function lensCtx(d) {
-    const g = G["lens:" + d.id]; let n = 0;
-    const sub = () => { const id = "s" + n++; let s = g.select(`g[data-s="${id}"]`); if (s.empty()) s = g.append("g").attr("data-s", id); return s; };
+    const g = G["lens:" + d.id], L = MK["lens:" + d.id];
     const ok = x => x && isFinite(x.lon) && isFinite(x.lat);
     return {
       data: (typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}, year: state.year, k: state.k, g, d3, projection, path, km, fmtYear, fmtSpan,
@@ -888,31 +1140,32 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ruledBy: (lon, lat, y) => { const r = ruledBy(lon, lat, y ?? state.year); return r ? (r.emp ? r.emp.name : r.name) : null; },
       near: (list, at, r) => nearby(list.filter(ok), at.lon, at.lat, r ?? at.r ?? R_KM).map(o => o.x),
       pins(list, o = {}) {
-        const key = o.key || (x => x.id), lb = o.label, tt = o.title || lb;
-        const sel = points(sub(), "lp" + (lb ? " lbl" : "") + (o.always ? " always" : "") + (o.cls ? " " + o.cls : ""), list.filter(ok), key, e => {
-          if (!spriteEl(e, o.shape)) (SHAPES[o.shape] || SHAPES.circle)(e);
-          if (lb) e.append("text").attr("x", 7).attr("y", 4);
-        }).style("--c", `var(--y-${d.id})`);
-        if (lb) sel.select("text").text(x => lb(x));
-        if (tt) sel.select("title").text(x => tt(x));
-        if (o.card) sel.on("click", onClickSel(x => lensCard(d, o.card(x))));
-        return sel;
+        const lb = o.label, tt = o.title || lb, cls = " " + (o.cls || "") + " ";
+        const color = o.color || `var(--y-${d.id})`, ghost = cls.includes(" ghost "), always = !!o.always || cls.includes(" always ");
+        const recs = list.filter(ok).map(x => {
+          const sprite = o.shape && !SHAPE_PATH[o.shape] ? o.shape : null;
+          return { src: x, x, lon: x.lon, lat: x.lat, kind: "lens", lens: d.id, shape: SHAPE_PATH[o.shape] ? o.shape : "circle", sprite, color, ghost, always, lbl: !!lb, heavy: cls.includes(" wf-hit "),
+            label: lb ? lb(x) : null, pri: always ? 7 : 3, title: tt ? () => tt(x) : null, card: o.card ? () => lensCard(d, o.card(x)) : null };
+        });
+        L.points.push(...recs);
+        return markSel(recs);
       },
       paths(list, o = {}) {
-        const key = o.key || (x => x.id), co = o.coords || (x => x.pts);
-        const rows = list.map(x => ({ x, id: key(x), pts: co(x) })).filter(r => Array.isArray(r.pts) && r.pts.length > 1);
-        const sel = lines(sub(), "lpath" + (o.cls ? " " + o.cls : ""), rows, r => r.id).style("--c", `var(--y-${d.id})`);
-        if (o.title) sel.selectAll("title").data(r => [r]).join("title").text(r => o.title(r.x));
-        if (o.card) sel.on("click", onClickSel(r => lensCard(d, { line: r.pts, lon: r.pts[Math.floor(r.pts.length / 2)][0], lat: r.pts[Math.floor(r.pts.length / 2)][1], ...o.card(r.x) })));
-        return sel;
+        const key = o.key || (x => x.id), co = o.coords || (x => x.pts), cls = " " + (o.cls || "") + " ", ghost = cls.includes(" ghost ");
+        const recs = list.map(x => ({ x, id: key(x), pts: co(x) })).filter(r => Array.isArray(r.pts) && r.pts.length > 1).map(r => ({
+          src: r.x, x: r.x, pts: r.pts, kind: "lens", lens: d.id, color: o.color || `var(--y-${d.id})`, ghost, width: ghost ? 2.4 : 2, alpha: ghost ? .9 : .75, dash: ghost ? [7, 5] : null,
+          title: o.title ? () => o.title(r.x) : null,
+          card: o.card ? () => lensCard(d, { line: r.pts, lon: r.pts[Math.floor(r.pts.length / 2)][0], lat: r.pts[Math.floor(r.pts.length / 2)][1], ...o.card(r.x) }) : null }));
+        L.lines.push(...recs);
+        return markSel(recs);
       },
-      _end() { g.selectAll(":scope > g[data-s]").filter(function () { return +this.dataset.s.slice(1) >= n; }).remove(); },
+      _end() {},
     };
   }
   function drawLenses() {
     for (const d of PLUG) {
-      const g = G["lens:" + d.id];
-      if (!state.on[d.id] || typeof d.draw !== "function") { g.selectAll("*").remove(); continue; }
+      const L = MK["lens:" + d.id]; L.points = []; L.lines = [];
+      if (!state.on[d.id] || typeof d.draw !== "function") { G["lens:" + d.id].selectAll("*").remove(); continue; }
       try { const c = lensCtx(d); d.draw(c); c._end(); } catch (err) { console.error("lens " + d.id, err); }
     }
   }
@@ -930,11 +1183,15 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function renderBasemap() {
     if (!BASEMAP || !BASEMAP.render) return;
     bmYear = state.year;
+    const t0 = performance.now();
     try { BASEMAP.render(d3.zoomTransform(svg.node()), state.year); } catch (err) { console.error("basemap", err); }
+    bmCost = bmCost * 0.6 + (performance.now() - t0) * 0.4;
   }
-  // A full basemap render is heavy, so year changes (slider, play) re-render it at most every 120 ms.
-  let bmTimer = 0, bmLast = 0;
+  // Year changes (slider, play) re-render the basemap in the same frame while that is cheap (a cached border frame,
+  // same view); when renders turn heavy (a new frame or view), at most every 120 ms.
+  let bmTimer = 0, bmLast = 0, bmCost = 0;
   function renderBasemapSoon() {
+    if (bmCost < 6 && !bmTimer) return renderBasemap();
     if (bmTimer) return;
     const wait = Math.max(0, 120 - (performance.now() - bmLast));
     bmTimer = setTimeout(() => { bmTimer = 0; bmLast = performance.now(); if (bmYear !== state.year) renderBasemap(); }, wait);
@@ -951,7 +1208,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
 
   let rafAll = 0;
   function drawAll(now) {
-    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); if (BASEMAP && bmYear !== state.year) renderBasemapSoon(); };
+    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); paintMarks(); marksChanged(); if (BASEMAP && bmYear !== state.year) renderBasemapSoon(); };
     if (now) { cancelAnimationFrame(rafAll); run(); } else if (!rafAll) rafAll = requestAnimationFrame(run);
   }
 
@@ -960,6 +1217,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const s = state.sel;
     gSelRing.attr("d", s ? path(d3.geoCircle().center([s.lon, s.lat]).radius(R_KM / 111.2)()) : null);
     const d = s ? [s] : [];
+    marksChanged();
     gSel.selectAll("g.sel").data(d).join(e => { const g = e.append("g").attr("class", "pt sel"); g.append("circle").attr("class", "pulse").attr("r", 8); g.append("circle").attr("r", 4); return g; });
     placeScaled();
   }
@@ -975,6 +1233,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     renderHere();
   }
   svg.on("click", ev => {
+    const [sx, sy] = d3.pointer(ev, svg.node()), hit = markAt(sx, sy);
+    if (hit) { const c = hit.card(); if (c) return select(c); }
     const [mx, my] = d3.pointer(ev, root.node());
     const ll = projection.invert([mx, my]);
     if (!ll || !isFinite(ll[0])) return;
@@ -1348,15 +1608,24 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const playBtn = document.getElementById("playyear");
   let timeRaf = 0, lastT = 0;
   function stopTime() { cancelAnimationFrame(timeRaf); timeRaf = 0; playBtn.textContent = "▶"; playBtn.setAttribute("aria-label", "Play through time"); }
+  // Speed: "x<m>" keeps the history-paced curve (about 40 s for all of history at 1x, slower where it is dense),
+  // "y<n>" plays a steady n years per second, so a decade or a century can be watched closely.
+  const speedEl = document.getElementById("speed");
+  let speed = speedEl.value, yearF = 0;
+  speedEl.addEventListener("change", () => { speed = speedEl.value; yearF = state.year; try { localStorage.setItem("atlas.speed", speed); } catch (e) {} });
+  try { const v = localStorage.getItem("atlas.speed"); if (v && [...speedEl.options].some(o => o.value === v)) speedEl.value = speed = v; } catch (e) {}
   playBtn.onclick = () => {
     if (timeRaf) return stopTime();
     if (state.year >= NOW - 1) setYear(MIN);
     playBtn.textContent = "❚❚"; playBtn.setAttribute("aria-label", "Pause");
-    lastT = performance.now();
+    lastT = performance.now(); yearF = state.year;
+    let tF = yearToT(state.year);
     const tick = now => {
-      const t = Math.min(1, yearToT(state.year) + (now - lastT) / 40000); lastT = now;
-      let ny = tToYear(t); if (ny <= state.year) ny = state.year + 1;
-      setYear(ny);
+      const dt = Math.min(100, now - lastT); lastT = now;
+      const v = +speed.slice(1);
+      if (speed[0] === "y") yearF += v * dt / 1000;
+      else { tF = Math.max(tF, yearToT(yearF)) + v * dt / 40000; yearF = NOW - SPAN * Math.pow(Math.max(0, 1 - tF), CURVE); }
+      if (Math.floor(yearF) > state.year) setYear(Math.floor(yearF));
       if (state.year >= NOW) return stopTime();
       timeRaf = requestAnimationFrame(tick);
     };
@@ -1403,6 +1672,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     ).classed("cut", d => d.style === "cut").style("--rc", col).attr("d", d => path({ type: "LineString", coordinates: d.pts }));
     gRoutes.selectAll("text").data(rs, d => d.i + d.label).join("text").attr("class", "routelab").text(d => d.label || "");
     const ps = (overlay.pins || []).filter(p => isFinite(p.lon) && isFinite(p.lat));
+    overlayMarks = { points: ps.map(p => ({ lon: p.lon, lat: p.lat, kind: "pin", color: "var(--ink)", label: p.name })),
+      lines: rs.map(r => ({ pts: r.pts, kind: "route", color: col(r), dashed: r.style === "cut", arrow: true })) };
+    marksChanged();
     gPins.selectAll("g.pin").data(ps, d => d.name + d.lon).join(enter => {
       const g = enter.append("g").attr("class", "pt pin");
       g.append("circle").attr("r", 4.5);

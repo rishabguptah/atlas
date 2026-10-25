@@ -7,6 +7,7 @@
 // B.realms(year, k) -> realms drawn in that year, at the level for zoom k: the finest one loaded, requesting the right
 //                      one if it is missing (onLoad fires when it arrives). null if none loaded yet.
 // B.snapFor(year)   -> the frame year in force (the last change at or before year); B.timeline() -> index once loaded.
+// B.chunkRealms(year, k) -> every realm of the loaded chunk around year (for warming caches), or null.
 (function (global) {
   const SNAPS = [-4000, -3000, -2000, -1500, -1000, -700, -500, -400, -323, -300, -200, -100, -1, 100, 200, 300, 400, 500, 600, 700, 800, 900,
     1000, 1100, 1200, 1279, 1300, 1400, 1492, 1500, 1530, 1600, 1650, 1700, 1715, 1783, 1800, 1815, 1878, 1880, 1900, 1914, 1920, 1930, 1938,
@@ -59,6 +60,9 @@
       const c = chunkFor(y), want = levelFor(k);
       if (!c || y < index.years[0]) return [];
       loadChunk(c, want);
+      // Fetch the neighbouring chunks too, so playing or scrubbing across a chunk edge does not wait on the network.
+      const ci = index.chunks.indexOf(c);
+      if (Array.isArray(cache["t" + want + ":" + c[2]])) for (const n of [index.chunks[ci + 1], index.chunks[ci - 1]]) if (n) loadChunk(n, want);
       for (let l = want; l >= 0; l--) { const r = frame(c, l, y); if (r) return r; if (l < want) loadChunk(c, l); }
       for (let l = want + 1; l <= 2; l++) { const r = frame(c, l, y); if (r) return r; }
       return null;
@@ -74,6 +78,8 @@
         for (let l = want + 1; l <= 2; l++) { const c = cache[l + ":" + s]; if (Array.isArray(c)) return c; }
         return null;
       },
+      // Every realm of the loaded chunk around year (all its frames) at the level for zoom k, for warming caches.
+      chunkRealms(year, k) { const c = index && chunkFor(year), all = c && cache["t" + levelFor(k) + ":" + c[2]]; return Array.isArray(all) ? all : null; },
       failed: (year, k) => index === false && !!failed[levelFor(k) + ":" + snapFor(year)] && !!failed["0:" + snapFor(year)],
     };
   }

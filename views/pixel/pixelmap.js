@@ -88,20 +88,37 @@
       return OUT3;
     }
 
-    const pathCache = new WeakMap(), svgPath = d3.geoPath(projection);
+    const pathCache = new WeakMap(), ctxPath = d3.geoPath(projection);
     function maskFor(feats, fill) {
       octx.setTransform(1, 0, 0, 1, 0, 0); octx.clearRect(0, 0, w, h);
       const t = last;
       octx.setTransform(t.k / PX, 0, 0, t.k / PX, -U0, -V0);
       // Projected outlines are cached as Path2D per feature (and per projection), then filled through the zoom transform.
       const pk = projection.scale() + "," + projection.translate().join(",");
-      feats.forEach((f, i) => {
-        let c = pathCache.get(f);
-        if (!c || c.pk !== pk) pathCache.set(f, c = { pk, p: new Path2D(svgPath(f) || "") });
-        octx.fillStyle = fill(f, i); octx.fill(c.p);
-      });
+      feats.forEach((f, i) => { octx.fillStyle = fill(f, i); octx.fill(pathOf(f, pk)); });
       octx.setTransform(1, 0, 0, 1, 0, 0);
       return octx.getImageData(0, 0, w, h).data;
+    }
+
+    // Build the projected outlines of features ahead of time, in idle slices, so the first visit to a border frame
+    // only fills paths. warm(features) queues them; already-built ones are skipped.
+    let warmQ = [], warmOn = false;
+    const idle = global.requestIdleCallback || (fn => setTimeout(() => fn({ timeRemaining: () => 8 }), 30));
+    function pathOf(f, pk) {
+      let c = pathCache.get(f);
+      // Projected straight into a Path2D (no SVG string to build and parse).
+      if (!c || c.pk !== pk) { const p2 = new Path2D(); ctxPath.context(p2)(f); pathCache.set(f, c = { pk, p: p2 }); }
+      return c.p;
+    }
+    function warm(feats) {
+      warmQ = feats.slice();
+      if (warmOn) return; warmOn = true;
+      const step = dl => {
+        const pk = projection.scale() + "," + projection.translate().join(",");
+        while (warmQ.length && dl.timeRemaining() > 2) { const f = warmQ.pop(), c = pathCache.get(f); if (!c || c.pk !== pk) pathOf(f, pk); }
+        if (warmQ.length) idle(step); else warmOn = false;
+      };
+      idle(step);
     }
 
     function render(t, o = {}) {
@@ -188,8 +205,9 @@
       drawRivers(t, need);
       stamps();
       terrain = base.slice();
-      drawRealms();
-      paint();
+      realmRaster.clear();
+      applyRealms();
+      realmsDone();
     }
 
     function snowLine(k) { return 47 + lowNoise[k] * 4 - Math.max(0, band[k] - 20) * 0.06; }
@@ -285,6 +303,19 @@
         }
       }
     }
+
+    // Realm rasters are kept per border frame (the realms array) for the current view, so scrubbing back and forth
+    // through years that share a frame, or revisiting one, only copies a buffer. Cleared by render() (new view).
+    const realmRaster = new Map(), RASTER_MAX = 16, NONE = [];
+    function applyRealms() {
+      const hit = realmRaster.get(realmsNow);
+      if (hit) { base.set(hit.base); ids = hit.ids; realmRaster.delete(realmsNow); realmRaster.set(realmsNow, hit); return; }
+      base.set(terrain); drawRealms();
+      realmRaster.set(realmsNow, { base: base.slice(), ids });
+      if (realmRaster.size > RASTER_MAX) realmRaster.delete(realmRaster.keys().next().value);
+    }
+    // The one place where realms are done and sprites come next (year-dependent passes over base go here).
+    function realmsDone() { paint(); }
 
     // Realms: rasterise polygons to an id buffer at art-pixel size, tint the land, and draw borders where ids change.
     function drawRealms() {
@@ -407,10 +438,11 @@
     return {
       canvas,
       render,
+      warm,
       move(t) { if (!last) return; const s = t.k / last.k; canvas.style.transform = `translate(${t.x - last.x * s}px,${t.y - last.y * s}px) scale(${s})`; canvas.style.transformOrigin = `${-parseFloat(canvas.style.left)}px ${-parseFloat(canvas.style.top)}px`; },
       sprites(l, o) { allSprites = l; spriteOpts = o || {}; paint(); },
       // A new year with the same view: keep the terrain pass, redo only realms and sprites.
-      setRealms(r) { realmsNow = r || []; if (!terrain) return; base.set(terrain); drawRealms(); paint(); },
+      setRealms(r) { realmsNow = r || NONE; if (!terrain) return; applyRealms(); realmsDone(); },
       // Is the last render for this transform (so a year change can use setRealms)?
       same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === container.clientWidth && lastH === container.clientHeight; },
       setMood(m) { const re = (m === "winter") !== (mood === "winter"); mood = m; if (re && last) render(last); else paint(); },
