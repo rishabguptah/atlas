@@ -76,6 +76,8 @@
       const sp = ERA ? ERA.shock(s.subtype) : /epidemic|pandemic|plague/.test(s.subtype) ? "plague" : s.subtype === "famine" ? "skull" : s.subtype === "eruption" ? "volcano" : "fire";
       statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2, pri: 3.8 });
     }
+    // Sprites other lenses ask for (ATLAS.pixelSprites: functions (year, k) -> [{lon, lat, sprite, ...}]).
+    for (const f of ATLAS.pixelSprites || []) try { statics.push(...(f(y, k) || [])); } catch (err) { console.error("pixel sprites", err); }
     if (typeof MONEY !== "undefined" && isOn("money")) for (const t of MONEY.trade) {
       if (y < t.start || y > t.end || !t.line || t.line.length < 2) continue;
       const segs = []; let tot = 0;
@@ -132,6 +134,8 @@
     return r ? `<img src="${PixelMarks.swatch(r, color)}" width="22" height="16" alt="" style="image-rendering:pixelated;display:block">` : null;
   };
 
+  // Lenses whose marks change within a year (the month cursor of a deep region) re-collect sprites without a re-render.
+  ATLAS.pixelRefresh = () => { if (pm && T && year != null) { collect(year, T.k); draw(); } };
   ATLAS.basemap({
     id: "pixel", name: "Pixel map", paintsMarks: typeof PixelMarks === "function",
     mount(el, projection) {

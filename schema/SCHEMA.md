@@ -15,7 +15,7 @@ bending an existing one, and say so in your PR.
 - Run `python3 tools/build.py` before you push. It fails on any error, and CI runs the same check.
 
 Workstream folders: `kernel`, `living-atlas`, `places-people`, `states-war`, `economy-trade`,
-`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`, `law`.
+`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`, `law`, `europe-19c`.
 
 ## Common fields (every record)
 
@@ -46,6 +46,7 @@ Years are integers. Negative is BCE, and there is no year 0 (-1 is 1 BCE).
 | `start`, `end` | Year it began and ended. `end: null` means it still exists. Omit when unknown. |
 | `start_approx`, `end_approx` | `true` when the year is a rough estimate. |
 | `start_range`, `end_range` | Optional `[low, high]` when historians give a range. |
+| `date`, `end_date` | Optional ISO date, `YYYY`, `YYYY-MM` or `YYYY-MM-DD`, as precise as the source; the year must equal `start` / `end`. |
 
 ### Place on the map
 
@@ -120,6 +121,7 @@ One measure record per (thing, metric, source), with id `m:<metric>:<thing slug>
 
 ## Changes
 
+v0.4 · 2026-10-25 · `europe-19c` workstream (deep zoom): `date` and `end_date` on any record, ISO `YYYY`, `YYYY-MM` or `YYYY-MM-DD` as precise as the source, and always in the same year as `start` / `end`; `date_note` when sources disagree. Event subtypes `siege`, `campaign`, `expedition`, `revolution`, `coup`, `mutiny`, `riot`, `protest`, `strike`, `massacre`, `pogrom`, `assassination`, `congress`, `independence`, `referendum`, `coronation`, `exhibition`, `fire`, `shipwreck`, `disaster`; `family` groups them (war, diplomacy, unrest, disaster, culture). `sitelinks` = how many Wikipedias cover a record. Place field `admin` / `admin_of` for provinces. See data/europe-19c/README.md.
 v0.3 · 2026-10-25 · `law` workstream: lens `law`; relation `governed_as` (polity -> `idea:gov:<form>`, time-bounded, with `basis`: curated or wikidata); event subtype `law` with `by` (polity id), `policy` (`idea:policy:<slug>`) and `effect` (adopt, abolish, restrict, extend); `by` and `policy` are checked as references; measures `regime_lied` (Lexical Index class 0-7, `step: true` = value holds until the next point) and Seshat presence metrics (`legal_code`, `courts`, `judges`, `lawyers`, `bureaucrats`, `divine_rulers`, `divine_legitimation`, `exec_constraint_gov`, `exec_constraint_nongov`). See data/law/README.md.
 v0.2 · 2026-10-25 · `art-architecture` workstream: `art` lens; idea subtype `style` (`family`, `origin`, `spread`); work fields `styles`, `styled_from`, `made_at`.
 

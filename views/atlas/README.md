@@ -43,6 +43,18 @@ rows from the current time; rows from other centuries fold under "from other tim
 view and lenses (localStorage `atlas.resume.v1`, this browser only). The header question box steps aside while the Ask tab is open.
 Roadmap and critique: https://claude.ai/artifact/6saKUD2YsaVezRGC9M3z6o
 
+## Up close: Europe 1789-1914
+
+The Up close tab studies one region by the month: a month scrubber (1 month, 3 months or a year per second; `[` and
+`]` step a month), ten storylines with a Next button, what happened this month, wars under way, who was born and died.
+Its lenses: Chronicle (3,600 dated events, Power), Railways (26,000 stations by opening date, Wealth), Provinces
+(Land), Growing cities (Wealth), Lives (Peoples). Data: `data/europe-19c/`. Railways and lives load from
+`deep/e19.json`, which has to be published beside the page:
+
+```sh
+python3 views/atlas/lenses/e19.py pub          # writes pub/deep/e19.json (about 2 MB)
+```
+
 ## Lens families and plugins
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
