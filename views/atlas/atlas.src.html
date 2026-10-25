@@ -1837,7 +1837,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   ATLAS.isOn = k => isOn(k);
   // A lens toggle also re-renders the basemap so anything it draws for a lens (sprites) follows the chip.
-  function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); renderBasemap(); }
+  function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); renderBasemap(); drawStrip(); }
   // Tap a family: open its lenses below, and switch the family on or off. Tap a lens: just that one.
   layersEl.addEventListener("click", ev => {
     const b = ev.target.closest(".chip"); if (!b) return;
@@ -1851,7 +1851,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const k = b.dataset.k; setOn(k, !isOn(k));
     redrawToggles(); syncChips(); refreshPanel();
   });
-  function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); } }
+  function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); drawStrip(); } }
 
   // ---------- year ----------
   const yearIn = document.getElementById("year"), yout = document.getElementById("yout"), yp = document.getElementById("yp");
@@ -1913,12 +1913,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ["ideas", JOURNEYS.flatMap(j => j.steps.map(s => s.y))],
       ["war", BATTLES.map(b => b.start)],
     ];
-    for (const d of PLUG) if (typeof d.strip === "function" && lensReady(d)) try { rows.push([d.id, (d.strip((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}) || []).filter(Number.isFinite)]); } catch (err) { console.error("lens " + d.id, err); }
-    const rh = 21 / rows.length;
-    rows.forEach(([k, ys], i) => {
+    for (const d of PLUG) if (typeof d.strip === "function" && lensReady(d) && isOn(d.id)) try { rows.push([d.id, (d.strip((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}) || []).filter(Number.isFinite)]); } catch (err) { console.error("lens " + d.id, err); }
+    // Only the lenses that are on get a row, so the strip says which years matter for what is on the map.
+    const on = rows.filter(([k]) => isOn(k)), rh = 21 / Math.max(3, on.length);
+    st.attr("aria-hidden", null).attr("role", "img").attr("aria-label", "Years with records for the lenses that are on");
+    on.forEach(([k, ys], i) => {
       // One tick per strip column (a thousand at most), not one per record: 11k battles would be 11k nodes.
       const xs = [...new Set(ys.filter(y => y >= MIN && y <= NOW).map(y => Math.round(yearToT(y) * 1000)))];
-      st.append("g").selectAll("line").data(xs).join("line")
+      const g = st.append("g");
+      g.append("title").text(`${NAME[k] || k}: years with records. Click to jump there.`);
+      g.append("rect").attr("x", 0).attr("y", i * rh).attr("width", 1000).attr("height", rh).attr("fill", "transparent");
+      g.selectAll("line").data(xs).join("line")
         .attr("x1", x => x).attr("x2", x => x).attr("y1", 1 + i * rh).attr("y2", Math.max(1.6, rh - 1.3) + 1 + i * rh)
         .style("stroke", `var(--y-${k})`).style("stroke-opacity", k === "order" ? 0.35 : 0.7);
     });
@@ -2630,7 +2635,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k];
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
-  syncChips();
+  syncChips(); drawStrip();
   // ---------- phone: the panel is a bottom sheet over a full-screen map ----------
   // Three heights: peek (tabs only), half, full. Drag the handle or the tabs; tap the handle to step up; picking
   // something on the map, or a tab, opens it to half so the answer shows without covering the whole map.
