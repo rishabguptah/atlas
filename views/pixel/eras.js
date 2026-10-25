@@ -242,7 +242,8 @@
     detail: [0.42, 0.12, 0.4],
     shade(P) {
       vellum(P, 12);
-      if (WATER(P.c) && P.d > 2 && (P.v % 6 === 0) && ((P.u + (P.v / 6 | 0) * 3) % 8) < 3) { P.r = P.r * 0.45 + 60 * 0.55; P.g = P.g * 0.45 + 110 * 0.55; P.b = P.b * 0.45 + 168 * 0.55; }
+      // Wave strokes: dropped at random per stroke so they never form a lattice; a third as many at world zoom.
+      if (WATER(P.c) && P.d > 2 && (P.v % 6 === 0) && ((P.u + (P.v / 6 | 0) * 3) % 8) < 3 && hash((P.u + (P.v / 6 | 0) * 3) >> 3, P.v) < (P.need > 0.4 ? 0.3 : 0.75)) { P.r = P.r * 0.45 + 60 * 0.55; P.g = P.g * 0.45 + 110 * 0.55; P.b = P.b * 0.45 + 168 * 0.55; }
     },
     redSea: "#c0392b",
     coast: "#2a2220",
@@ -272,7 +273,7 @@
     detail: [0.38, 0.1, 0.4],
     shade(P) {
       vellum(P, 10);
-      if (WATER(P.c) && P.d > 1 && ((P.v + Math.round(Math.sin(P.u * 0.5) * 1.3)) % 7 === 0) && vnoise(P.u, P.v, 14) > 0.42) { P.r += 64; P.g += 68; P.b += 64; }
+      if (WATER(P.c) && P.d > 1 && ((P.v + Math.round(Math.sin(P.u * 0.5) * 1.3)) % 7 === 0) && vnoise(P.u, P.v, 14) > (P.need > 0.4 ? 0.58 : 0.42)) { P.r += 34; P.g += 38; P.b += 40; }
     },
     coast: "#e8c060",
     realm: { fill: 0.05, band: 0.3, bandW: 1, edge: "#6a3a28", pastel: 0.1 },
@@ -532,9 +533,10 @@
       return meanL;
     };
     let graded = null, gradedKey = null;
-    const P = { r: 0, g: 0, b: 0, c: 0, band: 0, hs: 0, d: 0, u: 0, v: 0, dl: 0 };
+    const P = { r: 0, g: 0, b: 0, c: 0, band: 0, hs: 0, d: 0, u: 0, v: 0, dl: 0, need: 1 };
     function gradeTerrain(g) {
       const { terrain, base, cls, band, hs, w, h, U0, V0 } = g, ML = means(), bd = s.bandDither || 0, shade = s.shade;
+      P.need = g.need || 1;
       const view = new Uint8Array(base.buffer, base.byteOffset, base.length * 4);
       const red = s.redSea && typeof d3 !== "undefined" && areaMask(g, RED_SEA), redC = s.redSea && rgb(s.redSea);
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {

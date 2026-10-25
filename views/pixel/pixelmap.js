@@ -155,7 +155,7 @@
       // straddle the antimeridian; exact per pixel elsewhere (near the rim). Much cheaper than inverting every pixel.
       // The grid is anchored to the world (every G-th art column and row), so any region of the same view interpolates
       // exactly the same longitude and latitude for a given art pixel.
-      const G = 4, gU = Math.floor(U0 / G), gV = Math.floor(V0 / G), gw = Math.floor((U0 + w - 1) / G) - gU + 2, gh = Math.floor((V0 + h - 1) / G) - gV + 2;
+      const G = 8, gU = Math.floor(U0 / G), gV = Math.floor(V0 / G), gw = Math.floor((U0 + w - 1) / G) - gU + 2, gh = Math.floor((V0 + h - 1) / G) - gV + 2;
       const gl = new Float64Array(gw * gh * 2), gok = new Uint8Array(gw * gh);
       const inv = (i, j, outA, o) => {
         const px = ((U0 + i + 0.5) * PX) / t.k, py = ((V0 + j + 0.5) * PX) / t.k;
@@ -166,10 +166,19 @@
         outA[o] = ll[0]; outA[o + 1] = ll[1]; return 1;
       };
       for (let gj = 0; gj < gh; gj++) for (let gi = 0; gi < gw; gi++) gok[gj * gw + gi] = inv((gU + gi) * G - U0, (gV + gj) * G - V0, gl, (gj * gw + gi) * 2);
+      // A cell whose 4x4 surrounding grid points are all off the globe is paper: no exact inversion there (inverting
+      // off-globe points is the slow path of the projection, and most of a world view is paper).
+      const paper = new Uint8Array(gw * gh);
+      for (let gj = 1; gj < gh - 2; gj++) for (let gi = 1; gi < gw - 2; gi++) {
+        let any = 0;
+        for (let y = -1; y <= 2 && !any; y++) for (let x = -1; x <= 2; x++) if (gok[(gj + y) * gw + gi + x]) { any = 1; break; }
+        paper[gj * gw + gi] = !any;
+      }
       const ll = [0, 0];
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, u = U0 + i, v = V0 + j;
         const gi = Math.floor(u / G) - gU, gj = Math.floor(v / G) - gV, a = gj * gw + gi, b = a + 1, c2 = a + gw, d2 = c2 + 1;
+        if (paper[a]) { base[k] = OUTP; continue; }
         if (gok[a] && gok[b] && gok[c2] && gok[d2] && Math.abs(gl[a * 2] - gl[b * 2]) < 90 && Math.abs(gl[a * 2] - gl[d2 * 2]) < 90) {
           const fx = (u - (gU + gi) * G) / G, fy = (v - (gV + gj) * G) / G;
           for (let q = 0; q < 2; q++) {
