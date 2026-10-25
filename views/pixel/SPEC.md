@@ -74,7 +74,9 @@ about 180 / k km, so even at 20x detail is chosen and symbolised, not traced.
 | from | what | source |
 |---|---|---|
 | 2.5x | long walls (Hadrian's, Antonine, Limes, Gorgan, Great Walls, Danevirke, Berlin...) | hand-traced through known forts, approximate ones dashed |
-| 5x | main Roman roads, main railways, fields | Itiner-e; Natural Earth; HYDE country population over arable terrain |
+| 5x | main Roman roads, main railways, fields | Itiner-e; Natural Earth rail dated by Wikidata station openings; HYDE country population over arable terrain, FAO irrigation map in dry lands |
+| 16x | windmills (NW Europe 1180-1920), vineyards in the wine lands, two-pixel roads | procedural, era rules in detail.js |
+| 6x / 10x | main / all medieval and early modern trade, pilgrim and courier routes (dashed, straight legs) | OWTRAD (Ciolek), attested period ±50 years |
 | 6x / 14x / 24x | modern highways / secondary highways / roads | Natural Earth, dated by country |
 | 10x | hamlets where farmland is densely peopled | HYDE density, roofs by region and era |
 | 12x | castles, forts, lighthouses, ports with jetties | Wikidata (dated only), Pleiades |

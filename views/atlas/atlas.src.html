@@ -345,6 +345,53 @@ a { color: var(--accent); text-underline-offset: 2px; }
 @media (max-width: 600px) { .eras button:not([aria-current="true"]) { color: transparent; } .eras button[aria-current="true"] { overflow: visible; z-index: 1; } }
 .map canvas.marks { position: absolute; left: 0; top: 0; pointer-events: none; }
 .maptip { position: absolute; z-index: 5; max-width: 280px; pointer-events: none; background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 8px; font-size: 12.5px; line-height: 1.35; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
+/* One label engine (views/pixel/labels.js): every label is a candidate at every zoom; the queue hides losers with .lx.
+   Art direction D5: colour lives on the glyph, never on the text; settlements are vellum on ink, notes ink on vellum. */
+.map.lq .pt text { display: block; }
+.map.lq .pt text, .map.lq text.linelab { fill: #221f1a; stroke: #f6f0dc; stroke-width: 3px; font-style: normal; font-weight: 600; font-size: 12px; }
+.map.lq .pt.city text, .map.lq .pt.hub text, .map.lq .pt.reached text { fill: #f6f0dc; stroke: #221f1a; }
+.map.lq .pt.hi text { fill: var(--ink); stroke: var(--paper); font-size: 16px; }
+.map.lq text.linelab { fill: #221f1a !important; }
+.map.lq .pt text.lx, .map.lq text.linelab.lx, .map.lq text.routelab.lx, .map.lq.moving text { display: none; }
+/* A lens with focus: the basemap goes quiet and layers outside the focused family fade (g[data-layer].dim). */
+.basemap canvas { transition: filter .35s; }
+.map.lens-focus .basemap canvas { filter: saturate(.35) brightness(1.06) contrast(.86); }
+.map.lens-focus .g-relief { filter: saturate(.4); }
+.map g[data-layer] { transition: opacity .3s; }
+.map g[data-layer].dim { opacity: .28; }
+
+/* Phone: the map fills the screen; the panel is a bottom sheet (peek, half, full) you drag or tap the handle of. */
+.grab { display: none; }
+@media (max-width: 700px) {
+  html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+  .app { --peek: 92px; height: 100dvh; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; grid-template-areas: "top" "map" "time";
+    padding-bottom: calc(var(--peek) + env(safe-area-inset-bottom, 0px)); box-sizing: border-box; }
+  .top { grid-template-columns: minmax(0, 1fr); padding-block: 6px 5px; gap: 4px; }
+  .brand, .askbar { display: none; }
+  .layers { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .layers::-webkit-scrollbar { display: none; }
+  .layers .chip { flex: none; }
+  .map { position: relative; top: auto; height: auto; z-index: auto; border-bottom: 0; }
+  .time { padding-block: 4px 4px; gap: 0 10px; }
+  .time .playbtn { width: 34px; height: 34px; }
+  .yearplate { font-size: 24px; }
+  .maphint { display: none; }
+  .mapctl { top: 8px; }
+  .panel { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: 88dvh; border: 1px solid var(--rule); border-bottom: 0; border-radius: 14px 14px 0 0;
+    background: var(--paper); box-shadow: 0 -8px 24px rgba(0, 0, 0, .18); overflow: hidden; display: flex; flex-direction: column;
+    transform: translateY(calc(88dvh - var(--peek) - env(safe-area-inset-bottom, 0px))); transition: transform .28s cubic-bezier(.2, .8, .2, 1); touch-action: none; }
+  .panel[data-sheet="half"] { transform: translateY(calc(88dvh - 50dvh)); }
+  .panel[data-sheet="full"] { transform: translateY(0); }
+  .panel.dragging { transition: none; }
+  .panel > .pane { overflow-y: auto; flex: 1 1 auto; min-height: 0; touch-action: pan-y; padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+  .panel[data-sheet="peek"] > .pane { overflow: hidden; }
+  .grab { display: block; flex: none; width: 100%; height: 22px; border: 0; background: none; cursor: grab; position: relative; touch-action: none; }
+  .grab::before { content: ""; position: absolute; left: 50%; top: 8px; width: 40px; height: 5px; margin-left: -20px; border-radius: 3px; background: var(--rule); }
+  .tabs { position: static; top: auto; overflow-x: auto; scrollbar-width: none; flex: none; touch-action: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .player { top: 0; }
+  .keycard { max-height: calc(100% - 60px); }
+}
 </style>
 
 <div class="app">
@@ -393,7 +440,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
     </select>
   </div>
 
-  <aside class="panel" id="panel">
+  <aside class="panel" id="panel" data-sheet="peek">
+    <button class="grab" id="grab" type="button" aria-label="Show more of the panel"></button>
     <div class="tabs" role="tablist">
       <button class="tab" role="tab" data-tab="guide" aria-selected="true">Ask</button>
       <button class="tab" role="tab" data-tab="now" aria-selected="false">This year</button>
@@ -457,6 +505,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       if (!LENS_LAYER[l]) LENS_LAYER[l] = d.id;
     }
   }
+  // A plugin lens whose data loads after the first paint (LATE_FILES) is skipped until it has arrived.
+  const lensReady = d => typeof LATE_FILES === "undefined" || !LATE_FILES["lens:" + d.id] || (typeof LENS_DATA !== "undefined" && !!LENS_DATA[d.id]);
   const BASEMAP0 = ATLAS.basemaps.find(b => b && typeof b.mount === "function") || null;
   const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
   const fmtSpan = (s, e) => `${s == null ? "?" : fmtYear(s)}–${e == null ? "today" : fmtYear(e)}`;
@@ -517,9 +567,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const fragAt = (p, y) => stepAt(p.f, y);
 
   // Curated battles carry sides and a why; the Wikidata ones add breadth (participants, war).
+  const wdBattle = ([name, subtype, start, lat, lon, wd, parts, war]) => ({
+    id: "wd" + wd, name, subtype, start, lat, lon, parts, war, sources: wd ? [{ cite: "Wikidata " + wd, url: "https://www.wikidata.org/wiki/" + wd }] : [] });
   const BATTLES = WAR.battles.map(b => ({ ...b, cur: true })).concat((WAR.wd || []).map(([name, subtype, start, lat, lon, wd, parts, war]) => ({
     id: "wd" + wd, name, subtype, start, lat, lon, parts, war, sources: wd ? [{ cite: "Wikidata " + wd, url: "https://www.wikidata.org/wiki/" + wd }] : [] })));
-  const BAT_BY_YEAR = d3.group(BATTLES, b => b.start);
+  let BAT_BY_YEAR = d3.group(BATTLES, b => b.start);
   const battlesNear = (y, w) => { const out = []; for (let yy = y - w; yy <= y + w; yy++) { const g = BAT_BY_YEAR.get(yy); if (g) out.push(...g); } return out; };
   const CHOKES = WAR.chokepoints;
   const HELD = {};
@@ -619,7 +671,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const y = +fk.slice(1);
     let fc;
     if (fk[0] === "t") fc = (TL.realms(y, 1) || []).map(r => r.feature);
-    else { const t = POLITIES[y]; fc = precise("l0", y, onPrecise(y)) || topojson.feature(t, Object.values(t.objects)[0]).features; }
+    else { const t = POLITIES[y]; fc = precise("l0", y, onPrecise(y)) || (t ? topojson.feature(t, Object.values(t.objects)[0]).features : []); }
     const list = fc.map(f => {
       // A timeline row is shared by every frame of its years, so its shape is projected once.
       if (FEAT.has(f)) return FEAT.get(f);
@@ -712,6 +764,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (state.k !== zoomK0) mapEl.classList.add("moving");
     if (!zoomRaf) zoomRaf = requestAnimationFrame(zoomFrame);
     if (BASEMAP && BASEMAP.move) try { BASEMAP.move(ev.transform); } catch (err) { console.error(err); }
+    if (LQ) LQ.move(ev.transform);
   });
   const viewWatch = [];  // plugin tabs listening for pans and zooms (ATLAS.api.onView)
   zoom.on("end", () => {
@@ -724,6 +777,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   });
   svg.call(zoom).on("dblclick.zoom", null);
 
+  // zoom.transform skips the zoom's limits; fitT applies them (no empty sky past the world's edge on a phone).
+  let kMin = 1;
+  const fitT = t => zoom.constrain()(t, [[0, 0], [W, H]], zoom.translateExtent());
   function layout() {
     const r = mapEl.getBoundingClientRect();
     // Keep the same place in the middle when the map changes size.
@@ -736,17 +792,22 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     gLand.attr("d", path(land));
     for (const k in featCache) delete featCache[k];
     projV++;
-    zoom.translateExtent([[-W, -H], [W * 2, H * 2]]);
+    // A tall map (a phone held upright) would show the whole world as a thin band with empty sky above and below it,
+    // so there the smallest zoom fills the height and the view stops at the world's edges.
+    const sb = path.bounds({ type: "Sphere" }), worldH = sb[1][1] - sb[0][1];
+    kMin = worldH < H * 0.75 ? Math.min(6, H / worldH) : 1;
+    zoom.scaleExtent([kMin, 80]).translateExtent(kMin > 1 ? sb : [[-W, -H], [W * 2, H * 2]]);
     drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(true); drawOverlay(); drawSel(); renderBasemap();
-    if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had); svg.call(zoom.transform, d3.zoomIdentity.translate(W / 2 - t0.k * x, H / 2 - t0.k * y).scale(t0.k)); }
+    if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had), k = Math.max(kMin, t0.k); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k))); }
+    else if (kMin > 1) { const [x, y] = projection([30, 25]); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - kMin * x, H / 2 - kMin * y).scale(kMin))); }
     else if (t0.k > 1 || t0.x || t0.y) svg.call(zoom.transform, d3.zoomIdentity);
   }
   function flyTo(v, ms = 1400) {
     if (!v || !isFinite(v.lon) || !isFinite(v.lat)) return;
     const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]);
-    const k = Math.max(1, Math.min(80, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
+    const k = Math.max(kMin, Math.min(80, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
     const [x, y] = projection([v.lon, v.lat]);
-    const t = d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k);
+    const t = fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
     svg.interrupt().transition().duration(reduceMotion() ? 0 : ms).call(zoom.transform, t);
   }
   // Pan only if the point is off screen; keep the zoom the person chose.
@@ -890,7 +951,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     c.globalAlpha = 1; c.textAlign = "left";
     return boxes.length;
   }
-  let paintRaf = 0, lastPaint = { labels: [] };
+  let paintRaf = 0, lastPaint = { labels: [] }, labelsReady = false;
+  // The label queue and the focused family, once the sections below that define them have run.
+  const queueState = () => labelsReady ? { lq: !!LQ, f: focusFam() } : { lq: false, f: null };
   const paintSoon = () => { if (!paintRaf) paintRaf = requestAnimationFrame(() => { paintRaf = 0; paintMarks(); }); };
   // Paint every layer's records for the current zoom transform.
   function paintMarks() {
@@ -902,14 +965,14 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const selfPaint = !!(BASEMAP && BASEMAP.paintsMarks), hideKinds = (BASEMAP && BASEMAP.hideMarks) || [];
     const pixel = !!BASEMAP, moving = mapEl.classList.contains("moving"), zoomed = k >= 4;
     const paper = cssColor("var(--paper)"), soft = cssColor("var(--ink-soft)"), ink = cssColor("var(--ink)");
-    const labels = [];
+    const labels = [], Q = queueState(), dimOf = key => Q.f && famOfLayer(key) !== Q.f ? .28 : 1;
     // Lines first (all layers), in world coordinates through the zoom transform.
     if (!selfPaint) {
       c.setTransform(dpr * k, 0, 0, dpr * k, dpr * t.x, dpr * t.y);
       c.lineCap = "round"; c.lineJoin = "round";
       for (const key of LAYER_ORDER) for (const l of MK[key].lines) {
         const lp = linePath(l.pts);
-        c.globalAlpha = l.alpha ?? .75; c.strokeStyle = cssColor(l.color); c.lineWidth = (l.width || 2) / k;
+        c.globalAlpha = (l.alpha ?? .75) * (Q.f ? dimOf(key) : 1); c.strokeStyle = cssColor(l.color); c.lineWidth = (l.width || 2) / k;
         c.setLineDash(l.dash ? l.dash.map(v => v / k) : []);
         c.stroke(lp.p);
         if (l.arrow && lp.a && lp.b) {
@@ -924,17 +987,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     // Points, in screen pixels (they keep their size while the map zooms).
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
     for (const key of LAYER_ORDER) {
-      const L = MK[key];
+      const L = MK[key], dim = Q.f ? dimOf(key) : 1, fam = Q.lq ? famOfLayer(key) : null;
       if (!moving) for (const l of L.lines) if (l.label) {
         const lp = linePath(l.pts); if (!lp.m) continue;
-        labels.push({ text: l.label, x: lp.m[0] * k + t.x + 4, y: lp.m[1] * k + t.y - 5, px: 12, font: `italic 12px ${pixel ? FONT.pixel : FONT.fell}`, fill: cssColor(l.color), halo: paper, haloW: 3, alpha: 1, pri: 3 });
+        labels.push({ fam, note: true, kind: "line", text: l.label, x: lp.m[0] * k + t.x + 4, y: lp.m[1] * k + t.y - 5, px: 12, font: `italic 12px ${pixel ? FONT.pixel : FONT.fell}`, fill: cssColor(l.color), halo: paper, haloW: 3, alpha: 1, pri: 3 });
       }
       for (const r of L.points) {
         const p = proj(r); if (!p) continue;
         const x = p[0] * k + t.x, y = p[1] * k + t.y;
         r._x = x; r._y = y;
         if (x < -40 || y < -40 || x > W + 40 || y > H + 40) continue;
-        const a = r.fade ?? 1;
+        const a = (r.fade ?? 1) * dim;
         if (!selfPaint && !hideKinds.includes(r.kind)) {
           const img = r.sprite && spriteOf(r.sprite);
           c.setTransform(dpr, 0, 0, dpr, dpr * x, dpr * y);
@@ -942,7 +1005,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
           else paintShape(c, r, a);
         }
         if (moving || !r.label) continue;
-        const show = r.hi || r.always || (r.lbl && zoomed);
+        // With the label queue every label is a candidate; the queue picks by priority and room.
+        const show = Q.lq || r.hi || r.always || (r.lbl && zoomed);
         if (!show) continue;
         const K = KIND[r.kind] || KIND.lens, off = r.lblAt || K.lbl || [7, 4];
         const big = r.kind === "city" && r.hi, pxs = r.fontPx || (big ? 13.5 : 11);
@@ -953,11 +1017,13 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
           font: `${!pixel && (K.italic || r.ghost) ? "italic " : ""}${big || K.bold || onArt ? 600 : 400} ${pxs}px ${fam}`,
           fill: onArt ? "#f6f0dc" : big ? ink : r.lblColor ? cssColor(r.lblColor) : K.bold || K.italic || K.mono || r.kind === "stop" ? cssColor(r.color) : r.kind === "order" ? ink : soft,
           halo: onArt ? "#221f1a" : paper, haloW: 3, pri: (r.hi ? 100 : 0) + (r.always ? 20 : 0) + (r.pri || 0), force: r.hi,
+          r, fam, kind: r.kind,
         });
       }
     }
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
-    placeLabels(c, labels, W, H);
+    if (Q.lq) { if (!moving) queueLabels(c, labels, t, Q.f, pixel); }
+    else placeLabels(c, labels, W, H);
     lastPaint = { labels };
   }
   // Which record is under a screen point: points first (top layer down), then lines within 5 px.
@@ -1122,12 +1188,26 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const lensItem = (d, r, at) => item(`<b>${esc(r.title)}</b>${r.tag ? ` <span class="tag">${esc(r.tag)}</span>` : ""}`, typeof r.year === "number" ? fmtYear(r.year) : r.year ?? "", r.why || "",
     r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim || (typeof r.year === "number" && Math.abs(r.year - state.year) > 150));
   // What ctx.pins and ctx.paths return: enough of a d3 selection for the calls lenses chain on it (style("--c", ...)).
-  function markSel(recs) {
+  // What ctx.pins and ctx.paths return: enough of a d3 selection for the calls lenses chain on it. Functions get what
+  // the old SVG join bound (the record for pins, {x, id, pts} for paths); styles map onto the record's fields.
+  function markSel(recs, arg) {
+    const val = (v, r) => typeof v === "function" ? v(arg(r)) : v;
+    const STYLE = {
+      "--c": (r, v) => { if (v != null) r.color = v; }, opacity: (r, v) => { if (v != null) r.fade = +v; },
+      "stroke-width": (r, v) => { if (v != null) r.width = parseFloat(v); }, "stroke-opacity": (r, v) => { if (v != null) r.alpha = +v; },
+      "stroke-dasharray": (r, v) => { r.dash = v ? String(v).split(/[\s,]+/).map(Number) : null; },
+    };
     const s = {
-      style(name, v) { if (name === "--c") for (const r of recs) r.color = typeof v === "function" ? v(r.x) : v; return s; },
-      classed(cls, on) { if (cls === "ghost") for (const r of recs) r.ghost = typeof on === "function" ? !!on(r.x) : !!on; return s; },
-      attr() { return s; }, on() { return s; }, text() { return s; }, raise() { return s; }, select() { return s; }, selectAll() { return s; }, filter() { return s; },
-      each(fn) { recs.forEach((r, i) => fn.call(null, r.x, i)); return s; }, size: () => recs.length, nodes: () => [], empty: () => !recs.length,
+      style(name, v) { const f = STYLE[name]; if (f) for (const r of recs) f(r, val(v, r)); return s; },
+      classed(cls, on) {
+        for (const c of String(cls).split(/\s+/)) for (const r of recs) {
+          const yes = !!val(on, r);
+          if (c === "ghost") r.ghost = yes; else if (c === "always") r.always = r.always || yes; else if (c === "hi") r.hi = yes;
+        }
+        return s;
+      },
+      attr(name, v) { if (name === "marker-end") for (const r of recs) r.arrow = !!val(v, r); return s; }, on() { return s; }, text() { return s; }, raise() { return s; }, select() { return s; }, selectAll() { return s; }, filter() { return s; },
+      each(fn) { recs.forEach((r, i) => fn.call(null, arg(r), i)); return s; }, size: () => recs.length, nodes: () => [], empty: () => !recs.length,
     };
     return s;
   }
@@ -1155,17 +1235,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
           return r;
         });
         L.points.push(...recs);
-        return markSel(recs);
+        return markSel(recs, r => r.x);
       },
       paths(list, o = {}) {
         const key = o.key || (x => x.id), co = o.coords || (x => x.pts), cls = " " + (o.cls || "") + " ", ghost = cls.includes(" ghost ");
         const recs = list.map(x => ({ x, id: key(x), pts: co(x) })).filter(r => Array.isArray(r.pts) && r.pts.length > 1).map(r => ({
-          src: r.x, x: r.x, pts: r.pts, kind: "lens", lens: d.id, color: o.color || `var(--y-${d.id})`, ghost, width: o.width ?? (ghost ? 2.4 : 2), alpha: o.alpha ?? (ghost ? .9 : .75),
+          src: r.x, x: r.x, id: r.id, pts: r.pts, kind: "lens", lens: d.id, color: o.color || `var(--y-${d.id})`, ghost, width: o.width ?? (ghost ? 2.4 : 2), alpha: o.alpha ?? (ghost ? .9 : .75),
           dash: o.dash !== undefined ? o.dash : CONF_DASH[o.conf] !== undefined ? CONF_DASH[o.conf] : ghost ? [7, 5] : null, arrow: !!o.arrow, conf: o.conf || null,
           title: o.title ? () => o.title(r.x) : null,
           card: o.card ? () => lensCard(d, { line: r.pts, lon: r.pts[Math.floor(r.pts.length / 2)][0], lat: r.pts[Math.floor(r.pts.length / 2)][1], ...o.card(r.x) }) : null }));
         L.lines.push(...recs);
-        return markSel(recs);
+        return markSel(recs, r => ({ x: r.x, id: r.id, pts: r.pts }));
       },
       _end() {},
     };
@@ -1173,13 +1253,13 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function drawLenses() {
     for (const d of PLUG) {
       const L = MK["lens:" + d.id]; L.points = []; L.lines = [];
-      if (!state.on[d.id] || typeof d.draw !== "function") { G["lens:" + d.id].selectAll("*").remove(); continue; }
+      if (!state.on[d.id] || typeof d.draw !== "function" || !lensReady(d)) { G["lens:" + d.id].selectAll("*").remove(); continue; }
       try { const c = lensCtx(d); d.draw(c); c._end(); } catch (err) { console.error("lens " + d.id, err); }
     }
   }
   // Rows a plugin lens adds to the Here or This year tab, grouped under the lens name.
   function lensRows(fam, fn, at) {
-    return PLUG.filter(d => d.family === fam && typeof d[fn] === "function").map(d => {
+    return PLUG.filter(d => d.family === fam && typeof d[fn] === "function" && lensReady(d)).map(d => {
       let rows = [];
       try { rows = (fn === "here" ? d.here(lensCtx(d), at) : d.now(lensCtx(d))) || []; } catch (err) { console.error("lens " + d.id, err); }
       return sec(d.id, d.name, rows.filter(r => r && r.title).slice(0, 8).map(r => lensItem(d, r, at)));
@@ -1219,6 +1299,89 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); paintMarks(); marksChanged(); if (BASEMAP && bmYear !== state.year) renderBasemapSoon(); };
     if (now) { cancelAnimationFrame(rafAll); run(); } else if (!rafAll) rafAll = requestAnimationFrame(run);
   }
+
+  // ---------- labels: one queue for every layer's names (views/pixel/labels.js) ----------
+  // The basemap's realm and terrain names come in as sources; the SVG labels of lens marks join as extras, each with
+  // a priority from what it is, so at any zoom the most important names show and none overlap.
+  const LQ = ATLAS.labels ? ATLAS.labels.mount(mapEl, projection, svg.node()) : null;
+  if (LQ) mapEl.classList.add("lq");
+  const LABEL_PRI = { city: 46, hub: 58, battle: 44, choke: 46, shock: 52, school: 38, work: 36, stop: 40, order: 44, broke: 54, reached: 34, person: 22, lp: 42, pin: 95 };
+  const fontPx = {}, SETTLEMENT = new Set(["city", "hub", "pin", "reached"]);
+  function lensLabels(t) {
+    const out = [], f = focusFam(), M = 40;
+    const add = (tx, pri, x, y, mid, note) => {
+      const anchor = mid ? "middle" : tx.getAttribute("text-anchor"), cls = tx.getAttribute("class") || tx.parentNode.getAttribute("class") || "";
+      const fs = fontPx[cls] || (fontPx[cls] = parseFloat(getComputedStyle(tx).fontSize) || 11);
+      const w = ATLAS.labels.measure(tx.textContent, fs, 600), dx = +tx.getAttribute("x") || 0, dy = +tx.getAttribute("y") || 0;
+      const x0 = anchor === "middle" ? x + dx - w / 2 : x + dx;
+      if (x0 + w < -M || x0 > W + M || y + dy < -M || y + dy > H + M) { tx.classList.add("lx"); return; }
+      out.push({ pri, note, text: tx.textContent, box: [x0, y + dy - fs * 0.85, x0 + w, y + dy + fs * 0.25], show: on => tx.classList.toggle("lx", !on) });
+    };
+    const scan = (g, fam) => g.selectAll(":scope > .pt, :scope > g > .pt").each(function (d) {
+      const tx = this.querySelector(":scope > text"); if (!tx || !d || d.lon == null || !tx.textContent) return;
+      const p = projection([d.lon, d.lat]); if (!p) return;
+      const cl = this.classList, kind = cl[1];
+      let pri = LABEL_PRI[kind] ?? 40;
+      if (kind === "city") { const pop = popAt(d, state.year); pri += pop ? Math.min(14, Math.max(0, Math.log10(pop) - 3) * 4.5) : 0; if (d.layer === "wonders") pri += 3; }
+      else if (kind === "person") pri += Math.max(0, (d.hpi || 0) - 50) / 4;
+      else if (kind === "order") pri += Math.min(12, Math.sqrt(d._a || 0) * 8);
+      if (cl.contains("hi")) pri = 100;
+      else if (cl.contains("always") || cl.contains("now")) pri = Math.max(pri, 72);
+      if (pri < 100 && f) pri += fam === f ? 30 : -10;
+      add(tx, pri, p[0] * t.k + t.x, p[1] * t.k + t.y, false, !SETTLEMENT.has(kind));
+    });
+    root.selectAll("g[data-layer]").each(function () {
+      const k = this.dataset.layer, fam = famOfLayer(k), g = d3.select(this);
+      scan(g, fam);
+      g.selectAll("text.linelab").each(function (d) { if (d && d.lx != null) add(this, 50 + (f ? (fam === f ? 30 : -10) : 0), d.lx * t.k + t.x, d.ly * t.k + t.y, false, true); });
+    });
+    scan(gPins, null);
+    gRoutes.selectAll("text.routelab").each(function (d) { if (d) add(this, 96, d.lx * t.k + t.x, d.ly * t.k + t.y); });
+    gPolyLab.selectAll("text").each(function (d) { if (d && d.c) add(this, 100, d.c[0] * t.k + t.x, d.c[1] * t.k + t.y, true); });
+    return out;
+  }
+  // The canvas mark layer's labels (paintMarks) join the queue too: each gets a priority from what it is, the queue
+  // answers which ones fit, and only those are painted, in the D5 label tiers (ink on vellum; settlements vellum on ink).
+  function queueLabels(c, labels, t, f, pixel) {
+    const extra = lensLabels(t), INK = "#221f1a", VELLUM = "#f6f0dc", fam = pixel ? FONT.pixel : FONT.serif;
+    for (const L of labels) {
+      const r = L.r, kind = L.kind;
+      let pri = kind === "line" ? 50 : LABEL_PRI[kind] ?? 40;
+      if (r) {
+        pri += Math.min(14, r.pri || 0);
+        if (r.hi) pri = 100; else if (r.always) pri = Math.max(pri, 72);
+      }
+      if (pri < 100 && f) pri += L.fam === f ? 30 : -10;
+      // Only a highlighted city steps up a size (D2: 12 and 16); other highlights win on priority alone.
+      const hi = r && r.hi, settle = SETTLEMENT.has(kind), px = hi && kind === "city" ? 16 : 12;
+      L.font = `${hi || settle ? 600 : 500} ${px}px ${fam}`; L.px = px; L.fill = settle && !hi ? VELLUM : INK; L.halo = settle && !hi ? INK : VELLUM;
+      c.font = L.font;
+      const w = c.measureText(L.text).width, x0 = L.center ? L.x - w / 2 : L.x, y1 = L.y + px * .25, y0 = y1 - px;
+      L.on = false;
+      if (x0 < 0 || x0 + w > W || y0 < 0 || y1 > H) continue;  // whole labels only, never cut by the frame
+      extra.push({ pri, note: L.note || !settle, text: L.text, box: [x0 - 1, y0, x0 + w + 1, y1], show: on => { L.on = on; } });
+    }
+    try { LQ.layout(t, W, H, { year: state.year, focus: f, extra, avoid: chromeRects() }); } catch (err) { console.error("labels", err); }
+    c.lineJoin = "round";
+    for (const L of labels) if (L.on) {
+      c.font = L.font; c.globalAlpha = L.alpha; c.textAlign = L.center ? "center" : "left";
+      c.strokeStyle = L.halo; c.lineWidth = L.haloW; c.strokeText(L.text, L.x, L.y);
+      c.fillStyle = L.fill; c.fillText(L.text, L.x, L.y);
+    }
+    c.globalAlpha = 1; c.textAlign = "left";
+  }
+  // The map's own chrome (controls, hint, minimap, compass), in map coordinates: labels keep out from under it.
+  // ATLAS.chromeRects() when the interface provides it, else the elements we know.
+  function chromeRects() {
+    const m = mapEl.getBoundingClientRect(), rel = r => [r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top];
+    if (typeof ATLAS.chromeRects === "function") try { return ATLAS.chromeRects().map(r => Array.isArray(r) ? r : rel(r)); } catch (err) { console.error(err); }
+    const out = [];
+    for (const el of mapEl.querySelectorAll(".mapctl, .maphint, .keycard, .pxhud .hit, .pxhud .scale")) if (el.offsetParent) out.push(rel(el.getBoundingClientRect()));
+    return out;
+  }
+  // Every label change (a source refreshes, a pin, the focus) repaints the mark layer, which runs the queue.
+  function layoutLabels() { if (labelsReady && LQ) paintSoon(); }
+  if (ATLAS.labels) ATLAS.labels.onRefresh = layoutLabels;
 
   // ---------- selection: one place, every lens ----------
   function drawSel() {
@@ -1570,6 +1733,18 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       for (const k of MEMBERS[f.id]) chip(subEl, k, NAME[k], COLOR(k)).setAttribute("aria-pressed", isOn(k));
     }
     mapEl.classList.toggle("war-on", state.on.war);
+    syncFocus();
+  }
+  // A lens has focus while a family other than Land is open and on: the basemap desaturates, layers of other
+  // families fade (class dim, which the pixel lens painter reads too) and the focused family's labels win the queue.
+  const focusFam = () => state.fam && state.fam !== "land" && MEMBERS[state.fam].some(isOn) ? state.fam : null;
+  const famOfLayer = k => FAM_OF[k] || (PLUG.find(d => "lens:" + d.id === k) || {}).family || null;
+  labelsReady = true;
+  function syncFocus() {
+    const f = focusFam();
+    mapEl.classList.toggle("lens-focus", !!f);
+    root.selectAll("g[data-layer]").classed("dim", function () { return !!f && famOfLayer(this.dataset.layer) !== f; });
+    layoutLabels();
   }
   ATLAS.isOn = k => isOn(k);
   // A lens toggle also re-renders the basemap so anything it draws for a lens (sprites) follows the chip.
@@ -1640,23 +1815,27 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     timeRaf = requestAnimationFrame(tick);
   };
   // The strip above the slider: when each lens has something to say.
-  (function drawStrip() {
+  function drawStrip() {
     const st = d3.select("#strip");
+    st.selectAll("*").remove();
     const rows = [
       ["places", ENTRIES.flatMap(e => (EVENTS[e.id] || []).map(v => v[0]))],
       ["disease", SHOCKS.map(e => e.start)],
       ["ideas", JOURNEYS.flatMap(j => j.steps.map(s => s.y))],
       ["war", BATTLES.map(b => b.start)],
     ];
-    for (const d of PLUG) if (typeof d.strip === "function") try { rows.push([d.id, (d.strip((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}) || []).filter(Number.isFinite)]); } catch (err) { console.error("lens " + d.id, err); }
+    for (const d of PLUG) if (typeof d.strip === "function" && lensReady(d)) try { rows.push([d.id, (d.strip((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}) || []).filter(Number.isFinite)]); } catch (err) { console.error("lens " + d.id, err); }
     const rh = 21 / rows.length;
     rows.forEach(([k, ys], i) => {
-      st.append("g").selectAll("line").data(ys.filter(y => y >= MIN && y <= NOW)).join("line")
-        .attr("x1", y => yearToT(y) * 1000).attr("x2", y => yearToT(y) * 1000).attr("y1", 1 + i * rh).attr("y2", Math.max(1.6, rh - 1.3) + 1 + i * rh)
+      // One tick per strip column (a thousand at most), not one per record: 11k battles would be 11k nodes.
+      const xs = [...new Set(ys.filter(y => y >= MIN && y <= NOW).map(y => Math.round(yearToT(y) * 1000)))];
+      st.append("g").selectAll("line").data(xs).join("line")
+        .attr("x1", x => x).attr("x2", x => x).attr("y1", 1 + i * rh).attr("y2", Math.max(1.6, rh - 1.3) + 1 + i * rh)
         .style("stroke", `var(--y-${k})`).style("stroke-opacity", k === "order" ? 0.35 : 0.7);
     });
     st.on("click", ev => { const r = st.node().getBoundingClientRect(); stopTime(); animateYear(tToYear((ev.clientX - r.left) / r.width), 700); });
-  })();
+  }
+  drawStrip();
 
   // ---------- guide overlay ----------
   let overlay = { routes: [], pins: [], lens: "military" };
@@ -1690,6 +1869,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       return g;
     });
     placeScaled();
+    layoutLabels();
   }
   const caption = document.getElementById("caption");
   function showCaption(s) {
@@ -1889,7 +2069,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   };
   // Plugin indexes cover all time; keep the pieces that name a year inside the window, or no year at all.
   const plugIndex = (d, w) => {
-    let txt = ""; try { txt = d.index((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}); } catch { return ""; }
+    let txt = ""; if (!lensReady(d)) return ""; try { txt = d.index((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}); } catch { return ""; }
     const keep = String(txt).split(/\n|; /).filter(s => { const ys = (s.match(/-?\b\d{3,4}\b/g) || []).map(Number); return !ys.length || ys.some(y => y >= w.from - 50 && y <= w.to + 50); });
     const out = keep.join("\n");
     return `\n${(d.name || d.id).toUpperCase()} (layer ${d.id}):\n${out.length > 5000 ? out.slice(0, 5000) + "\n(cut)" : out}`;
@@ -2348,6 +2528,72 @@ Where the specialists disagree, say who the evidence favours.`;
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
   syncChips();
+  // ---------- phone: the panel is a bottom sheet over a full-screen map ----------
+  // Three heights: peek (tabs only), half, full. Drag the handle or the tabs; tap the handle to step up; picking
+  // something on the map, or a tab, opens it to half so the answer shows without covering the whole map.
+  (function sheet() {
+    const panel = document.getElementById("panel"), grab = document.getElementById("grab"), phone = matchMedia("(max-width: 700px)");
+    const ORDER = ["peek", "half", "full"];
+    const set = v => { panel.dataset.sheet = v; grab.setAttribute("aria-label", v === "full" ? "Show less of the panel" : "Show more of the panel"); };
+    const at = () => panel.dataset.sheet || "peek";
+    grab.addEventListener("click", () => { if (dragged) return; const i = ORDER.indexOf(at()); set(i >= 2 ? "peek" : ORDER[i + 1]); });
+    // Anything that switches tab (a click on the map selects Here, the guide, a tour) lifts a peeking sheet.
+    // Only after a tap or key press: startup and timed tours switch tabs without lifting the sheet.
+    let touched = -1e9; for (const t of ["pointerdown", "keydown"]) addEventListener(t, () => { touched = performance.now(); }, true);
+    new MutationObserver(() => { if (phone.matches && at() === "peek" && performance.now() - touched < 1500) set("half"); })
+      .observe(panel.querySelector(".tabs"), { subtree: true, attributes: true, attributeFilter: ["aria-selected"] });
+    panel.querySelector(".tabs").addEventListener("click", () => { if (phone.matches && at() === "peek") set("half"); });
+    let y0 = 0, t0 = 0, base = 0, dragged = false, id = null;
+    const offset = () => { const m = new DOMMatrix(getComputedStyle(panel).transform); return m.m42; };
+    const start = ev => {
+      if (!phone.matches || (ev.pointerType === "mouse" && ev.button !== 0)) return;
+      id = ev.pointerId; y0 = ev.clientY; t0 = performance.now(); base = offset(); dragged = false;
+    };
+    const move = ev => {
+      if (id !== ev.pointerId) return;
+      const dy = ev.clientY - y0;
+      if (!dragged && Math.abs(dy) < 6) return;
+      if (!dragged) { dragged = true; panel.classList.add("dragging"); try { ev.target.setPointerCapture(id); } catch (e) {} }
+      panel.style.transform = `translateY(${Math.max(0, base + dy)}px)`;
+    };
+    const end = ev => {
+      if (id !== ev.pointerId) return;
+      id = null;
+      if (!dragged) return;
+      const H = panel.getBoundingClientRect().height, y = offset(), v = (ev.clientY - y0) / Math.max(1, performance.now() - t0);
+      panel.classList.remove("dragging"); panel.style.transform = "";
+      // A flick goes one step in its direction; otherwise snap to the nearest height.
+      const cur = { full: 0, half: H - innerHeight * 0.5, peek: H - 92 };
+      let next = Object.keys(cur).reduce((a, b) => Math.abs(cur[b] - y) < Math.abs(cur[a] - y) ? b : a);
+      if (Math.abs(v) > 0.5) { const i = ORDER.indexOf(at()); next = ORDER[Math.max(0, Math.min(2, i + (v < 0 ? 1 : -1)))]; }
+      set(next);
+      setTimeout(() => { dragged = false; }, 0);
+    };
+    for (const el of [grab, panel.querySelector(".tabs")]) {
+      el.addEventListener("pointerdown", start); el.addEventListener("pointermove", move);
+      el.addEventListener("pointerup", end); el.addEventListener("pointercancel", end);
+    }
+    // A drag on the tabs must not also count as a tab tap.
+    panel.querySelector(".tabs").addEventListener("click", ev => { if (dragged) { ev.stopPropagation(); ev.preventDefault(); } }, true);
+    set(at());
+  })();
+
+  // ---------- late data: what the first paint does not need loads from files beside the page ----------
+  // build.py writes the big blobs (plugin lens data, the Wikidata battles) to atlas-files/ and lists them in LATE_FILES;
+  // they are fetched once the map has painted, then the map, strip and panel redraw.
+  function loadLate() {
+    const files = typeof LATE_FILES !== "undefined" ? LATE_FILES : {};
+    const got = (key, v) => {
+      const [kind, id] = key.split(":");
+      if (kind === "lens") LENS_DATA[id] = v;
+      else if (key === "war:wd") { for (const r of v) BATTLES.push(wdBattle(r)); BAT_BY_YEAR = d3.group(BATTLES, b => b.start); }
+    };
+    let timer = 0;
+    const done = () => { clearTimeout(timer); timer = setTimeout(() => { drawStrip(); drawAll(); refreshPanel(); renderKey(); }, 40); };
+    for (const [key, url] of Object.entries(files))
+      fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(v => { got(key, v); done(); }).catch(err => { console.error("late data " + url, err); done(); });
+  }
+  setTimeout(loadLate, 0);
   setBasemap();
   new ResizeObserver(() => layout()).observe(mapEl);
   layout();
