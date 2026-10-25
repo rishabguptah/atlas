@@ -160,7 +160,7 @@
   }
   function mountMarks(el, projection) {
     marks = PixelMarks(svgEl(), projection);
-    pm.overlay(marks.paint);
+    pm.overlay(g => { if (typeof PixelGrammar !== "undefined") PixelGrammar.over(g); marks.paint(g); });
     mapOf(el).classList.add("pxmarks");
     if (typeof ATLAS.marks === "function") {
       marks.set(ATLAS.marks());
@@ -219,6 +219,8 @@
         pm.setDetail((G, phase) => detail.draw(G, phase, window.ATLAS.deep && ATLAS.deep.m != null ? Math.floor(ATLAS.deep.m / 12) : year, proj));
         if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("provinces", view => detail.names(view), { base: true });
       }
+      // Data grammar (views/pixel/grammar.js): a choropleth under the sprites; compare overlay with the marks.
+      if (typeof PixelGrammar !== "undefined" && pm.underlay) { pm.underlay(g => PixelGrammar.under(g)); ATLAS.pixel = { repaint: () => pm && pm.repaint(), map: () => pm, transform: () => T, projection: () => proj }; }
       // Names of seas, rivers, ranges and deserts in the pixel font, under the Land lens's terrain toggle.
       if (!LBL && typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
       if (typeof PixelMarks === "function" && svgEl()) mountMarks(el, projection);

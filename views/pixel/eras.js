@@ -115,9 +115,10 @@
     note: "Babylonian Imago Mundi: the world incised in clay, the ocean a ring of wedge writing.",
     accent: "#9a5a32", ink: "#4a3020", paper: "#cfa77c", plate: "#c49a70", plateInk: "#4a3020",
     tint(c, b) {
+      // The sea is darker, wetter clay, at least 25 L* below the lowland so the coast still reads at world zoom.
       if (c === 255) return "#b48e68";
-      if (WATER(c)) return c === 0 ? "#a07a56" : c === 3 ? "#ad8762" : "#b08a64";
-      if (c === 4) return "#94704e";
+      if (WATER(c)) return c === 0 ? "#74523a" : c === 3 ? "#82603f" : "#7e5a3b";
+      if (c === 4) return "#74523a";
       return ramp([[12, "#cba37a"], [40, "#d2ab82"], [100, "#d9b48c"], [256, "#e0bd96"]], b);
     },
     detail: [0.55, 0.12, 0.6],
@@ -134,7 +135,7 @@
         if (hash(cu, cv) < 0.34 && ((y === 1 && x <= 2) || (y === 2 && x === 1) || (y === 1 && x === 3 && hash(cv, cu) < 0.5))) { P.r -= 38; P.g -= 34; P.b -= 30; }
       }
     },
-    coast: "#6e4c34", coastLand: "#e8cba4",
+    coast: "#4a3020", coastLand: "#e8cba4",
     realm: { fill: 0.05, band: 0.12, bandW: 1, edge: "#7a5438", lip: "#e2c39c", pastel: 0.3 },
     glint: null, frame: { ink: "#4a3020", paper: "#c49a70", a: "#8a6444", b: "#d8b48a" },
     title: y => ({ glyphs: "cuneiform", sub: yearCE(y) }),
@@ -149,7 +150,8 @@
     tint(c, b) {
       if (c === 255) return "#e0cc96";
       if (c === 4) return "#5a6a6a";
-      if (WATER(c)) return c === 2 ? "#ddd2a6" : "#d4caa0";
+      // The sea is a grey-green ink wash, at least 25 L* below the lowland so the coast still reads at world zoom.
+      if (WATER(c)) return c === 2 ? "#8a8460" : c === 3 ? "#847e5a" : "#7c7854";
       if (c >= 7 && c <= 9) return ramp([[30, "#d8c78e"], [256, "#cdb880"]], b);
       return ramp([[16, "#e4cf9a"], [48, "#dbc28a"], [110, "#cdae76"], [256, "#bc9862"]], b);
     },
@@ -161,7 +163,7 @@
       const s = ((P.u % 90) + 90) % 90; if (s === 0) { P.r -= 16; P.g -= 16; P.b -= 14; } else if (s === 1) { P.r += 6; P.g += 6; P.b += 4; }
       if (WATER(P.c) && P.d > 3 && ((P.v + Math.round(Math.sin(P.u * 0.45) * 1.2)) % 9 === 0) && hash(P.u >> 3, P.v) < 0.35) { P.r -= 40; P.g -= 38; P.b -= 30; }
     },
-    coast: "#3e2e1e", coast2: "#8a7a5a",
+    coast: "#3e2e1e", coast2: "#b4a67a",
     realm: { fill: 0.05, band: 0.3, bandW: 1, edge: "#5a3e28", pastel: 0.15 },
     graticule: { step: 15, color: "#a0503a", land: 0.12, sea: 0.38 },
     glint: null, frame: { ink: "#3e2e1e", paper: "#e6d3a0", a: "#a0503a", b: "#e6d3a0" },
