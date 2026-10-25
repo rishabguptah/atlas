@@ -101,6 +101,12 @@ for f in sorted(glob.glob(os.path.join(lens_dir, '*.py'))):
     spec = importlib.util.spec_from_file_location('atlas_lens_' + lid.replace('-', '_'), f)
     mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
     lens_data[lid] = mod.build(repo)
+    # A lens may hand over binary side files (images, rasters) as {'_files': {name: bytes}}: they go to atlas-files/
+    # (or inline as data URIs with --inline) and the lens data gets {'files': {name: url}}.
+    if isinstance(lens_data[lid], dict) and '_files' in lens_data[lid]:
+        import base64, mimetypes
+        lens_data[lid]['files'] = {n: ('data:' + (mimetypes.guess_type(n)[0] or 'application/octet-stream') + ';base64,' + base64.b64encode(b).decode()) if inline else side(n, b)
+                                   for n, b in lens_data[lid].pop('_files').items()}
     print('lens', lid, len(J(lens_data[lid])), 'bytes', file=sys.stderr)
 if not inline:
     for lid in list(lens_data):
@@ -132,7 +138,7 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
         lb = open(pixel_src + 'city-lights.json', 'rb').read()
         lights = side('city-lights.json', lb) if 'side' in globals() and not globals().get('inline') else json.loads(lb)
     data += 'const PIXEL = ' + J({'tile0': tile0, 'rivers': rv, 'lights': lights}) + ';\n'
-    for f in ('palette.js', 'icons.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js', 'motion.js'):
+    for f in ('palette.js', 'icons.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'paleo.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js', 'motion.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 # The label engine (one queue for every layer's names) goes first, with or without the pixel map.

@@ -107,6 +107,18 @@ also drawn on canvas with `PIXEL_ICONS.draw`); the six family emblems live there
 - The Director's dialog box is dressed in the same frames; the Director draws it.
 - Preview of the three directions considered: https://claude.ai/artifact/4wm6AUUts9hzFK2trCmmq2
 
+## Deep time (300,000 years ago to 4000 BCE)
+
+The slider runs from 300,000 years ago. Its first fifth is deep time on a log scale of years ago (eras: First modern
+humans, Out of Africa, Ice Age, First farmers); the rest is history on the old curve. Deep years snap to a grain that
+grows with age (1,000 years before 100,000 years ago) and read as "45,000 years ago". Before 4000 BCE there are no states
+or chokepoints. The pixel map redraws the ice-age world from sea level: exposed shelves and land bridges, ice sheets,
+glacial tundra and steppe, the Green Sahara (`views/pixel/paleo.js`, `ATLAS.paleo`; rasters `atlas-files/paleo-*.png`
+from `data/deep-time/`, about 0.7 MB, fetched only when the year goes before 5500 BCE). A new sea level or ice extent
+redraws all the terrain, so while the year moves it swaps at most every 400 ms. The Deep time lens (Peoples) adds the
+other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
+hearths, land-bridge and ice-sheet names, and climate shocks. Sources and rebuild: `ingest/deep-time/README.md`.
+
 ## Lens families and plugins
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses

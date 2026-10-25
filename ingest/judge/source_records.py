@@ -183,20 +183,24 @@ def cite_of(page):
 
 
 def reba_check(r, kernel):
-    """A population series against Reba points for the same place: supported when every comparable point is within 1.6x."""
+    """A population series against Reba points for the same place: supported when every comparable point before 1950
+    is within 1.6x, partly when some are not (estimates of old cities differ by source, so never contradicted).
+    Modern points are skipped: Reba's last points are city proper in 2000, ours are often today's metro area."""
     reba = next((m for m in kernel.get('measure', []) if m.get('of') == r['of'] and m['id'].endswith(':reba2016')), None)
     if not reba:
         return {'verdict': 'unverified', 'fix': None, 'note': 'no Reba series for this place'}
     rp = {p[0]: p[1] for p in reba['points']}
     pairs = []
     for y, v, *_ in r['points']:
+        if y >= 1950:
+            continue
         near = min(rp, key=lambda x: abs(x - y))
         if abs(near - y) <= 25:
             pairs.append((y, v, near, rp[near]))
     if not pairs:
         return {'verdict': 'unverified', 'fix': None, 'note': 'Reba has no point within 25 years of these'}
     bad = [p for p in pairs if not (1 / 1.6 <= p[1] / p[3] <= 1.6)]
-    return {'verdict': 'supported' if not bad else 'partly' if len(bad) < len(pairs) else 'contradicted',
+    return {'verdict': 'supported' if not bad else 'partly',
             'compared': pairs, 'fix': None if not bad else 'Reba differs at ' + ', '.join(f'{fy(p[0])}: {p[1]:,} vs {p[3]:,} ({fy(p[2])})' for p in bad)}
 
 

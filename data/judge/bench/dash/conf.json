@@ -1,8 +1,8 @@
 [
  {
   "kind": "event",
-  "attested": 14581,
-  "approximate": 1355,
+  "attested": 15051,
+  "approximate": 885,
   "estimated": 0,
   "unknown": 0
  },
@@ -43,8 +43,8 @@
  },
  {
   "kind": "place",
-  "attested": 9080,
-  "approximate": 7613,
+  "attested": 9091,
+  "approximate": 7602,
   "estimated": 0,
   "unknown": 0
  },
