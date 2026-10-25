@@ -1394,7 +1394,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   function speakerHtml(A, s) {
     const sp = specOf(s), prev = A.panel ? A.panel[A.panel.indexOf(sp.id) - 1] : null;
-    return `<div class="spk" style="--c:${specColor(sp)}"><b>${esc(sp.name)}</b>${A.passes && prev && A.passes[prev] ? `<span>picks up: ${esc(A.passes[prev])}</span>` : ""}</div>`;
+    return `<div class="spk" style="--c:${specColor(sp)}"><b>${esc(sp.name)}</b>${A.passes && A.passes[sp.id] ? `<span>asks the panel: ${esc(A.passes[sp.id])}</span>` : ""}</div>`;
   }
   // A link scene: both steps' evidence on the map at once, framed to hold them both.
   function applyLink(a, b, why) {
@@ -1643,7 +1643,8 @@ Write exactly one line:
 Choose 3 or 4 specialists whose lenses explain the most, ordered so each can build on the one before (often: the ground and the shocks first, then wealth and people, then power and ideas). Use 2 for a narrow factual question. Keep from..to as tight as the question allows, and the bbox a little wider than the region.`;
   const SPEAK = (sp, q, plan, said, mapNow) => {
     const w = plan.w;
-    const prior = said.length ? `WHAT THE PANEL HAS SAID SO FAR (step number, speaker, title: text):\n${said.map((s, i) => `${i + 1}. ${specOf(s).name}, ${s.title}: ${s.text}`).join("\n")}\n\nBuild on them. Open at least one step by naming a colleague and the point you are extending, complicating or disputing ("The Economist's silver explains the ships; what it misses is..."). Never repeat their facts; add what only your lens sees.` : "You speak first: lay the ground the others will build on.";
+    const others = plan.ids.filter(id => id !== sp.id && SPEC[id]);
+    const prior = !said.length && others.length ? `YOUR COLLEAGUES ARE SPEAKING AT THE SAME TIME:\n${others.map(id => `${SPEC[id].name}: ${plan.angles[id] || "their own lens"}`).join("\n")}\n\nStay on your angle and leave theirs to them. Where your evidence meets theirs, say so by name in at least one step ("the Economic historian will show the silver; what the plague data adds is..."). Add what only your lens sees.` : said.length ? `WHAT THE PANEL HAS SAID SO FAR (step number, speaker, title: text):\n${said.map((s, i) => `${i + 1}. ${specOf(s).name}, ${s.title}: ${s.text}`).join("\n")}\n\nBuild on them. Open at least one step by naming a colleague and the point you are extending, complicating or disputing ("The Economist's silver explains the ships; what it misses is..."). Never repeat their facts; add what only your lens sees.` : "You speak first: lay the ground the others will build on.";
     return `${HOUSE}
 
 You are the panel's ${sp.name.toUpperCase()}. You read history through ${sp.voice}.
@@ -1657,7 +1658,7 @@ ${prior}
 
 Write 2 or 3 step lines, in time order where possible, each a stop on the map tour:
 {"t":"step","lens":"${sp.lenses.join("|")}","title":"short vivid title","year":integer,"view":{"lon":number,"lat":number,"span":number},"layers":["${sp.layers.join('","')}"],"highlight":["place:<id>","polity:<id>"],"pins":[{"name":"label","lon":number,"lat":number}],"routes":[{"label":"what moved","points":[[lon,lat],[lon,lat]]}],"text":"3-5 sentences in your own voice: teach, with numbers and names","confidence":0.0-1.0,"sources":[{"cite":"Author, Title (year)","url":"optional"}]}
-Then one line: {"t":"pass","note":"one sentence handing over: the question your lens raises for the next specialist"}
+Then one line: {"t":"pass","note":"one sentence: the question your lens raises for a colleague, named"}
 Lean on YOUR DATA below: it is what the reader sees on the map. Quote its records by name and number where they fit, and say plainly when you go beyond it.
 ${MAPRULES}
 
@@ -1761,27 +1762,40 @@ Where the specialists disagree, say who the evidence favours.`;
     const panel = ids.length ? ids : fallbackPlan(q).panel;
     return { frame: String(f.frame || ""), w: { from, to, bbox: bb && bb[1] < bb[3] ? bb : null }, ids: panel.map(p => p.id), angles: Object.fromEntries(panel.map(p => [p.id, String(p.angle || "")])) };
   }
-  // A specialist's turn: its steps join the tour as they stream in; the map follows the first one.
-  async function speak(A, id, q, mapNow, signal) {
+  // A specialist's turn. Specialists speak at the same time, so each one's steps go into its own block and the
+  // tour is rebuilt in panel order; the step on screen stays on screen while others arrive around it.
+  const talking = A => { const n = A.panel.filter(id => A.status[id] === "speaking"); return n.length > 1 ? `${n.length} specialists are speaking…` : n.length ? `The ${SPEC[n[0]].name} is speaking…` : ""; };
+  function regroup(A) {
+    const cur = A.steps[state.active];
+    A.steps = A.panel.flatMap(id => A.by[id] || []);
+    if (cur) state.active = A.steps.indexOf(cur);
+  }
+  async function speak(A, id, q, mapNow, signal, said = []) {
     const sp = SPEC[id];
-    A.speaking = id; A.status[id] = "speaking"; A.loading = `The ${sp.name} is speaking…`; renderAnswer();
-    const before = A.steps.slice();
-    try {
-      await call(SPEAK(sp, q, A.plan, before, mapNow), o => {
-        if (state.answer !== A) return;
-        if (o.t === "step") {
-          const s = normStep(o); s.by = id;
-          if (!sp.lenses.includes(s.lens)) s.lens = sp.lenses[0];
-          if (!s.layers.length) s.layers = sp.layers.slice(0, 1);
-          A.steps.push(s); renderAnswer();
-          if (A.steps.length === 1) activate(0);
-        } else if (o.t === "pass") { A.passes[id] = String(o.note || ""); renderAnswer(); }
-      }, signal);
-      A.status[id] = "done";
-    } catch (e) {
-      A.status[id] = "missed";
-      if (FATAL.has(e?.code)) throw e;
+    A.status[id] = "speaking"; A.by[id] = []; A.loading = talking(A); renderAnswer();
+    for (let tries = 0; ; tries++) {
+      try {
+        await call(SPEAK(sp, q, A.plan, said, mapNow), o => {
+          if (state.answer !== A) return;
+          if (o.t === "step") {
+            const s = normStep(o); s.by = id;
+            if (!sp.lenses.includes(s.lens)) s.lens = sp.lenses[0];
+            if (!s.layers.length) s.layers = sp.layers.slice(0, 1);
+            A.by[id].push(s); regroup(A); renderAnswer();
+            if (state.active < 0) activate(A.steps.indexOf(s));
+          } else if (o.t === "pass") { A.passes[id] = String(o.note || ""); renderAnswer(); }
+        }, signal);
+        A.status[id] = "done";
+        break;
+      } catch (e) {
+        // Four calls at once can trip the rate limit: wait a moment and try that specialist once more.
+        if (e?.code === "rate_limited" && !tries && !A.by[id].length) { await new Promise(r => setTimeout(r, 2500 + Math.random() * 2500)); continue; }
+        A.status[id] = "missed";
+        if (FATAL.has(e?.code) && e?.code !== "rate_limited") throw e;
+        break;
+      }
     }
+    if (state.answer === A) { A.loading = talking(A); renderAnswer(); }
   }
   async function ask(q, followUp) {
     setTab("guide");
@@ -1798,7 +1812,7 @@ Where the specialists disagree, say who the evidence favours.`;
     const selTxt = state.sel ? `; reader has selected ${state.sel.title || state.sel.name || "a spot"} at ${state.sel.lat.toFixed(1)},${state.sel.lon.toFixed(1)}` : "";
     const on = LAYER_KEYS.filter(k => state.on[k]).join(", ");
     const mapNow = `Map now: year ${state.year}; layers on: ${on}${selTxt}${prev ? `; previous question: "${prev.question}"` : ""}.`;
-    const A = state.answer = { question: q, live: true, loading: "The chair is picking the panel…", steps: [], views: [], whatifs: [], unknowns: [], lenses: {}, links: [], panel: [], status: {}, passes: {}, plan: null };
+    const A = state.answer = { question: q, live: true, loading: "The chair is picking the panel…", steps: [], views: [], whatifs: [], unknowns: [], lenses: {}, links: [], panel: [], status: {}, passes: {}, by: {}, plan: null };
     state.active = -1; state.muted.clear();
     renderAnswer();
     goBtn.disabled = true; stopBtn.hidden = false; hint.textContent = "";
@@ -1812,7 +1826,8 @@ Where the specialists disagree, say who the evidence favours.`;
       A.panel = A.plan.ids.slice(); A.frame = A.plan.frame;
       for (const id of A.panel) A.status[id] = "waiting";
       renderAnswer();
-      for (const id of A.panel) { if (state.answer !== A) return; await speak(A, id, q, mapNow, my.signal); }
+      await Promise.all(A.panel.map(id => speak(A, id, q, mapNow, my.signal)));
+      if (state.answer !== A) return;
       if (!A.steps.length) { A.error = "The panel's answers didn't come back in a shape the map can read. Ask again."; return; }
       A.speaking = null; A.loading = "The chair is connecting the lenses…"; renderAnswer();
       try { await call(CLOSE(q, A.plan, A), o => { if (state.answer === A && eat(A, o)) renderAnswer(); }, my.signal); }
@@ -1821,6 +1836,7 @@ Where the specialists disagree, say who the evidence favours.`;
       if (convo.length > 3) convo = convo.slice(-3);
     } catch (e) {
       if (e?.code !== "cancelled" && e?.name !== "AbortError") A.error = ERR[e?.code] || ERR.upstream_error;
+      my.abort();  // one specialist hit a wall the others will hit too: stop them all
       if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; hint.textContent = ERR[e.code]; }
     } finally {
       if (ctl === my) { ctl = null; goBtn.disabled = false; stopBtn.hidden = true; }
@@ -1835,7 +1851,7 @@ Where the specialists disagree, say who the evidence favours.`;
     A.panel.push(id); A.status[id] = "waiting";
     goBtn.disabled = true; stopBtn.hidden = false;
     const my = ctl = new AbortController(), n = A.steps.length;
-    try { await speak(A, id, A.question, `Map now: year ${state.year}.`, my.signal); }
+    try { await speak(A, id, A.question, `Map now: year ${state.year}.`, my.signal, A.steps.slice()); }
     catch (e) { if (e?.code !== "cancelled" && e?.name !== "AbortError") A.error = ERR[e?.code] || ERR.upstream_error; }
     finally {
       if (ctl === my) { ctl = null; goBtn.disabled = false; stopBtn.hidden = true; }
