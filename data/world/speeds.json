@@ -1242,8 +1242,8 @@
   "conf": "documented",
   "sources": [
    {
-    "cite": "Wikipedia: RMS Britannia (1840)",
-    "url": "https://en.wikipedia.org/wiki/RMS_Britannia_(1840)"
+    "cite": "Wikipedia: Cunard Line",
+    "url": "https://en.wikipedia.org/wiki/Cunard_Line"
    }
   ],
   "note": "4 July 1840 departure; 14 days 8 hours."
@@ -1659,8 +1659,12 @@
   "conf": "typical",
   "sources": [
    {
-    "cite": "Wikipedia: Races to the North",
-    "url": "https://en.wikipedia.org/wiki/Races_to_the_North"
+    "cite": "Wikipedia: Race to the North",
+    "url": "https://en.wikipedia.org/wiki/Race_to_the_North"
+   },
+   {
+    "cite": "Wikipedia: Flying Scotsman (train)",
+    "url": "https://en.wikipedia.org/wiki/Flying_Scotsman_(train)"
    }
   ],
   "note": "~7.5 h in the 1888 race; scheduled ~9-10.5 h."

@@ -1,0 +1,243 @@
+{
+ "id": "evliya_celebi",
+ "name": "Evliya Celebi",
+ "kind": "scholar",
+ "summary": "An Ottoman courtier and dervish spends forty years attached to pashas' households and embassies, travelling from the Crimea and Caucasus to Vienna, Crete, Albania, Mecca and the Sudan, and records it all in the ten-volume Book of Travels.",
+ "start": 1640,
+ "end": 1682,
+ "stops": [
+  {
+   "place": "Istanbul",
+   "lon": 28.98,
+   "lat": 41.01,
+   "date": "1640",
+   "until": "1640",
+   "mode": "start",
+   "note": "Begins travelling beyond the city after a dream in which the Prophet grants him intercession for travel.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bursa",
+   "lon": 29.06,
+   "lat": 40.19,
+   "date": "1640",
+   "until": "1640",
+   "mode": "sea",
+   "note": "Makes his first journey outside Istanbul.",
+   "conf": "documented"
+  },
+  {
+   "place": "Trabzon",
+   "lon": 39.72,
+   "lat": 41.0,
+   "date": "1640",
+   "until": "1641",
+   "mode": "sea",
+   "note": "Joins the household of the governor Ketenci Omer Pasha.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bahcesaray (Crimea)",
+   "lon": 33.86,
+   "lat": 44.75,
+   "date": "1641",
+   "until": "1641",
+   "mode": "sea",
+   "note": "Visits the Crimean Khan's court.",
+   "conf": "likely"
+  },
+  {
+   "place": "Azov",
+   "lon": 39.42,
+   "lat": 47.1,
+   "date": "1641",
+   "until": "1641",
+   "mode": "land",
+   "note": "Witnesses the Ottoman siege of Cossack-held Azov.",
+   "conf": "documented"
+  },
+  {
+   "place": "Erzurum",
+   "lon": 41.27,
+   "lat": 39.9,
+   "date": "1646",
+   "until": "1647",
+   "mode": "land",
+   "note": "Serves as customs official under Defterdarzade Mehmed Pasha.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tabriz",
+   "lon": 46.29,
+   "lat": 38.08,
+   "date": "1647",
+   "until": "1647",
+   "mode": "land",
+   "note": "Carries letters to Safavid Persia.",
+   "conf": "documented"
+  },
+  {
+   "place": "Damascus",
+   "lon": 36.29,
+   "lat": 33.51,
+   "date": "1648",
+   "until": "1649",
+   "mode": "land",
+   "note": "Serves Murtaza Pasha in Syria.",
+   "conf": "documented"
+  },
+  {
+   "place": "Jerusalem",
+   "lon": 35.23,
+   "lat": 31.78,
+   "date": "1649",
+   "until": "1649",
+   "mode": "land",
+   "note": "First visit to Palestine.",
+   "conf": "documented"
+  },
+  {
+   "place": "Van",
+   "lon": 43.38,
+   "lat": 38.49,
+   "date": "1655",
+   "until": "1656",
+   "mode": "land",
+   "note": "Serves his patron Melek Ahmed Pasha and visits the Khan of Bitlis.",
+   "conf": "documented"
+  },
+  {
+   "place": "Sarajevo",
+   "lon": 18.41,
+   "lat": 43.86,
+   "date": "1660",
+   "until": "1660",
+   "mode": "land",
+   "note": "Tours Bosnia and Dalmatia with Melek Ahmed Pasha.",
+   "conf": "documented"
+  },
+  {
+   "place": "Shkodra",
+   "lon": 19.51,
+   "lat": 42.07,
+   "date": "1662",
+   "until": "1662",
+   "mode": "land",
+   "note": "Visits northern Albania.",
+   "conf": "documented"
+  },
+  {
+   "place": "Nove Zamky (Uyvar)",
+   "lon": 18.17,
+   "lat": 47.99,
+   "date": "1663",
+   "until": "1663",
+   "mode": "land",
+   "note": "Takes part in the Ottoman siege and capture of the fortress.",
+   "conf": "documented"
+  },
+  {
+   "place": "Vienna",
+   "lon": 16.37,
+   "lat": 48.21,
+   "date": "1665",
+   "until": "1666",
+   "mode": "land",
+   "note": "Accompanies Kara Mehmed Pasha's embassy and notes German words resembling Persian.",
+   "conf": "documented"
+  },
+  {
+   "place": "Athens",
+   "lon": 23.73,
+   "lat": 37.97,
+   "date": "1667",
+   "until": "1667",
+   "mode": "land",
+   "note": "Marvels at the Parthenon's sculptures.",
+   "conf": "documented"
+  },
+  {
+   "place": "Candia (Crete)",
+   "lon": 25.13,
+   "lat": 35.34,
+   "date": "1668",
+   "until": "1669",
+   "mode": "sea",
+   "note": "Witnesses the end of the 21-year siege of Candia.",
+   "conf": "documented"
+  },
+  {
+   "place": "Gjirokastra",
+   "lon": 20.14,
+   "lat": 40.08,
+   "date": "1670",
+   "until": "1670",
+   "mode": "sea",
+   "note": "Tours southern Albania and describes the town's stone houses.",
+   "conf": "documented"
+  },
+  {
+   "place": "Jerusalem",
+   "lon": 35.23,
+   "lat": 31.78,
+   "date": "1671",
+   "until": "1671",
+   "mode": "land",
+   "note": "Second visit on the way to Mecca.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mecca",
+   "lon": 39.83,
+   "lat": 21.42,
+   "date": "1671",
+   "until": "1672",
+   "mode": "land",
+   "note": "Performs the hajj with the Damascus caravan.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cairo",
+   "lon": 31.24,
+   "lat": 30.04,
+   "date": "1672",
+   "until": "1672",
+   "mode": "land",
+   "note": "Settles in Egypt under the patronage of Ozdemiroglu Osman Pasha.",
+   "conf": "documented"
+  },
+  {
+   "place": "Sennar (Funj Sultanate)",
+   "lon": 33.63,
+   "lat": 13.55,
+   "date": "1672",
+   "until": "1673",
+   "mode": "river",
+   "note": "Travels up the Nile into the Funj and Habesh lands.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cairo",
+   "lon": 31.24,
+   "lat": 30.04,
+   "date": "1673",
+   "until": "1682",
+   "mode": "river",
+   "note": "Writes up the Book of Travels; dies here or in Istanbul around 1682-84.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Robert Dankoff and Sooyong Kim, An Ottoman Traveller: Selections from the Book of Travels of Evliya Celebi, London 2010"
+  },
+  {
+   "cite": "Robert Dankoff, An Ottoman Mentality: The World of Evliya Celebi, Leiden 2004"
+  },
+  {
+   "cite": "Wikipedia, Evliya Celebi",
+   "url": "https://en.wikipedia.org/wiki/Evliya_%C3%87elebi"
+  }
+ ],
+ "status": "draft"
+}

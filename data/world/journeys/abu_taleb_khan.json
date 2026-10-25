@@ -1,0 +1,213 @@
+{
+ "id": "abu_taleb_khan",
+ "name": "Mirza Abu Taleb Khan",
+ "kind": "scholar",
+ "summary": "An unemployed Lucknow revenue officer sails with a Scottish friend from Calcutta to Britain, is lionised in London as the Persian Prince, and returns overland through France, Constantinople and Iraq, writing one of the first Indian accounts of Europe.",
+ "start": 1799,
+ "end": 1803,
+ "stops": [
+  {
+   "place": "Calcutta",
+   "lon": 88.36,
+   "lat": 22.57,
+   "date": "1799-02-07",
+   "until": "1799-02-07",
+   "mode": "start",
+   "note": "Sails with Captain David Richardson on a Danish ship.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cape Town",
+   "lon": 18.42,
+   "lat": -33.92,
+   "date": "1799-04",
+   "until": "1799-09",
+   "mode": "sea",
+   "note": "Waits months for a better ship and is well received by the Dutch and British.",
+   "conf": "documented"
+  },
+  {
+   "place": "Saint Helena",
+   "lon": -5.71,
+   "lat": -15.96,
+   "date": "1799-10",
+   "until": "1799-10",
+   "mode": "sea",
+   "note": "Calls at the island on the passage north.",
+   "conf": "likely"
+  },
+  {
+   "place": "Cork",
+   "lon": -8.47,
+   "lat": 51.9,
+   "date": "1799-12",
+   "until": "1799-12",
+   "mode": "sea",
+   "note": "Lands in Ireland after a stormy passage.",
+   "conf": "documented"
+  },
+  {
+   "place": "Dublin",
+   "lon": -6.26,
+   "lat": 53.35,
+   "date": "1799-12",
+   "until": "1800-01",
+   "mode": "land",
+   "note": "Meets Sake Dean Mahomed and receives letters from Cornwallis.",
+   "conf": "documented"
+  },
+  {
+   "place": "London",
+   "lon": -0.13,
+   "lat": 51.51,
+   "date": "1800-01-21",
+   "until": "1802-06-07",
+   "mode": "sea",
+   "note": "Feted as the Persian Prince and meets George III.",
+   "conf": "documented"
+  },
+  {
+   "place": "Paris",
+   "lon": 2.35,
+   "lat": 48.86,
+   "date": "1802-06",
+   "until": "1802-08",
+   "mode": "land",
+   "note": "Meets the orientalists Silvestre de Sacy and Langles.",
+   "conf": "documented"
+  },
+  {
+   "place": "Marseille",
+   "lon": 5.37,
+   "lat": 43.3,
+   "date": "1802-09",
+   "until": "1802-09",
+   "mode": "land",
+   "note": "Travels south through Lyon.",
+   "conf": "likely"
+  },
+  {
+   "place": "Genoa",
+   "lon": 8.93,
+   "lat": 44.41,
+   "date": "1802-10",
+   "until": "1802-10",
+   "mode": "sea",
+   "note": "Sails along the Italian coast.",
+   "conf": "likely"
+  },
+  {
+   "place": "Malta",
+   "lon": 14.51,
+   "lat": 35.9,
+   "date": "1802-11",
+   "until": "1802-11",
+   "mode": "sea",
+   "note": "Calls at the British-held island.",
+   "conf": "likely"
+  },
+  {
+   "place": "Smyrna",
+   "lon": 27.14,
+   "lat": 38.42,
+   "date": "1802-11",
+   "until": "1802-12",
+   "mode": "sea",
+   "note": "Lands in Ottoman Anatolia.",
+   "conf": "likely"
+  },
+  {
+   "place": "Constantinople",
+   "lon": 28.98,
+   "lat": 41.01,
+   "date": "1802-12",
+   "until": "1803-02",
+   "mode": "sea",
+   "note": "Received by Sultan Selim III.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mosul",
+   "lon": 43.13,
+   "lat": 36.34,
+   "date": "1803-03",
+   "until": "1803-03",
+   "mode": "land",
+   "note": "Crosses Anatolia and Kurdistan overland.",
+   "conf": "documented"
+  },
+  {
+   "place": "Baghdad",
+   "lon": 44.36,
+   "lat": 33.31,
+   "date": "1803-04",
+   "until": "1803-04",
+   "mode": "river",
+   "note": "Continues down the Tigris.",
+   "conf": "documented"
+  },
+  {
+   "place": "Karbala",
+   "lon": 44.03,
+   "lat": 32.62,
+   "date": "1803-04",
+   "until": "1803-04",
+   "mode": "land",
+   "note": "Visits the shrine of Husayn.",
+   "conf": "documented"
+  },
+  {
+   "place": "Najaf",
+   "lon": 44.33,
+   "lat": 32.0,
+   "date": "1803-05",
+   "until": "1803-05",
+   "mode": "land",
+   "note": "Visits the shrine of Ali.",
+   "conf": "documented"
+  },
+  {
+   "place": "Basra",
+   "lon": 47.81,
+   "lat": 30.51,
+   "date": "1803-05",
+   "until": "1803-05",
+   "mode": "river",
+   "note": "Takes ship for India.",
+   "conf": "likely"
+  },
+  {
+   "place": "Bombay",
+   "lon": 72.83,
+   "lat": 18.95,
+   "date": "1803-06",
+   "until": "1803-07",
+   "mode": "sea",
+   "note": "Lands in British India.",
+   "conf": "likely"
+  },
+  {
+   "place": "Calcutta",
+   "lon": 88.36,
+   "lat": 22.57,
+   "date": "1803-08",
+   "until": "1803-08",
+   "mode": "sea",
+   "note": "Home after four and a half years; dies in 1805.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Mirza Abu Taleb Khan, The Travels of Mirza Abu Taleb Khan in Asia, Africa and Europe, trans. Charles Stewart, London 1810"
+  },
+  {
+   "cite": "Michael H. Fisher, Counterflows to Colonialism: Indian Travellers and Settlers in Britain 1600-1857, Delhi 2004"
+  },
+  {
+   "cite": "Wikipedia, Mirza Abu Taleb Khan",
+   "url": "https://en.wikipedia.org/wiki/Mirza_Abu_Taleb_Khan"
+  }
+ ],
+ "status": "draft"
+}

@@ -1,0 +1,154 @@
+{
+ "id": "pocahontas",
+ "name": "Pocahontas",
+ "person": "person:pocahontas",
+ "kind": "envoy",
+ "summary": "Powhatan's daughter moves between her father's towns and English Jamestown, is taken captive, marries John Rolfe, and is sent to London as the Virginia Company's showpiece, dying at Gravesend on the voyage home.",
+ "start": 1607,
+ "end": 1617,
+ "stops": [
+  {
+   "place": "Werowocomoco",
+   "lon": -76.67,
+   "lat": 37.42,
+   "date": "1607-12",
+   "until": "1607-12",
+   "mode": "start",
+   "note": "Present when the captive John Smith is brought before her father Powhatan.",
+   "conf": "documented"
+  },
+  {
+   "place": "Jamestown",
+   "lon": -76.78,
+   "lat": 37.21,
+   "date": "1608",
+   "until": "1609",
+   "mode": "river",
+   "note": "Visits the fort with food and plays with the boys of the colony.",
+   "conf": "documented"
+  },
+  {
+   "place": "Passapatanzy",
+   "lon": -77.27,
+   "lat": 38.3,
+   "date": "1613-03",
+   "until": "1613-04",
+   "mode": "land",
+   "note": "Lured aboard Samuel Argall's ship by the Patawomeck weroance Iopassus and held for ransom.",
+   "conf": "documented"
+  },
+  {
+   "place": "Jamestown",
+   "lon": -76.78,
+   "lat": 37.21,
+   "date": "1613-04",
+   "until": "1613-04",
+   "mode": "sea",
+   "note": "Brought to the fort as a hostage.",
+   "conf": "documented"
+  },
+  {
+   "place": "Henricus",
+   "lon": -77.38,
+   "lat": 37.37,
+   "date": "1613-05",
+   "until": "1614-03",
+   "mode": "river",
+   "note": "Instructed in Christianity by Alexander Whitaker and baptised Rebecca.",
+   "conf": "documented"
+  },
+  {
+   "place": "Matchcot (Pamunkey river)",
+   "lon": -77.05,
+   "lat": 37.75,
+   "date": "1614-03",
+   "until": "1614-03",
+   "mode": "river",
+   "note": "Taken with an armed English party to meet her kin; tells them she will stay with the English.",
+   "conf": "documented"
+  },
+  {
+   "place": "Jamestown",
+   "lon": -76.78,
+   "lat": 37.21,
+   "date": "1614-04-05",
+   "until": "1614-04-05",
+   "mode": "river",
+   "note": "Marries the tobacco planter John Rolfe.",
+   "conf": "documented"
+  },
+  {
+   "place": "Varina Farms",
+   "lon": -77.33,
+   "lat": 37.4,
+   "date": "1614-04",
+   "until": "1616-04",
+   "mode": "river",
+   "note": "Lives on Rolfe's plantation; son Thomas is born in January 1615.",
+   "conf": "likely"
+  },
+  {
+   "place": "Plymouth",
+   "lon": -4.14,
+   "lat": 50.37,
+   "date": "1616-06-12",
+   "until": "1616-06-12",
+   "mode": "sea",
+   "note": "Arrives on the Treasurer with Rolfe, Thomas, Tomocomo and about a dozen Powhatans.",
+   "conf": "documented"
+  },
+  {
+   "place": "London (Belle Sauvage, Ludgate Hill)",
+   "lon": -0.1,
+   "lat": 51.51,
+   "date": "1616-06",
+   "until": "1616-09",
+   "mode": "land",
+   "note": "Shown to London society by the Virginia Company.",
+   "conf": "documented"
+  },
+  {
+   "place": "Brentford",
+   "lon": -0.31,
+   "lat": 51.49,
+   "date": "1616-10",
+   "until": "1617-02",
+   "mode": "land",
+   "note": "Moves out of the smoky city; meets John Smith again and turns away from him.",
+   "conf": "documented"
+  },
+  {
+   "place": "Whitehall Palace",
+   "lon": -0.13,
+   "lat": 51.5,
+   "date": "1617-01-05",
+   "until": "1617-01-05",
+   "mode": "land",
+   "note": "Presented to King James at Ben Jonson's masque The Vision of Delight.",
+   "conf": "documented"
+  },
+  {
+   "place": "Gravesend",
+   "lon": 0.37,
+   "lat": 51.44,
+   "date": "1617-03",
+   "until": "1617-03-21",
+   "mode": "river",
+   "note": "Falls ill on the ship home and is buried at St George's church.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Camilla Townsend, Pocahontas and the Powhatan Dilemma, New York 2004"
+  },
+  {
+   "cite": "Helen C. Rountree, Pocahontas, Powhatan, Opechancanough, Charlottesville 2005"
+  },
+  {
+   "cite": "Wikipedia, Pocahontas",
+   "url": "https://en.wikipedia.org/wiki/Pocahontas"
+  }
+ ],
+ "status": "draft"
+}

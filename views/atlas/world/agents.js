@@ -157,11 +157,32 @@
       k0 = i;
     }
     for (let i = 0; i < n; i++) { anchor[i] = Math.max(lo[i], Math.min(hi[i], anchor[i])); if (i) anchor[i] = Math.max(anchor[i], anchor[i - 1]); }
+    // Clamping piles stops with only a year onto 1 January or 31 December; spread each run of them across the part of
+    // their year that is free (after the stop before, before the stop after), by distance travelled.
+    for (let i = 0; i < n;) {
+      if (hard[i] != null || !isFinite(lo[i])) { i++; continue; }
+      let j = i; while (j + 1 < n && hard[j + 1] == null && lo[j + 1] === lo[i]) j++;
+      const a0 = Math.max(lo[i], i > 0 ? anchor[i - 1] : lo[i]), b0 = Math.min(hi[i], j + 1 < n ? anchor[j + 1] : hi[i]);
+      if (b0 > a0) {
+        const c0 = i > 0 ? cum[i - 1] : cum[i], c1 = j + 1 < n ? cum[j + 1] : cum[j], k = j - i + 1 + (i > 0) + (j + 1 < n);
+        for (let m = i; m <= j; m++) {
+          const f = c1 > c0 ? (cum[m] - c0) / (c1 - c0) : (m - i + (i > 0)) / Math.max(1, k - 1);
+          anchor[m] = a0 + (b0 - a0) * Math.max(0.02, Math.min(0.98, f));
+        }
+      }
+      i = j + 1;
+    }
+    for (let i = 1; i < n; i++) anchor[i] = Math.max(anchor[i], anchor[i - 1]);
     // Departure from a stop: its "until" if known, else a short stay before the next leg's share of time.
     for (let i = 0; i < n - 1; i++) {
       const next = anchor[i + 1];
       let d = dep[i] != null ? dep[i] : anchor[i] + Math.min(14 * DAY, (next - anchor[i]) * 0.15);
       dep[i] = Math.max(anchor[i], Math.min(d, next));
+      // Nobody walks for five years between two cities: a long gap between dated stops is a stay, and the leg
+      // takes about as long as the road does (30 km a day on land, 100 at sea, until the shared router says better).
+      const mode = S[i + 1].mode, v = mode === "sea" ? 100 : mode === "river" ? 60 : mode === "rail" ? 500 : mode === "air" ? 5000 : 30;
+      const need = (cum[i + 1] - cum[i]) / v * DAY * 1.2;
+      if (next - dep[i] > need * 1.5 && dep[i] !== (S[i]._q && S[i]._q.prec !== "y" ? S[i]._q.t : -1)) dep[i] = Math.max(dep[i], next - need);
     }
     dep[n - 1] = S[n - 1]._q ? Math.max(anchor[n - 1], S[n - 1]._q.end) : anchor[n - 1];
     const CONF = { documented: "attested", attested: "attested", likely: "estimated", estimated: "estimated", approximate: "approximate", guess: "approximate", unknown: "unknown" };

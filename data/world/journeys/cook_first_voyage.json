@@ -1,0 +1,274 @@
+{
+ "id": "cook_first_voyage",
+ "name": "Cook's first voyage (Endeavour)",
+ "person": "person:james_cook",
+ "kind": "explorer",
+ "summary": "Lieutenant James Cook takes HMS Endeavour round Cape Horn to observe the transit of Venus at Tahiti, charts New Zealand and the east coast of Australia, nearly loses the ship on the Great Barrier Reef and returns via Batavia.",
+ "start": 1768,
+ "end": 1771,
+ "stops": [
+  {
+   "place": "Plymouth",
+   "lon": -4.14,
+   "lat": 50.37,
+   "date": "1768-08-26",
+   "until": "1768-08-26",
+   "mode": "start",
+   "note": "Sails with 94 people including the naturalists Joseph Banks and Daniel Solander.",
+   "conf": "documented"
+  },
+  {
+   "place": "Funchal, Madeira",
+   "lon": -16.91,
+   "lat": 32.65,
+   "date": "1768-09-13",
+   "until": "1768-09-18",
+   "mode": "sea",
+   "note": "Takes on wine and fresh food.",
+   "conf": "documented"
+  },
+  {
+   "place": "Rio de Janeiro",
+   "lon": -43.17,
+   "lat": -22.91,
+   "date": "1768-11-13",
+   "until": "1768-12-07",
+   "mode": "sea",
+   "note": "The suspicious Portuguese viceroy keeps the crew mostly on board.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bay of Good Success, Tierra del Fuego",
+   "lon": -65.25,
+   "lat": -54.8,
+   "date": "1769-01-15",
+   "until": "1769-01-21",
+   "mode": "sea",
+   "note": "Two of Banks's servants die of cold on a botanising trip.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cape Horn",
+   "lon": -67.27,
+   "lat": -55.98,
+   "date": "1769-01-25",
+   "until": "1769-01-25",
+   "mode": "sea",
+   "note": "Rounds the Horn in unusually calm weather.",
+   "conf": "documented"
+  },
+  {
+   "place": "Matavai Bay, Tahiti",
+   "lon": -149.5,
+   "lat": -17.5,
+   "date": "1769-04-13",
+   "until": "1769-07-13",
+   "mode": "sea",
+   "note": "Builds Fort Venus and observes the transit of Venus on 3 June.",
+   "conf": "documented"
+  },
+  {
+   "place": "Huahine",
+   "lon": -151.0,
+   "lat": -16.75,
+   "date": "1769-07-16",
+   "until": "1769-07-19",
+   "mode": "sea",
+   "note": "Guided by Tupaia to the Leeward Islands.",
+   "conf": "documented"
+  },
+  {
+   "place": "Ra'iatea",
+   "lon": -151.43,
+   "lat": -16.83,
+   "date": "1769-07-20",
+   "until": "1769-08-09",
+   "mode": "sea",
+   "note": "Claims the Society Islands and refits.",
+   "conf": "documented"
+  },
+  {
+   "place": "Rurutu",
+   "lon": -151.35,
+   "lat": -22.45,
+   "date": "1769-08-13",
+   "until": "1769-08-14",
+   "mode": "sea",
+   "note": "Tupaia leads him south to the Austral island.",
+   "conf": "documented"
+  },
+  {
+   "place": "Poverty Bay (Turanganui)",
+   "lon": 178.02,
+   "lat": -38.68,
+   "date": "1769-10-08",
+   "until": "1769-10-11",
+   "mode": "sea",
+   "note": "First landing in New Zealand ends with several Maori shot.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tolaga Bay (Uawa)",
+   "lon": 178.32,
+   "lat": -38.37,
+   "date": "1769-10-23",
+   "until": "1769-10-29",
+   "mode": "sea",
+   "note": "Takes on water; Tupaia talks with Maori priests.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mercury Bay",
+   "lon": 175.8,
+   "lat": -36.83,
+   "date": "1769-11-04",
+   "until": "1769-11-15",
+   "mode": "sea",
+   "note": "Observes the transit of Mercury.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bay of Islands",
+   "lon": 174.17,
+   "lat": -35.22,
+   "date": "1769-11-29",
+   "until": "1769-12-05",
+   "mode": "sea",
+   "note": "Explores the northern harbour.",
+   "conf": "documented"
+  },
+  {
+   "place": "Queen Charlotte Sound",
+   "lon": 174.25,
+   "lat": -41.1,
+   "date": "1770-01-15",
+   "until": "1770-02-06",
+   "mode": "sea",
+   "note": "Careens the ship and confirms New Zealand is two islands from a hilltop.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cape Farewell",
+   "lon": 172.68,
+   "lat": -40.5,
+   "date": "1770-03-31",
+   "until": "1770-03-31",
+   "mode": "sea",
+   "note": "Leaves New Zealand after charting it in six months.",
+   "conf": "documented"
+  },
+  {
+   "place": "Point Hicks",
+   "lon": 149.27,
+   "lat": -37.8,
+   "date": "1770-04-19",
+   "until": "1770-04-19",
+   "mode": "sea",
+   "note": "Sights the east coast of Australia.",
+   "conf": "documented"
+  },
+  {
+   "place": "Botany Bay (Kamay)",
+   "lon": 151.21,
+   "lat": -34.0,
+   "date": "1770-04-29",
+   "until": "1770-05-06",
+   "mode": "sea",
+   "note": "Lands among the Gweagal, who resist; Banks collects plants.",
+   "conf": "documented"
+  },
+  {
+   "place": "Endeavour Reef",
+   "lon": 145.56,
+   "lat": -15.78,
+   "date": "1770-06-11",
+   "until": "1770-06-11",
+   "mode": "sea",
+   "note": "Strikes the reef at night and jettisons cannon to float off.",
+   "conf": "documented"
+  },
+  {
+   "place": "Endeavour River (Cooktown)",
+   "lon": 145.25,
+   "lat": -15.47,
+   "date": "1770-06-17",
+   "until": "1770-08-04",
+   "mode": "sea",
+   "note": "Beaches the ship for repairs and sees kangaroos; a quarrel with the Guugu Yimithirr over turtles.",
+   "conf": "documented"
+  },
+  {
+   "place": "Possession Island",
+   "lon": 142.4,
+   "lat": -10.73,
+   "date": "1770-08-22",
+   "until": "1770-08-22",
+   "mode": "sea",
+   "note": "Claims the east coast for Britain.",
+   "conf": "documented"
+  },
+  {
+   "place": "Savu",
+   "lon": 121.9,
+   "lat": -10.5,
+   "date": "1770-09-17",
+   "until": "1770-09-21",
+   "mode": "sea",
+   "note": "Buys provisions on the Dutch-dominated island.",
+   "conf": "documented"
+  },
+  {
+   "place": "Batavia",
+   "lon": 106.81,
+   "lat": -6.13,
+   "date": "1770-10-10",
+   "until": "1770-12-26",
+   "mode": "sea",
+   "note": "Repairs the ship; malaria and dysentery begin killing a third of the crew.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cape Town",
+   "lon": 18.42,
+   "lat": -33.92,
+   "date": "1771-03-15",
+   "until": "1771-04-14",
+   "mode": "sea",
+   "note": "Recovers the sick.",
+   "conf": "documented"
+  },
+  {
+   "place": "Saint Helena",
+   "lon": -5.71,
+   "lat": -15.96,
+   "date": "1771-05-01",
+   "until": "1771-05-04",
+   "mode": "sea",
+   "note": "Sails home with an East India convoy.",
+   "conf": "documented"
+  },
+  {
+   "place": "The Downs",
+   "lon": 1.45,
+   "lat": 51.22,
+   "date": "1771-07-13",
+   "until": "1771-07-13",
+   "mode": "sea",
+   "note": "Anchors off Kent after nearly three years.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "The Journals of Captain James Cook, vol. 1: The Voyage of the Endeavour 1768-1771, ed. J. C. Beaglehole, Hakluyt Society 1955"
+  },
+  {
+   "cite": "J. C. Beaglehole, The Life of Captain James Cook, London 1974"
+  },
+  {
+   "cite": "Wikipedia, First voyage of James Cook",
+   "url": "https://en.wikipedia.org/wiki/First_voyage_of_James_Cook"
+  }
+ ],
+ "status": "draft"
+}
