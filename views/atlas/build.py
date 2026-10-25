@@ -55,18 +55,36 @@ if os.path.exists(wd):
                       and e.get('start') is not None and (e['name'].lower(), e['start']) not in cur]
 
 # Terrain basemap (relief image, labels, rivers) from the terrain workstream, when it is there.
-terrain_js, relief = '', ''
+terrain_js, relief, relief_pol = '', '', ''
 if os.path.exists(layers + 'terrain.json'):
     import base64
     L['terrain'] = json.load(open(layers + 'terrain.json'))
     terrain_js = open(layers + 'terrain.js', encoding='utf-8').read()
     relief = 'data:image/webp;base64,' + base64.b64encode(open(layers + 'terrain-relief.webp', 'rb').read()).decode()
-data = '\n'.join(f'const {k.upper()} = {J(v)};' for k, v in L.items()) + f'\nconst ORDER = {J(order)};\nconst RELIEF = {J(relief)};\n'
+    if os.path.exists(layers + 'terrain-political.webp'):  # the Paradox-style texture that sits under flat realm colours
+        relief_pol = 'data:image/webp;base64,' + base64.b64encode(open(layers + 'terrain-political.webp', 'rb').read()).decode()
+data = '\n'.join(f'const {k.upper()} = {J(v)};' for k, v in L.items()) + f'\nconst ORDER = {J(order)};\nconst RELIEF = {J(relief)};\nconst RELIEF_POL = {J(relief_pol)};\n'
 if 'terrain' not in L: data += 'const TERRAIN = null;\n'
+
+# Plugin lenses: views/atlas/lenses/<id>.py gives the data (build(repo) -> dict), <id>.js draws it.
+# Basemaps and sprites are .js only. Each script gets its own tag so one broken lens cannot stop the page.
+import importlib.util
+sys.dont_write_bytecode = True
+lens_dir = os.path.join(here, 'lenses')
+lens_data, scripts = {}, []
+for f in sorted(glob.glob(os.path.join(lens_dir, '*.py'))):
+    lid = os.path.basename(f)[:-3]
+    spec = importlib.util.spec_from_file_location('atlas_lens_' + lid.replace('-', '_'), f)
+    mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
+    lens_data[lid] = mod.build(repo)
+    print('lens', lid, len(J(lens_data[lid])), 'bytes', file=sys.stderr)
+data += f'const LENS_DATA = {J(lens_data)};\n'
+for f in sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
+    scripts.append('<script>\n' + open(f, encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 
 land = J(json.load(open(atlas + 'borders/land-50m.json')))
 tours = [json.load(open(f)) for f in sorted(glob.glob(os.path.join(repo, 'data/guide/tours/*.json')))]
-s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours)).replace('/*__TERRAIN_JS__*/', terrain_js)
+s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours)).replace('/*__TERRAIN_JS__*/', terrain_js).replace('<!--__LENS_SCRIPTS__-->', '\n'.join(scripts))
 if local:
     s = s.replace('https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js', 'file://' + local + '/d3-7.8.5/package/dist/d3.min.js')
     s = s.replace('https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js', 'file://' + local + '/topojson-client-3.1.0/package/dist/topojson-client.min.js')
