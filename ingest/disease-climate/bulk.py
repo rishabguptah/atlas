@@ -278,7 +278,7 @@ def main():
          'what': 'Plague kept returning to Europe, North Africa and the Near East for more than 500 years after the Black Death.',
          'why': 'Biraben catalogued over 11,000 local outbreaks; the last big ones in western Europe were Marseille in 1720 and Moscow in 1771.',
          'sources': [SRC['biraben'], SRC['sticker']], 'status': 'sourced'},
-        {'id': 'place:earth', 'kind': 'place', 'subtype': 'region', 'name': 'Earth', 'lat': 0, 'lon': 0, 'lenses': ['geography'],
+        {'id': 'place:earth', 'kind': 'place', 'subtype': 'region', 'name': 'Earth', 'lenses': ['geography'],
          'sources': [SRC['pages2k']], 'status': 'sourced', 'stub': True},
     ]
     write('bulk_measures.jsonl', extra + ms)
