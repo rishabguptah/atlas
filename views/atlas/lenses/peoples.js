@@ -118,13 +118,14 @@
       // Family spreads: homeland, then each stage reached by this year.
       // After 1500 the language dots show where families ended up, so only draw a spread while it is still moving.
       const sps = P.spread.filter(s => spreadOn(s, y) && (y < 1500 || stagesBy(s, y).some(st => y - st.year < 300)));
-      ctx.paths(sps.map(sp => ({ sp, pts: [[sp.lon, sp.lat], ...stagesBy(sp, y).map(s => [s.lon, s.lat])] })), {
-        key: o => o.sp.id, coords: o => o.pts, cls: "pl-spread", title: o => o.sp.name, card: o => spreadCard(o.sp, P, y) })
-        .style("--c", r => famColor(P, r.x.sp.language));
+      // One call per family, since a path's colour is set per call.
+      for (const sp of sps) ctx.paths([{ sp, pts: [[sp.lon, sp.lat], ...stagesBy(sp, y).map(s => [s.lon, s.lat])] }], {
+        key: o => o.sp.id, coords: o => o.pts, cls: "pl-spread", color: famColor(P, sp.language), conf: "likely", arrow: true,
+        title: o => o.sp.name, card: o => spreadCard(o.sp, P, y) });
       const fronts = sps.map(sp => { const st = stagesBy(sp, y), last = st[st.length - 1]; return { sp, id: sp.id, lon: (last || sp).lon, lat: (last || sp).lat, fresh: last && y - last.year < 150 }; });
       ctx.pins(fronts, { key: o => o.id, shape: "circle", always: true, label: o => o.sp.name.replace(/ spread$/, ""), cls: "pl-front",
-        title: o => `${o.sp.name}: ${stagesBy(o.sp, y).map(s => s.name).pop() || "homeland"}`, card: o => spreadCard(o.sp, P, y) })
-        .style("--c", o => famColor(P, o.sp.language)).classed("fresh", o => o.fresh);
+        title: o => `${o.sp.name}: ${stagesBy(o.sp, y).map(s => s.name).pop() || "homeland"}`, card: o => spreadCard(o.sp, P, y),
+        color: o => famColor(P, o.sp.language), size: o => o.fresh ? 6 : 4.5, pri: 6 });
 
       // Scripts in use, and the line back to the script each came from (for a century after its birth).
       const sc = P.scripts.filter(s => scriptOn(s, y));

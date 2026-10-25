@@ -1,0 +1,20 @@
+{
+  "id": "paper",
+  "name": "Paper",
+  "type": "kind",
+  "sprite": "obj_paper",
+  "tech": "idea:tech_paper",
+  "what": "Sheets made by beating plant fibre (hemp, mulberry bark, rags) to a pulp, catching it on a screen and drying it. Invented in China by the second century BCE.",
+  "why": "Paper is cheaper than parchment and tougher than papyrus. Its arrival made bureaucracies, Islamic science and the printing press possible; each place it reached changed the recipe (rags in Samarkand, watermarks in Fabriano, water-powered mills in Europe).",
+  "now": "About 400 million tonnes of paper and board are made a year.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Bloom, J. M. (2001). Paper Before Print: The History and Impact of Paper in the Islamic World. Yale University Press."},
+    {"cite": "Tsien, T. H. (1985). Paper and Printing. Science and Civilisation in China 5(1). Cambridge University Press."},
+    {"cite": "Wikipedia: History of paper", "url": "https://en.wikipedia.org/wiki/History_of_paper"}
+  ],
+  "stops": [
+    {"y": 1580, "approx": true, "at": [-99.11, 19.33], "place": "Culhuacán, New Spain", "owner": "Spanish colonists", "by": "spread", "conf": "likely", "via": "sea", "note": "The first paper mill in the Americas worked at Culhuacán near Mexico City around 1580. Long before, the Maya and Aztecs had made their own bark paper, amate, a separate invention."},
+    {"y": 1690, "at": [-75.19, 40.03], "place": "Germantown, Philadelphia", "owner": "William Rittenhouse", "by": "spread", "conf": "sure", "via": "sea", "note": "William Rittenhouse, a papermaker from the Netherlands, built British North America's first paper mill on a creek near Germantown in 1690."}
+  ]
+}

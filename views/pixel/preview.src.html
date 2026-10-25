@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pixel Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Silkscreen&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #221f1a; --paper: #f6f0dc; --panel: #1c2433; --panel-2: #26324a; --edge: #f6f0dc; --edge-2: #8a9ab8;
+  --gold: #e8c050; --red: #c0503a; --sea: #264658; --text: #f2ead2; --muted: #a8b0c0;
+  --pix: "Pixelify Sans", "Silkscreen", ui-monospace, monospace;
+  --tiny: "Silkscreen", "Pixelify Sans", ui-monospace, monospace;
+  --body: "Spectral", Georgia, serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #efe6cc; color: var(--ink); overflow: hidden; }
+body { font-family: var(--body); }
+body[data-mood=night], body[data-mood=night] #map { background: #141820; }
+body[data-mood=night] .lbl { fill: #ffe2a0; }
+#map { position: absolute; inset: 0; overflow: hidden; background: #efe6cc; }
+#map svg { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; }
+#map svg:active { cursor: grabbing; }
+/* RPG window: a dark panel with a light double pixel border. */
+.win { background: var(--panel); color: var(--text); border: 3px solid var(--edge);
+  box-shadow: 0 0 0 3px var(--ink), inset 0 0 0 3px var(--panel-2), 6px 6px 0 3px rgba(34, 31, 26, .35); image-rendering: pixelated; }
+.cart { position: absolute; left: 18px; top: 18px; padding: 10px 16px 12px; min-width: 210px; }
+.cart h1 { font-family: var(--pix); font-weight: 700; font-size: 30px; letter-spacing: .06em; margin: 0; line-height: 1; color: var(--gold); text-shadow: 3px 3px 0 var(--ink); }
+.cart .sub { font-family: var(--tiny); font-size: 9px; letter-spacing: .12em; color: var(--muted); margin-top: 6px; text-transform: uppercase; }
+.cart .year { font-family: var(--pix); font-size: 44px; line-height: 1; margin-top: 10px; color: var(--text); text-shadow: 3px 3px 0 var(--ink); }
+.cart .era { font-family: var(--tiny); font-size: 10px; color: var(--gold); letter-spacing: .08em; }
+.go { position: absolute; right: 18px; top: 18px; padding: 8px; display: flex; flex-direction: column; gap: 4px; }
+.moods { top: auto; bottom: 120px; flex-direction: row; flex-wrap: wrap; max-width: 260px; }
+.go b { font-family: var(--tiny); font-weight: 400; font-size: 9px; color: var(--muted); letter-spacing: .12em; padding: 0 4px 2px; }
+button { font: inherit; cursor: pointer; }
+.btn { font-family: var(--pix); font-size: 14px; color: var(--text); background: var(--panel-2); border: 2px solid var(--edge-2); padding: 3px 10px; text-align: left; box-shadow: 2px 2px 0 var(--ink); }
+.btn:hover, .btn:focus-visible { border-color: var(--gold); color: var(--gold); outline: none; }
+.btn[aria-pressed="true"] { background: var(--gold); color: var(--ink); border-color: var(--ink); }
+.btn .cur { visibility: hidden; color: var(--gold); margin-right: 4px; }
+.btn:hover .cur, .btn:focus-visible .cur { visibility: visible; }
+.time { position: absolute; left: 50%; transform: translateX(-50%); bottom: 18px; width: min(760px, calc(100% - 36px)); padding: 10px 14px 8px; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; align-items: center; }
+.play { width: 38px; height: 34px; font-family: var(--pix); font-size: 16px; color: var(--ink); background: var(--gold); border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 14px; background: transparent; }
+input[type=range]::-webkit-slider-runnable-track { height: 8px; background: repeating-linear-gradient(90deg, var(--edge-2) 0 3px, var(--panel-2) 3px 6px); border: 2px solid var(--ink); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 20px; margin-top: -8px; background: var(--gold); border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+input[type=range]::-moz-range-track { height: 8px; background: var(--panel-2); border: 2px solid var(--ink); }
+input[type=range]::-moz-range-thumb { width: 14px; height: 20px; background: var(--gold); border: 2px solid var(--ink); border-radius: 0; }
+.ticks { grid-column: 2; display: flex; justify-content: space-between; font-family: var(--tiny); font-size: 9px; color: var(--muted); letter-spacing: .06em; }
+.legend { grid-column: 1 / 3; display: flex; gap: 14px; flex-wrap: wrap; font-family: var(--tiny); font-size: 9px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.legend img { width: auto; height: 21px; image-rendering: pixelated; vertical-align: middle; margin-right: 4px; }
+.dlg { position: absolute; left: 18px; bottom: 18px; width: min(380px, calc(100% - 36px)); padding: 12px 16px 14px; display: none; }
+.dlg.on { display: block; }
+.dlg .k { font-family: var(--tiny); font-size: 9px; color: var(--gold); letter-spacing: .12em; text-transform: uppercase; }
+.dlg h2 { font-family: var(--pix); font-weight: 600; font-size: 22px; margin: 2px 0 6px; line-height: 1.1; }
+.dlg p { margin: 0 0 6px; font-size: 14.5px; line-height: 1.45; color: var(--text); }
+.dlg p.why { color: var(--muted); font-style: italic; }
+.dlg .x { position: absolute; right: 8px; top: 6px; background: none; border: 0; color: var(--muted); font-family: var(--pix); font-size: 16px; }
+.dlg .more { font-family: var(--pix); color: var(--gold); font-size: 13px; animation: blink 1s steps(1) infinite; float: right; }
+@keyframes blink { 50% { opacity: 0; } }
+.lbl { font-family: var(--pix); font-weight: 600; fill: var(--paper); paint-order: stroke; stroke: var(--ink); stroke-width: 3px; stroke-linejoin: miter; pointer-events: none; }
+.realms text.realm { font-family: var(--pix); font-weight: 600; letter-spacing: .32em; fill: rgba(44, 28, 18, .78); stroke: rgba(246, 240, 220, .62); stroke-width: 3px; paint-order: stroke; pointer-events: none; }
+body[data-mood="night"] .realms text.realm { fill: rgba(246, 236, 200, .78); stroke: rgba(14, 18, 34, .7); }
+body[data-mood="chronicle"] .realms text.realm { fill: rgba(70, 36, 14, .85); stroke: rgba(240, 226, 196, .7); font-style: italic; }
+.lbl.big { font-size: 15px; } .lbl.mid { font-size: 13px; } .lbl.sm { font-size: 11px; font-weight: 500; }
+.lbl.ruin { fill: #d8c8a8; font-style: italic; }
+.lbl.realm { font-family: var(--tiny); fill: rgba(246, 240, 220, .92); stroke: rgba(34, 31, 26, .75); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; }
+.hit { fill: transparent; cursor: pointer; }
+.compass { position: absolute; right: 22px; bottom: 22px; width: 72px; height: 72px; image-rendering: pixelated; pointer-events: none; }
+.tip { position: absolute; pointer-events: none; padding: 4px 8px; font-family: var(--pix); font-size: 13px; display: none; white-space: nowrap; }
+.busy { position: absolute; right: 22px; top: 50%; font-family: var(--tiny); font-size: 9px; color: var(--ink); opacity: 0; transition: opacity .2s; }
+@media (max-width: 700px) {
+  .cart { left: 10px; top: 10px; padding: 8px 10px; min-width: 0; } .cart h1 { font-size: 22px; } .cart .year { font-size: 30px; }
+  .go { right: 10px; top: 10px; } .go .btn { font-size: 12px; padding: 2px 6px; }
+  .time { bottom: 10px; } .legend { display: none; } .compass { display: none; }
+  .dlg { left: 10px; bottom: 104px; }
+}
+</style>
+</head>
+<body>
+<div id="map"><svg id="svg" role="img" aria-label="Pixel-art world map"></svg></div>
+<div class="win cart"><h1>ATLAS</h1><div class="sub">The world in pixels</div><div class="year" id="year">1348</div><div class="era" id="era"></div></div>
+<div class="win go" id="go"><b>TRAVEL TO</b></div>
+<div class="win go moods" id="moods"><b>LIGHT</b></div>
+<div class="win time">
+  <button class="play" id="play" aria-label="Play through time">▶</button>
+  <input type="range" id="slider" min="0" max="1000" step="1" aria-label="Year">
+  <div></div><div class="ticks" id="ticks"></div>
+  <div class="legend" id="legend"></div>
+</div>
+<div class="win dlg" id="dlg" role="dialog" aria-live="polite"><button class="x" id="dlgx" aria-label="Close">×</button><div id="dlgbody"></div></div>
+<div class="win tip" id="tip"></div>
+<canvas class="compass" id="compass" width="24" height="24"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+/*__PIXEL_JS__*/
+</script>
+<script>
+/*__DATA__*/
+const LAND = /*__LAND__*/;
+</script>
+<script>
+(async function () {
+  const MIN = -3000, NOW = 2025;
+  const mapEl = document.getElementById("map"), svg = d3.select("#svg");
+  const projection = d3.geoNaturalEarth1();
+  const land = topojson.feature(LAND, LAND.objects.land);
+  const levels = RASTERS.map(([cell, tdeg, name]) => ({ cell, tdeg, url: (c, r) => `tiles/${name}_${c}_${r}.png` }));
+  const rivers = RIVERS.map(r => ({ rank: r.rank, line: r.line }));
+  let pm = null;
+  const state = { year: 1348, playing: false, sel: null };
+  const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : `${y}`;
+  const ERAS = [[-3000, "Age of Bronze"], [-1200, "Age of Iron"], [-500, "Classical Age"], [500, "Early Middle Ages"], [1000, "High Middle Ages"],
+    [1300, "Late Middle Ages"], [1450, "Age of Sail"], [1650, "Age of Empires"], [1789, "Age of Revolutions"], [1870, "Industrial Age"], [1914, "World Wars"], [1945, "Modern Age"]];
+  const eraOf = y => { let s = ERAS[0][1]; for (const [yy, n] of ERAS) if (y >= yy) s = n; return s; };
+
+  // Slider: more room for recent centuries, like the Atlas.
+  const SPAN = NOW - MIN, CURVE = 2.2;
+  const tToYear = t => Math.round(NOW - SPAN * Math.pow(1 - t, CURVE));
+  const yearToT = y => 1 - Math.pow((NOW - y) / SPAN, 1 / CURVE);
+  const slider = document.getElementById("slider");
+  document.getElementById("ticks").innerHTML = [-3000, -1000, 0, 500, 1000, 1500, 1800, 2025].map(y => `<span>${fmtYear(y)}</span>`).join("");
+
+  // ---------- data ----------
+  const OLDNAMES = { istanbul: [[-9999, "Byzantium"], [330, "Constantinople"], [1453, "Istanbul"]] };
+  const nameAt = (e, y) => { const n = OLDNAMES[e.id]; if (!n) return e.name; let s = e.name; for (const [yy, nm] of n) if (y >= yy) s = nm; return s; };
+  const interp = (series, y) => {
+    if (!series || !series.length || y < series[0][0] || y > series[series.length - 1][0]) return null;
+    for (let i = 1; i < series.length; i++) if (y <= series[i][0]) { const [a, va] = series[i - 1], [b, vb] = series[i]; return va + (vb - va) * (y - a) / (b - a || 1); }
+    return series[series.length - 1][1];
+  };
+  const popAt = (e, y) => interp(POP[e.id], y);
+  const REALM = PIXEL_PALETTE.REALM;
+  const hashC = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0; return REALM[Math.abs(h) % REALM.length]; };
+  EMPIRES.forEach((e, i) => { e.color = REALM[(i * 7) % REALM.length]; });
+  const SNAPS = Object.keys(POLITIES).map(Number).sort((a, b) => a - b);
+  const snapFor = y => { let s = SNAPS[0]; for (const v of SNAPS) if (v <= y) s = v; return s; };
+  const realmCache = {};
+  function realmsFor(s) {
+    if (realmCache[s]) return realmCache[s];
+    const t = POLITIES[s];
+    const fc = topojson.feature(t, Object.values(t.objects)[0]).features;
+    return realmCache[s] = fc.map((f, i) => {
+      const p = f.properties || {}, name = (p.NAME || p.SUBJECTO || "").trim();
+      const emp = EMPIRES.find(e => s >= e.start && s <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes((p.SUBJECTO || "").trim())));
+      return { id: s + ":" + i, name: emp ? emp.name : name, color: emp ? emp.color : hashC(name || String(i)), feature: f, emp };
+    }).filter(r => r.name && d3.geoArea(r.feature) < 2 * Math.PI);
+  }
+  const tier = (e, y) => {
+    if (e.layer === "wonders") return /pyramid/i.test(e.name) ? "wonder_pyramid" : "wonder_temple";
+    const p = popAt(e, y);
+    return p == null ? "city_town" : p > 400000 ? "city_metropolis" : p > 80000 ? "city_city" : p > 15000 ? "city_town" : "city_village";
+  };
+  const sideColor = side => hashC((side && side[0] && (side[0].name || "")) || "x");
+
+  // ---------- map ----------
+  const gRealm = svg.append("g").attr("class", "realms"), gHit = svg.append("g"), gLab = svg.append("g");
+  let W = 0, H = 0, T = d3.zoomIdentity, curSnap = null, settleTimer = 0;
+  const zoom = d3.zoom().scaleExtent([1, 64]).on("zoom", ev => {
+    T = ev.transform; pm.move(T); if (geo) geo.move(T);
+    gHit.attr("transform", T); gLab.attr("transform", T); gRealm.attr("transform", T);
+    gLab.selectAll("text").attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / T.k})`);
+    gRealm.selectAll("text").attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / T.k})`);
+    gHit.selectAll("circle").attr("r", 9 / T.k);
+    clearTimeout(settleTimer); settleTimer = setTimeout(settle, 140);
+  });
+  svg.call(zoom).on("dblclick.zoom", null);
+  const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm.same(T)) { pm.setRealms(realmsNow()); realmLabels(); } else settle(); } });
+  const realmsNow = () => borders.realms(state.year, T.k) || realmsFor(curSnap);
+  let shownRealms = null;
+  let geo = null;
+  function settle() { pm.render(T, { realms: shownRealms = realmsNow() }); if (geo) geo.render(T, W, H); placeSprites(); labels(); realmLabels(); }
+
+  // Realm names in wide-spaced capitals across their land, like an old atlas: sized by the realm's area on screen.
+  const realmGeo = new WeakMap();
+  function geoOf(realms) {
+    if (realmGeo.has(realms)) return realmGeo.get(realms);
+    const path = d3.geoPath(projection), best = {};
+    for (const r of realms) {
+      const name = (r.name || "").trim(); if (!name || name.length > 28) continue;
+      const g = r.feature.geometry; if (!g) continue;
+      const polys = g.type === "MultiPolygon" ? g.coordinates.map(c => ({ type: "Polygon", coordinates: c })) : [g];
+      let big = null, ba = 0, tot = 0;
+      for (const q of polys) { const a = path.area(q); tot += a; if (a > ba) { ba = a; big = q; } }
+      if (!big || (best[name] && best[name].area >= tot)) continue;
+      const c = path.centroid(big);
+      if (c.every(Number.isFinite)) best[name] = { name, area: tot, core: ba, x: c[0], y: c[1] };
+    }
+    const out = Object.values(best).sort((a, b) => b.area - a.area);
+    realmGeo.set(realms, out);
+    return out;
+  }
+  function realmLabels() {
+    const realms = realmsNow() || [], k = T.k, boxes = [], out = [];
+    for (const d of geoOf(realms)) {
+      if (out.length >= 40) break;
+      const side = Math.sqrt(d.area * 0.6 + d.core * 0.4) * k, n = d.name.length;
+      const fs = Math.min(34, Math.round(side * 1.5 / (n * 0.9 + 2)));
+      if (fs < 11) continue;
+      const sx = d.x * k + T.x, sy = d.y * k + T.y;
+      if (sx < 0 || sy < 0 || sx > W || sy > H) continue;
+      const wpx = n * fs * 0.95, bx = [sx - wpx / 2, sy - fs, sx + wpx / 2, sy + 4];
+      if (bx[0] < 8 || bx[2] > W - 8 || bx[1] < 8 || bx[3] > H - 140) continue;
+      if (boxes.some(b => !(bx[2] < b[0] || bx[0] > b[2] || bx[3] < b[1] || bx[1] > b[3]))) continue;
+      boxes.push(bx); out.push({ ...d, fs });
+    }
+    gRealm.selectAll("text").data(out, d => d.name).join("text").attr("class", "realm").attr("text-anchor", "middle")
+      .style("font-size", d => d.fs + "px").attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / k})`).text(d => d.name.toUpperCase());
+  }
+
+  function layout() {
+    W = mapEl.clientWidth; H = mapEl.clientHeight;
+    projection.fitExtent([[10, 10], [W - 10, H - 10]], { type: "Sphere" });
+    svg.attr("viewBox", `0 0 ${W} ${H}`);
+    zoom.translateExtent([[-W * 0.2, -H * 0.2], [W * 1.2, H * 1.2]]);
+    if (!pm) pm = PixelMap(mapEl, projection, { px: 3, levels, land, rivers });
+    if (!geo && TERRAIN) geo = PixelGeoLabels(mapEl, projection, TERRAIN);
+    curSnap = snapFor(state.year);
+    settle();
+  }
+
+  // ---------- sprites and labels for the year ----------
+  let movers = [], statics = [], frame = 0;
+  function placeSprites() {
+    const y = state.year; statics = []; movers = [];
+    const hits = [];
+    for (const e of ENTRIES) {
+      if (y < e.start) continue;
+      const lost = e.end != null && y >= e.end;
+      // Era- and region-aware sprite (era.js); declutter by zoom: great cities always, towns and ruins as you come closer.
+      const { sprite: sp, minK, pri } = PixelEra.place(e, y, popAt(e, y));
+      if (T.k < minK && !(state.sel && state.sel.e === e)) continue;
+      statics.push({ lon: e.lon, lat: e.lat, sprite: sp, pri });
+      hits.push({ lon: e.lon, lat: e.lat, kind: lost ? "Lost city" : e.layer === "wonders" ? "Wonder" : "City", name: nameAt(e, y), what: e.what, why: e.why, pop: lost ? null : popAt(e, y), lost, e });
+    }
+    for (const b of BATTLES) {
+      if (Math.abs(b.start - y) > 3) continue;
+      const a = sideColor(b.sides && b.sides[0]), c = sideColor(b.sides && b.sides[1]);
+      const ar = PixelEra.army(b.start, b.lon, b.lat);
+      const grp = "b:" + b.name + b.start;
+      statics.push({ lon: b.lon, lat: b.lat, sprite: ar, team: a, dx: -5, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: ar, flip: true, team: c, dx: 5, frame: 1, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -7, pri: 5, grp });
+      hits.push({ lon: b.lon, lat: b.lat, kind: "Battle · " + fmtYear(b.start), name: b.name, what: (b.sides || []).map(s => s.map(x => x.name).join(", ")).join("  vs  "), why: b.why });
+    }
+    for (const s of SHOCKS) {
+      if (y < s.start - 1 || y > (s.end ?? s.start) + 3) continue;
+      const sp = PixelEra.shock(s.subtype);
+      statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2, pri: 3.8 });
+      hits.push({ lon: s.lon, lat: s.lat, kind: s.subtype, name: s.name, what: s.what });
+    }
+    TRADE.filter(t => y >= t.start && y <= t.end).forEach((t, i) => {
+      const len = d3.geoLength({ type: "LineString", coordinates: t.line });
+      const n = T.k < 2 ? 1 : Math.max(1, Math.min(4, Math.round(len / 0.6)));
+      for (let q = 0; q < n; q++) movers.push({ t, len, phase: q / n, interp: d3.geoInterpolate });
+    });
+    const P = d => projection([d.lon, d.lat]);
+    gHit.selectAll("circle").data(hits.filter(P)).join("circle").attr("class", "hit")
+      .attr("cx", d => P(d)[0]).attr("cy", d => P(d)[1]).attr("r", 9 / T.k)
+      .on("mousemove", (ev, d) => { tip.style.display = "block"; tip.textContent = d.name; tip.style.left = ev.clientX + 14 + "px"; tip.style.top = ev.clientY + 10 + "px"; })
+      .on("mouseleave", () => { tip.style.display = "none"; })
+      .on("click", (ev, d) => { ev.stopPropagation(); open(d); });
+    labels(hits);
+    draw();
+    legend();
+  }
+  // Along-route position for a moving sprite: walk the route at constant speed.
+  function moverAt(m) {
+    const L = m.t.line, segs = []; let tot = 0;
+    for (let i = 1; i < L.length; i++) { const d = d3.geoDistance(L[i - 1], L[i]); segs.push(d); tot += d; }
+    let s = ((m.phase + frame * 0.004 / Math.max(0.2, tot)) % 1) * tot;
+    for (let i = 0; i < segs.length; i++) { if (s <= segs[i]) return d3.geoInterpolate(L[i], L[i + 1])(s / (segs[i] || 1)); s -= segs[i]; }
+    return L[L.length - 1];
+  }
+  function draw() {
+    const list = statics.slice();
+    for (const m of movers) {
+      const [lon, lat] = moverAt(m);
+      list.push({ lon, lat, sprite: PixelEra.mover(state.year, lon, lat, pm.isWater(lon, lat)), pri: 0.5 });
+    }
+    list.sort((a, b) => b.lat - a.lat);
+    pm.sprites(list, PixelEra.budget(T.k));
+  }
+  let lastHits = [];
+  function labels(hits) {
+    if (hits) lastHits = hits;
+    const y = state.year, k = T.k, boxes = [];
+    const cand = lastHits.filter(d => d.e).map(d => ({ d, w: d.pop || (d.lost ? 30000 : 20000) })).sort((a, b) => b.w - a.w);
+    const maxN = Math.round(10 + 14 * Math.pow(k, 1.1));
+    const out = [];
+    for (const { d } of cand) {
+      if (out.length >= maxN) break;
+      const p = projection([d.lon, d.lat]); if (!p) continue;
+      const sx = p[0] * k + T.x, sy = p[1] * k + T.y;
+      if (sx < -50 || sy < -20 || sx > W + 50 || sy > H + 20) continue;
+      const cls = d.lost ? "ruin sm" : (d.pop || 0) > 400000 ? "big" : (d.pop || 0) > 80000 ? "mid" : "sm";
+      const fs = cls.includes("big") ? 15 : cls.includes("mid") ? 13 : 11;
+      const wpx = d.name.length * fs * 0.55, bx = [sx - wpx / 2 - 2, sy + 4, sx + wpx / 2 + 2, sy + 6 + fs];
+      if (boxes.some(b => !(bx[2] < b[0] || bx[0] > b[2] || bx[3] < b[1] || bx[1] > b[3]))) continue;
+      boxes.push(bx); out.push({ ...d, x: p[0], y: p[1], cls, fs });
+    }
+    gLab.selectAll("text").data(out, d => d.name).join("text").attr("class", d => "lbl " + d.cls).attr("text-anchor", "middle").attr("dy", d => 6 + d.fs)
+      .attr("transform", d => `translate(${d.x},${d.y}) scale(${1 / k})`).text(d => d.name);
+  }
+
+  // ---------- dialog ----------
+  const tip = document.getElementById("tip"), dlg = document.getElementById("dlg"), body = document.getElementById("dlgbody");
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function open(d) {
+    body.innerHTML = `<div class="k">${esc(d.kind)}</div><h2>${esc(d.name)}</h2>${d.pop ? `<p>About ${Math.round(d.pop).toLocaleString()} people in ${fmtYear(state.year)}.</p>` : ""}${d.what ? `<p>${esc(d.what)}</p>` : ""}${d.why ? `<p class="why">${esc(d.why)}</p>` : ""}<span class="more">▼</span>`;
+    dlg.classList.add("on");
+  }
+  document.getElementById("dlgx").onclick = () => dlg.classList.remove("on");
+  svg.on("click", () => dlg.classList.remove("on"));
+
+  // ---------- year ----------
+  function setYear(y, fromSlider) {
+    state.year = Math.max(MIN, Math.min(NOW, Math.round(y)));
+    document.getElementById("year").textContent = fmtYear(state.year);
+    document.getElementById("era").textContent = eraOf(state.year).toUpperCase();
+    if (!fromSlider) slider.value = Math.round(yearToT(state.year) * 1000);
+    const s = snapFor(state.year);
+    curSnap = s;
+    const r = realmsNow();
+    if (r !== shownRealms) { shownRealms = r; pm.setRealms(r); realmLabels(); }
+    placeSprites();
+  }
+  slider.addEventListener("input", () => setYear(tToYear(slider.value / 1000), true));
+  const playBtn = document.getElementById("play");
+  let playTimer = 0;
+  playBtn.onclick = () => {
+    state.playing = !state.playing; playBtn.textContent = state.playing ? "❚❚" : "▶";
+    clearInterval(playTimer);
+    if (state.playing) playTimer = setInterval(() => { const t = Math.min(1, slider.value / 1000 + 0.004); setYear(tToYear(t)); if (t >= 1) playBtn.click(); }, 200);
+  };
+
+  // ---------- travel ----------
+  const PLACES = [["World", 0, 10, 1], ["Mediterranean", 18, 38, 4], ["Constantinople", 28.97, 41.0, 22], ["Near East", 44, 33, 5], ["India", 79, 22, 4.2], ["China", 110, 33, 4], ["Americas", -80, 15, 2.2]];
+  const go = document.getElementById("go");
+  PLACES.forEach(([n, lon, lat, k]) => {
+    const b = document.createElement("button"); b.className = "btn"; b.innerHTML = `<span class="cur">▶</span>${n}`;
+    b.onclick = () => flyTo(lon, lat, k); go.appendChild(b);
+  });
+  const moods = document.getElementById("moods");
+  const MOOD_LIST = [["day", "Day"], ["dusk", "Dusk"], ["night", "Night"], ["winter", "Winter"], ["chronicle", "Chronicle"]];
+  function setMood(m) {
+    pm.setMood(m); if (geo) geo.setMood(m); moods.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.m === m));
+    document.body.dataset.mood = m;
+  }
+  MOOD_LIST.forEach(([m, n]) => { const b = document.createElement("button"); b.className = "btn"; b.dataset.m = m; b.textContent = n; b.onclick = () => setMood(m); moods.appendChild(b); });
+  function flyTo(lon, lat, k) {
+    const [x, y] = projection([lon, lat]);
+    svg.transition().duration(matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1200).call(zoom.transform, d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
+  }
+
+  // ---------- legend and compass ----------
+  const sheet = (name, team) => {
+    const S = PIXEL_SPRITES[name]; const c = document.createElement("canvas"); c.width = S.w; c.height = S.h;
+    const x = c.getContext("2d"), K = PIXEL_PALETTE.KEYS;
+    S.frames[0].forEach((row, j) => [...row].forEach((ch, i) => { const col = ch === "x" ? (team || "#b8382a") : ch === "X" ? "#7c2018" : K[ch]; if (ch !== "." && col) { x.fillStyle = col; x.fillRect(i, j, 1, 1); } }));
+    return c.toDataURL();
+  };
+  // The legend shows the sprites of the year and of the region at the centre of the view.
+  let legendKey = "";
+  function legend() {
+    const c = projection.invert(T.invert([W / 2, H / 2])) || [20, 40], [lon, lat] = c, y = state.year;
+    const big = PixelEra.place({ lon, lat }, y, 5e5).sprite, town = PixelEra.place({ lon, lat }, y, 3e4).sprite;
+    const ruin = PixelEra.place({ lon, lat, end: y - 1 }, y).sprite;
+    const items = [[big, "Great city"], [town, "Town"], [ruin, "Lost city"], [PixelEra.army(y, lon, lat), "Battle"],
+      [PixelEra.mover(y, lon, lat, true), "Sea trade"], [PixelEra.mover(y, lon, lat, false), "Caravan"], [PixelEra.shock("plague"), "Plague"]];
+    const key = items.map(i => i[0]).join();
+    if (key === legendKey) return;
+    legendKey = key;
+    document.getElementById("legend").innerHTML = items.map(([s, n]) => `<span><img src="${sheet(s)}" alt="">${n}</span>`).join("");
+  }
+  (function compass() {
+    const c = document.getElementById("compass").getContext("2d"), K = PIXEL_PALETTE.KEYS;
+    const rows = ["...........k............", "..........kgk...........", "..........kgGk..........", ".........kygGk..........", ".........kygGGk.........", "........kyygGGk.........", "....k...kyygGGk...k.....", ".....kk.kyygGGGk.kk.....", "......kkkyygGGGkkk......", "......kwkkygGGkkwk......", "...kkkkwwkkgGkkwwkkkk...", "kkkwwwwwwwwkkwwwwwwWWkkk", "...kkkkWWkkGgkkWWkkkk...", "......kWkkGGgykkWk......", "......kkkGGGgyykkk......", ".....kk.kGGGgyyk.kk.....", "....k...kGGgyyk...k.....", "........kGGgyyk.........", ".........kGGgyk.........", ".........kGGgyk.........", "..........kGgyk.........", "..........kGgk..........", "...........kk...........", "........................"];
+    rows.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== ".") { c.fillStyle = K[ch]; c.fillRect(i, j, 1, 1); } }));
+  })();
+
+  // ---------- go ----------
+  layout();
+  setYear(state.year);
+  window.addEventListener("resize", () => { clearTimeout(settleTimer); settleTimer = setTimeout(layout, 200); });
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { if (document.hidden) return; frame++; pm.setFrame(frame); draw(); }, 260);
+  const q = new URLSearchParams(location.hash.slice(1));
+  if (q.get("y")) setYear(+q.get("y"));
+  setMood(q.get("mood") || "day");
+  if (q.get("at")) { const [lon, lat, k] = q.get("at").split(",").map(Number); svg.call(zoom.transform, d3.zoomIdentity.translate(W / 2 - k * projection([lon, lat])[0], H / 2 - k * projection([lon, lat])[1]).scale(k)); }
+  window.PIX = { pm, setYear, flyTo };
+})();
+</script>
+</body>
+</html>

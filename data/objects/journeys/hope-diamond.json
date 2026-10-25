@@ -1,0 +1,26 @@
+{
+  "id": "hope_diamond",
+  "name": "Hope Diamond",
+  "type": "single",
+  "sprite": "obj_gem_blue",
+  "what": "A deep blue diamond of 45.52 carats, cut down from a 112-carat stone that the French gem merchant Jean-Baptiste Tavernier bought in India in the 1660s.",
+  "why": "Same mines as the Koh-i-Noor, opposite path: sold, not seized. It went from Indian traders to the King of France, was stolen in the Revolution, recut to hide it, and finally posted to a museum in a plain parcel.",
+  "now": "National Museum of Natural History (Smithsonian), Washington DC, since 1958.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Kurin, R. (2006). Hope Diamond: The Legendary History of a Cursed Gem. Smithsonian Books."},
+    {"cite": "Farges, F. et al. (2009). The rediscovery of the 'French Blue' diamond. Gems & Gemology 45(1)."},
+    {"cite": "Wikipedia: Hope Diamond", "url": "https://en.wikipedia.org/wiki/Hope_Diamond"}
+  ],
+  "stops": [
+    {"y": 1640, "approx": true, "at": [80.05, 16.7], "place": "Kollur mines, Golconda", "owner": "Unknown miners", "by": "made", "conf": "likely", "note": "Tavernier's notes point to the Kollur mines on the Krishna. The tale that it was prised from the eye of an idol, and the curse, were invented by newspapers and jewellers around 1909."},
+    {"y": 1666, "approx": true, "at": [78.47, 17.36], "place": "Golconda", "owner": "Jean-Baptiste Tavernier", "by": "sold", "conf": "likely", "via": "land", "note": "Tavernier bought the rough blue stone, 112 3/16 carats, on one of his six voyages to the East.", "meet": "a gem merchant in Golconda"},
+    {"y": 1668, "at": [2.12, 48.8], "place": "Versailles", "owner": "Louis XIV", "by": "sold", "conf": "sure", "via": "sea", "path": [[78.47, 17.36], [72.83, 18.95], [60, 5], [50, -8], [42.5, -17], [36, -27], [28, -35], [18, -36], [12, -25], [5, -8], [-10, 2], [-18, 12], [-20, 25], [-12, 37], [-9, 44], [-5, 48.5], [-1.6, 49.6], [2.12, 48.8]], "note": "Tavernier sold it to Louis XIV with other diamonds in 1668. The court jeweller cut it in 1673 into the 69-carat \"French Blue\", worn on a ribbon by the king."},
+    {"y": 1792, "at": [2.32, 48.866], "place": "Garde-Meuble, Paris", "owner": "Thieves", "by": "stolen", "conf": "sure", "via": "land", "note": "During the Revolution thieves broke into the royal storehouse over several nights in September 1792 and took the crown jewels. The French Blue vanished."},
+    {"y": 1812, "at": [-0.13, 51.51], "place": "London", "owner": "Daniel Eliason, then Henry Philip Hope", "by": "sold", "conf": "sure", "via": "land", "note": "A 45-carat blue diamond turned up with the London dealer Daniel Eliason in 1812, exactly when the 20-year limit on crimes of the Revolution ran out. A lead model found in the Paris natural history museum in 2007 proved it was cut from the French Blue. The banker Henry Philip Hope owned it by 1839."},
+    {"y": 1910, "at": [2.33, 48.868], "place": "Cartier, Paris", "owner": "Pierre Cartier", "by": "sold", "conf": "sure", "via": "land", "note": "After the Hope family sold it in 1901 it passed through dealers to Pierre Cartier, who spread the story of the curse to sell it."},
+    {"y": 1911, "at": [-77.04, 38.91], "place": "Washington DC", "owner": "Evalyn Walsh McLean", "by": "sold", "conf": "sure", "via": "sea", "path": [[2.33, 48.868], [-1.6, 49.6], [-5, 48.5], [-30, 45], [-60, 41], [-74, 40.6], [-77.04, 38.91]], "note": "The Washington socialite Evalyn Walsh McLean bought it for $180,000 and wore it constantly, sometimes on her Great Dane."},
+    {"y": 1949, "at": [-73.97, 40.76], "place": "Harry Winston, New York", "owner": "Harry Winston", "by": "sold", "conf": "sure", "via": "land", "note": "After McLean died in 1947, the New York jeweller Harry Winston bought her whole collection in 1949 and showed the diamond on tour as part of his Court of Jewels."},
+    {"y": 1958, "at": [-77.026, 38.891], "place": "Smithsonian, Washington DC", "owner": "Smithsonian Institution", "by": "gift", "conf": "sure", "via": "land", "note": "Winston gave the diamond to the Smithsonian in 1958. He sent it by registered first-class mail in a plain brown parcel, for $145.29.", "meet": "the postman who delivered it, James Todd"}
+  ]
+}

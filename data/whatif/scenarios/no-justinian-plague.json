@@ -1,0 +1,42 @@
+{
+  "id": "whatif:no_justinian_plague",
+  "question": "What if the Plague of Justinian never happened?",
+  "short": "In 541, just as Justinian was winning back Italy, plague arrived in Egypt and spread across the empire. One camp says it killed a large share of the empire and broke Rome's last bid to rebuild; another says the evidence for mass death is thin. Remove it and you get a stronger Rome in the 560s, but the war with Persia (602-628) and the Arab conquests that followed probably still happen. The honest answer depends on which camp is right.",
+  "divergence": { "year": 541, "text": "The plague does not reach the port of Pelusium in Egypt in 541." },
+  "plausibility": 0.4,
+  "plausibility_note": "Medium: removing one pandemic is easy to imagine, but its real size is disputed, so the branch might change little.",
+  "lenses": ["disease", "order", "military"],
+  "steps": [
+    { "branch": false, "lens": "disease", "title": "The volcanic winter", "year": 536, "view": { "lon": 20, "lat": 45, "span": 70 }, "layers": ["disease"],
+      "text": "Eruptions in 536 and 540 cooled the northern hemisphere for decades: Procopius wrote that the sun gave light without brightness for a year. Tree rings show the coldest decade in two thousand years. The plague arrived into that cold, hungry world.",
+      "confidence": 0.75, "sources": [{ "cite": "Ulf Büntgen et al., Cooling and societal change during the Late Antique Little Ice Age, Nature Geoscience 9 (2016)" }] },
+    { "branch": false, "lens": "disease", "title": "From Pelusium to the capital", "year": 542, "view": { "lon": 31, "lat": 36, "span": 22 }, "layers": ["disease"],
+      "pins": [{ "name": "Pelusium, 541", "lon": 32.57, "lat": 31.04 }, { "name": "Constantinople, 542", "lon": 28.97, "lat": 41.01 }],
+      "routes": [{ "label": "plague, 541-542", "points": [[32.57, 31.04], [29.92, 31.2], [28.97, 41.01]], "style": "plague" }],
+      "text": "Plague appeared at Pelusium in 541 and reached Constantinople in spring 542, where Procopius reports thousands of deaths a day, a figure most think inflated. Ancient DNA from graves in Bavaria and elsewhere confirms it was Yersinia pestis, the Black Death's bacterium.",
+      "confidence": 0.8, "sources": [{ "cite": "David Wagner et al., Yersinia pestis and the Plague of Justinian 541-543 AD, Lancet Infectious Diseases 14 (2014)" }, { "cite": "Wikipedia, Plague of Justinian", "url": "https://en.wikipedia.org/wiki/Plague_of_Justinian" }] },
+    { "branch": false, "lens": "order", "title": "A reconquest half done", "year": 540, "view": { "lon": 10, "lat": 38, "span": 40 }, "layers": ["war"],
+      "pins": [{ "name": "Carthage, retaken 534", "lon": 10.32, "lat": 36.85 }, { "name": "Ravenna, taken 540", "lon": 12.2, "lat": 44.42 }],
+      "text": "Belisarius retook North Africa from the Vandals in 533-534 and took Ravenna in 540. Then the Goths rallied under Totila, and the Gothic War dragged on until 554, through the plague years. Italy came out ruined.",
+      "confidence": 0.85, "sources": [{ "cite": "Wikipedia, Gothic War (535-554)", "url": "https://en.wikipedia.org/wiki/Gothic_War_(535%E2%80%93554)" }] },
+    { "branch": false, "lens": "disease", "title": "Did it even matter much?", "year": 550, "view": { "lon": 25, "lat": 37, "span": 40 },
+      "text": "Here historians split. Kyle Harper and Peter Sarris see a catastrophe that killed a large share of the empire. Lee Mordechai and Merle Eisenberg looked for its traces in laws, coins, papyri and building and found few, arguing the death toll is not proven. The size of this what-if depends on who is right.",
+      "confidence": 0.5, "sources": [{ "cite": "Kyle Harper, The Fate of Rome (2017)" }, { "cite": "Lee Mordechai and Merle Eisenberg, Rejecting catastrophe: the case of the Justinianic Plague, Past & Present 244 (2019)" }] },
+    { "branch": true, "lens": "order", "title": "Italy holds the Lombards", "year": 568, "view": { "lon": 11, "lat": 44.5, "span": 12 },
+      "pins": [{ "name": "Lombards cross the Alps, 568", "lon": 13.2, "lat": 46.1 }],
+      "text": "The Lombards walked into a drained Italy in 568 and took most of it within a few years. With no plague and a less exhausted army, the empire may hold the Po valley longer. On Mordechai and Eisenberg's reading, though, the war itself had already done the damage.",
+      "confidence": 0.35, "sources": [{ "cite": "Wikipedia, Lombards", "url": "https://en.wikipedia.org/wiki/Lombards" }] },
+    { "branch": true, "lens": "military", "title": "The Arabs still come", "year": 636, "view": { "lon": 38, "lat": 31, "span": 25 }, "layers": ["war"],
+      "pins": [{ "name": "Yarmouk, 636", "lon": 35.95, "lat": 32.8 }],
+      "text": "The bigger blow was the Roman-Persian war of 602-628, which wrecked both empires just before the Arab armies arrived. A plague-free empire is richer going into that war, but probably not enough to stop the loss of Syria (Yarmouk, 636) and Egypt (by 642).",
+      "confidence": 0.25, "sources": [{ "cite": "Wikipedia, Battle of the Yarmuk", "url": "https://en.wikipedia.org/wiki/Battle_of_the_Yarmuk" }] }
+  ],
+  "views": [
+    { "name": "Kyle Harper", "school": "Catastrophe", "strength": "medium", "claim": "Climate and plague together ended Rome's ancient prosperity.", "for": "Ancient DNA, textual accounts, and the volcanic record.", "against": "Mortality figures rest on a few dramatic writers." },
+    { "name": "Peter Sarris", "school": "Catastrophe", "strength": "medium", "claim": "The plague caused labour shortages visible in Justinian's own laws.", "for": "Legislation on wages and abandoned land.", "against": "Laws can respond to many problems at once." },
+    { "name": "Mordechai and Eisenberg", "school": "Minimalist", "strength": "medium", "claim": "There is little hard evidence of mass mortality.", "for": "Papyri, coins and building show no clear break.", "against": "Absence of evidence in patchy sources is weak evidence of absence." }
+  ],
+  "unknowns": ["How many died: estimates run from a few percent to over a third.", "How far inland and into the countryside it spread.", "How much the cold of the 530s, rather than plague, explains the hard decades."],
+  "model": { "name": "The Eastern Roman Empire", "start": 400, "years": 400, "real": [{ "type": "climate", "year": 536 }, { "type": "plague", "year": 541 }, { "type": "plague", "year": 558 }], "alt": [{ "type": "climate", "year": 536 }],
+    "note": "Toy Turchin-style model, not fitted to Rome; it also cannot see wars with Persia or the Arabs. It assumes the catastrophe camp's plague (a third dead). The surprise: in the toy, the plague's deaths relieve pressure on the land, so the branch without it, a fuller and richer empire, hits its own crisis in the 580s instead of around 700. More people is not only more strength. If the minimalists are right, the two lines would barely differ." }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "rosetta_stone",
+  "name": "Rosetta Stone",
+  "type": "single",
+  "sprite": "obj_stele",
+  "what": "A broken granodiorite slab, 112 cm tall, carved with one priestly decree of 196 BCE in three scripts: hieroglyphs, Demotic and Greek. It was the key to reading hieroglyphs.",
+  "why": "Made as a public notice, reused as rubble, found by soldiers, surrendered as a spoil of war: a stone whose value changed completely once someone could read it.",
+  "now": "British Museum, London, room 4, its most visited object.",
+  "dispute": "Egypt's former antiquities minister Zahi Hawass and others have asked for its return since 2003; a 2022 petition asked again.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Parkinson, R. (1999). Cracking Codes: The Rosetta Stone and Decipherment. British Museum Press."},
+    {"cite": "British Museum: The Rosetta Stone (EA24)", "url": "https://www.britishmuseum.org/collection/object/Y_EA24"},
+    {"cite": "Wikipedia: Rosetta Stone", "url": "https://en.wikipedia.org/wiki/Rosetta_Stone"}
+  ],
+  "stops": [
+    {"y": -196, "at": [30.77, 30.96], "place": "Temple at Sais (probably)", "owner": "Egyptian priests under Ptolemy V", "by": "made", "conf": "likely", "note": "The priests meeting at Memphis on 27 March 196 BCE ordered the decree set up in every temple. This copy most likely stood in a temple at Sais, in the western Delta, before it was moved.", "meet": "a priest or scribe in a Delta temple"},
+    {"y": 1470, "approx": true, "at": [30.4, 31.42], "place": "Fort near Rashid (Rosetta)", "owner": "Mamluk sultanate", "by": "reused", "conf": "likely", "via": "land", "note": "Broken and carried off as building stone, it ended up in the walls of a fort near Rashid, probably the one the Mamluk sultan Qaitbay rebuilt in the late 1400s."},
+    {"y": 1799, "at": [30.4, 31.42], "place": "Fort Julien, Rashid", "owner": "French army in Egypt", "by": "found", "conf": "sure", "note": "In July 1799 French soldiers rebuilding the fort for Bonaparte's army found it; Lieutenant Pierre-François Bouchard saw that it might hold one text in three scripts. It went to the new Institut d'Égypte in Cairo, where copies were made.", "meet": "a soldier in Bouchard's work party at Fort Julien"},
+    {"y": 1801, "at": [29.92, 31.2], "place": "Alexandria", "owner": "British army", "by": "seized", "conf": "sure", "via": "land", "note": "Defeated by the British and Ottomans, the French in Alexandria had to hand over their antiquities under Article 16 of the Capitulation of Alexandria. General Menou claimed the stone as his own property; it was handed over all the same."},
+    {"y": 1802, "at": [-0.127, 51.519], "place": "British Museum, London", "owner": "British Museum", "by": "gift", "conf": "sure", "via": "sea", "path": [[29.92, 31.2], [25, 33.8], [15, 35.8], [11.5, 37.6], [5, 37.5], [-5.6, 36], [-9.8, 36.5], [-10, 43], [-5, 48.3], [-1.1, 50.8], [1.4, 51.4], [-0.127, 51.519]], "note": "Shipped on HMS Égyptienne, it reached Portsmouth in February 1802; George III presented it to the British Museum that year. Painted on its sides: \"Captured in Egypt by the British Army in 1801\" and \"Presented by King George III\"."},
+    {"y": 1822, "at": [2.35, 48.86], "place": "Paris (copies)", "owner": "British Museum", "by": "read", "conf": "sure", "copy": true, "note": "Jean-François Champollion, working in Paris from copies and casts, announced in September 1822 that he could read hieroglyphs. The stone itself stayed in London."},
+    {"y": 1917, "at": [-0.12, 51.518], "place": "Holborn, London", "owner": "British Museum", "by": "hidden", "conf": "sure", "via": "land", "note": "Fearing German air raids, the Museum hid it in a station of the Post Office's underground railway at Holborn until 1919."},
+    {"y": 1972, "at": [2.337, 48.861], "place": "Louvre, Paris", "owner": "British Museum (on loan)", "by": "displayed", "conf": "sure", "via": "land", "note": "Lent to the Louvre for a month in 1972, for the 150th anniversary of Champollion's letter announcing the decipherment. It has not travelled since."},
+    {"y": 1973, "at": [-0.127, 51.519], "place": "British Museum, London", "owner": "British Museum", "by": "returned", "conf": "sure", "via": "land", "note": "Back in London, where it has been on show ever since.", "meet": "anyone in the crowd around its case"}
+  ]
+}

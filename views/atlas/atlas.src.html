@@ -61,6 +61,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
 }
 .brand { font-family: var(--display); font-size: 30px; line-height: 1; margin: 0; font-weight: 400; }
 .askbar { display: flex; gap: 8px; min-width: 0; }
+.askbig { display: grid; gap: 6px; }
+.askbig textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 64px; border: 1.5px solid var(--accent); background: var(--card); padding: 10px 12px; border-radius: 6px; font-size: 17px; font-family: var(--fell); }
 .askbar input { flex: 1; min-width: 0; border: 1px solid var(--rule); background: var(--card); padding: 7px 12px; border-radius: 999px; font-size: 15.5px; font-family: var(--fell); }
 .layers { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .layers .lab { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-right: 2px; }
@@ -156,10 +158,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .time { grid-area: time; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; border-top: 1px solid var(--rule);
   padding-block: 6px 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; }
 .time .playbtn { grid-row: 1 / 3; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; font-size: 13px; }
-.strip { height: 22px; display: block; width: 100%; cursor: pointer; }
+.strip { height: 22px; display: block; width: 100%; cursor: pointer; will-change: transform; } /* own layer: the slider thumb moving must not repaint thousands of ticks */
 .strip line { stroke-width: 1; vector-effect: non-scaling-stroke; }
 .time input { width: 100%; min-width: 0; accent-color: var(--ink); margin: 0; }
-.time output { grid-row: 1 / 3; grid-column: 3; font-family: var(--mono); font-size: 13px; min-width: 76px; text-align: right; }
+.time output { grid-row: 1; grid-column: 3; font-family: var(--mono); font-size: 13px; min-width: 76px; text-align: right; }
+.time .speed { grid-row: 2; grid-column: 3; justify-self: end; max-width: 84px; font-family: var(--mono); font-size: 11.5px; border: 1px solid var(--rule); background: var(--card); border-radius: 4px; padding: 1px 4px; cursor: pointer; }
 
 .panel { grid-area: panel; border-left: 1px solid var(--rule); overflow-y: auto; min-height: 0; display: flex; flex-direction: column; }
 .tabs { position: sticky; top: 0; z-index: 3; background: var(--paper); display: flex; gap: 2px; border-bottom: 1px solid var(--rule); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 12px; }
@@ -253,6 +256,28 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .whatif { border: 1px dashed var(--rule); border-radius: 3px; padding: 8px 11px; font-size: 14px; cursor: pointer; text-align: left; background: transparent; display: grid; gap: 4px; }
 .whatif b { font-family: var(--fell); font-weight: 400; font-size: 16px; }
 .unk { margin: 0; padding-left: 18px; font-size: 14px; }
+.short.frame { color: var(--ink-soft); font-style: italic; }
+.pnl { display: grid; gap: 4px; }
+.pnl .who { display: grid; grid-template-columns: auto 1fr auto; gap: 0 8px; align-items: baseline; font-size: 14px; padding: 3px 0; }
+.pnl .dot, .invite .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c); display: inline-block; }
+.pnl .nm { font-family: var(--fell); font-size: 15.5px; }
+.pnl .stt { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.pnl .ang { grid-column: 2 / 4; font-size: 13px; color: var(--ink-soft); }
+.pnl .waiting, .pnl .skipped, .pnl .missed { opacity: .55; }
+.pnl .speaking .stt { color: var(--c); }
+@media (prefers-reduced-motion: no-preference) { .pnl .speaking .dot { animation: blink .8s infinite alternate; } }
+.spk { display: grid; gap: 2px; margin-top: 6px; padding-left: 2px; border-bottom: 2px solid var(--c); padding-bottom: 3px; }
+.spk b { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--c); font-weight: 600; }
+.spk span { font-size: 13px; font-style: italic; color: var(--ink-soft); }
+.links { display: grid; gap: 6px; }
+.link { text-align: left; border: 1px solid var(--rule); border-left: 4px solid var(--ca); border-right: 4px solid var(--cb); background: var(--card); border-radius: 3px; padding: 7px 10px; cursor: pointer; display: grid; gap: 3px; font: inherit; color: inherit; }
+.link:hover { background: var(--wash); }
+.link .ends { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: baseline; font-family: var(--fell); font-size: 15px; }
+.link .e.a { color: var(--ca); } .link .e.b { color: var(--cb); }
+.link .arr { color: var(--ink-soft); }
+.link .why { font-size: 13.5px; }
+.invite { display: flex; flex-wrap: wrap; gap: 6px; }
+.invite .btn { display: inline-flex; gap: 6px; align-items: center; }
 .error { border: 1px solid var(--warn); color: var(--warn); padding: 8px 11px; border-radius: 3px; font-size: 14px; }
 .follow textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 56px; border: 1px solid var(--rule); background: var(--card); padding: 8px 10px; border-radius: 4px; font-size: 15px; }
 
@@ -286,6 +311,40 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .pt.lp image { image-rendering: pixelated; }
 .pt.lp.lbl text { fill: var(--c); font-weight: 600; }
 .line.lpath { stroke: var(--c); stroke-width: 2px; vector-effect: non-scaling-stroke; stroke-opacity: .75; }
+
+/* Flow: map controls, the key, focus mode, eras under the slider, deep time folded away. */
+.maphint { background: var(--card); color: var(--ink-soft); text-shadow: none; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--rule); }
+.mapctl { position: absolute; top: 10px; right: calc(10px + env(safe-area-inset-right, 0px)); display: flex; gap: 6px; z-index: 5; }
+.mapctl .btn { font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; padding: 4px 9px; box-shadow: 0 2px 6px rgba(0,0,0,.18); }
+.mapctl .btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.mapctl kbd, .keycard kbd { font-family: var(--mono); font-size: 10px; border: 1px solid var(--rule); border-radius: 3px; padding: 0 4px; margin-left: 5px; opacity: .75; }
+.keycard { position: absolute; top: 44px; right: calc(10px + env(safe-area-inset-right, 0px)); z-index: 5; width: min(300px, calc(100% - 20px)); max-height: calc(100% - 60px); overflow-y: auto;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 8px 22px rgba(0,0,0,.18); padding: 10px 12px; display: grid; gap: 8px; font-size: 13.5px; }
+.keycard h4 { margin: 0; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); font-weight: 400; }
+.keycard .kg { display: grid; gap: 3px; }
+.keycard .kg b { font-weight: 600; color: var(--c); font-size: 13px; }
+.keycard .kr { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: center; line-height: 1.3; }
+.keycard .kr svg { position: static; width: 22px; height: 16px; overflow: visible; cursor: default; }
+.keycard .keys { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 10px; font-size: 12.5px; color: var(--ink-soft); }
+.keycard .keys kbd { margin: 0; justify-self: start; }
+.app.focus { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; grid-template-areas: "map" "time"; }
+.app.focus .top, .app.focus .panel { display: none; }
+.eras { grid-column: 2; position: relative; height: 16px; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+.eras button { all: unset; box-sizing: border-box; position: absolute; top: 0; height: 16px; padding: 1px 3px 0; overflow: hidden; white-space: nowrap; text-overflow: clip; cursor: pointer;
+  color: var(--ink-soft); border-left: 1px solid var(--rule); }
+.eras button:hover, .eras button:focus-visible { color: var(--ink); background: var(--wash); }
+.eras button[aria-current="true"] { color: var(--ink); background: var(--wash); font-weight: 500; }
+.sec details.deep { margin-top: 2px; }
+.sec details.deep summary { cursor: pointer; font-size: 12.5px; color: var(--ink-soft); padding: 3px 6px; list-style: none; }
+.sec details.deep summary::-webkit-details-marker { display: none; }
+.sec details.deep summary::before { content: "+ "; font-family: var(--mono); }
+.sec details.deep[open] summary::before { content: "− "; }
+.sec .items.only-deep { display: none; }
+.app.asking #qbox, .app.asking #go { visibility: hidden; }
+@media (max-width: 860px) { .mapctl kbd { display: none; } .app.focus .map { height: 80vh; } .app.asking #qbox, .app.asking #go { display: none; } }
+@media (max-width: 600px) { .eras button:not([aria-current="true"]) { color: transparent; } .eras button[aria-current="true"] { overflow: visible; z-index: 1; } }
+.map canvas.marks { position: absolute; left: 0; top: 0; pointer-events: none; }
+.maptip { position: absolute; z-index: 5; max-width: 280px; pointer-events: none; background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 8px; font-size: 12.5px; line-height: 1.35; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
 </style>
 
 <div class="app">
@@ -310,6 +369,12 @@ a { color: var(--accent); text-underline-offset: 2px; }
     <div class="yearplate" id="yp"></div>
     <div class="maphint" id="maphint">Click anywhere to see every lens there</div>
     <div class="caption" id="caption" hidden></div>
+    <div class="mapctl" role="toolbar" aria-label="Map controls">
+      <button class="btn" id="surprise" type="button" title="Jump to a random moment worth seeing (S)">Surprise me<kbd>S</kbd></button>
+      <button class="btn" id="keybtn" type="button" aria-pressed="false" aria-controls="keycard" title="What's on the map, and keyboard shortcuts (K)">Key<kbd>K</kbd></button>
+      <button class="btn" id="focusbtn" type="button" aria-pressed="false" title="Map only (F)">Focus<kbd>F</kbd></button>
+    </div>
+    <div class="keycard" id="keycard" hidden></div>
   </section>
 
   <div class="time">
@@ -317,17 +382,31 @@ a { color: var(--accent); text-underline-offset: 2px; }
     <svg class="strip" id="strip" viewBox="0 0 1000 22" preserveAspectRatio="none" aria-hidden="true"></svg>
     <input type="range" id="year" min="0" max="1000" step="1" aria-label="Year">
     <output id="yout"></output>
+    <div class="eras" id="eras" role="group" aria-label="Eras: tap one to jump there"></div>
+    <select class="speed" id="speed" aria-label="Playback speed" title="Playback speed">
+      <optgroup label="Paced by history (slower where it is dense)">
+        <option value="x0.25">¼×</option><option value="x0.5">½×</option><option value="x1" selected>1×</option><option value="x2">2×</option><option value="x5">5×</option><option value="x10">10×</option>
+      </optgroup>
+      <optgroup label="Steady, years per second">
+        <option value="y1">1 yr/s</option><option value="y2">2 yr/s</option><option value="y5">5 yr/s</option><option value="y10">10 yr/s</option><option value="y25">25 yr/s</option><option value="y100">100 yr/s</option>
+      </optgroup>
+    </select>
   </div>
 
   <aside class="panel" id="panel">
     <div class="tabs" role="tablist">
-      <button class="tab" role="tab" data-tab="now" aria-selected="true">This year</button>
+      <button class="tab" role="tab" data-tab="guide" aria-selected="true">Ask</button>
+      <button class="tab" role="tab" data-tab="now" aria-selected="false">This year</button>
       <button class="tab" role="tab" data-tab="here" aria-selected="false">Here</button>
-      <button class="tab" role="tab" data-tab="guide" aria-selected="false">Guide</button>
     </div>
     <div class="pane" id="pane-now"></div>
     <div class="pane" id="pane-here" hidden></div>
     <div class="pane" id="pane-guide" hidden>
+      <form class="askbig" id="ask2">
+        <label for="qbox2" class="kick">Ask the Atlas a question</label>
+        <textarea id="qbox2" rows="2" placeholder="Why did Rome fall but Constantinople last?"></textarea>
+        <div class="row"><button class="btn primary" type="submit">Ask, and let the map answer</button></div>
+      </form>
       <span class="hint" id="askhint"></span>
       <div class="examples" id="examples"></div>
       <div class="answer" id="answer" hidden></div>
@@ -349,8 +428,8 @@ const TOURS = /*__TOURS__*/;
 </script>
 <script>
 // Plugins register here: lenses (views/atlas/lenses/*.js), a basemap, sprites. See views/atlas/LENSES.md.
-window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
-  lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; } };
+window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null,
+  lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); } };
 </script>
 <!--__LENS_SCRIPTS__-->
 <script>
@@ -485,28 +564,93 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   const hashColor = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0; return PALETTE[Math.abs(h) % PALETTE.length]; };
   const SNAPS = Object.keys(POLITIES).map(Number).sort((a, b) => a - b);
   const snapFor = y => { let s = SNAPS[0]; for (const v of SNAPS) if (v <= y) s = v; return s; };
-  const featCache = {};
-  function featuresFor(s) {
-    if (featCache[s]) return featCache[s];
-    const t = POLITIES[s];
-    const fc = topojson.feature(t, Object.values(t.objects)[0]).features;
-    return featCache[s] = fc.map(f => {
-      const p = f.properties || {}, name = (p.NAME || "").trim(), subj = (p.SUBJECTO || "").trim();
-      const emp = EMPIRES.find(e => s >= e.start && s <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj))) || null;
-      return { f, name: name || subj, emp, d: path(f), area: path.area(f), c: path.centroid(f) };
-    }).filter(d => d.d);
+  const featCache = new Map(), FEAT = new WeakMap();
+  // Border timeline (borders-time/ beside the page, ingest/geography/timeline_borders.py from Cliopatria): a frame for
+  // every year a border changed, about 500 from 3400 BCE to 2024. A frame key is "t<year>" once that chunk has loaded,
+  // else "s<snapshot>" for the historical-basemaps snapshots below.
+  const TL = typeof PixelBorders === "function" ? PixelBorders({ base: "borders/", onLoad: () => onBorders() }) : null;
+  ATLAS.borders = TL;
+  const tlFor = y => { const ix = TL && TL.timeline(); return !!ix && y >= ix.years[0]; };
+  const frameOf = y => tlFor(y) && TL.realms(y, 1) ? "t" + TL.snapFor(y) : "s" + snapFor(y);
+  const frameYear = y => +frameOf(y).slice(1);
+  function onBorders() { realmCache = new WeakMap(); realmSnapCache = {}; drawRealmsLayer(true); drawPolys(true); refreshPanel(); renderBasemap(); }
+  // Precise borders (coasts fitted to Natural Earth) load from borders/<level>/world_<year>.json beside the
+  // published page: l0 (5 km) for the map, l1 (1.5 km) for the basemap when zoomed in. Until one arrives,
+  // or if the files are not there, the inline historical-basemaps snapshot stands in.
+  const PRECISE = {}, PRECISE_LV = [["l0", 1], ["l1", 3]];
+  const preciseLevel = k => PRECISE_LV.filter(l => k >= l[1]).pop()[0];
+  function precise(lv, s, then) {
+    const key = lv + ":" + s, have = PRECISE[key];
+    if (have !== undefined) return have instanceof Promise ? null : have;
+    PRECISE[key] = fetch(`borders/${lv}/world_${s < 0 ? "bc" + -s : s}.json`).then(r => r.ok ? r.json() : null).then(t => {
+      PRECISE[key] = t ? Object.values(t.objects).flatMap(o => topojson.feature(t, o).features) : false;
+      if (PRECISE[key] && then) then();
+    }).catch(() => { PRECISE[key] = false; });
+    return null;
   }
-  let curSnap;
+  const onPrecise = s => () => { featCache.delete("s" + s); realmSnapCache = {}; if (frameOf(state.year) === "s" + s) { drawRealmsLayer(true); drawPolys(true); refreshPanel(); renderBasemap(); } };
+  // Realms for the basemap, at the detail its zoom needs: [{id, n, name, subject_of, color, feature, level}].
+  let realmCache = new WeakMap(), realmSnapCache = {};
+  ATLAS.realms = (y, k = 1) => {
+    y = y ?? state.year;
+    const fk = frameOf(y);
+    if (fk[0] === "t") {
+      const rs = TL.realms(y, k) || TL.realms(y, 1);
+      if (realmCache.has(rs)) return realmCache.get(rs);
+      const meta = new Map(featuresFor(fk).map(d => [d.id, d]));
+      const list = rs.map(r => { const d = meta.get(r.id); return { id: r.id, n: r.n, name: d && d.emp ? d.emp.name : r.name, subject_of: null,
+        color: d && d.emp ? d.emp.color : hashColor(r.name || r.id), feature: r.feature, level: "time" }; });
+      realmCache.set(rs, list);
+      return list;
+    }
+    const s = +fk.slice(1), lv = preciseLevel(k), key = lv + ":" + s;
+    if (realmSnapCache[key]) return realmSnapCache[key];
+    let fs = precise(lv, s, onPrecise(s)), level = lv;
+    if (!fs && lv !== "l0") { fs = precise("l0", s, onPrecise(s)); level = "l0"; }
+    const list = fs ? fs.map(f => ({ f, p: f.properties || {} })).map(({ f, p }) => ({ f, p, d: featuresFor(fk).find(x => x.id === p.id) }))
+      .map(({ f, p, d }) => ({ id: p.id, n: p.n, name: d && d.emp ? d.emp.name : p.name, subject_of: p.subject_of, color: d && d.emp ? d.emp.color : hashColor(p.name || p.id || ""), feature: f, level }))
+      : featuresFor(fk).map((d, i) => ({ id: s + ":" + i, name: d.emp ? d.emp.name : d.name, color: d.emp ? d.emp.color : hashColor(d.name || ""), feature: d.f, level: "basemaps" }));
+    if (fs) realmSnapCache[key] = list;
+    return list;
+  };
+  // The states drawn in one frame, with their Living Atlas empire (for its colour and name) and projected shape.
+  function featuresFor(fk) {
+    if (featCache.has(fk)) return featCache.get(fk);
+    const y = +fk.slice(1);
+    let fc;
+    if (fk[0] === "t") fc = (TL.realms(y, 1) || []).map(r => r.feature);
+    else { const t = POLITIES[y]; fc = precise("l0", y, onPrecise(y)) || topojson.feature(t, Object.values(t.objects)[0]).features; }
+    const list = fc.map(f => {
+      // A timeline row is shared by every frame of its years, so its shape is projected once.
+      if (FEAT.has(f)) return FEAT.get(f);
+      const p = f.properties || {}, name = (p.name || p.NAME || "").trim(), subj = (p.subject_of || p.SUBJECTO || "").trim(), at = p.s ?? y;
+      const emp = (p.la && EMPIRES.find(e => e.id === p.la)) || EMPIRES.find(e => at >= e.start && at <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj))) || null;
+      // The SVG outline is only built when a frame is drawn as SVG (no basemap, or a highlighted state).
+      const d = { f, id: p.id, name: name || subj, emp, wiki: p.wiki, s: p.s, e: p.e,
+        get d() { return this._d ?? (this._d = path(f) || ""); },
+        get area() { return this._a ?? (this._a = path.area(f)); }, get c() { return this._c ?? (this._c = path.centroid(f)); } };
+      if (fk[0] === "t") FEAT.set(f, d);
+      return d;
+    }).filter(d => d.f.geometry);
+    // Playing through time visits hundreds of frames; keep the most recent ones.
+    if (featCache.size > 80) featCache.delete(featCache.keys().next().value);
+    featCache.set(fk, list);
+    return list;
+  }
+  let curSnap, curHi = "";
   function drawPolys(force) {
-    const s = state.borders ? snapFor(state.year) : null;
+    const s = state.borders ? frameOf(state.year) : null;
     drawRealmsLayer();
-    if (force || s !== curSnap) {
-      curSnap = s;
-      const list = s == null ? [] : featuresFor(s);
+    // Under the pixel basemap the fills are invisible, so only highlighted states get an SVG outline.
+    const isHi = d => !!d.emp && state.hi.has("polity:" + d.emp.id), onlyHi = !!BASEMAP && !isPolitical();
+    const hiKey = onlyHi ? [...state.hi].join() : "";
+    if (force || s !== curSnap || hiKey !== curHi) {
+      curSnap = s; curHi = hiKey;
+      const list = s == null ? [] : onlyHi ? featuresFor(s).filter(isHi) : featuresFor(s);
       gPoly.selectAll("path").data(list).join("path").attr("class", "poly").attr("d", d => d.d)
         .attr("fill", d => d.emp ? d.emp.color : hashColor(d.name)).classed("emp", d => !!d.emp);
     }
-    gPoly.selectAll("path").classed("hi", d => d.emp && state.hi.has("polity:" + d.emp.id));
+    gPoly.selectAll("path").classed("hi", isHi);
     const best = new Map();
     (s == null ? [] : featuresFor(s)).forEach(d => { if (d.emp && state.hi.has("polity:" + d.emp.id) && (!best.has(d.emp.id) || best.get(d.emp.id).area < d.area)) best.set(d.emp.id, d); });
     gPolyLab.selectAll("text").data([...best.values()], d => d.emp.id).join("text").attr("class", "polylab").text(d => d.emp.name);
@@ -516,7 +660,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   const isPolitical = () => !!(state.political && state.terrain && TERRAIN && RELIEF_POL && window.drawRealms);
   // Paradox-style realms: one flat colour per state, thick borders, the name curved across its largest piece.
   function drawRealmsLayer(force) {
-    const s = isPolitical() && state.borders ? snapFor(state.year) : null;
+    const s = isPolitical() && state.borders ? frameOf(state.year) : null;
     if (!force && s === realmSnap) return;
     realmSnap = s; gRealms.selectAll("*").remove(); realmsT = null;
     if (s == null) return;
@@ -532,7 +676,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     const pol = isPolitical();
     mapEl.classList.toggle("terrain-on", !!(TERRAIN && state.terrain));
     mapEl.classList.toggle("political-map", pol);
-    if (!TERRAIN || !state.terrain) return;
+    // A basemap that paints its own terrain hides this layer, so it is not built at all.
+    if (!TERRAIN || !state.terrain || (BASEMAP && BASEMAP.keepTerrain !== true && !pol)) return;
     if (pol) drawRelief(gRelief, path, RELIEF_POL); else if (RELIEF) drawRelief(gRelief, path, RELIEF);
     terrainT = drawTerrain(gTerrain, projection, path, TERRAIN, state.k, { onSelect: d => {
       const at = d.at || d.line[Math.floor(d.line.length / 2)];
@@ -542,7 +687,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   }
   // The state drawn under a point in the current border snapshot (smallest polygon that contains it).
   function ruledBy(lon, lat, y) {
-    const list = featuresFor(snapFor(y)); const whole = path.area({ type: "Sphere" }) * 0.4;
+    const list = featuresFor(frameOf(y)); const whole = path.area({ type: "Sphere" }) * 0.4;
     let best = null;
     for (const d of list) if (d.area < whole && d3.geoContains(d.f, [lon, lat]) && (!best || d.area < best.area)) best = d;
     return best;
@@ -560,7 +705,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   // Each zoom frame only moves the root group; labels hide while the scale changes and the
   // counter-scaling, thinning and label layout run once per frame at most, the rest when it settles.
   let zoomK0 = 1, zoomRaf = 0, drawnK = 1;
-  const zoomFrame = () => { zoomRaf = 0; svg.style("--k", state.k); placeScaled(); };
+  const zoomFrame = () => { zoomRaf = 0; svg.style("--k", state.k); placeScaled(); paintMarks(); };
   const zoom = d3.zoom().scaleExtent([1, 80]).on("start", ev => { zoomK0 = ev.transform.k; }).on("zoom", ev => {
     root.attr("transform", ev.transform);
     state.k = ev.transform.k;
@@ -568,9 +713,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     if (!zoomRaf) zoomRaf = requestAnimationFrame(zoomFrame);
     if (BASEMAP && BASEMAP.move) try { BASEMAP.move(ev.transform); } catch (err) { console.error(err); }
   });
+  const viewWatch = [];  // plugin tabs listening for pans and zooms (ATLAS.api.onView)
   zoom.on("end", () => {
     mapEl.classList.remove("moving");
-    if (Math.abs(Math.log(state.k / drawnK)) > 0.15) { drawnK = state.k; drawPeople(); drawWar(); drawLenses(); }
+    for (const fn of viewWatch) try { fn(); } catch (err) { console.error(err); }
+    if (Math.abs(Math.log(state.k / drawnK)) > 0.15) { drawnK = state.k; drawPeople(); drawWar(); drawLenses(); marksChanged(); }
+    paintMarks();
     if (terrainT) terrainT.update(state.k); if (realmsT) realmsT.update(state.k);
     renderBasemap();
   });
@@ -587,6 +735,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     gGrat.attr("d", path(d3.geoGraticule10()));
     gLand.attr("d", path(land));
     for (const k in featCache) delete featCache[k];
+    projV++;
     zoom.translateExtent([[-W, -H], [W * 2, H * 2]]);
     drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(true); drawOverlay(); drawSel(); renderBasemap();
     if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had); svg.call(zoom.transform, d3.zoomIdentity.translate(W / 2 - t0.k * x, H / 2 - t0.k * y).scale(t0.k)); }
@@ -607,151 +756,385 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     if (sx < 30 || sy < 30 || sx > W - 30 || sy > H - 30) flyTo({ lon, lat, zoom: Math.max(t.k, 2) }, 900);
   }
 
-  // ---------- layers ----------
-  const onClickSel = fn => function (ev, d) { ev.stopPropagation(); select(fn(d)); };
-  function points(g, cls, data, key, build) {
-    return g.selectAll(`g.${cls.split(" ")[0]}`).data(data, key).join(enter => {
-      const e = enter.append("g").attr("class", "pt " + cls);
-      build(e); e.append("title");
-      return e;
+  // ---------- layers: every lens mark is a record on one canvas ----------
+  // Each draw* function rebuilds its layer's list of plain records for the year; paintMarks() projects, culls and paints
+  // them all in one pass (no DOM per mark), and markAt() answers clicks and hovers. Records (shared with a basemap that
+  // paints marks itself, see ATLAS.marks):
+  //   point {lon, lat, kind, shape, color, pri, hi, ghost, size, fade, label, always, sprite, title, card}
+  //   line  {pts, color, kind, dash, arrow, ghost, width, alpha, label, title, card}
+  // card is a function returning the card to select; title is a function for the hover tip.
+  const MK = {};
+  const LAYER_ORDER = ["order", "money", "ideas", "disease", "war", ...PLUG.map(d => "lens:" + d.id), "places", "people"];
+  for (const k of LAYER_ORDER) MK[k] = { points: [], lines: [] };
+  const marksCv = document.createElement("canvas");
+  marksCv.className = "marks";
+  mapEl.insertBefore(marksCv, svg.node());
+  const mctx = marksCv.getContext("2d");
+  const tipEl = document.createElement("div");
+  tipEl.className = "maptip"; tipEl.hidden = true; mapEl.appendChild(tipEl);
+  let projV = 0;  // bumps when the projection changes (resize), so cached projected positions and outlines refresh
+  // Colours come from the page's CSS variables, read once per theme.
+  let colorCache = {};
+  const rootStyle = () => getComputedStyle(document.documentElement);
+  const cssColor = c => {
+    if (!c || c[0] !== "v") return c || "#888";
+    if (colorCache[c]) return colorCache[c];
+    const m = /var\((--[\w-]+)(?:,\s*([^)]+))?\)/.exec(c);
+    const v = m ? rootStyle().getPropertyValue(m[1]).trim() || (m[2] ? cssColor(m[2].trim()) : "") : "";
+    return colorCache[c] = v || "#888";
+  };
+  const onTheme = () => { colorCache = {}; paintMarks(); };
+  if (document.fonts) document.fonts.addEventListener("loadingdone", () => paintSoon());
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  const posCache = new WeakMap();
+  // Projected (unzoomed) position of a record, cached on its source object when it has one.
+  function proj(r) {
+    const src = r.src;
+    if (src) { const c = posCache.get(src); if (c && c.v === projV) return c.p; }
+    const p = projection([r.lon, r.lat]);
+    if (src) posCache.set(src, { v: projV, p });
+    return p;
+  }
+  const lineCache = new WeakMap();
+  function linePath(pts) {
+    const c = lineCache.get(pts);
+    if (c && c.v === projV) return c;
+    const s = path({ type: "LineString", coordinates: pts }), p = new Path2D(s || "");
+    // The last projected segment, for the arrowhead.
+    const a = projection(pts[pts.length - 2]), b = projection(pts[pts.length - 1]), m = projection(pts[Math.floor(pts.length / 2)]);
+    const out = { v: projV, p, a, b, m };
+    lineCache.set(pts, out);
+    return out;
+  }
+  const spriteImg = {};
+  function spriteOf(name) {
+    if (!name) return null;
+    if (spriteImg[name] !== undefined) return spriteImg[name];
+    const sp = ATLAS.sprites[name], f = sp && (sp.href || (Array.isArray(sp.frames) && typeof sp.frames[0] === "string" && sp.frames[0].startsWith("data:") ? sp.frames[0] : null));
+    if (!f || !sp.w || !sp.h) return spriteImg[name] = null;
+    const img = new Image(); img.onload = () => paintMarks(); img.src = f;
+    return spriteImg[name] = { img, w: sp.w, h: sp.h, ax: sp.ax ?? sp.w / 2, ay: sp.ay ?? sp.h };
+  }
+  const SHAPE_PATH = {
+    circle: (c, r) => { c.arc(0, 0, r, 0, 2 * Math.PI); },
+    square: (c, r) => { c.rect(-r * .875, -r * .875, r * 1.75, r * 1.75); },
+    diamond: (c, r) => { const q = r * 1.125; c.moveTo(0, -q); c.lineTo(q, 0); c.lineTo(0, q); c.lineTo(-q, 0); c.closePath(); },
+    cross: (c, r) => { c.moveTo(-r, -r); c.lineTo(r, r); c.moveTo(r, -r); c.lineTo(-r, r); },
+    triangle: (c, r) => { c.moveTo(0, -r * 1.25); c.lineTo(r * 1.125, r * .875); c.lineTo(-r * 1.125, r * .875); c.closePath(); },
+    hourglass: (c, r) => { c.moveTo(-4, -5); c.lineTo(4, -5); c.lineTo(0, 0); c.lineTo(4, 5); c.lineTo(-4, 5); c.lineTo(0, 0); c.closePath(); },
+  };
+  // How each kind looks: fill, stroke, label font and colour, label offset. Mirrors the old SVG styles.
+  const KIND = {
+    city: { lbl: [7, 4] }, person: { lbl: [6, -4] }, hub: { lbl: [8, 4], bold: 1 }, shock: { lbl: [8, 14], italic: 1 }, reached: {},
+    school: { lbl: [7, 10] }, work: { lbl: [7, -3] }, stop: { lbl: [7, 4] }, order: { lbl: [0, 0], center: 1, display: 1 },
+    broke: { lbl: [7, 4], mono: 1 }, battle: { lbl: [7, -4], bold: 1 }, choke: { lbl: [7, 4], italic: 1 }, lens: { lbl: [7, 4], bold: 1 },
+  };
+  const FONT = {
+    serif: getComputedStyle(document.body).fontFamily || "Spectral, Georgia, serif",
+    display: '"IM Fell English SC", "IM Fell English", Georgia, serif', fell: '"IM Fell English", Georgia, serif', mono: '"IBM Plex Mono", ui-monospace, monospace',
+    pixel: '"Pixelify Sans", "Silkscreen", ui-monospace, monospace',
+  };
+  function paintShape(c, r, alphaF) {
+    const col = cssColor(r.color), paper = cssColor("var(--paper)");
+    const sz = r.size || 4, shape = r.shape || "circle";
+    c.globalAlpha = alphaF;
+    if (r.kind === "battle") {
+      c.beginPath(); c.arc(0, 0, 6, 0, 2 * Math.PI); c.fillStyle = paper; c.globalAlpha = alphaF * .7; c.fill(); c.globalAlpha = alphaF;
+      c.beginPath(); SHAPE_PATH.cross(c, 4.5); c.strokeStyle = col; c.lineWidth = 2.2; c.lineCap = "round"; c.stroke(); return;
+    }
+    if (r.kind === "broke") { c.beginPath(); SHAPE_PATH.cross(c, 5); c.strokeStyle = col; c.lineWidth = 2.4; c.lineCap = "round"; c.stroke(); return; }
+    if (r.kind === "shock") {
+      c.beginPath(); c.arc(0, 0, sz, 0, 2 * Math.PI); c.strokeStyle = col; c.lineWidth = 2; if (r.dash) c.setLineDash(r.dash); c.stroke(); c.setLineDash([]);
+      c.beginPath(); c.arc(0, 0, 2.5, 0, 2 * Math.PI); c.fillStyle = col; c.fill(); return;
+    }
+    if (r.kind === "order") {
+      c.beginPath(); c.arc(0, 0, sz, 0, 2 * Math.PI); c.fillStyle = col; c.globalAlpha = alphaF * (r.hi ? .3 : .18); c.fill();
+      c.globalAlpha = alphaF; c.strokeStyle = col; c.lineWidth = r.hi ? 2 : 1.3; c.stroke(); return;
+    }
+    if (r.kind === "school") { c.beginPath(); SHAPE_PATH.square(c, 4); c.strokeStyle = col; c.lineWidth = 1.4; c.stroke(); return; }
+    if (r.kind === "stop") { c.beginPath(); c.arc(0, 0, 3.2, 0, 2 * Math.PI); c.fillStyle = r.hi ? col : paper; c.fill(); c.strokeStyle = col; c.lineWidth = 1.8; c.stroke(); return; }
+    if (r.kind === "city" && r.hi) {
+      c.beginPath(); c.arc(0, 0, 9, 0, 2 * Math.PI); c.strokeStyle = cssColor("var(--warn)"); c.lineWidth = 1.6; c.stroke();
+    }
+    if (shape === "cross") { c.beginPath(); SHAPE_PATH.cross(c, sz); c.strokeStyle = col; c.lineWidth = r.heavy ? 3 : 2.2; c.lineCap = "round"; c.stroke(); return; }
+    c.beginPath(); (SHAPE_PATH[shape] || SHAPE_PATH.circle)(c, sz);
+    c.fillStyle = col; c.globalAlpha = alphaF * (r.ghost ? .25 : r.fill ?? .85); c.fill(); c.globalAlpha = alphaF;
+    if (r.ghost) { c.strokeStyle = col; c.lineWidth = 1.4; c.setLineDash([3, 2]); c.stroke(); c.setLineDash([]); }
+    else if (r.stroke !== false) { c.strokeStyle = r.hi ? cssColor("var(--ink)") : paper; c.lineWidth = r.hi ? 1.4 : .8; c.stroke(); }
+  }
+  // Labels: highest priority first, each placed only where it does not overlap one already placed.
+  function placeLabels(c, labels, W, H) {
+    labels.sort((a, b) => b.pri - a.pri);
+    const boxes = [], cell = 64, grid = new Map();
+    const hits = (x0, y0, x1, y1) => {
+      for (let gx = Math.floor(x0 / cell); gx <= Math.floor(x1 / cell); gx++) for (let gy = Math.floor(y0 / cell); gy <= Math.floor(y1 / cell); gy++) {
+        const g = grid.get(gx * 4096 + gy); if (g) for (const b of g) if (x0 < b[2] && x1 > b[0] && y0 < b[3] && y1 > b[1]) return true;
+      }
+      return false;
+    };
+    const add = b => { for (let gx = Math.floor(b[0] / cell); gx <= Math.floor(b[2] / cell); gx++) for (let gy = Math.floor(b[1] / cell); gy <= Math.floor(b[3] / cell); gy++) { const k = gx * 4096 + gy; if (!grid.has(k)) grid.set(k, []); grid.get(k).push(b); } };
+    c.lineJoin = "round";
+    for (const L of labels) {
+      c.font = L.font;
+      const w = c.measureText(L.text).width, h = L.px;
+      const x0 = L.center ? L.x - w / 2 : L.x, y1 = L.y + h * .25, y0 = y1 - h;
+      if (x0 > W || x0 + w < 0 || y1 < 0 || y0 > H) continue;
+      if (!L.force && hits(x0 - 1, y0, x0 + w + 1, y1)) continue;
+      const b = [x0 - 1, y0, x0 + w + 1, y1]; boxes.push(b); add(b);
+      c.globalAlpha = L.alpha;
+      c.textAlign = L.center ? "center" : "left";
+      c.strokeStyle = L.halo; c.lineWidth = L.haloW; c.strokeText(L.text, L.x, L.y);
+      c.fillStyle = L.fill; c.fillText(L.text, L.x, L.y);
+    }
+    c.globalAlpha = 1; c.textAlign = "left";
+    return boxes.length;
+  }
+  let paintRaf = 0, lastPaint = { labels: [] };
+  const paintSoon = () => { if (!paintRaf) paintRaf = requestAnimationFrame(() => { paintRaf = 0; paintMarks(); }); };
+  // Paint every layer's records for the current zoom transform.
+  function paintMarks() {
+    cancelAnimationFrame(paintRaf); paintRaf = 0;
+    const dpr = window.devicePixelRatio || 1, Wc = Math.round(W * dpr), Hc = Math.round(H * dpr);
+    if (marksCv.width !== Wc || marksCv.height !== Hc) { marksCv.width = Wc; marksCv.height = Hc; marksCv.style.width = W + "px"; marksCv.style.height = H + "px"; }
+    const c = mctx, t = d3.zoomTransform(svg.node()), k = t.k;
+    c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, Wc, Hc);
+    const selfPaint = !!(BASEMAP && BASEMAP.paintsMarks), hideKinds = (BASEMAP && BASEMAP.hideMarks) || [];
+    const pixel = !!BASEMAP, moving = mapEl.classList.contains("moving"), zoomed = k >= 4;
+    const paper = cssColor("var(--paper)"), soft = cssColor("var(--ink-soft)"), ink = cssColor("var(--ink)");
+    const labels = [];
+    // Lines first (all layers), in world coordinates through the zoom transform.
+    if (!selfPaint) {
+      c.setTransform(dpr * k, 0, 0, dpr * k, dpr * t.x, dpr * t.y);
+      c.lineCap = "round"; c.lineJoin = "round";
+      for (const key of LAYER_ORDER) for (const l of MK[key].lines) {
+        const lp = linePath(l.pts);
+        c.globalAlpha = l.alpha ?? .75; c.strokeStyle = cssColor(l.color); c.lineWidth = (l.width || 2) / k;
+        c.setLineDash(l.dash ? l.dash.map(v => v / k) : []);
+        c.stroke(lp.p);
+        if (l.arrow && lp.a && lp.b) {
+          const ang = Math.atan2(lp.b[1] - lp.a[1], lp.b[0] - lp.a[0]), s = 3.6 * (l.width || 2) / k;
+          c.setLineDash([]); c.beginPath(); c.moveTo(lp.b[0] + Math.cos(ang) * s * .4, lp.b[1] + Math.sin(ang) * s * .4);
+          c.lineTo(lp.b[0] - Math.cos(ang - .5) * s, lp.b[1] - Math.sin(ang - .5) * s); c.lineTo(lp.b[0] - Math.cos(ang + .5) * s, lp.b[1] - Math.sin(ang + .5) * s);
+          c.closePath(); c.fillStyle = c.strokeStyle; c.fill();
+        }
+      }
+      c.setLineDash([]); c.globalAlpha = 1;
+    }
+    // Points, in screen pixels (they keep their size while the map zooms).
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    for (const key of LAYER_ORDER) {
+      const L = MK[key];
+      if (!moving) for (const l of L.lines) if (l.label) {
+        const lp = linePath(l.pts); if (!lp.m) continue;
+        labels.push({ text: l.label, x: lp.m[0] * k + t.x + 4, y: lp.m[1] * k + t.y - 5, px: 12, font: `italic 12px ${pixel ? FONT.pixel : FONT.fell}`, fill: cssColor(l.color), halo: paper, haloW: 3, alpha: 1, pri: 3 });
+      }
+      for (const r of L.points) {
+        const p = proj(r); if (!p) continue;
+        const x = p[0] * k + t.x, y = p[1] * k + t.y;
+        r._x = x; r._y = y;
+        if (x < -40 || y < -40 || x > W + 40 || y > H + 40) continue;
+        const a = r.fade ?? 1;
+        if (!selfPaint && !hideKinds.includes(r.kind)) {
+          const img = r.sprite && spriteOf(r.sprite);
+          c.setTransform(dpr, 0, 0, dpr, dpr * x, dpr * y);
+          if (img && img.img.complete && img.img.naturalWidth) { c.imageSmoothingEnabled = false; c.globalAlpha = a; c.drawImage(img.img, -img.ax * 3, -img.ay * 3, img.w * 3, img.h * 3); }
+          else paintShape(c, r, a);
+        }
+        if (moving || !r.label) continue;
+        const show = r.hi || r.always || (r.lbl && zoomed);
+        if (!show) continue;
+        const K = KIND[r.kind] || KIND.lens, off = r.lblAt || K.lbl || [7, 4];
+        const big = r.kind === "city" && r.hi, pxs = r.fontPx || (big ? 13.5 : 11);
+        const fam = pixel ? FONT.pixel : K.display ? FONT.display : K.mono ? FONT.mono : FONT.serif;
+        const onArt = pixel && (r.kind === "city" || r.kind === "battle");
+        labels.push({
+          text: r.label, x: x + off[0], y: y + (r.lblDy ?? off[1]), center: K.center, px: pxs, alpha: Math.max(.35, a),
+          font: `${!pixel && (K.italic || r.ghost) ? "italic " : ""}${big || K.bold || onArt ? 600 : 400} ${pxs}px ${fam}`,
+          fill: onArt ? "#f6f0dc" : big ? ink : r.lblColor ? cssColor(r.lblColor) : K.bold || K.italic || K.mono || r.kind === "stop" ? cssColor(r.color) : r.kind === "order" ? ink : soft,
+          halo: onArt ? "#221f1a" : paper, haloW: 3, pri: (r.hi ? 100 : 0) + (r.always ? 20 : 0) + (r.pri || 0), force: r.hi,
+        });
+      }
+    }
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    placeLabels(c, labels, W, H);
+    lastPaint = { labels };
+  }
+  // Which record is under a screen point: points first (top layer down), then lines within 5 px.
+  function markAt(sx, sy) {
+    const t = d3.zoomTransform(svg.node());
+    for (let i = LAYER_ORDER.length - 1; i >= 0; i--) {
+      const pts = MK[LAYER_ORDER[i]].points;
+      for (let j = pts.length - 1; j >= 0; j--) {
+        const r = pts[j]; if (r._x == null || !r.card) continue;
+        const rad = Math.max(6, (r.size || 4) + 3);
+        if (Math.abs(r._x - sx) <= rad && Math.abs(r._y - sy) <= rad && Math.hypot(r._x - sx, r._y - sy) <= rad) return r;
+      }
+    }
+    const [wx, wy] = t.invert([sx, sy]), tol = 5 / t.k;
+    for (let i = LAYER_ORDER.length - 1; i >= 0; i--) for (const l of MK[LAYER_ORDER[i]].lines) {
+      if (!l.card) continue;
+      let prev = null;
+      for (const q of l.pts) {
+        const p = projection(q); if (!p) { prev = null; continue; }
+        if (prev) {
+          const dx = p[0] - prev[0], dy = p[1] - prev[1], L2 = dx * dx + dy * dy, u = L2 ? Math.max(0, Math.min(1, ((wx - prev[0]) * dx + (wy - prev[1]) * dy) / L2)) : 0;
+          if (Math.hypot(prev[0] + u * dx - wx, prev[1] + u * dy - wy) <= tol) return l;
+        }
+        prev = p;
+      }
+    }
+    return null;
+  }
+  // The selection and the guide's pins and routes stay SVG on the page; a basemap that paints marks gets them as records too.
+  let overlayMarks = { points: [], lines: [] };
+  ATLAS.marks = () => {
+    const points = [], lines = [];
+    for (const k of LAYER_ORDER) { points.push(...MK[k].points); lines.push(...MK[k].lines); }
+    points.push(...overlayMarks.points); lines.push(...overlayMarks.lines);
+    const s = state.sel;
+    if (s) { points.push({ lon: s.lon, lat: s.lat, kind: "sel", color: "var(--ink)" }); lines.push({ kind: "ring", color: "var(--ink)", pts: d3.geoCircle().center([s.lon, s.lat]).radius(R_KM / 111.2)().coordinates[0] }); }
+    return { points, lines, labels: lastPaint.labels, year: state.year };
+  };
+  const markWatch = [];
+  ATLAS.onMarks = fn => { if (typeof fn === "function") markWatch.push(fn); };
+  const marksChanged = () => { for (const fn of markWatch) try { fn(ATLAS.marks()); } catch (err) { console.error(err); } };
+  // Hover: a tip with the record's title, and a pointer cursor over anything clickable.
+  let hoverRaf = 0, hoverEv = null;
+  svg.on("mousemove.marks", ev => {
+    hoverEv = ev;
+    if (hoverRaf) return;
+    hoverRaf = requestAnimationFrame(() => {
+      hoverRaf = 0; if (mapEl.classList.contains("moving")) return;
+      const [sx, sy] = d3.pointer(hoverEv, svg.node()), r = markAt(sx, sy);
+      svg.style("cursor", r ? "pointer" : null);
+      const tt = r && (typeof r.title === "function" ? r.title() : r.title);
+      if (!tt) { tipEl.hidden = true; return; }
+      tipEl.textContent = tt; tipEl.hidden = false;
+      tipEl.style.left = Math.min(W - 10, sx + 14) + "px"; tipEl.style.top = (sy + 16) + "px";
     });
-  }
-  function lines(g, cls, data, key) {
-    return g.selectAll(`path.${cls.split(" ")[0]}`).data(data, key).join("path").attr("class", "line " + cls).attr("d", d => path({ type: "LineString", coordinates: d.pts }));
-  }
-  const lab = (g, data, key, color) => g.selectAll("text.linelab").data(data, key).join("text").attr("class", "linelab")
-    .style("fill", color).text(d => d.name).each(d => { const m = projection(d.pts[Math.floor(d.pts.length / 2)]) || [0, 0]; d.lx = m[0] + 4; d.ly = m[1] - 5; });
+  }).on("mouseleave.marks", () => { tipEl.hidden = true; });
 
+  const P = (src, o) => Object.assign({ src, lon: src.lon, lat: src.lat }, o);
+  const cardFn = (fn, d) => () => fn(d);
   function drawPlaces() {
-    const y = state.year, g = G.places;
+    const y = state.year, out = MK.places.points = [];
     const list = state.on.places ? ENTRIES.filter(e => alive(e, y) || state.hi.has("place:" + e.id)) : ENTRIES.filter(e => state.hi.has("place:" + e.id));
-    const sel = points(g, "city lbl", list, d => d.id, e => { e.append("circle").attr("class", "ring").attr("r", 9); e.append("circle").attr("class", "dot"); e.append("text").attr("x", 7).attr("y", 4); })
-      .classed("wonder", d => d.layer === "wonders").classed("hi", d => state.hi.has("place:" + d.id)).on("click", onClickSel(cityCard));
-    sel.select(".dot").attr("r", d => { const p = popAt(d, y); return p ? Math.max(2.6, Math.min(10, Math.sqrt(p) / 100)) : 2.6; });
-    sel.select("text").text(d => nameAt(d, y));
-    sel.select("title").text(d => { const p = popAt(d, y); return `${nameAt(d, y)}${p ? ` · about ${fmtN(p)} people` : ""}`; });
-    sel.filter(".hi").raise();
+    for (const e of list) {
+      const p = popAt(e, y), hi = state.hi.has("place:" + e.id), wonder = e.layer === "wonders";
+      out.push(P(e, { kind: "city", shape: "circle", color: wonder ? "var(--y-money)" : "var(--y-places)", fill: hi ? 1 : .55, hi, lbl: true,
+        size: p ? Math.max(2.6, Math.min(10, Math.sqrt(p) / 100)) : 2.6, label: nameAt(e, y), pri: 6 + (p ? Math.log10(p) : 0),
+        title: () => `${nameAt(e, y)}${p ? ` · about ${fmtN(p)} people` : ""}`, card: cardFn(cityCard, e) }));
+    }
+    out.sort((a, b) => a.hi - b.hi);
   }
   function drawPeople() {
-    const y = state.year, g = G.people;
+    const y = state.year, out = MK.people.points = [];
     const n = Math.min(450, Math.round(14 + 22 * Math.pow(state.k, 1.25)));
     const list = state.on.people ? PPL.filter(p => adult(p, y)).slice(0, n) : [];
-    const sel = points(g, "person lbl", list, d => d.i, e => { e.append("circle"); e.append("text").attr("x", 6).attr("y", -4); })
-      .classed("top", (d, i) => i < 6).on("click", onClickSel(personCard));
-    sel.select("circle").attr("r", d => 2 + Math.max(0, d.hpi - 60) / 9);
-    sel.select("text").text(d => d.name);
-    sel.select("title").text(d => `${d.name} · ${d.occ} · ${fmtSpan(d.b, d.d)} · born ${d.place}`);
-    placeScaled();
+    list.forEach((d, i) => out.push(P(d, { kind: "person", shape: "circle", color: "var(--y-people)", fill: .8, size: 2 + Math.max(0, d.hpi - 60) / 9,
+      label: d.name, lbl: true, always: i < 6, pri: d.hpi / 20, title: () => `${d.name} · ${d.occ} · ${fmtSpan(d.b, d.d)} · born ${d.place}`, card: cardFn(personCard, d) })));
   }
   function drawMoney() {
-    const y = state.year, g = G.money, on = state.on.money;
+    const y = state.year, on = state.on.money, L = MK.money;
     const tr = on ? TRADE.filter(t => y >= t.start && y <= t.end) : [];
     const mg = on ? MIGS.filter(m => y >= m.start && y <= m.end) : [];
     const hb = on ? HUBS.filter(h => y >= h.start && y <= h.end) : [];
-    lines(g, "trade", tr, d => d.id).on("click", onClickSel(tradeCard)).selectAll("title").data(d => [d]).join("title").text(d => d.name);
-    g.selectAll("path.trade").raise();
-    lines(g, "mig", mg, d => d.id).classed("forced", d => d.forced).attr("marker-end", "url(#arrow)").on("click", onClickSel(migCard))
-      .selectAll("title").data(d => [d]).join("title").text(d => d.name);
-    lab(g, [...tr, ...mg], d => d.id, d => d.start != null && MIGS.includes(d) ? "var(--y-people)" : "var(--y-money)");
-    const s = points(g, "hub lbl always", hb, d => d.name, e => { e.append("rect").attr("x", -4).attr("y", -4).attr("width", 8).attr("height", 8).attr("transform", "rotate(45)"); e.append("text").attr("x", 8).attr("y", 4); })
-      .on("click", onClickSel(hubCard));
-    s.select("text").text(d => d.name.replace(/ \(.*\)/, ""));
-    s.select("title").text(d => `${d.name} · trade hub ${fmtSpan(d.start, d.end)}`);
+    L.lines = [
+      ...mg.map(d => ({ src: d, pts: d.pts, kind: "mig", color: d.forced ? "var(--warn)" : "var(--y-people)", width: 2, dash: [5, 4], dashed: !!d.forced, alpha: .8, arrow: true, label: d.name, title: () => d.name, card: cardFn(migCard, d) })),
+      ...tr.map(d => ({ src: d, pts: d.pts, kind: "trade", color: "var(--y-money)", width: 2, alpha: .75, label: d.name, title: () => d.name, card: cardFn(tradeCard, d) })),
+    ];
+    L.points = hb.map(d => P(d, { kind: "hub", shape: "diamond", size: 5, fill: 1, color: "var(--y-money)", label: d.name.replace(/ \(.*\)/, ""), always: true, pri: 8,
+      title: () => `${d.name} · trade hub ${fmtSpan(d.start, d.end)}`, card: cardFn(hubCard, d) }));
   }
   function drawDisease() {
-    const y = state.year, g = G.disease, on = state.on.disease;
+    const y = state.year, on = state.on.disease, L = MK.disease;
     const ev = on ? SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 2 && y <= (e.end ?? NOW) + 8) : [];
-    const s = points(g, "shock", ev, d => d.id, e => { e.append("circle").attr("class", "halo"); e.append("circle").attr("class", "core").attr("r", 2.5); e.append("text").attr("x", 8).attr("y", 14); })
-      .attr("class", d => "pt shock " + d.subtype).style("--sc", d => SHOCK_C[d.subtype] || "var(--y-disease)").on("click", onClickSel(shockCard));
-    s.select(".halo").attr("r", d => d.deaths ? 5 + Math.max(0, Math.log10(d.deaths[1]) - 3) * 2.6 : 7);
-    s.select("text").text(d => d.name);
-    s.select("title").text(d => `${d.name} · ${SHOCK_N[d.subtype] || d.subtype} · ${fmtSpan(d.start, d.end)}`);
+    L.points = ev.map(d => P(d, { kind: "shock", color: SHOCK_C[d.subtype] || "var(--y-disease)", size: d.deaths ? 5 + Math.max(0, Math.log10(d.deaths[1]) - 3) * 2.6 : 7,
+      dash: d.subtype === "famine" ? [3, 2] : null, famine: d.subtype === "famine", label: d.name, always: true, pri: 9, title: () => `${d.name} · ${SHOCK_N[d.subtype] || d.subtype} · ${fmtSpan(d.start, d.end)}`, card: cardFn(shockCard, d) }));
     // The Black Death month by month, from the Plague & Climate workstream.
     const bdOn = on && y >= 1338 && y <= 1365;
-    const routes = bdOn ? BD.filter(r => r.year <= y) : [];
-    lines(g, "bd", routes, d => d.from + d.to).on("click", onClickSel(() => shockCard(SHOCKS.find(e => e.id === "event:black_death"))));
-    const reached = bdOn ? Object.entries(ARRIVE).filter(([id, a]) => a.y <= y && PL[id]).map(([id, a]) => ({ id, ...a, lon: PL[id].lon, lat: PL[id].lat, name: PL[id].name })) : [];
-    const r = points(g, "reached", reached, d => d.id, e => { e.append("circle").attr("r", 2.6); e.append("text").attr("x", 5).attr("y", 3); }).on("click", onClickSel(d => ({ lon: d.lon, lat: d.lat, name: d.name })));
-    r.select("text").text(d => d.name);
-    r.select("title").text(d => `${d.name} · plague arrives ${MONTHS[(d.m || 1) - 1]} ${d.y}`);
+    const bd = () => shockCard(SHOCKS.find(e => e.id === "event:black_death"));
+    L.lines = (bdOn ? BD.filter(r => r.year <= y) : []).map(d => ({ src: d, pts: d.pts, kind: "bd", color: "var(--y-disease)", width: 1.6, alpha: .7, card: bd }));
+    const reached = bdOn ? Object.entries(ARRIVE).filter(([id, a]) => a.y <= y && PL[id]) : [];
+    for (const [id, a] of reached) {
+      const pl = PL[id];
+      L.points.push(P(pl, { kind: "reached", shape: "circle", size: 2.6, fill: 1, color: "var(--y-disease)", title: () => `${pl.name} · plague arrives ${MONTHS[(a.m || 1) - 1]} ${a.y}`,
+        card: () => ({ lon: pl.lon, lat: pl.lat, name: pl.name }) }));
+    }
   }
   function drawIdeas() {
-    const y = state.year, g = G.ideas, on = state.on.ideas;
+    const y = state.year, on = state.on.ideas, L = MK.ideas;
     const legs = [], stops = [];
     if (on) for (const j of JOURNEYS) {
       if (y < j.y0 || y > j.y1 + 150) continue;
       const vis = j.steps.filter(s => s.y <= y && y - s.y < 400);
       const last = vis[vis.length - 1];
       vis.forEach(s => {
-        if (s.from && (s.from.lon !== s.at.lon || s.from.lat !== s.at.lat)) legs.push({ id: j.id + s.i, j, s, pts: [[s.from.lon, s.from.lat], [s.at.lon, s.at.lat]], fresh: y - s.y < 40 });
-        stops.push({ id: j.id + s.i, j, s, lon: s.at.lon, lat: s.at.lat, now: s === last && y - s.y < 60 });
+        const go = () => journeyCard(j, s);
+        if (s.from && (s.from.lon !== s.at.lon || s.from.lat !== s.at.lat)) {
+          const fresh = y - s.y < 40;
+          s._pts = s._pts || [[s.from.lon, s.from.lat], [s.at.lon, s.at.lat]];
+          legs.push({ src: s, pts: s._pts, kind: "leg", color: "var(--y-ideas)", width: fresh ? 2.6 : 1.8, alpha: fresh ? 1 : .55, arrow: fresh, title: () => `${j.n}: ${s.text}`, card: go });
+        }
+        const now = s === last && y - s.y < 60;
+        stops.push(P(s.at, { kind: "stop", color: "var(--y-ideas)", hi: now, label: now ? j.n : s.at.name, lbl: true, always: now, pri: now ? 9 : 2,
+          title: () => `${j.n} · ${s.at.name}, ${fmtYear(s.y)}`, card: go }));
       });
     }
-    lines(g, "leg", legs, d => d.id).classed("fresh", d => d.fresh).attr("marker-end", d => d.fresh ? "url(#arrow)" : null).on("click", onClickSel(d => journeyCard(d.j, d.s)))
-      .selectAll("title").data(d => [d]).join("title").text(d => `${d.j.n}: ${d.s.text}`);
-    g.selectAll("text.linelab").remove();
+    L.lines = legs;
     const sc = on ? SCHOOLS.filter(x => y >= x.s && (x.e == null || y <= x.e)) : [];
-    const ss = points(g, "school lbl", sc, d => d.id, e => { e.append("rect").attr("x", -3.5).attr("y", -3.5).attr("width", 7).attr("height", 7); e.append("text").attr("x", 7).attr("y", 10); }).on("click", onClickSel(ideaCard));
-    ss.select("text").text(d => d.n); ss.select("title").text(d => `${d.n} · ${d.sub} · ${fmtSpan(d.s, d.e)}`);
     const wk = on ? WORKS.filter(w => w.s <= y && w.s > y - 100) : [];
-    const ws = points(g, "work lbl", wk, d => d.id, e => { e.append("path").attr("d", "M0-4.5L4.5 0 0 4.5-4.5 0z"); e.append("text").attr("x", 7).attr("y", -3); }).on("click", onClickSel(workCard));
-    ws.select("text").text(d => d.n); ws.select("title").text(d => `${d.n} · written ${fmtYear(d.s)}`);
-    const st = points(g, "stop lbl", stops, d => d.id, e => { e.append("circle").attr("r", 3.2); e.append("text").attr("x", 7).attr("y", 4); })
-      .classed("now", d => d.now).on("click", onClickSel(d => journeyCard(d.j, d.s)));
-    st.select("text").text(d => d.now ? d.j.n : d.s.at.name); st.select("title").text(d => `${d.j.n} · ${d.s.at.name}, ${fmtYear(d.s.y)}`);
-    st.filter(".now").raise();
+    L.points = [
+      ...sc.map(d => P(d, { kind: "school", label: d.n, lbl: true, color: "var(--y-ideas)", pri: 4, title: () => `${d.n} · ${d.sub} · ${fmtSpan(d.s, d.e)}`, card: cardFn(ideaCard, d) })),
+      ...wk.map(d => P(d, { kind: "work", shape: "diamond", size: 4, fill: .7, stroke: false, color: "var(--y-ideas)", label: d.n, lbl: true, pri: 3, title: () => `${d.n} · written ${fmtYear(d.s)}`, card: cardFn(workCard, d) })),
+      ...stops.sort((a, b) => a.hi - b.hi),
+    ];
   }
   function drawOrder() {
-    const y = state.year, g = G.order, on = state.on.order;
+    const y = state.year, on = state.on.order, L = MK.order;
     const list = on ? POLS.filter(p => polAlive(p, y)) : [];
     list.forEach(p => { p._a = areaAt(p, y); p._f = fragAt(p, y); p._b = band(p._f); });
     list.sort((a, b) => b._a - a._a);
-    const s = points(g, "order lbl", list, d => d.id, e => { e.append("circle"); e.append("text").attr("text-anchor", "middle"); })
-      .attr("class", (d, i) => `pt order lbl ${d._b}${i < 8 ? " big" : ""}`).style("--bc", d => `var(--b-${d._b === "none" ? "calm" : d._b})`).on("click", onClickSel(polityCard));
-    s.select("circle").attr("r", d => 3 + Math.sqrt(d._a) * 7);
-    s.select("text").attr("y", d => -(5 + Math.sqrt(d._a) * 7)).style("font-size", d => 10 + Math.min(4, Math.sqrt(d._a) * 2) + "px").text(d => d.n);
-    s.select("title").text(d => `${d.n} · ${d._b === "none" ? "no score yet" : d._b + ", " + Math.round(d._f * 100) + "% risk of breaking within 25 years"}`);
+    L.points = list.map((d, i) => {
+      const r = 3 + Math.sqrt(d._a) * 7;
+      return P(d, { kind: "order", color: `var(--b-${d._b === "none" ? "calm" : d._b})`, hi: d._b === "critical", critical: d._b === "critical", size: r, label: d.n, lbl: true, always: i < 8, pri: 10 - i / 10,
+        lblDy: -(5 + r), fontPx: 10 + Math.min(4, Math.sqrt(d._a) * 2),
+        title: () => `${d.n} · ${d._b === "none" ? "no score yet" : d._b + ", " + Math.round(d._f * 100) + "% risk of breaking within 50 years"}`, card: cardFn(polityCard, d) });
+    });
     const broke = on ? POLS.filter(p => p.b && p.e <= y && p.e > y - 20) : [];
-    const b = points(g, "broke lbl", broke, d => d.id, e => { e.append("path").attr("d", "M-5-5L5 5M5-5L-5 5"); e.append("text").attr("x", 7).attr("y", 4); }).on("click", onClickSel(polityCard));
-    b.select("text").text(d => `${d.n} breaks`); b.select("title").text(d => `${d.n} ended ${fmtYear(d.e)} without a successor (${d.st})`);
+    for (const d of broke) L.points.push(P(d, { kind: "broke", color: "var(--b-critical)", label: `${d.n} breaks`, lbl: true, pri: 7, title: () => `${d.n} ended ${fmtYear(d.e)} without a successor (${d.st})`, card: cardFn(polityCard, d) }));
   }
   function drawWar() {
-    const y = state.year, g = G.war, on = state.on.war;
+    const y = state.year, on = state.on.war, L = MK.war;
     // Curated battles linger 12 years; Wikidata ones show for their own year and two either side, thinned by zoom.
     const cap = Math.round(40 * Math.pow(state.k, 1.3));
     const bs = on ? [...battlesNear(y, 12).filter(b => b.cur), ...battlesNear(y, 2).filter(b => !b.cur).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y) || (b.parts || "").length - (a.parts || "").length).slice(0, cap)] : [];
-    const s = points(g, "battle lbl", bs, d => d.id, e => { e.append("circle").attr("r", 6); e.append("path").attr("d", "M-4.5-4.5L4.5 4.5M4.5-4.5L-4.5 4.5"); e.append("text").attr("x", 7).attr("y", -4); })
-      .classed("always", d => d.cur && Math.abs(d.start - y) <= 2).style("opacity", d => 1 - Math.abs(d.start - y) / 16).on("click", onClickSel(battleCard));
-    s.select("text").text(d => d.name.replace(/^(Battle|Siege|Sack) of /, ""));
-    s.select("title").text(d => `${d.name} · ${fmtYear(d.start)}${d.war ? " · " + d.war : ""} · ${sideNames(d).join(" vs ")}`);
-    const cs = on ? CHOKES : [];
-    const c = points(g, "choke lbl", cs, d => d.id, e => { e.append("path").attr("d", "M-4-5L4-5 0 0 4 5-4 5 0 0z"); e.append("text").attr("x", 7).attr("y", 4); }).on("click", onClickSel(chokeCard));
-    c.select("text").text(d => d.name);
-    c.select("title").text(d => { const h = holderAt(d.id, y); return `${d.name} · ${h.length ? "held by " + h.join(", ") : "no state holds it"} in ${fmtYear(y)}`; });
+    L.points = bs.map(d => P(d, { kind: "battle", color: "var(--y-war)", size: 6, label: d.name.replace(/^(Battle|Siege|Sack) of /, ""), lbl: true, always: d.cur && Math.abs(d.start - y) <= 2,
+      fade: 1 - Math.abs(d.start - y) / 16, pri: d.cur ? 8 : 2, title: () => `${d.name} · ${fmtYear(d.start)}${d.war ? " · " + d.war : ""} · ${sideNames(d).join(" vs ")}`, card: cardFn(battleCard, d) }));
+    if (on) for (const d of CHOKES) L.points.push(P(d, { kind: "choke", shape: "hourglass", color: "var(--y-war)", fill: 1, label: d.name, lbl: true, pri: 5,
+      title: () => { const h = holderAt(d.id, state.year); return `${d.name} · ${h.length ? "held by " + h.join(", ") : "no state holds it"} in ${fmtYear(state.year)}`; }, card: cardFn(chokeCard, d) }));
   }
   // ---------- plugin lenses and basemap ----------
-  const SHAPES = {
-    circle: e => e.append("circle").attr("r", 4),
-    square: e => e.append("rect").attr("x", -3.5).attr("y", -3.5).attr("width", 7).attr("height", 7),
-    diamond: e => e.append("path").attr("d", "M0-4.5L4.5 0 0 4.5-4.5 0z"),
-    cross: e => e.append("path").attr("class", "x").attr("d", "M-4-4L4 4M4-4L-4 4"),
-    triangle: e => e.append("path").attr("d", "M0-5L4.5 3.5-4.5 3.5z"),
-  };
-  // Sprites are drawn 3 screen pixels per art pixel, anchored at (ax, ay).
-  function spriteEl(e, name) {
-    const sp = ATLAS.sprites[name], f = sp && (sp.href || (Array.isArray(sp.frames) && typeof sp.frames[0] === "string" && sp.frames[0].startsWith("data:") ? sp.frames[0] : null));
-    if (!f || !sp.w || !sp.h) return false;
-    e.append("image").attr("href", f).attr("width", sp.w * 3).attr("height", sp.h * 3).attr("x", -(sp.ax ?? sp.w / 2) * 3).attr("y", -(sp.ay ?? sp.h) * 3);
-    return true;
-  }
   const lensCard = (d, c, at) => ({ lon: at ? at.lon : undefined, lat: at ? at.lat : undefined, name: null, ...c, kind: "lens:" + d.id, c: `var(--y-${d.id})`, kick: c.kick || d.name,
     sources: (c.sources || []).map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c || x.url, url: x.url || x.u }) });
   const lensGo = (d, c, at) => () => { const card = lensCard(d, c, at); if (isFinite(card.lon) && isFinite(card.lat)) select(card, { fly: !at, setYear: card.year != null && !at }); else if (card.year != null) animateYear(card.year); };
   const lensItem = (d, r, at) => item(`<b>${esc(r.title)}</b>${r.tag ? ` <span class="tag">${esc(r.tag)}</span>` : ""}`, typeof r.year === "number" ? fmtYear(r.year) : r.year ?? "", r.why || "",
-    r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim);
+    r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim || (typeof r.year === "number" && Math.abs(r.year - state.year) > 150));
+  // What ctx.pins and ctx.paths return: enough of a d3 selection for the calls lenses chain on it (style("--c", ...)).
+  function markSel(recs) {
+    const s = {
+      style(name, v) { if (name === "--c") for (const r of recs) r.color = typeof v === "function" ? v(r.x) : v; return s; },
+      classed(cls, on) { if (cls === "ghost") for (const r of recs) r.ghost = typeof on === "function" ? !!on(r.x) : !!on; return s; },
+      attr() { return s; }, on() { return s; }, text() { return s; }, raise() { return s; }, select() { return s; }, selectAll() { return s; }, filter() { return s; },
+      each(fn) { recs.forEach((r, i) => fn.call(null, r.x, i)); return s; }, size: () => recs.length, nodes: () => [], empty: () => !recs.length,
+    };
+    return s;
+  }
+  // Confidence grammar for lines (house rule 5): documented is solid, likely is dashed, legend or unknown route is dotted.
+  const CONF_DASH = { sure: null, likely: [6, 4], legend: [1.5, 4.5] };
   function lensCtx(d) {
-    const g = G["lens:" + d.id]; let n = 0;
-    const sub = () => { const id = "s" + n++; let s = g.select(`g[data-s="${id}"]`); if (s.empty()) s = g.append("g").attr("data-s", id); return s; };
+    const g = G["lens:" + d.id], L = MK["lens:" + d.id];
     const ok = x => x && isFinite(x.lon) && isFinite(x.lat);
     return {
       data: (typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}, year: state.year, k: state.k, g, d3, projection, path, km, fmtYear, fmtSpan,
@@ -759,31 +1142,38 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
       ruledBy: (lon, lat, y) => { const r = ruledBy(lon, lat, y ?? state.year); return r ? (r.emp ? r.emp.name : r.name) : null; },
       near: (list, at, r) => nearby(list.filter(ok), at.lon, at.lat, r ?? at.r ?? R_KM).map(o => o.x),
       pins(list, o = {}) {
-        const key = o.key || (x => x.id), lb = o.label, tt = o.title || lb;
-        const sel = points(sub(), "lp" + (lb ? " lbl" : "") + (o.always ? " always" : "") + (o.cls ? " " + o.cls : ""), list.filter(ok), key, e => {
-          if (!spriteEl(e, o.shape)) (SHAPES[o.shape] || SHAPES.circle)(e);
-          if (lb) e.append("text").attr("x", 7).attr("y", 4);
-        }).style("--c", `var(--y-${d.id})`);
-        if (lb) sel.select("text").text(x => lb(x));
-        if (tt) sel.select("title").text(x => tt(x));
-        if (o.card) sel.on("click", onClickSel(x => lensCard(d, o.card(x))));
-        return sel;
+        const lb = o.label, tt = o.title || lb, cls = " " + (o.cls || "") + " ";
+        const color = o.color || `var(--y-${d.id})`, ghost = cls.includes(" ghost "), always = !!o.always || cls.includes(" always ");
+        // Per-record options take a value or a function of the record: shape (a shape or sprite name), color, size, fade (0-1), always, hi, pri, fill, stroke,
+        // fontPx, lblColor, lblAt ([dx, dy] of the label).
+        const per = (v, x) => typeof v === "function" ? v(x) : v;
+        const recs = list.filter(ok).map(x => {
+          const shp = per(o.shape, x), sprite = shp && !SHAPE_PATH[shp] ? shp : null, al = o.always != null ? !!per(o.always, x) : always;
+          const r = { src: x, x, lon: x.lon, lat: x.lat, kind: "lens", lens: d.id, shape: SHAPE_PATH[shp] ? shp : "circle", sprite, color: o.color ? per(o.color, x) : color, ghost: o.ghost != null ? !!per(o.ghost, x) : ghost, always: al, lbl: !!lb, heavy: cls.includes(" wf-hit "),
+            label: lb ? lb(x) : null, pri: o.pri != null ? per(o.pri, x) : al ? 7 : 3, title: tt ? () => tt(x) : null, card: o.card ? () => lensCard(d, o.card(x)) : null };
+          for (const f of ["size", "fade", "hi", "fill", "stroke", "fontPx", "lblColor", "lblAt"]) if (o[f] != null) r[f] = per(o[f], x);
+          return r;
+        });
+        L.points.push(...recs);
+        return markSel(recs);
       },
       paths(list, o = {}) {
-        const key = o.key || (x => x.id), co = o.coords || (x => x.pts);
-        const rows = list.map(x => ({ x, id: key(x), pts: co(x) })).filter(r => Array.isArray(r.pts) && r.pts.length > 1);
-        const sel = lines(sub(), "lpath" + (o.cls ? " " + o.cls : ""), rows, r => r.id).style("--c", `var(--y-${d.id})`);
-        if (o.title) sel.selectAll("title").data(r => [r]).join("title").text(r => o.title(r.x));
-        if (o.card) sel.on("click", onClickSel(r => lensCard(d, { line: r.pts, lon: r.pts[Math.floor(r.pts.length / 2)][0], lat: r.pts[Math.floor(r.pts.length / 2)][1], ...o.card(r.x) })));
-        return sel;
+        const key = o.key || (x => x.id), co = o.coords || (x => x.pts), cls = " " + (o.cls || "") + " ", ghost = cls.includes(" ghost ");
+        const recs = list.map(x => ({ x, id: key(x), pts: co(x) })).filter(r => Array.isArray(r.pts) && r.pts.length > 1).map(r => ({
+          src: r.x, x: r.x, pts: r.pts, kind: "lens", lens: d.id, color: o.color || `var(--y-${d.id})`, ghost, width: o.width ?? (ghost ? 2.4 : 2), alpha: o.alpha ?? (ghost ? .9 : .75),
+          dash: o.dash !== undefined ? o.dash : CONF_DASH[o.conf] !== undefined ? CONF_DASH[o.conf] : ghost ? [7, 5] : null, arrow: !!o.arrow, conf: o.conf || null,
+          title: o.title ? () => o.title(r.x) : null,
+          card: o.card ? () => lensCard(d, { line: r.pts, lon: r.pts[Math.floor(r.pts.length / 2)][0], lat: r.pts[Math.floor(r.pts.length / 2)][1], ...o.card(r.x) }) : null }));
+        L.lines.push(...recs);
+        return markSel(recs);
       },
-      _end() { g.selectAll(":scope > g[data-s]").filter(function () { return +this.dataset.s.slice(1) >= n; }).remove(); },
+      _end() {},
     };
   }
   function drawLenses() {
     for (const d of PLUG) {
-      const g = G["lens:" + d.id];
-      if (!state.on[d.id] || typeof d.draw !== "function") { g.selectAll("*").remove(); continue; }
+      const L = MK["lens:" + d.id]; L.points = []; L.lines = [];
+      if (!state.on[d.id] || typeof d.draw !== "function") { G["lens:" + d.id].selectAll("*").remove(); continue; }
       try { const c = lensCtx(d); d.draw(c); c._end(); } catch (err) { console.error("lens " + d.id, err); }
     }
   }
@@ -801,7 +1191,18 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   function renderBasemap() {
     if (!BASEMAP || !BASEMAP.render) return;
     bmYear = state.year;
+    const t0 = performance.now();
     try { BASEMAP.render(d3.zoomTransform(svg.node()), state.year); } catch (err) { console.error("basemap", err); }
+    bmCost = bmCost * 0.6 + (performance.now() - t0) * 0.4;
+  }
+  // Year changes (slider, play) re-render the basemap in the same frame while that is cheap (a cached border frame,
+  // same view); when renders turn heavy (a new frame or view), at most every 120 ms.
+  let bmTimer = 0, bmLast = 0, bmCost = 0;
+  function renderBasemapSoon() {
+    if (bmCost < 6 && !bmTimer) return renderBasemap();
+    if (bmTimer) return;
+    const wait = Math.max(0, 120 - (performance.now() - bmLast));
+    bmTimer = setTimeout(() => { bmTimer = 0; bmLast = performance.now(); if (bmYear !== state.year) renderBasemap(); }, wait);
   }
   function setBasemap() {
     const want = state.basemap ? BASEMAP0 : null;
@@ -815,7 +1216,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
 
   let rafAll = 0;
   function drawAll(now) {
-    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); if (BASEMAP && bmYear !== state.year) renderBasemap(); };
+    const run = () => { rafAll = 0; drawPolys(); drawOrder(); drawMoney(); drawIdeas(); drawDisease(); drawWar(); drawLenses(); drawPlaces(); drawPeople(); placeScaled(); paintMarks(); marksChanged(); if (BASEMAP && bmYear !== state.year) renderBasemapSoon(); };
     if (now) { cancelAnimationFrame(rafAll); run(); } else if (!rafAll) rafAll = requestAnimationFrame(run);
   }
 
@@ -824,6 +1225,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     const s = state.sel;
     gSelRing.attr("d", s ? path(d3.geoCircle().center([s.lon, s.lat]).radius(R_KM / 111.2)()) : null);
     const d = s ? [s] : [];
+    marksChanged();
     gSel.selectAll("g.sel").data(d).join(e => { const g = e.append("g").attr("class", "pt sel"); g.append("circle").attr("class", "pulse").attr("r", 8); g.append("circle").attr("r", 4); return g; });
     placeScaled();
   }
@@ -839,6 +1241,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     renderHere();
   }
   svg.on("click", ev => {
+    const [sx, sy] = d3.pointer(ev, svg.node()), hit = markAt(sx, sy);
+    if (hit) { const c = hit.card(); if (c) return select(c); }
     const [mx, my] = d3.pointer(ev, root.node());
     const ll = projection.invert([mx, my]);
     if (!ll || !isFinite(ll[0])) return;
@@ -966,7 +1370,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   const sourceRow = (s, live) => `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite || s.url)}</a>` : esc(s.cite)}${live ? '<span class="unchecked">unchecked</span>' : ""}</li>`;
   const srcList = (arr, live) => arr && arr.length ? `<ul class="srcs">${arr.map(s => sourceRow(s, live)).join("")}</ul>` : "";
   const item = (title, y, w, fn, dim) => `<button class="it${dim ? " dim" : ""}" data-a="${act(fn)}"><span>${title}</span><span class="y">${esc(y ?? "")}</span>${w ? `<span class="w">${esc(w)}</span>` : ""}</button>`;
-  const sec = (layer, title, items, n) => items.length ? `<div class="sec${state.on[layer] === false ? " off" : ""}" style="--c:var(--y-${layer})"><h3><i></i>${esc(title)}${n != null ? `<span class="n">${esc(n)}</span>` : ""}</h3><div class="items">${items.join("")}</div></div>` : "";
+  // Rows from this time lead; rows from other centuries (faded) fold into "other times" so the present reads first.
+  const sec = (layer, title, items, n) => {
+    if (!items.length) return "";
+    const now = items.filter(x => !x.startsWith('<button class="it dim')), deep = items.filter(x => x.startsWith('<button class="it dim'));
+    return `<div class="sec${state.on[layer] === false ? " off" : ""}" style="--c:var(--y-${layer})"><h3><i></i>${esc(title)}${n != null ? `<span class="n">${esc(n)}</span>` : ""}</h3><div class="items${now.length ? "" : " only-deep"}">${now.join("")}</div>${deep.length ? `<details class="deep"><summary>${deep.length} from other times</summary><div class="items">${deep.join("")}</div></details>` : ""}</div>`;
+  };
   const goCard = (c, setYear) => () => { select(c, { fly: true, setYear }); };
   const nearby = (list, lon, lat, r) => list.map(x => ({ x, d: km([lon, lat], [x.lon, x.lat]) })).filter(o => o.d <= r).sort((a, b) => a.d - b.d);
   const nearLine = (pts, lon, lat) => d3.min(pts, p => km([lon, lat], p));
@@ -1023,7 +1432,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
       ${footHTML()}`;
   }
   function footHTML() {
-    return `<p class="foot">One map, seven workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Borders and Battles (curated battles plus about 11,000 from Wikidata, chokepoints and their holders from Cliopatria borders); terrain basemap (relief, rivers, named ranges, deserts and seas); Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
+    return `<p class="foot">One map, seven workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); a border for every year one changed, about 500 frames from 3400 BCE to 2024, from Seshat Cliopatria (CC BY 4.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Borders and Battles (curated battles plus about 11,000 from Wikidata, chokepoints and their holders from Cliopatria borders); terrain basemap (relief, rivers, named ranges, deserts and seas); Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
   }
 
   // ---------- Here ----------
@@ -1097,7 +1506,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     const P = fam => lensRows(fam, "here", at);
     el.innerHTML = `
       <div><p class="kick">Here, in ${esc(fmtYear(y))}</p><h2 class="ttl">${esc(name)}</h2>
-      ${rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(snapFor(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(snapFor(y)))} border map</p>`}</div>
+      ${rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(frameYear(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(frameYear(y)))} border map</p>`}</div>
       ${cardHTML(s)}
       ${rb && rb.emp ? `<div class="focus" style="--c:${rb.emp.color}"><span class="fk">Empire</span><span class="ft">${esc(rb.emp.name)}</span><span class="sub">${esc(fmtSpan(rb.emp.start, rb.emp.end))}${rb.emp.peak ? ` · peak ${rb.emp.peak[1]} million km² in ${esc(fmtYear(rb.emp.peak[0]))}` : ""}</span><p>${esc(rb.emp.what || "")}</p>${rb.emp.why ? `<p class="why">${esc(rb.emp.why)}</p>` : ""}</div>` : ""}
       ${sec("places", "The place", cityItems)}${P("land")}
@@ -1107,7 +1516,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
       ${sec("war", "War & chokepoints", wItems)}${P("power")}
       ${sec("disease", "Plague & climate", dItems)}${P("shocks")}
       ${sec("ideas", "Ideas & faith", iItems)}${P("mind")}
-      <p class="note">Within about ${R_KM} km of the marked spot (people: born within 60 km). Faded rows belong to other centuries; tap one to jump there.</p>
+      <p class="note">Within about ${R_KM} km of the marked spot (people: born within 60 km). Rows from other centuries fold under "from other times"; tap one to jump there.</p>
       <div class="row"><button class="btn primary" data-a="${act(() => askAbout({ title: name, year: y, here: true }))}">Ask the guide about ${esc(name)} in ${esc(fmtYear(y))}</button></div>`;
   }
 
@@ -1115,8 +1524,19 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   function setTab(t) {
     state.tab = t;
     document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === t));
-    for (const k of ["now", "here", "guide"]) document.getElementById("pane-" + k).hidden = k !== t;
+    for (const k of ["now", "here", "guide", ...TABS.map(d => d.id)]) document.getElementById("pane-" + k).hidden = k !== t;
     if (t === "now") renderNow(); else if (t === "here") renderHere();
+    // One question box at a time: the header box steps aside (keeping its space, so the map does not jump) while the Ask tab, with its big box, is open.
+    document.querySelector(".app").classList.toggle("asking", t === "guide");
+    const pt = TABS.find(d => d.id === t); if (pt && pt.show) try { pt.show(); } catch (err) { console.error("tab " + t, err); }
+  }
+  // Plugin tabs (ATLAS.tab) sit after Here, each with its own pane; mount() runs once the page is up.
+  const TABS = ATLAS.tabs.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !["now", "here", "guide"].includes(d.id) && a.findIndex(x => x && x.id === d.id) === i);
+  for (const d of TABS) {
+    const b = document.createElement("button"); b.className = "tab"; b.setAttribute("role", "tab"); b.dataset.tab = d.id; b.setAttribute("aria-selected", "false"); b.textContent = d.name || d.id;
+    document.querySelector(".tabs").appendChild(b);
+    const el = document.createElement("div"); el.className = "pane"; el.id = "pane-" + d.id; el.hidden = true;
+    document.getElementById("panel").appendChild(el);
   }
   document.querySelectorAll(".tab").forEach(b => b.onclick = () => setTab(b.dataset.tab));
   let panelTimer;
@@ -1151,7 +1571,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     }
     mapEl.classList.toggle("war-on", state.on.war);
   }
-  function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); }
+  ATLAS.isOn = k => isOn(k);
+  // A lens toggle also re-renders the basemap so anything it draws for a lens (sprites) follows the chip.
+  function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); renderBasemap(); }
   // Tap a family: open its lenses below, and switch the family on or off. Tap a lens: just that one.
   layersEl.addEventListener("click", ev => {
     const b = ev.target.closest(".chip"); if (!b) return;
@@ -1169,6 +1591,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
 
   // ---------- year ----------
   const yearIn = document.getElementById("year"), yout = document.getElementById("yout"), yp = document.getElementById("yp");
+  const yearWatch = [];  // plugin tabs listening for year changes (ATLAS.api.onYear)
   function setYear(y) {
     y = clampYear(y);
     if (y === state.year && yout.textContent) return;
@@ -1177,6 +1600,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     yout.textContent = fmtYear(y);
     yp.textContent = fmtYear(y);
     drawAll(); refreshPanel();
+    for (const fn of yearWatch) try { fn(y); } catch (err) { console.error(err); }
   }
   let yearAnim;
   function animateYear(to, ms = 1100) {
@@ -1192,15 +1616,24 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   const playBtn = document.getElementById("playyear");
   let timeRaf = 0, lastT = 0;
   function stopTime() { cancelAnimationFrame(timeRaf); timeRaf = 0; playBtn.textContent = "▶"; playBtn.setAttribute("aria-label", "Play through time"); }
+  // Speed: "x<m>" keeps the history-paced curve (about 40 s for all of history at 1x, slower where it is dense),
+  // "y<n>" plays a steady n years per second, so a decade or a century can be watched closely.
+  const speedEl = document.getElementById("speed");
+  let speed = speedEl.value, yearF = 0;
+  speedEl.addEventListener("change", () => { speed = speedEl.value; yearF = state.year; try { localStorage.setItem("atlas.speed", speed); } catch (e) {} });
+  try { const v = localStorage.getItem("atlas.speed"); if (v && [...speedEl.options].some(o => o.value === v)) speedEl.value = speed = v; } catch (e) {}
   playBtn.onclick = () => {
     if (timeRaf) return stopTime();
     if (state.year >= NOW - 1) setYear(MIN);
     playBtn.textContent = "❚❚"; playBtn.setAttribute("aria-label", "Pause");
-    lastT = performance.now();
+    lastT = performance.now(); yearF = state.year;
+    let tF = yearToT(state.year);
     const tick = now => {
-      const t = Math.min(1, yearToT(state.year) + (now - lastT) / 40000); lastT = now;
-      let ny = tToYear(t); if (ny <= state.year) ny = state.year + 1;
-      setYear(ny);
+      const dt = Math.min(100, now - lastT); lastT = now;
+      const v = +speed.slice(1);
+      if (speed[0] === "y") yearF += v * dt / 1000;
+      else { tF = Math.max(tF, yearToT(yearF)) + v * dt / 40000; yearF = NOW - SPAN * Math.pow(Math.max(0, 1 - tF), CURVE); }
+      if (Math.floor(yearF) > state.year) setYear(Math.floor(yearF));
       if (state.year >= NOW) return stopTime();
       timeRaf = requestAnimationFrame(tick);
     };
@@ -1247,6 +1680,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     ).classed("cut", d => d.style === "cut").style("--rc", col).attr("d", d => path({ type: "LineString", coordinates: d.pts }));
     gRoutes.selectAll("text").data(rs, d => d.i + d.label).join("text").attr("class", "routelab").text(d => d.label || "");
     const ps = (overlay.pins || []).filter(p => isFinite(p.lon) && isFinite(p.lat));
+    overlayMarks = { points: ps.map(p => ({ lon: p.lon, lat: p.lat, kind: "pin", color: "var(--ink)", label: p.name })),
+      lines: rs.map(r => ({ pts: r.pts, kind: "route", color: col(r), dashed: r.style === "cut", arrow: true })) };
+    marksChanged();
     gPins.selectAll("g.pin").data(ps, d => d.name + d.lon).join(enter => {
       const g = enter.append("g").attr("class", "pt pin");
       g.append("circle").attr("r", 4.5);
@@ -1260,7 +1696,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     if (!s) { caption.hidden = true; return; }
     caption.hidden = false;
     caption.style.setProperty("--lc", lensColor(s.lens));
-    caption.innerHTML = `<span class="lens">${esc(LENS_NAME[s.lens] || s.lens || "")}${s.year != null ? " · " + esc(fmtYear(clampYear(s.year))) : ""}</span><b>${esc(s.title || s.q || "")}</b>`;
+    caption.innerHTML = `<span class="lens">${esc(s.by && SPEC[s.by] ? SPEC[s.by].name : LENS_NAME[s.lens] || s.lens || "")}${s.year != null ? " · " + esc(fmtYear(clampYear(s.year))) : ""}</span><b>${esc(s.title || s.q || "")}</b>`;
   }
   // The guide's one tool: set the year, the view, the lenses and the highlights together.
   function applyScene(s) {
@@ -1275,6 +1711,30 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   }
 
   // ---------- guide answers ----------
+  // The panel: who is at the table, what each was asked, who is speaking. Curated tours get one from their steps' lenses.
+  function panelHtml(A, steps) {
+    const ids = A.panel && A.panel.length ? A.panel : [...new Set(steps.map(s => specOf(s).id))];
+    if (!ids.length) return "";
+    const st = A.status || {};
+    const label = { waiting: "up next", speaking: "speaking", done: "done", missed: "lost the thread", skipped: "didn't get a turn" };
+    return `<div class="sec"><h3 style="border:0;padding:0">The panel</h3><div class="pnl">${ids.map(id => { const sp = SPEC[id]; const s = st[id] || (A.live ? "" : "done"); return `
+      <div class="who ${s}" style="--c:${specColor(sp)}"><i class="dot"></i><span class="nm">${esc(sp.name)}</span><span class="stt">${esc(label[s] || "")}</span>${A.plan && A.plan.angles[id] ? `<span class="ang">${esc(A.plan.angles[id])}</span>` : ""}</div>`; }).join("")}</div></div>`;
+  }
+  function speakerHtml(A, s) {
+    const sp = specOf(s), prev = A.panel ? A.panel[A.panel.indexOf(sp.id) - 1] : null;
+    return `<div class="spk" style="--c:${specColor(sp)}"><b>${esc(sp.name)}</b>${A.passes && A.passes[sp.id] ? `<span>asks the panel: ${esc(A.passes[sp.id])}</span>` : ""}</div>`;
+  }
+  // A link scene: both steps' evidence on the map at once, framed to hold them both.
+  function applyLink(a, b, why) {
+    const vs = [a.view, b.view].filter(Boolean);
+    let view = b.view || a.view;
+    if (vs.length === 2) {
+      const lon = (vs[0].lon + vs[1].lon) / 2, lat = (vs[0].lat + vs[1].lat) / 2;
+      view = { lon, lat, span: Math.min(300, Math.max(vs[0].span || 30, vs[1].span || 30, Math.abs(vs[0].lon - vs[1].lon) * 1.6, Math.abs(vs[0].lat - vs[1].lat) * 2.4)) };
+    }
+    applyScene({ lens: b.lens, by: b.by, title: why, year: b.year, view, layers: [LENS_LAYER[a.lens], ...(a.layers || []), ...(b.layers || [])],
+      highlight: [...(a.highlight || []), ...(b.highlight || [])], pins: [...(a.pins || []), ...(b.pins || [])], routes: [...(a.routes || []), ...(b.routes || [])] });
+  }
   const answerEl = document.getElementById("answer");
   function renderAnswer() {
     const A = state.answer; if (!A) { answerEl.hidden = true; return; }
@@ -1287,19 +1747,22 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
       <div class="sec">
         <h2 class="q">${esc(A.question)}</h2>
         <div><span class="badge">${live ? "Live AI draft · sources unchecked" : "Curated draft · sources listed, judge pending"}</span> <button class="btn" id="newq" style="float:right">New question</button></div>
-        ${A.short ? `<p class="short">${esc(A.short)}</p>` : ""}
+        ${A.short ? `<p class="short">${esc(A.short)}</p>` : A.frame ? `<p class="short frame">${esc(A.frame)}</p>` : ""}
         <div class="status" ${A.loading ? "" : "hidden"}><span class="dot"></span><span>${esc(A.loading || "")}</span></div>
         ${A.error ? `<div class="error">${esc(A.error)}</div>` : ""}
       </div>
+      ${panelHtml(A, steps)}
       ${lensVals.length ? `<div class="sec"><h3 style="border:0;padding:0">How much each lens explains · tap to mute</h3><div class="meter">${lensVals.map(([l, v]) =>
         `<button class="mrow${state.muted.has(l) ? " off" : ""}" data-lens="${l}" style="--c:${lensColor(l)}" aria-pressed="${!state.muted.has(l)}"><span class="name">${esc(LENS_NAME[l])}</span><span class="bar"><i style="width:${Math.round(Math.min(1, v) * 100)}%"></i></span><span class="n">${Math.round(Math.min(1, v) * 100)}</span></button>`).join("")}</div></div>` : ""}
       ${steps.length ? `<div class="sec">
         <div class="player"><button class="btn" id="prev" aria-label="Previous step">◀</button><button class="btn primary" id="play">${state.playing ? "Pause" : "Play tour"}</button><button class="btn" id="next" aria-label="Next step">▶</button><span class="count" id="count"></span><span class="prog" id="prog"></span></div>
-        <div class="steps">${steps.map((s, i) => `
+        <div class="steps">${steps.map((s, i) => `${i === 0 || specOf(steps[i - 1]) !== specOf(s) ? speakerHtml(A, s) : ""}
           <div class="step${i === state.active ? " on" : ""}${state.muted.has(s.lens) ? " muted" : ""}" style="--c:${lensColor(s.lens)}" data-i="${i}">
             <button aria-expanded="${i === state.active}"><span class="i">${String(i + 1).padStart(2, "0")}</span><span class="t">${esc(s.title)}</span><span class="y">${s.year != null ? esc(fmtYear(clampYear(s.year))) : ""}</span><span class="ln">${esc(LENS_NAME[s.lens] || s.lens || "")}</span></button>
             <div class="body"><p>${esc(s.text)}</p>${s.confidence != null ? `<span class="conf">confidence ${Math.round(Number(s.confidence) * 100)}%</span>` : ""}${srcList(s.sources, live)}</div>
           </div>`).join("")}</div></div>` : ""}
+      ${(A.links || []).length ? `<div class="sec"><h3 style="border:0;padding:0">How the lenses connect</h3><div class="links">${A.links.map((k, i) => { const a = steps[k.a], b = steps[k.b]; return `
+        <button class="link" data-k="${i}" style="--ca:${lensColor(a.lens)};--cb:${lensColor(b.lens)}"><span class="ends"><span class="e a">${String(k.a + 1).padStart(2, "0")} ${esc(a.title)}</span><span class="arr" aria-hidden="true">→</span><span class="e b">${String(k.b + 1).padStart(2, "0")} ${esc(b.title)}</span></span><span class="why">${esc(k.why)}</span></button>`; }).join("")}</div></div>` : ""}
       ${(A.views || []).length ? `<div class="sec"><h3 style="border:0;padding:0">Competing explanations</h3>${A.views.map(v => `
         <div class="view"><div class="hd"><span class="nm">${esc(v.name)}</span><span class="sch">${esc(v.school || "")}</span><span class="st ${esc(v.strength || "")}">${esc(v.strength || "")}</span></div>
           <div>${esc(v.claim)}</div>
@@ -1307,6 +1770,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
       ${(A.whatifs || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What if · simulated, speculative</h3>${A.whatifs.map((w, i) => `
         <button class="whatif" data-w="${i}"><b>${esc(w.q)}</b><span>${esc(w.a)}</span>${w.confidence != null ? `<span class="conf">plausibility ${Math.round(Number(w.confidence) * 100)}%</span>` : ""}</button>`).join("")}</div>` : ""}
       ${(A.unknowns || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What we don't know</h3><ul class="unk">${A.unknowns.map(u => `<li>${esc(u)}</li>`).join("")}</ul></div>` : ""}
+      ${A.live && !A.loading && A.plan ? `<div class="sec"><h3 style="border:0;padding:0">Hear from another specialist</h3><div class="invite">${SPECS.filter(sp => !A.panel.includes(sp.id)).map(sp => `<button class="btn" data-sp="${sp.id}" style="--c:${specColor(sp)}"><i class="dot"></i>${esc(sp.name)}</button>`).join("")}</div></div>` : ""}
       ${!A.loading ? `<form class="follow" id="follow"><textarea id="fbox" rows="2" placeholder="Ask a follow-up" aria-label="Follow-up question"></textarea><div class="row"><button class="btn" type="submit">Follow up</button></div></form>` : ""}`;
     updatePlayer();
   }
@@ -1315,12 +1779,16 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     if (st) { stopPlay(); const i = +st.parentElement.dataset.i; activate(i === state.active ? -1 : i); return; }
     const m = ev.target.closest(".mrow");
     if (m) { const l = m.dataset.lens; state.muted.has(l) ? state.muted.delete(l) : state.muted.add(l); renderAnswer(); return; }
+    const k = ev.target.closest(".link");
+    if (k) { stopPlay(); const L = state.answer.links[+k.dataset.k], a = state.answer.steps[L.a], b = state.answer.steps[L.b]; applyLink(a, b, L.why); return; }
+    const inv = ev.target.closest(".invite [data-sp]");
+    if (inv) { invite(inv.dataset.sp); return; }
     const w = ev.target.closest(".whatif");
     if (w) { stopPlay(); const s = state.answer.whatifs[+w.dataset.w]; applyScene({ ...s, title: s.q, lens: "order" }); return; }
     if (ev.target.id === "prev") { stopPlay(); step(-1); }
     if (ev.target.id === "next") { stopPlay(); step(1); }
     if (ev.target.id === "play") { state.playing ? stopPlay() : startPlay(); }
-    if (ev.target.id === "newq") { abortLive(); stopPlay(); state.answer = null; state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); drawAll(); showCaption(null); answerEl.hidden = true; document.getElementById("examples").hidden = false; document.getElementById("qbox").focus(); }
+    if (ev.target.id === "newq") { abortLive(); stopPlay(); state.answer = null; state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); drawAll(); showCaption(null); answerEl.hidden = true; document.getElementById("examples").hidden = false; const q2b = document.getElementById("qbox2"); q2b.value = ""; q2b.focus(); }
   });
   answerEl.addEventListener("submit", ev => {
     if (ev.target.id !== "follow") return;
@@ -1396,34 +1864,159 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     ask(q, false);
   }
 
-  // ---------- live AI ----------
+  // ---------- live AI: a panel of specialists ----------
+  // The chair reads the question and picks 3 or 4 specialists, plus the stretch of time and map it needs.
+  // Each specialist then teaches 2 or 3 steps through its own lens, from its own slice of the map's data,
+  // building on what the colleagues before it said. The chair closes: the short answer, how the lenses
+  // connect, competing views, what-ifs and unknowns. One sample call per speaker; each prompt stays small
+  // because a specialist only sees its own records inside the window.
   const goBtn = document.getElementById("go"), stopBtn = document.getElementById("stop"), hint = document.getElementById("askhint");
-  let sample = null, ctl = null, convo = [];
-  const placeIndex = ENTRIES.map(e => `${e.id}|${e.name}|${e.lat.toFixed(2)},${e.lon.toFixed(2)}|${e.start}..${e.end ?? ""}`).join("\n");
-  const polityIndex = EMPIRES.map(e => `${e.id}|${e.name}|${e.start}..${e.end ?? ""}`).join("\n");
-  const RULES = `You are the Atlas Guide, a history guide that answers by driving an interactive world map for Rishi.
-Rishi wants the feeling of seeing history from a perspective nobody has had. Mix: 55% rigorous, 45% fun.
-Answer through several lenses: ${LENSES.join(", ")}. Give competing explanations from named historians or schools, say which the evidence favours, and say plainly what is not known. "We don't know" is a fine answer.
+  let sample = null, ctl = null, convo = [], sampleReady;
+  const short = (s, n = 140) => { s = String(s ?? "").replace(/\s+/g, " ").trim(); return s.length > n ? s.slice(0, n - 1) + "…" : s; };
+  const overlaps = (s, e, w) => (s ?? -1e9) <= w.to && (e ?? 1e9) >= w.from;
+  const inBox = (o, w) => {
+    if (!w.bbox || o == null || o.lon == null || o.lat == null) return true;
+    const [W, S, E, N] = w.bbox;
+    return o.lat >= S && o.lat <= N && (W <= E ? o.lon >= W && o.lon <= E : o.lon >= W || o.lon <= E);
+  };
+  const midYear = w => Math.round((w.from + w.to) / 2);
+  const cap = (lines, n) => lines.slice(0, n).join("\n") + (lines.length > n ? `\n(+${lines.length - n} more on the map)` : "") || "(nothing recorded here for this window)";
+  const ll = o => `${(+o.lat).toFixed(1)},${(+o.lon).toFixed(1)}`;
+  const sampleSeries = (series, w, n = 8) => {
+    const pts = (series || []).filter(p => p[0] >= w.from && p[0] <= w.to);
+    if (pts.length <= n) return pts;
+    return d3.range(n).map(i => pts[Math.round(i * (pts.length - 1) / (n - 1))]);
+  };
+  // Plugin indexes cover all time; keep the pieces that name a year inside the window, or no year at all.
+  const plugIndex = (d, w) => {
+    let txt = ""; try { txt = d.index((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}); } catch { return ""; }
+    const keep = String(txt).split(/\n|; /).filter(s => { const ys = (s.match(/-?\b\d{3,4}\b/g) || []).map(Number); return !ys.length || ys.some(y => y >= w.from - 50 && y <= w.to + 50); });
+    const out = keep.join("\n");
+    return `\n${(d.name || d.id).toUpperCase()} (layer ${d.id}):\n${out.length > 5000 ? out.slice(0, 5000) + "\n(cut)" : out}`;
+  };
 
-The map has data layers the reader can see under your tour: places (cities and wonders with population), people (3,000 famous people at their birthplaces), money (trade routes, trade hubs, migrations, India and UK GDP), disease (epidemics, famines, eruptions, climate shifts, the Black Death month by month), ideas (idea and faith journeys, schools, books) order (every state in Cliopatria with a fragility score) and war (battles, sieges, and who held each strait and pass)${PLUG.map(d => `, ${d.id} (${d.name})`).join("")}. A step's lens switches on its layer; add "layers":[...] to switch on others that show the evidence.
+  // Each specialist: who they are, which lenses their steps may use, which layers show their evidence,
+  // and digest(w) = their records inside window w = {from, to, bbox}.
+  const SPECS = [
+    { id: "geographer", name: "Geographer", lenses: ["geography"], layers: ["places"], voice: "mountains, rivers, coasts, distances, soils and the chokepoints nature made",
+      digest: w => `CITIES AND WONDERS ALIVE IN THE WINDOW (id name lat,lon span pop: what):\n${cap(ENTRIES.filter(e => overlaps(e.start, e.end, w) && inBox(e, w)).map(e => { const p = popAt(e, midYear(w)); return `place:${e.id} ${e.name} ${ll(e)} ${fmtSpan(e.start, e.end)}${p ? " pop ~" + fmtN(p) : ""}: ${short(e.what, 110)}`; }), 40)}
+TERRAIN (name, kind, lat,lon):\n${TERRAIN ? cap([...(TERRAIN.points || []).map(p => ({ n: p.name, t: p.t, lon: p.at[0], lat: p.at[1], tier: p.tier })), ...(TERRAIN.labels || []).filter(l => l.line && l.line.length).map(l => { const m = l.line[Math.floor(l.line.length / 2)]; return { n: l.name, t: l.t, lon: m[0], lat: m[1], tier: l.tier }; })].filter(o => inBox(o, w)).sort((a, b) => a.tier - b.tier).map(o => `${o.n} (${o.t}) ${ll(o)}`), 45) : "(terrain layer not loaded)"}
+CHOKEPOINTS:\n${cap(CHOKES.filter(c => inBox(c, w)).map(c => `${c.name} ${ll(c)}: ${short(c.what, 100)}`), 20)}` },
+    { id: "military", name: "Military historian", lenses: ["military"], layers: ["war"], voice: "armies, logistics, fortresses, sea power and who held which strait",
+      digest: w => {
+        const b = BATTLES.filter(x => x.start >= w.from && x.start <= w.to && inBox(x, w)).sort((a, c) => (c.cur ? 1 : 0) - (a.cur ? 1 : 0) || a.start - c.start);
+        const m = midYear(w);
+        return `BATTLES AND SIEGES IN THE WINDOW (${b.length} on the map; curated ones first):\n${cap(b.map(x => `${fmtYear(x.start)} ${x.name} (${x.subtype}) ${ll(x)}${sideNames(x).length ? ": " + sideNames(x).join(" vs ") : ""}${x.cur && x.winner != null && x.sides ? `; won by ${x.sides[x.winner]?.map(s => s.name).join(", ")}` : ""}${x.why ? `. ${short(x.why, 110)}` : ""}${x.war ? ` [${x.war}]` : ""}`), 45)}
+CHOKEPOINTS AND WHO HELD THEM (at ${fmtYear(w.from)} / ${fmtYear(m)} / ${fmtYear(w.to)}):\n${cap(CHOKES.filter(c => inBox(c, w)).map(c => `${c.name} ${ll(c)}: ${[w.from, m, w.to].map(y => holderAt(c.id, y).join(" & ") || "?").join(" / ")}`), 20)}`;
+      } },
+    { id: "economist", name: "Economic historian", lenses: ["economy", "technology"], layers: ["money", "tech"], voice: "trade, money, prices, productivity, technology and who got rich and why",
+      digest: w => `TRADE ROUTES RUNNING IN THE WINDOW:\n${cap(TRADE.filter(t => overlaps(t.start, t.end, w)).map(t => `${t.name} ${fmtSpan(t.start, t.end)}, goods: ${(t.goods || []).join(", ")}; ${short(t.why, 120)}`), 15)}
+TRADE HUBS (the richest crossroads, handed on city to city):\n${cap(HUBS.filter(h => overlaps(h.start, h.end, w)).map(h => `${h.name} ${ll(h)} ${fmtSpan(h.start, h.end)} (${h.relay})`), 15)}
+GDP SERIES (Maddison Project, values in 2011 dollars where per capita):\n${cap(Object.entries(MONEY.econ || {}).flatMap(([k, m]) => Object.entries(m).filter(([, s]) => Array.isArray(s)).map(([met, s]) => { const p = sampleSeries(s, w); return p.length ? `${k} ${met}: ${p.map(([y, v]) => `${y} ${Math.round(v)}`).join(", ")}` : ""; })).filter(Boolean), 8)}` },
+    { id: "demographer", name: "Demographer", lenses: ["population"], layers: ["places", "money"], voice: "how many people lived where, cities growing and dying, migrations and the people who moved",
+      digest: w => { const m = midYear(w); return `CITY POPULATIONS (at ${fmtYear(w.from)} → ${fmtYear(m)} → ${fmtYear(w.to)}):\n${cap(ENTRIES.filter(e => inBox(e, w) && POP[e.id]).map(e => ({ e, p: [w.from, m, w.to].map(y => popAt(e, y)) })).filter(o => o.p.some(Boolean)).sort((a, b) => (b.p[1] || 0) - (a.p[1] || 0)).map(o => `place:${o.e.id} ${o.e.name}: ${o.p.map(p => p ? fmtN(p) : "–").join(" → ")}`), 30)}
+MIGRATIONS OVERLAPPING THE WINDOW:\n${cap(MIGS.filter(g => overlaps(g.start, g.end, w)).map(g => `${g.name} ${fmtSpan(g.start, g.end)}${g.people ? ", ~" + fmtN(g.people) + " people" : ""}${g.forced ? ", forced" : ""}: ${short(g.why, 120)}`), 15)}`; } },
+    { id: "epidemiologist", name: "Epidemiologist and climate historian", lenses: ["disease"], layers: ["disease"], voice: "plague, famine, volcanoes, cold and drought, and how shocks from nature broke or remade societies",
+      digest: w => {
+        const ev = PLAGUE.events.filter(e => overlaps(e.start, e.end, w) && inBox(e, w));
+        const ids = new Set(ev.map(e => e.id)), nm = Object.fromEntries(PLAGUE.events.map(e => [e.id, e.name]));
+        const bd = w.from <= 1353 && w.to >= 1346 ? `\nBLACK DEATH ARRIVALS (place year/month):\n${cap(Object.entries(ARRIVE).map(([id, a]) => `${PL[id]?.name || id} ${a.y}/${a.m}`), 40)}` : "";
+        return `SHOCKS IN THE WINDOW (epidemics, famines, eruptions, climate shifts):\n${cap(ev.map(e => `${fmtSpan(e.start, e.end)} ${e.name} (${e.subtype})${e.lat != null ? " " + ll(e) : ""}: ${short(e.what, 130)}`), 30)}
+LINKS BETWEEN SHOCKS AND EVENTS:\n${cap(PLAGUE.relations.filter(r => ids.has(r.from) || ids.has(r.to)).filter(r => r.type !== "spread_to").map(r => `${nm[r.from] || r.from} ${r.type.replace(/_/g, " ")} ${nm[r.to] || r.to}${r.view ? ` (${r.view})` : ""}: ${short(r.note, 110)}`), 20)}${bd}`;
+      } },
+    { id: "scholar", name: "Historian of faith and ideas", lenses: ["religion", "ideas", "literature", "art", "architecture"], layers: ["ideas", "art"], voice: "religions, philosophies, books, schools, art and buildings, and how ideas travelled",
+      digest: w => {
+        const ok = x => overlaps(x.s, x.e ?? x.s, w) && inBox(x, w);
+        return `SCHOOLS, FAITHS AND MOVEMENTS:\n${cap(SCHOOLS.filter(ok).map(x => `${x.n} ${fmtSpan(x.s, x.e)} at ${x.name}: ${short(x.w, 110)}`), 25)}
+BOOKS AND WORKS:\n${cap(WORKS.filter(ok).map(x => `${x.n} (${fmtYear(x.s)}, ${x.name}${x.a && THINKERS[x.a] ? ", " + THINKERS[x.a].n : ""}): ${short(x.w, 90)}`), 25)}
+THINKERS:\n${cap(Object.values(THINKERS).filter(p => overlaps(p.s, p.e, w) && inBox(ipt(p.p), w)).map(p => `${p.n} ${fmtSpan(p.s, p.e)}: ${short(p.w, 90)}`), 25)}
+JOURNEYS OF IDEAS:\n${cap(JOURNEYS.filter(j => overlaps(j.y0, j.y1, w)).map(j => `${j.n}: ${j.steps.map(s => `${s.at.name} ${fmtYear(s.y)}`).join(" → ")}. ${short(j.why, 120)}`), 10)}`;
+      } },
+    { id: "biographer", name: "Biographer", lenses: ["people"], layers: ["people"], voice: "the individuals who made the difference, who could have met whom, and how much one life really changed",
+      digest: w => `FAMOUS PEOPLE ALIVE IN THE WINDOW (most famous first; name, life, occupation, birthplace):\n${cap(PPL.filter(p => overlaps(p.b, p.d ?? p.b + 70, w) && inBox(p, w)).map(p => `${p.name} (${fmtSpan(p.b, p.d)}), ${p.occ}, born ${p.place}`), 35)}` },
+    { id: "political", name: "Political scientist", lenses: ["order", "law", "government"], layers: ["order", "law"], voice: "states, rulers, institutions, laws, legitimacy, and why order holds or falls into chaos",
+      digest: w => { const m = midYear(w); return `STATES IN THE WINDOW (Cliopatria; fragility = model's risk of collapse within 50 years at ${fmtYear(m)}; base rate ${Math.round(ORDER.base * 100)}%, warning at ${Math.round(ORDER.thr * 100)}%):\n${cap(POLS.filter(p => overlaps(p.s, p.e, w) && inBox(p, w)).sort((a, b) => (b.pk ? b.pk[1] : 0) - (a.pk ? a.pk[1] : 0)).map(p => { const f = fragAt(p, m); return `${p.n} ${fmtSpan(p.s, p.e)}${p.pk ? `, peak ${p.pk[1]} Mkm² in ${fmtYear(p.pk[0])}` : ""}${f != null ? `, fragility ${Math.round(f * 100)}% (${band(f)})` : ""}`; }), 35)}`; } },
+  ];
+  // Plugin lenses join the specialist whose lenses they share; a lens nobody owns gets its own specialist.
+  for (const d of PLUG) {
+    const sp = SPECS.find(s => (d.guide || []).some(l => s.lenses.includes(l)));
+    if (sp) { if (!sp.layers.includes(d.id)) sp.layers.push(d.id); (sp.plugs = sp.plugs || []).push(d); }
+    else if ((d.guide || []).length) SPECS.push({ id: d.id, name: `${d.name} specialist`, lenses: d.guide.slice(), layers: [d.id], voice: (d.name || d.id).toLowerCase(), plugs: [d], digest: () => "" });
+  }
+  for (const s of SPECS) s.layers = s.layers.filter(k => LAYERS.some(l => l.k === k));
+  const SPEC = Object.fromEntries(SPECS.map(s => [s.id, s]));
+  const specOf = st => SPEC[st.by] || SPECS.find(s => s.lenses.includes(st.lens)) || SPEC.political;
+  const specColor = s => lensColor(s.lenses[0]);
 
-OUTPUT: JSON Lines only. One JSON object per line, no prose, no markdown, no code fences. Lines in this order:
-1. {"t":"answer","short":"2-4 sentence direct answer","lenses":{"geography":0.0-1.0, ...how much each relevant lens explains}}
-2. 6 to 10 step lines, a guided tour in time order where possible:
-{"t":"step","lens":"one lens","title":"short vivid title","year":integer (negative = BCE),"view":{"lon":number,"lat":number,"span":degrees of longitude across the screen},"layers":["${LAYERS.map(l => l.k).join("|")}"],"highlight":["place:<id>","polity:<id>"],"pins":[{"name":"label","lon":number,"lat":number}],"routes":[{"label":"what moved","points":[[lon,lat],[lon,lat],...]}],"text":"2-4 sentences, concrete, with numbers and names","confidence":0.0-1.0,"sources":[{"cite":"Author, Title (year)","url":"optional"}]}
-3. 2 to 5 lines: {"t":"view","name":"historian or school","school":"short label","lens":"lens","strength":"strong|medium|weak","claim":"one sentence","for":"evidence for","against":"evidence against","sources":[{"cite":"..."}]}
-4. 1 or 2 lines: {"t":"whatif","q":"a counterfactual question","a":"2-3 sentences","confidence":0.0-1.0,"year":integer,"view":{"lon":number,"lat":number,"span":number}}
-5. 1 line: {"t":"unknowns","items":["what historians cannot settle", "..."]}
+  const placeIndex = w => ENTRIES.filter(e => overlaps(e.start, e.end, w)).map(e => `${e.id}|${e.name}|${e.lat.toFixed(2)},${e.lon.toFixed(2)}|${e.start}..${e.end ?? ""}`).join("\n");
+  const polityIndex = w => EMPIRES.filter(e => overlaps(e.start, e.end, w)).map(e => `${e.id}|${e.name}|${e.start}..${e.end ?? ""}`).join("\n");
+  const HOUSE = `You are on the Atlas panel: specialist historians who answer Rishi's questions together by driving an interactive world map, each through one lens.
+Rishi wants the feeling of seeing history from a perspective nobody has had. Mix: 55% rigorous, 45% fun. Concrete beats vague: names, numbers, places, years. "We don't know" is a fine answer.
+OUTPUT: JSON Lines only. One JSON object per line, no prose, no markdown, no code fences.
+SOURCE RULES: cite only works you are confident exist (author, title, year) or en.wikipedia.org article URLs you are confident exist. Never invent a URL. Prefer fewer, real sources.`;
+  const MAPRULES = `MAP RULES: view.span is how many degrees of longitude the view shows: 300 = whole world, 50 = the Mediterranean, 15 = a country like Italy, 4 = a city and its surroundings. Routes are [lon,lat] pairs (longitude first). Pins mark places not in the index; use real coordinates. Highlight only ids from the indexes below. "layers" switches on map layers that show your evidence: ${LAYERS.map(l => `${l.k} (${l.n})`).join(", ")}.`;
+  const roster = () => SPECS.map(s => `${s.id}: ${s.name}, reads ${s.voice}`).join("\n");
+  const earlier = () => convo.length ? `\nEARLIER IN THIS CONVERSATION:\n${convo.map(c => `Q: ${c.q}\nA: ${c.a}`).join("\n")}\n` : "";
+  const CHAIR = (q, mapNow) => `${HOUSE}
 
-MAP RULES: span is how many degrees of longitude the view shows: 300 = whole world, 50 = the Mediterranean, 15 = a country like Italy, 4 = a city and its surroundings. Routes are [lon,lat] pairs (longitude first). Pins mark places not in the index; use real coordinates. Highlight only ids from the index below.
-SOURCE RULES: cite only works you are confident exist (author, title, year) or en.wikipedia.org article URLs you are confident exist. Never invent a URL. Prefer fewer, real sources.
+You are the CHAIR. Pick the panel for this question and the stretch of time and map it needs. Do not answer it yourself.
+THE PANEL:
+${roster()}
+${earlier()}
+${mapNow}
+QUESTION: ${q}
+
+Write exactly one line:
+{"t":"plan","frame":"one sentence: what really needs explaining here","from":integer year (negative = BCE),"to":integer year,"bbox":[west,south,east,north] in degrees, or null if the question is world-wide,"panel":[{"id":"specialist id","angle":"the specific sub-question this specialist will teach, under 15 words"}]}
+Choose 3 or 4 specialists whose lenses explain the most, ordered so each can build on the one before (often: the ground and the shocks first, then wealth and people, then power and ideas). Use 2 for a narrow factual question. Keep from..to as tight as the question allows, and the bbox a little wider than the region.`;
+  const SPEAK = (sp, q, plan, said, mapNow) => {
+    const w = plan.w;
+    const others = plan.ids.filter(id => id !== sp.id && SPEC[id]);
+    const prior = !said.length && others.length ? `YOUR COLLEAGUES ARE SPEAKING AT THE SAME TIME:\n${others.map(id => `${SPEC[id].name}: ${plan.angles[id] || "their own lens"}`).join("\n")}\n\nStay on your angle and leave theirs to them. Where your evidence meets theirs, say so by name in at least one step ("the Economic historian will show the silver; what the plague data adds is..."). Add what only your lens sees.` : said.length ? `WHAT THE PANEL HAS SAID SO FAR (step number, speaker, title: text):\n${said.map((s, i) => `${i + 1}. ${specOf(s).name}, ${s.title}: ${s.text}`).join("\n")}\n\nBuild on them. Open at least one step by naming a colleague and the point you are extending, complicating or disputing ("The Economist's silver explains the ships; what it misses is..."). Never repeat their facts; add what only your lens sees.` : "You speak first: lay the ground the others will build on.";
+    return `${HOUSE}
+
+You are the panel's ${sp.name.toUpperCase()}. You read history through ${sp.voice}.
+QUESTION: ${q}
+THE CHAIR'S FRAME: ${plan.frame}
+YOUR ANGLE: ${plan.angles[sp.id] || "what your lens shows that the others cannot"}
+WINDOW: ${fmtYear(w.from)} to ${fmtYear(w.to)}${w.bbox ? `, region [W,S,E,N] ${w.bbox.join(",")}` : ", world-wide"}
+${earlier()}${mapNow}
+
+${prior}
+
+Write 2 or 3 step lines, in time order where possible, each a stop on the map tour:
+{"t":"step","lens":"${sp.lenses.join("|")}","title":"short vivid title","year":integer,"view":{"lon":number,"lat":number,"span":number},"layers":["${sp.layers.join('","')}"],"highlight":["place:<id>","polity:<id>"],"pins":[{"name":"label","lon":number,"lat":number}],"routes":[{"label":"what moved","points":[[lon,lat],[lon,lat]]}],"text":"3-5 sentences in your own voice: teach, with numbers and names","confidence":0.0-1.0,"sources":[{"cite":"Author, Title (year)","url":"optional"}]}
+Then one line: {"t":"pass","note":"one sentence: the question your lens raises for a colleague, named"}
+Lean on YOUR DATA below: it is what the reader sees on the map. Quote its records by name and number where they fit, and say plainly when you go beyond it.
+${MAPRULES}
+
+YOUR DATA (from the Atlas's own layers, inside the window):
+${(() => { try { return sp.digest(w); } catch (e) { console.warn(sp.id, e); return "(this layer's records could not be read)"; } })()}${(sp.plugs || []).map(d => typeof d.index === "function" ? plugIndex(d, w) : "").join("")}
 
 PLACE INDEX (id|name|lat,lon|start..end):
-${placeIndex}
+${placeIndex(w)}
 
 POLITY INDEX (id|name|start..end):
-${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try { return `\n\n${d.name.toUpperCase()} (lens ${d.id}):\n${d.index((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {})}`; } catch { return ""; } }).join("")}`;
-  (async () => {
+${polityIndex(w)}`;
+  };
+  const CLOSE = (q, plan, A) => `${HOUSE}
+
+You are the CHAIR closing the panel. QUESTION: ${q}
+FRAME: ${plan.frame}
+THE TOUR SO FAR (step number, speaker, lens, year, title: text):
+${A.steps.map((s, i) => `${i + 1}. ${specOf(s).name}, ${s.lens}, ${s.year != null ? fmtYear(s.year) : "-"}, ${s.title}: ${s.text}`).join("\n")}
+
+Write, in this order:
+1. {"t":"answer","short":"2-4 sentence direct answer that weaves the lenses together","lenses":{"lens name":0.0-1.0 for how much each lens explains, using: ${LENSES.join(", ")}}}
+2. 2 to 4 lines naming the links ACROSS lenses, the chain that only shows when the specialists are heard together:
+{"t":"link","a":step number,"b":step number (a different lens),"why":"one sentence: how a led to, fed, or undercut b"}
+3. 2 to 4 lines: {"t":"view","name":"historian or school","school":"short label","lens":"lens","strength":"strong|medium|weak","claim":"one sentence","for":"evidence for","against":"evidence against","sources":[{"cite":"..."}]}
+4. 1 or 2 lines: {"t":"whatif","q":"a counterfactual question","a":"2-3 sentences","confidence":0.0-1.0,"year":integer,"view":{"lon":number,"lat":number,"span":number}}
+5. 1 line: {"t":"unknowns","items":["what historians cannot settle", "..."]}
+Where the specialists disagree, say who the evidence favours.`;
+
+  // use() resolves after the viewer answers; ask() waits for it so an early question is not turned away.
+  sampleReady = (async () => {
     try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; }
     if (!sample) hint.textContent = "Live answers need this page open in Claude. Curated tours work anywhere.";
   })();
@@ -1438,6 +2031,7 @@ ${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try {
     prompt_too_large: "That conversation got too long. Start a fresh question.",
     upstream_error: "The connection dropped. Ask again to retry.",
   };
+  const FATAL = new Set(["cancelled", "not_granted", "sampling_disabled", "session_expired", "rate_limited"]);
   const LAYER_KEYS = LAYERS.map(l => l.k);
   function normStep(o) {
     return {
@@ -1452,11 +2046,11 @@ ${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try {
       sources: Array.isArray(o.sources) ? o.sources.filter(s => s && s.cite).map(s => ({ cite: String(s.cite), url: /^https:\/\/en\.wikipedia\.org\//.test(s.url || "") ? s.url : undefined })) : [],
     };
   }
-  function eat(A, line) {
-    line = line.trim();
-    if (!line || line[0] !== "{") return false;
-    let o; try { o = JSON.parse(line); } catch { return false; }
+  const parse = line => { line = line.trim(); if (!line || line[0] !== "{") return null; try { return JSON.parse(line); } catch { return null; } };
+  // The chair's closing lines; a specialist's lines go through speak() instead.
+  function eat(A, o) {
     if (o.t === "answer") { A.short = String(o.short || ""); A.lenses = o.lenses || {}; }
+    else if (o.t === "link") { const a = Math.round(o.a) - 1, b = Math.round(o.b) - 1; if (A.steps[a] && A.steps[b] && a !== b) A.links.push({ a, b, why: String(o.why || "") }); }
     else if (o.t === "step") A.steps.push(normStep(o));
     else if (o.t === "view") A.views.push({ ...o, sources: (o.sources || []).filter(s => s && s.cite) });
     else if (o.t === "whatif") { const n = normStep(o); A.whatifs.push({ ...o, view: n.view, year: n.year, pins: [] }); }
@@ -1464,8 +2058,77 @@ ${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try {
     else return false;
     return o.t;
   }
+  // One sample call; onLine gets each complete JSON line as it streams in.
+  async function call(prompt, onLine, signal) {
+    let done = 0;
+    const feed = text => { const lines = text.split("\n"); for (; done < lines.length - 1; done++) { const o = parse(lines[done]); if (o) onLine(o); } };
+    try {
+      const res = await sample([{ role: "user", content: prompt }], { signal, cache: false, onText: ({ text }) => feed(text) });
+      feed(res.text + "\n");
+      return res;
+    } catch (e) { if (e && e.text) feed(e.text + "\n"); throw e; }
+  }
+  // When the chair's plan does not come back, a sensible default panel for the question.
+  function fallbackPlan(q) {
+    const t = q.toLowerCase(), pick = [];
+    const want = (id, re) => { if (re.test(t) && SPEC[id] && !pick.includes(id)) pick.push(id); };
+    want("epidemiologist", /plague|disease|death|climate|famine|volcan|pandemic|cold|drought/);
+    want("economist", /rich|poor|gdp|trade|money|econom|wealth|silver|industr/);
+    want("military", /war|battle|army|conquer|invasion|fall|sea|navy/);
+    want("scholar", /relig|faith|idea|philosoph|book|god|church|islam|buddh|art/);
+    want("demographer", /people|population|migra|city|cities/);
+    for (const id of ["geographer", "political", "economist"]) if (pick.length < 3 && !pick.includes(id)) pick.push(id);
+    return { frame: "", from: state.year - 200, to: state.year + 50, bbox: null, panel: pick.slice(0, 4).map(id => ({ id, angle: "" })) };
+  }
+  function planOf(o, q) {
+    const f = o && o.t === "plan" ? o : fallbackPlan(q);
+    let from = isFinite(f.from) ? clampYear(f.from) : state.year - 200, to = isFinite(f.to) ? clampYear(f.to) : state.year + 50;
+    if (from > to) [from, to] = [to, from];
+    if (to - from < 20) { from -= 10; to += 10; }
+    const bb = Array.isArray(f.bbox) && f.bbox.length === 4 && f.bbox.every(isFinite) ? f.bbox.map(Number) : null;
+    const ids = (Array.isArray(f.panel) ? f.panel : []).map(p => p && SPEC[p.id] ? p : null).filter(Boolean).filter((p, i, a) => a.findIndex(x => x.id === p.id) === i).slice(0, 4);
+    const panel = ids.length ? ids : fallbackPlan(q).panel;
+    return { frame: String(f.frame || ""), w: { from, to, bbox: bb && bb[1] < bb[3] ? bb : null }, ids: panel.map(p => p.id), angles: Object.fromEntries(panel.map(p => [p.id, String(p.angle || "")])) };
+  }
+  // A specialist's turn. Specialists speak at the same time, so each one's steps go into its own block and the
+  // tour is rebuilt in panel order; the step on screen stays on screen while others arrive around it.
+  const talking = A => { const n = A.panel.filter(id => A.status[id] === "speaking"); return n.length > 1 ? `${n.length} specialists are speaking…` : n.length ? `The ${SPEC[n[0]].name} is speaking…` : ""; };
+  function regroup(A) {
+    const cur = A.steps[state.active];
+    A.steps = A.panel.flatMap(id => A.by[id] || []);
+    if (cur) state.active = A.steps.indexOf(cur);
+  }
+  async function speak(A, id, q, mapNow, signal, said = []) {
+    const sp = SPEC[id];
+    A.status[id] = "speaking"; A.by[id] = []; A.loading = talking(A); renderAnswer();
+    for (let tries = 0; ; tries++) {
+      try {
+        await call(SPEAK(sp, q, A.plan, said, mapNow), o => {
+          if (state.answer !== A) return;
+          if (o.t === "step") {
+            const s = normStep(o); s.by = id;
+            if (!sp.lenses.includes(s.lens)) s.lens = sp.lenses[0];
+            if (!s.layers.length) s.layers = sp.layers.slice(0, 1);
+            A.by[id].push(s); regroup(A); renderAnswer();
+            if (state.active < 0) activate(A.steps.indexOf(s));
+          } else if (o.t === "pass") { A.passes[id] = String(o.note || ""); renderAnswer(); }
+        }, signal);
+        A.status[id] = "done";
+        break;
+      } catch (e) {
+        // Four calls at once can trip the rate limit: wait a moment and try that specialist once more.
+        if (e?.code === "rate_limited" && !tries && !A.by[id].length) { await new Promise(r => setTimeout(r, 2500 + Math.random() * 2500)); continue; }
+        A.status[id] = "missed";
+        if (FATAL.has(e?.code) && e?.code !== "rate_limited") throw e;
+        break;
+      }
+    }
+    if (state.answer === A) { A.loading = talking(A); renderAnswer(); }
+  }
   async function ask(q, followUp) {
     setTab("guide");
+    document.getElementById("qbox2").value = q;
+    if (!sample) { hint.textContent = "Connecting to Claude…"; await sampleReady; hint.textContent = ""; }
     if (!sample) {
       const t = TOURS.find(t => t.question.toLowerCase() === q.toLowerCase());
       if (t) return openTour(t);
@@ -1477,35 +2140,51 @@ ${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try {
     const selTxt = state.sel ? `; reader has selected ${state.sel.title || state.sel.name || "a spot"} at ${state.sel.lat.toFixed(1)},${state.sel.lon.toFixed(1)}` : "";
     const on = LAYER_KEYS.filter(k => state.on[k]).join(", ");
     const mapNow = `Map now: year ${state.year}; layers on: ${on}${selTxt}${prev ? `; previous question: "${prev.question}"` : ""}.`;
-    const turns = [{ role: "user", content: RULES }, ...convo, { role: "user", content: `${mapNow}\nQUESTION: ${q}` }];
-    state.answer = { question: q, live: true, loading: "Thinking through the lenses…", steps: [], views: [], whatifs: [], unknowns: [], lenses: {} };
+    const A = state.answer = { question: q, live: true, loading: "The chair is picking the panel…", steps: [], views: [], whatifs: [], unknowns: [], lenses: {}, links: [], panel: [], status: {}, passes: {}, by: {}, plan: null };
     state.active = -1; state.muted.clear();
     renderAnswer();
     goBtn.disabled = true; stopBtn.hidden = false; hint.textContent = "";
-    const A = state.answer;
     const my = ctl = new AbortController();
-    let done = 0;
-    const consume = text => {
-      const lines = text.split("\n"), complete = lines.length - 1;
-      let changed = false, firstStep = false;
-      for (; done < complete; done++) { const t = eat(A, lines[done]); if (t) changed = true; if (t === "step" && A.steps.length === 1) firstStep = true; }
-      if (changed && state.answer === A) { A.loading = A.steps.length ? `Writing step ${A.steps.length + 1}…` : "Writing the tour…"; renderAnswer(); if (firstStep) activate(0); }
-    };
     try {
-      const res = await sample(turns, { signal: my.signal, cache: false, onText: ({ text }) => consume(text) });
-      consume(res.text + "\n");
-      convo.push({ role: "user", content: `${mapNow}\nQUESTION: ${q}` }, { role: "assistant", content: res.text });
-      if (convo.length > 6) convo = convo.slice(-6);
-      if (!A.steps.length && !A.short) A.error = "The answer didn't come back in a shape the map can read. Ask again.";
-      if (res.truncated) A.error = "The answer was cut short. Ask a narrower question.";
+      let planLine = null;
+      try { await call(CHAIR(q, mapNow), o => { if (o.t === "plan" && !planLine) planLine = o; }, my.signal); }
+      catch (e) { if (FATAL.has(e?.code)) throw e; }
+      if (state.answer !== A) return;
+      A.plan = planOf(planLine, q);
+      A.panel = A.plan.ids.slice(); A.frame = A.plan.frame;
+      for (const id of A.panel) A.status[id] = "waiting";
+      renderAnswer();
+      await Promise.all(A.panel.map(id => speak(A, id, q, mapNow, my.signal)));
+      if (state.answer !== A) return;
+      if (!A.steps.length) { A.error = "The panel's answers didn't come back in a shape the map can read. Ask again."; return; }
+      A.speaking = null; A.loading = "The chair is connecting the lenses…"; renderAnswer();
+      try { await call(CLOSE(q, A.plan, A), o => { if (state.answer === A && eat(A, o)) renderAnswer(); }, my.signal); }
+      catch (e) { if (FATAL.has(e?.code)) throw e; }
+      convo.push({ q, a: `${A.short || A.frame} (panel: ${A.panel.map(id => SPEC[id].name).join(", ")}; steps: ${A.steps.map(s => s.title).join("; ")})` });
+      if (convo.length > 3) convo = convo.slice(-3);
     } catch (e) {
-      if (e && e.text) consume(e.text + "\n");
-      if (e?.code !== "cancelled") A.error = ERR[e?.code] || ERR.upstream_error;
+      if (e?.code !== "cancelled" && e?.name !== "AbortError") A.error = ERR[e?.code] || ERR.upstream_error;
+      my.abort();  // one specialist hit a wall the others will hit too: stop them all
       if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; hint.textContent = ERR[e.code]; }
     } finally {
       if (ctl === my) { ctl = null; goBtn.disabled = false; stopBtn.hidden = true; }
-      A.loading = "";
+      A.loading = ""; A.speaking = null;
+      for (const id in A.status) if (A.status[id] !== "done") A.status[id] = A.status[id] === "waiting" ? "skipped" : "missed";
       if (state.answer === A) { renderAnswer(); if (state.active < 0 && A.steps.length) activate(0); }
+    }
+  }
+  // After an answer: bring one more specialist to the table; their steps join the end of the tour.
+  async function invite(id) {
+    const A = state.answer; if (!A || !A.live || A.loading || !sample || !A.plan) return;
+    A.panel.push(id); A.status[id] = "waiting";
+    goBtn.disabled = true; stopBtn.hidden = false;
+    const my = ctl = new AbortController(), n = A.steps.length;
+    try { await speak(A, id, A.question, `Map now: year ${state.year}.`, my.signal, A.steps.slice()); }
+    catch (e) { if (e?.code !== "cancelled" && e?.name !== "AbortError") A.error = ERR[e?.code] || ERR.upstream_error; }
+    finally {
+      if (ctl === my) { ctl = null; goBtn.disabled = false; stopBtn.hidden = true; }
+      A.loading = ""; A.speaking = null; if (A.status[id] !== "done") A.status[id] = "missed";
+      if (state.answer === A) { renderAnswer(); if (A.steps[n]) activate(n); }
     }
   }
   document.getElementById("ask").addEventListener("submit", ev => {
@@ -1515,14 +2194,169 @@ ${polityIndex}${PLUG.filter(d => typeof d.index === "function").map(d => { try {
     t ? openTour(t) : ask(q, false);
   });
   stopBtn.onclick = () => abortLive();
+  const q2 = document.getElementById("qbox2");
+  document.getElementById("ask2").addEventListener("submit", ev => {
+    ev.preventDefault();
+    const q = q2.value.trim(); if (!q) return;
+    document.getElementById("qbox").value = q;
+    document.getElementById("ask").requestSubmit();
+  });
+  q2.addEventListener("keydown", ev => { if (ev.key === "Enter" && !ev.shiftKey) { ev.preventDefault(); document.getElementById("ask2").requestSubmit(); } });
 
-  // ---------- start: 1348, the Black Death year, where five lenses overlap ----------
+  // ---------- plugin API: what a plugin tab (ATLAS.tab) may do with the map ----------
+  ATLAS.api = {
+    get year() { return state.year; }, get k() { return state.k; },
+    setYear: (y, animate = true, ms) => { stopTime(); animate ? animateYear(y, ms) : (cancelAnimationFrame(yearAnim), setYear(y)); },
+    // A scene is a guide step: {year, view: {lon, lat, span}, lens, layers, highlight, pins, routes, title}.
+    scene: s => { stopPlay(); applyScene(s); },
+    clearScene: () => { state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); showCaption(null); drawAll(); },
+    fly: (v, ms) => flyTo(v, ms), setOn: (k, v = true) => { if (isOn(k) !== v) { setOn(k, v); redrawToggles(); syncChips(); } },
+    redraw: () => drawAll(), setTab: t => setTab(t), fmtYear, onYear: fn => yearWatch.push(fn),
+    // What the map shows now: the centre, the zoom and roughly how many degrees fit across and down.
+    view: () => {
+      const t = d3.zoomTransform(svg.node()), c = projection.invert(t.invert([W / 2, H / 2]));
+      const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]) * t.k;
+      return c && isFinite(c[0]) ? { lon: c[0], lat: c[1], k: t.k, w: W / pxPerDeg, h: H / pxPerDeg } : null;
+    },
+    onView: fn => viewWatch.push(fn),  // called when a pan or zoom settles
+    select: card => select(card, { fly: true }),
+  };
+  for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
+
+  // ---------- eras under the slider: where you are in time, one tap to jump ----------
+  const ERAS = [[MIN, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
+    [1450, 1800, "Early modern"], [1800, 1914, "Industrial"], [1914, 1945, "World wars"], [1945, NOW, "Since 1945"]];
+  const erasEl = document.getElementById("eras");
+  erasEl.innerHTML = ERAS.map(([a, b, n], i) => `<button type="button" data-i="${i}" style="left:${(yearToT(a) * 100).toFixed(2)}%;width:${((yearToT(b) - yearToT(a)) * 100).toFixed(2)}%" title="${esc(n)}, ${esc(fmtYear(a))} to ${esc(fmtYear(b))}">${esc(n)}</button>`).join("");
+  erasEl.addEventListener("click", ev => { const b = ev.target.closest("button"); if (!b) return; const [a, z] = ERAS[+b.dataset.i]; stopTime(); animateYear(Math.round(a + (z - a) / 2), 900); });
+  const syncEra = y => erasEl.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-current", y >= ERAS[i][0] && (y < ERAS[i][1] || i === ERAS.length - 1)));
+  yearWatch.push(syncEra);
+
+  // ---------- the key: exactly what is drawn right now ----------
+  const G_ = {
+    dot: '<circle cx="11" cy="8" r="5" fill="var(--c)" fill-opacity=".6"/>', small: '<circle cx="11" cy="8" r="3" fill="var(--c)"/>',
+    line: '<path d="M1 12 Q11 2 21 9" fill="none" stroke="var(--c)" stroke-width="2"/>', arrow: '<path d="M1 12 L18 5" stroke="var(--c)" stroke-width="2"/><path d="M15 2 L21 4 L17 9z" fill="var(--c)"/>',
+    diamond: '<path d="M11 2 L17 8 L11 14 L5 8z" fill="var(--c)"/>', square: '<rect x="6" y="3" width="10" height="10" fill="var(--c)"/>',
+    halo: '<circle cx="11" cy="8" r="7" fill="var(--c)" fill-opacity=".25" stroke="var(--c)"/><circle cx="11" cy="8" r="2.5" fill="var(--c)"/>',
+    ring: '<circle cx="11" cy="8" r="6" fill="var(--c)" fill-opacity=".3" stroke="var(--c)" stroke-width="1.5"/>', cross: '<path d="M6 3 L16 13 M16 3 L6 13" stroke="var(--c)" stroke-width="2.4"/>',
+    battle: '<circle cx="11" cy="8" r="6" fill="none" stroke="var(--c)" stroke-width="1.5"/><path d="M7 4 L15 12 M15 4 L7 12" stroke="var(--c)" stroke-width="1.5"/>',
+    hourglass: '<path d="M6 2 L16 2 L11 8 L16 14 L6 14 L11 8z" fill="var(--c)"/>', border: '<path d="M1 12 L7 6 L12 9 L21 3" fill="none" stroke="var(--c)" stroke-width="2"/>',
+    sprite: '<rect x="5" y="4" width="4" height="4" fill="var(--c)"/><rect x="9" y="8" width="4" height="4" fill="var(--c)"/><rect x="13" y="4" width="4" height="4" fill="var(--c)"/><rect x="9" y="0" width="4" height="4" fill="var(--c)" fill-opacity=".5"/>',
+  };
+  const KEY = {
+    basemap: [["sprite", "Pixel sprites: the armies, fleets, caravans and towns of the era"]], borders: [["border", "Borders on this year's map"]],
+    places: [["dot", "City or wonder; a bigger dot means more people"]], people: [["small", "Famous person alive and grown up this year"]],
+    money: [["line", "Trade route running this year"], ["arrow", "Migration under way"], ["diamond", "Trade hub"]],
+    disease: [["halo", "Plague, famine or disaster; a bigger ring means more deaths"]],
+    ideas: [["arrow", "An idea, faith or text on the move"], ["square", "School, temple or library open now"], ["diamond", "Book written in the last century"]],
+    order: [["ring", "State; size is territory, colour is its risk of breaking"], ["cross", "A state that just broke apart"]],
+    war: [["battle", "Battle or siege, fading over a dozen years"], ["hourglass", "Strait or mountain pass that armies and trade must cross"]],
+  };
+  const keyEl = document.getElementById("keycard"), keyBtn = document.getElementById("keybtn");
+  function renderKey() {
+    if (keyEl.hidden) return;
+    const groups = FAMILIES.map(f => {
+      const rows = MEMBERS[f.id].filter(k => isOn(k) && k !== "terrain" && k !== "political").flatMap(k => {
+        const d = PLUG.find(x => x.id === k);
+        const rs = KEY[k] || (d ? (Array.isArray(d.key) ? d.key : [["dot", d.desc || d.name || k]]) : []);
+        // A basemap that paints marks itself (the pixel map) can draw the key's glyphs in the same style.
+        return rs.map(([g, t]) => `<div class="kr" style="--c:${COLOR(k)}">${(ATLAS.keyGlyph && ATLAS.keyGlyph(g, k, COLOR(k))) || `<svg viewBox="0 0 22 16" aria-hidden="true">${G_[g] || G_.dot}</svg>`}<span>${d && !KEY[k] && !Array.isArray(d.key) ? "<b>" + esc(d.name) + "</b> " : ""}${esc(t)}</span></div>`);
+      });
+      return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${esc(f.n)}</b>${rows.join("")}</div>` : "";
+    }).join("");
+    keyEl.innerHTML = `<h4>On the map in ${esc(fmtYear(state.year))}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
+      <h4>Keys</h4><div class="keys"><kbd>← →</kbd><span>Step through time (Shift for bigger steps)</span><kbd>Space</kbd><span>Play or pause time</span><kbd>/</kbd><span>Ask a question</span>
+      <kbd>1–6</kbd><span>Switch a lens family on or off</span><kbd>S</kbd><span>Surprise me</span><kbd>F</kbd><span>Focus: map only</span><kbd>K</kbd><span>This key</span><kbd>Esc</kbd><span>Close, clear the caption</span></div>`;
+  }
+  function toggleKey(v = keyEl.hidden) { keyEl.hidden = !v; keyBtn.setAttribute("aria-pressed", v); renderKey(); }
+  keyBtn.onclick = () => toggleKey();
+  yearWatch.push(() => { if (!keyEl.hidden) renderKey(); });
+  layersEl.addEventListener("click", () => setTimeout(renderKey)); subEl.addEventListener("click", () => setTimeout(renderKey));
+
+  // ---------- focus: the map alone ----------
+  const appEl = document.querySelector(".app"), focusBtn = document.getElementById("focusbtn");
+  function toggleFocus(v = !appEl.classList.contains("focus")) { appEl.classList.toggle("focus", v); focusBtn.setAttribute("aria-pressed", v); }
+  focusBtn.onclick = () => toggleFocus();
+
+  // ---------- surprise me: a random moment worth seeing, framed and explained ----------
+  const SURPRISES = [
+    BATTLES.filter(b => b.cur && isFinite(b.lon)).map(b => ({ y: b.start, lens: "military", make: () => battleCard(b) })),
+    SHOCKS.filter(e => isFinite(e.lon) && e.start >= MIN).map(e => ({ y: e.start, lens: "disease", make: () => shockCard(e) })),
+    JOURNEYS.flatMap(j => j.steps.filter(s => s.at && isFinite(s.at.lon)).map(s => ({ y: s.y, lens: "ideas", make: () => journeyCard(j, s) }))),
+    ENTRIES.flatMap(e => (EVENTS[e.id] || []).map(([yy, t]) => ({ y: yy, lens: "geography", make: () => ({ ...cityCard(e), title: `${nameAt(e, yy)}: ${t}`, year: yy }) }))),
+  ].filter(p => p.length);
+  const seen = [];
+  function surprise() {
+    if (!SURPRISES.length) return;
+    let pick;
+    for (let n = 0; n < 12; n++) { const pool = SURPRISES[Math.floor(Math.random() * SURPRISES.length)]; pick = pool[Math.floor(Math.random() * pool.length)]; if (!seen.includes(pick)) break; }
+    seen.push(pick); if (seen.length > 40) seen.shift();
+    stopTime(); stopPlay(); cancelAnimationFrame(yearAnim);
+    setYear(pick.y);
+    const card = pick.make(); if (!card) return;
+    ensureLayers([LENS_LAYER[pick.lens]]);
+    flyTo({ lon: card.lon, lat: card.lat, span: 28 }, 1300);
+    showCaption({ title: card.title, year: pick.y, lens: pick.lens });
+    select(card);
+  }
+  document.getElementById("surprise").onclick = () => surprise();
+
+  // ---------- keyboard: time, play, ask, lenses, focus ----------
+  function stepYear(dir, big) {
+    stopTime(); cancelAnimationFrame(yearAnim);
+    const t = Math.max(0, Math.min(1, yearToT(state.year) + dir * (big ? 0.01 : 0.001)));
+    let y = tToYear(t); if (y === state.year) y += dir;
+    setYear(y);
+  }
+  document.addEventListener("keydown", ev => {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey || ev.defaultPrevented) return;
+    const t = ev.target;
+    if (t.closest && t.closest("input, textarea, select, [contenteditable]")) { if (ev.key === "Escape" && t.blur) t.blur(); return; }
+    if (t.closest && t.closest("button, a, summary") && (ev.key === " " || ev.key === "Enter")) return;
+    const k = ev.key.length === 1 ? ev.key.toLowerCase() : ev.key;
+    if (k === "ArrowLeft" || k === "ArrowRight") stepYear(k === "ArrowLeft" ? -1 : 1, ev.shiftKey);
+    else if (k === " ") playBtn.click();
+    else if (k === "/") { if (appEl.classList.contains("focus")) toggleFocus(false); const q = state.tab === "guide" ? q2 : document.getElementById("qbox"); q.focus(); }
+    else if (k === "s") surprise();
+    else if (k === "f") toggleFocus();
+    else if (k === "k" || k === "?") toggleKey();
+    else if (k === "Escape") { if (!keyEl.hidden) toggleKey(false); else if (appEl.classList.contains("focus")) toggleFocus(false); else showCaption(null); }
+    else if (/^[1-6]$/.test(k) && FAMILIES[+k - 1]) famChips[FAMILIES[+k - 1].id].click();
+    else return;
+    ev.preventDefault();
+  });
+
+  // ---------- resume: reopen on the last year, place and lenses (this browser only) ----------
+  const SAVE_KEY = "atlas.resume.v1";
+  function saveView() {
+    try {
+      const tr = d3.zoomTransform(svg.node()), c = projection.invert(tr.invert([W / 2, H / 2]));
+      localStorage.setItem(SAVE_KEY, JSON.stringify({ year: state.year, lon: c[0], lat: c[1], k: tr.k, on: state.on, basemap: state.basemap, terrain: state.terrain, borders: state.borders, political: state.political }));
+    } catch (err) { /* storage may be blocked; resuming is a convenience */ }
+  }
+  function loadView() {
+    try { const r = JSON.parse(localStorage.getItem(SAVE_KEY) || "null"); return r && isFinite(r.year) && isFinite(r.lon) && isFinite(r.lat) ? r : null; } catch (err) { return null; }
+  }
+  setInterval(saveView, 4000);
+  addEventListener("pagehide", saveView);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) saveView(); });
+
+  // ---------- start: where you left off, or 1348, the Black Death year, where five lenses overlap ----------
+  const RESUME = loadView();
+  if (RESUME) {
+    for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k];
+    for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
+  }
   syncChips();
   setBasemap();
   new ResizeObserver(() => layout()).observe(mapEl);
   layout();
-  setYear(1348);
-  setTab("now");
-  flyTo({ lon: 45, lat: 35, span: 140 }, 0);
+  setYear(RESUME ? RESUME.year : 1348);
+  syncEra(state.year);
+  setTab("guide");
+  if (RESUME) {
+    flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(1, Math.min(80, +RESUME.k || 1)) }, 0);
+    document.getElementById("maphint").textContent = `Picked up where you left off, in ${fmtYear(state.year)}. Press S for a surprise.`;
+  } else flyTo({ lon: 45, lat: 35, span: 140 }, 0);
 })();
 </script>

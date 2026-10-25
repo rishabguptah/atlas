@@ -19,15 +19,16 @@ KINDS = {  # kind -> (id prefix, owning workstream folder or None)
     'language': ('lang', 'peoples-languages'), 'script': ('script', 'peoples-languages'),
     'sample': ('dna', 'peoples-languages'),
 }
-LENSES = {'geography', 'military', 'economy', 'population', 'disease', 'religion', 'ideas', 'literature', 'people', 'order', 'language'}
+LENSES = {'geography', 'military', 'economy', 'population', 'disease', 'religion', 'ideas', 'literature', 'people', 'order', 'art', 'law', 'language'}
 REL_TYPES = {'controls', 'capital_of', 'part_of', 'located_in', 'born_in', 'died_in', 'ruled', 'participant_in',
              'fought', 'allied_with', 'trades_with', 'founded', 'destroyed', 'succeeded', 'influenced', 'teacher_of',
-             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented', 'derived_from'}
+             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented', 'governed_as', 'derived_from'}
 CAUSAL = {'caused', 'contributed_to', 'prevented'}
 CAUSES = {'war', 'fire', 'earthquake', 'river', 'sea', 'climate', 'trade', 'capital', 'quarried', 'volcano',
           'silt', 'faith', 'disease', 'unknown'}
 STATUS = {'sourced', 'draft'}
 ID_RE = re.compile(r'^([a-z]+)(?::[a-z0-9_]+)+$')
+DATE_RE = re.compile(r'^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$')
 
 
 def year(v):
@@ -61,6 +62,13 @@ def check(r):
             errs.append(f'{f}_range must be [low, high]')
     if year(r.get('start')) and year(r.get('end')) and r['start'] > r['end']:
         errs.append('start is after end')
+    for f, y in (('date', 'start'), ('end_date', 'end')):
+        if f in r:
+            v = r[f]
+            if not (isinstance(v, str) and DATE_RE.match(v)):
+                errs.append(f'{f} must be YYYY, YYYY-MM or YYYY-MM-DD')
+            elif year(r.get(y)) and int(v[:4]) != r[y]:
+                errs.append(f'{f} {v} is not in {y} year {r[y]}')
     if 'lat' in r or 'lon' in r:
         lat, lon = r.get('lat'), r.get('lon')
         if not (isinstance(lat, (int, float)) and isinstance(lon, (int, float)) and -90 <= lat <= 90 and -180 <= lon <= 180):
@@ -91,9 +99,11 @@ def check(r):
 def refs(r):
     """Ids this record points at."""
     out = []
-    for f in ('place', 'from', 'to', 'of', 'capital', 'author', 'language', 'family', 'branch'):
+    for f in ('place', 'from', 'to', 'of', 'capital', 'author', 'by', 'policy', 'language'):
         if isinstance(r.get(f), str):
             out.append(r[f])
+    if r.get('kind') == 'language':  # elsewhere `family` is a plain label (europe-19c event families)
+        out += [r[f] for f in ('family', 'branch') if isinstance(r.get(f), str)]
     for f in ('born', 'died'):
         if isinstance(r.get(f), dict) and isinstance(r[f].get('place'), str):
             out.append(r[f]['place'])
