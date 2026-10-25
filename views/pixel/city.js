@@ -65,12 +65,13 @@
   };
 
   function PixelCity(opts) {
-    const url = (opts && opts.url) || "atlas-files/world/cities.json", onLoad = (opts && opts.onLoad) || (() => {});
+    const url = (opts && opts.url) || "atlas-files/world/cities.json", inlined = global.PIXEL_CITIES, onLoad = (opts && opts.onLoad) || (() => {});
     let cities = null, loading = false, over = null, overKey = "", shown = [];
     function load() {
       if (cities || loading) return;
       loading = true;
-      fetch(url).then(r => (r.ok ? r.json() : { cities: [] })).then(d => {
+      // A one-file build embeds the plans as PIXEL_CITIES; otherwise they sit beside the page.
+      (inlined ? Promise.resolve(inlined) : fetch(url).then(r => (r.ok ? r.json() : { cities: [] }))).then(d => {
         cities = d.cities || [];
         for (const c of cities) for (const f of c.features) {
           if (f.line) { let a = 180, b = 90, e = -180, n = -90; for (const [x, y] of f.line) { a = Math.min(a, x); b = Math.min(b, y); e = Math.max(e, x); n = Math.max(n, y); } f.bb = [a, b, e, n]; }
@@ -95,9 +96,16 @@
       const here = cities.filter(c => overlaps(c.bbox, box) && year >= c.t0 - 50);
       if (!here.length) { shown = []; return; }
       const B = G.base;
-      // Redraw only when the view or the set of standing features changes, not on every year step.
+      // Redraw only when the view, the set of standing features or what they are called and used as changes (the
+      // Pantheon becoming a church in 609), not on every year step.
       let sig = 0;
-      for (const c of here) for (let i = 0; i < c.features.length; i++) if (alive(c.features[i], year)) sig = (sig * 31 + i + 1) | 0;
+      const hash = s => { let x = 0; for (let k = 0; k < s.length; k++) x = (x * 31 + s.charCodeAt(k)) | 0; return x; };
+      for (const c of here) for (let i = 0; i < c.features.length; i++) {
+        const f = c.features[i];
+        if (!alive(f, year)) continue;
+        sig = (sig * 31 + i + 1) | 0;
+        if (f.names || f.kinds) sig = (sig * 31 + hash(kindAt(f, year) + "|" + (nameAt(f, year) || ""))) | 0;
+      }
       const key = [G.k, G.U0, G.V0, G.w, G.h, here.length, sig].join();
       if (key === overKey && over) { for (let i = 0; i < over.length; i += 2) B[over[i]] = over[i + 1]; return; }
       const before = B.slice(), occ = new Uint8Array(G.w * G.h), { w, h, cls } = G;

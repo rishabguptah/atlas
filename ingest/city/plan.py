@@ -185,7 +185,7 @@ def build(city):
         return not box or all(box[0] <= x <= box[2] and box[1] <= y <= box[3] for x, y in line)
     # Claude's drafts.
     dp = os.path.join(OUT, 'drafts', city['id'] + '.json')
-    nd = 0
+    nd, added = 0, set()
     if os.path.exists(dp):
         for f in json.load(open(dp))['features']:
             f = dict(f); f['conf'] = max(1, int(f.get('conf', 1))); f['status'] = 'draft'
@@ -202,17 +202,19 @@ def build(city):
                     if g.get('wd') == f.get('wd'):
                         g['names'] = f['names']
                         if f.get('kinds'): g['kinds'] = f['kinds']
+                        # The names and kinds by period are Claude's, unchecked: the feature carries the draft's confidence and source.
+                        g['conf'] = max(g.get('conf', 0), f['conf']); g['status'] = 'draft'; g['src'] = f.get('src')
                         if f.get('t0') is not None and (g.get('t0') is None or f.get('fix_dates')): g['t0'] = f['t0']
                         if f.get('fix_dates'): g['t1'] = f.get('t1')
                 continue
             if f.get('wd') and f['wd'] in seen_q:
                 continue
-            feats.append(f); nd += 1
+            feats.append(f); added.add(id(f)); nd += 1
     feats.sort(key=lambda f: (f['k'] != 'wall', -(f.get('sl') or 0)))
     walls = [f for f in feats if f['k'] == 'wall']
     # The cap trims Wikidata landmarks only; Claude's drafts fill gaps the sources leave, so they all stay.
-    wd_marks = [f for f in feats if f['k'] != 'wall' and f.get('status') != 'draft']
-    feats = walls + wd_marks[:MAX_LANDMARKS] + [f for f in feats if f['k'] != 'wall' and f.get('status') == 'draft']
+    wd_marks = [f for f in feats if f['k'] != 'wall' and id(f) not in added]
+    feats = walls + wd_marks[:MAX_LANDMARKS] + [f for f in feats if f['k'] != 'wall' and id(f) in added]
     out = {'id': city['id'], 'name': city['name'], 'bbox': city['bbox'], 't0': city['t0'], 't1': city['t1'], 'features': feats,
            'sources': {'walls': 'OpenStreetMap contributors (ODbL), via Overture Maps', 'landmarks': 'Wikidata (CC0): items with coordinates and dates in the box',
                        'drafts': 'data/cities/plans/drafts (Claude, from the sources named on each feature; unchecked)'}}

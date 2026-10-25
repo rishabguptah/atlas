@@ -151,6 +151,10 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
     # The city layer (views/pixel/city.js) is only needed past about 3 degrees across: beside the page, loaded on
     # first use by the pixel basemap; inline only in a one-file build.
     if inline:
+        # The world index is not written for a one-file build, so the city plans go in the page too (PIXEL_CITIES).
+        cp = os.path.join(repo, 'data', 'cities', 'plans')
+        plans = [json.load(open(os.path.join(cp, f), encoding='utf-8')) for f in sorted(os.listdir(cp)) if f.endswith('.json')] if os.path.isdir(cp) else []
+        scripts.append('<script>\nwindow.PIXEL_CITIES = ' + J({'cities': plans}).replace('</', '<\\/') + ';\n</script>')
         scripts.append('<script>\n' + open(os.path.join(pixel_dir, 'city.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
     else:
         os.makedirs(side_dir, exist_ok=True); shutil.copy(os.path.join(pixel_dir, 'city.js'), os.path.join(side_dir, 'city.js'))
