@@ -403,3 +403,21 @@ body { background: var(--sea); font-family: var(--f-prose); }
 }
 .app .mp-back .ico { transform: scaleX(-1); }
 @media (max-width: 700px) { .app.ui-hidden { padding-bottom: env(safe-area-inset-bottom, 0px); } .app.ui-hidden .panel { transform: translateY(100%); } }
+/* The eye stays findable when everything else has gone: vellum, ink line. A one-time hint says how to come back. */
+.app.ui-hidden .eyebtn { opacity: .85; color: var(--ink-fixed); border-image-source: var(--f-button-q); }
+.app .uihint { position: absolute; z-index: 30; top: 64px; right: max(var(--g), env(safe-area-inset-right, 0px)); padding: 4px 8px; font-family: var(--f-tiny); font-size: 8px; line-height: 12px;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink); border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; pointer-events: none; }
+@media (max-width: 700px) { .app .uihint { top: auto; bottom: 64px; } .app.ui-hidden .time { transform: translateY(calc(100% + var(--peek, 92px) + 60px)); } }
+/* In a game the panel holds the question; the map's caption card would say it twice. */
+@media (min-width: 701px) { .app.in-mode .caption { display: none; } }
+/* Panes never run wider than the panel. */
+.app .panel .pane { min-width: 0; max-width: 100%; overflow-x: hidden; overflow-wrap: anywhere; }
+.app .panel .pane * { max-width: 100%; box-sizing: border-box; }
+/* Phone: the lens families are one row of emblems, like the desktop rail. */
+@media (max-width: 700px) {
+  .app .nextcard { top: 84px; }
+  .app #layers { left: max(8px, env(safe-area-inset-left, 0px)); right: auto; top: 128px; width: 40px; flex-direction: column; overflow: visible; padding: 0; gap: 4px; }
+  .app #layers .chip.fam { width: 40px; padding: 2px; justify-content: center; }
+  .app #layers .chip.fam .nm { display: none; }
+  .app #sublayers { left: 56px; right: 8px; top: 128px; }
+}

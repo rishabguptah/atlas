@@ -179,7 +179,11 @@
   eye.type = "button"; eye.className = "btn eyebtn"; eye.innerHTML = ico("focus") + `<span class="nm">Hide</span>`;
   const mapctl = $(".mapctl"); if (mapctl) mapctl.appendChild(eye);
   function setHidden(v) {
-    app.classList.toggle("ui-hidden", v);
+    const was = app.classList.contains("ui-hidden");
+    app.classList.toggle("ui-hidden", v); root.classList.toggle("ui-bare", v);
+    if (was !== v && A.pixelRefresh) A.pixelRefresh();
+    if (v && !was) { let seen = false; try { seen = !!localStorage.getItem("atlas.uihint.v1"); localStorage.setItem("atlas.uihint.v1", "1"); } catch (e) {}
+      if (!seen) { const t = document.createElement("div"); t.className = "uihint"; t.textContent = "Press H or the eye to bring it back"; map.appendChild(t); setTimeout(() => t.remove(), 2200); } }
     eye.setAttribute("aria-pressed", v); eye.title = v ? "Show the interface (H)" : "Hide the interface: just the map (H)";
     eye.querySelector(".nm").textContent = v ? "Show" : "Hide";
     try { localStorage.setItem("atlas.uihidden.v1", v ? "1" : ""); } catch (e) {}
@@ -238,6 +242,9 @@
       for (const k of now) if (!h.lenses.includes(k)) api.setOn(k, false);
       for (const k of h.lenses) if (!now.includes(k)) api.setOn(k, true);
     }
+    // Whatever the mode drew on the map (pins, routes, a caption) goes with it.
+    if (api.clearScene) api.clearScene();
+    if (A.motion && A.motion.pulse) A.motion.pulse(null, { all: true });
     if (h.year !== api.year) api.setYear(h.year, true, 600);
     if (h.view) api.fly({ lon: h.view.lon, lat: h.view.lat, zoom: h.view.k }, 900);
     plate.hidden = true; app.classList.remove("in-mode");

@@ -750,6 +750,8 @@
 
   // Title plate, centred on the top edge: the era's title and the year in its own numerals (and the silk scroll's seal).
   function plate(g, s) {
+    // The interface hidden (the Atlas's eye or H): the title plate goes with it.
+    if (typeof document !== "undefined" && document.documentElement.classList.contains("ui-bare")) return;
     const t = s.title ? s.title(curYear) : {};
     const lines = [];
     if (s.seal) lines.push({ seal: true });
