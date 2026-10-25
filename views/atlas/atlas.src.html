@@ -483,7 +483,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
 <script>
 (() => {
   // ---------- basics ----------
-  const NOW = 2025, MIN = -4000, SPAN = NOW - MIN, CURVE = 1.6;
+  // Time runs from 300,000 years ago. The slider is in two parts: deep time (before 4000 BCE) on a log scale of years
+  // ago in its first DEEP_T, then history on the old curve (denser toward today) in the rest.
+  const NOW = 2025, MIN = -298000, HIST = -4000, SPAN = NOW - HIST, CURVE = 1.6, DEEP_T = 0.2;
+  const LBP0 = Math.log(NOW - MIN), LBP1 = Math.log(NOW - HIST);
   const LENSES = ["geography", "military", "economy", "population", "disease", "religion", "ideas", "literature", "people", "order"];
   const LENS_NAME = { geography: "Geography", military: "Military", economy: "Economy & trade", population: "Population & migration", disease: "Disease & climate", religion: "Religion", ideas: "Ideas", literature: "Literature", people: "People", order: "Order & chaos" };
   const lensColor = l => `var(--l-${LENSES.includes(l) ? l : "order"})`;
@@ -508,12 +511,19 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // A plugin lens whose data loads after the first paint (LATE_FILES) is skipped until it has arrived.
   const lensReady = d => typeof LATE_FILES === "undefined" || !LATE_FILES["lens:" + d.id] || (typeof LENS_DATA !== "undefined" && !!LENS_DATA[d.id]);
   const BASEMAP0 = ATLAS.basemaps.find(b => b && typeof b.mount === "function") || null;
-  const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
+  const fmtAgo = y => { const a = NOW - y, r = a >= 100000 ? 1000 : 100; return `${(Math.round(a / r) * r).toLocaleString("en-US")} years ago`; };
+  const fmtYear = y => y <= -10000 ? fmtAgo(y) : y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
   const fmtSpan = (s, e) => `${s == null ? "?" : fmtYear(s)}–${e == null ? "today" : fmtYear(e)}`;
-  const tToYear = t => Math.round(NOW - SPAN * Math.pow(1 - t, CURVE));
-  const yearToT = y => 1 - Math.pow(Math.max(0, NOW - y) / SPAN, 1 / CURVE);
+  const tToYearF = t => t >= DEEP_T ? NOW - SPAN * Math.pow(Math.max(0, 1 - (t - DEEP_T) / (1 - DEEP_T)), CURVE)
+    : NOW - Math.exp(LBP0 + (LBP1 - LBP0) * Math.max(0, t) / DEEP_T);
+  // Deep years snap to a grain that grows with age (1,000 years at 100,000 years ago), so steps stay meaningful.
+  const grain = y => y >= HIST ? 1 : NOW - y >= 100000 ? 1000 : NOW - y >= 20000 ? 100 : 10;
+  const snapYear = y => { const g = grain(y); return g === 1 ? Math.round(y) : Math.round(y / g) * g; };
+  const tToYear = t => snapYear(tToYearF(t));
+  const yearToT = y => y >= HIST ? DEEP_T + (1 - DEEP_T) * (1 - Math.pow(Math.max(0, NOW - y) / SPAN, 1 / CURVE))
+    : DEEP_T * (LBP0 - Math.log(Math.min(NOW - MIN, NOW - y))) / (LBP0 - LBP1);
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const clampYear = y => Math.max(MIN, Math.min(NOW, Math.round(Number(y) || 0)));
+  const clampYear = y => snapYear(Math.max(MIN, Math.min(NOW, Math.round(Number(y) || 0))));
   const km = (a, b) => d3.geoDistance(a, b) * 6371;
   const fmtN = n => n >= 1e9 ? (n / 1e9).toFixed(1).replace(/\.0$/, "") + " billion" : n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, "") + " million" : n >= 1e4 ? Math.round(n / 1e3) + ",000" : String(Math.round(n));
   const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1211,7 +1221,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const bs = on ? [...battlesNear(y, 12).filter(b => b.cur), ...battlesNear(y, 2).filter(b => !b.cur).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y) || (b.parts || "").length - (a.parts || "").length).slice(0, cap)] : [];
     L.points = bs.map(d => P(d, { kind: "battle", color: "var(--y-war)", size: 6, label: d.name.replace(/^(Battle|Siege|Sack) of /, ""), lbl: true, always: d.cur && Math.abs(d.start - y) <= 2,
       fade: 1 - Math.abs(d.start - y) / 16, pri: d.cur ? 8 : 2, title: () => `${d.name} · ${fmtYear(d.start)}${d.war ? " · " + d.war : ""} · ${sideNames(d).join(" vs ")}`, card: cardFn(battleCard, d) }));
-    if (on) for (const d of CHOKES) L.points.push(P(d, { kind: "choke", shape: "hourglass", color: "var(--y-war)", fill: 1, label: d.name, lbl: true, pri: 5,
+    if (on && state.year >= HIST) for (const d of CHOKES) L.points.push(P(d, { kind: "choke", shape: "hourglass", color: "var(--y-war)", fill: 1, label: d.name, lbl: true, pri: 5,
       title: () => { const h = holderAt(d.id, state.year); return `${d.name} · ${h.length ? "held by " + h.join(", ") : "no state holds it"} in ${fmtYear(state.year)}`; }, card: cardFn(chokeCard, d) }));
   }
   // ---------- plugin lenses and basemap ----------
@@ -1832,7 +1842,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     yearAnim = requestAnimationFrame(tick);
   }
   yearIn.addEventListener("input", () => { cancelAnimationFrame(yearAnim); stopTime(); setYear(tToYear(yearIn.value / 1000)); });
-  // Play through time: about 40 seconds from 4000 BCE to today, slower where history is denser.
+  // Play through time: about 40 seconds from 300,000 years ago to today (8 of them in deep time), slower where history is denser.
   const playBtn = document.getElementById("playyear");
   let timeRaf = 0, lastT = 0;
   function stopTime() { cancelAnimationFrame(timeRaf); timeRaf = 0; playBtn.textContent = "▶"; playBtn.setAttribute("aria-label", "Play through time"); }
@@ -1844,7 +1854,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   try { const v = localStorage.getItem("atlas.speed"); if (v && [...speedEl.options].some(o => o.value === v)) speedEl.value = speed = v; } catch (e) {}
   playBtn.onclick = () => {
     if (timeRaf) return stopTime();
-    if (state.year >= NOW - 1) setYear(MIN);
+    if (state.year >= NOW - 1) setYear(speed[0] === "y" ? HIST : MIN);
     playBtn.textContent = "❚❚"; playBtn.setAttribute("aria-label", "Pause");
     lastT = performance.now(); yearF = state.year;
     let tF = yearToT(state.year);
@@ -1852,8 +1862,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       const dt = Math.min(100, now - lastT); lastT = now;
       const v = +speed.slice(1);
       if (speed[0] === "y") yearF += v * dt / 1000;
-      else { tF = Math.max(tF, yearToT(yearF)) + v * dt / 40000; yearF = NOW - SPAN * Math.pow(Math.max(0, 1 - tF), CURVE); }
-      if (Math.floor(yearF) > state.year) setYear(Math.floor(yearF));
+      else { tF = Math.max(tF, yearToT(yearF)) + v * dt / 40000; yearF = tToYearF(Math.min(1, tF)); }
+      if (snapYear(Math.floor(yearF)) > state.year) setYear(Math.floor(yearF));
       if (state.year >= NOW) return stopTime();
       timeRaf = requestAnimationFrame(tick);
     };
@@ -2457,7 +2467,7 @@ Where the specialists disagree, say who the evidence favours.`;
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 
   // ---------- eras under the slider: where you are in time, one tap to jump ----------
-  const ERAS = [[MIN, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
+  const ERAS = [[MIN, -70000, "First modern humans"], [-70000, -40000, "Out of Africa"], [-40000, -9700, "Ice Age"], [-9700, HIST, "First farmers"], [HIST, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
     [1450, 1800, "Early modern"], [1800, 1914, "Industrial"], [1914, 1945, "World wars"], [1945, NOW, "Since 1945"]];
   const erasEl = document.getElementById("eras");
   erasEl.innerHTML = ERAS.map(([a, b, n], i) => `<button type="button" data-i="${i}" style="left:${(yearToT(a) * 100).toFixed(2)}%;width:${((yearToT(b) - yearToT(a)) * 100).toFixed(2)}%" title="${esc(n)}, ${esc(fmtYear(a))} to ${esc(fmtYear(b))}">${esc(n)}</button>`).join("");
@@ -2538,7 +2548,7 @@ Where the specialists disagree, say who the evidence favours.`;
   function stepYear(dir, big) {
     stopTime(); cancelAnimationFrame(yearAnim);
     const t = Math.max(0, Math.min(1, yearToT(state.year) + dir * (big ? 0.01 : 0.001)));
-    let y = tToYear(t); if (y === state.year) y += dir;
+    let y = tToYear(t); if (y === state.year) y += dir * grain(y + dir);
     setYear(y);
   }
   document.addEventListener("keydown", ev => {
