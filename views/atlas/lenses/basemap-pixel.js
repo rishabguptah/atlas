@@ -65,9 +65,16 @@
   // each realm, and the terrain names; both step back when a lens has focus.
   const LBL = window.ATLAS && ATLAS.labels;
   let realmItems = [];
+  // Finding the curves takes a few ms, so it waits for an idle moment instead of sitting in a year step's frame.
+  let nameJob = 0;
+  const idle = window.requestIdleCallback ? fn => requestIdleCallback(fn, { timeout: 150 }) : fn => setTimeout(fn, 30);
   function nameRealms() {
-    realmItems = pm && typeof PixelRealmNames === "function" && isOn("borders") ? PixelRealmNames(pm.labelGrid()) : [];
-    if (LBL) LBL.refresh();
+    if (nameJob) return;
+    nameJob = idle(() => {
+      nameJob = 0;
+      realmItems = pm && typeof PixelRealmNames === "function" && isOn("borders") ? PixelRealmNames(pm.labelGrid()) : [];
+      if (LBL) LBL.refresh();
+    });
   }
   if (LBL) {
     LBL.add("realms", () => pm && isOn("borders") ? realmItems : [], { base: true });
