@@ -1,5 +1,5 @@
 // The Atlas chrome: dresses the page's own markup in the chronicle style (icons, the year cartouche's era line,
-// the lens rail, ribbon tabs) and adds what the HUD needs: the one next thing, a foldable panel, a phone sheet,
+// the lens rail, ribbon tabs) and adds what the HUD needs: the one next thing, a foldable panel (the page owns the phone sheet),
 // era names under the slider, and ATLAS.chromeRects() so the label engine can keep map labels out from under the HUD.
 // Runs after the page script. Icons come from views/pixel/icons.js (PIXEL_ICONS), colours from the kit (chrome/kit.py).
 (function () {
@@ -8,7 +8,7 @@
   const api = A.api, app = document.querySelector(".app"), root = document.documentElement;
   const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
   const ico = (n, cls) => I.svg(n, cls);
-  const phone = matchMedia("(max-width: 860px)");
+  const phone = matchMedia("(max-width: 700px)");
   let rectT = 0;
 
   // ---------- icons on the existing controls ----------
@@ -131,28 +131,26 @@
   const panel = $("#panel");
   function setFold(v) {
     app.classList.toggle("panel-min", v);
-    if (phone.matches) app.classList.toggle("sheet-min", v);
     try { localStorage.setItem("atlas.panelmin.v1", v ? "1" : ""); } catch (e) {}
     emitRects();
   }
   $(".tabs").addEventListener("click", ev => {
-    const b = ev.target.closest(".tab"); if (!b) return;
+    const b = ev.target.closest(".tab"); if (!b || phone.matches) return;
     // The page switched the tab already (its own handler ran first); a tap on the tab that was open folds the panel.
-    if (b.dataset.wasOpen === "1" && !app.classList.contains("panel-min") && !app.classList.contains("sheet-min")) setFold(true);
-    else if (app.classList.contains("panel-min") || app.classList.contains("sheet-min")) setFold(false);
+    if (b.dataset.wasOpen === "1" && !app.classList.contains("panel-min") ) setFold(true);
+    else if (app.classList.contains("panel-min") ) setFold(false);
   });
   $(".tabs").addEventListener("pointerdown", ev => { $$(".tab").forEach(t => t.dataset.wasOpen = t.getAttribute("aria-selected") === "true" ? "1" : ""); }, true);
   $(".tabs").addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") $$(".tab").forEach(t => t.dataset.wasOpen = t.getAttribute("aria-selected") === "true" ? "1" : ""); }, true);
   document.addEventListener("keydown", ev => {
     if (ev.target.closest("input, textarea, select, [contenteditable]") || ev.metaKey || ev.ctrlKey || ev.altKey) return;
-    if (ev.key === "p" || ev.key === "P") { ev.preventDefault(); setFold(!app.classList.contains("panel-min") && !app.classList.contains("sheet-min")); }
+    if ((ev.key === "p" || ev.key === "P") && !phone.matches) { ev.preventDefault(); setFold(!app.classList.contains("panel-min") ); }
   });
   // Anything that writes into Here (a click on the map) opens the panel again.
-  new MutationObserver(() => { if (app.classList.contains("panel-min") || app.classList.contains("sheet-min")) { if ($$(".tab").some(t => t.dataset.tab !== "guide" && t.getAttribute("aria-selected") === "true" && t.dataset.tab === "here")) setFold(false); } })
+  new MutationObserver(() => { if (app.classList.contains("panel-min") ) { if ($$(".tab").some(t => t.dataset.tab !== "guide" && t.getAttribute("aria-selected") === "true" && t.dataset.tab === "here")) setFold(false); } })
     .observe($("#pane-here"), { childList: true });
   let wantMin = false; try { wantMin = !!localStorage.getItem("atlas.panelmin.v1"); } catch (e) {}
-  // On a phone the sheet starts folded so the map gets most of the screen.
-  if (phone.matches || wantMin) setFold(true);
+  if (wantMin && !phone.matches) setFold(true);
 
   // The grip at the foot of the panel: about 60% of the height by default, the full height on demand.
   const grip = document.createElement("button");
@@ -164,36 +162,51 @@
   // Plugin panes added later still sit above the grip.
   new MutationObserver(() => { if (panel.lastElementChild !== grip) panel.appendChild(grip); }).observe(panel, { childList: true });
 
-  // ---------- phone: drag the sheet by its ribbons ----------
-  (function sheetDrag() {
-    const tabs = $(".tabs");
-    let y0 = 0, h0 = 0, drag = false, moved = false;
-    tabs.addEventListener("pointerdown", ev => { if (!phone.matches) return; drag = true; moved = false; y0 = ev.clientY; h0 = panel.getBoundingClientRect().height; });
-    addEventListener("pointermove", ev => {
-      if (!drag) return;
-      const dy = ev.clientY - y0; if (Math.abs(dy) > 6) moved = true; if (!moved) return;
-      app.classList.remove("sheet-min");
-      panel.style.height = Math.max(60, Math.min(innerHeight * .86, h0 - dy)) + "px";
-    });
-    addEventListener("pointerup", () => {
-      if (!drag) return; drag = false; if (!moved) return;
-      const h = panel.getBoundingClientRect().height, vh = innerHeight;
-      panel.style.height = "";
-      // Snap to folded, half or tall.
-      if (h < vh * .22) setFold(true); else { setFold(false); app.classList.toggle("sheet-tall", h > vh * .6); }
-      tabs.addEventListener("click", e => e.stopPropagation(), { capture: true, once: true });
-    });
-  })();
+  // ---------- the Director caption: one scene of a story, on the map ----------
+  // ATLAS.directorCaption(scene, { i, n, title, onNext, onPrev, onWhy, onClose }) shows or updates the caption;
+  // ATLAS.directorCaption(null) hides it. scene is the L4 Scene (views/atlas/WORLD.md): caption, t/date, by, conf.
+  // The Director owns playing (Space for next); this only draws. While it shows, the panel folds to its ribbons.
+  const BY_FAMILY = { geographer: "land", geography: "land", military: "power", political: "power", order: "power", economy: "wealth", economic: "wealth",
+    population: "peoples", demographer: "peoples", people: "peoples", disease: "shocks", epidemiologist: "shocks", climate: "shocks", religion: "mind", ideas: "mind", literature: "mind" };
+  const CONF = { attested: "Attested", estimated: "Estimated", approximate: "Approximate", disputed: "Disputed", unknown: "Unknown", speculative: "What if" };
+  let dcap = null, dcapFolded = false;
+  A.directorCaption = (scene, o = {}) => {
+    if (!scene) { if (dcap) dcap.hidden = true; if (dcapFolded) { dcapFolded = false; setFold(false); } emitRects(); return; }
+    if (!dcap) {
+      dcap = document.createElement("section"); dcap.className = "dcap"; dcap.setAttribute("aria-live", "polite"); map.appendChild(dcap);
+      dcap.addEventListener("click", ev => { const b = ev.target.closest("[data-a]"); if (!b) return; const f = dcap._o && dcap._o["on" + b.dataset.a]; if (f) f(); });
+    }
+    dcap._o = o; dcap.hidden = false;
+    const fam = BY_FAMILY[String(scene.by || "").toLowerCase()] || (I.FAMILY[scene.by] ? scene.by : null);
+    const conf = CONF[scene.conf] ? scene.conf : "attested";
+    const when = scene.date || (scene.t != null ? api.fmtYear(scene.t) : "");
+    dcap.dataset.conf = conf; dcap.style.setProperty("--t", fam ? `var(--t-${fam})` : "var(--gold)");
+    const n = o.n || 1, i = Math.min(n, (o.i || 0) + 1);
+    dcap.innerHTML = `<div class="dc-top">${fam ? `<span class="fi">${ico(fam)}</span>` : ""}<span class="kick"></span><span class="dc-n num">${i} / ${n}</span>
+        ${o.onClose ? `<button class="dc-x" type="button" data-a="Close" aria-label="Stop the story">${ico("close")}</button>` : ""}</div>
+      <b class="dc-cap"></b>
+      <div class="dc-act">${o.onPrev && i > 1 ? `<button class="btn" type="button" data-a="Prev" aria-label="Previous scene">${ico("back")}</button>` : ""}
+        ${o.onNext && i < n ? `<button class="btn primary" type="button" data-a="Next">${ico("next")}Next<kbd>Space</kbd></button>` : ""}
+        ${o.onWhy ? `<button class="btn" type="button" data-a="Why">${esc(scene.ask || "Why?")}</button>` : ""}
+        <span class="dc-conf">${CONF[conf]}</span></div>
+      <div class="dc-pips" aria-hidden="true">${Array.from({ length: Math.min(n, 40) }, (_, j) => `<i class="${j < i - 1 ? "done" : j === i - 1 ? "on" : ""}"></i>`).join("")}</div>`;
+    dcap.querySelector(".kick").textContent = [o.title, when].filter(Boolean).join(" · ");
+    dcap.querySelector(".dc-cap").textContent = scene.caption || scene.title || "";
+    if (!phone.matches && !app.classList.contains("panel-min")) { dcapFolded = true; setFold(true); }
+    emitRects();
+  };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   // ---------- what the HUD covers, for the label engine ----------
-  // ATLAS.chromeRects() -> [{x, y, w, h}] in map pixels; "atlas:chrome" fires on the document when they change.
-  const HUD = [".yearplate", "#nextcard", "#layers", "#sublayers", ".askbar", ".mapctl", ".time", ".panel", ".caption", ".keycard", ".maphint"];
+  // ATLAS.chromeRects() -> [[x0, y0, x1, y1], ...] in map pixels (the label queue keeps labels out of them);
+  // "atlas:chrome" fires on the document when they change.
+  const HUD = [".dcap", ".yearplate", "#nextcard", "#layers", "#sublayers", ".askbar", ".mapctl", ".time", ".panel", ".caption", ".keycard", ".maphint"];
   A.chromeRects = () => {
     const m = map.getBoundingClientRect(), out = [];
     for (const s of HUD) for (const el of document.querySelectorAll(s)) {
       if (el.hidden || !el.offsetParent && getComputedStyle(el).position !== "fixed") continue;
       const r = el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) continue;
-      out.push({ x: r.left - m.left, y: r.top - m.top, w: r.width, h: r.height, el: s });
+      out.push([r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top]);
     }
     return out;
   };

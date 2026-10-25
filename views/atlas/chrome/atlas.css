@@ -222,7 +222,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .wf .picks button { border: 0; box-shadow: 0 0 0 2px var(--vellum-3); font-size: 13px; }
 
 /* ---- the panel opens to about 60% of the height so the map stays the interface; the grip makes it tall ---- */
-@media (min-width: 861px) {
+@media (min-width: 701px) {
   .app .panel { bottom: auto; height: min(calc(100% - 2 * var(--g)), max(420px, 62vh)); }
   .app.panel-tall .panel { height: auto; bottom: var(--g); }
 }
@@ -231,10 +231,10 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .grip::before { content: ""; width: 24px; height: 6px; background: repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 0 / 24px 2px no-repeat, repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 4px / 24px 2px no-repeat; }
 .app .grip:hover { color: var(--ink); }
 .app .grip:focus-visible { outline: 2px dashed var(--gold); outline-offset: -2px; }
-@media (max-width: 860px) { .app .grip { display: none; } }
+@media (max-width: 700px) { .app .grip { display: none; } }
 
 /* ---- the panel folded to its ribbons (P): the map runs the full width ---- */
-@media (min-width: 861px) {
+@media (min-width: 701px) {
 .app.panel-min .panel { bottom: auto; overflow: hidden; }
 .app.panel-min .panel .pane, .app.panel-min .grip { display: none; }
 .app.panel-min .panel { height: auto; }
@@ -255,15 +255,14 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app.focus .caption, .app.focus .maphint { left: max(var(--g), env(safe-area-inset-left, 0px)); }
 
 /* ---- narrower desktops: map buttons lose their words, the panel narrows ---- */
-@media (max-width: 1280px) and (min-width: 861px) {
+@media (max-width: 1280px) and (min-width: 701px) {
   .app .mapctl .btn > span:not(.ico) { display: none; }
   .app .askbar { right: calc(var(--pw) + 2 * var(--g) + 150px); }
 }
 
-/* ---- phone: full map, top bar, a row of lenses, the chronicle as a sheet over the time ribbon ---- */
-@media (max-width: 860px) {
-  :root { --timeh: 80px; }
-  .app { height: 100%; display: block; }
+/* ---- phone: full map, the year and lenses on top, the time ribbon above the page's bottom sheet (peek, half, full) ---- */
+@media (max-width: 700px) {
+  .app { display: block; padding-bottom: 0; height: 100dvh; }
   .app .map { position: absolute; inset: 0; height: auto; border: 0; }
   .app .yearplate { left: max(8px, env(safe-area-inset-left, 0px)); top: 8px; min-width: 0; padding: 0 8px 4px; }
   .app .yearplate .yp { font-size: 32px; line-height: 32px; }
@@ -271,25 +270,56 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app .mapctl { right: max(8px, env(safe-area-inset-right, 0px)); top: 12px; }
   .app .mapctl .btn > span:not(.ico) { display: none; }
   .app .keycard, .app .cx-toasts { right: max(8px, env(safe-area-inset-right, 0px)); top: 64px; }
-  .app #layers { left: 0; right: 0; top: 78px; width: auto; flex-direction: row; overflow-x: auto; padding: 2px max(8px, env(safe-area-inset-left, 0px)) 8px; scrollbar-width: none; }
-  .app #layers .chip { flex: none; font-size: 8px; line-height: 12px; letter-spacing: .06em; }
-  .app #sublayers { left: 8px; right: 8px; top: 130px; width: auto; }
-  .app .nextcard { left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); width: auto; top: 128px; padding: 0 8px 2px 4px; grid-template-columns: 24px minmax(0, 1fr); }
+  .app #layers { left: 0; right: 0; top: 80px; width: auto; flex-direction: row; overflow-x: auto; padding: 2px max(8px, env(safe-area-inset-left, 0px)) 8px; scrollbar-width: none; }
+  .app #layers .chip.fam { flex: none; width: auto; }
+  .app #layers .chip.fam .nm { opacity: 1; font-size: 8px; line-height: 12px; letter-spacing: .06em; }
+  .app #sublayers { left: 8px; right: 8px; top: 132px; width: auto; }
+  .app .nextcard { left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); width: auto; top: 130px; padding: 0 8px 2px 4px; }
   .app .nextcard .kick { display: none; }
   .app .nextcard .ico { grid-row: 1; }
   .app .nextcard b { font-size: 12px; line-height: 16px; -webkit-line-clamp: 1; }
-  .app #sublayers:not(:empty) ~ .nextcard { display: none; }
-  .app .time { left: 0; right: 0; bottom: 0; padding-bottom: max(4px, env(safe-area-inset-bottom, 0px)); grid-template-columns: auto minmax(0, 1fr) auto; }
+  .app:not(.sub-shut) #sublayers:not(:empty) ~ .nextcard { display: none; }
+  .app .time { left: 0; right: 0; bottom: calc(var(--peek, 92px) - 8px + env(safe-area-inset-bottom, 0px)); grid-template-columns: auto minmax(0, 1fr) auto; }
   .app .time output { font-size: 8px; }
-  .app .panel { position: absolute; left: 0; right: 0; width: auto; top: auto; bottom: calc(var(--timeh) - 6px); height: 42vh; overflow-y: auto; }
-  .app.sheet-min .panel { height: 64px; overflow: hidden; }
-  .app .tabs { top: 0; padding-left: 2px; }
-  .app .player { top: 60px; }
-  .app .caption { left: 8px; right: 8px; max-width: none; bottom: calc(42vh + var(--timeh) + 4px); }
-  .app.sheet-min .caption, .app.sheet-min .maphint { bottom: calc(var(--timeh) + 70px); }
-  .app .maphint { left: 8px; bottom: calc(42vh + var(--timeh) + 4px); }
-  .app .pxhud-br { display: none; }
-  .app.focus .time { right: 0; }
+  /* The page's sheet keeps its mechanics (transform, data-sheet); it gets the chronicle frame. */
+  .app .panel { position: fixed; left: 0; right: 0; top: auto; bottom: 0; width: auto; height: 88dvh; z-index: 20; border-radius: 0; box-shadow: none; overflow: hidden; display: flex; flex-direction: column; }
+  .app .panel .grab::before { border-radius: 0; height: 4px; width: 32px; margin-left: -16px; background: repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px); }
+  .app .tabs { position: static; flex: none; overflow-x: auto; scrollbar-width: none; }
+  .app .tab { flex: 1 0 52px; }
+  .app .caption { left: 8px; right: 8px; max-width: none; bottom: calc(var(--peek, 92px) + var(--timeh) + 8px); }
+  .app .maphint, .app .pxhud-br { display: none; }
+}
+
+/* ---- the Director caption: a story's scene, bottom centre over the map ---- */
+.app .dcap { position: absolute; z-index: 7; left: 50%; transform: translateX(-50%); bottom: calc(var(--timeh) + 2 * var(--g) + 4px); width: min(560px, calc(100% - 2 * var(--rail) - 6 * var(--g)));
+  display: grid; gap: 6px; padding: 4px 12px 8px 16px; color: var(--ink);
+  border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); }
+.app .dcap[hidden] { display: none; }
+.app .dcap::before { content: ""; position: absolute; left: -2px; top: 0; bottom: 0; width: 6px; background: var(--t); }
+.app .dcap .dc-top { display: flex; align-items: center; gap: 8px; }
+.app .dcap .dc-top .kick { color: var(--ink-2); }
+.app .dcap .dc-n { margin-left: auto; font-size: 8px; color: var(--ink-soft); }
+.app .dcap .dc-x { all: unset; cursor: pointer; margin-right: -6px; }
+.app .dcap .dc-x .ico { --t: var(--ink-soft); width: 24px; height: 24px; }
+.app .dcap .dc-cap { font-family: var(--f-head); font-weight: 500; font-size: 24px; line-height: 28px; text-wrap: balance; }
+.app .dcap .dc-act { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.app .dcap kbd { font-family: var(--f-hud); font-size: 8px; margin-left: 4px; padding: 0 3px; box-shadow: 0 0 0 2px var(--gold-2); color: var(--gold-hi); }
+.app .dcap .dc-conf { margin-left: auto; font-family: var(--f-hud); font-size: 8px; text-transform: uppercase; letter-spacing: .08em; padding: 2px 6px; box-shadow: inset 0 0 0 2px var(--ink-2); }
+.app .dcap .dc-pips { display: flex; gap: 2px; height: 4px; }
+.app .dcap .dc-pips i { flex: 1; background: var(--vellum-3); }
+.app .dcap .dc-pips i.done { background: var(--ink-2); }
+.app .dcap .dc-pips i.on { background: var(--t); }
+/* Confidence grammar (D10): solid attested, hatched estimated, dashed approximate or disputed, fog unknown, dashed gold for a what if. */
+.app .dcap[data-conf="estimated"]::before { background: repeating-linear-gradient(135deg, var(--t) 0 2px, transparent 2px 4px); }
+.app .dcap[data-conf="estimated"] .dc-conf { box-shadow: none; background: repeating-linear-gradient(135deg, var(--wash) 0 2px, transparent 2px 4px); }
+.app .dcap[data-conf="approximate"]::before, .app .dcap[data-conf="disputed"]::before { background: repeating-linear-gradient(180deg, var(--t) 0 6px, transparent 6px 10px); }
+.app .dcap[data-conf="approximate"] .dc-conf, .app .dcap[data-conf="disputed"] .dc-conf { box-shadow: none; outline: 2px dashed var(--ink-2); outline-offset: -2px; }
+.app .dcap[data-conf="unknown"]::before { background: repeating-conic-gradient(var(--t) 0 25%, transparent 0 50%) 0 0 / 4px 4px; }
+.app .dcap[data-conf="speculative"] .dc-conf { box-shadow: none; outline: 2px dashed var(--gold); outline-offset: -2px; color: var(--gold-2); }
+.app .dcap ~ .caption { display: none; }
+@media (max-width: 700px) {
+  .app .dcap { left: 8px; right: 8px; transform: none; width: auto; bottom: calc(var(--peek, 92px) + var(--timeh) + 8px); }
+  .app .dcap .dc-cap { font-size: 16px; line-height: 20px; }
 }
 
 /* Icons inside the map's own layer are not the map's SVG. */
@@ -307,7 +337,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .tab .nm { letter-spacing: 0; overflow: hidden; text-overflow: clip; max-width: 100%; }
 
 /* With the panel at its usual height, the minimap and compass take the free corner under it. */
-@media (min-width: 861px) {
+@media (min-width: 701px) {
   .app:not(.panel-tall):not(.panel-min) .pxhud-br { right: max(var(--g), env(safe-area-inset-right, 0px)) !important; bottom: var(--g) !important; }
   .app:not(.panel-tall) .time { right: calc(var(--pw) + 2 * var(--g)); }
 }
