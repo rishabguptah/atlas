@@ -1884,7 +1884,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   ATLAS.isOn = k => isOn(k);
   // A lens toggle also re-renders the basemap so anything it draws for a lens (sprites) follows the chip.
-  function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); renderBasemap(); }
+  function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); renderBasemap(); drawStrip(); }
   // Tap a family: open its lenses below, and switch the family on or off. Tap a lens: just that one.
   layersEl.addEventListener("click", ev => {
     const b = ev.target.closest(".chip"); if (!b) return;
@@ -1898,7 +1898,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const k = b.dataset.k; setOn(k, !isOn(k));
     redrawToggles(); syncChips(); refreshPanel();
   });
-  function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); } }
+  function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); drawStrip(); } }
 
   // ---------- year ----------
   const yearIn = document.getElementById("year"), yout = document.getElementById("yout"), yp = document.getElementById("yp");
@@ -1965,7 +1965,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     // (Land, Power, Wealth, Peoples, Mind, Shocks) in the family colours. Height is the square root of the count, so a
     // quiet century still shows. Hover says what is there; tap jumps.
     const NB = 200, fams = FAMILIES.map(f => f.id), bins = Array.from({ length: NB }, () => Object.fromEntries(fams.map(f => [f, 0])));
+    // Only lenses that are on count, so the band shows what the map is showing.
     for (const [k, ys] of rows) {
+      if (!isOn(k)) continue;
       const f = FAM_OF[k] || (PLUG.find(d => d.id === k) || {}).family; if (!fams.includes(f)) continue;
       for (const y of ys) if (y >= MIN && y <= NOW) bins[Math.min(NB - 1, Math.floor(yearToT(y) * NB))][f]++;
     }
@@ -1982,7 +1984,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       const r = st.node().getBoundingClientRect(), u = Math.max(0, Math.min(0.999, (ev.clientX - r.left) / r.width)), b = bins[Math.floor(u * NB)];
       const a = tToYear(Math.floor(u * NB) / NB), z = tToYear((Math.floor(u * NB) + 1) / NB);
       const parts = FAMILIES.filter(f => b[f.id]).map(f => `<span style="color:${f.c}">●</span> ${esc(f.n)} ${b[f.id]}`);
-      tip.innerHTML = `<b>${esc(fmtYear(a))}${z > a ? "–" + esc(fmtYear(z)) : ""}</b> ${parts.length ? parts.join(" · ") : "nothing recorded yet"}<span class="h">How much the atlas records here, by lens family. Tap to go.</span>`;
+      tip.innerHTML = `<b>${esc(fmtYear(a))}${z > a ? "–" + esc(fmtYear(z)) : ""}</b> ${parts.length ? parts.join(" · ") : "nothing recorded yet"}<span class="h">How much the lenses that are on record here, by family. Tap to go.</span>`;
       tip.hidden = false; tip.style.left = Math.max(0, Math.min(r.width - 260, ev.clientX - r.left - 130)) + "px";
     }).on("mouseleave", () => { tip.hidden = true; });
   }
