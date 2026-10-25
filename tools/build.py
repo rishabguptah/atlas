@@ -17,10 +17,10 @@ KINDS = {  # kind -> (id prefix, owning workstream folder or None)
     'event': ('event', None), 'idea': ('idea', 'religion-ideas'), 'work': ('work', 'religion-ideas'),
     'route': ('route', 'economy-trade'), 'relation': ('rel', None), 'measure': ('m', None),
 }
-LENSES = {'geography', 'military', 'economy', 'population', 'disease', 'religion', 'ideas', 'literature', 'people', 'order', 'art'}
+LENSES = {'geography', 'military', 'economy', 'population', 'disease', 'religion', 'ideas', 'literature', 'people', 'order', 'art', 'law'}
 REL_TYPES = {'controls', 'capital_of', 'part_of', 'located_in', 'born_in', 'died_in', 'ruled', 'participant_in',
              'fought', 'allied_with', 'trades_with', 'founded', 'destroyed', 'succeeded', 'influenced', 'teacher_of',
-             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented'}
+             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented', 'governed_as'}
 CAUSAL = {'caused', 'contributed_to', 'prevented'}
 CAUSES = {'war', 'fire', 'earthquake', 'river', 'sea', 'climate', 'trade', 'capital', 'quarried', 'volcano',
           'silt', 'faith', 'disease', 'unknown'}
@@ -89,7 +89,7 @@ def check(r):
 def refs(r):
     """Ids this record points at."""
     out = []
-    for f in ('place', 'from', 'to', 'of', 'capital', 'author'):
+    for f in ('place', 'from', 'to', 'of', 'capital', 'author', 'by', 'policy'):
         if isinstance(r.get(f), str):
             out.append(r[f])
     for f in ('born', 'died'):
