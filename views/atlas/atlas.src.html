@@ -514,7 +514,15 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const hashColor = s => { let h = 0; for (const c of s) h = (h * 31 + c.charCodeAt(0)) | 0; return PALETTE[Math.abs(h) % PALETTE.length]; };
   const SNAPS = Object.keys(POLITIES).map(Number).sort((a, b) => a - b);
   const snapFor = y => { let s = SNAPS[0]; for (const v of SNAPS) if (v <= y) s = v; return s; };
-  const featCache = {};
+  const featCache = new Map(), FEAT = new WeakMap();
+  // Border timeline (borders-time/ beside the page, ingest/geography/timeline_borders.py from Cliopatria): a frame for
+  // every year a border changed, about 500 from 3400 BCE to 2024. A frame key is "t<year>" once that chunk has loaded,
+  // else "s<snapshot>" for the historical-basemaps snapshots below.
+  const TL = typeof PixelBorders === "function" ? PixelBorders({ base: "borders/", onLoad: () => onBorders() }) : null;
+  const tlFor = y => { const ix = TL && TL.timeline(); return !!ix && y >= ix.years[0]; };
+  const frameOf = y => tlFor(y) && TL.realms(y, 1) ? "t" + TL.snapFor(y) : "s" + snapFor(y);
+  const frameYear = y => +frameOf(y).slice(1);
+  function onBorders() { realmCache = new WeakMap(); realmSnapCache = {}; drawRealmsLayer(true); drawPolys(true); refreshPanel(); renderBasemap(); }
   // Precise borders (coasts fitted to Natural Earth) load from borders/<level>/world_<year>.json beside the
   // published page: l0 (5 km) for the map, l1 (1.5 km) for the basemap when zoomed in. Until one arrives,
   // or if the files are not there, the inline historical-basemaps snapshot stands in.
@@ -529,34 +537,56 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     }).catch(() => { PRECISE[key] = false; });
     return null;
   }
-  const onPrecise = s => () => { delete featCache[s]; realmCache = {}; if (snapFor(state.year) === s) { drawRealmsLayer(true); drawPolys(true); refreshPanel(); renderBasemap(); } };
-  // Realms for the basemap, at the detail its zoom needs: [{id, n, name, subject_of, color, feature}].
-  let realmCache = {};
+  const onPrecise = s => () => { featCache.delete("s" + s); realmSnapCache = {}; if (frameOf(state.year) === "s" + s) { drawRealmsLayer(true); drawPolys(true); refreshPanel(); renderBasemap(); } };
+  // Realms for the basemap, at the detail its zoom needs: [{id, n, name, subject_of, color, feature, level}].
+  let realmCache = new WeakMap(), realmSnapCache = {};
   ATLAS.realms = (y, k = 1) => {
-    const s = snapFor(y ?? state.year), lv = preciseLevel(k), key = lv + ":" + s;
-    if (realmCache[key]) return realmCache[key];
+    y = y ?? state.year;
+    const fk = frameOf(y);
+    if (fk[0] === "t") {
+      const rs = TL.realms(y, k) || TL.realms(y, 1);
+      if (realmCache.has(rs)) return realmCache.get(rs);
+      const meta = new Map(featuresFor(fk).map(d => [d.id, d]));
+      const list = rs.map(r => { const d = meta.get(r.id); return { id: r.id, n: r.n, name: d && d.emp ? d.emp.name : r.name, subject_of: null,
+        color: d && d.emp ? d.emp.color : hashColor(r.name || r.id), feature: r.feature, level: "time" }; });
+      realmCache.set(rs, list);
+      return list;
+    }
+    const s = +fk.slice(1), lv = preciseLevel(k), key = lv + ":" + s;
+    if (realmSnapCache[key]) return realmSnapCache[key];
     let fs = precise(lv, s, onPrecise(s)), level = lv;
     if (!fs && lv !== "l0") { fs = precise("l0", s, onPrecise(s)); level = "l0"; }
-    const list = fs ? fs.map(f => ({ f, p: f.properties || {} })).map(({ f, p }) => ({ f, p, d: featuresFor(s).find(x => x.id === p.id) }))
+    const list = fs ? fs.map(f => ({ f, p: f.properties || {} })).map(({ f, p }) => ({ f, p, d: featuresFor(fk).find(x => x.id === p.id) }))
       .map(({ f, p, d }) => ({ id: p.id, n: p.n, name: d && d.emp ? d.emp.name : p.name, subject_of: p.subject_of, color: d && d.emp ? d.emp.color : hashColor(p.name || p.id || ""), feature: f, level }))
-      : featuresFor(s).map((d, i) => ({ id: s + ":" + i, name: d.emp ? d.emp.name : d.name, color: d.emp ? d.emp.color : hashColor(d.name || ""), feature: d.f, level: "basemaps" }));
-    if (fs) realmCache[key] = list;
+      : featuresFor(fk).map((d, i) => ({ id: s + ":" + i, name: d.emp ? d.emp.name : d.name, color: d.emp ? d.emp.color : hashColor(d.name || ""), feature: d.f, level: "basemaps" }));
+    if (fs) realmSnapCache[key] = list;
     return list;
   };
-  function featuresFor(s) {
-    if (featCache[s]) return featCache[s];
-    const pr = precise("l0", s, onPrecise(s));
-    const t = POLITIES[s];
-    const fc = pr || topojson.feature(t, Object.values(t.objects)[0]).features;
-    return featCache[s] = fc.map(f => {
-      const p = f.properties || {}, name = (p.name || p.NAME || "").trim(), subj = (p.subject_of || p.SUBJECTO || "").trim();
-      const emp = EMPIRES.find(e => s >= e.start && s <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj))) || null;
-      return { f, id: p.id, name: name || subj, emp, d: path(f), area: path.area(f), c: path.centroid(f) };
+  // The states drawn in one frame, with their Living Atlas empire (for its colour and name) and projected shape.
+  function featuresFor(fk) {
+    if (featCache.has(fk)) return featCache.get(fk);
+    const y = +fk.slice(1);
+    let fc;
+    if (fk[0] === "t") fc = (TL.realms(y, 1) || []).map(r => r.feature);
+    else { const t = POLITIES[y]; fc = precise("l0", y, onPrecise(y)) || topojson.feature(t, Object.values(t.objects)[0]).features; }
+    const list = fc.map(f => {
+      // A timeline row is shared by every frame of its years, so its shape is projected once.
+      if (FEAT.has(f)) return FEAT.get(f);
+      const p = f.properties || {}, name = (p.name || p.NAME || "").trim(), subj = (p.subject_of || p.SUBJECTO || "").trim(), at = p.s ?? y;
+      const emp = (p.la && EMPIRES.find(e => e.id === p.la)) || EMPIRES.find(e => at >= e.start && at <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj))) || null;
+      const d = { f, id: p.id, name: name || subj, emp, wiki: p.wiki, s: p.s, e: p.e, d: path(f),
+        get area() { return this._a ?? (this._a = path.area(f)); }, get c() { return this._c ?? (this._c = path.centroid(f)); } };
+      if (fk[0] === "t") FEAT.set(f, d);
+      return d;
     }).filter(d => d.d);
+    // Playing through time visits hundreds of frames; keep the most recent ones.
+    if (featCache.size > 80) featCache.delete(featCache.keys().next().value);
+    featCache.set(fk, list);
+    return list;
   }
   let curSnap;
   function drawPolys(force) {
-    const s = state.borders ? snapFor(state.year) : null;
+    const s = state.borders ? frameOf(state.year) : null;
     drawRealmsLayer();
     if (force || s !== curSnap) {
       curSnap = s;
@@ -574,7 +604,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const isPolitical = () => !!(state.political && state.terrain && TERRAIN && RELIEF_POL && window.drawRealms);
   // Paradox-style realms: one flat colour per state, thick borders, the name curved across its largest piece.
   function drawRealmsLayer(force) {
-    const s = isPolitical() && state.borders ? snapFor(state.year) : null;
+    const s = isPolitical() && state.borders ? frameOf(state.year) : null;
     if (!force && s === realmSnap) return;
     realmSnap = s; gRealms.selectAll("*").remove(); realmsT = null;
     if (s == null) return;
@@ -600,7 +630,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // The state drawn under a point in the current border snapshot (smallest polygon that contains it).
   function ruledBy(lon, lat, y) {
-    const list = featuresFor(snapFor(y)); const whole = path.area({ type: "Sphere" }) * 0.4;
+    const list = featuresFor(frameOf(y)); const whole = path.area({ type: "Sphere" }) * 0.4;
     let best = null;
     for (const d of list) if (d.area < whole && d3.geoContains(d.f, [lon, lat]) && (!best || d.area < best.area)) best = d;
     return best;
@@ -1088,7 +1118,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ${footHTML()}`;
   }
   function footHTML() {
-    return `<p class="foot">One map, seven workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Borders and Battles (curated battles plus about 11,000 from Wikidata, chokepoints and their holders from Cliopatria borders); terrain basemap (relief, rivers, named ranges, deserts and seas); Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
+    return `<p class="foot">One map, seven workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); a border for every year one changed, about 500 frames from 3400 BCE to 2024, from Seshat Cliopatria (CC BY 4.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Borders and Battles (curated battles plus about 11,000 from Wikidata, chokepoints and their holders from Cliopatria borders); terrain basemap (relief, rivers, named ranges, deserts and seas); Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
   }
 
   // ---------- Here ----------
@@ -1162,7 +1192,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const P = fam => lensRows(fam, "here", at);
     el.innerHTML = `
       <div><p class="kick">Here, in ${esc(fmtYear(y))}</p><h2 class="ttl">${esc(name)}</h2>
-      ${rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(snapFor(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(snapFor(y)))} border map</p>`}</div>
+      ${rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(frameYear(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(frameYear(y)))} border map</p>`}</div>
       ${cardHTML(s)}
       ${rb && rb.emp ? `<div class="focus" style="--c:${rb.emp.color}"><span class="fk">Empire</span><span class="ft">${esc(rb.emp.name)}</span><span class="sub">${esc(fmtSpan(rb.emp.start, rb.emp.end))}${rb.emp.peak ? ` · peak ${rb.emp.peak[1]} million km² in ${esc(fmtYear(rb.emp.peak[0]))}` : ""}</span><p>${esc(rb.emp.what || "")}</p>${rb.emp.why ? `<p class="why">${esc(rb.emp.why)}</p>` : ""}</div>` : ""}
       ${sec("places", "The place", cityItems)}${P("land")}

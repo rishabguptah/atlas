@@ -51,3 +51,21 @@ python3 ingest/geography/precise_borders.py HB RAW node_modules/.bin/mapshaper O
 ```
 
 The views load border levels by zoom: `l0` below 3x, `l1` from 3x, `l2` from 9x.
+
+## Border timeline (a frame for every year a border changed)
+
+`timeline_borders.py` turns Seshat Cliopatria (v0.2.1, CC BY 4.0, `raw/cliopatria/cliopatria.geojson.zip`) into a border
+for every year one changed: 508 frames from 3400 BCE to 2024 instead of the 49 historical-basemaps snapshots. Each
+Cliopatria row (one polity over a span of years) is clipped to Natural Earth 10m land, grows into the unclaimed coast
+within 20 km that no other row of those years claims, and is written once into a time chunk (about 450 rows each),
+at the same `l0`/`l1`/`l2` levels. The page keeps the rows with `s <= year <= e`.
+
+```sh
+python3 ingest/geography/timeline_borders.py raw/cliopatria/cliopatria.geojson.zip RAW node_modules/.bin/mapshaper OUT
+# -> OUT/index.json (frame years, chunks), OUT/l0|l1|l2/c_<year>.json, OUT/realms.json,
+#    data/states-war/geo/border-changes.json (rises, ends, gains and losses with who from, for the Border changes lens)
+```
+
+The full run takes about 1.5 to 2 hours on 4 cores (`TB_CHANGES_ONLY=1` skips the chunk files; `TB_SPAN=1000,1100` for a test).
+Publish OUT beside the Atlas page as `borders-time/`; `views/pixel/borders.js` and the page fall back to `borders/` when it is missing.
+Sizes: l0 28 MB, l1 45 MB, l2 86 MB, 38 files each.
