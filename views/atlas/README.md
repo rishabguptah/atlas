@@ -5,6 +5,19 @@ Ideas & faith, Order & chaos, War & chokepoints, Borders, Terrain) toggle layers
 Click anywhere and the "Here" column gathers every lens for that spot and year. "This year" is the
 world digest. The guide's question box sits on top and switches on the lenses its steps use.
 
+## The panel (live answers)
+
+A live question goes to a panel of specialists instead of one guide. The chair (one short call) picks 3 or 4 of
+Geographer, Military historian, Economic historian, Demographer, Epidemiologist and climate historian,
+Historian of faith and ideas, Biographer and Political scientist, plus the years and region the question needs.
+Each specialist then gets one call with only its own records inside that window (cities and terrain; battles and
+who held each chokepoint; trade routes, hubs, GDP and the tech lens; city populations and migrations; shocks and
+their links; schools, books, thinkers and idea journeys plus the art lens; famous people; states with fragility plus
+the law lens) and teaches 2 or 3 steps, naming the colleague it builds on. The chair closes with the short answer,
+"How the lenses connect" links between steps (tap one to see both on the map), competing views, what-ifs and
+unknowns. After an answer, "Hear from another specialist" adds one more voice. A plugin lens joins the specialist
+whose lenses it shares (`guide` names), or gets a specialist of its own.
+
 Published: https://claude.ai/artifact/WycnvWHmbGsVRrsWC628p5 (declares `sample` for live answers).
 
 ## Build
