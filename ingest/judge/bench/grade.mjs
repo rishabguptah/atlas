@@ -56,7 +56,7 @@ Reply with exactly one JSON object and nothing else:
  "why":{"chain":0-5 how well it explains causes (mechanisms, not lists),"views":0-5 whether competing explanations are named and weighed fairly,"honesty":0-5 whether confidence matches the evidence and unknowns are named,"premise":0-5 whether it checks the question's assumptions (5 if there is nothing to check and it does not invent one)},
  "sources":0-5 how many citations look like real works or real Wikipedia pages (0 = invented, 5 = all real and apt),
  "best":"one sentence: the strongest thing in the answer","worst":"one sentence: the most important thing to fix"}
-List every rubric point exactly once. Count an error only if you are confident it is wrong; small rounding is not an error.`;
+List every rubric point exactly once. Put a statement in errors only if you are confident it is wrong: never list one and then call it correct or 'broadly right', and small rounding or a defensible simplification is not an error.`;
 
 const jsonOf = t => { const m = String(t).match(/\{[\s\S]*\}/); if (!m) throw new Error("no JSON in grader reply"); return JSON.parse(m[0]); };
 const inBox = (v, b) => {

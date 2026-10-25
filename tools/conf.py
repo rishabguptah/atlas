@@ -34,6 +34,8 @@ WORKSTREAM = [
     ('art-architecture', lambda r: r.get('type') == 'influenced', 'approximate'),
     # Migrations and peoples: sizes and dates are reconstructions.
     ('economy-trade', lambda r: r['kind'] == 'group', 'estimated'),
+    # Ancient DNA samples: dated by radiocarbon or context, a measured range rather than a rough guess.
+    ('peoples-languages', lambda r: r['kind'] == 'sample', 'estimated'),
     # Fragility forecasts and backtests are model outputs.
     ('order-chaos', lambda r: r['kind'] == 'measure', 'estimated'),
     # Wikidata battles and the Europe 1789-1914 chronicle are dated to the day by their sources.

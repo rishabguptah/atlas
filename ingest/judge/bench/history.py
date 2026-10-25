@@ -24,3 +24,26 @@ for f in sorted(glob.glob(os.path.join(B, 'runs', '*', 'summary.json'))):
                  'medianSeconds': s['medianSeconds']})
 json.dump(rows, open(os.path.join(B, 'history.json'), 'w'), indent=1)
 print(f'{len(rows)} runs; latest score {rows[-1]["score"] if rows else None}')
+
+# Tables for the accuracy report page: the latest run question by question, and conf classes by kind.
+D = os.path.join(B, 'dash')
+os.makedirs(D, exist_ok=True)
+json.dump(rows, open(os.path.join(D, 'bench_history.json'), 'w'), indent=1)
+if rows:
+    Q = {json.loads(l)['id']: json.loads(l) for l in open(os.path.join(B, 'questions.jsonl')) if l.strip()}
+    G = [json.loads(l) for l in open(os.path.join(B, 'runs', rows[-1]['run'], 'grades.jsonl')) if l.strip()]
+    latest = [{'id': g['id'], 'question': Q[g['id']]['q'], 'region': Q[g['id']]['region'], 'kind': Q[g['id']]['kind'],
+               'total': g.get('total'), **(g.get('parts') or {}), 'errors': len((g.get('grade') or {}).get('errors') or []),
+               'best': (g.get('grade') or {}).get('best', ''), 'worst': (g.get('grade') or {}).get('worst', '')}
+              for g in G if g['id'] in Q]
+    json.dump(sorted(latest, key=lambda r: r['total'] or 0), open(os.path.join(D, 'bench_latest.json'), 'w'), indent=1)
+k = os.path.join(ROOT, 'dist/kernel.json')
+if os.path.exists(k):
+    from collections import Counter
+    recs = json.load(open(k))['records']
+    conf = [{'kind': kind, **{c: n for c, n in Counter(r.get('conf') for r in v).items() if c}} for kind, v in sorted(recs.items())]
+    for r in conf:
+        for c in ('attested', 'estimated', 'approximate', 'unknown'):
+            r.setdefault(c, 0)
+    json.dump(conf, open(os.path.join(D, 'conf.json'), 'w'), indent=1)
+print('dash tables in data/judge/bench/dash/')
