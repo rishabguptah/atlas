@@ -832,11 +832,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     bmYear = state.year;
     try { BASEMAP.render(d3.zoomTransform(svg.node()), state.year); } catch (err) { console.error("basemap", err); }
   }
-  // A full basemap render is heavy, so year changes (slider, play) re-render it at most every 350 ms.
+  // A full basemap render is heavy, so year changes (slider, play) re-render it at most every 120 ms.
   let bmTimer = 0, bmLast = 0;
   function renderBasemapSoon() {
     if (bmTimer) return;
-    const wait = Math.max(0, 350 - (performance.now() - bmLast));
+    const wait = Math.max(0, 120 - (performance.now() - bmLast));
     bmTimer = setTimeout(() => { bmTimer = 0; bmLast = performance.now(); if (bmYear !== state.year) renderBasemap(); }, wait);
   }
   function setBasemap() {
