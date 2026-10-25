@@ -26,6 +26,18 @@ LEVELS = {'l0': 5000, 'l1': 1500, 'l2': 400}  # simplification interval in metre
 SLIVER = 0.6  # square degrees: unclaimed coastal pieces smaller than this join a neighbour
 
 
+# a few source names arrive with U+FFFD where an accent was lost upstream; restore the known ones
+FIX = {'Arag\ufffdn': 'Aragón', 'Teotihuac\ufffdn': 'Teotihuacán', 'Monte Alb\ufffdn': 'Monte Albán'}
+
+
+def clean(v):
+    if not isinstance(v, str) or '\ufffd' not in v:
+        return v
+    for bad, good in FIX.items():
+        v = v.replace(bad, good)
+    return v.replace('\ufffd', '')
+
+
 def slug(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()
     return re.sub(r'[^a-z0-9]+', '_', s).strip('_') or 'unnamed'
@@ -54,7 +66,7 @@ for y in years:
     src = json.load(open(os.path.join(HB, f'world_{y}.geojson'), encoding='utf-8'))
     feats, geoms = [], []
     for f in src['features']:
-        p = f['properties']
+        p = {k: clean(v) for k, v in f['properties'].items()}
         if not f['geometry']:
             continue
         name = p.get('NAME') or p.get('SUBJECTO')
