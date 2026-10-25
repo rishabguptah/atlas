@@ -184,7 +184,7 @@ const LAND = /*__LAND__*/;
       const lost = e.end != null && y >= e.end;
       const sp = lost ? "ruin" : tier(e, y);
       // Declutter by zoom: great cities always, towns and ruins as you come closer.
-      const minK = sp === "city_metropolis" ? 1 : sp.startsWith("wonder") ? 2 : sp === "city_city" ? 1.8 : sp === "ruin" ? 3 : sp === "city_town" ? 2.6 : 4;
+      const minK = sp === "city_metropolis" ? 1 : sp.startsWith("wonder") ? 2.5 : sp === "city_city" ? 2.2 : sp === "ruin" ? 4 : sp === "city_town" ? 3.6 : 6;
       if (T.k < minK && !(state.sel && state.sel.e === e)) continue;
       statics.push({ lon: e.lon, lat: e.lat, sprite: sp });
       hits.push({ lon: e.lon, lat: e.lat, kind: lost ? "Lost city" : e.layer === "wonders" ? "Wonder" : "City", name: nameAt(e, y), what: e.what, why: e.why, pop: lost ? null : popAt(e, y), lost, e });

@@ -31,17 +31,8 @@ for f in sorted(glob.glob(atlas + 'borders/world_*.json')):
 
 # Terrain tiles: L0 whole, L1 cut into 30-degree tiles, L2 as the terrain thread ships them.
 T = atlas + 'pixel/terrain/'
-os.makedirs(out + '/tiles', exist_ok=True)
-import shutil
-from PIL import Image
-if not os.path.exists(out + '/tiles/l1_11_5.png'):  # tiles are slow to cut; reuse them on rebuilds
-    shutil.copy(T + 'terrain_l0.png', out + '/tiles/l0_0_0.png')
-    l1 = Image.open(T + 'terrain_l1.png')
-    for c in range(12):
-        for r in range(6):
-            l1.crop((c * 450, r * 450, c * 450 + 450, r * 450 + 450)).save(f'{out}/tiles/l1_{c}_{r}.png', optimize=True)
-    for f in glob.glob(T + 'z2_*.png'):
-        shutil.copy(f, out + '/tiles/l2_' + os.path.basename(f)[3:])
+import subprocess
+subprocess.run([sys.executable, os.path.join(here, 'tiles.py'), out, T], check=True)
 rasters = [[1 / 6, 360, 'l0'], [1 / 15, 30, 'l1'], [1 / 30, 30, 'l2']]
 rivers = [r for r in json.load(open(atlas + 'pixel/rivers.json')) if r['rank'] <= 8]
 
