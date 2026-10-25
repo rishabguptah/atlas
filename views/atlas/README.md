@@ -61,7 +61,7 @@ Order & chaos reads `data/order-chaos/lab.json`, War & chokepoints reads `data/s
 
 Keys: ←/→ step the year (Shift for bigger steps), Space plays time, / jumps to the question box, 1–6 switch lens families,
 S is Surprise me (a random curated battle, shock, idea journey or city event, flown to and captioned, with Here filled in),
-F is focus (map only), K or ? opens the key, Esc closes. The key lists exactly the marks drawn for the lenses that are on;
+F is focus (map only), K or ? opens the key, P folds the panel, Esc closes. The key lists exactly the marks drawn for the lenses that are on;
 a plugin lens can describe its own marks with `key: [[glyph, text], ...]` (glyphs: dot, small, line, arrow, diamond, square,
 halo, ring, cross, battle, hourglass, border, sprite). Eras sit under the slider and jump on tap. Here and This year lead with
 rows from the current time; rows from other centuries fold under "from other times". The page reopens on the last year,
@@ -93,6 +93,27 @@ only when needed, from a sidecar to publish beside the page:
 python3 views/atlas/lenses/travels.py pub      # writes pub/atlas-files/travels-deep.json (about 2.7 MB)
 ```
 
+## The chronicle interface (chrome)
+
+The page's interface is a skin over the markup above, art direction v0 (`/mnt/project-files/atlas/art-direction/DIRECTION.md`):
+an illuminated 16-bit chronicle floating over the map like a HUD. `chrome/kit.py` makes the colour tokens (from
+`views/pixel/palette.js`, lens tinctures from `PIXEL_PALETTE.LENS`), the 9-slice pixel frames (tiny PNGs, `--f-panel`,
+`--f-card`, `--f-hud`, ...) and the night theme; `chrome/chrome.css` holds the components and `chrome/atlas.css` the layout;
+`chrome/chrome.js` dresses the existing controls. Icons are 12x12 grids in `views/pixel/icons.js` (`PIXEL_ICONS.svg(name)`,
+also drawn on canvas with `PIXEL_ICONS.draw`); the six family emblems live there and nowhere else. Fonts: Pixelify Sans
+(headings, the year), Silkscreen at 8 or 16 px (`--f-tiny`: kickers, tabs, chips, numbers), Spectral (prose).
+
+- The year cartouche sits top left with the era name and a map style picker (`ATLAS.setEraStyle`).
+- The **Next card** under it always says one thing to do now. Plugins add a provider with
+  `ATLAS.nextThing({ id, pri, get() -> { kick, title, go } | null })`; the highest priority with something to say wins.
+- The lens families are an emblem rail on the left (44 px squares that open on hover or focus; a family's lenses fly out beside it).
+- The panel floats right at about 60% of the height ("Taller" at its foot for full height); **P** or a tap on the open tab folds
+  it to its ribbons. On a phone it is the bottom sheet.
+- `ATLAS.chromeRects()` returns the boxes the interface covers, `[[x0, y0, x1, y1], ...]` in map pixels, and
+  `atlas:chrome` fires on the document when they change, so labels can stay out from under it.
+- The Director's dialog box is dressed in the same frames; the Director draws it.
+- Preview of the three directions considered: https://claude.ai/artifact/4wm6AUUts9hzFK2trCmmq2
+
 ## Deep time (300,000 years ago to 4000 BCE)
 
 The slider runs from 300,000 years ago. Its first fifth is deep time on a log scale of years ago (eras: First modern
@@ -104,6 +125,14 @@ from `data/deep-time/`, about 0.7 MB, fetched only when the year goes before 550
 redraws all the terrain, so while the year moves it swaps at most every 400 ms. The Deep time lens (Peoples) adds the
 other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
 hearths, land-bridge and ice-sheet names, and climate shocks. Sources and rebuild: `ingest/deep-time/README.md`.
+
+## The whole world (People lens)
+
+People outside Europe come from `data/coverage/` (Pantheon, Wikidata, CBDB; see its README) and load after the first
+paint from `atlas-files/people-world.json` (about 2.3 MB, publish it beside the page). Every person carries a region,
+and the map and This year pick the most remembered person of each region in turn, so a world view at 1200 shows
+Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead of Europe's top 450.
+`views/atlas/world_people.py` builds the rows.
 
 ## Lens families and plugins
 

@@ -242,9 +242,10 @@
     detail: [0.42, 0.12, 0.4],
     shade(P) {
       vellum(P, 12);
-      // Wave strokes every sixth row, every eighteenth below 2x so the world view stays quiet.
+      // Wave strokes every sixth row, every eighteenth below 2x so the world view stays quiet; a quarter dropped at random
+      // per stroke so they never read as a lattice.
       const wr = P.k < 2 ? 18 : 6;
-      if (WATER(P.c) && P.d > 2 && (P.v % wr === 0) && ((P.u + (P.v / wr | 0) * 3) % 8) < 3) { P.r = P.r * 0.45 + 60 * 0.55; P.g = P.g * 0.45 + 110 * 0.55; P.b = P.b * 0.45 + 168 * 0.55; }
+      if (WATER(P.c) && P.d > 2 && (P.v % wr === 0) && ((P.u + (P.v / wr | 0) * 3) % 8) < 3 && hash((P.u + (P.v / wr | 0) * 3) >> 3, P.v) < 0.75) { P.r = P.r * 0.45 + 60 * 0.55; P.g = P.g * 0.45 + 110 * 0.55; P.b = P.b * 0.45 + 168 * 0.55; }
     },
     redSea: "#c0392b",
     coast: "#2a2220",
@@ -274,7 +275,7 @@
     detail: [0.38, 0.1, 0.4],
     shade(P) {
       vellum(P, 10);
-      if (WATER(P.c) && P.d > 1 && ((P.v + Math.round(Math.sin(P.u * 0.5) * 1.3)) % 9 === 0) && vnoise(P.u, P.v, 14) > 0.55) { P.r += 64; P.g += 68; P.b += 64; }
+      if (WATER(P.c) && P.d > 1 && ((P.v + Math.round(Math.sin(P.u * 0.5) * 1.3)) % 9 === 0) && vnoise(P.u, P.v, 14) > 0.55) { P.r += 34; P.g += 38; P.b += 40; }
     },
     coast: "#e8c060",
     realm: { fill: 0.05, band: 0.3, bandW: 1, edge: "#6a3a28", pastel: 0.1, thin: 6 },
@@ -760,7 +761,8 @@
     const widthOf = l => l.cune ? l.cune * 4 - 1 : l.seal ? 18 : textWidth(l.text), heightOf = l => l.seal ? 10 : 5;
     const pw = Math.max(...lines.map(widthOf)) + (t.star ? 10 : 0) + 8, ph = lines.reduce((a, l) => a + heightOf(l) + 2, 0) + 4;
     const cx = Math.round((f.i0 + f.i1) / 2), x0 = cx - (pw >> 1) - (t.star ? 5 : 0), y0 = f.j0 + 2;
-    if (pw > f.i1 - f.i0 - 40) return;
+    // Phones: the year cartouche already names the era, and the plate would sit under it.
+    if (pw > f.i1 - f.i0 - 40 || f.i1 - f.i0 < 230) return;
     f.box(x0, y0, pw, ph, edge, fill);
     let y = y0 + 3;
     for (const l of lines) {

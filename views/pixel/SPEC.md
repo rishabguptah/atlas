@@ -108,6 +108,10 @@ never on a year step. pixelmap.js marks rivers first (`cls` 4, `riv` 1 river / 2
 - Landmarks (`LANDMARKS`) replace generated peaks near them; green zones (`GREEN`) irrigate deserts at oases and deltas.
 - Pans redraw bands with a `SEAM` margin wide enough for the largest anchored piece; keep it if pieces grow.
 
+### Wave glyphs and regional towns (follow-up)
+- Wave glyphs are one tone above the water under them, placed per world cell with jitter and thinned by slow noise; at world zoom (tier 0) about a third as many. Era styles with wave strokes (Catalan, al-Idrisi) thin out below 2x and drop strokes at random.
+- `PixelEra.culture(lon, lat, year)` names a city's building tradition (islamic from 650, near_east before, sahel, africa, east_asia, steppe, south_asia/deccan, meso and andes until the conquest; generic European sprites elsewhere). The library has a settlement for each at sizes 3 and 4 (and yurts at 1 and 2); a missing size borrows the nearest local one.
+
 ## Motion (views/pixel/motion.js)
 
 Everything that moves lives on small canvases above the map (season, fx, sky, dissolve), at the same art-pixel grid; the

@@ -2,7 +2,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Silkscreen&family=Spectral:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <style>
 /* Layout: one sheet. The question goes across the top, the map and one shared year take the middle,
    and the margin column reads whatever the map is pointing at: this year, this place, or the guide's answer. */
@@ -393,6 +393,10 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .keycard { max-height: calc(100% - 60px); }
 }
 </style>
+<style>
+/* The chronicle chrome (views/atlas/chrome/): kit tokens and frames, components, then the HUD layout over this page. */
+/*__CHROME_CSS__*/
+</style>
 
 <div class="app">
   <header class="top">
@@ -413,7 +417,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
         <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="context-stroke"/></marker>
       </defs>
     </svg>
-    <div class="yearplate" id="yp"></div>
+    <div class="yearplate"><div class="yp" id="yp"></div><div class="yp-era" id="ypera"></div></div>
     <div class="maphint" id="maphint">Click anywhere to see every lens there</div>
     <div class="caption" id="caption" hidden></div>
     <div class="mapctl" role="toolbar" aria-label="Map controls">
@@ -477,7 +481,9 @@ const TOURS = /*__TOURS__*/;
 <script>
 // Plugins register here: lenses (views/atlas/lenses/*.js), a basemap, sprites. See views/atlas/LENSES.md.
 window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null,
-  lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); } };
+  lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); },
+  // The one next thing (the chrome's gold card): { id, pri, get() -> { kick, title, go } | null }. See chrome/chrome.js.
+  nexts: [], nextThing(d) { this.nexts.push(d); } };
 </script>
 <!--__LENS_SCRIPTS__-->
 <script>
@@ -496,8 +502,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   ];
   const LENS_LAYER = { geography: "places", military: "war", economy: "money", population: "money", disease: "disease", religion: "ideas", ideas: "ideas", literature: "ideas", people: "people", order: "order" };
   // Six families on the chip bar; each lens inside one is precise, a family is what you switch on together.
-  const FAMILIES = [{ id: "land", n: "Land", c: "var(--l-geography)" }, { id: "power", n: "Power", c: "var(--y-war)" }, { id: "wealth", n: "Wealth", c: "var(--y-money)" },
-    { id: "peoples", n: "Peoples", c: "var(--y-people)" }, { id: "mind", n: "Mind", c: "var(--y-ideas)" }, { id: "shocks", n: "Shocks", c: "var(--y-disease)" }];
+  // Each family has one heraldic tincture (art direction D4, PIXEL_PALETTE.LENS via the chrome's --t-* tokens).
+  const FAMILIES = [{ id: "land", n: "Land", c: "var(--t-land, var(--l-geography))" }, { id: "power", n: "Power", c: "var(--t-power, var(--y-war))" }, { id: "wealth", n: "Wealth", c: "var(--t-wealth, var(--y-money))" },
+    { id: "peoples", n: "Peoples", c: "var(--t-peoples, var(--y-people))" }, { id: "mind", n: "Mind", c: "var(--t-mind, var(--y-ideas))" }, { id: "shocks", n: "Shocks", c: "var(--t-shocks, var(--y-disease))" }];
+  // The family emblem (views/pixel/icons.js) for a layer or lens, tinted with its family's tincture.
+  const famIcon = k => { const f = FAMILIES.some(x => x.id === k) ? k : FAM_OF[k] || (ATLAS.lenses.find(d => d && d.id === k) || {}).family; return f && window.PIXEL_ICONS ? `<span class="fi" style="--t:var(--t-${f})">${PIXEL_ICONS.svg(f, "s")}</span>` : "<i></i>"; };
   const FAM_OF = { places: "land", war: "power", order: "power", money: "wealth", people: "peoples", ideas: "mind", disease: "shocks" };
   const PLUG = ATLAS.lenses.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !(d.id in FAM_OF) && FAMILIES.some(f => f.id === d.family) && a.findIndex(x => x && x.id === d.id) === i);
   for (const d of PLUG) {
@@ -544,7 +553,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
 
   const PPL = PEOPLE.people.map((r, i) => {
     const bp = PEOPLE.places[r[3]], dp = PEOPLE.places[r[4]];
-    return { i, name: r[0], b: r[1], d: r[2], occ: r[5], grp: r[6], hpi: r[7], wiki: r[8], place: bp ? bp[0] : "", country: bp ? bp[3] : "", lat: bp ? bp[1] : null, lon: bp ? bp[2] : null, dplace: dp ? dp[0] : "" };
+    return { i, name: r[0], b: r[1], d: r[2], occ: r[5], grp: r[6], hpi: r[7], wiki: r[8], rg: r[9] ?? -1, place: bp ? bp[0] : "", country: bp ? bp[3] : "", lat: bp ? bp[1] : null, lon: bp ? bp[2] : null, dplace: dp ? dp[0] : "" };
   }).filter(p => p.lat != null).sort((a, b) => b.hpi - a.hpi);
   const adult = (p, y) => y >= p.b + 15 && y <= (p.d ?? p.b + 80);
   // People born within 60 km of a spot, from the world index (ATLAS.world.near), in the page's person shape; null
@@ -562,6 +571,31 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
         dplace: "", hpi: r.rank, wiki: null, wd: typeof r.ref === "number" && r.ref ? "Q" + r.ref : null }, d: r.dist });
     }
     return out.sort((a, b) => b.x.hpi - a.x.hpi);
+  }
+  // People outside Europe (data/coverage: Pantheon, Wikidata, CBDB), loaded after the first paint as "people:world".
+  // Row: [name, born, died, occupation, group, fame, wikipedia, lat, lon, place, death place, region, what, wikidata or cbdb:id, place kind (0 born, 1 lived or from, 2 served the state there)].
+  const REGIONS = PEOPLE.regions || [];
+  function addPeople(rows) {
+    for (const r of rows) {
+      const id = r[13] || "", src = id.startsWith("cbdb:") ? [{ cite: "China Biographical Database, person " + id.slice(5), url: "https://projects.iq.harvard.edu/cbdb" }]
+        : id ? [{ cite: "Wikidata " + id, url: "https://www.wikidata.org/wiki/" + id }] : [];
+      PPL.push({ i: -1, name: r[0], b: r[1], d: r[2], occ: r[3], grp: r[4], hpi: r[5], wiki: r[6], lat: r[7], lon: r[8], place: r[9], dplace: r[10],
+        rg: r[11], what: r[12], src, pk: r[14] || 0, country: REGIONS[r[11]] || "" });
+    }
+    PPL.sort((a, b) => b.hpi - a.hpi);
+  }
+  if (PEOPLE.world) addPeople(PEOPLE.world);
+  // The n people to show: the most remembered of each region in turn, so a world view is not just Europe's famous.
+  function balanced(list, n) {
+    const by = new Map();
+    for (const p of list) { let b = by.get(p.rg); if (!b) by.set(p.rg, b = []); b.push(p); }
+    const bs = [...by.values()], out = [];
+    for (let i = 0; out.length < n; i++) {
+      let any = false;
+      for (const b of bs) { if (i < b.length) { any = true; out.push(b[i]); if (out.length >= n) break; } }
+      if (!any) break;
+    }
+    return out;
   }
 
   // Flows: the economy-trade kernel records (lenses/flows.py: 75 routes, people as [low, high]) when built in, else the extracted layer.
@@ -1132,7 +1166,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function drawPeople() {
     const y = state.year, out = MK.people.points = [];
     const n = Math.min(450, Math.round(14 + 22 * Math.pow(state.k, 1.25)));
-    const list = state.on.people ? PPL.filter(p => adult(p, y)).slice(0, n) : [];
+    const list = state.on.people ? balanced(PPL.filter(p => adult(p, y)), n) : [];
     list.forEach((d, i) => out.push(P(d, { kind: "person", shape: "circle", color: "var(--y-people)", fill: .8, size: 2 + Math.max(0, d.hpi - 60) / 9,
       label: d.name, lbl: true, always: i < 6, pri: d.hpi / 20, title: () => `${d.name} · ${d.occ} · ${fmtSpan(d.b, d.d)} · born ${d.place}`, card: cardFn(personCard, d) })));
   }
@@ -1489,8 +1523,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   function personCard(p) {
     return { kind: "person", c: "var(--y-people)", lon: p.lon, lat: p.lat, name: p.place, kick: `Person · ${p.occ}`, title: p.name, year: p.b + 30,
-      meta: `${fmtSpan(p.b, p.d)} · born in ${p.place}${p.country ? ", " + p.country : ""}${p.dplace && p.dplace !== p.place ? ` · died in ${p.dplace}` : ""}`,
-      sources: p.wd ? [{ cite: `Wikidata ${p.wd} (CC0) via the world index`, url: "https://www.wikidata.org/wiki/" + p.wd }] : wiki(p.wiki) };
+      meta: `${fmtSpan(p.b, p.d)} · ${["born in", "of", "served"][p.pk || 0]} ${p.place}${p.country ? ", " + p.country : ""}${p.dplace && p.dplace !== p.place ? ` · died in ${p.dplace}` : ""}`,
+      body: p.what || "", sources: p.wd ? [{ cite: `Wikidata ${p.wd} (CC0) via the world index`, url: "https://www.wikidata.org/wiki/" + p.wd }] : p.wiki ? wiki(p.wiki) : p.src || [] };
   }
   function tradeCard(t) {
     const m = t.pts[Math.floor(t.pts.length / 2)];
@@ -1589,7 +1623,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const sec = (layer, title, items, n) => {
     if (!items.length) return "";
     const now = items.filter(x => !x.startsWith('<button class="it dim')), deep = items.filter(x => x.startsWith('<button class="it dim'));
-    return `<div class="sec${state.on[layer] === false ? " off" : ""}" style="--c:var(--y-${layer})"><h3><i></i>${esc(title)}${n != null ? `<span class="n">${esc(n)}</span>` : ""}</h3><div class="items${now.length ? "" : " only-deep"}">${now.join("")}</div>${deep.length ? `<details class="deep"><summary>${deep.length} from other times</summary><div class="items">${deep.join("")}</div></details>` : ""}</div>`;
+    return `<div class="sec${state.on[layer] === false ? " off" : ""}" data-layer="${layer}" style="--c:var(--y-${layer})"><h3>${famIcon(layer)}${esc(title)}${n != null ? `<span class="n">${esc(n)}</span>` : ""}</h3><div class="items${now.length ? "" : " only-deep"}">${now.join("")}</div>${deep.length ? `<details class="deep"><summary>${deep.length} from other times</summary><div class="items">${deep.join("")}</div></details>` : ""}</div>`;
   };
   const goCard = (c, setYear) => () => { select(c, { fly: true, setYear }); };
   const nearby = (list, lon, lat, r) => list.map(x => ({ x, d: km([lon, lat], [x.lon, x.lat]) })).filter(o => o.d <= r).sort((a, b) => a.d - b.d);
@@ -1603,7 +1637,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     for (const e of ENTRIES) for (const [yy, t, bad] of (EVENTS[e.id] || [])) if (Math.abs(yy - y) <= 25) evs.push({ e, yy, t, bad });
     evs.sort((a, b) => Math.abs(a.yy - y) - Math.abs(b.yy - y));
     const cities = ENTRIES.filter(e => alive(e, y)).map(e => ({ e, p: popAt(e, y) })).filter(o => o.p).sort((a, b) => b.p - a.p).slice(0, 6);
-    const ppl = PPL.filter(p => adult(p, y)).slice(0, 8);
+    const ppl = balanced(PPL.filter(p => adult(p, y)), 8);
     const tr = TRADE.filter(t => y >= t.start && y <= t.end), mg = MIGS.filter(m => y >= m.start && y <= m.end);
     const hubs = HUBS.filter(h => y >= h.start && y <= h.end);
     const sh = SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 5 && y <= (e.end ?? NOW) + 10).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y)).slice(0, 6);
@@ -2497,6 +2531,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     war: [["battle", "Battle or siege, fading over a dozen years"], ["hourglass", "Strait or mountain pass that armies and trade must cross"]],
   };
   const keyEl = document.getElementById("keycard"), keyBtn = document.getElementById("keybtn");
+  let keyGroups = null;
   function renderKey() {
     if (keyEl.hidden) return;
     const groups = FAMILIES.map(f => {
@@ -2506,9 +2541,13 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
         // A basemap that paints marks itself (the pixel map) can draw the key's glyphs in the same style.
         return rs.map(([g, t]) => `<div class="kr" style="--c:${COLOR(k)}">${(ATLAS.keyGlyph && ATLAS.keyGlyph(g, k, COLOR(k))) || `<svg viewBox="0 0 22 16" aria-hidden="true">${G_[g] || G_.dot}</svg>`}<span>${d && !KEY[k] && !Array.isArray(d.key) ? "<b>" + esc(d.name) + "</b> " : ""}${esc(t)}</span></div>`);
       });
-      return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${esc(f.n)}</b>${rows.join("")}</div>` : "";
+      return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${famIcon(f.id)}${esc(f.n)}</b>${rows.join("")}</div>` : "";
     }).join("");
-    keyEl.innerHTML = `<h4>On the map in ${esc(fmtYear(state.year))}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
+    // Year steps only change the heading: keep the rows (and their pixel glyphs) when they are the same.
+    const head = `On the map in ${fmtYear(state.year)}`;
+    if (groups === keyGroups && keyEl.firstElementChild) { keyEl.firstElementChild.textContent = head; return; }
+    keyGroups = groups;
+    keyEl.innerHTML = `<h4>${esc(head)}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
       <h4>Keys</h4><div class="keys"><kbd>← →</kbd><span>Step through time (Shift for bigger steps)</span><kbd>Space</kbd><span>Play or pause time</span><kbd>/</kbd><span>Ask a question</span>
       <kbd>1–6</kbd><span>Switch a lens family on or off</span><kbd>S</kbd><span>Surprise me</span><kbd>F</kbd><span>Focus: map only</span><kbd>K</kbd><span>This key</span><kbd>Esc</kbd><span>Close, clear the caption</span></div>`;
   }
@@ -2654,6 +2693,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
         // Fragility and area series per polity id; POLS holds copies, so fill both.
         for (const list of [ORDER.polities, POLS]) for (const p of list) { const sv = v[p.id]; if (sv) { if (sv[0]) p.a = sv[0]; if (sv[1]) p.f = sv[1]; } }
       }
+      else if (key === "people:world") addPeople(v);
       else if (key === "war:wd") { for (const r of v) BATTLES.push(wdBattle(r)); BAT_BY_YEAR = d3.group(BATTLES, b => b.start); }
     };
     let timer = 0;
@@ -2674,3 +2714,4 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   } else flyTo({ lon: 45, lat: 35, span: 140 }, 0);
 })();
 </script>
+<!--__CHROME_JS__-->

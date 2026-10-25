@@ -311,7 +311,7 @@
       <h3>A month's travel from ${esc(o.n)}</h3>
       <div class="bars">${bars.map(([e, a]) => `<button class="bar${snap(y) === e ? " now" : ""}" data-year="${e}"><span class="t">${esc(fy(e))}</span><span class="b" style="width:${a ? Math.max(1, a / mx * 100) : 0}%"></span><span class="v">${a ? fmtArea(a) : "tap to measure"}</span></button>`).join("")}</div>
       ${dests.length ? `<h3>To the other cities, ${esc(fy(res.y))}</h3><table>${dests.map(([n, d]) => `<tr><td>${esc(n)}</td><td class="n">${esc(dd(d))}</td></tr>`).join("")}</table>` : ""}
-      ${D.trips.length ? `<h3>How good is the router?</h3><p>Real journeys with their recorded days, against what the Atlas's router says for the same trip and year.</p>
+      ${D.trips.length ? `<h3>How good is the router?</h3><p>Real journeys with their recorded days, against the Atlas's router for the same trip and year (time under way; its days waiting for a ship are left out, as the records leave them out).</p>
         ${S.checks ? `<table>${S.checks.map(c => `<tr><td>${esc(c.t[0])} → ${esc(c.t[3])}, ${esc(fy(c.t[6]))}<br><small>${esc(c.t[9] || c.t[8])}</small></td><td class="n">${c.t[7]} d recorded<br>${c.m == null ? "…" : isFinite(c.m) ? Math.round(c.m) + " d model" : "no route"}</td></tr>`).join("")}</table><p>${esc(checkLine())}</p>` : `<div class="row"><button class="c" data-a="check">Check ${D.trips.length} journeys</button></div>`}` : ""}
       <p>Rings come from the Atlas's shared router (the same one Live a life uses), worked out for each decade. Click anywhere on the map: Here says how long it took to get there.</p>
     </div>`;
@@ -327,7 +327,8 @@
     const step = () => {
       if (i >= S.checks.length) return renderTab();
       const c = S.checks[i++], t = c.t;
-      try { const r = A.world.route([t[1], t[2]], [t[4], t[5]], t[6], { pref: t[8] === "sea" || t[8] === "steam" ? "sea" : "fast" }); c.m = r ? r.days : NaN; } catch (err) { c.m = NaN; }
+      // Records time the passage, so compare the router's time under way (its days waiting in port are left out).
+      try { const r = A.world.route([t[1], t[2]], [t[4], t[5]], t[6], { pref: t[8] === "sea" || t[8] === "steam" ? "sea" : "fast" }); c.m = r ? r.legs.filter(l => l.medium !== "port").reduce((a, l) => a + l.days, 0) : NaN; c.all = r ? r.days : NaN; } catch (err) { c.m = NaN; }
       if (i % 4 === 0) renderTab();
       setTimeout(step, 30);
     };
