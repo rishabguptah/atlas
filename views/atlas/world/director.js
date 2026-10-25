@@ -1,7 +1,7 @@
 // L4 Director: plays any Story (story.js) on the map. The map flies to each scene, a one-line caption types
 // itself into a pixel dialog box on the map, Space or → plays the next scene, ← goes back, the strip at the
 // bottom scrubs the whole story, one obvious button asks "Why?" (or "Go deeper"), and "How do we know" opens the
-// scene's sources and confidence. The side panel folds away while a story plays; Esc gives it back.
+// scene's sources and confidence. The panel (and Ask) stays open beside it; Esc leaves the story.
 //
 // ATLAS.world.director: init(api), play(story | id, {at, auto}), next(), prev(), go(i), leave(), active,
 // onEnd(fn). Needs ATLAS.api (scene, setOn, setTab, ask, ...), which the page hands to tabs at mount.
@@ -105,7 +105,7 @@
   }
 
   let api = null, root = null, box = null, strip = null;
-  const S = { story: null, i: -1, typing: 0, shown: 0, why: false, src: false, auto: false, timer: 0, t0: 0, dur: 0, raf: 0, hadFocus: false, ended: false, ends: [] };
+  const S = { story: null, i: -1, typing: 0, shown: 0, why: false, src: false, auto: false, timer: 0, t0: 0, dur: 0, raf: 0, ended: false, ends: [] };
 
   function init(a) {
     if (api) return;
@@ -130,10 +130,10 @@
     if (story.sync) story.sync();
     if (!story.scenes || !story.scenes.length) return false;
     const app = document.querySelector(".app");
-    if (!S.story) { S.hadFocus = app.classList.contains("focus"); }
     stopAuto();
     S.story = story; S.i = -1; S.ended = false; S.auto = !!opts.auto;
-    app.classList.add("focus", "directing");
+    // The panel stays open so Ask is always one tap away; F still gives the map the whole screen.
+    app.classList.add("directing");
     root.hidden = false;
     renderStrip();
     go(Math.max(0, Math.min(story.scenes.length - 1, opts.at || 0)));
@@ -202,7 +202,7 @@
     S.story = null; S.i = -1; S.ended = false;
     root.hidden = true;
     const app = document.querySelector(".app");
-    app.classList.remove("directing"); if (!S.hadFocus) app.classList.remove("focus");
+    app.classList.remove("directing");
   }
 
   // ---------- autoplay ----------

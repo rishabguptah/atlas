@@ -327,7 +327,7 @@
       <div class="ctl">${on ? `<button type="button" class="go ghost" data-act="prev" aria-label="Previous stop">◀</button>
         <button type="button" class="go" data-act="pause">${follow.playing ? "❚❚ Pause" : "▶ Play"}</button>
         <button type="button" class="go ghost" data-act="next" aria-label="Next stop">▶</button><button type="button" class="go ghost" data-act="stop">✕ Stop</button>`
-        : `<button type="button" class="go" data-act="follow">▶ Follow its journey</button><button type="button" class="go ghost" data-act="play">🎲 Play: guess where it goes</button>`}</div>
+        : `<button type="button" class="go" data-act="follow">▶ Follow its journey</button><button type="button" class="go ghost" data-act="play">🎲 Play: guess where it goes</button>${W().director ? `<button type="button" class="go ghost" data-act="story">🎬 Play as a story</button>` : ""}`}</div>
       ${on ? quizHtml(o) : best(o.id) != null ? `<p class="note">Your best guessing game: ${best(o.id)} of ${rounds(o)}.</p>` : ""}
       <div class="conf"><span>documented</span><span class="likely">likely</span><span class="legend">legend or unknown route</span></div>
       <ol class="stops">${o.stops.map(s => `<li data-i="${s.i}" class="${s.c}${on && s.i === follow.i ? " on" : ""}${on && s.i < follow.i ? " done" : ""}"><i></i><div>
@@ -453,6 +453,7 @@
     if (a === "surprise") { const all = C0().objs; return start(all[Math.floor(Math.random() * all.length)].id); }
     if (a === "back") { if (follow.id) stop(); openId = null; return render(); }
     if (a === "follow") return start(openId);
+    if (a === "story") { const o = C0().byId[openId]; if (o && W().director) { routeLegs(o); W().director.play(story(o)); } return; }
     if (a === "play") return start(openId, true);
     if (a.startsWith("pick")) return answer(a.slice(4));
     if (a === "stop") return stop();
@@ -482,6 +483,7 @@
           run++; follow.playing = false; showStop(s.i, run);
         }
       });
+      register();
       el.addEventListener("submit", ev => { if (ev.target.id !== "obj-trace") return; ev.preventDefault(); const q = el.querySelector("#obj-q").value.trim(); if (q) trace(q); });
       // Stop following if the person drags time away from the journey.
       document.addEventListener("keydown", ev => { if (ev.key === "Escape" && follow.id) stop(); });
@@ -610,24 +612,34 @@ SOURCE RULES: cite works you are confident exist, or en.wikipedia.org URLs you a
     start_date: date(s.prev ? Math.max(s.prev.y, s.y - 1) : s.y, s.a), end_date: date(s.y, s.a), mode: s.v || "land", conf: legConf(s),
     via: s.L, by: s.by, owner: s.owner, branch: s.br, src: srcOf(C0(), s.obj, s) });
   // A Story of Scenes (views/atlas/WORLD.md, L4) for the shared Director: an opening on why it matters, then one scene per stop.
-  const LENS_OF = { looted: "military", seized: "military", tribute: "military", traded: "economy", paid: "economy", taxed: "economy",
-    gift: "politics", made: "art", copied: "art", read: "ideas", found: "archaeology" };
+  // The Director's lens names (views/atlas/world/director.js BY): what kind of history each move is.
+  const LENS_OF = { looted: "military", seized: "military", tribute: "military", destroyed: "military", attacked: "military",
+    traded: "economy", paid: "economy", taxed: "economy", sold: "economy", bought: "economy", read: "ideas", printed: "literature",
+    copied: "literature", gift: "order", returned: "order", made: "people", found: "people", carried: "geography" };
   function story(o) {
     const sid = i => `object:${o.id}:${i}`, C = C0();
-    const first = o.stops[0], scenes = [{ id: sid("open"), t: first.y, view: { ...viewFor(first), span: 60 }, lenses: [ID],
+    const s0 = o.stops[0], scenes = [{ id: sid("open"), t: s0.y, view: { ...viewFor(s0), span: 60 }, lenses: [ID],
       highlight: [], pins: [], routes: [], actors: ["object:" + o.id], caption: `${o.n}. ${o.w.split(". ")[0]}.`.slice(0, 160),
-      text: o.why || o.w, by: "object", conf: conf5(first), sources: o.s.map(C.src), branch: null, next: [sid(0)], ask: "Why does it matter?" }];
+      text: o.why || o.w, by: null, conf: conf5(s0), sources: o.s.map(C.src), branch: null, next: [sid(0)], ask: "Why does it matter?" }];
     o.stops.forEach((s, i) => scenes.push({ id: sid(i), t: s.y, date: date(s.y, s.a), view: viewFor(s), lenses: [ID],
-      highlight: [], pins: [{ lon: s.lon, lat: s.lat, label: s.p, sprite: sprite(o.sp), conf: conf5(s) }],
-      routes: s.L ? [{ path: s.L, conf: legConf(s), mode: s.v || "land", carrier: s.v === "sea" ? "ship" : "caravan" }] : [],
-      actors: ["object:" + o.id], caption: `${fmtY(s.y)}. ${o.n}: ${s.p}`.slice(0, 160), text: s.n + (s.m ? ` Who could have seen it: ${s.m}.` : ""),
-      by: LENS_OF[s.by] || "history", conf: conf5(s), sources: srcOf(C, o, s), branch: s.br ? sid(o.stops.indexOf(homeAt(o, i))) : null,
+      highlight: [], pins: [{ lon: s.lon, lat: s.lat, name: s.p, label: s.p, sprite: sprite(o.sp), conf: conf5(s) }],
+      routes: s.L ? [{ label: s.prev ? `${s.prev.p} → ${s.p}` : s.p, points: s.L, path: s.L, conf: legConf(s), mode: s.v || "land", carrier: s.v === "sea" ? "ship" : "caravan" }] : [],
+      actors: ["object:" + o.id], caption: `${o.n}: ${s.p}`.slice(0, 160), text: s.n + (s.m ? ` Who could have seen it: ${s.m}.` : ""),
+      by: LENS_OF[s.by] || null, conf: conf5(s), sources: srcOf(C, o, s), branch: s.br ? sid(o.stops.indexOf(homeAt(o, i))) : null,
       next: i + 1 < o.stops.length ? [sid(i + 1)] : [], ask: "How do we know?" }));
     if (o.now) scenes[scenes.length - 1].next = [sid("now")], scenes.push({ id: sid("now"), t: o.y1, view: viewFor(o.stops[o.stops.length - 1]), lenses: [ID], highlight: [], pins: [], routes: [],
-      actors: ["object:" + o.id], caption: `Today: ${o.now}`.slice(0, 160), text: o.dis ? `Disputed: ${o.dis}` : o.now, by: "object",
+      actors: ["object:" + o.id], caption: `Today: ${o.now}`.slice(0, 160), text: o.dis ? `Disputed: ${o.dis}` : o.now, by: null,
       conf: "attested", sources: o.s.map(C.src), branch: null, next: [], ask: null });
-    return { id: "object:" + o.id, title: o.n, kind: "object", scenes };
+    return { id: "object:" + o.id, title: o.n, kind: "object", blurb: first(o.w), status: o.ai ? "live" : o.status, live: !!o.ai, scenes };
   }
+  // Every journey is also a Story the shared Director can play (views/atlas/world/story.js).
+  const W = () => window.ATLAS.world || {};
+  let registered = false;
+  function register() {
+    if (registered || !W().stories || !W().stories.add) return;
+    W().stories.add({ kind: "object", list: () => C0().objs.map(story) }); registered = true;
+  }
+  register();
   ATLAS.objects = {
     list: () => C0().objs.map(o => ({ id: o.id, name: o.n, type: o.t, what: o.w, sprite: sprite(o.sp), from: o.y0, to: o.y1 })),
     // The journey in the shared shape (views/atlas/WORLD.md): a route record, subtype journey, one leg per move.

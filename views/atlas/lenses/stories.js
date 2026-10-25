@@ -89,7 +89,9 @@
       el.addEventListener("click", ev => { const b = ev.target.closest("[data-id]"); if (b) play(b.dataset.id); });
       // Refresh the list when a story ends, so finished ones show as seen.
       A.world.director.onEnd(() => render());
-      setTimeout(coldOpen, 350);
+      // The cold open waits until the map has painted and the page is idle, so it never slows the first paint.
+      const later = () => requestAnimationFrame(() => requestAnimationFrame(() => (window.requestIdleCallback || (f => setTimeout(f, 200)))(coldOpen, { timeout: 2500 })));
+      document.readyState === "complete" ? later() : addEventListener("load", later, { once: true });
     },
     show() { render(); },
   });

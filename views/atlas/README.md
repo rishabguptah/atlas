@@ -86,7 +86,7 @@ Zoom frames only move the map: labels hide while the scale changes and thinning 
 Every story-like thing plays on the map through one Director (`world/director.js`, WORLD.md L4): the map flies, a
 one-line caption types into a pixel dialog box, Space or → is the next scene, ← goes back, the strip scrubs the story,
 **Why?** (Enter) unfolds the reason, "How do we know" (H) shows sources and the confidence class, P plays by itself, Esc
-gives the panel back. `world/story.js` holds the Scene/Story format, the registry (`ATLAS.world.stories.add/list/get/check`)
+leaves the story. The panel, with Ask, stays open beside the story; the cold open waits until the map has painted. `world/story.js` holds the Scene/Story format, the registry (`ATLAS.world.stories.add/list/get/check`)
 and converters for guide tours, panel answers (live ones keep streaming in), What-ifs (a fork scene, then dashed branch
 scenes), Up close storylines (by the month) and Codex trails. Authored Stories live in `data/stories/*.json`; the Stories
 tab (`lenses/stories.*`) lists them all. The Atlas opens on a cold open (Constantinople 1453) on a first visit or after
