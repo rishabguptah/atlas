@@ -7,6 +7,8 @@
 //   pm.tick()                                advance sprite and water animation by one frame (call ~4 fps)
 //   pm.overlay(fn) / pm.repaint()            fn(g) paints last, into the same grid (lens marks, see marks.js); repaint redraws
 //   pm.setDetail(fn)                         fn(G, phase) draws zoom detail into the grid: "under" before realm tints, "over" after; "key" names the under pass (see detail.js)
+//   pm.labelGrid()                           realm id and terrain class per art pixel of the last frame (for realm names)
+//   pm.spriteBoxes()                         screen boxes of the prioritised sprites last painted (labels keep off them)
 //
 // levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
 // land: GeoJSON land (coasts come from it, so they stay sharp at any zoom). rivers: [{rank, line: [[lon,lat],...]}].
@@ -431,7 +433,7 @@
     }
     // Declutter: when sprites carry a priority (pri), keep the most important ones that fit without touching,
     // up to max; sprites sharing a grp (a battle's two armies and clash) are kept or dropped together.
-    let spriteOpts = {}, spriteMask = null, overlay = null;
+    let spriteOpts = {}, spriteMask = null, overlay = null, shown = [];
     function declutter(src, t) {
       if (!src.some(s => s.pri != null)) return src;
       const pad = spriteOpts.pad == null ? 2 : spriteOpts.pad, max = spriteOpts.max || Infinity, groups = new Map();
@@ -456,6 +458,7 @@
     function paint() {
       if (!base) return;
       const list = declutter(allSprites, last);
+      shown = list;
       const img = ctx.createImageData(w, h), out = new Uint32Array(img.data.buffer);
       out.set(base);
       // Water shimmer: a few world-anchored wave glints that move with the frame.
@@ -523,6 +526,20 @@
       isWater(lon, lat) { if (!cls || !last) return false; const q = this.toPixel(lon, lat); if (!q || q[0] < 0 || q[1] < 0 || q[0] >= w || q[1] >= h) return false; return cls[q[1] * w + q[0]] <= 2; },
       // Which realm is drawn under a screen point (for hover and click), from the id buffer.
       realmAt(sx, sy) { if (!ids || !last) return null; const i = Math.floor((sx - parseFloat(canvas.style.left)) / PX), j = Math.floor((sy - parseFloat(canvas.style.top)) / PX); const n = ids[j * w + i]; return n > 0 ? realmsNow[n - 1] : null; },
+      // Screen boxes of the sprites last painted with a priority (towns, armies, landmarks), so names can keep off them.
+      spriteBoxes() {
+        if (!last) return [];
+        const out = [], L = parseFloat(canvas.style.left), Tp = parseFloat(canvas.style.top);
+        for (const s of shown) {
+          if (s.pri == null || s.pri < 1) continue;
+          const S = (global.PIXEL_SPRITES || {})[s.sprite], p = S && projection([s.lon, s.lat]); if (!p) continue;
+          const i0 = Math.floor((p[0] * last.k) / PX) - U0 + (s.dx || 0), j0 = Math.floor((p[1] * last.k) / PX) - V0 + (s.dy || 0);
+          out.push([L + (i0 - S.ax) * PX, Tp + (j0 - S.ay) * PX, L + (i0 - S.ax + S.w) * PX, Tp + (j0 - S.ay + S.h) * PX]);
+        }
+        return out;
+      },
+      // The last frame's realm ids and terrain classes per art pixel, for naming realms (realmnames.js).
+      labelGrid() { return ids && last ? { ids, cls, w, h, PX, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top), realms: realmsNow } : null; },
       toPixel(lon, lat) { const p = projection([lon, lat]); return p && [Math.floor((p[0] * last.k) / PX) - U0, Math.floor((p[1] * last.k) / PX) - V0]; },
       get size() { return { w, h, PX }; },
     };
