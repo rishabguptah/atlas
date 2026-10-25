@@ -1,0 +1,28 @@
+{
+  "id": "cowrie_shells",
+  "name": "Cowrie shells",
+  "type": "kind",
+  "sprite": "obj_shell",
+  "what": "Small white sea snail shells, mostly the money cowrie Monetaria moneta of the Maldives, used as money from China to West Africa for over a thousand years.",
+  "why": "The longest-lived currency in history ran on one archipelago's lagoons. In the 18th century European ships carried billions of Maldive shells to West Africa, where they paid for enslaved people.",
+  "now": "No longer money anywhere, but still used in divination, jewellery and as a symbol of wealth across West Africa and South Asia.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Hogendorn, J. & Johnson, M. (1986). The Shell Money of the Slave Trade. Cambridge University Press."},
+    {"cite": "Yang, B. (2019). Cowrie Shells and Cowrie Money: A Global History. Routledge."},
+    {"cite": "Ibn Battuta, Rihla (c. 1355), trans. H. A. R. Gibb."},
+    {"cite": "Wikipedia: Shell money", "url": "https://en.wikipedia.org/wiki/Shell_money"}
+  ],
+  "stops": [
+    {"y": 900, "approx": true, "at": [73.51, 4.18], "place": "Maldives", "owner": "Maldivian islanders", "by": "made", "conf": "sure", "note": "Women gathered the shells on palm fronds laid in the lagoons, then dried and counted them. Arab writers from the 9th century describe the Maldives' shell trade.", "meet": "Ibn Battuta, a judge in the Maldives in 1343-1344"},
+    {"y": 1000, "approx": true, "at": [88.14, 24.87], "place": "Bengal", "owner": "Bengal markets", "by": "traded", "conf": "likely", "via": "sea", "path": [[73.51, 4.18], [79, 5.5], [81.8, 7.5], [82.5, 13], [86.5, 20], [88.14, 24.87]], "note": "Shiploads of cowries went to Bengal, where they served as small change for everyday buying until the 19th century; Bengal rice went back to the islands."},
+    {"y": 1100, "approx": true, "at": [102.71, 25.04], "place": "Yunnan", "owner": "Dali kingdom", "by": "traded", "conf": "likely", "via": "land", "from": 1, "note": "In Yunnan cowries were money under the Dali kingdom and long after; Marco Polo saw them there in the 1280s.", "meet": "Marco Polo, in Yunnan in the 1280s"},
+    {"y": 1250, "approx": true, "at": [31.26, 30.03], "place": "Cairo", "owner": "Karimi merchants", "by": "traded", "conf": "likely", "via": "sea", "from": 0, "path": [[73.51, 4.18], [65, 12], [52, 12.5], [43.3, 12.7], [39.2, 21.5], [34, 27.5], [32.55, 29.95], [31.26, 30.03]], "note": "Through the Red Sea and Egypt the shells crossed the Sahara with the caravans."},
+    {"y": 1352, "at": [-3.0, 16.77], "place": "Timbuktu and the Niger bend", "owner": "Mali empire", "by": "traded", "conf": "sure", "via": "caravan", "path": [[31.26, 30.03], [25.5, 29.2], [15, 26], [5, 24], [-1, 20], [-3.0, 16.77]], "note": "Ibn Battuta, travelling in Mali in 1352, saw cowries used as money in the markets of the Niger."},
+    {"y": 1520, "approx": true, "at": [-9.14, 38.72], "place": "Lisbon", "owner": "Portuguese crown", "by": "traded", "conf": "sure", "via": "sea", "from": 0, "path": [[73.51, 4.18], [65, -10], [45, -36], [18, -36], [-5, -10], [-25, 10], [-20, 35], [-9.14, 38.72]], "note": "The Portuguese shipped cowries home as ballast from the Indian Ocean and on to West Africa."},
+    {"y": 1650, "approx": true, "at": [4.9, 52.37], "place": "Amsterdam", "owner": "Dutch East India Company", "by": "traded", "conf": "sure", "via": "sea", "from": 5, "note": "The VOC bought Maldive shells in Ceylon and Bengal and auctioned them by the ton in Amsterdam to slave traders."},
+    {"y": 1720, "approx": true, "at": [2.09, 6.36], "place": "Ouidah", "owner": "Kingdom of Dahomey and its traders", "by": "paid", "conf": "sure", "via": "sea", "from": 6, "path": [[4.9, 52.37], [2, 51], [-5, 48.5], [-12, 40], [-18, 25], [-17.5, 14.7], [-13, 7], [-5, 4.5], [2.09, 6.36]], "note": "On the Bight of Benin cowries were the money of the Atlantic slave trade: European ships brought billions of shells there in the 18th century. Each shell was a fraction of a person's price; the people sold are the point of this stop.", "meet": "a person taken from Ouidah's beach to the slave ships"},
+    {"y": 1845, "approx": true, "at": [39.19, -6.16], "place": "Zanzibar", "owner": "German and French traders", "by": "traded", "conf": "sure", "via": "sea", "from": 0, "note": "From the 1840s traders shipped the larger East African ring cowrie, Monetaria annulus, from Zanzibar by the hundreds of tons."},
+    {"y": 1860, "approx": true, "at": [3.39, 6.45], "place": "Lagos", "owner": "West African markets", "by": "traded", "conf": "sure", "via": "sea", "from": 8, "path": [[39.19, -6.16], [42, -15], [36, -30], [18, -36], [10, -20], [5, -5], [3.39, 6.45]], "note": "The flood of East African shells caused one of history's great inflations: cowrie prices in Lagos fell steeply, and under colonial rule shells gave way to coins."}
+  ]
+}

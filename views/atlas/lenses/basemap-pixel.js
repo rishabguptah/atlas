@@ -66,9 +66,16 @@
   // each realm, and the terrain names; both step back when a lens has focus.
   const LBL = window.ATLAS && ATLAS.labels;
   let realmItems = [];
+  // Finding the curves takes a few ms, so it waits for an idle moment instead of sitting in a year step's frame.
+  let nameJob = 0;
+  const idle = window.requestIdleCallback ? fn => requestIdleCallback(fn, { timeout: 150 }) : fn => setTimeout(fn, 30);
   function nameRealms() {
-    realmItems = pm && typeof PixelRealmNames === "function" && isOn("borders") ? PixelRealmNames(pm.labelGrid()) : [];
-    if (LBL) LBL.refresh();
+    if (nameJob) return;
+    nameJob = idle(() => {
+      nameJob = 0;
+      realmItems = pm && typeof PixelRealmNames === "function" && isOn("borders") ? PixelRealmNames(pm.labelGrid()) : [];
+      if (LBL) LBL.refresh();
+    });
   }
   if (LBL) {
     LBL.add("realms", () => pm && isOn("borders") ? realmItems : [], { base: true });
@@ -194,7 +201,7 @@
   }
   function mountMarks(el, projection) {
     marks = PixelMarks(svgEl(), projection);
-    pm.overlay(marks.paint);
+    pm.overlay(g => { if (typeof PixelGrammar !== "undefined") PixelGrammar.over(g); marks.paint(g); });
     mapOf(el).classList.add("pxmarks");
     if (typeof ATLAS.marks === "function") {
       marks.set(ATLAS.marks());
@@ -253,6 +260,8 @@
         pm.setDetail((G, phase) => detail.draw(G, phase, window.ATLAS.deep && ATLAS.deep.m != null ? Math.floor(ATLAS.deep.m / 12) : year, proj));
         if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("provinces", view => detail.names(view), { base: true });
       }
+      // Data grammar (views/pixel/grammar.js): a choropleth under the sprites; compare overlay with the marks.
+      if (typeof PixelGrammar !== "undefined" && pm.underlay) { pm.underlay(g => PixelGrammar.under(g)); ATLAS.pixel = { repaint: () => pm && pm.repaint(), map: () => pm, transform: () => T, projection: () => proj }; }
       // Names of seas, rivers, ranges and deserts in the pixel font, under the Land lens's terrain toggle.
       if (!LBL && typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
       if (typeof PixelMarks === "function" && svgEl()) mountMarks(el, projection);

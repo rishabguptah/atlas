@@ -502,34 +502,52 @@
 
     // ---------- meaning first: ink-in, plague fronts, campaigns, trade ----------
     // Borders that changed since the last settled year ink in over three stepped frames.
+    // Borders that moved ink in quietly: only pixels within about 2 art px of a boundary that changed, in ink, stepping
+    // from the old line to the new over three frames. Never a realm fill (art direction review of #63).
     function diffBorders() {
-      const { ids, realms } = V;
+      const { ids, realms, cls } = V;
       const key = [V.t.k, V.t.x, V.t.y, w, h].join();
       if (!ids || !src.isOn || !src.isOn("borders")) { prevIds = null; return; }
       if (prevIds && prevKey === key && prevRealms !== realms) {
         const idx = new Map(realms.map((r, n) => [r.name || r.id, n + 1]));
         const map = new Int32Array(prevRealms.length + 1); prevRealms.forEach((r, n) => { map[n + 1] = idx.get(r.name || r.id) || -1; });
-        const list = [];
-        for (let k = 0; k < w * h; k++) { const a = prevIds[k], b = ids[k]; if (a === b && a === 0) continue; if (map[a] !== b && V.cls[k] > 3 && V.cls[k] !== 255) list.push(k); }
+        const land = k => cls[k] > 3 && cls[k] !== 255;
+        const edgeOf = (A, k) => { const a = A[k]; return A[k - 1] !== a || A[k + 1] !== a || A[k - w] !== a || A[k + w] !== a; };
+        // An old boundary pixel survives if the same two realms still meet there (by name).
+        const same = k => { const a = prevIds[k], b = ids[k]; return (a === 0 && b === 0) || map[a] === b; };
+        const oldL = [], newL = [], moved = new Uint8Array(w * h);
+        let changed = 0;
+        for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) {
+          const k = j * w + i; if (!land(k)) continue;
+          if (!same(k)) changed++;
+          const eo = edgeOf(prevIds, k), en = edgeOf(ids, k);
+          if (eo && !en) { oldL.push(k); moved[k] = 1; } else if (en && !eo) { newL.push(k); moved[k] = 1; }
+        }
         // A wholesale change (a new data frame, everything renamed) is not news: skip it.
-        if (list.length && list.length < w * h * 0.25) ink = { list: Int32Array.from(list), f0: frame };
+        if ((oldL.length || newL.length) && changed < w * h * 0.25) {
+          // The step between: changed pixels within 2 px of either line.
+          const mid = [];
+          for (let j = 2; j < h - 2; j++) for (let i = 2; i < w - 2; i++) {
+            const k = j * w + i; if (moved[k] || !land(k) || same(k)) continue;
+            let near = false;
+            for (let dj = -2; dj <= 2 && !near; dj++) for (let di = -2; di <= 2; di++) if (moved[k + dj * w + di]) { near = true; break; }
+            if (near) mid.push(k);
+          }
+          ink = { old: Int32Array.from(oldL), mid: Int32Array.from(mid), now: Int32Array.from(newL), f0: frame };
+        }
       }
       prevIds = ids.slice(); prevRealms = realms; prevKey = key;
     }
     function drawInk() {
       if (!ink) return;
-      const s = frame - ink.f0; if (s > 4) { ink = null; return; }
-      const { ids, realms, U0, V0 } = V, cover = [0.55, 0.38, 0.2, 0.08, 0.03][s];
-      const tint = realms.map(r => { const c = rgb(r.color || "#c8a46a"); return [Math.min(255, c[0] * 0.7 + 216 * 0.3 + 30), Math.min(255, c[1] * 0.7 + 163 * 0.3 + 20), c[2] * 0.7 + 44 * 0.3]; });
-      for (let n = 0; n < ink.list.length; n++) {
-        const k = ink.list[n], i = k % w, j = (k / w) | 0;
-        if (BAYER[((V0 + j) & 3) * 4 + ((U0 + i) & 3)] > cover) continue;
-        const id = ids[k];
-        const edge = i > 0 && j > 0 && i < w - 1 && j < h - 1 && (ids[k - 1] !== id || ids[k + 1] !== id || ids[k - w] !== id || ids[k + w] !== id);
-        if (edge) fxb[k] = s < 2 ? INK : GOLD;
-        else if (id > 0) { const c = tint[id - 1]; fxb[k] = pack(c[0], c[1], c[2]); }
-        else fxb[k] = s < 2 ? GOLD : VELLUM;
-      }
+      const s = frame - ink.f0; if (s > 3) { ink = null; return; }
+      const { U0, V0 } = V, col = (V.era && V.era.ink) || INK;
+      const put = (L, cover) => { for (let n = 0; n < L.length; n++) { const k = L[n], i = k % w, j = (k / w) | 0; if (BAYER[((V0 + j) & 3) * 4 + ((U0 + i) & 3)] < cover) fxb[k] = col; } };
+      // 0: the old line in ink; 1: the ground between, dithered; 2: the new line; 3: the new line fading.
+      if (s === 0) put(ink.old, 1);
+      else if (s === 1) { put(ink.old, 0.35); put(ink.mid, 0.4); put(ink.now, 0.5); }
+      else if (s === 2) put(ink.now, 1);
+      else put(ink.now, 0.4);
     }
     // A projected polyline as art-pixel steps, for walking along it.
     function trace(pts) {

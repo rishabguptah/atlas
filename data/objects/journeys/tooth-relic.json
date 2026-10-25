@@ -1,0 +1,28 @@
+{
+  "id": "tooth_relic",
+  "name": "Sacred Tooth Relic of the Buddha",
+  "type": "single",
+  "sprite": "obj_relic",
+  "what": "A canine tooth believed to be the Buddha's, kept in a series of golden caskets. Whoever held it was thought to have the right to rule Sri Lanka.",
+  "why": "A relic that followed the capital: as Sinhalese kings moved from Anuradhapura to Polonnaruwa, Kotte and Kandy, the tooth moved with them. The Portuguese said they burned it; Kandy says they burned a copy.",
+  "now": "Sri Dalada Maligawa, the Temple of the Tooth, Kandy. A replica casket is paraded in the Esala Perahera every summer.",
+  "dispute": "The Portuguese claimed to have destroyed the real tooth in Goa in 1561.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Dathavamsa (The Chronicle of the Tooth), 13th-century Pali text; Culavamsa."},
+    {"cite": "Strong, J. S. (2004). Relics of the Buddha. Princeton University Press."},
+    {"cite": "Wikipedia: Relic of the tooth of the Buddha", "url": "https://en.wikipedia.org/wiki/Relic_of_the_tooth_of_the_Buddha"},
+    {"cite": "Wikipedia: Temple of the Tooth", "url": "https://en.wikipedia.org/wiki/Temple_of_the_Tooth"}
+  ],
+  "stops": [
+    {"y": -483, "approx": true, "at": [83.89, 26.74], "place": "Kushinagar", "owner": "The Buddha's followers", "by": "made", "conf": "legend", "note": "Tradition says that after the Buddha's cremation at Kushinagar his disciple Khema took a tooth from the pyre. The date of the Buddha's death is itself debated, from about 483 to 400 BCE."},
+    {"y": -400, "approx": true, "at": [83.9, 18.4], "place": "Dantapura, Kalinga", "owner": "Kings of Kalinga", "by": "carried", "conf": "legend", "via": "land", "note": "The Dathavamsa says it was kept for centuries in a temple at Dantapura, \"tooth city\", in Kalinga on India's east coast. Where Dantapura was is uncertain."},
+    {"y": 310, "approx": true, "at": [80.4, 8.35], "place": "Anuradhapura", "owner": "King Sirimeghavanna", "by": "carried", "conf": "likely", "via": "sea", "path": [[83.9, 18.4], [83.3, 17.6], [81.4, 14.5], [80.6, 11.0], [80.3, 9.6], [80.4, 8.35]], "note": "In the 4th century, the chronicles say, Princess Hemamala and Prince Danta smuggled the tooth to Sri Lanka hidden in her hair. The king built a temple for it, and the Chinese pilgrim Faxian saw it paraded around 410.", "meet": "Faxian, the Chinese pilgrim, in about 410"},
+    {"y": 1070, "approx": true, "at": [81.0, 7.94], "place": "Polonnaruwa", "owner": "Vijayabahu I and his successors", "by": "carried", "conf": "likely", "via": "land", "note": "After Vijayabahu I drove out the Cholas, the capital moved to Polonnaruwa and the tooth with it, to the Atadage and later the Hatadage, whose ruins still stand."},
+    {"y": 1415, "approx": true, "at": [79.9, 6.89], "place": "Kotte", "owner": "Parakramabahu VI of Kotte", "by": "carried", "conf": "likely", "via": "land", "note": "The tooth passed through several later capitals (Dambadeniya, Yapahuwa, Kurunegala, Gampola) before Kotte, near Colombo, in the 15th century."},
+    {"y": 1560, "at": [80.01, 9.66], "place": "Jaffna", "owner": "Portuguese", "by": "seized", "conf": "sure", "split": true, "from": 4, "note": "Portuguese troops seized a tooth relic at Jaffna in 1560. Whether this was the Kandyan relic, a second tooth, or a copy is the whole dispute."},
+    {"y": 1561, "at": [73.91, 15.5], "place": "Goa", "owner": "Portuguese viceroy", "by": "destroyed", "conf": "sure", "split": true, "via": "sea", "from": 5, "path": [[80.01, 9.66], [79.8, 8.5], [77.6, 7.9], [76.2, 9.9], [74.8, 12.9], [73.91, 15.5]], "note": "King Bayinnaung of Burma offered a fortune for it. Archbishop Gaspar de Leão persuaded Viceroy Constantino de Bragança to refuse: the tooth was ground in a mortar, burned and thrown into the river."},
+    {"y": 1595, "at": [80.641, 7.294], "place": "Temple of the Tooth, Kandy", "owner": "Kings of Kandy", "by": "carried", "conf": "sure", "via": "land", "from": 4, "note": "Vimaladharmasuriya I brought the tooth to his new hill capital, Kandy, and built a temple for it. The present temple was mostly built by the last kings of Kandy in the 18th century.", "meet": "a dancer in the Esala Perahera"},
+    {"y": 1998, "at": [80.641, 7.294], "place": "Kandy", "owner": "Temple of the Tooth", "by": "attacked", "conf": "sure", "note": "In January 1998 a Tamil Tigers truck bomb badly damaged the temple's front. The relic chamber was unharmed."}
+  ]
+}

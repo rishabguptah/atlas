@@ -127,12 +127,22 @@ animate along a leg with `api.redraw()` each frame, caption with `api.scene`). I
 The Codex tab (`lenses/codex.js`) is the example of a plugin that keeps the viewer's progress: it uses `localStorage`
 (wrapped in try/catch, so the page works without it) and never sends it anywhere.
 
+The Live tab (`lenses/life.js`) is the life RPG: play a real life from `data/life/lives/*.json` (or ask for anyone,
+drafted by AI and marked so) or an ordinary one from base rates in `data/life/rules.json`. It travels with
+`ATLAS.world.route` and exposes `ATLAS.life.story()`, the life so far as a Story of Scenes (WORLD.md L4), registered with `ATLAS.world.stories` (kind `life`) and played by the Director.
+
 ## Pixel sprites from a lens
 
 A lens can put its marks into the pixel grid (house rule: one world, one grid). Push a function onto
 `ATLAS.pixelSprites`; the pixel basemap calls it with `(year, k)` whenever it collects sprites and draws what it
 returns, `[{lon, lat, sprite, pri, grp, dy, team}]`, decluttered with everything else. Call `ATLAS.pixelRefresh()`
 when your marks change without a year change (a month cursor). `lenses/e19.js` is the example.
+
+## Data charts and the visual grammar
+
+How data is drawn (confidence hatching, flow widths, city tiers, ramps, panel charts) is specified in `VIZ.md`. To
+add a chart to a record's card push a function onto `ATLAS.cardViz`; for a tile in "This year" use `ATLAS.nowViz`.
+Give records a `conf` (attested, estimated, approximate, unknown) and the map draws it.
 
 ## Deep regions (time by the month)
 

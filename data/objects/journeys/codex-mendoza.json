@@ -1,0 +1,22 @@
+{
+  "id": "codex_mendoza",
+  "name": "Codex Mendoza",
+  "type": "single",
+  "sprite": "obj_codex",
+  "what": "A painted book of 71 leaves made in Mexico City about twenty years after the Spanish conquest: Aztec history, the tribute each town paid, and a life from birth to old age, glossed in Spanish.",
+  "why": "Made for a viceroy to send to the emperor, it never arrived: French privateers took it at sea, and it passed through the hands of a French cosmographer and English collectors to Oxford.",
+  "now": "Bodleian Library, Oxford (MS. Arch. Selden. A. 1).",
+  "status": "draft",
+  "sources": [
+    {"cite": "Berdan, F. F. & Anawalt, P. R. (eds.) (1992). The Codex Mendoza. 4 vols. University of California Press."},
+    {"cite": "Bodleian Libraries: Digital Mendoza", "url": "https://digitalmendoza.bodleian.ox.ac.uk/"},
+    {"cite": "Wikipedia: Codex Mendoza", "url": "https://en.wikipedia.org/wiki/Codex_Mendoza"}
+  ],
+  "stops": [
+    {"y": 1541, "approx": true, "at": [-99.133, 19.433], "place": "Mexico City", "owner": "Viceroy Antonio de Mendoza", "by": "made", "conf": "likely", "note": "Indigenous painters (tlacuilos) made it, probably for Viceroy Mendoza, and a Spanish interpreter added notes. It was meant for Charles V.", "meet": "a Nahua painter in Mexico City"},
+    {"y": 1553, "approx": true, "at": [2.35, 48.86], "place": "Paris", "owner": "André Thevet", "by": "looted", "conf": "likely", "via": "sea", "path": [[-99.133, 19.433], [-96.13, 19.2], [-90, 23], [-82.36, 23.14], [-75, 30], [-40, 38], [-15, 44], [-5, 47.5], [0.1, 49.5], [2.35, 48.86]], "note": "The ship carrying it to Spain was captured by French corsairs. By the 1550s it belonged to André Thevet, cosmographer to the king of France, who wrote his name in it five times."},
+    {"y": 1587, "approx": true, "at": [2.35, 48.86], "place": "Paris", "owner": "Richard Hakluyt", "by": "sold", "conf": "sure", "note": "Richard Hakluyt, chaplain to the English ambassador and the great collector of voyages, bought it from Thevet for 20 French crowns."},
+    {"y": 1625, "at": [-0.12, 51.51], "place": "London", "owner": "Samuel Purchas", "by": "printed", "conf": "sure", "via": "sea", "note": "Hakluyt's papers passed to Samuel Purchas, who printed woodcuts of the codex in Purchas his Pilgrimes (1625), the first time Europeans could see Aztec pictorial writing."},
+    {"y": 1659, "at": [-1.2546, 51.7541], "place": "Bodleian Library, Oxford", "owner": "Bodleian Library", "by": "gift", "conf": "sure", "via": "land", "note": "The lawyer John Selden owned it next; after his death his library came to the Bodleian in 1659. It has been there since, now online in full.", "meet": "a reader in Duke Humfrey's Library"}
+  ]
+}

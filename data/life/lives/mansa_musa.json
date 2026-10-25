@@ -1,0 +1,60 @@
+{
+  "id": "mansa_musa", "name": "Mansa Musa", "pid": "Mansa Musa", "born": 1280, "born_approx": true, "died": 1337, "role": "King of Mali", "sprite": "person_ruler", "team": "#c89a2a",
+  "intro": "You are Musa, mansa (king of kings) of Mali, the richest realm in West Africa: its gold fields at Bambuk and Bure supply much of the gold that reaches the Mediterranean. You are a Muslim ruler over many subjects who are not. It is 1324 and you have decided to make the pilgrimage to Mecca.",
+  "sources": [
+    {"cite": "Al-Umari, Masalik al-absar fi mamalik al-amsar (c. 1337-38), in N. Levtzion and J. F. P. Hopkins, Corpus of Early Arabic Sources for West African History (1981)"},
+    {"cite": "Ibn Khaldun, Kitab al-Ibar, in Levtzion and Hopkins, Corpus (1981)"},
+    {"cite": "Michael A. Gomez, African Dominion: A New History of Empire in Early and Medieval West Africa (2018)"},
+    {"cite": "Wikipedia: Mansa Musa", "url": "https://en.wikipedia.org/wiki/Mansa_Musa"}
+  ],
+  "chapters": [
+    {"y": 1324, "m": 1, "at": {"n": "Mali, the royal capital (site debated; Niani shown)", "lon": -8.38, "lat": 11.38}, "title": "The pilgrimage",
+     "text": "A pilgrim king is a statement: Mali is a Muslim power to be reckoned with in Cairo and Mecca. Arab writers will later say thousands went with you and that you carried tons of gold; the exact numbers are not trustworthy.",
+     "choices": [
+       {"t": "Go in full state, with a great caravan and gold", "real": true, "out": "You cross the Sahara by way of Walata and Tuat. Your caravan is remembered for centuries.", "fx": {"renown": 2, "wealth": -1}},
+       {"t": "Go quietly, as a simple pilgrim", "out": "Mali stays a rumour to the Mediterranean world. No Catalan mapmaker draws you holding a nugget of gold.", "fx": {"renown": -1, "wealth": 1}},
+       {"t": "Stay home and send an envoy", "out": "Mansas before you had gone, and your authority rests partly on Islam's prestige. Staying keeps you safer but smaller.", "end": "A ruler known only from oral tradition in Mali.", "p": 0.4}
+     ]},
+    {"y": 1324, "m": 7, "at": {"n": "Cairo", "lon": 31.24, "lat": 30.04},
+     "via": [[-8.38, 11.38], [-7.03, 16.6], [-3.0, 16.77], [0.0, 27.0], [8.0, 26.5], [13.0, 26.0], [25.0, 25.5], [31.24, 30.04]],
+     "took": "Mali to Cairo across the Sahara: arrived July 1324. Sahara crossings with a big caravan took about two to three months of travel.",
+     "title": "Kiss the ground?",
+     "text": "Sultan al-Nasir Muhammad receives you. Court officials tell you to kiss the ground before him, as everyone does.",
+     "choices": [
+       {"t": "Refuse; then prostrate yourself 'to God'", "real": true, "out": "Al-Umari's informants say you hesitated, then said you would bow to God who created you, and did so. The sultan seats you beside him and gives you robes and a horse.", "fx": {"renown": 1}},
+       {"t": "Kiss the ground like any vassal", "out": "Easier, but it says Mali is a client of Egypt. Your prestige at home suffers.", "fx": {"renown": -1}}
+     ]},
+    {"y": 1324, "m": 9, "at": {"n": "Cairo", "lon": 31.24, "lat": 30.04},
+     "title": "Rivers of gold",
+     "text": "Your people spend and give gold freely in Cairo's markets.",
+     "choices": [
+       {"t": "Give lavishly to everyone", "real": true, "out": "Al-Umari, writing about twelve years later, says so much gold came in that its value in Cairo fell and had still not recovered.", "fx": {"wealth": -2, "renown": 2}},
+       {"t": "Keep your gold for the road home", "out": "You return solvent. But the legend that put you on maps and in headlines 700 years later is never born.", "fx": {"wealth": 1}}
+     ]},
+    {"y": 1325, "m": 3, "at": {"n": "Mecca", "lon": 39.83, "lat": 21.42},
+     "via": [[31.24, 30.04], [32.9, 29.0], [35.0, 28.0], [38.0, 25.0], [39.61, 24.47], [39.83, 21.42]],
+     "title": "Bringing the world home",
+     "text": "After the hajj, you can bring scholars, books and builders back to Mali. Al-Sahili, a poet and scholar from Granada, is in Mecca.",
+     "choices": [
+       {"t": "Recruit scholars and al-Sahili to come home with you", "real": true, "out": "Al-Sahili comes to Mali. Later tradition credits him with an audience hall at the capital and with the Djinguereber mosque at Timbuktu.", "fx": {"learning": 2}},
+       {"t": "Buy books, but bring no one", "out": "Books without teachers do less. Timbuktu's rise as a city of scholars might have come slower.", "fx": {"learning": 1}}
+     ]},
+    {"y": 1325, "m": 6, "at": {"n": "Cairo", "lon": 31.24, "lat": 30.04},
+     "via": [[39.83, 21.42], [39.61, 24.47], [35.0, 28.0], [31.24, 30.04]],
+     "title": "Out of money",
+     "text": "On the way back your gold has run out. Cairo's merchants will lend, at a price.",
+     "choices": [
+       {"t": "Borrow from Cairo's merchants at high interest", "real": true, "out": "You borrow heavily. Some lenders are repaid later in Mali; Ibn Khaldun and al-Umari tell stories of creditors who travelled to collect.", "fx": {"wealth": -1}},
+       {"t": "Sell what you have and go home lighter", "out": "No debts, but some of your retinue is lost or left behind.", "fx": {"health": -1}}
+     ]},
+    {"y": 1327, "m": 1, "at": {"n": "Timbuktu", "lon": -3.0, "lat": 16.77},
+     "via": [[31.24, 30.04], [25.0, 25.5], [8.0, 26.5], [0.04, 16.27], [-3.0, 16.77]],
+     "title": "City of learning",
+     "text": "Gao, on the Niger, has come under Mali's rule (the timing is uncertain; traditions credit your general Saghmandia). You pass through on the way home and can build in Timbuktu.",
+     "choices": [
+       {"t": "Build a great mosque at Timbuktu", "real": true, "out": "The Djinguereber mosque is built of earth and wood around 1327. Rebuilt many times, it still stands and is a World Heritage site.", "fx": {"renown": 2}},
+       {"t": "Spend it on the army instead", "out": "Mali's power did rest on its cavalry. But the mosque and Timbuktu's scholars are what the world remembers.", "fx": {"renown": -1}}
+     ]}
+  ],
+  "epilogue": "Musa died around 1337. In 1375 the Catalan Atlas showed a West African king on a throne holding a gold nugget, labelled as the richest and noblest king in the land. Within a century of his death Mali was shrinking, and Songhay, centred on Gao, took its place."
+}

@@ -203,7 +203,7 @@
       ${s.short ? `<p class="short">${esc(s.short)}</p>` : ""}
       ${s.plausibility_note ? `<p class="note">${esc(s.plausibility_note)}</p>` : ""}
       ${s.loading ? `<p class="note">${esc(s.loading)}</p>` : ""}${s.error ? `<div class="err">${esc(s.error)}</div>` : ""}
-      ${n ? `<div class="player"><button class="btn" data-a="prev" aria-label="Previous step">◀</button><button class="btn primary" data-a="play">${W.playing ? "Pause" : "Play"}</button><button class="btn" data-a="next" aria-label="Next step">▶</button><span class="count">${W.i + 1 || "–"} of ${n}</span></div>` : ""}
+      ${n ? `<div class="player"><button class="btn" data-a="prev" aria-label="Previous step">◀</button><button class="btn primary" data-a="play">${W.playing ? "Pause" : ATLAS.world && ATLAS.world.director ? "▶ Play on the map" : "Play"}</button><button class="btn" data-a="next" aria-label="Next step">▶</button><span class="count">${W.i + 1 || "–"} of ${n}</span></div>` : ""}
       ${s.steps.map((x, i) => `${i === fork ? `<div class="fork"><b>The branch · ${esc(fy(s.divergence.year))}</b><span>${esc(s.divergence.text)}</span></div>` : ""}
         <div class="wst${x.branch ? " alt" : ""}${i === W.i ? " on" : ""}" data-i="${i}"><button aria-expanded="${i === W.i}">
           <span>${x.branch ? `<span class="tagb">branch</span>` : `<span class="tagr">real</span>`}</span><span class="t">${esc(x.title)}</span><span class="y">${x.year != null ? esc(fy(x.year)) : ""}</span></button>
@@ -284,7 +284,13 @@
     if (a === "back") { stop(); W.sc = null; W.i = -1; if (live) live.abort(); api.clearScene(); render(); }
     else if (a === "prev") { stop(); go(Math.max(0, W.i - 1)); }
     else if (a === "next") { stop(); go(W.i + 1); }
-    else if (a === "play") { W.playing ? (stop(), render()) : play(); }
+    else if (a === "play") {
+      // With the Director on the page the scenario plays as a Story on the map: real steps, the fork, the branch.
+      const dir = ATLAS.world && ATLAS.world.director;
+      const fork = W.sc ? W.sc.steps.findIndex(x => x.branch) : -1, at = Math.max(0, W.i) + (fork >= 0 && W.i >= fork ? 1 : 0);  // the Story has a fork scene before the first branch step
+      if (!W.playing && dir && W.sc && dir.play(ATLAS.world.stories.from.whatif(W.sc), { at })) return;
+      W.playing ? (stop(), render()) : play();
+    }
     else if (a === "reveal") {
       const F = forecast(Math.round(api.year));
       W.fc = { F, revealed: true }; api.setOn("whatif", true);
