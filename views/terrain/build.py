@@ -3,7 +3,9 @@
 
 Usage: python3 views/terrain/build.py LAYER_DIR OUT.html [--local D3_DIR] [--borders BORDERS_DIR]
 LAYER_DIR holds terrain.json, terrain-relief.webp and terrain-political.webp from views/terrain/export.py.
-BORDERS_DIR holds the historical-basemaps snapshots world_<year>.json (default: the project's atlas/borders).
+BORDERS_DIR is the output of ingest/geography/precise_borders.py (default: the project's atlas/borders-precise).
+Only the world level (l0) is inlined; publish BORDERS_DIR/l1 and l2 next to the page as borders/<level>/world_<year>.json,
+which the page fetches as you zoom in (it falls back to l0 when they are missing).
 --local swaps the CDN d3 for a local file, for screenshots without network.
 """
 import base64, os, sys
@@ -12,12 +14,13 @@ args = sys.argv[1:]
 local = None
 if '--local' in args:
     i = args.index('--local'); local = args[i + 1]; del args[i:i + 2]
-borders = '/mnt/project-files/atlas/borders'
+borders = '/mnt/project-files/atlas/borders-precise'
 if '--borders' in args:
     i = args.index('--borders'); borders = args[i + 1]; del args[i:i + 2]
 layer, out = args
 import json
-snaps = {y: json.load(open(os.path.join(borders, f'world_{"bc" + str(-y) if y < 0 else y}.json'))) for y in (-500, 100, 800, 1200, 1600, 1914)}
+snap = lambda y: os.path.join(borders, 'l0', f'world_{"bc" + str(-y) if y < 0 else y}.json')
+snaps = {y: json.load(open(snap(y))) for y in (-500, 100, 800, 1200, 1600, 1914) if os.path.exists(snap(y))}
 here = os.path.dirname(os.path.abspath(__file__))
 s = open(os.path.join(here, 'preview.src.html'), encoding='utf-8').read()
 relief = 'data:image/webp;base64,' + base64.b64encode(open(os.path.join(layer, 'terrain-relief.webp'), 'rb').read()).decode()

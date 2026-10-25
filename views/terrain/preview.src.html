@@ -87,11 +87,28 @@ button { font: inherit; color: inherit; }
 const TERRAIN = /*__TERRAIN__*/;
 const RELIEF = "/*__RELIEF__*/";
 const RELIEF_POLITICAL = "/*__RELIEF_POLITICAL__*/";
+// world-level borders are inlined; closer levels load on demand as you zoom in (borders/<level>/world_<year>.json)
 const BORDERS = /*__BORDERS__*/;
+const LEVELS = [{ id: 'l2', from: 9, label: 'close detail, 400 m' }, { id: 'l1', from: 3, label: 'regional detail, 1.5 km' },
+  { id: 'l0', from: 0, label: 'world detail, 5 km' }];
+const levelFor = k => LEVELS.find(l => k >= l.from);
+const fileYear = y => y < 0 ? 'bc' + -y : y;
+const loaded = {};
+function realmFeatures(lv, y) {
+  const key = lv + '/' + y;
+  if (!loaded[key]) {
+    const topo = lv === 'l0' ? Promise.resolve(BORDERS[y])
+      : fetch(`borders/${lv}/world_${fileYear(y)}.json`).then(r => r.ok ? r.json() : null).catch(() => null);
+    loaded[key] = topo.then(t => t && topojson.feature(t, t.objects.realms || Object.values(t.objects)[0]).features
+      .map(f => Object.assign(f, { box: path.bounds(f) })));
+  }
+  return loaded[key];
+}
 // strategy-game palette: strong but earthy, so the relief still reads through a multiply blend
-const PALETTE = ['#d0463a', '#3f6fb5', '#e3b23c', '#5b9a4a', '#8e4fa8', '#d9782f', '#2f9c9a', '#b8456f', '#7a8f2e',
-  '#c45f9a', '#4c86c9', '#a8642c', '#6aa86f', '#c9a02c', '#5d5fb0', '#b0393b'];
-const colorOf = f => { const n = f.properties.SUBJECTO || f.properties.NAME; if (!n) return null; let h = 0;
+const PALETTE = ['#d0463a', '#8a6fb8', '#e3b23c', '#5b9a4a', '#8e4fa8', '#d9782f', '#2f9c9a', '#b8456f', '#7a8f2e',
+  '#c45f9a', '#9fae4a', '#a8642c', '#6aa86f', '#c9a02c', '#5d5fb0', '#b0393b'];
+const nameOf = f => f.properties.name || f.properties.NAME || f.properties.SUBJECTO;
+const colorOf = f => { const n = f.properties.subject_of || f.properties.name || f.properties.SUBJECTO || f.properties.NAME; if (!n) return null; let h = 0;
   for (const c of n) h = (h * 31 + c.charCodeAt(0)) >>> 0; return PALETTE[h % PALETTE.length]; };
 const YEARS = Object.keys(BORDERS).map(Number).sort((a, b) => a - b);
 let mode = 'political', year = YEARS.includes(1600) ? 1600 : YEARS[0], realms;
@@ -107,30 +124,49 @@ const projection = d3.geoNaturalEarth1();
 const path = d3.geoPath(projection);
 const root = svg.append('g');
 const base = root.append('g'), over = root.append('g');
-let k = 1, terrain;
+let k = 1, terrain, realmG, shownLevel = null, drawSeq = 0;
+const view = { x: 0, y: 0, k: 1 };
 
 function draw() {
   const { width: W, height: H } = svg.node().getBoundingClientRect();
   projection.fitExtent([[6, 6], [W - 6, H - 6]], { type: 'Sphere' });
   base.selectAll('*').remove();
   drawRelief(base, path, mode === 'political' ? RELIEF_POLITICAL : RELIEF);
-  realms = null;
+  realms = null; shownLevel = null; drawSeq++;
   svg.classed('political-map', mode === 'political');
-  if (mode === 'political') {
-    const t = BORDERS[year], feats = topojson.feature(t, Object.values(t.objects)[0]).features;
-    realms = drawRealms(base.append('g'), projection, path, feats, k, { colorOf, onSelect: f => showRealm(f) });
-  }
+  realmG = base.append('g');
+  if (mode === 'political') refreshRealms();
   base.append('path').attr('class', 'grat').attr('d', path(d3.geoGraticule10())).style('stroke-width', 'calc(.6px / var(--k, 1))');
   base.append('path').attr('class', 'sphere-edge').attr('d', path({ type: 'Sphere' })).style('stroke-width', 'calc(1.2px / var(--k, 1))');
   terrain = drawTerrain(over, projection, path, TERRAIN, k, { onSelect: show });
   applySwitches();
 }
 
+// draw the border level that fits the zoom; at closer levels only realms on screen are drawn, so it stays smooth
+async function refreshRealms() {
+  if (mode !== 'political') return;
+  const seq = drawSeq, lv = levelFor(k), { width: W, height: H } = svg.node().getBoundingClientRect();
+  const x0 = -view.x / view.k, y0 = -view.y / view.k, x1 = x0 + W / view.k, y1 = y0 + H / view.k, m = (x1 - x0) * .25;
+  const box = [x0 - m, y0 - m, x1 + m, y1 + m];
+  if (shownLevel && shownLevel.id === lv.id && (lv.id === 'l0' || inside(box, shownLevel.box))) return;
+  let feats = await realmFeatures(lv.id, year);
+  if (!feats) feats = await realmFeatures('l0', year);
+  if (seq !== drawSeq) return;
+  const wide = [box[0] - m * 2, box[1] - m * 2, box[2] + m * 2, box[3] + m * 2];
+  const use = lv.id === 'l0' ? feats : feats.filter(f => f.box[0][0] < wide[2] && f.box[1][0] > wide[0] && f.box[0][1] < wide[3] && f.box[1][1] > wide[1]);
+  realmG.selectAll('*').remove();
+  realms = drawRealms(realmG, projection, path, use, k, { colorOf, nameOf, onSelect: f => showRealm(f) });
+  shownLevel = { id: lv.id, box: wide, label: lv.label };
+  scale();
+}
+const inside = (a, b) => a[0] >= b[0] && a[1] >= b[1] && a[2] <= b[2] && a[3] <= b[3];
+
 function showRealm(f) {
   const card = document.getElementById('card'), p = f.properties;
   card.innerHTML = `<button class="close" aria-label="Close">&times;</button><div class="kind">Realm in ${fmtYear(year)}</div>
-    <h2>${p.NAME || p.SUBJECTO}</h2>${p.SUBJECTO && p.SUBJECTO !== p.NAME ? `<p>Part of ${p.SUBJECTO}</p>` : ''}
-    <div class="meta">Borders: historical-basemaps (GPL-3.0)</div>`;
+    <h2>${nameOf(f)}</h2>${p.subject_of && p.subject_of !== p.name ? `<p>Part of ${p.subject_of}</p>` : ''}
+    ${p.precision ? `<p class="why">Border precision in the source: ${['', 'approximate', 'moderate', 'legally defined'][p.precision] || p.precision}</p>` : ''}
+    <div class="meta">Borders: historical-basemaps (GPL-3.0), coasts fitted to Natural Earth</div>`;
   card.hidden = false;
   card.querySelector('.close').onclick = () => { card.hidden = true; };
 }
@@ -150,11 +186,11 @@ function show(d) {
   terrain.highlight(d.id);
 }
 
-const zoom = d3.zoom().scaleExtent([1, 14]).on('zoom', e => {
-  k = e.transform.k;
+const zoom = d3.zoom().scaleExtent([1, 60]).on('zoom', e => {
+  k = e.transform.k; Object.assign(view, { x: e.transform.x, y: e.transform.y, k });
   root.attr('transform', e.transform);
   svg.style('--k', k);
-}).on('end', () => { terrain.update(k); realms && realms.update(k); scale(); });
+}).on('end', () => { terrain.update(k); realms && realms.update(k); refreshRealms(); scale(); });
 svg.call(zoom);
 d3.select('#zin').on('click', () => svg.transition().duration(350).call(zoom.scaleBy, 1.8));
 d3.select('#zout').on('click', () => svg.transition().duration(350).call(zoom.scaleBy, 1 / 1.8));
@@ -163,7 +199,8 @@ d3.select('#zhome').on('click', () => svg.transition().duration(450).call(zoom.t
 function scale() {
   const tiers = { 1: 0, 2: 1.6, 3: 2.5, 4: 4, 5: 6, 6: 9 };
   const shown = Object.entries(tiers).filter(([, m]) => k >= m).length;
-  document.getElementById('scale').textContent = `Zoom ${k.toFixed(1)}× · ${shown} of 6 name tiers`;
+  document.getElementById('scale').textContent = `Zoom ${k.toFixed(1)}× · ${shown} of 6 name tiers`
+    + (mode === 'political' && shownLevel ? ` · borders: ${shownLevel.label}` : '');
 }
 
 const sw = { relief: true, rivers: true, names: true, gates: true };
@@ -208,5 +245,5 @@ const { width: W0, height: H0 } = svg.node().getBoundingClientRect();
 const [cx, cy] = projection([45, 35]);
 const k0 = W0 < 700 ? 3.2 : 1.8;
 svg.call(zoom.transform, d3.zoomIdentity.translate(W0 / 2 - cx * k0, H0 / 2 - cy * k0).scale(k0));
-terrain.update(k0); realms && realms.update(k0); scale();
+terrain.update(k0); realms && realms.update(k0); refreshRealms(); scale();
 </script>
