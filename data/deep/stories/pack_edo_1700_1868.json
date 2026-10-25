@@ -1,0 +1,535 @@
+{
+ "stories": [
+  {
+   "id": "edo_power_1701_1868",
+   "title": "From the Pine Corridor to Tokyo",
+   "region": "Edo and the Kantō",
+   "start": "1701",
+   "end": "1868",
+   "view": {
+    "lon": 139.7,
+    "lat": 35.55,
+    "span": 1.2
+   },
+   "blurb": "How the shogun's city kept order for a century and a half, and how ships at Uraga and swords at Sakurada Gate brought it down.",
+   "steps": [
+    {
+     "date": "1701-04-21",
+     "date_note": "",
+     "end_date": "",
+     "name": "The sword in the Pine Corridor",
+     "place_name": "Edo Castle",
+     "lat": 35.687,
+     "lon": 139.754,
+     "family": "unrest",
+     "subtype": "assault",
+     "who": [
+      "Asano Naganori",
+      "Kira Yoshinaka"
+     ],
+     "what": "Asano wounded Kira inside the castle and was ordered to commit seppuku that day.",
+     "why": "Drawing a sword in the castle broke the core rule of shogunal order.",
+     "wikipedia": "Forty-seven rōnin",
+     "wikidata": "Q822472"
+    },
+    {
+     "date": "1703-01",
+     "date_note": "Genroku 15, 12th month, 14th day",
+     "end_date": "1703-03",
+     "name": "The rōnin's vendetta",
+     "place_name": "Honjo and Sengaku-ji",
+     "lat": 35.694,
+     "lon": 139.795,
+     "family": "unrest",
+     "subtype": "vendetta",
+     "who": [
+      "Ōishi Yoshio"
+     ],
+     "what": "The Akō rōnin killed Kira and were later ordered to commit seppuku.",
+     "why": "The case set loyalty against law and became Japan's favorite story.",
+     "wikipedia": "Forty-seven rōnin",
+     "wikidata": "Q822472"
+    },
+    {
+     "date": "1716",
+     "date_note": "",
+     "end_date": "1745",
+     "name": "Yoshimune's reforms",
+     "place_name": "Edo Castle",
+     "lat": 35.685,
+     "lon": 139.754,
+     "family": "diplomacy",
+     "subtype": "reform",
+     "who": [
+      "Tokugawa Yoshimune"
+     ],
+     "what": "The eighth shogun launched the Kyōhō reforms.",
+     "why": "Debt and debased coin threatened the shogunate.",
+     "wikipedia": "Kyōhō Reforms",
+     "wikidata": "Q1795223"
+    },
+    {
+     "date": "1721",
+     "date_note": "",
+     "end_date": "",
+     "name": "A box for petitions",
+     "place_name": "Tatsunokuchi",
+     "lat": 35.684,
+     "lon": 139.764,
+     "family": "diplomacy",
+     "subtype": "petition box",
+     "who": [
+      "Tokugawa Yoshimune"
+     ],
+     "what": "Commoners could now drop signed petitions to the shogun.",
+     "why": "One petition produced a free hospital for the poor.",
+     "wikipedia": "Meyasubako"
+    },
+    {
+     "date": "1772",
+     "date_note": "",
+     "end_date": "1786",
+     "name": "Tanuma's commercial state",
+     "place_name": "Edo Castle",
+     "lat": 35.685,
+     "lon": 139.754,
+     "family": "diplomacy",
+     "subtype": "government",
+     "who": [
+      "Tanuma Okitsugu"
+     ],
+     "what": "Tanuma taxed guilds and drained marshes.",
+     "why": "Famine and riots ended his era in disgrace.",
+     "wikipedia": "Tanuma Okitsugu",
+     "wikidata": "Q521070"
+    },
+    {
+     "date": "1787",
+     "date_note": "",
+     "end_date": "1793",
+     "name": "Riots and the Kansei reforms",
+     "place_name": "Edo",
+     "lat": 35.684,
+     "lon": 139.774,
+     "family": "unrest",
+     "subtype": "riot",
+     "who": [
+      "Matsudaira Sadanobu"
+     ],
+     "what": "Edo crowds sacked rice shops; Sadanobu took power and imposed austerity.",
+     "why": "The city's hunger could now unseat a government.",
+     "wikipedia": "Kansei Reforms",
+     "wikidata": "Q590574"
+    },
+    {
+     "date": "1841",
+     "date_note": "",
+     "end_date": "1843",
+     "name": "The Tenpō reforms",
+     "place_name": "Edo",
+     "lat": 35.685,
+     "lon": 139.754,
+     "family": "diplomacy",
+     "subtype": "reform",
+     "who": [
+      "Mizuno Tadakuni"
+     ],
+     "what": "Mizuno banned luxury and moved the theatres.",
+     "why": "The last great attempt at restoration failed within two years.",
+     "wikipedia": "Tenpō Reforms",
+     "wikidata": "Q2367979"
+    },
+    {
+     "date": "1853-07-08",
+     "date_note": "",
+     "end_date": "",
+     "name": "Black ships at Uraga",
+     "place_name": "Uraga",
+     "lat": 35.239,
+     "lon": 139.718,
+     "family": "diplomacy",
+     "subtype": "arrival",
+     "who": [
+      "Matthew C. Perry",
+      "Abe Masahiro"
+     ],
+     "what": "Perry's squadron demanded a treaty.",
+     "why": "The shogunate could not defend Edo Bay.",
+     "wikipedia": "Perry Expedition",
+     "wikidata": "Q7169780"
+    },
+    {
+     "date": "1854-03-31",
+     "date_note": "",
+     "end_date": "",
+     "name": "Convention of Kanagawa",
+     "place_name": "Yokohama village",
+     "lat": 35.447,
+     "lon": 139.643,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Matthew C. Perry"
+     ],
+     "what": "Japan opened two ports to American ships.",
+     "why": "It ended two centuries of seclusion.",
+     "wikipedia": "Convention of Kanagawa",
+     "wikidata": "Q771451"
+    },
+    {
+     "date": "1858-07-29",
+     "date_note": "",
+     "end_date": "",
+     "name": "The Harris Treaty",
+     "place_name": "Off Kanagawa",
+     "lat": 35.4,
+     "lon": 139.64,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Townsend Harris",
+      "Ii Naosuke"
+     ],
+     "what": "Trade treaty signed without imperial approval.",
+     "why": "It set off the Ansei purge and a wave of terror.",
+     "wikipedia": "Treaty of Amity and Commerce (United States–Japan)",
+     "wikidata": "Q1194699"
+    },
+    {
+     "date": "1860-03-24",
+     "date_note": "",
+     "end_date": "",
+     "name": "Sakuradamon incident",
+     "place_name": "Sakurada Gate",
+     "lat": 35.677,
+     "lon": 139.752,
+     "family": "unrest",
+     "subtype": "assassination",
+     "who": [
+      "Ii Naosuke"
+     ],
+     "what": "Rōnin killed the tairō in the snow.",
+     "why": "Shogunal authority never recovered.",
+     "wikipedia": "Sakuradamon incident",
+     "wikidata": "Q7403192"
+    },
+    {
+     "date": "1862-09-14",
+     "date_note": "",
+     "end_date": "",
+     "name": "Namamugi incident",
+     "place_name": "Namamugi",
+     "lat": 35.493,
+     "lon": 139.676,
+     "family": "unrest",
+     "subtype": "incident",
+     "who": [
+      "Charles Lennox Richardson"
+     ],
+     "what": "Satsuma retainers killed an English merchant on the Tōkaidō.",
+     "why": "It led to the bombardment of Kagoshima.",
+     "wikipedia": "Namamugi incident"
+    },
+    {
+     "date": "1868-05-03",
+     "date_note": "",
+     "end_date": "",
+     "name": "Edo surrenders",
+     "place_name": "Edo Castle",
+     "lat": 35.685,
+     "lon": 139.754,
+     "family": "war",
+     "subtype": "surrender",
+     "who": [
+      "Saigō Takamori",
+      "Katsu Kaishū"
+     ],
+     "what": "Edo Castle was handed over without battle.",
+     "why": "A city of a million was spared.",
+     "wikipedia": "Fall of Edo",
+     "wikidata": "Q715559"
+    },
+    {
+     "date": "1868-09-03",
+     "date_note": "",
+     "end_date": "1868-11-26",
+     "name": "Edo becomes Tokyo",
+     "place_name": "Tokyo",
+     "lat": 35.685,
+     "lon": 139.754,
+     "family": "diplomacy",
+     "subtype": "renaming",
+     "who": [
+      "Emperor Meiji"
+     ],
+     "what": "Edo was renamed and the emperor moved in.",
+     "why": "The shogun's city became the capital.",
+     "wikipedia": "Tokyo",
+     "wikidata": "Q1490"
+    }
+   ],
+   "status": "draft",
+   "pack": "edo_1700_1868"
+  },
+  {
+   "id": "edo_city_life_1707_1859",
+   "title": "Ash, Ink and Fire: Living in Edo",
+   "region": "Edo and the Kantō",
+   "start": "1707",
+   "end": "1859",
+   "view": {
+    "lon": 139.77,
+    "lat": 35.68,
+    "span": 0.5
+   },
+   "blurb": "The townspeople's Edo: fires and quakes, prints and novels, Dutch books and fireworks.",
+   "steps": [
+    {
+     "date": "1707-12-16",
+     "date_note": "",
+     "end_date": "",
+     "name": "Fuji's ash",
+     "place_name": "Edo",
+     "lat": 35.685,
+     "lon": 139.77,
+     "family": "disaster",
+     "subtype": "ashfall",
+     "who": [],
+     "what": "Ash from Fuji fell on Edo.",
+     "why": "Villages on Fuji's slope were ruined for years.",
+     "wikipedia": "Hōei eruption",
+     "wikidata": "Q288045"
+    },
+    {
+     "date": "1733",
+     "date_note": "",
+     "end_date": "",
+     "name": "Riot and fireworks",
+     "place_name": "Ryōgoku",
+     "lat": 35.693,
+     "lon": 139.787,
+     "family": "culture",
+     "subtype": "festival",
+     "who": [
+      "Tokugawa Yoshimune"
+     ],
+     "what": "After rice riots, fireworks honored the dead.",
+     "why": "Ryōgoku became Edo's summer playground.",
+     "wikipedia": "Sumidagawa Fireworks Festival",
+     "wikidata": "Q3119229"
+    },
+    {
+     "date": "1765",
+     "date_note": "",
+     "end_date": "",
+     "name": "Brocade prints",
+     "place_name": "Edo",
+     "lat": 35.685,
+     "lon": 139.775,
+     "family": "culture",
+     "subtype": "prints",
+     "who": [
+      "Suzuki Harunobu"
+     ],
+     "what": "Full-color woodblock prints appeared.",
+     "why": "Cheap color images became an Edo specialty.",
+     "wikipedia": "Suzuki Harunobu",
+     "wikidata": "Q360978"
+    },
+    {
+     "date": "1771",
+     "date_note": "",
+     "end_date": "",
+     "name": "Dissection at Kozukappara",
+     "place_name": "Kozukappara",
+     "lat": 35.733,
+     "lon": 139.799,
+     "family": "culture",
+     "subtype": "science",
+     "who": [
+      "Sugita Genpaku",
+      "Maeno Ryōtaku"
+     ],
+     "what": "Physicians compared a body with a Dutch atlas.",
+     "why": "Observation beat inherited doctrine.",
+     "wikipedia": "Kaitai Shinsho",
+     "wikidata": "Q1324350"
+    },
+    {
+     "date": "1772-04-01",
+     "date_note": "",
+     "end_date": "",
+     "name": "The Meiwa fire",
+     "place_name": "Meguro",
+     "lat": 35.633,
+     "lon": 139.708,
+     "family": "disaster",
+     "subtype": "fire",
+     "who": [],
+     "what": "A fire burned across the city.",
+     "why": "Fire shaped Edo's building and money.",
+     "wikipedia": "Great Meiwa Fire"
+    },
+    {
+     "date": "1774",
+     "date_note": "",
+     "end_date": "",
+     "name": "Kaitai Shinsho",
+     "place_name": "Edo",
+     "lat": 35.68,
+     "lon": 139.774,
+     "family": "culture",
+     "subtype": "book",
+     "who": [
+      "Sugita Genpaku"
+     ],
+     "what": "The translated anatomy appeared.",
+     "why": "It founded Dutch learning.",
+     "wikipedia": "Kaitai Shinsho",
+     "wikidata": "Q1324350"
+    },
+    {
+     "date": "1787",
+     "date_note": "",
+     "end_date": "",
+     "name": "Smashing the rice shops",
+     "place_name": "Edo",
+     "lat": 35.684,
+     "lon": 139.774,
+     "family": "unrest",
+     "subtype": "riot",
+     "who": [],
+     "what": "Crowds sacked rice dealers.",
+     "why": "Famine reached the city.",
+     "wikipedia": "Tenmei uchikowashi"
+    },
+    {
+     "date": "1802",
+     "date_note": "",
+     "end_date": "1822",
+     "name": "Yaji and Kita take the road",
+     "place_name": "Edo",
+     "lat": 35.684,
+     "lon": 139.775,
+     "family": "culture",
+     "subtype": "novel",
+     "who": [
+      "Jippensha Ikku"
+     ],
+     "what": "A comic road novel.",
+     "why": "Travel became a pastime for commoners.",
+     "wikipedia": "Tōkaidōchū Hizakurige",
+     "wikidata": "Q1279587"
+    },
+    {
+     "date": "1825",
+     "date_note": "",
+     "end_date": "",
+     "name": "Yotsuya Kaidan",
+     "place_name": "Nakamura-za",
+     "lat": 35.686,
+     "lon": 139.778,
+     "family": "culture",
+     "subtype": "play",
+     "who": [
+      "Tsuruya Nanboku IV"
+     ],
+     "what": "A ghost play premiered.",
+     "why": "Kabuki turned to dark everyday life.",
+     "wikipedia": "Yotsuya Kaidan",
+     "wikidata": "Q1339373"
+    },
+    {
+     "date": "1831",
+     "date_note": "approximate",
+     "end_date": "",
+     "name": "The Great Wave",
+     "place_name": "Off Kanagawa",
+     "lat": 35.42,
+     "lon": 139.65,
+     "family": "culture",
+     "subtype": "print",
+     "who": [
+      "Katsushika Hokusai"
+     ],
+     "what": "Hokusai's landscape print.",
+     "why": "Landscapes became a mass genre.",
+     "wikipedia": "The Great Wave off Kanagawa",
+     "wikidata": "Q252485"
+    },
+    {
+     "date": "1833",
+     "date_note": "",
+     "end_date": "1834",
+     "name": "Hiroshige's Tōkaidō",
+     "place_name": "Nihonbashi",
+     "lat": 35.684,
+     "lon": 139.774,
+     "family": "culture",
+     "subtype": "print series",
+     "who": [
+      "Utagawa Hiroshige"
+     ],
+     "what": "Fifty-three stations from Nihonbashi.",
+     "why": "The highway became art.",
+     "wikipedia": "The Fifty-three Stations of the Tōkaidō",
+     "wikidata": "Q243248"
+    },
+    {
+     "date": "1855-11-11",
+     "date_note": "",
+     "end_date": "",
+     "name": "The Ansei earthquake",
+     "place_name": "Edo",
+     "lat": 35.69,
+     "lon": 139.8,
+     "family": "disaster",
+     "subtype": "earthquake",
+     "who": [
+      "Fujita Tōko"
+     ],
+     "what": "A quake and fires killed thousands.",
+     "why": "Catfish prints showed public feeling.",
+     "wikipedia": "1855 Edo earthquake",
+     "wikidata": "Q4389204"
+    },
+    {
+     "date": "1856",
+     "date_note": "",
+     "end_date": "1858",
+     "name": "One Hundred Famous Views",
+     "place_name": "Edo",
+     "lat": 35.687,
+     "lon": 139.791,
+     "family": "culture",
+     "subtype": "print series",
+     "who": [
+      "Utagawa Hiroshige"
+     ],
+     "what": "Hiroshige's farewell to Edo.",
+     "why": "It inspired Van Gogh.",
+     "wikipedia": "One Hundred Famous Views of Edo",
+     "wikidata": "Q165190"
+    },
+    {
+     "date": "1859-07",
+     "date_note": "",
+     "end_date": "",
+     "name": "Yokohama opens",
+     "place_name": "Yokohama",
+     "lat": 35.444,
+     "lon": 139.638,
+     "family": "diplomacy",
+     "subtype": "port",
+     "who": [],
+     "what": "A new trading port opened.",
+     "why": "Silk and tea went abroad; new ideas came in.",
+     "wikipedia": "Yokohama",
+     "wikidata": "Q38283"
+    }
+   ],
+   "status": "draft",
+   "pack": "edo_1700_1868"
+  }
+ ]
+}

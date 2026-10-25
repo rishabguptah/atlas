@@ -1,4 +1,4 @@
-{"id":"europe_1789_1914","name":"Europe 1789–1914","bbox":[-25, 34, 50, 72],"t0":1789,"t1":1914,"built":"2026-10-25","n":25571,"kinds":{"w": 735, "f": 352, "e": 3927, "b": 14747, "d": 5714, "z": 96},"sources":["Wikidata (CC0)", "Pantheon 2025 (CC BY-SA 4.0)", "Atlas kernel (see each record)"],"rows":[
+{"id":"europe_1789_1914","name":"Europe 1789–1914","bbox":[-25, 34, 50, 72],"t0":1789,"t1":1914,"built":"2026-10-25","n":25572,"kinds":{"w": 735, "f": 352, "e": 3928, "b": 14747, "d": 5714, "z": 96},"sources":["Wikidata (CC0)", "Pantheon 2025 (CC BY-SA 4.0)", "Atlas kernel (see each record)"],"rows":[
 ["w","c","building","Et'hem Bey Mosque",19.8194,41.3278,"1789","",798610,31,1,{"role":"building"}],
 ["f","c","region","Principality of Lippe",8.877,51.936,"1789","",14551680,30,1,{}],
 ["w","c","building","Tartu Town Hall",26.7218,58.38,"1789","",2394712,24,1,{"role":"building"}],
@@ -19727,6 +19727,7 @@
 ["w","c","building","St. Jakobus",14.9793,51.1449,"1898","",321403,12,1,{"role":"building"}],
 ["e","x","disaster","the \"Frenchman's Garden\" Murders",-5.347,37.707,"1898","1904",48781860,3,2,{"desc":"six serial murders","pin":"location"}],
 ["e","d","congress","1898 The Hague Session of the Institut de Droit International",4.31,52.08,"1898","",101440793,0,2,{"desc":"annual or biennial meeting of the international law association","pin":"location"}],
+["e","c","language_death","Death of Dalmatian",14.58,45.02,"1898","","event:language_death_dalmatian",0,1,{"desc":"Tuone Udaina of Krk, the last speaker, was killed by a road-mine explosion on 10 June 1898.","src":"Matteo Bartoli, Das Dalmatische (1906)"}],
 ["e","d","law","All men win the vote in Norway",10.739,59.913,"1898","","event:law:male_suffrage:nor",0,1,{"desc":"From 1898, all men who are citizens could vote in national elections in Norway (Lexical Index coding).","src":"Skaaning, Gerring and Bartusevicius, Lexical Index of Electoral Democracy (LIED) v6.9, processed by Our World in Data (2026)"}],
 ["b","p","composer","Viktor Ullmann",18.633,49.748,"1898-01-01","",78530,65.5,0,{"place":"Cieszyn","died":"1944-10-18"}],
 ["b","p","religious_figure","Elazar Shach",24.75,55.967,"1898-01-01","",1324942,62.8,0,{"place":"Vabalninkas","died":"2001-11-02"}],

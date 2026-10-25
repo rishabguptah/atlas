@@ -260,7 +260,8 @@ def wd_rows(p):
                 if k == 'r':
                     s = iso(r['s'], '9')[0] if r.get('s') else None
                     e = iso(r['e'], '9')[0] if r.get('e') else None
-                    d, end, conf = (s, e or '', 0) if s else ((bd and ystr(year_of(bd) + 20)) or ystr(t0), dd or '', 2)
+                    # Without dates on the statement: from when they were grown (or the window opens) to their death.
+                    d, end, conf = (s, e or '', 0) if s else (ystr(max(t0, year_of(bd) + 20)) if bd else ystr(t0), dd or '', 2)
                 else:
                     d, end, conf = (bd if k == 'b' else dd), '', 0
                 if not d:
@@ -305,6 +306,10 @@ def assemble(p):
         w = [r for r in wd_rows(p) if inbox(b, r[4], r[5]) and (inspan(r[6], t0, t1) or (r[0] == 'r' and inspan(r[6], t0 - 60, t1)))]
         # Pantheon and the chronicle already have the best-known births, deaths and events: keep theirs.
         w = [r for r in w if not (r[8] in have and r[0] in ('e', 'b', 'd'))]
+        # Stays without dates of their own are only a guess at when: keep the better-known ones.
+        rs = sorted((r for r in w if r[0] == 'r'), key=lambda r: (r[10] > 0, -r[9]))
+        keep_r = {id(r) for r in rs[:1500] if r[10] == 0 or r[9] >= 3}
+        w = [r for r in w if r[0] != 'r' or id(r) in keep_r]
         rows += w
         have |= {r[8] for r in w if isinstance(r[8], int)}
     rows += kernel_rows(keep, have)
@@ -337,7 +342,7 @@ def draft_rows(p):
         x = {'status': 'draft', 'src': 'AI draft (Claude, 2026-10-25), written from Wikipedia: ' + r['wikipedia'] if r.get('wikipedia') else 'AI draft (Claude, 2026-10-25)'}
         if r.get('desc'): x['desc'] = r['desc']
         if r.get('place'): x['place'] = r['place']
-        out.append([r.get('k') or 'e', r.get('f') or 'c', r.get('sub') or '', r['name'], round(r['lon'], 4), round(r['lat'], 4), d, r.get('end') or '',
+        out.append([r.get('k') if r.get('k') in ('e', 'f', 'z', 'w', 'b', 'd', 'r') else 'e', r.get('f') or ('x' if r.get('k') == 'x' else 'c'), r.get('sub') or '', r['name'], round(r['lon'], 4), round(r['lat'], 4), d, r.get('end') or '',
                     'draft:' + p['id'] + ':' + str(len(out)), 8, max(1, int(r.get('conf') or 1)), x])
     return out
 
