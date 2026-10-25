@@ -815,6 +815,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const [x, y] = projection([v.lon, v.lat]);
     const t = fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
     svg.interrupt().transition().duration(reduceMotion() ? 0 : ms).call(zoom.transform, t);
+    if (BASEMAP && BASEMAP.fly) try { BASEMAP.fly(v, reduceMotion() ? 0 : ms); } catch (err) { console.error(err); }
   }
   // Pan only if the point is off screen; keep the zoom the person chose.
   function reveal(lon, lat) {

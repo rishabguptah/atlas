@@ -2,6 +2,7 @@
 // Renderer, palette and sprites live in views/pixel/ (see SPEC.md); this file wires them to the page.
 // Data: PIXEL.tile0 (terrain L0 as a data URI), PIXEL.rivers; finer tiles load from tiles/ next to the page when published.
 // Lens marks are painted into the pixel grid (views/pixel/marks.js) and a pixel HUD sits in the corners (views/pixel/hud.js).
+// Everything that moves (water, weather, night, ships, armies, plague, ink-in) is views/pixel/motion.js, on its own canvases (ATLAS.motion).
 (function () {
   if (typeof PixelMap !== "function" || typeof PixelBorders !== "function" || typeof PIXEL === "undefined" || !PIXEL.tile0) return;
   const STYLE = `@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Silkscreen&display=swap");
@@ -81,7 +82,7 @@
     LBL.add("sprites", () => pm ? pm.spriteBoxes().map(block => ({ block })) : [], { base: true });
     if (typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) LBL.add("geo", () => pm && isOn("terrain") ? PixelGeoLabels.items(TERRAIN) : [], { base: true });
   }
-  let pm = null, proj = null, T = null, year = null, snap = null, timer = 0, frame = 0, statics = [], movers = [];
+  let pm = null, proj = null, T = null, year = null, snap = null, statics = [], movers = [], motion = null, lastRender = 0;
   let marks = null, hud = null, watch = null, markTimer = 0;
   const realmCache = {}, NO_REALMS = [];
   let warmed = null;
@@ -135,20 +136,60 @@
       for (let q = 0; q < n; q++) movers.push({ line: t.line, segs, tot, phase: q / n });
     }
   }
-  function moverAt(m) {
-    let s = ((m.phase + frame * 0.004 / Math.max(0.2, m.tot)) % 1) * m.tot;
-    for (let i = 0; i < m.segs.length; i++) { if (s <= m.segs[i]) return d3.geoInterpolate(m.line[i], m.line[i + 1])(s / (m.segs[i] || 1)); s -= m.segs[i]; }
-    return m.line[m.line.length - 1];
-  }
+  // Movers (ships and caravans on trade routes) walk on the motion layer; the map itself only draws what stands still.
   function draw() {
     if (!pm) return;
     const list = statics.slice();
-    for (const m of movers) {
-      const [lon, lat] = moverAt(m), sea = pm.isWater(lon, lat);
+    if (!motion) for (const m of movers) {
+      const [lon, lat] = m.line[0], sea = pm.isWater(lon, lat);
       list.push({ lon, lat, sprite: ERA ? ERA.mover(year, lon, lat, sea) : sea ? "ship" : "caravan", pri: 0.5 });
     }
     list.sort((a, b) => b.lat - a.lat);
     pm.sprites(list, ERA && T ? ERA.budget(T.k) : undefined);
+  }
+
+  // ---------- what the motion layer animates, asked for when the year settles ----------
+  // Campaigns: consecutive battles of one war (Wikidata), so an army walks from the last battle to the next.
+  let wars = null, warsFrom = null;
+  function campaigns(y) {
+    const wd = typeof WAR !== "undefined" && WAR.wd; if (!wd) return [];
+    if (warsFrom !== wd) {
+      warsFrom = wd; const by = new Map();
+      for (const b of wd) if (b[7] && isFinite(b[2]) && isFinite(b[3])) { if (!by.has(b[7])) by.set(b[7], []); by.get(b[7]).push(b); }
+      wars = [...by.values()].filter(l => l.length > 1).map(l => l.sort((a, b) => a[2] - b[2]));
+    }
+    const out = [];
+    for (const l of wars) {
+      if (l[0][2] > y || l[l.length - 1][2] < y) continue;
+      let n = 0;
+      for (let i = 0; i + 1 < l.length && n < 3; i++) {
+        const a = l[i], b = l[i + 1];
+        if (a[2] > y || b[2] < y || b[2] - a[2] > 2) continue;
+        const d = d3.geoDistance([a[4], a[3]], [b[4], b[3]]);
+        if (d < 0.004 || d > 0.35) continue; // same field, or too far to march (about 25 km to 2200 km)
+        const side = (a[6] || "").split(" / ")[0];
+        out.push({ a: [a[4], a[3]], b: [b[4], b[3]], team: hashC(side), sprite: ERA ? ERA.army(y, a[4], a[3]) : "army", size: l.length }); n++;
+      }
+    }
+    return out.sort((p, q) => q.size - p.size).slice(0, 14);
+  }
+  // The Black Death's spread, month by month, for the year on the slider.
+  function plagueFronts(y) {
+    if (typeof PLAGUE === "undefined" || !PLAGUE.routes) return [];
+    return PLAGUE.routes.features.filter(f => f.properties && f.properties.year === y).map(f => ({ pts: f.geometry.coordinates, month: f.properties.month || 1 }));
+  }
+  // Smoke: this year's curated battles, eruptions and burning cities.
+  function emitters(y) {
+    const out = [];
+    if (typeof WAR !== "undefined" && isOn("war")) for (const b of WAR.battles) if (b.start === y && b.lat != null) out.push({ lon: b.lon, lat: b.lat, kind: "battle" });
+    if (typeof PLAGUE !== "undefined" && isOn("disease")) for (const s of PLAGUE.events) if (s.lat != null && s.subtype === "eruption" && y >= s.start && y <= (s.end ?? s.start) + 1) out.push({ lon: s.lon, lat: s.lat, kind: "ash" });
+    if (typeof ENTRIES !== "undefined" && isOn("places")) for (const e of ENTRIES) if (e.end === y && (e.causes || []).some(c => /war|fire|volcano/.test(c))) out.push({ lon: e.lon, lat: e.lat, kind: "fire" });
+    return out.slice(0, 12);
+  }
+  // City lights until the Reba et al. series arrive: the page's own cities, sized by population.
+  function lights(y) {
+    if (typeof ENTRIES === "undefined") return [];
+    return ENTRIES.filter(e => y >= e.start && (e.end == null || y < e.end)).map(e => ({ lon: e.lon, lat: e.lat, pop: (typeof POP !== "undefined" && interp(POP[e.id], y) || 20000) / 1000 }));
   }
 
   // Lens marks: the page's own records once it offers them (ATLAS.marks), else what its SVG layers drew.
@@ -225,10 +266,18 @@
       if (!LBL && typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
       if (typeof PixelMarks === "function" && svgEl()) mountMarks(el, projection);
       if (typeof PixelHUD === "function") hud = PixelHUD(mapOf(el), projection, { px: 3, tile: PIXEL.tile0, fly: (v, ms) => ATLAS.api && ATLAS.api.fly(v, ms ?? 600) });
-      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => { if (document.hidden || !T) return; frame++; pm.setFrame(frame); draw(); }, 260);
+      if (typeof PixelMotion === "function") {
+        const L = PIXEL.lights;
+        motion = ATLAS.motion = PixelMotion(pm, el, projection, { px: 3, mapEl: mapOf(el), lightsUrl: typeof L === "string" ? L : null, lightsData: L && L.c ? L.c : null,
+          source: { movers: () => movers, campaigns, plague: plagueFronts, emitters, lights, isOn, moverSprite: (lon, lat, sea) => ERA ? ERA.mover(year, lon, lat, sea) : sea ? "ship" : "caravan" } });
+      }
     },
     render(t, y) {
       if (!pm) return;
+      // A big jump in one go (an era, a tour step, Surprise me) dissolves the old world into the new; scrubbing and play do not.
+      const now = performance.now();
+      if (motion && year != null && Math.abs(y - year) >= 25 && now - lastRender > 400 && pm.same(t)) motion.jump();
+      lastRender = now;
       T = t; year = y;
       if (marks && !watch && typeof ATLAS.marks === "function") marks.set(ATLAS.marks()); else if (marks) marks.markDirty();
       if (hud) hud.update(t);
@@ -251,11 +300,13 @@
         if (key !== geoKey) { geoKey = key; if (on) geo.render(t, el0.clientWidth, el0.clientHeight); else geo.clear(); }
       }
       collect(y, t.k); draw();
+      if (motion) motion.year(y);
       provLabels();
     },
-    move(t) { if (pm) pm.move(t); if (geo) geo.move(t); if (hud) hud.update(t); if (provSvg && T) { const s = t.k / T.k; provSvg.style.transform = `translate(${t.x - T.x * s}px,${t.y - T.y * s}px) scale(${s})`; } },
+    move(t) { if (pm) pm.move(t); if (motion) motion.move(t); if (geo) geo.move(t); if (hud) hud.update(t); if (provSvg && T) { const s = t.k / T.k; provSvg.style.transform = `translate(${t.x - T.x * s}px,${t.y - T.y * s}px) scale(${s})`; } },
     unmount() {
-      clearInterval(timer); clearTimeout(markTimer); markTimer = 0;
+      clearTimeout(markTimer); markTimer = 0;
+      if (motion) motion.destroy(); motion = null; if (ATLAS.motion) ATLAS.motion = null;
       if (watch) watch.disconnect(); watch = null; marks = null;
       if (el0) mapOf(el0).classList.remove("pxmarks");
       if (hud) hud.remove(); hud = null;
@@ -264,5 +315,6 @@
       realmItems = []; if (LBL) LBL.refresh();
     },
     setMood(m) { if (pm) pm.setMood(m); if (geo) geo.setMood(m); if (LBL && LBL.engine) LBL.engine.setMood(m); },
+    fly(v, ms) { if (motion) motion.fly(v, ms); },
   });
 })();
