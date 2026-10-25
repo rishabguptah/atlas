@@ -1,0 +1,42 @@
+{
+  "id": "whatif:ming_keeps_sailing",
+  "question": "What if Ming China had kept sailing after 1433?",
+  "short": "Between 1405 and 1433 Zheng He led seven huge fleets as far as Hormuz and East Africa, then the court stopped them. Keep them sailing and the likeliest change is an Indian Ocean with a Chinese naval presence when the Portuguese arrive in 1498, which could have blunted Portugal's grab for the spice ports. Chinese fleets discovering America or Europe is not supported by anything they were trying to do.",
+  "divergence": { "year": 1433, "text": "After the seventh voyage the court keeps funding the treasure fleets instead of letting them rot." },
+  "plausibility": 0.35,
+  "plausibility_note": "Low to medium: the voyages ended for solid reasons (cost, the Mongol threat in the north, court politics), so keeping them needs a different Ming.",
+  "lenses": ["economy", "military", "geography", "order"],
+  "steps": [
+    { "branch": false, "lens": "economy", "title": "The first fleet", "year": 1405, "view": { "lon": 100, "lat": 12, "span": 60 }, "layers": ["money"],
+      "pins": [{ "name": "Nanjing", "lon": 118.8, "lat": 32.06 }, { "name": "Malacca", "lon": 102.25, "lat": 2.2 }, { "name": "Calicut", "lon": 75.78, "lat": 11.25 }],
+      "routes": [{ "label": "first voyage, 1405-07", "points": [[118.8, 32.06], [119.3, 26.1], [109.2, 13.8], [106.8, -6.1], [102.25, 2.2], [80.2, 6.0], [75.78, 11.25]] }],
+      "text": "The Yongle emperor sent the eunuch admiral Zheng He out in 1405 with, by the Ming records, 62 large ships and about 27,800 men. Their main destination was Calicut on India's pepper coast. The aim was prestige and tribute, not trade monopolies or colonies.",
+      "confidence": 0.8, "sources": [{ "cite": "Edward Dreyer, Zheng He: China and the Oceans in the Early Ming Dynasty, 1405-1433 (2007)" }, { "cite": "Wikipedia, Ming treasure voyages", "url": "https://en.wikipedia.org/wiki/Ming_treasure_voyages" }] },
+    { "branch": false, "lens": "geography", "title": "To Hormuz and Africa", "year": 1418, "view": { "lon": 65, "lat": 8, "span": 70 },
+      "pins": [{ "name": "Hormuz", "lon": 56.45, "lat": 27.1 }, { "name": "Aden", "lon": 45.03, "lat": 12.8 }, { "name": "Mogadishu", "lon": 45.34, "lat": 2.05 }, { "name": "Malindi", "lon": 40.12, "lat": -3.22 }],
+      "routes": [{ "label": "later voyages", "points": [[75.78, 11.25], [56.45, 27.1]] }, { "label": "later voyages", "points": [[75.78, 11.25], [45.03, 12.8], [45.34, 2.05], [40.12, -3.22]] }],
+      "text": "Later voyages went on to Hormuz, Aden, Mogadishu and Malindi. Envoys came back to the court with them, along with exotic gifts; a giraffe presented in 1414 was hailed as a qilin, a sign of good rule.",
+      "confidence": 0.8, "sources": [{ "cite": "Edward Dreyer, Zheng He (2007)" }] },
+    { "branch": false, "lens": "order", "title": "Why it stopped", "year": 1433, "view": { "lon": 112, "lat": 33, "span": 40 },
+      "pins": [{ "name": "Beijing, new capital 1421", "lon": 116.4, "lat": 39.9 }],
+      "text": "The fleets were ruinously expensive. The capital had moved north to Beijing in 1421, the rebuilt Grand Canal now carried grain without the sea, and the Mongols were the real threat (in 1449 they captured an emperor at Tumu). Civil officials who distrusted the palace eunuchs won the argument, and the fleets were left to decay.",
+      "confidence": 0.7, "sources": [{ "cite": "Edward Dreyer, Zheng He (2007)" }] },
+    { "branch": true, "lens": "economy", "title": "A Ming lake", "year": 1460, "view": { "lon": 85, "lat": 5, "span": 75 },
+      "pins": [{ "name": "Malacca, Ming protectorate", "lon": 102.25, "lat": 2.2 }, { "name": "Calicut", "lon": 75.78, "lat": 11.25 }],
+      "text": "Malacca really did shelter under Ming protection in the early 1400s. Keep the fleets and that becomes a network: Ming envoys and warships calling at the main ports every few years, tribute and trade flowing to China. Not an empire of colonies, but a presence.",
+      "confidence": 0.5, "sources": [] },
+    { "branch": true, "lens": "military", "title": "Da Gama meets a fleet", "year": 1498, "view": { "lon": 72, "lat": 14, "span": 30 },
+      "pins": [{ "name": "Calicut, 1498", "lon": 75.78, "lat": 11.25 }, { "name": "Diu, 1509", "lon": 70.98, "lat": 20.71 }, { "name": "Goa, 1510", "lon": 73.83, "lat": 15.5 }],
+      "text": "Vasco da Gama reached Calicut in 1498 with four ships. Portugal won the Indian Ocean by sea power: the battle of Diu in 1509, Goa in 1510, Malacca in 1511. Against a standing Chinese navy that saw these ports as tributaries, that run gets much harder. This is the branch's biggest plausible change.",
+      "confidence": 0.35, "sources": [{ "cite": "Wikipedia, Battle of Diu (1509)", "url": "https://en.wikipedia.org/wiki/Battle_of_Diu_(1509)" }] },
+    { "branch": true, "lens": "geography", "title": "Would they have found America? Almost surely not", "year": 1500, "view": { "lon": -170, "lat": 20, "span": 200 },
+      "text": "The fleets followed known monsoon routes to known ports; nothing in their mission pushed them across 10,000 km of open Pacific. Gavin Menzies' claim that they reached America in 1421 is rejected by historians. A good what-if keeps its ambitions inside what the actors wanted.",
+      "confidence": 0.05, "sources": [{ "cite": "Wikipedia, 1421: The Year China Discovered the World", "url": "https://en.wikipedia.org/wiki/1421:_The_Year_China_Discovered_the_World" }] }
+  ],
+  "views": [
+    { "name": "Edward Dreyer", "school": "Power projection", "strength": "strong", "claim": "The voyages were about imperial legitimacy and ending them was a rational budget choice.", "for": "The Ming's real enemy was on the northern frontier.", "against": "Private Chinese sea trade kept growing, so maritime interest did not vanish." },
+    { "name": "Kenneth Pomeranz", "school": "Great Divergence", "strength": "medium", "claim": "Europe's lead came from coal and the Americas around 1800, not from who kept sailing in 1433.", "for": "China stayed commercially dynamic for centuries after.", "against": "Naval control of trade routes did give Europe colonies and silver." },
+    { "name": "David Landes", "school": "Closing in", "strength": "weak", "claim": "Stopping the fleets showed a state turning inward, a choice with long costs.", "for": "Later sea bans (haijin) restricted private trade.", "against": "The bans were patchy, and Chinese merchants filled Southeast Asian ports anyway." }
+  ],
+  "unknowns": ["The real size of the largest treasure ships (claims of 120 m are doubted).", "How much private Chinese trade the voyages carried alongside the tribute.", "Whether any Ming court could have afforded both the fleets and the northern wars."]
+}

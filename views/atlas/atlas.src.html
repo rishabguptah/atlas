@@ -378,8 +378,8 @@ const TOURS = /*__TOURS__*/;
 </script>
 <script>
 // Plugins register here: lenses (views/atlas/lenses/*.js), a basemap, sprites. See views/atlas/LENSES.md.
-window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
-  lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; } };
+window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null,
+  lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); } };
 </script>
 <!--__LENS_SCRIPTS__-->
 <script>
@@ -768,7 +768,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
       .attr("class", (d, i) => `pt order lbl ${d._b}${i < 8 ? " big" : ""}`).style("--bc", d => `var(--b-${d._b === "none" ? "calm" : d._b})`).on("click", onClickSel(polityCard));
     s.select("circle").attr("r", d => 3 + Math.sqrt(d._a) * 7);
     s.select("text").attr("y", d => -(5 + Math.sqrt(d._a) * 7)).style("font-size", d => 10 + Math.min(4, Math.sqrt(d._a) * 2) + "px").text(d => d.n);
-    s.select("title").text(d => `${d.n} · ${d._b === "none" ? "no score yet" : d._b + ", " + Math.round(d._f * 100) + "% risk of breaking within 25 years"}`);
+    s.select("title").text(d => `${d.n} · ${d._b === "none" ? "no score yet" : d._b + ", " + Math.round(d._f * 100) + "% risk of breaking within 50 years"}`);
     const broke = on ? POLS.filter(p => p.b && p.e <= y && p.e > y - 20) : [];
     const b = points(g, "broke lbl", broke, d => d.id, e => { e.append("path").attr("d", "M-5-5L5 5M5-5L-5 5"); e.append("text").attr("x", 7).attr("y", 4); }).on("click", onClickSel(polityCard));
     b.select("text").text(d => `${d.n} breaks`); b.select("title").text(d => `${d.n} ended ${fmtYear(d.e)} without a successor (${d.st})`);
@@ -1180,8 +1180,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
   function setTab(t) {
     state.tab = t;
     document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === t));
-    for (const k of ["now", "here", "guide"]) document.getElementById("pane-" + k).hidden = k !== t;
+    for (const k of ["now", "here", "guide", ...TABS.map(d => d.id)]) document.getElementById("pane-" + k).hidden = k !== t;
     if (t === "now") renderNow(); else if (t === "here") renderHere();
+    const pt = TABS.find(d => d.id === t); if (pt && pt.show) try { pt.show(); } catch (err) { console.error("tab " + t, err); }
+  }
+  // Plugin tabs (ATLAS.tab) sit after Here, each with its own pane; mount() runs once the page is up.
+  const TABS = ATLAS.tabs.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !["now", "here", "guide"].includes(d.id) && a.findIndex(x => x && x.id === d.id) === i);
+  for (const d of TABS) {
+    const b = document.createElement("button"); b.className = "tab"; b.setAttribute("role", "tab"); b.dataset.tab = d.id; b.setAttribute("aria-selected", "false"); b.textContent = d.name || d.id;
+    document.querySelector(".tabs").appendChild(b);
+    const el = document.createElement("div"); el.className = "pane"; el.id = "pane-" + d.id; el.hidden = true;
+    document.getElementById("panel").appendChild(el);
   }
   document.querySelectorAll(".tab").forEach(b => b.onclick = () => setTab(b.dataset.tab));
   let panelTimer;
@@ -1236,6 +1245,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
 
   // ---------- year ----------
   const yearIn = document.getElementById("year"), yout = document.getElementById("yout"), yp = document.getElementById("yp");
+  const yearWatch = [];  // plugin tabs listening for year changes (ATLAS.api.onYear)
   function setYear(y) {
     y = clampYear(y);
     if (y === state.year && yout.textContent) return;
@@ -1244,6 +1254,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     yout.textContent = fmtYear(y);
     yp.textContent = fmtYear(y);
     drawAll(); refreshPanel();
+    for (const fn of yearWatch) try { fn(y); } catch (err) { console.error(err); }
   }
   let yearAnim;
   function animateYear(to, ms = 1100) {
@@ -1817,6 +1828,18 @@ Where the specialists disagree, say who the evidence favours.`;
     document.getElementById("ask").requestSubmit();
   });
   q2.addEventListener("keydown", ev => { if (ev.key === "Enter" && !ev.shiftKey) { ev.preventDefault(); document.getElementById("ask2").requestSubmit(); } });
+
+  // ---------- plugin API: what a plugin tab (ATLAS.tab) may do with the map ----------
+  ATLAS.api = {
+    get year() { return state.year; }, get k() { return state.k; },
+    setYear: (y, animate = true, ms) => { stopTime(); animate ? animateYear(y, ms) : (cancelAnimationFrame(yearAnim), setYear(y)); },
+    // A scene is a guide step: {year, view: {lon, lat, span}, lens, layers, highlight, pins, routes, title}.
+    scene: s => { stopPlay(); applyScene(s); },
+    clearScene: () => { state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); showCaption(null); drawAll(); },
+    fly: (v, ms) => flyTo(v, ms), setOn: (k, v = true) => { if (isOn(k) !== v) { setOn(k, v); redrawToggles(); syncChips(); } },
+    redraw: () => drawAll(), setTab: t => setTab(t), fmtYear, onYear: fn => yearWatch.push(fn),
+  };
+  for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 
   // ---------- start: 1348, the Black Death year, where five lenses overlap ----------
   syncChips();
