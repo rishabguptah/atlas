@@ -3,7 +3,7 @@
 //   const pm = PixelMap(container, projection, { px: 3, rasters, land, rivers, palette })
 //   pm.render(transform, { realms, year })   on zoom end, resize and year change (transform = d3 zoom transform)
 //   pm.move(transform)                       on every zoom frame: shifts the last frame with CSS until render
-//   pm.sprites(list)                         [{lon, lat, sprite, frame?, team?, flip?}] drawn into the pixel grid
+//   pm.sprites(list, {max, pad}?)           [{lon, lat, sprite, frame?, team?, flip?, pri?, grp?}] drawn into the pixel grid; with pri, decluttered
 //   pm.tick()                                advance sprite and water animation by one frame (call ~4 fps)
 //
 // levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
@@ -50,7 +50,7 @@
     container.prepend(canvas);
     const ctx = canvas.getContext("2d");
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
-    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, list = [], realmsNow = [];
+    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [];
 
     // Terrain tiles: levels coarse to fine, each {cell (degrees), tdeg (tile size in degrees), url(col, row)}.
     // Tiles load on demand; until a finer tile arrives the coarser level shows, then the map re-renders.
@@ -329,8 +329,33 @@
       }));
       return spriteCache[key] = px;
     }
+    // Declutter: when sprites carry a priority (pri), keep the most important ones that fit without touching,
+    // up to max; sprites sharing a grp (a battle's two armies and clash) are kept or dropped together.
+    let spriteOpts = {};
+    function declutter(src, t) {
+      if (!src.some(s => s.pri != null)) return src;
+      const pad = spriteOpts.pad == null ? 2 : spriteOpts.pad, max = spriteOpts.max || Infinity, groups = new Map();
+      src.forEach((s, n) => {
+        const S = (global.PIXEL_SPRITES || {})[s.sprite], p = S && projection([s.lon, s.lat]); if (!p) return;
+        const i0 = Math.floor((p[0] * t.k) / PX) - U0 + (s.dx || 0), j0 = Math.floor((p[1] * t.k) / PX) - V0 + (s.dy || 0);
+        const hw = Math.max(S.ax, S.w - 1 - S.ax), b = [i0 - hw, j0 - S.ay, i0 + hw, j0 + S.h - 1 - S.ay];
+        const key = s.grp || n, g = groups.get(key);
+        if (!g) groups.set(key, { pri: s.pri || 0, n, b, items: [s] });
+        else { g.items.push(s); g.pri = Math.max(g.pri, s.pri || 0); g.b = [Math.min(g.b[0], b[0]), Math.min(g.b[1], b[1]), Math.max(g.b[2], b[2]), Math.max(g.b[3], b[3])]; }
+      });
+      const kept = [], keep = new Set();
+      for (const g of [...groups.values()].sort((a, b) => b.pri - a.pri || a.n - b.n)) {
+        const b = g.b;
+        if (b[2] < 0 || b[3] < 0 || b[0] >= w || b[1] >= h) continue;
+        if (kept.length >= max) break;
+        if (kept.some(o => b[0] - pad <= o[2] && b[2] + pad >= o[0] && b[1] - pad <= o[3] && b[3] + pad >= o[1])) continue;
+        kept.push(b); for (const s of g.items) keep.add(s);
+      }
+      return src.filter(s => keep.has(s));
+    }
     function paint() {
       if (!base) return;
+      const list = declutter(allSprites, last);
       const img = ctx.createImageData(w, h), out = new Uint32Array(img.data.buffer);
       out.set(base);
       // Water shimmer: a few world-anchored wave glints that move with the frame.
@@ -375,7 +400,7 @@
       canvas,
       render,
       move(t) { if (!last) return; const s = t.k / last.k; canvas.style.transform = `translate(${t.x - last.x * s}px,${t.y - last.y * s}px) scale(${s})`; canvas.style.transformOrigin = `${-parseFloat(canvas.style.left)}px ${-parseFloat(canvas.style.top)}px`; },
-      sprites(l) { list = l; paint(); },
+      sprites(l, o) { allSprites = l; spriteOpts = o || {}; paint(); },
       // A new year with the same view: keep the terrain pass, redo only realms and sprites.
       setRealms(r) { realmsNow = r || []; if (!terrain) return; base.set(terrain); drawRealms(); paint(); },
       // Is the last render for this transform (so a year change can use setRealms)?
