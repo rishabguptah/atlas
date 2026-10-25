@@ -350,3 +350,56 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app .dr { justify-items: start; padding-left: max(var(--g), env(safe-area-inset-left, 0px)); }
   .app .dr-strip { width: min(680px, 100%); }
 }
+
+/* ---- show or hide the interface (the eye, H): chrome slides off its nearest edge in three steps (D8) ---- */
+.app #focusbtn { display: none; }
+.app .yearplate, .app #nextcard, .app .modeplate, .app #layers, .app #sublayers, .app .askbar, .app .mapctl, .app .panel, .app .time, .app .pxhud-br, .app .caption, .app .keycard, .app .cx-toasts {
+  transition: transform 150ms steps(3, end), opacity 150ms steps(3, end); }
+.app.ui-hidden #layers, .app.ui-hidden #sublayers { transform: translateX(calc(-100% - 2 * var(--g))); pointer-events: none; }
+.app.ui-hidden .panel, .app.ui-hidden .keycard, .app.ui-hidden .cx-toasts { transform: translateX(calc(100% + 2 * var(--g))); pointer-events: none; }
+.app.ui-hidden #nextcard, .app.ui-hidden .modeplate, .app.ui-hidden .askbar { transform: translateY(calc(-100% - 120px)); pointer-events: none; }
+.app.ui-hidden .time, .app.ui-hidden .pxhud-br, .app.ui-hidden .caption { transform: translateY(calc(100% + 2 * var(--g) + 40px)); pointer-events: none; }
+.app.ui-hidden .mapctl .btn:not(.eyebtn) { opacity: 0; pointer-events: none; }
+.app.ui-hidden .mapctl { right: max(var(--g), env(safe-area-inset-right, 0px)); }
+.app.ui-hidden .yearplate { transform: scale(.75); transform-origin: 0 0; }
+.app.ui-hidden .yearplate, .app.ui-hidden .eyebtn { opacity: .4; }
+.app.ui-hidden .yearplate:hover, .app.ui-hidden .eyebtn:hover, .app.ui-hidden .eyebtn:focus-visible { opacity: 1; }
+.app .eyebtn[aria-pressed="true"] { color: var(--vellum-fixed); border-image-source: var(--f-button); }
+/* Dragging the map: the interface becomes a ghost until you let go; hovering it brings it back. */
+.app.panning :is(.yearplate, #nextcard, .modeplate, #layers, .askbar, .mapctl, .panel, .time, .pxhud-br, .caption):not(:hover) { opacity: .25; transition: opacity 120ms steps(2, end); }
+
+/* ---- a game or mode: one plate, top left, the same in every mode ---- */
+.app .modeplate { position: absolute; z-index: 7; left: max(var(--g), env(safe-area-inset-left, 0px)); top: 104px; display: flex; align-items: center; gap: 8px; padding: 2px 4px;
+  border: 10px solid transparent; border-image: var(--f-plate) 5 fill / 10px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); }
+.app .modeplate[hidden], .app.in-mode #nextcard { display: none; }
+.app .modeplate button { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.app .mp-back { color: var(--vellum-fixed); padding: 2px 6px; border: 6px solid transparent; border-image: var(--f-button) 3 fill / 6px stretch; }
+.app .mp-back .ico { --t: var(--gold-hi); width: 12px; height: 12px; }
+.app .mp-back kbd { font-family: var(--f-tiny); font-size: 8px; opacity: .7; }
+.app .mp-back:hover, .app .mp-back:focus-visible { transform: translateY(-2px); }
+.app .mp-nm { font-family: var(--f-head); font-size: 16px; color: var(--ink); white-space: nowrap; }
+.app .mp-peek { color: var(--ink-soft); border-bottom: 2px dotted var(--ink-soft); }
+.app .mp-peek:hover, .app .mp-peek:focus-visible { color: var(--ink); }
+.app.directing .modeplate { display: none; }
+@media (max-width: 700px) {
+  .app .modeplate { top: auto; bottom: calc(var(--peek, 92px) + var(--timeh) + 8px); left: 8px; }
+  .app .mp-peek, .app .mp-back kbd { display: none; }
+  .app .eyebtn { position: fixed; right: 12px; bottom: calc(var(--peek, 92px) + var(--timeh) + 12px); z-index: 25; }
+  .app.ui-hidden .eyebtn { bottom: 16px; }
+  .app.ui-hidden .yearplate { transform: scale(.75); }
+}
+@media (prefers-reduced-motion: reduce) { .app .yearplate, .app #layers, .app .panel, .app .time { transition: none; } }
+/* Folded on the Ask ribbon, the question box is the only way to ask, so it stays. */
+.app.panel-min.asking .askbar, .app.panel-min.asking #qbox, .app.panel-min.asking #go { visibility: visible; }
+@media (max-width: 860px) { .app.panel-min.asking #qbox, .app.panel-min.asking #go { display: revert; } }
+.app.ui-hidden .maphint { opacity: 0; }
+.app.ui-hidden .pxhud-br { transform: translateY(calc(100% + 200px)); }
+.app.in-mode .askbar, .app.in-mode .maphint { display: none; }
+/* Folded, the ribbons are one row of emblems (the names are in the tooltips). */
+@media (min-width: 701px) {
+  .app.panel-min .tabs { flex-wrap: wrap; gap: 0; padding: 0; }
+  .app.panel-min .tabs .tab, .app.panel-min .tabs.many .tab[aria-selected] { flex: 0 0 auto; width: 30px; padding: 4px 3px; margin: 0; }
+  .app.panel-min .tabs .tab .nm, .app.panel-min .tabs.many .tab[aria-selected] .nm { display: none; }
+}
+.app .mp-back .ico { transform: scaleX(-1); }
+@media (max-width: 700px) { .app.ui-hidden { padding-bottom: env(safe-area-inset-bottom, 0px); } .app.ui-hidden .panel { transform: translateY(100%); } }

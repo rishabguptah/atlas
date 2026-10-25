@@ -157,8 +157,12 @@
   // Anything that writes into Here (a click on the map) opens the panel again.
   new MutationObserver(() => { if (app.classList.contains("panel-min") ) { if ($$(".tab").some(t => t.dataset.tab !== "guide" && t.getAttribute("aria-selected") === "true" && t.dataset.tab === "here")) setFold(false); } })
     .observe($("#pane-here"), { childList: true });
-  let wantMin = false; try { wantMin = !!localStorage.getItem("atlas.panelmin.v1"); } catch (e) {}
+  // Map first: the panel starts folded to its ribbons and opens when something is asked of it.
+  let wantMin = true; try { const v = localStorage.getItem("atlas.panelmin.v1"); if (v !== null) wantMin = !!v; } catch (e) {}
   if (wantMin && !phone.matches) setFold(true);
+  const curTab = () => { const t = $$(".tab").find(t => t.getAttribute("aria-selected") === "true"); return t ? t.dataset.tab : null; };
+  let lastTab = curTab();
+  new MutationObserver(() => { if (app.classList.contains("panel-min") && !phone.matches) setFold(false); }).observe($("#answer") || panel, { childList: true });
 
   // The grip at the foot of the panel: about 60% of the height by default, the full height on demand.
   const grip = document.createElement("button");
@@ -170,13 +174,92 @@
   // Plugin panes added later still sit above the grip.
   new MutationObserver(() => { if (panel.lastElementChild !== grip) panel.appendChild(grip); }).observe(panel, { childList: true });
 
+  // ---------- show or hide the interface: the eye (H). Panning fades it; hovering brings it back ----------
+  const eye = document.createElement("button");
+  eye.type = "button"; eye.className = "btn eyebtn"; eye.innerHTML = ico("focus") + `<span class="nm">Hide</span>`;
+  const mapctl = $(".mapctl"); if (mapctl) mapctl.appendChild(eye);
+  function setHidden(v) {
+    app.classList.toggle("ui-hidden", v);
+    eye.setAttribute("aria-pressed", v); eye.title = v ? "Show the interface (H)" : "Hide the interface: just the map (H)";
+    eye.querySelector(".nm").textContent = v ? "Show" : "Hide";
+    try { localStorage.setItem("atlas.uihidden.v1", v ? "1" : ""); } catch (e) {}
+    emitRects();
+  }
+  eye.addEventListener("click", () => setHidden(!app.classList.contains("ui-hidden")));
+  document.addEventListener("keydown", ev => {
+    if (ev.target.closest("input, textarea, select, [contenteditable]") || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    if (ev.key === "h" || ev.key === "H") { ev.preventDefault(); setHidden(!app.classList.contains("ui-hidden")); }
+  });
+  let hid = false; try { hid = !!localStorage.getItem("atlas.uihidden.v1"); } catch (e) {}
+  setHidden(hid);
+  // While you drag the map the interface steps back to a ghost, so the place you are looking for is not under it.
+  let panT = 0, down = null;
+  map.addEventListener("pointerdown", ev => { if (ev.target.closest("button, a, input, select, .panel, .dr")) return; down = [ev.clientX, ev.clientY]; }, { passive: true });
+  addEventListener("pointermove", ev => {
+    if (!down || app.classList.contains("panning")) return;
+    if (Math.abs(ev.clientX - down[0]) + Math.abs(ev.clientY - down[1]) > 6) { clearTimeout(panT); app.classList.add("panning"); }
+  }, { passive: true });
+  addEventListener("pointerup", () => { down = null; clearTimeout(panT); panT = setTimeout(() => app.classList.remove("panning"), 300); }, { passive: true });
+
+  // ---------- games and modes: one way in, one way out ----------
+  // Opening a game or mode remembers the year, view, lenses and tab you came from; "Back to map" (or Esc) puts them back
+  // and folds the panel, so the map is where you left it.
+  const MODES = { codex: "Codex", guess: "Guess the past", life: "Live a life", whatif: "What if", stories: "Stories", travels: "Who was there", objects: "Objects", compare: "Compare", upclose: "Up close" };
+  let home = null;
+  const plate = document.createElement("div");
+  plate.className = "modeplate"; plate.hidden = true;
+  plate.innerHTML = `<button type="button" class="mp-back">${ico("next")}<span>Back to map</span><kbd>Esc</kbd></button><span class="mp-nm"></span>
+    <button type="button" class="mp-peek" title="Fold the panel to look at the map (P)"></button>`;
+  map.appendChild(plate);
+  const syncPeek = () => { plate.querySelector(".mp-peek").textContent = app.classList.contains("panel-min") ? "Show panel" : "Look at the map"; };
+  plate.querySelector(".mp-peek").addEventListener("click", () => { setFold(!app.classList.contains("panel-min")); syncPeek(); });
+  plate.querySelector(".mp-back").addEventListener("click", () => exitMode());
+  function syncMode() {
+    const t = curTab();
+    if (t === lastTab) return;
+    if (MODES[t] && !home) {
+      const v = api.view();
+      home = { tab: MODES[lastTab] ? "here" : lastTab || "guide", year: api.year, view: v, lenses: api.lenses ? api.lenses() : null };
+    }
+    if (!MODES[t]) home = null;
+    if (lastTab !== null && app.classList.contains("panel-min") && !phone.matches) setFold(false);
+    lastTab = t;
+    plate.hidden = !home;
+    app.classList.toggle("in-mode", !!home);
+    if (home) plate.querySelector(".mp-nm").textContent = MODES[t];
+    syncPeek(); emitRects();
+  }
+  function exitMode() {
+    const h = home; if (!h) return;
+    home = null; lastTab = h.tab;
+    api.setTab(h.tab);
+    if (h.lenses && api.lenses) {
+      const now = api.lenses();
+      for (const k of now) if (!h.lenses.includes(k)) api.setOn(k, false);
+      for (const k of h.lenses) if (!now.includes(k)) api.setOn(k, true);
+    }
+    if (h.year !== api.year) api.setYear(h.year, true, 600);
+    if (h.view) api.fly({ lon: h.view.lon, lat: h.view.lat, zoom: h.view.k }, 900);
+    plate.hidden = true; app.classList.remove("in-mode");
+    if (!phone.matches) setFold(true);
+    syncPeek(); emitRects();
+  }
+  A.exitMode = exitMode;
+  new MutationObserver(syncMode).observe($(".tabs"), { subtree: true, attributes: true, attributeFilter: ["aria-selected"] });
+  new MutationObserver(syncPeek).observe(app, { attributes: true, attributeFilter: ["class"] });
+  document.addEventListener("keydown", ev => {
+    if (ev.key !== "Escape" || !home || app.classList.contains("directing") || ev.target.closest("input, textarea, select")) return;
+    const key = $(".keycard"); if (key && !key.hidden) return;
+    exitMode();
+  });
+
   // A story on the map: views/atlas/world/director.js draws the dialog box and puts the page in focus mode;
   // atlas.css dresses the box in the chronicle's frames.
 
   // ---------- what the HUD covers, for the label engine ----------
   // ATLAS.chromeRects() -> [[x0, y0, x1, y1], ...] in map pixels (the label queue keeps labels out of them);
   // "atlas:chrome" fires on the document when they change.
-  const HUD = [".dr-box", ".dr-strip", ".yearplate", "#nextcard", "#layers", "#sublayers", ".askbar", ".mapctl", ".time", ".panel", ".caption", ".keycard", ".maphint"];
+  const HUD = [".modeplate", ".dr-box", ".dr-strip", ".yearplate", "#nextcard", "#layers", "#sublayers", ".askbar", ".mapctl", ".time", ".panel", ".caption", ".keycard", ".maphint"];
   A.chromeRects = () => {
     const m = map.getBoundingClientRect(), out = [];
     for (const s of HUD) for (const el of document.querySelectorAll(s)) {

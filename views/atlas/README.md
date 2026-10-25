@@ -116,6 +116,12 @@ also drawn on canvas with `PIXEL_ICONS.draw`); the six family emblems live there
 - `ATLAS.chromeRects()` returns the boxes the interface covers, `[[x0, y0, x1, y1], ...]` in map pixels, and
   `atlas:chrome` fires on the document when they change, so labels can stay out from under it.
 - The Director's dialog box is dressed in the same frames; the Director draws it.
+- Map first: the panel starts folded to a row of emblem ribbons and opens when a ribbon is tapped, a place clicked or a
+  question asked. The eye button (or **H**) hides the whole interface but a faint year plate and the eye; dragging the map
+  turns the interface into a ghost until you let go.
+- Games and modes (Codex, Guess, Live, What if, Stories, Who was there, Objects, Compare, Up close) share one way out: a
+  "Back to map" plate top left (or **Esc**) puts back the year, view, lenses and tab you came from and folds the panel.
+  `ATLAS.exitMode()` does the same; `ATLAS.api.lenses()` lists the lenses that are on.
 - Preview of the three directions considered: https://claude.ai/artifact/4wm6AUUts9hzFK2trCmmq2
 
 ## Deep time (300,000 years ago to 4000 BCE)
