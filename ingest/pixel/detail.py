@@ -334,19 +334,73 @@ RAIL = {'GBR': 1840, 'BEL': 1843, 'DEU': 1850, 'FRA': 1852, 'NLD': 1860, 'CHE': 
 ROAD = {'DEU': 1935, 'ITA': 1925, 'USA': 1925, 'GBR': 1930, 'FRA': 1930, 'NLD': 1935, 'BEL': 1935, 'CAN': 1935, 'JPN': 1960, 'CHN': 1970}
 
 
+# Railway opening dates from Wikidata stations (official opening, else inception): a stretch of line opens with the
+# stations along it (their 25th percentile, so one older station of another line does not pull it back). Stretches
+# with no dated station take their neighbour's date along the same line, else the country estimate, drawn dashed.
+STATION_CELL = 0.1
+stations = collections.defaultdict(list)
+
+
+def load_stations():
+    f = ZD + 'wikidata-stations.json'
+    if not os.path.exists(f): return
+    for x in json.load(open(f)):
+        y = wd_year(x.get('open'))
+        if y is None or y < 1800 or y > 2030: continue
+        try: lon, lat = map(float, x['coord']['value'][6:-1].split())
+        except ValueError: continue
+        stations[(int(lon // STATION_CELL), int(lat // STATION_CELL))].append((lon, lat, y))
+load_stations()
+
+
+def chop(coords, step=0.25):
+    out, cur, run = [], [coords[0]], 0.0
+    for a, b in zip(coords, coords[1:]):
+        run += math.hypot(b[0] - a[0], b[1] - a[1]); cur.append(b)
+        if run >= step: out.append(cur); cur, run = [b], 0.0
+    if len(cur) > 1: out.append(cur)
+    return out
+
+
+def rail_year(piece, r=0.05):
+    ys = []
+    pts = []
+    for a, b in zip(piece, piece[1:]):
+        n = max(1, int(math.hypot(b[0] - a[0], b[1] - a[1]) / 0.03))
+        pts += [(a[0] + (b[0] - a[0]) * i / n, a[1] + (b[1] - a[1]) * i / n) for i in range(n)]
+    pts.append(piece[-1])
+    seen = set()
+    for x, y in pts:
+        cx, cy = int(x // STATION_CELL), int(y // STATION_CELL)
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                for st in stations.get((cx + dx, cy + dy), ()):
+                    if id(st) in seen: continue
+                    if abs(st[0] - x) < r and abs(st[1] - y) < r: seen.add(id(st)); ys.append(st[2])
+    if not ys: return None
+    ys.sort(); return ys[len(ys) // 4]
+
+
 def ne_lines():
     p = ZD + 'ne_10m_railroads/ne_10m_railroads'
     if os.path.exists(p + '.shp'):
         for sr in shapefile.Reader(p).iterShapeRecords():
             if sr.record['scalerank'] > 9: continue
             ln = shape(sr.shape.__geo_interface__)
+            main = 1 if sr.record['scalerank'] <= 6 else 0
             for c in lines_of(ln, 0.004):
-                m = c[len(c) // 2]; cc = country_at(*m)
-                a = RAIL.get(cc, 1920)
-                if cc == 'USA': a = 1855 if m[0] > -95 else 1885
-                if cc == 'RUS' and m[0] > 60: a = 1905
-                if cc == 'CAN' and m[0] < -95: a = 1890
-                add_line('rw', a, 9999, (sr.record['scalerank'] <= 6) | 1 << 1, c); stats['railway'] += 1
+                prev = None
+                for piece in chop(c):
+                    y = rail_year(piece)
+                    if y is None and prev is not None: y = prev
+                    if y is not None:
+                        prev = y; add_line('rw', y, 9999, main, piece); stats['railway (station-dated)'] += 1; continue
+                    m = piece[len(piece) // 2]; cc = country_at(*m)
+                    a = RAIL.get(cc, 1920)
+                    if cc == 'USA': a = 1855 if m[0] > -95 else 1885
+                    if cc == 'RUS' and m[0] > 60: a = 1905
+                    if cc == 'CAN' and m[0] < -95: a = 1890
+                    add_line('rw', a, 9999, main | 1 << 1, piece); stats['railway (country estimate)'] += 1
     p = ZD + 'ne_10m_roads/ne_10m_roads'
     if os.path.exists(p + '.shp'):
         for sr in shapefile.Reader(p).iterShapeRecords():
@@ -372,6 +426,44 @@ def ne_lines():
             rank = 1 if sr['labelrank'] <= 2 else 2 if sr['labelrank'] <= 4 else 3
             add_name(sr['name'], sr['longitude'], sr['latitude'], 1994, 9999, rank); stats['admin-1'] += 1
 ne_lines()
+
+# ---------------------------------------------------------------- OWTRAD: medieval and early modern land routes
+# Ciolek's Old World Trade Routes data sets (CC BY-NC 2.5): node-to-node legs of trade, pilgrimage, courier and
+# caravan routes, each with the period its source attests. Drawn dashed (straight legs between known stops), shown
+# from 50 years before to 50 years after the attested period. Sea legs are left to the ship sprites.
+OWT_MAIN = {'tmcCNm1500', 'tmcCNm1700', 'tmcZWEm1300a', 'tmcZCEm1500', 'tmcINm1550', 'tmcIRa0500', 'tmcZCAm0600', 'tmcZCAm1000',
+            'tmcTRm1200b', 'tmcZMEm1300', 'tmcTRm1300', 'tmcPLm1150', 'tmcDEm1500', 'tmcFRm1300', 'tmcESm1400'}
+
+
+def owtrad():
+    import html as H, io, re
+    d = ZD + 'owtrad/'
+    if not os.path.isdir(d): return
+    seen = set()
+    for f in sorted(os.listdir(d)):
+        if not f.startswith('tmc') or not f.endswith('.html') or f == 'tmcESm1999.html': continue
+        txt = H.unescape(re.sub(r'<[^>]*>', '', open(d + f, encoding='latin-1').read()))
+        i = txt.find('"NODE1","COUNTRY1"')
+        if i < 0: continue
+        rows = []
+        for ln in txt[i:].splitlines():
+            if not ln.strip().startswith('"'):
+                if rows: break
+                continue
+            rows.append(ln)
+        main = 1 if f[:-5] in OWT_MAIN else 0
+        for r in csv.DictReader(io.StringIO('\n'.join(rows))):
+            if r['TRAVMODE'].strip() in ('shp', 'gal'): continue
+            try:
+                x1, y1, x2, y2 = (float(r[k]) for k in ('LONG1', 'LAT1', 'LONG2', 'LAT2'))
+                a, b = int(r['EARLYDATE']), int(r['LATEDATE'])
+            except (ValueError, TypeError): continue
+            if (x1, y1) == (x2, y2) or abs(x1 - x2) > 12 or abs(y1 - y2) > 12: continue
+            key = tuple(sorted([(round(x1, 2), round(y1, 2)), (round(x2, 2), round(y2, 2))])) + (a // 100,)
+            if key in seen: continue
+            seen.add(key)
+            add_line('tr', a - 50, b + 50, main | 1 << 1, [(x1, y1), (x2, y2)]); stats['historical route leg'] += 1
+owtrad()
 
 # ---------------------------------------------------------------- write
 os.makedirs(OUT, exist_ok=True)
@@ -418,7 +510,26 @@ pj = {'epochs': EPOCHS, 'countries': [], 'source': 'HYDE 3.x country population 
 for i, code in enumerate(countries, 1):
     pj['countries'].append({'c': code, 'km2': round(arable[i]), 'pop': [round(at(pop[code], e)) for e in EPOCHS] if code in pop else None})
 json.dump(pj, open(os.path.join(OUT, 'pop.json'), 'w'), separators=(',', ':'))
-rgb = Image.merge('RGB', (cimg, cimg, cimg))
+# G: percent of land equipped for irrigation (FAO GMIA v5, ca. 2005) x 2.5. B: since when that land has been irrigated,
+# for the old irrigation civilisations (1 since 5000 BCE, 2 since 1000 BCE, 3 since 1 CE, 4 since 500 CE); 0 = only
+# modern schemes count, from 1850. Basins are coarse boxes around the classic irrigated valleys and oases.
+irr = Image.new('L', (W, H), 0); basin = Image.new('L', (W, H), 0)
+gf = ZD + 'gmia/gmia_v5_aei_pct.asc'
+if os.path.exists(gf):
+    import numpy as np
+    a5 = np.loadtxt(gf, skiprows=6, dtype=np.float32)
+    a5[a5 < 0] = 0
+    a10 = a5.reshape(H, 2, W, 2).max(axis=(1, 3))
+    irr = Image.fromarray(np.clip(a10 * 2.5, 0, 255).astype('uint8'))
+BASINS = [  # lon0, lat0, lon1, lat1, code
+    (29.0, 22.0, 33.5, 31.8, 1), (42.0, 29.5, 48.8, 37.0, 1), (66.0, 23.0, 75.5, 33.5, 1),
+    (44.0, 25.0, 62.0, 38.5, 2), (58.0, 36.0, 73.5, 43.5, 2), (42.0, 12.0, 60.0, 26.0, 2), (-82.0, -18.5, -69.0, -3.0, 2),
+    (75.0, 36.0, 95.0, 43.5, 3), (93.0, 36.0, 104.5, 41.0, 3), (-113.5, 32.0, -110.0, 34.5, 4), (-10.0, 27.0, 12.0, 37.5, 3),
+]
+bd = ImageDraw.Draw(basin)
+for x0, y0, x1, y1, code in BASINS:
+    bd.rectangle([(x0 + 180) * W / 360, (90 - y1) * H / 180, (x1 + 180) * W / 360, (90 - y0) * H / 180], fill=code)
+rgb = Image.merge('RGB', (cimg, irr, basin))
 rgb.save(os.path.join(OUT, 'countries.png'), optimize=True)
 open(os.path.join(OUT, 'SOURCES.md'), 'w').write('''# Pixel map zoom detail: sources
 
@@ -428,6 +539,9 @@ open(os.path.join(OUT, 'SOURCES.md'), 'w').write('''# Pixel map zoom detail: sou
 - Historical provinces (duchies, themes, eyalets, satrapies, commanderies...), castles, forts, city walls, ports, lighthouses: Wikidata (CC0), inception to dissolution; undated sites left out.
 - Long walls: traced through well-known forts and end points (approximate lines are flagged).
 - Modern roads, railways, ports and first-level divisions: Natural Earth 10m (public domain). These are today's networks, shown from the year that kind of line became common in each country (estimate).
+- Medieval and early modern routes: OWTRAD Dromographic Digital Data Archives, T. M. Ciolek (ed.), www.ciolek.com (CC BY-NC 2.5); straight legs between attested stops, shown 50 years either side of the attested period.
+- Railway dates: Wikidata railway stations (official opening, else inception); a 25 km stretch takes the 25th percentile of its stations' dates, else its neighbour's, else a country estimate (dashed).
+- Irrigated farmland in dry lands: FAO AQUASTAT Global Map of Irrigation Areas v5 (ca. 2005); before 1850 only inside the classic irrigation basins (Nile, Mesopotamia, Indus, Iranian qanats, Oxus oases, Tarim, Hexi, Yemen, coastal Peru, Maghreb, Hohokam), boxes drawn by hand.
 - Fields and villages: density from HYDE 3.x country population (via Our World in Data, CC BY 4.0) spread over arable land from the terrain classes; drawn procedurally.
 ''')
 print(dict(stats))
