@@ -70,13 +70,7 @@
   // ---------- styles ----------
   const css = document.createElement("style");
   css.textContent = `
-.pt.lp.e19ev.story text { font-weight: 700; }
-.pt.lp.e19ev.focus > :not(text):not(title) { stroke: var(--ink); stroke-width: 2px; }
-.pt.lp.e19ev.focus text { font-size: 13px; fill: var(--ink); }
-.pt.lp.e19prov circle { display: none; }
-.pt.lp.e19prov text { font-family: var(--display); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; fill: color-mix(in srgb, var(--ink) 62%, transparent); font-weight: 400 !important; text-anchor: middle; }
-.basemap-on .pt.lp.e19prov text { fill: #f1e7cc; stroke: #2b2419; stroke-width: 2.5px; paint-order: stroke; }
-.e19rail path { fill: none; vector-effect: non-scaling-stroke; pointer-events: none; }
+.basemap-on .e19rail path { fill: none; vector-effect: non-scaling-stroke; pointer-events: none; }
 .e19rail .cas { stroke: #2b2419; stroke-width: 3.2px; stroke-linecap: butt; opacity: .75; }
 .e19rail .trk { stroke: #f4e6bf; stroke-width: 1.4px; stroke-dasharray: 3 3; stroke-linecap: butt; shape-rendering: crispEdges; }
 .e19rail .stn { stroke: #2b2419; stroke-width: 3px; stroke-linecap: square; shape-rendering: crispEdges; opacity: .85; }
@@ -84,8 +78,6 @@
 .e19rail .new0 { stroke: #2b2419; stroke-width: 4.4px; opacity: .9; }
 .e19rail .stn.new { stroke-width: 4px; }
 .e19rail .trk.new { stroke-width: 2.4px; stroke-dasharray: none; }
-.pt.lp.e19city circle { fill-opacity: .35; stroke: var(--c); stroke-width: 1; }
-.pt.lp.e19city.boom circle { fill-opacity: .75; }
 .uc { display: grid; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
 .uc h2 { font-family: var(--fell); font-weight: 400; font-size: 21px; line-height: 1.2; margin: 0; }
 .uc h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; gap: 8px; align-items: baseline; }
@@ -156,10 +148,11 @@
     draw(ctx) {
       const { c, list } = visibleEvents(ctx);
       for (const f in FAM) {
-        const sel = ctx.pins(list.filter(e => e.f === f), { key: e => e.i, shape: FAM[f][1], cls: "e19ev",
+        ctx.pins(list.filter(e => e.f === f), { key: e => e.i, shape: FAM[f][1], color: FAM[f][2],
           label: e => e.st >= 0 || e.w >= 25 || ctx.k >= 6 ? e.n.replace(/^(Battle|Siege) of /, "") : null,
-          title: e => `${fmtDate(e.d)} · ${e.n}${e.part ? " · " + e.part : ""}`, card: evCard, always: false });
-        sel.classed("story", e => e.st >= 0).classed("focus", e => e.i === ES.focus).classed("always", e => e.i === ES.focus || e.st >= 0 || (c.month && e.m === c.m && e.w >= 15)).style("opacity", e => fade(e, c)).style("--c", FAM[f][2]);
+          title: e => `${fmtDate(e.d)} · ${e.n}${e.part ? " · " + e.part : ""}`, card: evCard,
+          always: e => e.i === ES.focus || e.st >= 0 || (c.month && e.m === c.m && e.w >= 15), hi: e => e.i === ES.focus,
+          fade: e => Math.max(0.3, fade(e, c)), size: e => e.st >= 0 ? 5.5 : 4, pri: e => (e.i === ES.focus ? 60 : e.st >= 0 ? 12 : 3) + Math.min(5, e.w / 20) });
       }
     },
     here(ctx, at) {
@@ -261,7 +254,8 @@
         boxes.push([x, yy, w, h]); list.push(p);
         if (list.length >= 400) break;
       }
-      ctx.pins(list, { key: p => p.i, cls: "e19prov", always: true, label: provName,
+      ctx.pins(list, { key: p => p.i, always: true, size: 0.1, fill: 0, stroke: false, fontPx: 10, lblColor: "var(--ink-soft)", pri: -5,
+        lblAt: p => [-provName(p).length * 2.9, 4], label: provName,
         title: p => `${p.n} · ${p.kind} of ${p.of}${p.s ? " · from " + p.s : ""}${p.e ? " to " + p.e : ""}`,
         card: p => ({ kick: `Province · ${p.kind} of ${p.of}`, title: p.n, year: y, lon: p.lon, lat: p.lat, meta: `${p.s ? "from " + p.s : "dates not in Wikidata"}${p.e ? ", ended " + p.e : ""}`,
           body: "Named at its centre: Wikidata has no historical outline for most nineteenth-century provinces, so the map names them instead of drawing borders it cannot source.", why: "", sources: [wd(p.q)] }) });
@@ -298,9 +292,9 @@
       const y = ctx.year;
       if (y < R.start - 39 || y > R.end) { ctx.pins([], {}); return; }
       const list = CITY.map(c => ({ c, v: popAt(c, y), g: growth(c, y) })).filter(o => o.v).sort((a, b) => b.v - a.v).slice(0, Math.round(40 * Math.max(1, ctx.k)));
-      const sel = ctx.pins(list.map(o => ({ ...o, lon: o.c.lon, lat: o.c.lat, id: o.c.i })), { key: o => o.c.i, cls: "e19city",
-        label: o => o.v > 250000 || ctx.k >= 4 ? o.c.n : null, title: o => `${o.c.n} · about ${fmtN(o.v)}${o.g ? ` · ${o.g.toFixed(1)}× in 50 years` : ""}`, card: o => cityCard(o.c, y) });
-      sel.classed("boom", o => o.g >= 3).select("circle").attr("r", o => 2 + Math.sqrt(o.v) / 110);
+      ctx.pins(list.map(o => ({ ...o, lon: o.c.lon, lat: o.c.lat, id: o.c.i })), { key: o => o.c.i,
+        label: o => o.v > 400000 || ctx.k >= 5 ? o.c.n : null, title: o => `${o.c.n} · about ${fmtN(o.v)}${o.g ? ` · ${o.g.toFixed(1)}× in 50 years` : ""}`, card: o => cityCard(o.c, y),
+        size: o => Math.min(16, 2 + Math.sqrt(o.v) / 110), fill: o => o.g >= 3 ? 0.75 : 0.3, always: o => o.v > 1e6 });
     },
     here(ctx, at) {
       const y = ctx.year;
@@ -336,10 +330,9 @@
       const c = cursor(ctx.year), y = Math.floor(c.m / 12);
       if (y < R.start || y > R.end || !whenSide(() => ATLAS.api && ATLAS.api.redraw())) { ctx.pins([], {}); ctx.pins([], {}); return; }
       const list = livesIn(c).slice(0, Math.round(16 * Math.max(1, ctx.k)));
-      ctx.pins(list.filter(o => o.k === "b"), { key: o => "b" + o.p.n, shape: "triangle", label: o => o.p.n, title: o => `${o.p.n} born ${fmtDate(o.p.bd)}`, card: o => lifeCard(o.p, "b") })
-        .style("opacity", o => fade({ m: o.m, prec: "d" }, c));
-      ctx.pins(list.filter(o => o.k === "d"), { key: o => "d" + o.p.n, shape: "cross", label: o => `† ${o.p.n}`, title: o => `${o.p.n} died ${fmtDate(o.p.dd)}`, card: o => lifeCard(o.p, "d") })
-        .style("opacity", o => fade({ m: o.m, prec: "d" }, c));
+      const fd = o => Math.max(0.3, fade({ m: o.m, prec: "d" }, c));
+      ctx.pins(list.filter(o => o.k === "b"), { key: o => "b" + o.p.n, shape: "triangle", label: o => o.p.n, title: o => `${o.p.n} born ${fmtDate(o.p.bd)}`, card: o => lifeCard(o.p, "b") , fade: fd, pri: o => 2 + o.p.fame / 30 });
+      ctx.pins(list.filter(o => o.k === "d"), { key: o => "d" + o.p.n, shape: "cross", label: o => `† ${o.p.n}`, title: o => `${o.p.n} died ${fmtDate(o.p.dd)}`, card: o => lifeCard(o.p, "d") , fade: fd, pri: o => 2 + o.p.fame / 30 });
     },
     here(ctx, at) {
       if (!ES.data) { side(); return []; }

@@ -69,6 +69,12 @@ capital or leave lon/lat out.
 `ctx` gives: `data, year, k (zoom), g, d3, projection, path, pins, paths, near(list, at), km(a,b), fmtYear,
 fmtSpan, select(card), ruledBy(lon, lat, year)`. Records passed to `ctx.pins` need `lon` and `lat`.
 
+`ctx.pins` options beyond `key, shape, label, title, card, cls, always`: `color`, `size` (radius in px), `fade` (0 to 1),
+`always` (label always shown), `hi`, `pri` (label priority), `ghost`, `fill` (fill opacity), `stroke` (false for none),
+`fontPx`, `lblColor` and `lblAt` (`[dx, dy]` of the label),
+each a value or a function of the record. Marks are records on one canvas, so the returned selection only takes
+`style("--c", ...)` and `classed("ghost", ...)`; use these options for anything else.
+
 `shape` is one of `circle | square | diamond | cross | triangle`, or a sprite name once the art-style
 work adds them (`army`, `temple`, `ship`, ...); unknown sprite names fall back to a circle.
 
