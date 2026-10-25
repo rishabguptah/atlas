@@ -33,12 +33,12 @@
   // The page shares its own border loader (ATLAS.borders) so each chunk is fetched and parsed once; it re-renders the
   // basemap when a chunk arrives. Standalone, the basemap keeps its own.
   let own = null;
-  const bordersOf = () => window.ATLAS.borders || own || (own = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(own.realms(year, T.k)); else pm.render(T, { realms: own.realms(year, T.k) }); nameRealms(); } } }));
+  const bordersOf = () => window.ATLAS.borders || own || (own = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(year >= DEEP_REALMS ? own.realms(year, T.k) : NO_REALMS); else pm.render(T, { realms: year >= DEEP_REALMS ? own.realms(year, T.k) : NO_REALMS }); nameRealms(); } } }));
   let geo = null, geoKey = "", el0 = null;
   // Zoom detail (roads, walls, fields, villages, ports, castles, province names) from detail/ next to the page.
   const detail = typeof PixelDetail === "function" ? PixelDetail({ base: "detail/", onLoad: () => {
     if (!pm || !T) return;
-    const realms = isOn("borders") ? (bordersOf().realms(year, T.k) || realmsFor(year)) : NO_REALMS;
+    const realms = isOn("borders") && year >= DEEP_REALMS ? (bordersOf().realms(year, T.k) || realmsFor(year)) : NO_REALMS;
     if (pm.same(T)) pm.setRealms(realms); else pm.render(T, { realms });
     if (window.ATLAS.labels && ATLAS.labels.refresh) ATLAS.labels.refresh(); else provLabels();
   } }) : null;
@@ -84,7 +84,8 @@
   }
   let pm = null, proj = null, T = null, year = null, snap = null, statics = [], movers = [], motion = null, lastRender = 0;
   let marks = null, hud = null, watch = null, markTimer = 0;
-  const realmCache = {}, NO_REALMS = [];
+  const realmCache = {}, NO_REALMS = [], DEEP_REALMS = -4000;
+  let paleoKey = "", paleoAt = 0, paleoTimer = 0;
   let warmed = null;
   function realmsFor(y) {
     if (typeof POLITIES === "undefined") return [];
@@ -249,7 +250,9 @@
     ATLAS.eraStyle = () => ({ choice: eraChoice, id: eraId });
   }
   ATLAS.pixelRefresh = () => { if (pm && T && year != null) { collect(year, T.k); draw(); } };
-  ATLAS.basemap({
+  // A full redraw at the current view and year (the ice-age rasters arrived, say).
+  ATLAS.pixelRerender = () => { if (pm && T && year != null) BM.render(T, year); };
+  const BM = {
     id: "pixel", name: "Pixel map", paintsMarks: typeof PixelMarks === "function",
     mount(el, projection) {
       proj = projection; el0 = el;
@@ -281,8 +284,18 @@
       T = t; year = y;
       if (marks && !watch && typeof ATLAS.marks === "function") marks.set(ATLAS.marks()); else if (marks) marks.markDirty();
       if (hud) hud.update(t);
-      const realms = isOn("borders") ? (bordersOf().realms(y, t.k) || realmsFor(y)) : NO_REALMS;
-      const same = pm.same(t);
+      // Deep time (before the first states): no realms; the ice-age world (coasts, ice, biomes) from ATLAS.paleo.
+      const realms = isOn("borders") && y >= DEEP_REALMS ? (bordersOf().realms(y, t.k) || realmsFor(y)) : NO_REALMS;
+      // A new sea level or ice extent redraws all the terrain, so while the year keeps moving it swaps at most every
+      // 400 ms (and once more when the year settles); between swaps the steps stay cheap.
+      let paleoNew = false;
+      const pal = pm.setPaleo && window.ATLAS.paleo ? ATLAS.paleo.at(y) : null;
+      if (pm.setPaleo && (pal ? pal.key : "") !== paleoKey) {
+        const wait = 400 - (performance.now() - paleoAt);
+        if (wait <= 0 || !paleoKey || !pal) { paleoNew = pm.setPaleo(pal); paleoKey = pal ? pal.key : ""; paleoAt = performance.now(); }
+        else if (!paleoTimer) paleoTimer = setTimeout(() => { paleoTimer = 0; if (ATLAS.pixelRerender) ATLAS.pixelRerender(); }, wait + 20);
+      }
+      const same = pm.same(t) && !paleoNew;
       eraFor(t, y, !same);
       if (same) pm.setRealms(realms); else pm.render(t, { realms });
       // Warm the outlines of every frame in this chunk while the browser is idle, so scrubbing on stays cheap.
@@ -316,5 +329,6 @@
     },
     setMood(m) { if (pm) pm.setMood(m); if (geo) geo.setMood(m); if (LBL && LBL.engine) LBL.engine.setMood(m); },
     fly(v, ms) { if (motion) motion.fly(v, ms); },
-  });
+  };
+  ATLAS.basemap(BM);
 })();

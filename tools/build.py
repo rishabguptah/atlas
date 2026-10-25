@@ -43,7 +43,7 @@ DATE_RE = re.compile(r'^\d{4}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$')
 
 
 def year(v):
-    return isinstance(v, int) and not isinstance(v, bool) and v != 0 and -100000 < v < 2100
+    return isinstance(v, int) and not isinstance(v, bool) and v != 0 and -3000000 < v < 2100
 
 
 def check(r):
