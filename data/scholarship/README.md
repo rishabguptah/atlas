@@ -1,7 +1,7 @@
 # Scholarship: sources, debates, primary sources, why chains
 
 The layer that makes the Atlas argue like a seminar and cite like a monograph. Schema: `schema/SCHEMA.md`
-(v0.5, "Scholarship"). Everything here is checked by `ingest/scholarship/verify.py` against the outside world,
+(v0.6, "Scholarship"). Everything here is checked by `ingest/scholarship/verify.py` against the outside world,
 and by `tools/build.py` and `ingest/judge/audit.py` like every other record.
 
 | File | Kind | What |

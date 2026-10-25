@@ -1,0 +1,74 @@
+{
+  "id": "babur", "name": "Babur", "pid": "Babur", "born": 1483, "died": 1530, "role": "Prince, then emperor", "sprite": "army_horse_archer", "team": "#4f7a32",
+  "intro": "You are Zahir al-Din Muhammad, called Babur, 'the tiger'. Through your father you descend from Timur, through your mother from Genghis Khan. It is June 1494 in the valley of Fergana. You are eleven, and your father has just died in a fall from a collapsing dovecote at his fort at Akhsi.",
+  "sources": [
+    {"cite": "Babur, The Baburnama: Memoirs of Babur, Prince and Emperor, tr. W. M. Thackston (1996)"},
+    {"cite": "Stephen F. Dale, The Garden of the Eight Paradises: Babur and the Culture of Empire in Central Asia, Afghanistan and India (2004)"},
+    {"cite": "Gulbadan Begum, Humayun-nama, tr. A. S. Beveridge (1902)"},
+    {"cite": "Wikipedia: Babur", "url": "https://en.wikipedia.org/wiki/Babur"}
+  ],
+  "chapters": [
+    {"y": 1494, "m": 6, "at": {"n": "Andijan", "lon": 72.34, "lat": 40.78}, "title": "A boy king",
+     "text": "Your two uncles, the rulers of Samarkand and Tashkent, are already marching on Fergana. The nobles are wondering whom to back.",
+     "choices": [
+       {"t": "Hold Andijan and take the throne", "real": true, "out": "Your grandmother Aisan Daulat Begum steers the court, and the citadel holds. Your uncle from Samarkand falls ill and dies on the way home.", "fx": {"renown": 1}},
+       {"t": "Submit to your uncle and live as a junior prince", "out": "Timurid princes who gave up their thrones seldom lived long or rose again.", "end": "A minor Timurid prince, forgotten in the Shaybanid conquests.", "p": 0.4}
+     ]},
+    {"y": 1497, "m": 11, "at": {"n": "Samarkand", "lon": 66.97, "lat": 39.65},
+     "via": [[72.34, 40.78], [70.94, 40.38], [69.6, 40.28], [67.84, 40.1], [66.97, 39.65]],
+     "title": "Timur's city",
+     "text": "At fourteen you have taken Samarkand, the city of your ancestor Timur, after a seven-month siege. It is starving and your men want plunder. Then word comes that your enemies have seized Andijan behind you.",
+     "choices": [
+       {"t": "Ride back to save Andijan", "real": true, "out": "You leave Samarkand after about a hundred days, fall ill on the way, and arrive to find Andijan already lost. You end up with neither.", "fx": {"health": -1}},
+       {"t": "Hold Samarkand and let Andijan go", "out": "Your army is from Fergana and wants to go home. Many desert you anyway.", "fx": {"renown": -1}}
+     ]},
+    {"y": 1501, "m": 1, "at": {"n": "Samarkand", "lon": 66.97, "lat": 39.65},
+     "title": "Shaybani Khan",
+     "text": "You took Samarkand again in 1500 with a few hundred men. But the Uzbek leader Muhammad Shaybani has beaten you at Sar-e Pul and besieges you. The city is starving. He offers to let you go if your elder sister Khanzada marries him.",
+     "choices": [
+       {"t": "Accept, and leave with your mother", "real": true, "out": "Khanzada goes to Shaybani. You escape into the mountains with a handful of followers and years of poverty, later writing that you were pushed from place to place like a king on a chessboard.", "fx": {"wealth": -2, "health": -1}},
+       {"t": "Fight to the end", "out": "The city was starving and its people were deserting. Shaybani killed rivals who fell into his hands.", "end": "Killed when Samarkand falls, 1501.", "p": 0.5}
+     ]},
+    {"y": 1504, "m": 10, "at": {"n": "Kabul", "lon": 69.17, "lat": 34.53},
+     "via": [[66.97, 39.65], [68.78, 38.56], [67.0, 37.2], [68.6, 36.0], [69.0, 35.2], [69.17, 34.53]],
+     "title": "A new kingdom over the mountains",
+     "text": "You are 21 and a wanderer. Kabul, over the Hindu Kush, is held by a usurper and its throne is in dispute.",
+     "choices": [
+       {"t": "Cross the Hindu Kush and take Kabul", "real": true, "out": "Kabul surrenders in October 1504. It becomes your home: you plant gardens and write about its fruit, birds and flowers.", "fx": {"renown": 2, "wealth": 2}},
+       {"t": "Join your cousins in Herat against Shaybani", "out": "Herat fell to Shaybani in 1507 and its Timurid princes scattered or died.", "end": "Lost with the Timurids of Herat, 1507.", "p": 0.4}
+     ]},
+    {"y": 1511, "m": 10, "at": {"n": "Samarkand", "lon": 66.97, "lat": 39.65},
+     "via": [[69.17, 34.53], [68.6, 36.0], [68.86, 36.73], [66.9, 36.76], [66.97, 39.65]],
+     "title": "The Shah's price",
+     "text": "Shah Ismail of Persia has killed Shaybani in battle and sent your sister home. He offers help to retake Samarkand, if you rule as his ally and wear the red-capped dress of his Shia followers.",
+     "choices": [
+       {"t": "Accept the Shah's help and his dress", "real": true, "out": "You enter Samarkand in triumph, but its Sunni people despise you for the Shia dress. In 1512 the Uzbeks beat you, and the Safavid army is destroyed at Ghazdewan. You never rule Samarkand again.", "fx": {"renown": -1}},
+       {"t": "Refuse and stay in Kabul", "out": "No Samarkand, but no humiliation. Your eyes turn south to India sooner.", "fx": {"renown": 1}}
+     ]},
+    {"y": 1526, "m": 4, "at": {"n": "Panipat", "lon": 76.97, "lat": 29.39},
+     "via": [[69.17, 34.53], [71.57, 34.0], [72.25, 33.9], [74.35, 31.55], [75.85, 30.9], [76.97, 29.39]],
+     "title": "Panipat",
+     "text": "Sultan Ibrahim Lodi of Delhi comes at you with an army you put at 100,000 and a thousand war elephants. You have perhaps 12,000 men, matchlocks and some cannon, and Ottoman-trained gunners.",
+     "choices": [
+       {"t": "Chain carts together, dig in, and let him attack", "real": true, "out": "On 21 April Ibrahim's army piles into your line of carts and guns while your horse archers wheel round both flanks. Ibrahim dies on the field. You take Delhi and Agra.", "fx": {"renown": 3, "wealth": 3}},
+       {"t": "Charge before his army is ready", "out": "Your edge was the fortified line and the flanking archers. In an open melee numbers and elephants usually win.", "end": "Killed at Panipat, 1526. The Lodis rule on.", "p": 0.5}
+     ]},
+    {"y": 1527, "m": 3, "at": {"n": "Khanwa", "lon": 77.54, "lat": 27.03},
+     "via": [[76.97, 29.39], [77.21, 28.61], [78.02, 27.18], [77.54, 27.03]],
+     "title": "The army wants to go home",
+     "text": "Rana Sanga of Mewar leads a Rajput confederation against you. An astrologer predicts defeat; your men are homesick and frightened.",
+     "choices": [
+       {"t": "Swear off wine, smash the goblets, and rally the army", "real": true, "out": "You pour out your wine, vow to abstain and declare a holy war. On 17 March the same cart-and-gun tactics win again. North India is yours.", "fx": {"renown": 2, "health": 1}},
+       {"t": "Take the army back to Kabul with the loot", "out": "Many of your officers wanted exactly this. You would be a raider, not the founder of an empire.", "end": "The rich raider-king of Kabul. No Mughal Empire.", "p": 0.4}
+     ]},
+    {"y": 1530, "m": 12, "at": {"n": "Agra", "lon": 78.02, "lat": 27.18},
+     "via": [[77.54, 27.03], [78.02, 27.18]],
+     "title": "A father's bargain",
+     "text": "Your son Humayun is dying of fever. Your daughter Gulbadan later records that you walked around his bed three times and prayed to give your life for his.",
+     "choices": [
+       {"t": "Offer your life for his", "real": true, "out": "Humayun recovers. You fall ill and die on 26 December 1530, aged 47. You are buried, as you wished, in a garden in Kabul.", "fx": {"health": -5}},
+       {"t": "Pray for him, and look to your other sons", "out": "History records only the story your family told. Babur was already ill; the bargain is a legend about love, not medicine.", "fx": {"health": -3}}
+     ]}
+  ],
+  "epilogue": "Babur's memoir, the Baburnama, written in Chagatai Turkish, is one of the first true autobiographies in Islamic literature. His grandson Akbar made the Mughal Empire one of the great states of the world."
+}

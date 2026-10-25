@@ -1,0 +1,989 @@
+{
+ "about": "Travel rules for the shared motion model (views/atlas/world/route.js, ATLAS.world.route). Every number is a rough, sourced default, not a precise model. Costs are in day-wages (what an unskilled labourer earned in a day there), so trips in different centuries compare.",
+ "modes": [
+  {
+   "id": "foot",
+   "n": "On foot",
+   "medium": "land",
+   "from": -100000,
+   "to": null,
+   "kmd": 30,
+   "cost": 1,
+   "sprite": "person_pilgrim",
+   "src": [
+    {
+     "cite": "Scheidel and Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World (2012): foot travel 30 km a day",
+     "url": "https://orbis.stanford.edu/"
+    }
+   ]
+  },
+  {
+   "id": "horse",
+   "n": "On horseback",
+   "medium": "land",
+   "from": -1000,
+   "to": null,
+   "kmd": 56,
+   "cost": 3,
+   "sprite": "army_horse_archer",
+   "src": [
+    {
+     "cite": "ORBIS: horseback 56 km a day; ridden horses spread across the steppe by about 1000 BCE (Anthony, The Horse, the Wheel and Language, 2007)",
+     "url": "https://orbis.stanford.edu/"
+    }
+   ]
+  },
+  {
+   "id": "camel",
+   "n": "With a camel caravan",
+   "medium": "land",
+   "from": -1000,
+   "to": 1950,
+   "kmd": 32,
+   "cost": 2,
+   "sprite": "caravan_camel",
+   "src": [
+    {
+     "cite": "Bulliet, The Camel and the Wheel (1975): caravans made about 3 to 4 km an hour for 8 to 10 hours a day; domestic camels in Arabian caravan trade by about 1000 BCE"
+    }
+   ]
+  },
+  {
+   "id": "river",
+   "n": "By river boat",
+   "medium": "river",
+   "from": -3000,
+   "to": null,
+   "kmd": 45,
+   "cost": 1.5,
+   "sprite": "ship_dhow",
+   "src": [
+    {
+     "cite": "ORBIS models river travel at roughly 1 to 3 km an hour upstream and faster downstream; this game uses one average for both directions",
+     "url": "https://orbis.stanford.edu/"
+    }
+   ]
+  },
+  {
+   "id": "sail",
+   "n": "Under sail",
+   "medium": "sea",
+   "from": -3000,
+   "to": 1870,
+   "kmd": 100,
+   "cost": 2,
+   "sprite": "ship_galley",
+   "src": [
+    {
+     "cite": "Casson, 'Speed under Sail of Ancient Ships', TAPA 82 (1951): 4 to 6 knots with a fair wind, 2 to 2.5 against; about 100 km a day averaged over a voyage"
+    }
+   ]
+  },
+  {
+   "id": "ocean",
+   "n": "Ocean-going sailing ship",
+   "medium": "sea",
+   "from": 1450,
+   "to": 1880,
+   "kmd": 120,
+   "cost": 2,
+   "sprite": "ship_galleon",
+   "src": [
+    {
+     "cite": "Bowen, The Business of Empire (2006): East India Company ships took about five to six months from England to India around the Cape"
+    }
+   ]
+  },
+  {
+   "id": "steam",
+   "n": "Steamship",
+   "medium": "sea",
+   "from": 1840,
+   "to": null,
+   "kmd": 380,
+   "cost": 3,
+   "sprite": "ship_steamer",
+   "src": [
+    {
+     "cite": "Headrick, The Tentacles of Progress (1988): by the 1870s steamers via Suez reached Bombay from London in about a month"
+    }
+   ]
+  },
+  {
+   "id": "rail",
+   "n": "By railway",
+   "medium": "land",
+   "from": 1830,
+   "to": null,
+   "kmd": 500,
+   "cost": 2,
+   "sprite": "caravan_wagon",
+   "rail": true,
+   "src": [
+    {
+     "cite": "Wolmar, Blood, Iron and Gold: How the Railways Transformed the World (2009); opening years per region in rail_regions"
+    }
+   ]
+  },
+  {
+   "id": "motor",
+   "n": "By motor car or bus",
+   "medium": "land",
+   "from": 1925,
+   "to": null,
+   "kmd": 350,
+   "cost": 3,
+   "sprite": "caravan_wagon",
+   "src": [
+    {
+     "cite": "Rough figure for paved and unpaved inter-city roads of the mid twentieth century"
+    }
+   ]
+  },
+  {
+   "id": "air",
+   "n": "By air",
+   "medium": "air",
+   "from": 1950,
+   "to": null,
+   "kmd": 8000,
+   "cost": 0,
+   "fare": [
+    [
+     1950,
+     120
+    ],
+    [
+     1975,
+     40
+    ],
+    [
+     2000,
+     12
+    ],
+    [
+     2025,
+     6
+    ]
+   ],
+   "sprite": "ship_modern",
+   "src": [
+    {
+     "cite": "Fares in day-wages fall roughly tenfold from 1950 to 2000 (IATA; Our World in Data, air transport)",
+     "url": "https://ourworldindata.org/grapher/airline-passengers"
+    }
+   ]
+  }
+ ],
+ "terrain": {
+  "names": [
+   "deep ocean",
+   "sea",
+   "lake",
+   "ice",
+   "tundra",
+   "boreal forest",
+   "temperate forest",
+   "tropical forest",
+   "grassland",
+   "steppe",
+   "sand desert",
+   "rock desert",
+   "wetland",
+   "hills",
+   "mountains",
+   "high peaks"
+  ],
+  "foot": [
+   0,
+   0,
+   0,
+   0.15,
+   0.6,
+   0.6,
+   0.75,
+   0.45,
+   1,
+   0.95,
+   0.35,
+   0.5,
+   0.4,
+   0.75,
+   0.45,
+   0.2
+  ],
+  "horse": [
+   0,
+   0,
+   0,
+   0.1,
+   0.6,
+   0.5,
+   0.7,
+   0.35,
+   1,
+   1,
+   0.3,
+   0.45,
+   0.3,
+   0.7,
+   0.4,
+   0.15
+  ],
+  "camel": [
+   0,
+   0,
+   0,
+   0,
+   0.3,
+   0.3,
+   0.5,
+   0.2,
+   0.9,
+   1,
+   1,
+   1,
+   0.2,
+   0.6,
+   0.35,
+   0.1
+  ],
+  "rail": [
+   0,
+   0,
+   0,
+   0,
+   0.6,
+   0.9,
+   1,
+   0.7,
+   1,
+   1,
+   0.8,
+   0.8,
+   0.6,
+   0.9,
+   0.6,
+   0.3
+  ],
+  "motor": [
+   0,
+   0,
+   0,
+   0,
+   0.5,
+   0.7,
+   1,
+   0.5,
+   1,
+   1,
+   0.6,
+   0.6,
+   0.5,
+   0.9,
+   0.6,
+   0.3
+  ],
+  "src": [
+   {
+    "cite": "Relative speeds are the game's own rough weights, in the spirit of ORBIS's terrain costs and Naismith's rule (W. W. Naismith, 1892: an extra hour for every 600 m climbed); deserts are slow on foot and fine by camel (Bulliet 1975)"
+   }
+  ]
+ },
+ "seasons": [
+  {
+   "id": "mare_clausum",
+   "n": "Winter seas closed",
+   "box": [
+    -6,
+    30,
+    37,
+    46
+   ],
+   "medium": "sea",
+   "months": [
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "before": 1600,
+   "x": 0.3,
+   "risk": 4,
+   "why": "Roman and medieval sailors kept off the Mediterranean from mid-November to mid-March: short days, cloud that hid the stars, and winter gales.",
+   "src": [
+    {
+     "cite": "Vegetius, Epitoma rei militaris 4.39; Casson, Ships and Seamanship in the Ancient World (1971)"
+    }
+   ]
+  },
+  {
+   "id": "monsoon_east",
+   "n": "The south-west monsoon",
+   "box": [
+    35,
+    -12,
+    100,
+    25
+   ],
+   "medium": "sea",
+   "months": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "heading": "east",
+   "before": 1870,
+   "x": 1.35,
+   "against": 0.25,
+   "why": "From April to September the monsoon blows from the south-west: ships from Arabia and Africa run fast to India, and nothing sails the other way.",
+   "src": [
+    {
+     "cite": "Periplus of the Erythraean Sea 57 (1st century CE); Hourani, Arab Seafaring in the Indian Ocean (1951, rev. 1995)"
+    }
+   ]
+  },
+  {
+   "id": "monsoon_west",
+   "n": "The north-east monsoon",
+   "box": [
+    35,
+    -12,
+    100,
+    25
+   ],
+   "medium": "sea",
+   "months": [
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "heading": "west",
+   "before": 1870,
+   "x": 1.35,
+   "against": 0.25,
+   "why": "From November to March the wind turns: ships from India run home to Arabia and East Africa.",
+   "src": [
+    {
+     "cite": "Hourani, Arab Seafaring in the Indian Ocean (1951, rev. 1995)"
+    }
+   ]
+  },
+  {
+   "id": "china_monsoon",
+   "n": "South China Sea monsoon",
+   "box": [
+    100,
+    -10,
+    125,
+    30
+   ],
+   "medium": "sea",
+   "months": [
+    5,
+    6,
+    7,
+    8,
+    9
+   ],
+   "heading": "north",
+   "before": 1870,
+   "x": 1.3,
+   "against": 0.3,
+   "why": "Junks sailed north to China on the summer monsoon and south to the Straits on the winter one, so traders waited months at Malacca or Quanzhou.",
+   "src": [
+    {
+     "cite": "Reid, Southeast Asia in the Age of Commerce 1450-1680, vol. 2 (1993)"
+    }
+   ]
+  },
+  {
+   "id": "china_monsoon_s",
+   "n": "South China Sea monsoon",
+   "box": [
+    100,
+    -10,
+    125,
+    30
+   ],
+   "medium": "sea",
+   "months": [
+    11,
+    12,
+    1,
+    2,
+    3
+   ],
+   "heading": "south",
+   "before": 1870,
+   "x": 1.3,
+   "against": 0.3,
+   "why": "The winter monsoon carried junks south from China to the Straits of Malacca and Java.",
+   "src": [
+    {
+     "cite": "Reid, Southeast Asia in the Age of Commerce 1450-1680, vol. 2 (1993)"
+    }
+   ]
+  },
+  {
+   "id": "frozen_north",
+   "n": "Frozen northern seas",
+   "box": [
+    -10,
+    56,
+    45,
+    72
+   ],
+   "medium": "sea",
+   "months": [
+    12,
+    1,
+    2,
+    3
+   ],
+   "before": 1880,
+   "x": 0.15,
+   "risk": 3,
+   "why": "The Baltic and White Seas freeze or close in winter; the Hansa laid up its ships from November to February.",
+   "src": [
+    {
+     "cite": "Dollinger, The German Hansa (1970)"
+    }
+   ]
+  },
+  {
+   "id": "passes",
+   "n": "Snow on the passes",
+   "box": [
+    -180,
+    25,
+    180,
+    70
+   ],
+   "medium": "land",
+   "terrain": [
+    14,
+    15
+   ],
+   "months": [
+    12,
+    1,
+    2,
+    3
+   ],
+   "before": 1900,
+   "x": 0.35,
+   "why": "High passes like the Alps, the Hindu Kush and the Pamirs closed or turned deadly under winter snow.",
+   "src": [
+    {
+     "cite": "Hansen, The Silk Road: A New History (2012); Xuanzang's own account of losing men to snow and cold crossing the Tian Shan (Great Tang Records on the Western Regions, 646)"
+    }
+   ]
+  },
+  {
+   "id": "rasputitsa",
+   "n": "The mud season",
+   "box": [
+    22,
+    47,
+    60,
+    62
+   ],
+   "medium": "land",
+   "months": [
+    4,
+    10,
+    11
+   ],
+   "before": 1930,
+   "x": 0.4,
+   "why": "Spring thaw and autumn rain turned Russian and Ukrainian roads to mud; travel waited for the ground to freeze or dry.",
+   "src": [
+    {
+     "cite": "Rasputitsa (Wikipedia)",
+     "url": "https://en.wikipedia.org/wiki/Rasputitsa"
+    }
+   ]
+  },
+  {
+   "id": "winter_road",
+   "n": "Winter sledge roads",
+   "box": [
+    22,
+    50,
+    140,
+    68
+   ],
+   "medium": "land",
+   "months": [
+    12,
+    1,
+    2
+   ],
+   "before": 1900,
+   "x": 1.25,
+   "why": "Once rivers froze, sledges ran on the ice and snow faster than carts ever did in summer.",
+   "src": [
+    {
+     "cite": "Winter road (Wikipedia): sledge roads on frozen rivers",
+     "url": "https://en.wikipedia.org/wiki/Winter_road"
+    }
+   ]
+  },
+  {
+   "id": "desert_summer",
+   "n": "Desert summer",
+   "box": [
+    -20,
+    12,
+    75,
+    42
+   ],
+   "medium": "land",
+   "terrain": [
+    10,
+    11
+   ],
+   "months": [
+    6,
+    7,
+    8
+   ],
+   "before": 1930,
+   "x": 0.75,
+   "risk": 2,
+   "why": "Caravans moved at night or waited out the summer heat; the great Sahara crossings left in autumn and winter.",
+   "src": [
+    {
+     "cite": "Ibn Battuta, Rihla (Sijilmasa to Walata, 1352): the caravan left in February"
+    }
+   ]
+  },
+  {
+   "id": "wet_season",
+   "n": "Rains",
+   "box": [
+    -20,
+    0,
+    120,
+    25
+   ],
+   "medium": "land",
+   "terrain": [
+    7,
+    12
+   ],
+   "months": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "before": 1930,
+   "x": 0.5,
+   "why": "Monsoon and summer rains flooded tropical tracks and rivers; armies and traders waited for the dry season.",
+   "src": [
+    {
+     "cite": "Gommans, Mughal Warfare (2002): campaigning seasons and the monsoon"
+    }
+   ]
+  }
+ ],
+ "channels": [
+  {
+   "n": "Strait of Gibraltar",
+   "at": [
+    -5.6,
+    35.95
+   ]
+  },
+  {
+   "n": "Bosporus",
+   "at": [
+    29.05,
+    41.1
+   ]
+  },
+  {
+   "n": "Dardanelles",
+   "at": [
+    26.4,
+    40.2
+   ]
+  },
+  {
+   "n": "Oresund",
+   "at": [
+    12.7,
+    56.0
+   ]
+  },
+  {
+   "n": "Strait of Messina",
+   "at": [
+    15.6,
+    38.2
+   ]
+  },
+  {
+   "n": "Strait of Dover",
+   "at": [
+    1.4,
+    51.0
+   ]
+  },
+  {
+   "n": "Bab-el-Mandeb",
+   "at": [
+    43.4,
+    12.6
+   ]
+  },
+  {
+   "n": "Strait of Hormuz",
+   "at": [
+    56.4,
+    26.5
+   ]
+  },
+  {
+   "n": "Kerch Strait",
+   "at": [
+    36.6,
+    45.3
+   ]
+  },
+  {
+   "n": "Strait of Malacca",
+   "at": [
+    100.4,
+    3.0
+   ]
+  },
+  {
+   "n": "Bonifacio",
+   "at": [
+    9.2,
+    41.3
+   ]
+  },
+  {
+   "n": "Palk Strait",
+   "at": [
+    79.6,
+    9.6
+   ]
+  },
+  {
+   "n": "Suez Canal",
+   "line": [
+    [
+     32.55,
+     29.95
+    ],
+    [
+     32.35,
+     30.6
+    ],
+    [
+     32.3,
+     31.25
+    ]
+   ],
+   "from": 1869
+  },
+  {
+   "n": "Panama Canal",
+   "line": [
+    [
+     -79.92,
+     9.35
+    ],
+    [
+     -79.55,
+     8.9
+    ]
+   ],
+   "from": 1914
+  },
+  {
+   "n": "Kiel Canal",
+   "line": [
+    [
+     9.1,
+     53.9
+    ],
+    [
+     10.15,
+     54.35
+    ]
+   ],
+   "from": 1895
+  }
+ ],
+ "ports": {
+  "max_km": 120,
+  "wait_days": 6,
+  "no_port_days": 25,
+  "why": "You can only board a ship at a port. Waiting for a sailing and a berth usually took days; finding a boat on an empty coast took weeks. Steamers ran to timetables, so from the 1840s the wait is about two days.",
+  "steam_wait_days": 2
+ },
+ "pace": {
+  "land": 0.8,
+  "sea": 0.95,
+  "why": "Speeds above are per travelling day. Long journeys also lose days to rest, repairs, guides, markets, customs and bad weather; the game counts about one day in five lost on land and a little at sea.",
+  "src": [
+   {
+    "cite": "ORBIS speeds are per day of travel; Ibn Battuta's and Xuanzang's journeys show weeks-long stops in most big towns"
+   }
+  ]
+ },
+ "rail_regions": [
+  {
+   "n": "Britain",
+   "box": [
+    -6,
+    50,
+    2,
+    58.5
+   ],
+   "from": 1840
+  },
+  {
+   "n": "Western and central Europe",
+   "box": [
+    -9.5,
+    36,
+    24,
+    56
+   ],
+   "from": 1855
+  },
+  {
+   "n": "Eastern USA",
+   "box": [
+    -95,
+    25,
+    -66,
+    49
+   ],
+   "from": 1850
+  },
+  {
+   "n": "The US West",
+   "box": [
+    -125,
+    30,
+    -95,
+    49
+   ],
+   "from": 1869
+  },
+  {
+   "n": "European Russia",
+   "box": [
+    24,
+    44,
+    60,
+    62
+   ],
+   "from": 1865
+  },
+  {
+   "n": "Trans-Siberian",
+   "box": [
+    60,
+    42,
+    135,
+    58
+   ],
+   "from": 1904
+  },
+  {
+   "n": "India",
+   "box": [
+    68,
+    8,
+    92,
+    34
+   ],
+   "from": 1865
+  },
+  {
+   "n": "Japan",
+   "box": [
+    129,
+    31,
+    142,
+    42
+   ],
+   "from": 1890
+  },
+  {
+   "n": "China",
+   "box": [
+    100,
+    20,
+    125,
+    42
+   ],
+   "from": 1910
+  },
+  {
+   "n": "Ottoman lands and Egypt",
+   "box": [
+    26,
+    22,
+    48,
+    42
+   ],
+   "from": 1890
+  },
+  {
+   "n": "Southern Africa",
+   "box": [
+    15,
+    -35,
+    35,
+    -15
+   ],
+   "from": 1890
+  },
+  {
+   "n": "Argentina and Chile",
+   "box": [
+    -75,
+    -42,
+    -55,
+    -20
+   ],
+   "from": 1885
+  },
+  {
+   "n": "Mexico",
+   "box": [
+    -110,
+    15,
+    -86,
+    32
+   ],
+   "from": 1885
+  },
+  {
+   "n": "Canada",
+   "box": [
+    -125,
+    42,
+    -60,
+    55
+   ],
+   "from": 1886
+  },
+  {
+   "n": "Australia",
+   "box": [
+    113,
+    -39,
+    154,
+    -12
+   ],
+   "from": 1885
+  },
+  {
+   "n": "Everywhere else",
+   "box": [
+    -180,
+    -60,
+    180,
+    80
+   ],
+   "from": 1950
+  }
+ ],
+ "roads": [
+  {
+   "n": "Roman roads",
+   "polity": "Roman",
+   "from": -200,
+   "to": 450,
+   "x": 1.3,
+   "why": "Paved roads with milestones and way-stations (the cursus publicus) across the Roman world.",
+   "src": [
+    {
+     "cite": "ORBIS; Chevallier, Roman Roads (1976)"
+    }
+   ]
+  },
+  {
+   "n": "Persian royal roads",
+   "polity": "Achaemenid",
+   "from": -520,
+   "to": -330,
+   "x": 1.25,
+   "why": "Herodotus counts 111 way-stations on the road from Sardis to Susa.",
+   "src": [
+    {
+     "cite": "Herodotus, Histories 5.52-53"
+    }
+   ]
+  },
+  {
+   "n": "Inca roads",
+   "polity": "Inca",
+   "from": 1440,
+   "to": 1532,
+   "x": 1.3,
+   "why": "The Qhapaq Nan, some 30,000 km of road with tambo rest-houses, crossing the Andes.",
+   "src": [
+    {
+     "cite": "Hyslop, The Inka Road System (1984)"
+    }
+   ]
+  },
+  {
+   "n": "Mongol yam",
+   "polity": "Mongol",
+   "from": 1230,
+   "to": 1360,
+   "x": 1.2,
+   "why": "Relay stations every 30 to 50 km let official travellers with a paiza pass ride across Eurasia.",
+   "src": [
+    {
+     "cite": "Silverstein, Postal Systems in the Pre-Modern Islamic World (2007), ch. 4 on the Mongol yam"
+    }
+   ]
+  },
+  {
+   "n": "Trade-route caravanserais",
+   "trade": true,
+   "x": 1.2,
+   "why": "Along a working trade route you travel with caravans, find inns and wells, and are safer.",
+   "src": [
+    {
+     "cite": "Trade routes from the Atlas economy-trade workstream (data/economy-trade/routes.jsonl)"
+    }
+   ]
+  }
+ ],
+ "hazards": {
+  "base_per_100_days": 0.02,
+  "sea_per_100_days": 0.03,
+  "war_km": 250,
+  "war_risk": 0.02,
+  "border_days": 2,
+  "border_toll": 3,
+  "why": "Travellers died of disease, exposure, shipwreck and bandits; these rates are rough guesses, set below the several percent of people aboard who died on a typical Dutch East India Company voyage to Asia (Bruijn, Gaastra and Schoffer, Dutch-Asiatic Shipping, 1987).",
+  "src": [
+   {
+    "cite": "Bruijn, Gaastra and Schoffer, Dutch-Asiatic Shipping in the 17th and 18th Centuries (1987)"
+   }
+  ],
+  "war_max": 3
+ }
+}

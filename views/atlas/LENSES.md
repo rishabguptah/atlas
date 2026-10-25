@@ -24,7 +24,7 @@ Pick the one your lens belongs to:
 | `wealth`  | Trade & migration, Technology, food & energy, Object journeys, VOC ships |
 | `peoples` | People, Peoples & languages, Travellers, Middle Passage      |
 | `mind`    | Ideas & faith, Art & architecture                            |
-| `shocks`  | Plague & climate                                             |
+| `shocks`  | Plague & climate, Epidemics, Eruptions, famine & cold          |
 
 A lens is precise (one question, one kind of record); a family is a group you switch on together.
 
@@ -130,6 +130,10 @@ The Who was there tab (`lenses/travels.js`) is the Contemporaries finder and exp
 
 The Codex tab (`lenses/codex.js`) is the example of a plugin that keeps the viewer's progress: it uses `localStorage`
 (wrapped in try/catch, so the page works without it) and never sends it anywhere.
+
+The Live tab (`lenses/life.js`) is the life RPG: play a real life from `data/life/lives/*.json` (or ask for anyone,
+drafted by AI and marked so) or an ordinary one from base rates in `data/life/rules.json`. It travels with
+`ATLAS.world.route` and exposes `ATLAS.life.story()`, the life so far as a Story of Scenes (WORLD.md L4), registered with `ATLAS.world.stories` (kind `life`) and played by the Director.
 
 ## Pixel sprites from a lens
 

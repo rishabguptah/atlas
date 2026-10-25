@@ -1,0 +1,21 @@
+{
+  "id": "tipus_tiger",
+  "name": "Tipu's Tiger",
+  "type": "single",
+  "sprite": "obj_tiger",
+  "what": "A life-size painted wooden tiger mauling a European man, with a pipe organ inside that makes the tiger roar and the man wail.",
+  "why": "A war toy made for Tipu Sultan of Mysore, the East India Company's fiercest enemy, it became the Company's own trophy after his death and a London crowd-pleaser.",
+  "now": "Victoria and Albert Museum, London.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Stronge, S. (2009). Tipu's Tigers. V&A Publishing."},
+    {"cite": "Victoria and Albert Museum: Tipu's Tiger (2545(IS))", "url": "https://collections.vam.ac.uk/item/O61382/tippoos-tiger-musical-instrument-unknown/"},
+    {"cite": "Wikipedia: Tipu's Tiger", "url": "https://en.wikipedia.org/wiki/Tipu%27s_Tiger"}
+  ],
+  "stops": [
+    {"y": 1793, "approx": true, "at": [76.69, 12.42], "place": "Seringapatam (Srirangapatna)", "owner": "Tipu Sultan of Mysore", "by": "made", "conf": "likely", "note": "Made in Mysore in the 1790s for Tipu, the \"Tiger of Mysore\", whose throne, weapons and soldiers' uniforms all carried tiger stripes. The French may have helped with the organ.", "meet": "a musician of Tipu's court"},
+    {"y": 1799, "at": [76.69, 12.42], "place": "Seringapatam", "owner": "East India Company", "by": "seized", "conf": "sure", "note": "The British stormed Seringapatam in May 1799 and Tipu died in the breach. Prize agents found the tiger in the palace music room.", "meet": "a soldier of the storming party, May 1799"},
+    {"y": 1808, "at": [-0.0826, 51.5134], "place": "East India House, London", "owner": "East India Company", "by": "displayed", "conf": "sure", "via": "sea", "path": [[76.69, 12.42], [78.5, 12.8], [80.27, 13.08], [81, 8], [75, -10], [45, -36], [18, -36], [-5, -10], [-25, 10], [-20, 35], [-10, 46], [-5, 49], [1.4, 51.2], [-0.0826, 51.5134]], "note": "Shipped to London, it went on show in the Company's museum in Leadenhall Street. Visitors cranked it so often that the reading room complained; Keats mocked its \"Man-Tiger-Organ\".", "meet": "a visitor turning the crank, maybe the young Keats"},
+    {"y": 1880, "at": [-0.172, 51.4966], "place": "South Kensington Museum (V&A)", "owner": "Victoria and Albert Museum", "by": "carried", "conf": "sure", "via": "land", "note": "When the Company's India Museum was broken up after 1879, the tiger went to South Kensington. Its organ still works but is no longer played for visitors."}
+  ]
+}

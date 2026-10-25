@@ -72,6 +72,13 @@ and technology (galley, junk, carrack, steam, rail, air). Every consumer uses th
 Living world, Objects (unknown legs), trade, news, plague and idea diffusion. Target: < 300 ms for a
 continental route, worker-friendly.
 
+Shipped in `views/atlas/world/route.js` (data: `data/motion/`, lens data `motion`, which may load late, so check
+`ATLAS.world.motionReady()`). `a`, `b` are `[lon, lat]` or `{lon, lat}` for now; `when` is a year, `"YYYY-MM"` or
+`{y, m}`; `opts.pref` is `fast | land | sea`. The result also has `pts` (simplified path), `cost` (day-wages),
+`notes` (seasons, canals, roads used) and `meet` (borders, battles and plague on the way). `ATLAS.world.reach`
+returns `{days: Float32Array(720 * 360), at(lon, lat)}`. A continental route takes about 0.1 to 0.6 s warm.
+`ATLAS.world.motion` exposes the grid helpers (`cellOf`, `cls`, `isWater`, `polity`, `plagueAt`, `battles`, `rules()`).
+
 ## L3 Agents and causes (agents: "Simulate people meeting and traveling"; `why`: "Bring scholar-level depth to the atlas")
 
 ```js
@@ -102,6 +109,14 @@ A **Story** is `{id, title, kind: tour|answer|life|simulation|object|storyline|w
 Guide tours, panel answers, What-if scenarios, Up close storylines, Codex trails, RPG chronicles, object
 follows and simulation stories all emit Stories. One Director plays them: on-map caption, Space for next,
 one obvious "Why?" or "Go deeper", the panel collapses to a story strip.
+
+Built (2026-10-25): `views/atlas/world/story.js` (format, registry, converters) and `world/director.js` (player).
+Extra optional Scene fields the Director reads: `lens` (the guide lens, when `by` names a specialist), `kick` (a
+short label over the caption), `debate` (one line on what is argued over, shown under "How do we know") and
+`deeper` (`{story, label}`, `{tab}` or `{q}`: where "Go deeper" goes; otherwise it asks the panel `ask`). A Story may
+name `next` (the story offered at its end), `status` (`draft`, `live`) and a `sync()` that refreshes `scenes` while
+it streams. Register with `ATLAS.world.stories.add(story)` or `add({kind, list})`; play with
+`ATLAS.world.director.play(story, {at, auto})`. Authored stories: `data/stories/*.json`.
 
 ## Rules for every owner
 

@@ -181,12 +181,11 @@ made) and `src`.
 
 ## Changes
 
-v0.5 · 2026-10-25 · `scholarship` workstream (with the world-engine contract, views/atlas/WORLD.md): kinds `source`,
+v0.6 · 2026-10-25 · `scholarship` workstream (with the world-engine contract, views/atlas/WORLD.md): kinds `source`,
 `debate`, `quote`, `chain`; `src` / `pages` / `quote` on any sources entry (checked as references); `conf` class on any
 record and journey leg; relation `present_at` (with `role`); route subtype `journey` with `legs` and `carrier`; causal
 relation fields `mech`, `lag`, `debate`.
-
-v0.5 (also) · 2026-10-25 · `peoples-languages` workstream: kinds `language`, `script`, `sample`; lens `language`; relation `derived_from`; event subtypes `language_spread` (with `hypotheses` and `stages`), `attestation`, `language_death`, `script_reform`, `genetic_finding` (with `ancestry_share` [low, high] %). The build now also checks `language` references, and `family` / `branch` on language records.
+v0.5 · 2026-10-25 · `peoples-languages` workstream: kinds `language`, `script`, `sample`; lens `language`; relation `derived_from`; event subtypes `language_spread` (with `hypotheses` and `stages`), `attestation`, `language_death`, `script_reform`, `genetic_finding` (with `ancestry_share` [low, high] %). The build now also checks `language` references, and `family` / `branch` on language records.
 v0.4 · 2026-10-25 · `europe-19c` workstream (deep zoom): `date` and `end_date` on any record, ISO `YYYY`, `YYYY-MM` or `YYYY-MM-DD` as precise as the source, and always in the same year as `start` / `end`; `date_note` when sources disagree. Event subtypes `siege`, `campaign`, `expedition`, `revolution`, `coup`, `mutiny`, `riot`, `protest`, `strike`, `massacre`, `pogrom`, `assassination`, `congress`, `independence`, `referendum`, `coronation`, `exhibition`, `fire`, `shipwreck`, `disaster`; `family` groups them (war, diplomacy, unrest, disaster, culture). `sitelinks` = how many Wikipedias cover a record. Place field `admin` / `admin_of` for provinces. See data/europe-19c/README.md.
 v0.3 · 2026-10-25 · `law` workstream: lens `law`; relation `governed_as` (polity -> `idea:gov:<form>`, time-bounded, with `basis`: curated or wikidata); event subtype `law` with `by` (polity id), `policy` (`idea:policy:<slug>`) and `effect` (adopt, abolish, restrict, extend); `by` and `policy` are checked as references; measures `regime_lied` (Lexical Index class 0-7, `step: true` = value holds until the next point) and Seshat presence metrics (`legal_code`, `courts`, `judges`, `lawyers`, `bureaucrats`, `divine_rulers`, `divine_legitimation`, `exec_constraint_gov`, `exec_constraint_nongov`). See data/law/README.md.
 v0.2 · 2026-10-25 · `art-architecture` workstream: `art` lens; idea subtype `style` (`family`, `origin`, `spread`); work fields `styles`, `styled_from`, `made_at`.
