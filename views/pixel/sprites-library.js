@@ -412,6 +412,618 @@
   def("ship_modern", { kind: "ship", label: "Ocean liner / warship", era: [1900, 2100], regions: ANY, ay: 7, map: { 3: "m" }, fps: 4 },
     [liner, bob(edit(liner, { 0: ".......3...3........", 1: "........3...3......." }))]);
 
+  // ---------------------------------------------------------------- caravans (face right, anchor = feet)
+  const camel = [
+    "..............tt",
+    ".....xx......tkt",
+    "....xXXx.....tt.",
+    "...txXXxt...tt..",
+    "..ttttttttt.t...",
+    ".tttttttttttt...",
+    "ntttttttttttt...",
+    "n.ntttttttttn...",
+    "...t.t...t.t....",
+    "...t.t...t.t....",
+    "...t.t...t.t....",
+    "...n.n...n.n....",
+  ];
+  def("caravan_camel", { kind: "caravan", label: "Camel caravan", era: [-1000, 1950], regions: ["middle_east", "africa", "steppe", "south_asia"] },
+    [camel, edit(camel, { 8: "...t..t.t...t...", 9: "..t...t.t....t..", 10: "..t...t.t....t..", 11: "..n....nn....n.." })]);
+
+  const mule = [
+    "..........m.m.",
+    "...nnnn...mm..",
+    "..nNnnNn.mmmm.",
+    "..nnnnnn.mkmmm",
+    ".xxxxxxxxmm..M",
+    "MmmmmmmmmmM...",
+    "M.mmmmmmmmM...",
+    "..MmmmmmmM....",
+    "..m.m...m.m...",
+    "..m.m...m.m...",
+    "..M.M...M.M...",
+  ];
+  def("caravan_mule", { kind: "caravan", label: "Mule train", era: [-3000, 1950], regions: ANY },
+    [mule, edit(mule, { 8: "..m..m.m...m..", 9: ".m...m.m....m.", 10: ".M....MM....M." })]);
+
+  const cart = [
+    "..wwwwww....",
+    ".wwwwwwww...",
+    "wwwwwwwwwW..",
+    "wWWwWWwWWW..",
+    "nnnnnnnnnnnn",
+    "NNNNNNNNNN..",
+    ".NNN..NNN...",
+    ".NkN..NkN...",
+    ".NNN..NNN...",
+  ];
+  const wagon = (h, turn) => over(over(blank(26, 11), h, 10, 1), turn ? edit(cart, { 7: ".kNN..kNN..." }) : cart, 0, 2);
+  def("caravan_wagon", { kind: "caravan", label: "Wagon train", era: [-1500, 1920], regions: ["europe", "steppe", "americas", "east_asia", "south_asia"], ax: 13 },
+    [wagon(HORSE, false), wagon(HORSE_STEP, true)]);
+
+  // ---------------------------------------------------------------- settlements (anchor = ground centre)
+  const village = [
+    "...g.........",
+    "..ygg........",
+    ".yyggG...g...",
+    "yyyggGG.ygg..",
+    ".nnnnn.yyggG.",
+    ".nkknnyyyggGG",
+    ".nkknn.nnnnn.",
+    ".......nnkkn.",
+  ];
+  def("city_village", { kind: "city", label: "Village", size: 1, era: [-10000, 2100], regions: ANY, map: { 1: "m" } },
+    [village,
+     edit(village, { 0: "...g.....1...", 1: "..ygg.....1.." }),
+     edit(village, { 0: "...g....1....", 1: "..ygg....1..." })]);
+
+  const town = [
+    "........r.......",
+    ".......rrR......",
+    "..r...rrrRR.....",
+    ".rrR..wwwWW..r..",
+    "rrrRR.wkwkW.rrR.",
+    "wwwWW.wwwWWrrrRR",
+    "wkwkW.wwkWWwwwWW",
+    "wwwWWrrrRRRwkwkW",
+    "wwkWrrrrrRRRwwkW",
+    ".....wwwwWWW....",
+    ".....wkwwkWW....",
+    ".....wwwkkWW....",
+  ];
+  def("city_town", { kind: "city", label: "Town", size: 2, era: [-3000, 2100], regions: ["europe", "americas", "oceania"] }, [town]);
+
+  const adobe = [
+    ".......WWWW......",
+    ".......ttttn.....",
+    ".......tkktn.....",
+    ".WWWW..ttttn.WWW.",
+    ".ttttn.ttttn.tttn",
+    ".tkktnWWWWWWWtkkn",
+    ".ttttntttttttnttn",
+    ".ttkknttkktkktnkn",
+    ".ttkkntttttttnttn",
+    "NNNNNNNNNNNNNNNNN",
+  ];
+  def("city_town_adobe", { kind: "city", label: "Mudbrick town", size: 2, era: [-4000, 2100], regions: ["middle_east", "africa", "south_asia", "americas"] }, [adobe]);
+
+  const asianTown = [
+    "L.........L.....",
+    "LeeeeeeeeeL.....",
+    ".eeeeeeeee......",
+    ".wrwwwwwrw......",
+    ".wrwkL........L.",
+    ".wrwkLeeeeeeeeL.",
+    ".wrww.eeeeeeee..",
+    "......wrwwkkwrw.",
+    "......wrwwkkwrw.",
+    "......wrwwkkwrw.",
+  ];
+  def("city_town_asian", { kind: "city", label: "Town (East Asia)", size: 2, era: [-1000, 2100], regions: ["east_asia", "southeast_asia"] }, [asianTown]);
+
+  const walled = [
+    "........1x........",
+    "........1xx.......",
+    "........1.........",
+    ".rr....rrrr....rr.",
+    "rrrR..rrrrRR..rrrR",
+    "mmmM..mmmmMM..mmmM",
+    "mkmM..mkmkMM..mkmM",
+    "mmmM..mmmmMM..mmmM",
+    "mmmM..mmmmMM..mmmM",
+    "mmmMm.m.m.m.m.mmmM",
+    "mmmMmmmmmmmmmmmmmM",
+    "mmmMmmmmmmmmmmmmmM",
+    "mmmMmmmmkkmmmmmmmM",
+    "mmmMmmmkkkkmmmmmmM",
+    "MMMMMMMkkkkMMMMMMM",
+  ];
+  def("city_walled", { kind: "city", label: "Walled city", size: 3, era: [-3000, 1850], regions: ANY, map: { 1: "M" } },
+    [walled, edit(walled, { 0: "........1.........", 1: "........1xx.......", 2: "........1.x......." })]);
+
+  const metropolis = [
+    ".........g..........",
+    "........ggG.........",
+    "...w...gggGG....w...",
+    "..wwW..gggGG...wwW..",
+    "..wkW.gggggGG..wkW..",
+    "..wwW.wwwwwWW..wwW..",
+    ".rrwWrwkwkwkWrrwwWr.",
+    "rrrwWrwwwwwwWrrwwWrr",
+    "wwwwwwwwkkwwwwwwwwww",
+    "W.W.W.W.W.W.W.W.W.W.",
+    "WWWWWWWWWWWWWWWWWWWW",
+    "WWkWWWWWWkkWWWWWkWWW",
+    "WWWWWWWWkkkkWWWWWWWW",
+    "WWWWWWWWkkkkWWWWWWWW",
+  ];
+  def("city_metropolis", { kind: "city", label: "Great city", size: 4, era: [-700, 1900], regions: ANY }, [metropolis]);
+
+  const industrial = [
+    "..3.....3...........",
+    ".3.3...3.3..........",
+    "..3.....3...........",
+    "..MM....MM..........",
+    "..MM....MM.....rrR..",
+    "..MM....MM....rrrRR.",
+    "rrMMrrrrMMrr..rwwRR.",
+    "rRRRRRRRRRRRR.rwwRR.",
+    "rwwrwwrwwrwwR.rrrRR.",
+    "rrrrrrrrrrrrRrrrrrRR",
+    "rwwrwwrkkrwwRrwwrwwR",
+    "rrrrrrrkkrrrRrrrrrrR",
+  ];
+  def("city_industrial", { kind: "city", label: "Industrial city", size: 4, era: [1780, 1970], regions: ANY, map: { 3: "m" }, fps: 3 },
+    [industrial,
+     edit(industrial, { 0: ".3.....3............", 1: "..3.3...3.3.........", 2: ".3.....3............" }),
+     edit(industrial, { 0: "...3.....3..........", 1: ".3.....3............", 2: "..3.3...3.3........." })]);
+
+  const modern = [
+    "......c.............",
+    "......B.............",
+    ".....bbB......bbB...",
+    ".....bcB......bcB...",
+    ".....bbB..bB..bbB...",
+    "..mM.bcB..bB..bcB...",
+    "..mM.bbBbbbB..bbBmM.",
+    "..mM.bcBbcbBmMbcBmM.",
+    "mMmM.bbBbbbBmMbbBmM.",
+    "mMmMbbbBbcbBmMbcBmMM",
+    "mMmMbcbBbbbBmMbbBmMM",
+    "MMMMMMMMMMMMMMMMMMMM",
+  ];
+  def("city_modern", { kind: "city", label: "Modern metropolis", size: 5, era: [1900, 2100], regions: ANY },
+    [modern, edit(modern, { 0: "......B............." })]);
+
+  // ---------------------------------------------------------------- landmarks (regional icons for a city)
+  const pagoda = [
+    "......g......",
+    "......g......",
+    "....L.g.L....",
+    "....LeeeL....",
+    ".....rrR.....",
+    "...L.....L...",
+    "...LeeeeeL...",
+    "....rrkrR....",
+    "..L.......L..",
+    "..LeeeeeeeL..",
+    "...rrrkrrR...",
+    ".L.........L.",
+    ".LeeeeeeeeeL.",
+    "..rrrrkrrrR..",
+    "..rrrkkkrrR..",
+    ".RRRRRRRRRRR.",
+  ];
+  def("city_pagoda", { kind: "city", label: "Pagoda", landmark: true, era: [500, 2100], regions: ["east_asia", "southeast_asia"] }, [pagoda]);
+
+  const mosque = [
+    "..g.............",
+    "..w.............",
+    ".wwW......g.....",
+    ".wwW......g.....",
+    ".wWW....cccc....",
+    "wwwWW..ccccbb...",
+    ".wwW..ccccccbb..",
+    ".wwW..cccccbbb..",
+    ".wwW.wwwwwwWWWW.",
+    ".wwW.wkwwkwwkWW.",
+    ".wwWwwwwwwwwwWWW",
+    ".wwWwkkwwkkwwkkW",
+    ".wwWwkkwwkkwwkkW",
+    "WWWWWWWWWWWWWWWW",
+  ];
+  def("city_minaret", { kind: "city", label: "Mosque and minaret", landmark: true, era: [622, 2100], regions: ["middle_east", "africa", "south_asia", "southeast_asia", "steppe"] }, [mosque]);
+
+  const cathedral = [
+    "..M.........M..",
+    "..M.........M..",
+    ".MMM.......MMM.",
+    ".MMM...M...MMM.",
+    "MMMMM.MMM.MMMMM",
+    "ttttnMMMMMttttn",
+    "tkktnttttntkktn",
+    "tkktntcccntkktn",
+    "ttttntcbcnttttn",
+    "tkktntcccntkktn",
+    "tkktnttttntkktn",
+    "ttttntkkkntttTn",
+    "ttttnkkkkkntttn",
+    "nnnnnkkkkknnnnn",
+  ];
+  def("city_cathedral", { kind: "city", label: "Cathedral", landmark: true, era: [1000, 2100], regions: ["europe", "americas"] },
+    [cathedral.map((r) => r.replace("T", "t"))]);
+
+  const ziggurat = [
+    "........ww........",
+    ".......wwwW.......",
+    ".......wkkW.......",
+    ".....tttNNnnn.....",
+    ".....tttNNnnn.....",
+    "...tttttNNnnnnn...",
+    "...NNNNNNNNNNNN...",
+    "...tttttNNnnnnn...",
+    ".tttttttNNnnnnnnn.",
+    ".NNNNNNNNNNNNNNNN.",
+    ".tttttttNNnnnnnnn.",
+    "nnnnnnnnNNnnnnnnnn",
+  ];
+  def("city_ziggurat", { kind: "city", label: "Ziggurat", landmark: true, era: [-3000, -300], regions: ["middle_east"] }, [ziggurat]);
+
+  const hinduTemple = [
+    ".......go......",
+    "......nnn......",
+    "......ttn......",
+    ".....tttnn.....",
+    ".....NNNNN.....",
+    ".....tttnn.....",
+    "....ttttnnn....",
+    "....NNNNNNN....",
+    "....ttttnnn....",
+    "..t.ttttnnn.n..",
+    ".tttNNNNNNNnnn.",
+    "ttttttkkkttnnnn",
+    "ttttttkkkttnnnn",
+    "NNNNNNNNNNNNNNN",
+  ];
+  def("city_temple_hindu", { kind: "city", label: "Hindu temple", landmark: true, era: [400, 2100], regions: ["south_asia", "southeast_asia"] }, [hinduTemple]);
+
+  const mesoPyramid = [
+    "......rrrr......",
+    "......wkkw......",
+    ".....mmmmmm.....",
+    ".....mmNNmM.....",
+    "....mmmNNmMM....",
+    "....MMMNNMMM....",
+    "...mmmmNNmmMM...",
+    "...MMMMNNMMMM...",
+    "..mmmmmNNmmmMM..",
+    "..MMMMMNNMMMMM..",
+    ".mmmmmmNNmmmmMM.",
+    "MMMMMMMNNMMMMMMM",
+  ];
+  def("city_temple_meso", { kind: "city", label: "Temple pyramid", landmark: true, era: [-1000, 1600], regions: ["americas"] }, [mesoPyramid]);
+
+  // ---------------------------------------------------------------- wonders (anchor = ground centre)
+  // era = [built, lost or 2100]; lost wonders carry the year they were lost and where they stood.
+  const W_PYRAMIDS = [
+    ".........g................",
+    "........ygG...............",
+    ".......yygGG......g.......",
+    "......yyygGGG....ygG......",
+    ".....yyyygGGGG..yygGG.....",
+    "....yyyyygGGGGGyyygGGG....",
+    "...yyyyyygGGGGGGyygGGGk...",
+    "..yyyyyyygGGGGGGGygGGkgG..",
+    ".yyyyyyyygGGGGGGGGgGkygGG.",
+    "yyyyyyyyygGGGGGGGGGkyygGGG",
+    "yyyyyyyyygGGGGGGGGkyyygGGG",
+    "nttnttnttnttnttnttnttnttnt",
+  ];
+  def("wonder_pyramids", { kind: "wonder", label: "Pyramids of Giza", era: [-2560, 2100], regions: ["africa",  "middle_east"], place: [29.979, 31.134], lost: null, note: "Last ancient wonder still standing" },
+    [W_PYRAMIDS]);
+
+  const W_GARDENS = [
+    "........lLl.........",
+    ".......lllLL........",
+    "........nnn.........",
+    "......lllllLL.......",
+    "......ttkttnn.......",
+    "....llllllllLLL.....",
+    "....tLttkttnLnn.....",
+    "....tLttkttnLnn.....",
+    "..llllllllllllLLL...",
+    "..tLttkttkttkLnnn...",
+    "..tLttkttkttkLnnn...",
+    "lllllllllllllllllLLL",
+    "tLttkttkttkttkttLnnn",
+    "tLttkttkttkttkttLnnn",
+    "tttttttttttttttttnnn",
+    "nnnnnnnnnnnnnnnnnnnn",
+  ];
+  def("wonder_gardens", { kind: "wonder", label: "Hanging Gardens of Babylon", era: [-600, -100], regions: ["middle_east"], place: [32.536, 44.421], lost: -100, note: "Existence still debated; no trace found" },
+    [W_GARDENS]);
+
+  const W_ARTEMIS = [
+    "..........ww..........",
+    "........wwwwWW........",
+    "......wwwwgwwwWW......",
+    "....wwwwwwwwwwwwWW....",
+    "..wwwwwwwwwwwwwwwwWW..",
+    "WWWWWWWWWWWWWWWWWWWWWW",
+    ".wwwwwwwwwwwwwwwwwwwW.",
+    ".wwkwwkwwkwwkwwkwwkwW.",
+    ".wwkwwkwwkwwkwwkwwkwW.",
+    ".wwkwwkwwkwwkwwkwwkwW.",
+    ".wwkwwkwwkwwkwwkwwkwW.",
+    ".wwkwwkwwkwwkwwkwwkwW.",
+    "WWWWWWWWWWWWWWWWWWWWWW",
+    "tttttttttttttttttttttt",
+  ];
+  def("wonder_artemis", { kind: "wonder", label: "Temple of Artemis", era: [-550, 401], regions: ["mediterranean"], place: [37.95, 27.364], lost: 401, note: "Burned 356 BC, rebuilt, finally destroyed 401" },
+    [W_ARTEMIS]);
+
+  const W_ZEUS = [
+    ".......ww.......",
+    ".....wwwwWW.....",
+    "...wwwwwwwwWW...",
+    ".wwwwwwwwwwwwWW.",
+    "WWWWWWWWWWWWWWWW",
+    "wwkkkkkggkkkkkWW",
+    "wwkkkkkwwkkgkkWW",
+    "wwkkkkwwwwkgkkWW",
+    "wwkkkgggggggkkWW",
+    "wwkkwgggggGgkkWW",
+    "wwkkGkgggGkgkkWW",
+    "wwkkGggggGGgkkWW",
+    "wwkkGgGGgGGkkkWW",
+    "WWWWWWWWWWWWWWWW",
+  ];
+  def("wonder_zeus", { kind: "wonder", label: "Statue of Zeus at Olympia", era: [-435, 475], regions: ["mediterranean"], place: [37.638, 21.63], lost: 475, note: "Lost, probably to fire in Constantinople" },
+    [W_ZEUS]);
+
+  const W_MAUSOLEUM = [
+    ".......gg.......",
+    "......gggg......",
+    ".......tn.......",
+    "......ttnn......",
+    ".....tttnnn.....",
+    "....ttttnnnn....",
+    "...tttttnnnnn...",
+    "..ttttttnnnnnn..",
+    ".WWWWWWWWWWWWWW.",
+    ".wkwkwkwkwkwkwk.",
+    ".wkwkwkwkwkwkwk.",
+    ".wkwkwkwkwkwkwk.",
+    "WWWWWWWWWWWWWWWW",
+    "wwwwwwwwwwwwwwWW",
+    "wwwwwwwwwwwwwwWW",
+    "wwwwwwwwwwwwwwWW",
+    "wwwwwwwwwwwwwwWW",
+    "wwwwwwwwwwwwwwWW",
+    "WWWWWWWWWWWWWWWW",
+  ];
+  def("wonder_mausoleum", { kind: "wonder", label: "Mausoleum at Halicarnassus", era: [-351, 1494], regions: ["mediterranean"], place: [37.038, 27.424], lost: 1494, note: "Felled by earthquakes, stones reused by 1494" },
+    [W_MAUSOLEUM]);
+
+  const W_COLOSSUS = [
+    ".........o..",
+    "........owo.",
+    ".........G..",
+    "....ggg..g..",
+    "...ggggG.g..",
+    "...gggGG.g..",
+    "....gGG.gg..",
+    "..gggggggG..",
+    ".gggggggG...",
+    ".g.ggggGG...",
+    ".g.ggggGG...",
+    "...ggGgGG...",
+    "...gG..gG...",
+    "...gG..gG...",
+    "...gG..gG...",
+    "..ggG..gGG..",
+    ".wwwwwwwwWW.",
+    "..wwwwwwWW..",
+    "..wkwwwkWW..",
+    "..wwwwwwWW..",
+    ".wwwwwwwwWW.",
+    "WWWWWWWWWWWW",
+  ];
+  def("wonder_colossus", { kind: "wonder", label: "Colossus of Rhodes", era: [-280, -226], regions: ["mediterranean"], place: [36.451, 28.226], lost: -226, note: "Toppled by an earthquake after 54 years", fps: 4 },
+    [W_COLOSSUS, edit(W_COLOSSUS, { 0: "........o...", 1: ".........wo." })]);
+
+  const W_PHAROS = [
+    "......y......",
+    ".....yoy.....",
+    ".....oro.....",
+    ".....wwW.....",
+    "....wwwwW....",
+    ".....wkW.....",
+    "....wwwWW....",
+    "....wwwWW....",
+    "....wkwWW....",
+    "....wwwWW....",
+    "....wkwWW....",
+    "...wwwwwWW...",
+    "..wwwwwwwWW..",
+    "..wwkwwkwWW..",
+    "..wwwwwwwWW..",
+    "..wwkwwkwWW..",
+    "..wwwwwwwWW..",
+    "..wwkwwkwWW..",
+    "..wwwwwwwWW..",
+    ".wwwwwwwwwWW.",
+    ".wwwwkkkwwWW.",
+    "WWWWWWWWWWWWW",
+  ];
+  def("wonder_pharos", { kind: "wonder", label: "Lighthouse of Alexandria", era: [-280, 1480], regions: ["africa",  "mediterranean"], place: [31.214, 29.885], lost: 1480, note: "Earthquakes 956-1323; stones went into Qaitbay fort", fps: 4 },
+    [W_PHAROS, edit(W_PHAROS, { 0: ".....y.y.....", 1: "......yo.....", 2: ".....ooo....." }), edit(W_PHAROS, { 0: ".............", 1: ".....oyo.....", 2: "....oyroo...." })]);
+
+  const W_GREAT_WALL = [
+    "...............m.m.M........",
+    "...............mmmMM........",
+    "...............mkmMM........",
+    "...............mmmMMm.......",
+    "..............mmmmMMm.m.....",
+    "......m.m...m.mMMLLMMmm.m...",
+    "....mmmmm.m.mmMllLLLLMMmm.m.",
+    "..m.mMMMMmmmMMlLLLLLLLLMMmm.",
+    "mmmmMllllMMMllLLLeeLLLLLLMMm",
+    "mMMMlLLLLlllLLLeeeeeeLLLLLLM",
+    "MlllLLLLLLLLLLeeeeeeeeeLLLLL",
+    "lLLLLeeeeLLLeeeeeeeeeeeeeLLL",
+    "LLLLeeeeeeeeeeeeeeeeeeeeeeeL",
+  ];
+  def("wonder_great_wall", { kind: "wonder", label: "Great Wall", era: [-220, 2100], regions: ["east_asia"], place: [40.431, 116.57], lost: null, note: "Built and rebuilt for two thousand years" },
+    [W_GREAT_WALL]);
+
+  const W_COLOSSEUM = [
+    "...ttttttttttttt......",
+    "..ttkttkttkttkttt.....",
+    ".tttttttttttttttttt...",
+    "tkktkktkktkktkktkkt...",
+    "tkktkktkktkktkktkkttn.",
+    "tttttttttttttttttttnn.",
+    "tkktkktkktkktkktkktnn.",
+    "tkktkktkktkktkktkktnn.",
+    "ttttttttttttttttttttnn",
+    "tkktkktkktkktkktkktnnn",
+    "tkktkktkktkktkktkktnnn",
+    "nnnnnnnnnnnnnnnnnnnnnn",
+  ];
+  def("wonder_colosseum", { kind: "wonder", label: "Colosseum", era: [80, 2100], regions: ["mediterranean",  "europe"], place: [41.89, 12.492], lost: null, note: "Arena of Rome; quarried after the 1349 earthquake" },
+    [W_COLOSSEUM]);
+
+  const W_STONEHENGE = [
+    "...mmmmM.....mmmmM..",
+    "...mM.mM..m..mM.mM..",
+    ".m.mM.mM.mM..mM.mM.m",
+    ".mMmM.mM.mM..mM.mMmM",
+    ".mMmM.mM.mM..mM.mMmM",
+    "lllllllllllllllllllL",
+    ".LLLLLLLLLLLLLLLLLL.",
+  ];
+  def("wonder_stonehenge", { kind: "wonder", label: "Stonehenge", era: [-2500, 2100], regions: ["europe"], place: [51.179, -1.826], lost: null, note: "Sarsen circle raised around 2500 BC" },
+    [W_STONEHENGE]);
+
+  const W_ANGKOR = [
+    "............m............",
+    "...........mmM...........",
+    "...........mmM...........",
+    "......M...mmmMM...M......",
+    ".....MMK..kkkkk..MMK.....",
+    ".....MMK..mmmMM..MMK.....",
+    "..m..kKK.mmmmMMM.kKK..m..",
+    ".mmM.MMK.kkkkkkk.MMK.mmM.",
+    ".mmM.MMK.mmmmmMM.MMK.mmM.",
+    "mmmMMMMKmmmmmmMMMMMKmmmMM",
+    "MMMMMMMMMMMMMMMMMMMMMMMMM",
+    "mkmmkmmkmmkmkkkmkmmkmmkmM",
+    "mmmmmmmmmmmkkkkmmmmmmmmmM",
+    "bcccbcccbcccbcccbcccbcccb",
+    "bbbbbbbbbbbbbbbbbbbbbbbbb",
+  ];
+  def("wonder_angkor", { kind: "wonder", label: "Angkor Wat", era: [1150, 2100], regions: ["southeast_asia"], place: [13.412, 103.867], lost: null, note: "Largest religious monument on Earth" },
+    [W_ANGKOR]);
+
+  const W_TAJ = [
+    "..........g..........",
+    "..........w..........",
+    ".........wWW.........",
+    "..w.....wwwWW.....w..",
+    ".www...wwwwwWW...www.",
+    "..w...wwwwwwwWW...w..",
+    "..w...wwwwwwwWW...w..",
+    "..w....wwwwwWW....w..",
+    "..w..wwwwwwwwwWW..w..",
+    "..w.wwwwwwwwwwwWW.w..",
+    "..w.wwkwwwkwwwkWW.w..",
+    "..w.wwkwwkkkwwkWW.w..",
+    "..w.wwwwwkkkwwwWW.w..",
+    "WWWWWWWWWWWWWWWWWWWWW",
+    "cccbcccbcccccbcccbccc",
+  ];
+  def("wonder_taj", { kind: "wonder", label: "Taj Mahal", era: [1653, 2100], regions: ["south_asia"], place: [27.175, 78.042], lost: null, note: "Mughal tomb finished 1653" },
+    [W_TAJ]);
+
+  const W_HAGIA_SOPHIA = [
+    "..........MM..........",
+    "..t.....mmmmMM.....t..",
+    "..t...mmmmmmmMMM...t..",
+    ".ttt.mmmmmmmmMMMM.ttt.",
+    "..t..tttttttttttn..t..",
+    "..t.mmMtkttkttkMMM.t..",
+    "..t.tttttttttttttn.t..",
+    "..ttttkttkttkttkttnt..",
+    "..ttttttttttttttttnt..",
+    "..tttkkttkkkttkkttnt..",
+    "..tttkkttkkkttkkttnt..",
+    "nnnnnnnnnnnnnnnnnnnnnn",
+  ];
+  def("wonder_hagia_sophia", { kind: "wonder", label: "Hagia Sophia", era: [537, 2100], regions: ["mediterranean",  "middle_east",  "europe"], place: [41.009, 28.98], lost: null, note: "Largest dome in the world for nearly a thousand years" },
+    [W_HAGIA_SOPHIA]);
+
+  const W_DJENNE = [
+    "...t.......t.......t...",
+    "..ttn.....ttn.....ttn..",
+    "..ttn.....ttn.....ttn..",
+    ".NttnN...NttnN...NttnN.",
+    "..ttn.....ttn.....ttn..",
+    ".NttnNtttNttnNtttNttnN.",
+    "..ttntttttttnttttttnn..",
+    ".NttnttkttttnttkttnnN..",
+    "..ttntttttttnttttttnn..",
+    "ttttttttttttttttttttnnn",
+    "tttttttttkkktttttttnnnn",
+    "ttttttttkkkkkttttttnnnn",
+    "nnnnnnnnnnnnnnnnnnnnnnn",
+  ];
+  def("wonder_djenne", { kind: "wonder", label: "Great Mosque of Djenne", era: [1240, 2100], regions: ["africa"], place: [13.905, -4.555], lost: null, note: "Mudbrick, replastered every year; current building 1907" },
+    [W_DJENNE]);
+
+  const W_MACHU_PICCHU = [
+    "...............e......",
+    "..............eeL.....",
+    ".............eeeLL....",
+    "............eeeeLLL...",
+    "...........eeeeeLLLL..",
+    "..........eeeeeeeLLLL.",
+    "..mm.mm...eeeeeeeeLLLL",
+    ".mmmMmmM.eeeeeeeeeeLLL",
+    "MmkMmmkMlllllllllLLLLL",
+    "lllllllllLLLLLLLLLLLLL",
+    "mmmmmmmmmmmmmmmmmmmMMM",
+    "lllllllllllllllllLLLLL",
+    "mmmmmmmmmmmmmmmmmmMMMM",
+    "lllllllllllllllLLLLLLL",
+  ];
+  def("wonder_machu_picchu", { kind: "wonder", label: "Machu Picchu", era: [1450, 2100], regions: ["americas"], place: [-13.163, -72.545], lost: null, note: "Inca estate the Spanish never found" },
+    [W_MACHU_PICCHU]);
+
+  const W_EIFFEL = [
+    "......n......",
+    "......n......",
+    ".....nN......",
+    ".....nN......",
+    ".....nN......",
+    ".....nNN.....",
+    "....nnNN.....",
+    "....nkkN.....",
+    "....nNnN.....",
+    "...nnNNNN....",
+    "...nkkkkN....",
+    "..nnNNNNNN...",
+    "..nN.k.NN....",
+    "..nN...nN....",
+    ".nnN...nNN...",
+    ".nN.....nN...",
+    "nnN.....nNN..",
+    "nN.......nN..",
+    "NN.......NN..",
+  ];
+  def("wonder_eiffel", { kind: "wonder", label: "Eiffel Tower", era: [1889, 2100], regions: ["europe"], place: [48.858, 2.294], lost: null, note: "Tallest structure in the world until 1930" },
+    [W_EIFFEL]);
+
   // ---------------------------------------------------------------- lookup and checks
   const KINDS = ["army", "ship", "caravan", "city", "ruin", "wonder", "person", "event"];
 
