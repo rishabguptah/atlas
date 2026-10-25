@@ -125,3 +125,12 @@ crawls its routes month by month, armies march between consecutive battles of a 
 trade routes, smoke rises from battles and eruptions, a big instant year jump dissolves through a Bayer threshold.
 Hooks for other layers: `ATLAS.motion.layer(id, fn)`, `.onStep(fn)`, `.frame`, `.pulse(lon, lat, {color, r, repeat})`.
 City lights data: `python3 ingest/pixel/city_lights.py historical_urban_population.csv /mnt/project-files/atlas/pixel/city-lights.json`.
+
+### City art (city-art.js)
+Rides with city.js (same side file) and replaces `PixelCity.ART` entries: buildings by building tradition from
+`PixelEra.culture` (Byzantine, Romanesque and Gothic churches; Ottoman, Persian, Arab and Mughal mosques; classical, East
+Asian, Hindu and Mesoamerican temples; palaces, gates, tombs, schools and houses per tradition), walls in local material
+(Byzantine brick courses, mudbrick, Chinese grey brick, Indian sandstone) with crenels from k 180 and towers from k 260,
+roads, canals and the Golden Horn chain, and two area hooks city.js calls when present: `area:extent`/`area:district`
+(roofscape: staggered blocks, T-junction streets, gardens, squares, courtyards in flat-roofed traditions) and `area:water`.
+The built-up texture does not count as occupied, so buildings stand inside it. Stamps are fills; `bake()` inks the outline.

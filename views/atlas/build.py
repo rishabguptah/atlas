@@ -154,14 +154,16 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
     # The city layer (views/pixel/city.js) is only needed past about 3 degrees across: beside the page, loaded on
     # first use by the pixel basemap; inline only in a one-file build.
+    # Its art (city-art.js: buildings, walls and roofs in each place's building tradition) travels in the same file.
+    city_js = '\n'.join(open(os.path.join(pixel_dir, f), encoding='utf-8').read() for f in ('city.js', 'city-art.js') if os.path.exists(os.path.join(pixel_dir, f)))
     if inline:
         # The world index is not written for a one-file build, so the city plans go in the page too (PIXEL_CITIES).
         cp = os.path.join(repo, 'data', 'cities', 'plans')
         plans = [json.load(open(os.path.join(cp, f), encoding='utf-8')) for f in sorted(os.listdir(cp)) if f.endswith('.json')] if os.path.isdir(cp) else []
         scripts.append('<script>\nwindow.PIXEL_CITIES = ' + J({'cities': plans}).replace('</', '<\\/') + ';\n</script>')
-        scripts.append('<script>\n' + open(os.path.join(pixel_dir, 'city.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
+        scripts.append('<script>\n' + city_js.replace('</script', '<\\/script') + '\n</script>')
     else:
-        os.makedirs(side_dir, exist_ok=True); shutil.copy(os.path.join(pixel_dir, 'city.js'), os.path.join(side_dir, 'city.js'))
+        os.makedirs(side_dir, exist_ok=True); open(os.path.join(side_dir, 'city.js'), 'w', encoding='utf-8').write(city_js)
 # The label engine (one queue for every layer's names) goes first, with or without the pixel map.
 scripts.insert(0, '<script>\n' + open(os.path.join(pixel_dir, 'labels.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 # The world engine (views/atlas/world/: the world index and its packs) loads before the lenses that read it; its
