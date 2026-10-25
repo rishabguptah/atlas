@@ -2,13 +2,14 @@
 // Renderer, palette and sprites live in views/pixel/ (see SPEC.md); this file wires them to the page.
 // Data: PIXEL.tile0 (terrain L0 as a data URI), PIXEL.rivers; finer tiles load from tiles/ next to the page when published.
 (function () {
-  if (typeof PixelMap !== "function" || typeof PIXEL === "undefined" || !PIXEL.tile0) return;
+  if (typeof PixelMap !== "function" || typeof PixelBorders !== "function" || typeof PIXEL === "undefined" || !PIXEL.tile0) return;
   const STYLE = `@import url("https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&family=Silkscreen&display=swap");
 .basemap canvas.pixelmap { image-rendering: pixelated; }
 .basemap-on .pt.city .dot, .basemap-on .pt.city .ring, .basemap-on .pt.battle circle, .basemap-on .pt.battle path { opacity: 0; }
 .basemap-on svg text { font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace !important; font-style: normal !important; letter-spacing: .02em; }
 .basemap-on .pt.city text, .basemap-on .pt.battle text { font-weight: 600; fill: #f6f0dc; stroke: #221f1a; stroke-width: 3px; paint-order: stroke; }
 `;
+  const ERA = typeof PixelEra !== "undefined" ? PixelEra : null;
   const isOn = k => !window.ATLAS.isOn || ATLAS.isOn(k);
   const REALM = PIXEL_PALETTE.REALM;
   const hashC = s => { let h = 0; for (const c of s || "") h = (h * 31 + c.charCodeAt(0)) | 0; return REALM[Math.abs(h) % REALM.length]; };
@@ -22,8 +23,10 @@
     const p = typeof POP !== "undefined" ? interp(POP[e.id], y) : null;
     return p == null ? "city_town" : p > 400000 ? "city_metropolis" : p > 80000 ? "city_city" : p > 15000 ? "city_town" : "city_village";
   };
-  const MIN_K = { city_metropolis: 1, city_city: 2.2, wonder_pyramid: 2.5, wonder_temple: 3, ruin: 4, city_town: 3.6, city_village: 6 };
+  const MIN_K = { city_metropolis: 1.4, city_city: 3, wonder_pyramid: 3, wonder_temple: 3, ruin: 4.5, city_town: 5, city_village: 8 };
 
+  // Precise borders from borders/l0|l1|l2 next to the page; the page's own simplified borders until they arrive.
+  const borders = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(borders.realms(year, T.k)); else pm.render(T, { realms: borders.realms(year, T.k) }); } } });
   let pm = null, proj = null, T = null, year = null, snap = null, timer = 0, frame = 0, statics = [], movers = [];
   const realmCache = {};
   function realmsFor(y) {
@@ -43,17 +46,24 @@
     statics = []; movers = [];
     if (typeof ENTRIES !== "undefined" && isOn("places")) for (const e of ENTRIES) {
       if (y < e.start) continue;
+      if (ERA) {
+        const p = ERA.place(e, y, typeof POP !== "undefined" ? interp(POP[e.id], y) : null);
+        if (k >= p.minK) statics.push({ lon: e.lon, lat: e.lat, sprite: p.sprite });
+        continue;
+      }
       const sp = e.end != null && y >= e.end ? "ruin" : tierOf(e, y);
       if (k >= (MIN_K[sp] || 1)) statics.push({ lon: e.lon, lat: e.lat, sprite: sp });
     }
     if (typeof WAR !== "undefined" && isOn("war")) for (const b of WAR.battles) {
       if (Math.abs(b.start - y) > 3) continue;
       const a = hashC(b.sides && b.sides[0] && b.sides[0][0] && b.sides[0][0].name), c = hashC(b.sides && b.sides[1] && b.sides[1][0] && b.sides[1][0].name);
-      statics.push({ lon: b.lon, lat: b.lat, sprite: "army", team: a, dx: -4 }, { lon: b.lon, lat: b.lat, sprite: "army_flip", team: c, dx: 4, frame: 1 }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -5 });
+      // Era armies: hoplites, legions, knights, musket lines, tanks; the second side faces the first.
+      const ar = ERA ? ERA.army(b.start, b.lon, b.lat) : "army";
+      statics.push({ lon: b.lon, lat: b.lat, sprite: ar, team: a, dx: -5 }, { lon: b.lon, lat: b.lat, sprite: ERA ? ar : "army_flip", flip: !!ERA, team: c, dx: 5, frame: 1 }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -7 });
     }
     if (typeof PLAGUE !== "undefined" && isOn("disease")) for (const s of PLAGUE.events) {
       if (s.lat == null || y < s.start - 1 || y > (s.end ?? s.start) + 3) continue;
-      const sp = /epidemic|pandemic|plague/.test(s.subtype) ? "plague" : s.subtype === "famine" ? "skull" : s.subtype === "eruption" ? "volcano" : "fire";
+      const sp = ERA ? ERA.shock(s.subtype) : /epidemic|pandemic|plague/.test(s.subtype) ? "plague" : s.subtype === "famine" ? "skull" : s.subtype === "eruption" ? "volcano" : "fire";
       statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2 });
     }
     if (typeof MONEY !== "undefined" && isOn("money")) for (const t of MONEY.trade) {
@@ -72,7 +82,10 @@
   function draw() {
     if (!pm) return;
     const list = statics.slice();
-    for (const m of movers) { const [lon, lat] = moverAt(m); list.push({ lon, lat, sprite: pm.isWater(lon, lat) ? "ship" : "caravan" }); }
+    for (const m of movers) {
+      const [lon, lat] = moverAt(m), sea = pm.isWater(lon, lat);
+      list.push({ lon, lat, sprite: ERA ? ERA.mover(year, lon, lat, sea) : sea ? "ship" : "caravan" });
+    }
     list.sort((a, b) => b.lat - a.lat);
     pm.sprites(list);
   }
@@ -89,7 +102,8 @@
     render(t, y) {
       if (!pm) return;
       T = t; year = y;
-      pm.render(t, { realms: isOn("borders") ? realmsFor(y) : [] });
+      const realms = isOn("borders") ? (borders.realms(y, t.k) || realmsFor(y)) : [];
+      if (pm.same(t)) pm.setRealms(realms); else pm.render(t, { realms });
       collect(y, t.k); draw();
     },
     move(t) { if (pm) pm.move(t); },
