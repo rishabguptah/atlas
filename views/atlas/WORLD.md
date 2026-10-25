@@ -91,6 +91,11 @@ Open ocean is closed until a crossing became a route (`rules.open_ocean`: the At
 until 1488, the open Pacific until 1565), so nobody sails from Rome to New York. Empire roads test only the realms named
 for a road-building empire that year, so a reach through Mongol lands takes about 0.1 s instead of 2 s. The Travel time
 lens (`lenses/shrink.js`) draws `reach` as isochrones and checks `route` against documented journeys.
+Speeds that changed within a mode's life are curves (`kmd_by`: steamers 330 to 800 km a day from 1838 to 1950, clippers,
+railways 350 to 1,200); `regions` limits a mode to boxes (stagecoaches on Britain's turnpikes from 1750, the continent
+from 1780); sea seasons include the North Atlantic westerlies, the trade winds and the etesians. `route` falls back to
+the fastest way when a sea or land preference finds nothing (`fallback: "fast"`), and an island the grid draws as sea
+can be reached by ship. Against 55 documented journeys (time under way) the median ratio is about 1.0, 22 within 1.5×.
 
 ## L3 Agents and causes (agents: "Simulate people meeting and traveling"; `why`: "Bring scholar-level depth to the atlas")
 

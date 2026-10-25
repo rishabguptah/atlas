@@ -69,7 +69,15 @@
   }
 
   // ---------- travel: time-dependent A* over land and water ----------
-  function modesFor(y) { return D().rules.modes.filter(m => y >= m.from && (m.to == null || y < m.to)); }
+  // Modes in use in year y; a mode with kmd_by ([[year, km a day], ...]) gets that year's speed (steamers and clippers got faster).
+  const modeCache = new Map();
+  function modesFor(y) {
+    if (modeCache.has(y)) return modeCache.get(y);
+    const ms = D().rules.modes.filter(m => y >= m.from && (m.to == null || y < m.to)).map(m => m.kmd_by ? { ...m, kmd: interp(m.kmd_by, y) } : m);
+    if (modeCache.size > 400) modeCache.clear();
+    modeCache.set(y, ms);
+    return ms;
+  }
   function tradeCells(y) {
     const s = new Set();
     for (const t of (typeof MONEY !== "undefined" && MONEY.trade) || []) {
@@ -173,6 +181,7 @@
       const c = cls(i), lon = lonOf(i), lat = latOf(i); let best = 0, mode = -1;
       for (const m of land) {
         if (m.rail && !rails.some(r => inBox(r.box, lon, lat))) continue;
+        if (m.regions && !m.regions.some(r => y >= r.from && inBox(r.box, lon, lat))) continue;
         const v = m.kmd * ((T[m.id] || T.foot)[c] ?? 0.5);
         if (v > best) { best = v; mode = MODE.indexOf(m.id); }
       }
@@ -192,9 +201,12 @@
     g[s0] = 0; H.push(heur(s0), s0);
     const seaPen = pref === "land" ? 4 : 1, landPen = pref === "sea" ? 1.8 : 1;
     let found = -1, n = 0;
-    while (H.size && n < (pref === "fast" ? 450000 : 200000)) {
-      const s = H.pop(), onW = s >= N, i = onW ? s - N : s, gs = g[s]; n++;
-      if (!onW && i === t0) { found = s; break; }
+    // n counts settled states only: an entry whose cost has since improved is skipped without counting.
+    while (H.size && n < (pref === "fast" ? 600000 : 300000)) {
+      const k0 = H.k[0], s = H.pop(), onW = s >= N, i = onW ? s - N : s, gs = g[s];
+      if (k0 > gs + heur(i) + 1e-3) continue;   // heur is cached as Float32, so allow for its rounding
+      n++;
+      if (i === t0 && (!onW || !dry(t0))) { found = s; break; }   // a speck of an island the grid draws as sea: arriving by ship counts
       const r = Math.floor(i / COLS), c = i % COLS;
       const mo = ((month - 1 + Math.floor(gs / 30.4)) % 12) + 1;
       if (sea) {
@@ -333,7 +345,7 @@
     const landSpeed = i => {
       if (LV[i] >= 0) return LV[i];
       const c = cls(i), lon = lonOf(i), lat = latOf(i); let best = 0, rail = false;
-      for (const m of land) { if (m.rail && !rails.some(r => inBox(r.box, lon, lat))) continue; const v = m.kmd * ((T[m.id] || T.foot)[c] ?? 0.5); if (v > best) { best = v; rail = !!m.rail; } }
+      for (const m of land) { if (m.rail && !rails.some(r => inBox(r.box, lon, lat))) continue; if (m.regions && !m.regions.some(r => y >= r.from && inBox(r.box, lon, lat))) continue; const v = m.kmd * ((T[m.id] || T.foot)[c] ?? 0.5); if (v > best) { best = v; rail = !!m.rail; } }
       const road = Math.max(trade.has(i) ? 1.2 : 1, rail ? 1 : roadAt(roads, lon, lat, y));
       return LV[i] = best * road * pace.land;
     };
@@ -387,7 +399,11 @@
     if (!M()) return null;
     const A = pt(a), B = pt(b), T = when(t), pref = opts.pref || (opts.mode === "air" ? "air" : opts.mode === "land" ? "land" : opts.mode === "sea" ? "sea" : "fast");
     if (!A || !B) return null;
-    return shape(pref === "air" ? flight(A, B, T.y) : route(A, B, T.y, T.m, pref));
+    if (pref === "air") return shape(flight(A, B, T.y));
+    // A strong preference (sea, land) searches greedily and can give up on long voyages; then take the fastest way, and say so.
+    let r = route(A, B, T.y, T.m, pref);
+    if (!r && pref !== "fast") { r = route(A, B, T.y, T.m, "fast"); if (r) r.fallback = "fast"; }
+    return shape(r);
   };
   W.reach = (a, t, maxDays, opts) => { const A = pt(a), T = when(t); return A ? reach(A, T.y, T.m, maxDays, opts) : null; };
   W.motionReady = () => !!M();
