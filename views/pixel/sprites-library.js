@@ -1445,6 +1445,8 @@
     return out;
   }
 
-  global.PIXEL_SPRITES = Object.assign({}, S, global.PIXEL_SPRITES || {});
+  // Join the shared registry in place; a sprite already registered there (the starter set) keeps its name.
+  const shared = (global.PIXEL_SPRITES = global.PIXEL_SPRITES || {});
+  for (const name in S) if (!(name in shared)) shared[name] = S[name];
   global.PIXEL_SPRITE_LIBRARY = { sprites: S, kinds: KINDS, pick, validate };
 })(typeof window !== "undefined" ? window : globalThis);
