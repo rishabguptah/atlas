@@ -1,0 +1,20 @@
+{
+  "id": "stirrup",
+  "name": "Stirrup",
+  "type": "kind",
+  "sprite": "obj_stirrup",
+  "tech": "idea:tech_stirrup",
+  "what": "A loop hung from the saddle to hold the rider's foot. It spread from a toe loop in India and a single mounting stirrup in China to a pair of iron stirrups used from Korea to France.",
+  "why": "Lynn White argued in 1962 that the stirrup made mounted shock combat, and so knights and feudalism, possible. Most historians now reject the strong version (\"the Great Stirrup Controversy\"), but its path across the steppe is clear.",
+  "now": "Every saddle in the world.",
+  "status": "draft",
+  "sources": [
+    {"cite": "White, L. (1962). Medieval Technology and Social Change. Oxford University Press."},
+    {"cite": "Dien, A. E. (1986). The stirrup and its effect on Chinese military history. Ars Orientalis 16, 33-56."},
+    {"cite": "Curta, F. (2008). The earliest Avar-age stirrups, or the 'stirrup controversy' revisited. In The Other Europe in the Middle Ages. Brill."},
+    {"cite": "Wikipedia: Stirrup", "url": "https://en.wikipedia.org/wiki/Stirrup"}
+  ],
+  "stops": [
+    {"y": 694, "approx": true, "at": [61.83, 37.6], "place": "Merv, Khorasan", "owner": "Umayyad armies", "by": "spread", "conf": "likely", "note": "Arab writers credit the general al-Muhallab ibn Abi Sufra, fighting in Khorasan around 694, with making his troops use iron stirrups; before that Arab riders had used wooden ones or none."}
+  ]
+}

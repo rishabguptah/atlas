@@ -21,7 +21,7 @@ Pick the one your lens belongs to:
 |-----------|--------------------------------------------------------------|
 | `land`    | Terrain, Cities, Borders                                     |
 | `power`   | Rule & law, War & chokepoints, Order & chaos                 |
-| `wealth`  | Trade & migration, Technology, food & energy                 |
+| `wealth`  | Trade & migration, Technology, food & energy, Object journeys |
 | `peoples` | People, Peoples & languages                                  |
 | `mind`    | Ideas & faith, Art & architecture                            |
 | `shocks`  | Plague & climate                                             |
@@ -61,6 +61,10 @@ ATLAS.lens({
   strip: d => d.events.map(e => e.y),
 });
 ```
+
+`ctx.pins` options can also be given per record as functions: `shape` (a shape or a sprite name; the pixel map paints a `PIXEL_SPRITES` name as that sprite), `color`, `size`, `fade`, `always`, `hi`, `ghost`, `pri`, `fill`, `stroke`, `fontPx`, `lblColor`, `lblAt`.
+`ctx.paths` takes `conf: "sure" | "likely" | "legend"` for the confidence grammar (house rule 5: documented is solid, likely is
+dashed, legend or an unknown route is dotted, on the canvas and in the pixel map alike), plus `arrow`, `alpha`, `width` and `dash`.
 
 A **card** is `{kick, title, meta, body, why, year, lon, lat, sources: [{cite, url}], line?: [[lon,lat],...]}`.
 Records without coordinates can still appear in Here and This year; give the card the polity's
@@ -115,6 +119,10 @@ caption), `clearScene()`, `fly(view, ms)`, `setOn(lensId, on = true)`, `redraw()
 `onYear(fn)` (called on every year change, so debounce anything heavy), `view()` (`{lon, lat, k, w, h}`: the map's
 centre, zoom and about how many degrees fit across and down), `onView(fn)` (called when a pan or zoom settles) and
 `select(card)` (opens a card in Here, panning to it if it is off screen).
+
+The Objects tab (`lenses/objects.js`) is the example of a tab that plays a sequence on the map (fly, step the year,
+animate along a leg with `api.redraw()` each frame, caption with `api.scene`). It also exposes `ATLAS.objects` (`list`,
+`journey`, `at(year)`, `near(lon, lat, year, km)`, `follow(id)`) for other plugins.
 
 The Codex tab (`lenses/codex.js`) is the example of a plugin that keeps the viewer's progress: it uses `localStorage`
 (wrapped in try/catch, so the page works without it) and never sends it anywhere.

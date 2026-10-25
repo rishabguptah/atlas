@@ -1,0 +1,22 @@
+{
+  "id": "relics_of_saint_mark",
+  "name": "Relics of Saint Mark",
+  "type": "single",
+  "sprite": "obj_relic",
+  "what": "The bones believed to be those of Mark the Evangelist, writer of the second gospel and, by tradition, founder of the Church of Alexandria.",
+  "why": "A relic theft that built a city's identity: Venice stole a saint to outrank its rivals, built St Mark's Basilica to hold him and put his lion on its flag. Whether the bones are really Mark's is a matter of faith.",
+  "now": "In the high altar of St Mark's Basilica, Venice. A relic returned in 1968 is kept in St Mark's Coptic Orthodox Cathedral, Cairo.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Geary, P. J. (1978). Furta Sacra: Thefts of Relics in the Central Middle Ages. Princeton University Press."},
+    {"cite": "Wikipedia: Mark the Evangelist (Relics)", "url": "https://en.wikipedia.org/wiki/Mark_the_Evangelist#Relics"},
+    {"cite": "Wikipedia: St Mark's Basilica", "url": "https://en.wikipedia.org/wiki/St_Mark%27s_Basilica"}
+  ],
+  "stops": [
+    {"y": 68, "at": [29.92, 31.2], "place": "Alexandria", "owner": "Church of Alexandria", "by": "made", "conf": "legend", "note": "Church tradition (Eusebius and later) says Mark founded the Church in Alexandria and was dragged to death through its streets around 68. His tomb was venerated at a church in the Boukolou district by the harbour.", "meet": "a Christian of Alexandria"},
+    {"y": 828, "at": [12.339, 45.434], "place": "Venice", "owner": "Doge of Venice", "by": "looted", "conf": "likely", "via": "sea", "path": [[29.92, 31.2], [25, 34], [21, 36.5], [19.5, 39.8], [17, 41.5], [14, 44], [12.339, 45.434]], "note": "Two Venetian merchants, Buono da Malamocco and Rustico da Torcello, took the body from Alexandria in 828. The legend says they hid it under pork so the Muslim customs guards would not search it. Doge Giustiniano Participazio had a chapel built for it, the first St Mark's.", "meet": "a sailor or merchant on the Venetian ship in 828"},
+    {"y": 976, "at": [12.339, 45.434], "place": "Venice", "owner": "Doge of Venice", "by": "lost", "conf": "legend", "note": "A revolt in 976 burned the first church. The relics were hidden during the rebuilding and their place forgotten."},
+    {"y": 1094, "at": [12.339, 45.434], "place": "St Mark's Basilica, Venice", "owner": "Republic of Venice", "by": "found", "conf": "legend", "note": "At the consecration of the new basilica in 1094, the story goes, Mark's arm reached out of a pillar to show where he lay. The mosaics of the \"Apparitio\" in the basilica tell it.", "meet": "a Venetian at the consecration in 1094"},
+    {"y": 1968, "at": [31.276, 30.072], "place": "St Mark's Coptic Cathedral, Cairo", "owner": "Coptic Orthodox Church", "by": "gift", "conf": "sure", "via": "sea", "path": [[12.339, 45.434], [14, 44], [17, 41.5], [19.5, 39.8], [21, 36.5], [25, 34], [29.92, 31.2], [31.276, 30.072]], "note": "Pope Paul VI gave a relic of Mark to Pope Cyril VI of the Coptic Church in June 1968; it was placed in the new cathedral built at Abbassia in Cairo.", "split": true}
+  ]
+}
