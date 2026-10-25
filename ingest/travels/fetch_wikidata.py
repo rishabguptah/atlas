@@ -9,7 +9,7 @@ Reads every person with a wikidata id from dist/kernel.json (run tools/build.py 
   wd_battles.json  conflicts the person took part in (P607) with the battle's date and place
   wd_coords.json   coordinates for every item above, with fallbacks: P625, headquarters P159, location P276,
                    located in P131, and for offices the capital (P36) of the jurisdiction (P1001)
-Already-fetched batches are cached in RAW_DIR/cache/, so a rerun only asks for new people.
+Fetched people are kept in RAW_DIR/wd_by_person.json and placed items in wd_coords.json, so a rerun only asks\nfor new people and new places (raw query results are also cached in RAW_DIR/cache/).
 """
 import json, os, sys, time, hashlib, urllib.request, urllib.parse
 
@@ -85,13 +85,28 @@ def main():
     kernel = json.load(open(os.path.join(ROOT, 'dist', 'kernel.json')))['records']
     people = sorted({p['wikidata'] for p in kernel['person'] if p.get('wikidata')})
     print(f'{len(people)} people with wikidata ids')
-    stays, battles = [], []
-    for i, b in enumerate(batched(people, 80)):
+    # Per-person store, so adding people only asks for the new ones (batch caches shift when the list changes).
+    store_path = os.path.join(RAW, 'wd_by_person.json')
+    store = json.load(open(store_path)) if os.path.exists(store_path) else {}
+    if not store and os.path.exists(os.path.join(RAW, 'wd_stays.json')):
+        for kind, f in (('stays', 'wd_stays.json'), ('battles', 'wd_battles.json')):
+            for r in json.load(open(os.path.join(RAW, f))):
+                store.setdefault(q(r['p']), {'stays': [], 'battles': []})[kind].append(r)
+    todo = [x for x in people if x not in store]
+    print(f'{len(todo)} not fetched yet')
+    for i, b in enumerate(batched(todo, 80)):
         vals = ' '.join('wd:' + x for x in b)
-        stays += sparql(STAYS % vals)
-        battles += sparql(BATTLES % vals)
+        for x in b:
+            store[x] = {'stays': [], 'battles': []}
+        for kind, tpl in (('stays', STAYS), ('battles', BATTLES)):
+            for r in sparql(tpl % vals):
+                store[q(r['p'])][kind].append(r)
         if i % 10 == 0:
-            print(f'  people {i * 80}/{len(people)}: {len(stays)} stays, {len(battles)} battles')
+            print(f'  people {i * 80}/{len(todo)}')
+            json.dump(store, open(store_path, 'w'))
+    json.dump(store, open(store_path, 'w'))
+    stays = [r for x in people for r in store[x]['stays']]
+    battles = [r for x in people for r in store[x]['battles']]
     for r in stays:
         r['prop'] = q(r['prop'])
     items = set()
@@ -100,11 +115,16 @@ def main():
     for r in battles:
         items.update(q(r.get(f)) for f in ('b', 'loc') if r.get(f))
     items = {x for x in items if x and x.startswith('Q')}
-    print(f'{len(items)} items to place')
-    coords = {}
+    cpath = os.path.join(RAW, 'wd_coords.json')
+    coords = json.load(open(cpath)) if os.path.exists(cpath) else {}
+    items -= set(coords)
+    print(f'{len(items)} new items to place')
     for i, b in enumerate(batched(items, 150)):
+        for x in b:
+            coords.setdefault(x, {'label': None})
         for r in sparql(COORDS % ' '.join('wd:' + x for x in b)):
             c = coords.setdefault(q(r['x']), {'label': r.get('xl')})
+            c['label'] = c.get('label') or r.get('xl')
             for f in ('c', 'hq', 'lo', 'in', 'cap'):
                 if r.get(f) and f not in c:
                     c[f] = r[f]

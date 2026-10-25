@@ -4,7 +4,7 @@
 // scene's sources and confidence. The panel (and Ask) stays open beside it; Esc leaves the story.
 //
 // ATLAS.world.director: init(api), play(story | id, {at, auto}), next(), prev(), go(i), leave(), active,
-// onEnd(fn). Needs ATLAS.api (scene, setOn, setTab, ask, ...), which the page hands to tabs at mount.
+// onEnd(fn), onLeave(fn). Needs ATLAS.api (scene, setOn, setTab, ask, ...), which the page hands to tabs at mount.
 (function () {
   const A = window.ATLAS, world = A.world = A.world || {};
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -105,7 +105,7 @@
   }
 
   let api = null, root = null, box = null, strip = null;
-  const S = { story: null, i: -1, typing: 0, shown: 0, why: false, src: false, auto: false, timer: 0, t0: 0, dur: 0, raf: 0, ended: false, ends: [] };
+  const S = { story: null, i: -1, typing: 0, shown: 0, why: false, src: false, auto: false, timer: 0, t0: 0, dur: 0, raf: 0, ended: false, ends: [], leaves: [] };
 
   function init(a) {
     if (api) return;
@@ -158,6 +158,7 @@
       pins: sc.pins || [], routes: sc.routes || [], title: sc.caption });
     // A scene can carry its own moment within the year (Living world's day clock): sc.show(sc) after the page's scene.
     if (typeof sc.show === "function") try { sc.show(sc); } catch (err) { console.error(err); }
+    if (sc.set) for (const k in sc.set) { const f = A.sceneSet && A.sceneSet[k]; if (f) try { f(sc.set[k]); } catch (err) { console.error(err); } }
     const e19 = A.e19;
     if (e19 && sc.date && sc.date.length >= 7) {
       const y = +sc.date.slice(0, 4);
@@ -202,6 +203,7 @@
     stopAuto(); finishTyping(true);
     try { const seen = JSON.parse(localStorage.getItem("atlas.stories.v1") || "{}"); seen[S.story.id] = Date.now(); localStorage.setItem("atlas.stories.v1", JSON.stringify(seen)); } catch { /* progress is a convenience */ }
     S.story = null; S.i = -1; S.ended = false;
+    for (const f of S.leaves) try { f(); } catch (err) { console.error(err); }
     root.hidden = true;
     const app = document.querySelector(".app");
     app.classList.remove("directing");
@@ -360,5 +362,6 @@
     init, play, go, next, prev, leave,
     get active() { return !!S.story; }, get story() { return S.story; }, get index() { return S.i; },
     onEnd: fn => S.ends.push(fn),
+    onLeave: fn => S.leaves.push(fn),   // the story was closed (Esc, Explore from here or another story)
   };
 })();

@@ -148,15 +148,21 @@ How data is drawn (confidence hatching, flow widths, city tiers, ramps, panel ch
 add a chart to a record's card push a function onto `ATLAS.cardViz`; for a tile in "This year" use `ATLAS.nowViz`.
 Give records a `conf` (attested, estimated, approximate, unknown) and the map draws it.
 
-## Deep regions (time by the month)
+## Deep zoom anywhere (time by the month)
 
-`lenses/e19.*` is the first deep-zoom region, Europe 1789-1914. The pattern for the next one:
+There are no hand-built regions any more. Any place and period goes deep through the world index
+(`views/atlas/world/`, WORLD.md L1):
 
-- Records with `date` / `end_date` (ISO, as precise as the source) in their own workstream folder.
-- A `<id>.py` whose `build(repo)` returns `region: {id, name, start, end, view}`, the dated rows, and storylines;
-  heavy parts (railway stations, lives) go in a sidecar file written by `python3 views/atlas/lenses/<id>.py OUT_DIR`
-  to `OUT_DIR/atlas-files/<id>-deep.json`, published beside the page and fetched only when a lens needs it.
-- The `.js` registers its lenses and tab at once and builds from `LENS_DATA.<id>` lazily (`ok()` in `e19.js`): big
-  lens data arrives after the first paint, so every draw, row and tab render must cope with it not being there yet.
-- A month cursor shared on `ATLAS.<id>.m` (year * 12 + month - 1). Lenses use it while the page's year is that
-  month's year and fall back to the whole year when the main slider moves. An `ATLAS.tab` holds the scrubber.
+- Dated rows for everywhere live in `data/deep/` (`chronicle.tsv` from Wikidata, `lives.tsv` from Pantheon) and in the
+  kernel; `ingest/deep/` rebuilds them.
+- A dense window is one line in `views/atlas/world/packs.json` (`id`, `name`, `bbox`, `t0`, `t1`); the generic
+  assembler (`python3 views/atlas/world/assemble.py <id>`) fills it from the chronicle, Pantheon, the kernel and
+  Wikidata box queries (dated things and people in the box), plus an optional draft layer in
+  `data/deep/packs/drafts/<id>.json` (conf estimated or worse, status draft).
+- Storylines are files in `data/deep/stories/` (checked and given Wikidata ids by `python3 ingest/deep/stories.py`).
+- A lens or tab reads `ATLAS.world.at / near / density / stories` and redraws on `ATLAS.world.onLoad`. Rows arrive
+  after the first paint, so every draw must cope with them not being there yet.
+- The month cursor is `ATLAS.deep.m` (year * 12 + month - 1). Lenses use it while the page's year is that month's
+  year and fall back to the whole year when the main slider moves.
+- A region with extras of its own (Europe 1789-1914's provinces, cities and railways: `lenses/e19.*`) keeps them in
+  its own lens and can add numbers to Up close with `ATLAS.deepStats.push((year, bbox) => [{v, t}])`.

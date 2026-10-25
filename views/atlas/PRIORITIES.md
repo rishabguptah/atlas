@@ -57,6 +57,14 @@ experience someone actually feels.
 4. Experiences on top: Live a life, Living world, Objects, Up close packs, What-if forks.
 5. Visual threads merge any time, but never add DOM per mark and always state step time and page size.
 
+## Review before merge
+
+Codex (ChatGPT) reviews every PR automatically, using the rules in `AGENTS.md` and `SECURITY.md`. Before merging,
+wait for its review (a comment or review from the Codex bot, usually a few minutes after the PR opens or after a
+push) and address every P0/P1 finding: fix it and push, or reply on the thread with why it does not apply.
+If no review shows up within 15 minutes, comment `@codex review` once and wait again; never merge over an
+unanswered P0/P1.
+
 ## Not now
 
 New stand-alone pages, new lens families, more hand-built regions, or a second question box. Make a

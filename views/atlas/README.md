@@ -54,25 +54,26 @@ Order & chaos reads `data/order-chaos/lab.json`, War & chokepoints reads `data/s
 
 Keys: ←/→ step the year (Shift for bigger steps), Space plays time, / jumps to the question box, 1–6 switch lens families,
 S is Surprise me (a random curated battle, shock, idea journey or city event, flown to and captioned, with Here filled in),
-F is focus (map only), K or ? opens the key, Esc closes. The key lists exactly the marks drawn for the lenses that are on;
+F is focus (map only), K or ? opens the key, P folds the panel, Esc closes. The key lists exactly the marks drawn for the lenses that are on;
 a plugin lens can describe its own marks with `key: [[glyph, text], ...]` (glyphs: dot, small, line, arrow, diamond, square,
 halo, ring, cross, battle, hourglass, border, sprite). Eras sit under the slider and jump on tap. Here and This year lead with
 rows from the current time; rows from other centuries fold under "from other times". The page reopens on the last year,
 view and lenses (localStorage `atlas.resume.v1`, this browser only). The header question box steps aside while the Ask tab is open.
 Roadmap and critique: https://claude.ai/artifact/6saKUD2YsaVezRGC9M3z6o
 
-## Up close: Europe 1789-1914
+## Up close: any place, any period
 
-The Up close tab studies one region by the month: a month scrubber (1 month, 3 months or a year per second; `[` and
-`]` step a month), ten storylines with a Next button, what happened this month, wars under way, who was born and died.
-Its lenses: Chronicle (3,600 dated events, Power), Railways (26,000 stations by opening date, Wealth), Provinces
-(Land), Growing cities (Wealth), Lives (Peoples). Data: `data/europe-19c/`. The chronicle loads after the first paint
-like other big lens data; railways and lives load only when needed, from `atlas-files/e19-deep.json`, which has to be
-published beside the page:
-
-```sh
-python3 views/atlas/lenses/e19.py pub          # writes pub/atlas-files/e19-deep.json (about 2 MB)
-```
+The Up close tab studies whatever the map shows, by the month: pan or zoom anywhere, pick a span (a dense pack's
+window, a decade, a lifetime, a century, five centuries, or a storyline's), and scrub or play (1 month, a year or ten
+years per second; `[` and `]` step a month). It reads the world index (`views/atlas/world/`, see WORLD.md L1):
+what happened here this month (widening to the year, five years, a generation when that is thin), wars under way,
+who was born, died, lived or worked here, a "how deep" meter with the dense pack that covers the view, and the
+study storylines that pass through (75 of them, from Sumer to 1991, each with a Next button and the journeys of the
+people it names drawn on the map). Where the data is thin, "Fill in with Claude" adds draft rows (dashed on the map,
+marked draft, kept in this browser) and "Write a storyline for here and now" drafts a storyline. Its lenses:
+Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces, Growing cities and railway numbers
+(`lenses/e19.*`). Everything loads after the first paint from `atlas-files/world/` and `atlas-files/packs/`, which
+`build.py` writes beside the page: publish them with it (about 20 MB, fetched a slice or pack at a time).
 
 ## Travellers in motion
 
@@ -84,6 +85,47 @@ only when needed, from a sidecar to publish beside the page:
 ```sh
 python3 views/atlas/lenses/travels.py pub      # writes pub/atlas-files/travels-deep.json (about 2.7 MB)
 ```
+
+## The chronicle interface (chrome)
+
+The page's interface is a skin over the markup above, art direction v0 (`/mnt/project-files/atlas/art-direction/DIRECTION.md`):
+an illuminated 16-bit chronicle floating over the map like a HUD. `chrome/kit.py` makes the colour tokens (from
+`views/pixel/palette.js`, lens tinctures from `PIXEL_PALETTE.LENS`), the 9-slice pixel frames (tiny PNGs, `--f-panel`,
+`--f-card`, `--f-hud`, ...) and the night theme; `chrome/chrome.css` holds the components and `chrome/atlas.css` the layout;
+`chrome/chrome.js` dresses the existing controls. Icons are 12x12 grids in `views/pixel/icons.js` (`PIXEL_ICONS.svg(name)`,
+also drawn on canvas with `PIXEL_ICONS.draw`); the six family emblems live there and nowhere else. Fonts: Pixelify Sans
+(headings, the year), Silkscreen at 8 or 16 px (`--f-tiny`: kickers, tabs, chips, numbers), Spectral (prose).
+
+- The year cartouche sits top left with the era name and a map style picker (`ATLAS.setEraStyle`).
+- The **Next card** under it always says one thing to do now. Plugins add a provider with
+  `ATLAS.nextThing({ id, pri, get() -> { kick, title, go } | null })`; the highest priority with something to say wins.
+- The lens families are an emblem rail on the left (44 px squares that open on hover or focus; a family's lenses fly out beside it).
+- The panel floats right at about 60% of the height ("Taller" at its foot for full height); **P** or a tap on the open tab folds
+  it to its ribbons. On a phone it is the bottom sheet.
+- `ATLAS.chromeRects()` returns the boxes the interface covers, `[[x0, y0, x1, y1], ...]` in map pixels, and
+  `atlas:chrome` fires on the document when they change, so labels can stay out from under it.
+- The Director's dialog box is dressed in the same frames; the Director draws it.
+- Preview of the three directions considered: https://claude.ai/artifact/4wm6AUUts9hzFK2trCmmq2
+
+## Deep time (300,000 years ago to 4000 BCE)
+
+The slider runs from 300,000 years ago. Its first fifth is deep time on a log scale of years ago (eras: First modern
+humans, Out of Africa, Ice Age, First farmers); the rest is history on the old curve. Deep years snap to a grain that
+grows with age (1,000 years before 100,000 years ago) and read as "45,000 years ago". Before 4000 BCE there are no states
+or chokepoints. The pixel map redraws the ice-age world from sea level: exposed shelves and land bridges, ice sheets,
+glacial tundra and steppe, the Green Sahara (`views/pixel/paleo.js`, `ATLAS.paleo`; rasters `atlas-files/paleo-*.png`
+from `data/deep-time/`, about 0.7 MB, fetched only when the year goes before 5500 BCE). A new sea level or ice extent
+redraws all the terrain, so while the year moves it swaps at most every 400 ms. The Deep time lens (Peoples) adds the
+other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
+hearths, land-bridge and ice-sheet names, and climate shocks. Sources and rebuild: `ingest/deep-time/README.md`.
+
+## The whole world (People lens)
+
+People outside Europe come from `data/coverage/` (Pantheon, Wikidata, CBDB; see its README) and load after the first
+paint from `atlas-files/people-world.json` (about 2.3 MB, publish it beside the page). Every person carries a region,
+and the map and This year pick the most remembered person of each region in turn, so a world view at 1200 shows
+Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead of Europe's top 450.
+`views/atlas/world_people.py` builds the rows.
 
 ## Lens families and plugins
 
@@ -130,3 +172,19 @@ the motion model's own estimate for the same trip, then your calibration) with W
 calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five with streaks and a copyable
 result, Endless and About here modes, and finds; each reveal also visits the spot for the Codex. Progress stays in
 localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `calibration` and `play(id)`.
+
+## Travel time: watch the world shrink
+
+The Travel time lens (Land family, `lenses/shrink.*`) paints travel-time rings from a city into the pixel map, after
+Galton's isochronic passage chart (1881) and Bartholomew's 1914 one: red within a week, rose two weeks, ochre a month,
+green two months, blue a season, dusk beyond. The rings are worked out live by the shared router (`ATLAS.world.reach`,
+plus flights from the 1950s), once per city and decade after the slider settles (30 to 160 ms, on idle), then cached per
+view, so a year step pays only a cheap repaint. The lens also draws news on its way (dated arrivals from
+`data/world/news.json` and `data/tech-food-energy/news.jsonl`) and three wandering centres of the world (cities, trade,
+ideas, one point a century since 3000 BCE). The Travel tab picks the city (seven hubs or the map centre), shows a month's
+reach for the seven benchmark years, the days to the other hubs, and checks the router against documented journeys
+(`data/world/speeds.json`). The Story `story:world_shrinks` plays it all in eleven scenes.
+
+Hooks it added for everyone: `ATLAS.pixelUnder` (functions painting into the pixel frame under the sprites, after the
+choropleth), a Scene's `set: {<plugin>: value}` (handed to `ATLAS.sceneSet[plugin]` when the scene plays),
+`ATLAS.world.director.onLeave(fn)`, and `ATLAS.shrink` (`rings`, `origin()`, `compute(o, y)`).

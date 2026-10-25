@@ -1,12 +1,12 @@
 # Usage: python3 views/atlas/build.py OUT.html [ATLAS_DIR] [LAYERS_DIR] [--local D3_DIR] [--inline]
-# Big blobs the first paint does not need go to atlas-files/ next to OUT.html (publish them with the page):
+# Big blobs the first paint does not need go to atlas-files/ next to OUT.html (publish them with the page, world/ and packs/ included):
 # relief images, the terrain L0 tile, plugin lens data over 40 KB and the Wikidata battles. The old border snapshots
 # are not inlined (the page reads borders/l0 beside it). --inline keeps everything in one file (for opening locally).
 # One page, one map, one year: every workstream's layer on the same map, the guide on top.
 # ATLAS_DIR holds the Living Atlas files (entries*.js, empires.js, borders/); default /mnt/project-files/atlas.
 # LAYERS_DIR holds people/money/plague/ideas.json from extract_layers.py; default ATLAS_DIR/unified/layers.
 # Order and Chaos (data/order-chaos/lab.json) and the guide tours come from this repo.
-import sys, json, glob, os
+import sys, json, glob, os, re
 
 args = sys.argv[1:]
 local = None
@@ -52,6 +52,13 @@ if os.path.exists(tp):
     for t in L['money']['trade']:
         if t['name'] in snapped:
             t['stops'], t['line'] = t['line'], snapped[t['name']]['line']
+# People outside Europe (data/coverage/) load after the first paint; every row gets a region so the map can balance them.
+sys.path.insert(0, here)
+import world_people
+L['people']['regions'], world = world_people.add(repo, L['people'])
+if world:
+    if inline: L['people']['world'] = world
+    else: late['people:world'] = side('people-world.json', world)
 
 # States & war straight from the kernel records: battles, chokepoints and who held them.
 rows = lambda f: [json.loads(l) for l in open(os.path.join(repo, 'data/states-war', f)) if l.strip()]
@@ -101,6 +108,12 @@ for f in sorted(glob.glob(os.path.join(lens_dir, '*.py'))):
     spec = importlib.util.spec_from_file_location('atlas_lens_' + lid.replace('-', '_'), f)
     mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
     lens_data[lid] = mod.build(repo)
+    # A lens may hand over binary side files (images, rasters) as {'_files': {name: bytes}}: they go to atlas-files/
+    # (or inline as data URIs with --inline) and the lens data gets {'files': {name: url}}.
+    if isinstance(lens_data[lid], dict) and '_files' in lens_data[lid]:
+        import base64, mimetypes
+        lens_data[lid]['files'] = {n: ('data:' + (mimetypes.guess_type(n)[0] or 'application/octet-stream') + ';base64,' + base64.b64encode(b).decode()) if inline else side(n, b)
+                                   for n, b in lens_data[lid].pop('_files').items()}
     print('lens', lid, len(J(lens_data[lid])), 'bytes', file=sys.stderr)
 if not inline:
     for lid in list(lens_data):
@@ -126,20 +139,43 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
             q = [round(x, 1), round(y, 1)]
             if not pts or pts[-1] != q: pts.append(q)
         if r['rank'] <= 4 and len(pts) > 1: rv.append({'rank': r['rank'], 'line': pts})
-    data += 'const PIXEL = ' + J({'tile0': tile0, 'rivers': rv}) + ';\n'
-    for f in ('palette.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js'):
+    # City lights for the night sky (ingest/pixel/city_lights.py): beside the page when it has side files, else inline.
+    lights = None
+    if os.path.exists(pixel_src + 'city-lights.json'):
+        lb = open(pixel_src + 'city-lights.json', 'rb').read()
+        lights = side('city-lights.json', lb) if 'side' in globals() and not globals().get('inline') else json.loads(lb)
+    data += 'const PIXEL = ' + J({'tile0': tile0, 'rivers': rv, 'lights': lights}) + ';\n'
+    for f in ('palette.js', 'icons.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'paleo.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js', 'motion.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 # The label engine (one queue for every layer's names) goes first, with or without the pixel map.
 scripts.insert(0, '<script>\n' + open(os.path.join(pixel_dir, 'labels.js'), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
-# The world engine (views/atlas/world/*.js, see WORLD.md) loads before the lenses so they can use ATLAS.world.
-for f in sorted(glob.glob(os.path.join(here, 'world', '*.js'))) + sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
+# The world engine (views/atlas/world/: the world index and its packs) loads before the lenses that read it; its
+# files go beside the page in atlas-files/world/ and atlas-files/packs/, fetched only when a view asks.
+world_dir = os.path.join(here, 'world')
+if not inline and os.path.exists(os.path.join(world_dir, 'build_index.py')):
+    spec = importlib.util.spec_from_file_location('atlas_world_index', os.path.join(world_dir, 'build_index.py'))
+    wmod = importlib.util.module_from_spec(spec); spec.loader.exec_module(wmod)
+    wmod.write(repo, side_dir)
+for f in sorted(glob.glob(os.path.join(world_dir, '*.js'))) + sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
     scripts.append('<script>\n' + open(f, encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 
 data += f'const LATE_FILES = {J(late)};\n'
+
+# The chronicle chrome (views/atlas/chrome/): tokens and pixel frames from the kit, components, the HUD layout, and
+# chrome.js after the page script. Icons are views/pixel/icons.js, inlined above with the pixel scripts.
+sys.path.insert(0, os.path.join(here, 'chrome'))
+import kit
+chrome_css = kit.css() + '\n'.join(open(os.path.join(here, 'chrome', f), encoding='utf-8').read() for f in ('chrome.css', 'atlas.css'))
+# The chrome's comments are for its source; the page gets it without them.
+chrome_css = re.sub(r';}', '}', re.sub(r':\s+', ':', re.sub(r'\s*([{};,>])\s*', r'\1', re.sub(r'/\*.*?\*/', '', chrome_css, flags=re.S))))
+if 'PIXEL_ICONS' not in '\n'.join(scripts):
+    scripts.insert(0, '<script>\n' + open(os.path.join(repo, 'views/pixel/icons.js'), encoding='utf-8').read() + '\n</script>')
+chrome_js = '<script>\n' + re.sub(r'(?m)^\s*//.*\n', '', open(os.path.join(here, 'chrome', 'chrome.js'), encoding='utf-8').read()).replace('</script', '<\\/script') + '\n</script>'
+
 land = J(json.load(open(atlas + 'borders/land-50m.json')))
 tours = [json.load(open(f)) for f in sorted(glob.glob(os.path.join(repo, 'data/guide/tours/*.json')))]
-s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours)).replace('/*__TERRAIN_JS__*/', terrain_js).replace('<!--__LENS_SCRIPTS__-->', '\n'.join(scripts))
+s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours)).replace('/*__TERRAIN_JS__*/', terrain_js).replace('<!--__LENS_SCRIPTS__-->', '\n'.join(scripts)).replace('/*__CHROME_CSS__*/', chrome_css).replace('<!--__CHROME_JS__-->', chrome_js)
 if local:
     s = s.replace('https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js', 'file://' + local + '/d3-7.8.5/package/dist/d3.min.js')
     s = s.replace('https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js', 'file://' + local + '/topojson-client-3.1.0/package/dist/topojson-client.min.js')

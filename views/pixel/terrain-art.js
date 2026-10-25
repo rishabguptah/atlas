@@ -571,18 +571,25 @@
     for (let k = 0; k < N; k++) if (cls[k] === 4) { base[k] = RM[ID.river][riv && riv[k] === 2 ? 3 : 2]; anim[k] = 3; }
 
     TM.push(performance.now());
-    // 12. Wave glyphs on open water, sparse, on a world grid (the motion layer may cycle them).
+    // 12. Wave glyphs on open water, sparse, one tone above the water under them (the motion layer may cycle them).
+    // Cells are jittered and thinned by slow noise so they never read as a lattice; a third as many at world zoom.
     {
-      const g = WAVE[tier], cw = [26, 30, 34, 40][tier], ch = [15, 17, 20, 24][tier], col = { a: RM[ID.sea][4] };
+      const g = WAVE[tier], gw = g[0].length, gh = g.length, cw = [26, 30, 34, 40][tier], ch = [15, 17, 20, 24][tier];
+      const keep = tier === 0 ? 0.22 : 0.6, up = new Map();
+      for (const r of [RM[ID.deep], RM[ID.sea]]) for (let t = 0; t < 4; t++) up.set(r[t], r[t + 1]);
       for (let cv = Math.floor(V0 / ch) - 1; cv < Math.ceil((V0 + h) / ch) + 1; cv++) for (let cu = Math.floor(U0 / cw) - 1; cu < Math.ceil((U0 + w) / cw) + 1; cu++) {
-        const r = hash(cu * 5 + 7, cv * 3 + 1); if (r > 0.6) continue;
-        const u = cu * cw + Math.floor(hash(cv, cu * 9) * cw), v = cv * ch + Math.floor(r * ch / 0.6), i = u - U0, j = v - V0;
-        if (i < 2 || j < 2 || i >= w - 6 || j >= h - 2) continue;
+        const r = hash(cu * 5 + 7, cv * 3 + 1);
+        if (r > keep * (0.4 + 1.2 * NSEA(cu * 7, cv * 11))) continue;
+        const u = cu * cw + Math.floor(hash(cv * 131 + 17, cu * 29 - 5) * cw * 1.6 - cw * 0.3), v = cv * ch + Math.floor(hash(cu * 71 - 3, cv * 43 + 9) * ch * 1.6 - ch * 0.3);
+        const i = u - U0, j = v - V0;
+        if (i < 4 || j < 4 || i >= w - 6 || j >= h - 2) continue;
         const k = j * w + i; if (cls[k] > 1 || dist[k] < 6) continue;
-        const deepc = cls[k] === 0 ? RM[ID.deep][3] : RM[ID.sea][4];
-        stamp(i, j, g, { a: deepc }, true);
-        for (let y = 0; y < g.length; y++) for (let x = 0; x < g[0].length; x++) if (g[y][x] !== ".") { const ii = i + x - (g[0].length >> 1), jj = j + y - g.length + 1; if (ii >= 0 && jj >= 0 && ii < w && jj < h) anim[jj * w + ii] = 2; }
-        void col;
+        for (let y = 0; y < gh; y++) for (let x = 0; x < gw; x++) if (g[y][x] !== ".") {
+          const ii = i + x - (gw >> 1), jj = j + y - gh + 1; if (ii < 0 || jj < 0 || ii >= w || jj >= h) continue;
+          const q = jj * w + ii; if (cls[q] > 1) continue;
+          const nb = up.get(base[q]); if (nb == null) continue;
+          base[q] = nb; anim[q] = 2;
+        }
       }
     }
 

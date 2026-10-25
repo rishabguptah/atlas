@@ -1,0 +1,553 @@
+{
+ "stories": [
+  {
+   "id": "baghdad_power_762_1258",
+   "title": "Caliphs, Amirs and Sultans: Who Ruled Baghdad",
+   "region": "Iraq",
+   "start": "762",
+   "end": "1258",
+   "view": {
+    "lon": 44.2,
+    "lat": 33.4,
+    "span": 2.2
+   },
+   "blurb": "Five centuries of power in the Abbasid capital: a caliph's round city, a family purge, a brothers' war, a flight to Samarra, Persian and Turkish protectors, and the Mongol end.",
+   "steps": [
+    {
+     "date": "0762",
+     "date_note": "construction 762 to 766",
+     "end_date": "0766",
+     "name": "Al-Mansur founds the Round City",
+     "place_name": "Baghdad",
+     "lat": 33.345,
+     "lon": 44.375,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "al-Mansur"
+     ],
+     "what": "The second Abbasid caliph built a walled circular capital on the Tigris with his palace and mosque at its centre.",
+     "why": "A new dynasty needed a capital away from the Syrian Umayyad heartland and the restive garrison city of Kufa.",
+     "wikipedia": "Round City of Baghdad",
+     "wikidata": "Q1191316"
+    },
+    {
+     "date": "0803",
+     "date_note": "January 803",
+     "end_date": "",
+     "name": "Harun destroys the Barmakids",
+     "place_name": "al-Anbar",
+     "lat": 33.372,
+     "lon": 43.7,
+     "family": "diplomacy",
+     "subtype": "purge",
+     "who": [
+      "Harun al-Rashid",
+      "Ja'far ibn Yahya",
+      "Yahya ibn Khalid"
+     ],
+     "what": "Harun had his vizier Ja'far executed and the rest of the family imprisoned.",
+     "why": "It showed that even the most powerful administrators held office only at the caliph's pleasure.",
+     "wikipedia": "Barmakids",
+     "wikidata": "Q808354"
+    },
+    {
+     "date": "0812-08",
+     "date_note": "August 812 to September 813",
+     "end_date": "0813-09",
+     "name": "Siege of Baghdad in the brothers' war",
+     "place_name": "Baghdad",
+     "lat": 33.345,
+     "lon": 44.375,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "al-Amin",
+      "al-Ma'mun",
+      "Tahir ibn Husayn"
+     ],
+     "what": "Al-Ma'mun's generals besieged al-Amin for a year; the city was battered and al-Amin was killed.",
+     "why": "The first great civil war of Abbasid Baghdad decided the succession and wrecked the Round City.",
+     "wikipedia": "Siege of Baghdad (812–813)",
+     "wikidata": "Q7509846"
+    },
+    {
+     "date": "0819-08",
+     "date_note": "August 819",
+     "end_date": "",
+     "name": "Al-Ma'mun comes home to Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.357,
+     "lon": 44.405,
+     "family": "diplomacy",
+     "subtype": "return",
+     "who": [
+      "al-Ma'mun"
+     ],
+     "what": "After ruling from Merv, al-Ma'mun entered Baghdad and made it the capital again.",
+     "why": "His arrival ended a rebellion by Baghdadis who had set up a rival caliph.",
+     "wikipedia": "Al-Ma'mun"
+    },
+    {
+     "date": "0833",
+     "date_note": "833 to about 848",
+     "end_date": "0848",
+     "name": "The mihna: an inquisition over the Quran",
+     "place_name": "Baghdad",
+     "lat": 33.335,
+     "lon": 44.408,
+     "family": "unrest",
+     "subtype": "inquisition",
+     "who": [
+      "al-Ma'mun",
+      "Ahmad ibn Hanbal"
+     ],
+     "what": "Scholars were made to declare the Quran created; Ibn Hanbal refused and was flogged.",
+     "why": "The caliphs lost the contest to define doctrine, and religious authority passed to the scholars.",
+     "wikipedia": "Mihna",
+     "wikidata": "Q1624489"
+    },
+    {
+     "date": "0836",
+     "date_note": "",
+     "end_date": "",
+     "name": "Al-Mu'tasim moves to Samarra",
+     "place_name": "Samarra",
+     "lat": 34.2,
+     "lon": 43.876,
+     "family": "diplomacy",
+     "subtype": "capital move",
+     "who": [
+      "al-Mu'tasim"
+     ],
+     "what": "Clashes between Turkish soldiers and Baghdadis led the caliph to build a new capital upriver.",
+     "why": "For over fifty years the court lived among its slave soldiers rather than its subjects.",
+     "wikipedia": "Samarra",
+     "wikidata": "Q170047"
+    },
+    {
+     "date": "0861-12",
+     "date_note": "December 861",
+     "end_date": "",
+     "name": "Murder of al-Mutawakkil and the anarchy",
+     "place_name": "Samarra",
+     "lat": 34.295,
+     "lon": 43.858,
+     "family": "unrest",
+     "subtype": "assassination",
+     "who": [
+      "al-Mutawakkil",
+      "al-Muntasir"
+     ],
+     "what": "Turkish officers killed the caliph, opening nine years in which commanders made and unmade caliphs.",
+     "why": "Real power had passed to the army that was supposed to protect the caliph.",
+     "wikipedia": "Anarchy at Samarra",
+     "wikidata": "Q2349651"
+    },
+    {
+     "date": "0865",
+     "date_note": "865 to 866",
+     "end_date": "0866",
+     "name": "A caliph besieged in Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.357,
+     "lon": 44.405,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "al-Musta'in",
+      "al-Mu'tazz"
+     ],
+     "what": "Al-Musta'in fled to Baghdad and was besieged there by the army of al-Mu'tazz from Samarra.",
+     "why": "Baghdad and Samarra fought each other as rival centres of power.",
+     "wikipedia": "Abbasid civil war (865–866)",
+     "wikidata": "Q4147498"
+    },
+    {
+     "date": "0892",
+     "date_note": "",
+     "end_date": "",
+     "name": "Caliphs return to Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.335,
+     "lon": 44.408,
+     "family": "diplomacy",
+     "subtype": "capital move",
+     "who": [
+      "al-Mu'tadid"
+     ],
+     "what": "Al-Mu'tadid settled the court in palaces on the east bank of Baghdad.",
+     "why": "A brief Abbasid revival restored Baghdad as the seat of government.",
+     "wikipedia": "Al-Mu'tadid"
+    },
+    {
+     "date": "0945",
+     "date_note": "December 945",
+     "end_date": "",
+     "name": "The Buyids take Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.335,
+     "lon": 44.408,
+     "family": "war",
+     "subtype": "conquest",
+     "who": [
+      "Mu'izz al-Dawla",
+      "al-Mustakfi"
+     ],
+     "what": "A Shi'i Daylamite dynasty from Iran took the city and soon blinded the caliph.",
+     "why": "The caliph became a figurehead under foreign military protectors for a century.",
+     "wikipedia": "Mu'izz al-Dawla"
+    },
+    {
+     "date": "1055-12",
+     "date_note": "December 1055",
+     "end_date": "",
+     "name": "Tughril the Seljuk enters Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.335,
+     "lon": 44.408,
+     "family": "diplomacy",
+     "subtype": "conquest",
+     "who": [
+      "Tughril"
+     ],
+     "what": "The Seljuk Turks replaced the Buyids and styled themselves defenders of the Sunni caliph.",
+     "why": "A new Turkish sultanate ruled in the caliph's name.",
+     "wikipedia": "Tughril I",
+     "wikidata": "Q144565"
+    },
+    {
+     "date": "1058-12",
+     "date_note": "December 1058 to January 1060",
+     "end_date": "1060-01",
+     "name": "Al-Basasiri prays for the Fatimids",
+     "place_name": "Baghdad",
+     "lat": 33.335,
+     "lon": 44.408,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "al-Basasiri",
+      "al-Qa'im"
+     ],
+     "what": "A rebel commander had Friday prayers said in Baghdad for the Fatimid caliph of Cairo for a year.",
+     "why": "For a moment Baghdad looked set to fall to the rival Ismaili caliphate.",
+     "wikipedia": "Al-Basasiri",
+     "wikidata": "Q288840"
+    },
+    {
+     "date": "1180",
+     "date_note": "reign 1180 to 1225",
+     "end_date": "1225",
+     "name": "Al-Nasir revives the caliphate",
+     "place_name": "Baghdad",
+     "lat": 33.335,
+     "lon": 44.408,
+     "family": "diplomacy",
+     "subtype": "revival",
+     "who": [
+      "al-Nasir li-Din Allah"
+     ],
+     "what": "With the Seljuks gone, al-Nasir ruled Iraq himself and used futuwwa brotherhoods to bind princes to him.",
+     "why": "It was the last flowering of Abbasid political power.",
+     "wikipedia": "Al-Nasir",
+     "wikidata": "Q284750"
+    },
+    {
+     "date": "1258-01-29",
+     "date_note": "29 January to 10 February 1258",
+     "end_date": "1258-02-10",
+     "name": "The Mongols take Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.335,
+     "lon": 44.408,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Hulagu Khan",
+      "al-Musta'sim",
+      "Ibn al-Alqami"
+     ],
+     "what": "Hulagu besieged and stormed the city, sacked it and executed the last caliph.",
+     "why": "The Abbasid caliphate of Baghdad ended after five centuries.",
+     "wikipedia": "Siege of Baghdad",
+     "wikidata": "Q369560"
+    }
+   ],
+   "status": "draft",
+   "pack": "baghdad_762_1258"
+  },
+  {
+   "id": "baghdad_paper_ideas_762_1258",
+   "title": "Paper, Translators and Colleges in Baghdad",
+   "region": "Iraq",
+   "start": "794",
+   "end": "1258",
+   "view": {
+    "lon": 44.39,
+    "lat": 33.34,
+    "span": 0.15
+   },
+   "blurb": "How cheap paper, Greek translations, booksellers and endowed colleges made Baghdad the centre of learning, until the libraries burned.",
+   "steps": [
+    {
+     "date": "0794",
+     "date_note": "approximate",
+     "end_date": "",
+     "name": "Paper making comes to Baghdad",
+     "place_name": "Baghdad",
+     "lat": 33.325,
+     "lon": 44.385,
+     "family": "culture",
+     "subtype": "industry",
+     "who": [
+      "Barmakids"
+     ],
+     "what": "Paper mills were set up in Baghdad under Barmakid patronage.",
+     "why": "Cheap paper made bureaucracy, bookselling and scholarship possible on a new scale.",
+     "wikipedia": "History of paper",
+     "wikidata": "Q1811550"
+    },
+    {
+     "date": "0820",
+     "date_note": "approximate",
+     "end_date": "",
+     "name": "Al-Khwarizmi writes al-Jabr",
+     "place_name": "Baghdad",
+     "lat": 33.357,
+     "lon": 44.405,
+     "family": "culture",
+     "subtype": "science",
+     "who": [
+      "al-Khwarizmi",
+      "al-Ma'mun"
+     ],
+     "what": "Al-Khwarizmi wrote his book on solving equations, dedicated to al-Ma'mun.",
+     "why": "It gave the world algebra and spread Indian numerals westward.",
+     "wikipedia": "Al-Jabr",
+     "wikidata": "Q8369"
+    },
+    {
+     "date": "0830",
+     "date_note": "approximate",
+     "end_date": "",
+     "name": "The House of Wisdom under al-Ma'mun",
+     "place_name": "Baghdad",
+     "lat": 33.357,
+     "lon": 44.405,
+     "family": "culture",
+     "subtype": "academy",
+     "who": [
+      "al-Ma'mun"
+     ],
+     "what": "The palace library became a centre for copying and translation.",
+     "why": "Caliphal money paid for Greek, Persian and Indian knowledge to be put into Arabic.",
+     "wikipedia": "House of Wisdom",
+     "wikidata": "Q33018"
+    },
+    {
+     "date": "0830",
+     "date_note": "active about 830 to 873",
+     "end_date": "0873",
+     "name": "Hunayn ibn Ishaq translates Galen",
+     "place_name": "Baghdad",
+     "lat": 33.357,
+     "lon": 44.405,
+     "family": "culture",
+     "subtype": "translation",
+     "who": [
+      "Hunayn ibn Ishaq",
+      "Banu Musa"
+     ],
+     "what": "Hunayn and his circle translated Galen, Hippocrates and other Greek works.",
+     "why": "Their versions became the basis of medicine in the Islamic world and Europe.",
+     "wikipedia": "Hunayn ibn Ishaq",
+     "wikidata": "Q503130"
+    },
+    {
+     "date": "0833",
+     "date_note": "active about 820 to 870",
+     "end_date": "",
+     "name": "Al-Kindi, philosopher of the Arabs",
+     "place_name": "Baghdad",
+     "lat": 33.357,
+     "lon": 44.405,
+     "family": "culture",
+     "subtype": "philosophy",
+     "who": [
+      "al-Kindi"
+     ],
+     "what": "Al-Kindi adapted Greek philosophy to Islamic questions.",
+     "why": "He started the tradition of Arabic philosophy.",
+     "wikipedia": "Al-Kindi",
+     "wikidata": "Q179759"
+    },
+    {
+     "date": "0850",
+     "date_note": "approximate",
+     "end_date": "",
+     "name": "The Banu Musa's Book of Ingenious Devices",
+     "place_name": "Baghdad",
+     "lat": 33.357,
+     "lon": 44.405,
+     "family": "culture",
+     "subtype": "engineering",
+     "who": [
+      "Banu Musa"
+     ],
+     "what": "Three brothers described automata, valves and trick vessels.",
+     "why": "It showed the practical side of Baghdad's scientific patronage.",
+     "wikipedia": "Book of Ingenious Devices",
+     "wikidata": "Q4116191"
+    },
+    {
+     "date": "0982",
+     "date_note": "",
+     "end_date": "",
+     "name": "Al-Adudi Hospital opens",
+     "place_name": "Baghdad",
+     "lat": 33.348,
+     "lon": 44.39,
+     "family": "culture",
+     "subtype": "medicine",
+     "who": [
+      "'Adud al-Dawla"
+     ],
+     "what": "The Buyid ruler founded a large staffed hospital.",
+     "why": "Hospitals became teaching institutions as well as charities.",
+     "wikipedia": "Al-'Adudi Hospital"
+    },
+    {
+     "date": "0987",
+     "date_note": "",
+     "end_date": "",
+     "name": "Ibn al-Nadim catalogues all books",
+     "place_name": "Baghdad",
+     "lat": 33.325,
+     "lon": 44.385,
+     "family": "culture",
+     "subtype": "bookselling",
+     "who": [
+      "Ibn al-Nadim"
+     ],
+     "what": "A bookseller compiled the Fihrist, listing books known in Arabic.",
+     "why": "It records the size of the Baghdad book trade, much of it now lost.",
+     "wikipedia": "Al-Fihrist",
+     "wikidata": "Q2083240"
+    },
+    {
+     "date": "0991",
+     "date_note": "founded 991 or 993",
+     "end_date": "",
+     "name": "A public library in al-Karkh",
+     "place_name": "al-Karkh",
+     "lat": 33.325,
+     "lon": 44.385,
+     "family": "culture",
+     "subtype": "library",
+     "who": [
+      "Sabur ibn Ardashir"
+     ],
+     "what": "A Buyid vizier endowed a library open to scholars.",
+     "why": "Endowed libraries spread learning beyond the court.",
+     "wikipedia": "Sabur ibn Ardashir",
+     "wikidata": "Q11903980"
+    },
+    {
+     "date": "1067",
+     "date_note": "founded 1065, opened 1067",
+     "end_date": "",
+     "name": "The Nizamiyya opens",
+     "place_name": "Baghdad",
+     "lat": 33.334,
+     "lon": 44.404,
+     "family": "culture",
+     "subtype": "college",
+     "who": [
+      "Nizam al-Mulk",
+      "Abu Ishaq al-Shirazi"
+     ],
+     "what": "The Seljuk vizier opened an endowed college with salaried teachers and student stipends.",
+     "why": "It became the model of the madrasa across the Islamic world.",
+     "wikipedia": "Nizamiyya of Baghdad",
+     "wikidata": "Q4703031"
+    },
+    {
+     "date": "1091",
+     "date_note": "1091 to 1095",
+     "end_date": "1095",
+     "name": "Al-Ghazali teaches and leaves",
+     "place_name": "Baghdad",
+     "lat": 33.334,
+     "lon": 44.404,
+     "family": "culture",
+     "subtype": "theology",
+     "who": [
+      "al-Ghazali"
+     ],
+     "what": "Al-Ghazali attacked the philosophers, then left Baghdad to seek Sufi certainty.",
+     "why": "His work shaped Sunni thought for centuries.",
+     "wikipedia": "Al-Ghazali",
+     "wikidata": "Q9546"
+    },
+    {
+     "date": "1233",
+     "date_note": "completed 1233",
+     "end_date": "",
+     "name": "The Mustansiriyya opens",
+     "place_name": "Baghdad",
+     "lat": 33.341,
+     "lon": 44.388,
+     "family": "culture",
+     "subtype": "college",
+     "who": [
+      "al-Mustansir"
+     ],
+     "what": "A caliphal college for all four Sunni law schools opened by the Tigris.",
+     "why": "The building still stands, the finest relic of Abbasid Baghdad.",
+     "wikipedia": "Mustansiriyya Madrasa",
+     "wikidata": "Q15260416"
+    },
+    {
+     "date": "1237",
+     "date_note": "",
+     "end_date": "",
+     "name": "Al-Wasiti paints the Maqamat",
+     "place_name": "Baghdad",
+     "lat": 33.325,
+     "lon": 44.385,
+     "family": "culture",
+     "subtype": "painting",
+     "who": [
+      "Yahya ibn Mahmud al-Wasiti"
+     ],
+     "what": "A scribe illustrated al-Hariri's stories with lively scenes of daily life.",
+     "why": "It is among the masterpieces of Arabic book painting.",
+     "wikipedia": "Yahya ibn Mahmud al-Wasiti",
+     "wikidata": "Q472751"
+    },
+    {
+     "date": "1258-02",
+     "date_note": "February 1258",
+     "end_date": "",
+     "name": "The libraries are destroyed",
+     "place_name": "Baghdad",
+     "lat": 33.357,
+     "lon": 44.405,
+     "family": "war",
+     "subtype": "destruction",
+     "who": [
+      "Hulagu Khan",
+      "Nasir al-Din al-Tusi"
+     ],
+     "what": "The Mongol sack destroyed Baghdad's libraries and colleges.",
+     "why": "Baghdad lost its role as the centre of Arabic learning.",
+     "wikipedia": "Siege of Baghdad",
+     "wikidata": "Q369560"
+    }
+   ],
+   "status": "draft",
+   "pack": "baghdad_762_1258"
+  }
+ ]
+}

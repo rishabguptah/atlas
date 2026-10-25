@@ -57,6 +57,15 @@ Wikidata, Pantheon, Cliopatria, raw/), never hand-built per region. Europe 1789-
 pack. A window with no pack can be filled by a live AI draft (marked `status: draft`, `conf: estimated` or
 worse), cached, and queued for the judge.
 
+Implemented (v1): `views/atlas/world/world.js`, `build_index.py` (time slices of the whole world plus packs, written by
+`views/atlas/build.py` beside the page), `assemble.py` and `packs.json` (one line per pack). Every record is one row
+`[k, f, sub, name, lon, lat, date, end, ref, rank, conf, extra]` (see assemble.py); the API returns them as
+`{k, f, sub, name, lon, lat, d, e, m, me, ref, rank, conf, x, id, src}` with `m` the month index. `t` is a year,
+`{y, m}` or `{m0, m1}` (month indexes). Extra hooks: `onLoad(fn)`, `load(t, bbox)`, `packs()`, `stories()` (study
+storylines; `asStory(s)` gives the L4 Story shape), `draft(rows, {key})` for live AI rows, `addLifeline(fn)` for
+presences and journeys from the travellers layer, `addMeasure(fn)` for measure providers. Consumers so far: the
+Up close tab (`lenses/deep.js`) and the Here tab's "born here" list.
+
 ## L2 Motion (owner: "Build a live-a-life history RPG", extracted from its router)
 
 ```js
@@ -78,6 +87,15 @@ Shipped in `views/atlas/world/route.js` (data: `data/motion/`, lens data `motion
 `notes` (seasons, canals, roads used) and `meet` (borders, battles and plague on the way). `ATLAS.world.reach`
 returns `{days: Float32Array(720 * 360), at(lon, lat)}`. A continental route takes about 0.1 to 0.6 s warm.
 `ATLAS.world.motion` exposes the grid helpers (`cellOf`, `cls`, `isWater`, `polity`, `plagueAt`, `battles`, `rules()`).
+Open ocean is closed until a crossing became a route (`rules.open_ocean`: the Atlantic until 1492, the South Atlantic
+until 1488, the open Pacific until 1565), so nobody sails from Rome to New York. Empire roads test only the realms named
+for a road-building empire that year, so a reach through Mongol lands takes about 0.1 s instead of 2 s. The Travel time
+lens (`lenses/shrink.js`) draws `reach` as isochrones and checks `route` against documented journeys.
+Speeds that changed within a mode's life are curves (`kmd_by`: steamers 330 to 800 km a day from 1838 to 1950, clippers,
+railways 350 to 1,200); `regions` limits a mode to boxes (stagecoaches on Britain's turnpikes from 1750, the continent
+from 1780); sea seasons include the North Atlantic westerlies, the trade winds and the etesians. `route` falls back to
+the fastest way when a sea or land preference finds nothing (`fallback: "fast"`), and an island the grid draws as sea
+can be reached by ship. Against 55 documented journeys (time under way) the median ratio is about 1.0, 22 within 1.5×.
 
 ## L3 Agents and causes (agents: "Simulate people meeting and traveling"; `why`: "Bring scholar-level depth to the atlas")
 

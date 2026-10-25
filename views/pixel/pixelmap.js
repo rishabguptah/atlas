@@ -7,10 +7,14 @@
 //   pm.tick()                                advance sprite and water animation by one frame (call ~4 fps)
 //   pm.overlay(fn) / pm.repaint()            fn(g) paints last, into the same grid (lens marks, see marks.js); repaint redraws
 //   pm.setEra(style, {quiet?})               era map style from eras.js (null = today's look): grades the cached raster, draws the frame, ~400 ms dither crossfade
+//   pm.setPaleo(p)                          p = {key, cls(lon, lat, c, isLand, band, u, v)} remaps terrain classes for another
+//                                            age (ice-age coasts, ice sheets, biomes; see paleo.js); returns true if it changed
 //   pm.setDetail(fn)                         fn(G, phase) draws zoom detail into the grid: "under" before realm tints, "over" after; "key" names the under pass (see detail.js)
 //   pm.labelGrid()                           realm id and terrain class per art pixel of the last frame (for realm names)
 //   pm.spriteBoxes()                         screen boxes of the prioritised sprites last painted (labels keep off them)
 //   pm.underlay(fn)                          fn(g) paints after the terrain and realms, before the sprites (choropleths, grammar.js)
+//   pm.on(fn) / pm.view() / pm.ownWater(on)  for an animation layer above the map (motion.js): fn('layout'|'realms'|'paint') after
+//                                            each pass; view() reads this frame's buffers; ownWater(false) leaves water shimmer to it
 //
 // levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
 // land: GeoJSON land (coasts come from it, so they stay sharp at any zoom). rivers: [{rank, line: [[lon,lat],...]}].
@@ -52,7 +56,7 @@
     container.prepend(canvas);
     const ctx = canvas.getContext("2d");
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
-    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, elevA = null, riv = null, anim = null, art = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [];
+    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, elevA = null, riv = null, anim = null, art = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [], paleo = null, paleoKey = "";
 
     // Terrain tiles: levels coarse to fine, each {cell (degrees), tdeg (tile size in degrees), url(col, row)}.
     // Tiles load on demand; until a finer tile arrives the coarser level shows, then the map re-renders.
@@ -155,7 +159,7 @@
       // straddle the antimeridian; exact per pixel elsewhere (near the rim). Much cheaper than inverting every pixel.
       // The grid is anchored to the world (every G-th art column and row), so any region of the same view interpolates
       // exactly the same longitude and latitude for a given art pixel.
-      const G = 4, gU = Math.floor(U0 / G), gV = Math.floor(V0 / G), gw = Math.floor((U0 + w - 1) / G) - gU + 2, gh = Math.floor((V0 + h - 1) / G) - gV + 2;
+      const G = 8, gU = Math.floor(U0 / G), gV = Math.floor(V0 / G), gw = Math.floor((U0 + w - 1) / G) - gU + 2, gh = Math.floor((V0 + h - 1) / G) - gV + 2;
       const gl = new Float64Array(gw * gh * 2), gok = new Uint8Array(gw * gh);
       const inv = (i, j, outA, o) => {
         const px = ((U0 + i + 0.5) * PX) / t.k, py = ((V0 + j + 0.5) * PX) / t.k;
@@ -166,10 +170,19 @@
         outA[o] = ll[0]; outA[o + 1] = ll[1]; return 1;
       };
       for (let gj = 0; gj < gh; gj++) for (let gi = 0; gi < gw; gi++) gok[gj * gw + gi] = inv((gU + gi) * G - U0, (gV + gj) * G - V0, gl, (gj * gw + gi) * 2);
+      // A cell whose 4x4 surrounding grid points are all off the globe is paper: no exact inversion there (inverting
+      // off-globe points is the slow path of the projection, and most of a world view is paper).
+      const paper = new Uint8Array(gw * gh);
+      for (let gj = 1; gj < gh - 2; gj++) for (let gi = 1; gi < gw - 2; gi++) {
+        let any = 0;
+        for (let y = -1; y <= 2 && !any; y++) for (let x = -1; x <= 2; x++) if (gok[(gj + y) * gw + gi + x]) { any = 1; break; }
+        paper[gj * gw + gi] = !any;
+      }
       const ll = [0, 0];
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, u = U0 + i, v = V0 + j;
         const gi = Math.floor(u / G) - gU, gj = Math.floor(v / G) - gV, a = gj * gw + gi, b = a + 1, c2 = a + gw, d2 = c2 + 1;
+        if (paper[a]) { base[k] = OUTP; continue; }
         if (gok[a] && gok[b] && gok[c2] && gok[d2] && Math.abs(gl[a * 2] - gl[b * 2]) < 90 && Math.abs(gl[a * 2] - gl[d2 * 2]) < 90) {
           const fx = (u - (gU + gi) * G) / G, fy = (v - (gV + gj) * G) / G;
           for (let q = 0; q < 2; q++) {
@@ -186,6 +199,7 @@
         if (c === 4 && (need > 0.1 || !isLand)) c = 10;
         if (isLand && WATER(c) && c !== 3) c = 10;
         if (!isLand && !WATER(c)) c = 2;
+        if (paleo) { const c0 = c; c = paleo.cls(ll[0], ll[1], c, isLand, s2, u, v); if (c !== c0 && c0 <= 2) { hs[k] = 128; band[k] = 0; cls[k] = c; latA[k] = ll[1]; lonA[k] = ll[0]; elevA[k] = 0; lowNoise[k] = Math.sin(ll[0] * 1.7 + Math.sin(ll[1] * 2.3)) * Math.sin(ll[1] * 2.1 + ll[0] * 0.6); continue; } }
         cls[k] = c; hs[k] = s1; band[k] = s2;
         latA[k] = ll[1]; lonA[k] = ll[0]; elevA[k] = s3;
         lowNoise[k] = Math.sin(ll[0] * 1.7 + Math.sin(ll[1] * 2.3)) * Math.sin(ll[1] * 2.1 + ll[0] * 0.6);
@@ -239,7 +253,7 @@
       const need = 360 / (sw * t.k / PX);
       // A pan at the same zoom keeps every art pixel it already drew (they are anchored to the world grid) and only
       // draws the newly exposed bands, each with a margin so trees, peaks and shorelines join up across the seam.
-      const P = prevView, reuse = P && P.k === t.k && P.need === need && P.mood === mood && P.ver === tileVer && !o.full &&
+      const P = prevView, reuse = P && P.k === t.k && P.need === need && P.mood === mood && P.ver === tileVer && P.pk === paleoKey && !o.full &&
         Math.abs(U0 - P.U0) < w && Math.abs(V0 - P.V0) < h;
       if (!reuse) { off.width = w; off.height = h; terrainPass(t, need); }
       else {
@@ -262,11 +276,12 @@
         ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = view);
         off.width = w; off.height = h; art = { ...art, anim };
       }
-      prevView = { k: t.k, need, mood, ver: tileVer, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
+      prevView = { k: t.k, need, mood, ver: tileVer, pk: paleoKey, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
       terrain = base.slice();
       realmRaster.clear();
       applyRealms();
       realmsDone();
+      emit("layout");
     }
 
     function setPx(i, j, col) { if (i >= 0 && j >= 0 && i < w && j < h) base[j * w + i] = col; }
@@ -276,7 +291,7 @@
       let e = dx + dy, n = 0;
       for (;;) {
         const q = y0 * w + x0;
-        if (x0 >= 0 && y0 >= 0 && x0 < w && y0 < h && cls[q] >= 4 && cls[q] !== 255) { cls[q] = 4; riv[q] = Math.max(riv[q], col); }
+        if (x0 >= 0 && y0 >= 0 && x0 < w && y0 < h && cls[q] >= 4 && cls[q] !== 255 && !(paleo && cls[q] === 5)) { cls[q] = 4; riv[q] = Math.max(riv[q], col); }
         if (x0 === x1 && y0 === y1 || ++n > 4000) break;
         const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; }
       }
@@ -330,7 +345,9 @@
       if (realmRaster.size > RASTER_MAX) realmRaster.delete(realmRaster.keys().next().value);
     }
     // The one place where realms are done and sprites come next (year-dependent passes over base go here).
-    function realmsDone() { detail("over"); paint(); }
+    function realmsDone() { detail("over"); paint(); emit("realms"); }
+    const hooks = [];
+    function emit(kind) { for (const fn of hooks) try { fn(kind); } catch (err) { console.error("pixel hook", err); } }
     function detail(phase) {
       if (!detailFn || !last) return;
       try { return detailFn({ w, h, U0, V0, PX, k: last.k, need: NEED, base, cls, hs, band, lonA, latA, lowNoise, ids, realms: realmsNow, hash, toPixel: (lon, lat) => { const p = projection([lon, lat]); return p && [Math.floor((p[0] * last.k) / PX) - U0, Math.floor((p[1] * last.k) / PX) - V0]; } }, phase); }
@@ -385,7 +402,7 @@
     }
     // Declutter: when sprites carry a priority (pri), keep the most important ones that fit without touching,
     // up to max; sprites sharing a grp (a battle's two armies and clash) are kept or dropped together.
-    let spriteOpts = {}, spriteMask = null, overlay = null, underlay = null, shown = [], lastOut = null;
+    let spriteOpts = {}, spriteMask = null, overlay = null, underlay = null, shown = [], lastOut = null, kept = [], outNow = null, water = true;
     const GLINT = pack(rgb("#8ab8c4"));
     function declutter(src, t) {
       if (!src.some(s => s.pri != null)) return src;
@@ -411,12 +428,12 @@
     function paint() {
       if (!base) return;
       const list = declutter(allSprites, last);
-      shown = list;
+      shown = kept = list;
       const img = ctx.createImageData(w, h), out = new Uint32Array(img.data.buffer);
       out.set(base);
       // Water shimmer: a few world-anchored wave glints that move with the frame.
       const glint = era && era.glint !== undefined ? era.glint : GLINT;
-      if (glint !== null) for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+      if (water && glint !== null) for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, c = cls[k]; if (c > 1) continue;
         const u = U0 + i, v = V0 + j;
         if (v % 5 === 0 && hash(u >> 2, v) < 0.035 && ((u + frame) & 3) < 2) out[k] = glint;
@@ -465,6 +482,8 @@
       if (fade) { if (fade.prev.length === out.length && fade.U0 === U0 && fade.V0 === V0) { const m = fade.mask, p = fade.prev, f = fade.t; for (let k = 0; k < out.length; k++) if (m[k] >= f) out[k] = p[k]; } }
       lastOut = out;
       ctx.putImageData(img, 0, 0);
+      outNow = out;
+      emit("paint");
     }
 
     return {
@@ -499,7 +518,13 @@
       underlay(fn) { underlay = fn; },
       repaint() { paint(); },
       setDetail(fn) { detailFn = fn; },
+      setPaleo(p) { const key = p ? p.key : ""; if (key === paleoKey) return false; paleo = p || null; paleoKey = key; return true; },
       setFrame(f) { frame = f; },
+      on(fn) { hooks.push(fn); },
+      ownWater(on) { water = !!on; },
+      spritePixels,
+      // This frame's buffers, read-only: art-pixel grid w x h whose (0, 0) is world grid (U0, V0) at transform t.
+      view() { return last && base ? { w, h, U0, V0, PX, t: last, cls, hs, band, lat: latA, lon: lonA, ids, realms: realmsNow, base, terrain, anim, out: outNow, sprite: spriteMask, kept, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top) } : null; },
       // Is this lon/lat drawn as water right now (from the last render)?
       isWater(lon, lat) { if (!cls || !last) return false; const q = this.toPixel(lon, lat); if (!q || q[0] < 0 || q[1] < 0 || q[0] >= w || q[1] >= h) return false; return cls[q[1] * w + q[0]] <= 2; },
       // Which realm is drawn under a screen point (for hover and click), from the id buffer.
