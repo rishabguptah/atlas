@@ -21,7 +21,14 @@ OUT = os.path.join(os.path.dirname(os.path.dirname(HERE)), 'data', 'religion-ide
 NOTE = 'Religion and ideas workstream draft, written from general knowledge; check against this article'
 
 
-def src(title):
+try:
+    WD = json.load(open(os.path.join(HERE, 'wikidata_ids.json'), encoding='utf-8'))
+except FileNotFoundError:  # before the first resolve_wikidata.py run
+    WD = {'qid': {}, 'title': {}}
+
+
+def src(title, rid=None):
+    title = WD['title'].get(rid, title)
     return [{'cite': f'Wikipedia: {title}', 'url': 'https://en.wikipedia.org/wiki/' + quote(title.replace(' ', '_'), safe="(),'_–-"), 'note': NOTE}]
 
 
@@ -64,7 +71,7 @@ def records():
         if died is not None:
             r['died'] = {'year': yr(died)}
         r['active_place'] = P(active)
-        r.update(sources=src(wiki), status='draft')
+        r.update(sources=src(wiki, r['id']), status='draft')
         out['people'].append(r)
 
     for slug, name, sub, start, end, origin, founder, lenses, wiki, what in IDEAS:
@@ -74,7 +81,7 @@ def records():
             r['end'] = None  # still exists
         else:
             when(r, 'end', end)
-        r.update(sources=src(wiki), status='draft')
+        r.update(sources=src(wiki, r['id']), status='draft')
         out['ideas'].append(r)
         if founder:
             assert founder in people, founder
@@ -88,7 +95,7 @@ def records():
             assert author in people, author
             r['author'] = 'person:' + author
         when(r, 'start', year)
-        r.update(sources=src(wiki), status='draft')
+        r.update(sources=src(wiki, r['id']), status='draft')
         out['works'].append(r)
 
     seen = set()
@@ -126,7 +133,13 @@ def records():
         name, lat, lon, wiki, today = PLACES[slug]
         out['places'].append({'id': 'place:' + slug, 'kind': 'place', 'stub': True, 'name': name, 'subtype': 'city',
                               'lenses': ['geography'], 'lat': lat, 'lon': lon, 'today': today,
-                              'sources': src(wiki), 'status': 'draft'})
+                              'sources': src(wiki, 'place:' + slug), 'status': 'draft'})
+    for recs in out.values():
+        for r in recs:
+            q = WD['qid'].get(r['id'])
+            if q:
+                r['wikidata'] = q
+                r['sources'].append({'cite': f'Wikidata {q}', 'url': f'https://www.wikidata.org/wiki/{q}'})
     return out
 
 

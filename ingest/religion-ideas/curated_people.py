@@ -42,7 +42,7 @@ PEOPLE = [
     ('muhammad', 'Muhammad', (570, 570, 571), 632, 'mecca', 'medina', ['prophet', 'ruler'], ['religion'], 'Muhammad', 'Prophet of Islam; his move from Mecca to Medina in 622 begins the Islamic calendar.'),
     ('hunayn', 'Hunayn ibn Ishaq', 809, 873, 'al_hira', 'baghdad', ['translator', 'physician'], ['ideas'], 'Hunayn ibn Ishaq', 'Christian physician who led the Baghdad translation of Greek medicine and philosophy into Syriac and Arabic.'),
     ('al_kindi', 'al-Kindi', (801, 801, 805), 873, 'kufa', 'baghdad', ['philosopher'], ['ideas'], 'Al-Kindi', 'The first major philosopher writing in Arabic, who argued Greek thought and Islam agree.'),
-    ('al_khwarizmi', 'al-Khwarizmi', (780, 780, 790), (850, 847, 850), 'khwarazm', 'baghdad', ['mathematician'], ['ideas'], 'Muhammad ibn Musa al-Khwarizmi', 'Mathematician of the House of Wisdom; algebra and the word algorithm come from him.'),
+    ('al_khwarizmi', 'al-Khwarizmi', (780, 780, 790), (850, 847, 850), 'khwarazm', 'baghdad', ['mathematician'], ['ideas'], 'Al-Khwarizmi', 'Mathematician of the House of Wisdom; algebra and the word algorithm come from him.'),
     ('al_farabi', 'al-Farabi', (872, 870, 872), 950, 'farab', 'baghdad', ['philosopher'], ['ideas'], 'Al-Farabi', 'Called the Second Teacher after Aristotle; wrote on logic, music and the virtuous city.'),
     ('ferdowsi', 'Ferdowsi', 940, (1020, 1019, 1025), 'tus', 'tus', ['poet'], ['literature'], 'Ferdowsi', 'Spent some thirty years writing the Shahnameh, the Persian national epic.'),
     ('avicenna', 'Avicenna (Ibn Sina)', 980, 1037, 'bukhara', 'hamadan', ['philosopher', 'physician'], ['ideas'], 'Avicenna', 'Persian polymath whose metaphysics and Canon of Medicine were taught from Isfahan to Paris.'),
@@ -80,7 +80,7 @@ PEOPLE = [
     ('dogen', 'Dōgen', 1200, 1253, 'kyoto', 'eiheiji', ['monk', 'philosopher'], ['religion', 'ideas'], 'Dōgen', 'Studied at Tiantong in China and founded Sōtō Zen in Japan.'),
     ('basho', 'Matsuo Bashō', 1644, 1694, 'iga', 'tokyo', ['poet'], ['literature'], 'Matsuo Bashō', 'Master of haiku and the travel diary The Narrow Road to the Deep North.'),
     # Medieval and early modern Europe
-    ('adelard', 'Adelard of Bath', (1080, 1080, 1085), (1152, 1142, 1152), 'bath', 'bath', ['translator', 'scholar'], ['ideas'], 'Adelard of Bath', 'English scholar who travelled to Sicily and Syria and translated Euclid from Arabic into Latin.'),
+    ('adelard', 'Adelard of Bath', (1080, 1075, 1085), (1152, 1142, 1160), 'bath', 'bath', ['translator', 'scholar'], ['ideas'], 'Adelard of Bath', 'English scholar who travelled to Sicily and Syria and translated Euclid from Arabic into Latin.'),
     ('gerard_cremona', 'Gerard of Cremona', (1114, 1114, 1114), 1187, 'cremona', 'toledo', ['translator'], ['ideas'], 'Gerard of Cremona', 'Translated some 87 Arabic works in Toledo, including Ptolemy\'s Almagest and Aristotle\'s natural books.'),
     ('michael_scot', 'Michael Scot', (1175, 1175, 1175), (1232, 1232, 1236), None, 'palermo', ['translator', 'scholar'], ['ideas'], 'Michael Scot', 'Scottish scholar who translated Averroes\' commentaries in Toledo and served Frederick II in Sicily.'),
     ('anselm', 'Anselm of Canterbury', 1033, 1109, 'aosta', 'canterbury', ['theologian', 'bishop'], ['religion', 'ideas'], 'Anselm of Canterbury', 'Archbishop who proposed the ontological argument for God.'),
