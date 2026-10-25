@@ -7,6 +7,8 @@
 //   pm.tick()                                advance sprite and water animation by one frame (call ~4 fps)
 //   pm.overlay(fn) / pm.repaint()            fn(g) paints last, into the same grid (lens marks, see marks.js); repaint redraws
 //   pm.setEra(style, {quiet?})               era map style from eras.js (null = today's look): grades the cached raster, draws the frame, ~400 ms dither crossfade
+//   pm.setPaleo(p)                          p = {key, cls(lon, lat, c, isLand, band, u, v)} remaps terrain classes for another
+//                                            age (ice-age coasts, ice sheets, biomes; see paleo.js); returns true if it changed
 //   pm.setDetail(fn)                         fn(G, phase) draws zoom detail into the grid: "under" before realm tints, "over" after; "key" names the under pass (see detail.js)
 //   pm.labelGrid()                           realm id and terrain class per art pixel of the last frame (for realm names)
 //   pm.spriteBoxes()                         screen boxes of the prioritised sprites last painted (labels keep off them)
@@ -54,7 +56,7 @@
     container.prepend(canvas);
     const ctx = canvas.getContext("2d");
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
-    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, elevA = null, riv = null, anim = null, art = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [];
+    let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, elevA = null, riv = null, anim = null, art = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [], paleo = null, paleoKey = "";
 
     // Terrain tiles: levels coarse to fine, each {cell (degrees), tdeg (tile size in degrees), url(col, row)}.
     // Tiles load on demand; until a finer tile arrives the coarser level shows, then the map re-renders.
@@ -298,6 +300,7 @@
         if (c === 4 && (need > 0.1 || !isLand)) c = 10;
         if (isLand && WATER(c) && c !== 3) c = 10;
         if (!isLand && !WATER(c)) c = 2;
+        if (paleo) { const c0 = c; c = paleo.cls(ll[0], ll[1], c, isLand, s2, u, v); if (c !== c0 && c0 <= 2) { hs[k] = 128; band[k] = 0; cls[k] = c; latA[k] = ll[1]; lonA[k] = ll[0]; elevA[k] = 0; lowNoise[k] = Math.sin(ll[0] * 1.7 + Math.sin(ll[1] * 2.3)) * Math.sin(ll[1] * 2.1 + ll[0] * 0.6); continue; } }
         cls[k] = c; hs[k] = s1; band[k] = s2;
         latA[k] = ll[1]; lonA[k] = ll[0]; elevA[k] = s3;
         lowNoise[k] = Math.sin(ll[0] * 1.7 + Math.sin(ll[1] * 2.3)) * Math.sin(ll[1] * 2.1 + ll[0] * 0.6);
@@ -351,7 +354,7 @@
       const need = 360 / (sw * t.k / PX);
       // A pan at the same zoom keeps every art pixel it already drew (they are anchored to the world grid) and only
       // draws the newly exposed bands, each with a margin so trees, peaks and shorelines join up across the seam.
-      const P = prevView, reuse = P && P.k === t.k && P.need === need && P.mood === mood && P.ver === tileVer && !o.full &&
+      const P = prevView, reuse = P && P.k === t.k && P.need === need && P.mood === mood && P.ver === tileVer && P.pk === paleoKey && !o.full &&
         Math.abs(U0 - P.U0) < w && Math.abs(V0 - P.V0) < h;
       if (!reuse) { off.width = w; off.height = h; terrainPass(t, need); }
       else {
@@ -374,7 +377,7 @@
         ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = view);
         off.width = w; off.height = h; art = { ...art, anim };
       }
-      prevView = { k: t.k, need, mood, ver: tileVer, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
+      prevView = { k: t.k, need, mood, ver: tileVer, pk: paleoKey, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
       terrain = base.slice();
       realmRaster.clear();
       applyRealms();
@@ -389,7 +392,7 @@
       let e = dx + dy, n = 0;
       for (;;) {
         const q = y0 * w + x0;
-        if (x0 >= 0 && y0 >= 0 && x0 < w && y0 < h && cls[q] >= 4 && cls[q] !== 255) { cls[q] = 4; riv[q] = Math.max(riv[q], col); }
+        if (x0 >= 0 && y0 >= 0 && x0 < w && y0 < h && cls[q] >= 4 && cls[q] !== 255 && !(paleo && cls[q] === 5)) { cls[q] = 4; riv[q] = Math.max(riv[q], col); }
         if (x0 === x1 && y0 === y1 || ++n > 4000) break;
         const e2 = 2 * e; if (e2 >= dy) { e += dy; x0 += sx; } if (e2 <= dx) { e += dx; y0 += sy; }
       }
@@ -617,6 +620,7 @@
       underlay(fn) { underlay = fn; },
       repaint() { paint(); },
       setDetail(fn) { detailFn = fn; },
+      setPaleo(p) { const key = p ? p.key : ""; if (key === paleoKey) return false; paleo = p || null; paleoKey = key; return true; },
       setFrame(f) { frame = f; },
       on(fn) { hooks.push(fn); },
       ownWater(on) { water = !!on; },

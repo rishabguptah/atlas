@@ -45,6 +45,8 @@ is then checked once, against Crossref or OpenLibrary, and every record that cit
 ### Time
 
 Years are integers. Negative is BCE, and there is no year 0 (-1 is 1 BCE).
+Deep-time records (data/deep-time/) go back to about 3 million years ago: a date given in the source as "ka" (thousands
+of years before 1950) is stored as `1950 - ka * 1000`. The checker accepts years after -3,000,000.
 
 | Field | Rule |
 | --- | --- |

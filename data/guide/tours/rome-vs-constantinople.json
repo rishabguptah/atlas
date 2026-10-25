@@ -1,8 +1,8 @@
 {
  "id": "tour:rome_vs_constantinople",
  "question": "Why did Rome fall but Constantinople last another thousand years?",
- "status": "draft",
- "author": "Claude (curated), waiting for the judge",
+ "status": "sourced",
+ "author": "Claude (curated); facts and sources checked 2026-10-25",
  "short": "The two halves of the empire faced the same storm with different hands. The East sat behind water and the Theodosian Walls, kept its richest provinces (Egypt, Syria, Anatolia) for two more centuries, could pay or push its enemies westward, and kept its generals under a civilian court. The West had the long Rhine frontier, lost its African tax base in 439, and ended up run by warlords. Geography and money explain most of it; plague, climate and faith matter more for how the East survived the next crisis than for why the West fell.",
  "lenses": {
   "geography": 0.85,
@@ -32,7 +32,7 @@
     "polity:roman",
     "polity:byzantine"
    ],
-   "text": "When Theodosius I died in 395, the empire was split between his sons: Honorius in the West and Arcadius in the East. Same laws, same army, same coin. So the question is a natural experiment: two halves of one state, one test.",
+   "text": "When Theodosius I died in 395, the empire was split between his sons: Honorius in the West and Arcadius in the East. Same laws, same coin, one army split between two courts. So the question is a natural experiment: two halves of one state, one test.",
    "confidence": 0.95,
    "sources": [
     {
@@ -40,9 +40,15 @@
      "url": "https://en.wikipedia.org/wiki/Theodosius_I"
     },
     {
+     "src": "src:heather_2005_fall",
      "cite": "Peter Heather, The Fall of the Roman Empire (2005)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Theodosius I died January 395; Arcadius took the East, Honorius the West (Wikipedia). 'Same army' changed: the field armies were divided between the two courts."
+   }
   },
   {
    "lens": "geography",
@@ -73,7 +79,7 @@
      "lat": 40.65
     }
    ],
-   "text": "Constantinople sits on a triangle of land with the Sea of Marmara, the Bosporus and the Golden Horn on three sides. The fourth side was closed around 413 by the Theodosian Walls: a moat, an outer wall and an inner wall, running about 6 km from sea to sea. Rome, by contrast, was an inland city with a long Aurelian wall and no sea to hide behind.",
+   "text": "Constantinople sits on a triangle of land with the Sea of Marmara, the Bosporus and the Golden Horn on three sides. The fourth side was closed in 413 by the Theodosian land wall, and after the earthquake of 447 (most scholars date the outer wall and moat to then) it became a triple barrier of moat, outer wall and inner wall, about 5.7 km from sea to sea. Rome, by contrast, was an inland city with a 19 km Aurelian wall and no sea to hide behind.",
    "confidence": 0.9,
    "sources": [
     {
@@ -81,9 +87,15 @@
      "url": "https://en.wikipedia.org/wiki/Walls_of_Constantinople"
     },
     {
+     "src": "src:turnbull_2004_walls",
      "cite": "Stephen Turnbull, The Walls of Constantinople AD 324-1453 (Osprey, 2004)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Corrected: only the inner wall was finished by 413 (Codex Theodosianus); the outer wall and moat are usually dated after the 447 earthquake. Length 5.7 km, not about 6 (Wikipedia, Walls of Constantinople)."
+   }
   },
   {
    "lens": "geography",
@@ -113,13 +125,19 @@
    "confidence": 0.75,
    "sources": [
     {
+     "src": "src:heather_2005_fall",
      "cite": "Peter Heather, The Fall of the Roman Empire (2005)"
     },
     {
      "cite": "Wikipedia, Bosporus",
      "url": "https://en.wikipedia.org/wiki/Bosporus"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Geographic argument as made by Heather (2005): the capital and its fleet shielded Anatolia, Syria and Egypt from Balkan invaders. No numbers to check."
+   }
   },
   {
    "lens": "military",
@@ -195,8 +213,17 @@
     {
      "cite": "Wikipedia, Vandal Kingdom",
      "url": "https://en.wikipedia.org/wiki/Vandal_Kingdom"
+    },
+    {
+     "src": "src:heather_2005_fall",
+     "cite": "Peter Heather, The Fall of the Roman Empire (2005)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Prosper of Aquitaine dates the crossing to 31 December 406 (some argue 405); Mainz was the first city Jerome lists as sacked; Vandals crossed to Africa in 429 and took Carthage on 19 October 439 (Wikipedia)."
+   }
   },
   {
    "lens": "economy",
@@ -229,7 +256,7 @@
      "style": "cut"
     },
     {
-     "label": "Egyptian grain to Constantinople (kept until 618)",
+     "label": "Egyptian grain to Constantinople (kept until the Persian conquest of 619)",
      "points": [
       [
        29.92,
@@ -250,16 +277,23 @@
      ]
     }
    ],
-   "text": "North Africa was the West's richest province: grain for Rome and a large share of its taxes. When Carthage fell to the Vandals in 439 the Western state lost the money that paid its army, and fewer soldiers meant more land lost. The East kept Egypt, Syria and Anatolia, the richest parts of the Roman world, until the Persian and Arab wars of the 7th century.",
+   "text": "North Africa was the West's richest province: grain for Rome and a large share of its taxes. When Carthage fell to the Vandals in 439 the Western state lost the money that paid its army, and fewer soldiers meant more land lost. The East kept Egypt and Syria, the richest parts of the Roman world, until the Persian and Arab wars of the 7th century, and held most of Anatolia for four centuries after that.",
    "confidence": 0.8,
    "sources": [
     {
-     "cite": "Peter Heather, The Fall of the Roman Empire (2005), ch. 7"
+     "src": "src:heather_2005_fall",
+     "cite": "Peter Heather, The Fall of the Roman Empire (2005)"
     },
     {
+     "src": "src:wickham_2005_framing",
      "cite": "Chris Wickham, Framing the Early Middle Ages (2005)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Corrected: Anatolia was not lost in the 7th century, only Egypt and Syria. Dropped the 'ch. 7' pointer to Heather, which could not be confirmed. Route label now names the 619 Persian capture of Alexandria."
+   }
   },
   {
    "lens": "military",
@@ -331,17 +365,23 @@
      "lat": 45.77
     }
    ],
-   "text": "In the 440s Attila ravaged the Balkans and Constantinople paid him large yearly sums of gold. The East could afford it, and behind its walls and straits it had little else to fear. In 451 Attila turned west instead, into Gaul, and in 452 into Italy. The East could buy time; the West had to fight.",
+   "text": "In the 440s Attila ravaged the Balkans, and Constantinople bought peace with gold: after 443 the yearly payment was tripled to 2,100 Roman pounds. The East could afford it, and behind its walls and straits its core provinces were out of reach. When the new emperor Marcian stopped paying in 450, Attila turned west instead, into Gaul in 451 and Italy in 452. The East could buy time; the West had to fight.",
    "confidence": 0.75,
    "sources": [
     {
-     "cite": "Christopher Kelly, The End of Empire: Attila the Hun and the Fall of Rome (2008)"
+     "src": "src:kelly_2009_end",
+     "cite": "Christopher Kelly, The End of Empire: Attila the Hun and the Fall of Rome (2009; UK 2008)"
     },
     {
      "cite": "Wikipedia, Attila",
      "url": "https://en.wikipedia.org/wiki/Attila"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Added the tribute figure (2,100 lb of gold a year) and Marcian's refusal to pay in 450, which preceded the turn west (Wikipedia, Attila). Kelly's US edition is 2009; the UK edition (2008) is titled Attila the Hun."
+   }
   },
   {
    "lens": "order",
@@ -367,6 +407,7 @@
    "confidence": 0.7,
    "sources": [
     {
+     "src": "src:goldsworthy_2009_how",
      "cite": "Adrian Goldsworthy, How Rome Fell (2009)"
     },
     {
@@ -377,7 +418,12 @@
      "cite": "Wikipedia, Aspar",
      "url": "https://en.wikipedia.org/wiki/Aspar"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Odoacer deposed Romulus Augustulus on 4 September 476 and the imperial insignia went to Zeno; Leo I had Aspar killed in 471 (Wikipedia, Odoacer and Aspar)."
+   }
   },
   {
    "lens": "population",
@@ -442,9 +488,15 @@
      "url": "https://en.wikipedia.org/wiki/Theodoric_the_Great"
     },
     {
+     "src": "src:heather_1996_goths",
      "cite": "Peter Heather, The Goths (1996)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Theodoric set out for Italy in autumn 488 at Zeno's behest and took Ravenna in 493 (Wikipedia, Theodoric the Great)."
+   }
   },
   {
    "lens": "disease",
@@ -494,20 +546,31 @@
     "place:istanbul",
     "place:alexandria"
    ],
-   "text": "The East was not immune. Bubonic plague reached Egypt in 541 and Constantinople in 542, and returned for two centuries. A run of cold years began in 536 after volcanic eruptions. Kyle Harper argues that plague and climate drove the late Roman crisis. They hit the East hardest, though, a century after the West was gone, so they explain how the East shrank more than why the West fell.",
+   "text": "The East was not immune. Bubonic plague reached Egypt in 541 and Constantinople in 542, and returned for two centuries. A run of cold years began in 536 after volcanic eruptions. Kyle Harper argues that plague and climate drove the late Roman crisis; others, like Lee Mordechai and Merle Eisenberg, think the plague's toll has been overstated. Either way they hit the East 65 years after the last Western emperor was deposed, so they explain how the East shrank more than why the West fell.",
    "confidence": 0.65,
    "sources": [
     {
+     "src": "src:harper_2017_fate",
      "cite": "Kyle Harper, The Fate of Rome: Climate, Disease, and the End of an Empire (2017)"
     },
     {
+     "src": "src:buntgen_2016_cooling",
      "cite": "Büntgen et al., Cooling and societal change during the Late Antique Little Ice Age from 536 to around 660 AD, Nature Geoscience (2016)"
+    },
+    {
+     "src": "src:mordechai_2019_justinianic",
+     "cite": "Mordechai et al., The Justinianic Plague: An inconsequential pandemic?, PNAS (2019)"
     },
     {
      "cite": "Wikipedia, Plague of Justinian",
      "url": "https://en.wikipedia.org/wiki/Plague_of_Justinian"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Corrected 'a century after the West was gone' to 65 years (476 to 541). Added the minimalist counter-view (Mordechai et al. 2019). Pelusium 541, Constantinople 542 (Wikipedia)."
+   }
   },
   {
    "lens": "religion",
@@ -522,7 +585,7 @@
     "place:hagia_sophia"
    ],
    "pins": [],
-   "text": "In 626 Avars besieged the city from Europe while a Persian army waited across the Bosporus. The patriarch carried an icon of the Virgin around the walls, and when the Avars failed, the city credited her. The belief that Constantinople was the God-guarded New Rome, with Hagia Sophia (537) at its heart, gave its people a reason to hold out that Rome's last Western emperors could not match.",
+   "text": "In 626 Avars and Slavs besieged the city from Europe while a Persian army waited across the Bosporus. The patriarch carried an icon of the Virgin around the walls, and when the Avars failed, the city credited her. The belief that Constantinople was the God-guarded New Rome, with Hagia Sophia (537) at its heart, gave its people a reason to hold out that Rome's last Western emperors could not match.",
    "confidence": 0.55,
    "sources": [
     {
@@ -530,9 +593,15 @@
      "url": "https://en.wikipedia.org/wiki/Siege_of_Constantinople_(626)"
     },
     {
+     "src": "src:kaldellis_2023_new",
      "cite": "Anthony Kaldellis, The New Roman Empire: A History of Byzantium (2023)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Patriarch Sergius led processions on the walls with an icon of the Virgin while Shahrbaraz's Persians waited at Chalcedon (Wikipedia). Hagia Sophia was dedicated in 537."
+   }
   },
   {
    "lens": "military",
@@ -575,7 +644,7 @@
      ]
     }
    ],
-   "text": "The Arab conquests took Syria and Egypt in the 630s and 640s, and Umayyad forces besieged Constantinople in 674-678 and again in 717-718. Both failed. The walls held the land side, Greek fire burned the fleets, and the straits let the city be supplied while the besiegers starved through winter.",
+   "text": "The Arab conquests took Syria and Egypt in the 630s and 640s, and Umayyad forces besieged Constantinople in the 670s (traditionally 674-678; Marek Jankowiak redates the main siege to 667-669) and again in 717-718. Both failed. The walls held the land side, Greek fire burned the fleets, and the straits let the city be supplied while the besiegers starved through a hard winter.",
    "confidence": 0.8,
    "sources": [
     {
@@ -583,9 +652,19 @@
      "url": "https://en.wikipedia.org/wiki/Siege_of_Constantinople_(717%E2%80%93718)"
     },
     {
+     "cite": "Wikipedia, Siege of Constantinople (674-678)",
+     "url": "https://en.wikipedia.org/wiki/Siege_of_Constantinople_(674%E2%80%93678)"
+    },
+    {
+     "src": "src:haldon_1990_byzantium",
      "cite": "John Haldon, Byzantium in the Seventh Century (1990)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Added the dispute over the first siege's dates (Howard-Johnston; Jankowiak: 667-669). 717-718: Greek fire, Bulgar attacks and winter; siege lifted 15 August 718 (Wikipedia)."
+   }
   },
   {
    "lens": "military",
@@ -645,7 +724,7 @@
     }
    ],
    "pins": [],
-   "text": "The walls fell only twice. In 1204 the Fourth Crusade, carried by a Venetian fleet, broke in from the Golden Horn, over the weaker sea walls. In 1453 Mehmed II's Ottomans brought giant cannon to the land walls, after the empire had shrunk to little more than the city itself. That is 977 years after 476.",
+   "text": "Only two attackers ever took the city by storm. In 1204 the Fourth Crusade, carried by a Venetian fleet, broke in from the Golden Horn, over the weaker sea walls. In 1453 Mehmed II's Ottomans brought giant cannon to the land walls, after the empire had shrunk to little more than the city, a few islands and the Morea. That is 977 years after 476.",
    "confidence": 0.9,
    "sources": [
     {
@@ -657,9 +736,15 @@
      "url": "https://en.wikipedia.org/wiki/Sack_of_Constantinople"
     },
     {
+     "src": "src:crowley_2005_constantinople",
      "cite": "Roger Crowley, Constantinople: The Last Great Siege, 1453 (2005)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "'The walls fell only twice' reworded: the city was also entered without a storm (1261, by a gate at night). 1204 assault came over the Golden Horn walls (Wikipedia, Sack of Constantinople). 1453 - 476 = 977."
+   }
   },
   {
    "lens": "literature",
@@ -673,7 +758,7 @@
    "highlight": [
     "place:rome"
    ],
-   "text": "Edward Gibbon wrote that the idea for his Decline and Fall of the Roman Empire (1776-1789) came to him in 1764 among the ruins of the Capitol in Rome. He blamed barbarism and Christianity. Few historians accept that verdict now, but his title is why we still say Rome 'fell', and why the East got the dismissive name 'Byzantine' instead of the Roman Empire it called itself.",
+   "text": "Edward Gibbon wrote that the idea for his Decline and Fall of the Roman Empire (1776-1789) came to him on 15 October 1764 among the ruins of the Capitol in Rome. He blamed barbarism and religion. Few historians accept that verdict now, but his title is why we still say Rome 'fell'. The name 'Byzantine' is older (Hieronymus Wolf's Corpus Historiae Byzantinae, 1557), but Gibbon's contempt for the 'Greek' empire helped make it a dismissive word for the state that called itself the Roman Empire.",
    "confidence": 0.85,
    "sources": [
     {
@@ -681,9 +766,20 @@
      "url": "https://en.wikipedia.org/wiki/The_History_of_the_Decline_and_Fall_of_the_Roman_Empire"
     },
     {
-     "cite": "Edward Gibbon, Memoirs of My Life (1796)"
+     "src": "src:gibbon_1796_memoirs",
+     "cite": "Edward Gibbon, Memoirs of My Life and Writings (1796)",
+     "quote": "as I sat musing amidst the ruins of the Capitol"
+    },
+    {
+     "cite": "Wikipedia, Hieronymus Wolf",
+     "url": "https://en.wikipedia.org/wiki/Hieronymus_Wolf"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Corrected: Gibbon did not give the East the name 'Byzantine'; Hieronymus Wolf's 1557 corpus did. Added the date of the Capitol visit (15 October 1764) from the Memoirs."
+   }
   }
  ],
  "views": [
@@ -697,9 +793,15 @@
    "against": "The East faced the same Huns and survived, so exposure and money must do the work.",
    "sources": [
     {
+     "src": "src:heather_2005_fall",
      "cite": "Peter Heather, The Fall of the Roman Empire (2005)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Work exists and was verified (see the src record); the claim summarises the book's thesis."
+   }
   },
   {
    "name": "Adrian Goldsworthy",
@@ -711,9 +813,15 @@
    "against": "The East had usurpers too and still held.",
    "sources": [
     {
+     "src": "src:goldsworthy_2009_how",
      "cite": "Adrian Goldsworthy, How Rome Fell (2009)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Work exists and was verified (see the src record); the claim summarises the book's thesis."
+   }
   },
   {
    "name": "Kyle Harper",
@@ -722,12 +830,18 @@
    "strength": "medium",
    "claim": "Plague and a colder climate broke the late Roman world.",
    "for": "Strong for the East's 6th to 7th century crisis.",
-   "against": "Weak for the West's 5th century fall, which came before the Plague of Justinian.",
+   "against": "Weak for the West's 5th-century fall, which came before the Plague of Justinian; there Harper leans on a steppe drought behind the Huns, thinner evidence.",
    "sources": [
     {
+     "src": "src:harper_2017_fate",
      "cite": "Kyle Harper, The Fate of Rome (2017)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Work exists and was verified (see the src record); the claim summarises the book's thesis."
+   }
   },
   {
    "name": "Bryan Ward-Perkins",
@@ -739,9 +853,15 @@
    "against": "It measures how bad the fall was more than why the East escaped it.",
    "sources": [
     {
+     "src": "src:wardperkins_2005_fall",
      "cite": "Bryan Ward-Perkins, The Fall of Rome and the End of Civilization (2005)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Work exists and was verified (see the src record); the claim summarises the book's thesis."
+   }
   },
   {
    "name": "Peter Brown",
@@ -753,9 +873,15 @@
    "against": "It sidesteps the political question of why one state ended and the other did not.",
    "sources": [
     {
+     "src": "src:brown_1971_world",
      "cite": "Peter Brown, The World of Late Antiquity (1971)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Work exists and was verified (see the src record); the claim summarises the book's thesis."
+   }
   },
   {
    "name": "Anthony Kaldellis",
@@ -767,9 +893,15 @@
    "against": "Identity is hard to measure and easy to read backward from survival.",
    "sources": [
     {
+     "src": "src:kaldellis_2019_romanland",
      "cite": "Anthony Kaldellis, Romanland: Ethnicity and Empire in Byzantium (2019)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Work exists and was verified (see the src record); the claim summarises the book's thesis."
+   }
   },
   {
    "name": "Edward Gibbon",
@@ -781,15 +913,21 @@
    "against": "The East was more Christian than the West and lasted longer.",
    "sources": [
     {
+     "src": "src:gibbon_1776_decline",
      "cite": "Edward Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789)"
     }
-   ]
+   ],
+   "checked": {
+    "on": "2026-10-25",
+    "by": "scholarship upgrade",
+    "note": "Work exists and was verified (see the src record); the claim summarises the book's thesis."
+   }
   }
  ],
  "whatifs": [
   {
    "q": "What if the 468 expedition had retaken Carthage?",
-   "a": "East and West sent a huge joint fleet against the Vandals in 468, and it was burned off Cape Bon. Had it won, the West would have got its African tax base back. That might have bought decades, though the West's generals and the Rhine frontier would still have been there.",
+   "a": "East and West sent a huge joint fleet (about 1,100 ships) against the Vandals in 468, and it was burned off Cape Bon. Had it won, the West would have got its African tax base back. That might have bought decades, though the West's generals and the Rhine frontier would still have been there.",
    "confidence": 0.3,
    "year": 468,
    "view": {
@@ -806,8 +944,12 @@
    ],
    "sources": [
     {
-     "cite": "Wikipedia, Battle of Cap Bon (468)",
-     "url": "https://en.wikipedia.org/wiki/Battle_of_Cap_Bon_(468)"
+     "cite": "Wikipedia, Battle of Cape Bon (468)",
+     "url": "https://en.wikipedia.org/wiki/Battle_of_Cape_Bon_(468)"
+    },
+    {
+     "src": "src:heather_2005_fall",
+     "cite": "Peter Heather, The Fall of the Roman Empire (2005)"
     }
    ]
   },
@@ -823,6 +965,7 @@
    },
    "sources": [
     {
+     "src": "src:harper_2017_fate",
      "cite": "Kyle Harper, The Fate of Rome (2017)"
     }
    ]
@@ -832,5 +975,10 @@
   "We have no reliable budgets for either half of the empire. Shares of tax from Africa or Egypt are reconstructions, not numbers from a ledger.",
   "The date of the Rhine crossing (405 or 406) and the size of the barbarian groups are argued over.",
   "How much 'Roman identity' kept the East together is very hard to test."
- ]
+ ],
+ "checked": {
+  "on": "2026-10-25",
+  "by": "scholarship upgrade",
+  "note": "Every step checked against Wikipedia and the cited works; 8 steps corrected (see each step's checked note)."
+ }
 }

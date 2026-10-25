@@ -93,6 +93,18 @@ only when needed, from a sidecar to publish beside the page:
 python3 views/atlas/lenses/travels.py pub      # writes pub/atlas-files/travels-deep.json (about 2.7 MB)
 ```
 
+## Deep time (300,000 years ago to 4000 BCE)
+
+The slider runs from 300,000 years ago. Its first fifth is deep time on a log scale of years ago (eras: First modern
+humans, Out of Africa, Ice Age, First farmers); the rest is history on the old curve. Deep years snap to a grain that
+grows with age (1,000 years before 100,000 years ago) and read as "45,000 years ago". Before 4000 BCE there are no states
+or chokepoints. The pixel map redraws the ice-age world from sea level: exposed shelves and land bridges, ice sheets,
+glacial tundra and steppe, the Green Sahara (`views/pixel/paleo.js`, `ATLAS.paleo`; rasters `atlas-files/paleo-*.png`
+from `data/deep-time/`, about 0.7 MB, fetched only when the year goes before 5500 BCE). A new sea level or ice extent
+redraws all the terrain, so while the year moves it swaps at most every 400 ms. The Deep time lens (Peoples) adds the
+other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
+hearths, land-bridge and ice-sheet names, and climate shocks. Sources and rebuild: `ingest/deep-time/README.md`.
+
 ## Lens families and plugins
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
@@ -124,3 +136,19 @@ the motion model's own estimate for the same trip, then your calibration) with W
 calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five with streaks and a copyable
 result, Endless and About here modes, and finds; each reveal also visits the spot for the Codex. Progress stays in
 localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `calibration` and `play(id)`.
+
+## Travel time: watch the world shrink
+
+The Travel time lens (Land family, `lenses/shrink.*`) paints travel-time rings from a city into the pixel map, after
+Galton's isochronic passage chart (1881) and Bartholomew's 1914 one: red within a week, rose two weeks, ochre a month,
+green two months, blue a season, dusk beyond. The rings are worked out live by the shared router (`ATLAS.world.reach`,
+plus flights from the 1950s), once per city and decade after the slider settles (30 to 160 ms, on idle), then cached per
+view, so a year step pays only a cheap repaint. The lens also draws news on its way (dated arrivals from
+`data/world/news.json` and `data/tech-food-energy/news.jsonl`) and three wandering centres of the world (cities, trade,
+ideas, one point a century since 3000 BCE). The Travel tab picks the city (seven hubs or the map centre), shows a month's
+reach for the seven benchmark years, the days to the other hubs, and checks the router against documented journeys
+(`data/world/speeds.json`). The Story `story:world_shrinks` plays it all in eleven scenes.
+
+Hooks it added for everyone: `ATLAS.pixelUnder` (functions painting into the pixel frame under the sprites, after the
+choropleth), a Scene's `set: {<plugin>: value}` (handed to `ATLAS.sceneSet[plugin]` when the scene plays),
+`ATLAS.world.director.onLeave(fn)`, and `ATLAS.shrink` (`rings`, `origin()`, `compute(o, y)`).

@@ -6,7 +6,8 @@
 // Scene: {id, t, date, view: {lon, lat, span}, lenses: [layer ids], by: guide lens, highlight, pins, routes,
 //         actors, caption (one line), text (the why, longer), conf: attested|estimated|approximate|unknown,
 //         sources: [{cite, url}], branch (null or a what-if id), next, ask (a question for the live panel),
-//         deeper: {story: id} | {q: question} | {tab: id}, kick (optional label over the caption)}
+//         deeper: {story: id} | {q: question} | {tab: id}, kick (optional label over the caption),
+//         set: {<plugin>: value} (hands a plugin its own scene state through ATLAS.sceneSet[plugin], e.g. shrink: {from: "london"})}
 // Story: {id, title, kind: tour|answer|life|simulation|object|storyline|whatif|quest, blurb, scenes, next?}
 (function () {
   const A = window.ATLAS, world = A.world = A.world || {};
@@ -29,7 +30,7 @@
       highlight: s.highlight || [], pins: s.pins || [], routes: s.routes || [], actors: s.actors || [],
       caption: s.caption || s.title || "", text: s.text || "", conf: s.conf || confOf(s.confidence),
       confidence: s.confidence ?? null, sources: s.sources || [], branch: s.branch || null, next: s.next || null,
-      ask: s.ask || null, deeper: s.deeper || null, kick: s.kick || null, ...extra,
+      ask: s.ask || null, deeper: s.deeper || null, kick: s.kick || null, set: s.set || null, ...extra,
     };
   }
   // A frame that holds every scene's view: for closing scenes that step back to show the whole story.

@@ -1,0 +1,30 @@
+{"claim": "2026-W44-01", "type": "start", "ref": "place:acruvium", "text": "Acruvium () was founded or first settled around 330 BCE (approx.)."}
+{"claim": "2026-W44-02", "type": "start", "ref": "place:diano_marina", "text": "Diano Marina () was founded or first settled around 30 BCE (approx.)."}
+{"claim": "2026-W44-03", "type": "start", "ref": "place:serra_orrios", "text": "Serra Orrios () was founded or first settled around 2000 BCE (approx.)."}
+{"claim": "2026-W44-04", "type": "start", "ref": "place:capo_testa", "text": "Capo Testa () was founded or first settled around 330 BCE (approx.)."}
+{"claim": "2026-W44-05", "type": "start", "ref": "place:histria", "text": "Histria () was founded or first settled around 550 BCE (approx.)."}
+{"claim": "2026-W44-06", "type": "end", "ref": "place:alea", "text": "Alea ended or was abandoned around 300 CE."}
+{"claim": "2026-W44-07", "type": "end", "ref": "place:prov:van_vilayet_q3975923", "text": "Van vilayet ended or was abandoned around 1922 CE."}
+{"claim": "2026-W44-08", "type": "end", "ref": "place:torre_alocaz", "text": "Torre Alocaz ended or was abandoned around 640 CE."}
+{"claim": "2026-W44-09", "type": "end", "ref": "place:polizzello_archaeological_site", "text": "Polizzello archaeological site ended or was abandoned around 550 BCE."}
+{"claim": "2026-W44-10", "type": "text", "ref": "place:palenque", "text": "Palenque: Maya city of Pakal the Great, with superb inscriptions and sculpture. Abandoned in the Classic Maya collapse; Pakal's tomb was found in 1952."}
+{"claim": "2026-W44-11", "type": "text", "ref": "place:bosporus", "text": "Bosporus: The narrow strait at Constantinople between the Black Sea and the Sea of Marmara. It made Constantinople rich and nearly impregnable for 1,500 years, and it is still Russia's only warm-water exit."}
+{"claim": "2026-W44-12", "type": "text", "ref": "place:stadium_quarter_delos", "text": "Stadium Quarter (Delos): Neighborhood surrounding the stadium in the settlement of Delos, constructed during the Hellenistic period."}
+{"claim": "2026-W44-13", "type": "text", "ref": "place:styra", "text": "Styra: Styra was an ancient port city located in the southwestern part of Euboea that possessed also an inland acropolis (on the modern peak of Hagios Nikolaos), extensive quarries, and a series of large stone structures known today as drakospita (dragon's houses)."}
+{"claim": "2026-W44-14", "type": "text", "ref": "place:zakros", "text": "Zakros: A Minoan site in eastern Crete and the location of a Bronze Age palatial center."}
+{"claim": "2026-W44-15", "type": "event", "ref": "event:gvp_eruption_18594", "text": "?, 1663 CE: Toya eruption, 1663."}
+{"claim": "2026-W44-16", "type": "event", "ref": "event:2013_india_pakistan_border_incidents_q4629452", "text": "?, 2013 CE: 2013 India–Pakistan border incidents."}
+{"claim": "2026-W44-17", "type": "event", "ref": "event:tragic_week_q1142553", "text": "?, 1909 CE: Tragic Week."}
+{"claim": "2026-W44-18", "type": "event", "ref": "event:battle_of_miyajima_q1064989", "text": "?, 1555 CE: Battle of Miyajima."}
+{"claim": "2026-W44-19", "type": "event", "ref": "event:battle_of_eisenach_q5722426", "text": "?, 908 CE: Battle of Eisenach."}
+{"claim": "2026-W44-20", "type": "event", "ref": "event:siege_of_breteuil_q107536804", "text": "?, 1356 CE: Siege of Breteuil."}
+{"claim": "2026-W44-21", "type": "event", "ref": "event:siege_of_kruje_q2348220", "text": "?, 1477 CE: Siege of Krujë."}
+{"claim": "2026-W44-22", "type": "population", "ref": "m:population:vyshny_volochyok_q134181:wikidata", "text": "Vyshny Volochyok had about 13,554 people in 1859 CE.", "point": 1859}
+{"claim": "2026-W44-23", "type": "population", "ref": "m:population:country_costa_rica:gapminder", "text": "Costa Rica had about 150,227 people in 1874 CE.", "point": 1874}
+{"claim": "2026-W44-24", "type": "population", "ref": "m:population:country_equatorial_guinea:gapminder", "text": "Equatorial Guinea had about 102,371 people in 1892 CE.", "point": 1892}
+{"claim": "2026-W44-25", "type": "population", "ref": "m:population:vyazma_q102307:wikidata", "text": "Vyazma had about 15,600 people in 1897 CE.", "point": 1897}
+{"claim": "2026-W44-26", "type": "population", "ref": "m:population:nizhniy_novgorod:reba2016", "text": "Nizhniy Novgorod had about 45,000 people in 1400 CE.", "point": 1400}
+{"claim": "2026-W44-27", "type": "polity_dates", "ref": "polity:sultanate_of_harar", "text": "Sultanate of Harar lasted from 1547 CE to 1578 CE."}
+{"claim": "2026-W44-28", "type": "polity_dates", "ref": "polity:kingdom_of_lunda", "text": "Kingdom of Lunda lasted from 1709 CE to 1889 CE."}
+{"claim": "2026-W44-29", "type": "polity_peak", "ref": "polity:maitraka_dynasty", "text": "Maitraka Dynasty peaked around 656 CE at about 0.303531 million km²."}
+{"claim": "2026-W44-30", "type": "polity_peak", "ref": "polity:lesotho", "text": "Lesotho peaked around 1973 CE at about 0.031741 million km²."}
