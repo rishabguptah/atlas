@@ -10,7 +10,7 @@ v0.5: relation `present_at`, route subtype `journey` with `legs`, and the `conf`
 | `presences_wikidata.jsonl` | 43,244 presences for 12,541 people (2026-10-25, after the coverage people): residence P551 (`lived`), work location P937 (`worked`), educated at P69, employer P108, positions held P39 at the office's location or its jurisdiction's capital, and battles (P607 with their own coordinates, under two years). Undated stays get `conf: unknown` and a `window` instead of start/end; the finder ignores them. | `fetch_wikidata.py` then `presences.py` |
 | `presences_travels.jsonl` | Long stays on the hand-entered journeys, plus co-presence clusters people ask about (Vienna 1913, Zurich 1916, Florence 1504, Paris 1920s, Weimar). Drafts with a cited biography each. | `itineraries.py` |
 | `journeys.jsonl` | Ibn Battuta, Xuanzang, Marco Polo, Mansa Musa's hajj, Faxian, Zheng He's 1st, 5th and 7th voyages, Evliya Çelebi, Humboldt. Drafts from the cited accounts. | `itineraries.py` |
-| `journeys_world.jsonl`, `presences_world.jsonl` | 43 journeys researched by the living-world thread (data/world/journeys on its branch): Zhang Qian to Ho Chi Minh. | `world_journeys.py DIR` |
+| `journeys_world.jsonl`, `presences_world.jsonl` | journeys researched by the living-world thread: Zhang Qian to Gandhi. Add new ones here as kernel records. | hand-kept |
 | `voyages_das.jsonl` | 8,157 Dutch East India Company voyages 1595-1795 (Dutch-Asiatic Shipping): ports and dates, the Cape call, the ship and master, and the people aboard, the people who died and the people who arrived. Sea lanes between ports are `via` points with `via_conf: approximate`. Ships that never arrived end in a leg with `conf: unknown`. | `das.py` |
 | `slave_routes.jsonl` | 262 Middle Passage routes (African region to American region) with people embarked, landed and dead at sea, and `by_decade`. | `slave.py` |
 | `voyages/slave.json` | All 64,852 SlaveVoyages voyages (trans-Atlantic and intra-American) as compact columns: year, ship, captain, flag, ports, people embarked and landed (imputed), resistance. Not kernel records (too many). | `slave.py` |
@@ -29,7 +29,6 @@ python3 ingest/travels/presences.py
 python3 ingest/travels/das.py
 python3 ingest/travels/slave.py                          # needs pdftotext for the codebook's place codes
 python3 ingest/travels/itineraries.py
-python3 ingest/travels/world_journeys.py DIR             # DIR = a checkout of data/world/journeys
 python3 tools/build.py
 ```
 
