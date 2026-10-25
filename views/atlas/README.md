@@ -29,6 +29,24 @@ python3 views/atlas/extract_layers.py /mnt/project-files/atlas/unified/layers \
 python3 views/atlas/build.py atlas.html                 # ATLAS_DIR defaults to /mnt/project-files/atlas
 ```
 
+The page stays small (about 3.3 MB): build.py writes what the first paint does not need to `atlas-files/` next to the
+page (relief images, the terrain L0 tile, plugin lens data over 40 KB, the Wikidata battles), and the page fetches it
+once the map has painted. **Publish `atlas-files/*` with the page**, beside `tiles/`, `borders/` and `borders-time/`.
+`--inline` puts everything back in one file for opening locally.
+
+## Performance budget
+
+Every change to the page keeps these (headless Chromium, 1440x900; measure before you merge):
+
+- Page HTML at most 4 MB. Anything else loads from a file beside the page, after the first paint.
+- Map painted within 1.5 s with no network throttling, and within 3 s at 25 Mbps.
+- A year step (slider or play) under 16 ms at the median and under 33 ms at p90. No DOM node per map mark: draw
+  into the canvas mark layer (`ctx.pins`/`ctx.paths`, or records via `ATLAS.marks()`), not SVG.
+- Work on every year step stays O(what is visible); cache anything keyed by border frame or view.
+- Idle (nothing moving) under 10% of one core; animation timers pause when the tab is hidden.
+- Zoom or pan settling under 100 ms.
+
+
 Order & chaos reads `data/order-chaos/lab.json`, War & chokepoints reads `data/states-war/` (curated plus Wikidata battles); Terrain reads terrain.json, terrain.js and terrain-relief.webp from LAYERS_DIR when present; tours come from `data/guide/tours/`. Next step: read
 `dist/kernel.json` for every layer once each workstream's records are merged.
 
