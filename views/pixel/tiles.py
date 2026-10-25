@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Lay out the pixel map's terrain tiles and precise borders for publishing next to a page: OUT_DIR/tiles/l0_0_0.png,
-l1_<col>_<row>.png (L1 cut into 30-degree tiles), l2_<col>_<row>.png and OUT_DIR/borders/l0|l1|l2/world_<year>.json.
+l1_<col>_<row>.png (L1 cut into 30-degree tiles), l2_<col>_<row>.png OUT_DIR/borders/l0|l1|l2/world_<year>.json
+and OUT_DIR/detail/ (zoom detail tiles).
 Skips work already done.
 
 Usage: python3 views/pixel/tiles.py OUT_DIR [TERRAIN_DIR]   (TERRAIN_DIR default /mnt/project-files/atlas/pixel/terrain)
@@ -37,4 +38,14 @@ if os.path.isdir(bsrc):
                 for bad, good in FFFD_FIXES.items():
                     txt = txt.replace(bad, good)
                 open(t, 'w', encoding='utf-8').write(txt.replace('\ufffd', ''))
+# Zoom detail (ingest/pixel/detail.py) goes to OUT_DIR/detail/ for views/pixel/detail.js: 30-degree tiles, pop.json, countries.png.
+dsrc = os.path.normpath(os.path.join(src, '..', 'detail'))
+if os.path.isdir(dsrc):
+    dout = os.path.join(out, '..', 'detail')
+    os.makedirs(dout, exist_ok=True)
+    for f in glob.glob(os.path.join(dsrc, '*')):
+        if f.endswith(('.json', '.png')):
+            t = os.path.join(dout, os.path.basename(f))
+            if not os.path.exists(t) or os.path.getmtime(t) < os.path.getmtime(f):
+                open(t, 'w', encoding='utf-8').write(open(f, encoding='utf-8').read().replace('\ufffd', '')) if f.endswith('.json') else shutil.copy(f, t)
 print(out, len(os.listdir(out)), 'tiles')
