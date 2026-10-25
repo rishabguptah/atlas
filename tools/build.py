@@ -16,11 +16,13 @@ KINDS = {  # kind -> (id prefix, owning workstream folder or None)
     'person': ('person', 'places-people'), 'group': ('group', 'economy-trade'),
     'event': ('event', None), 'idea': ('idea', 'religion-ideas'), 'work': ('work', 'religion-ideas'),
     'route': ('route', 'economy-trade'), 'relation': ('rel', None), 'measure': ('m', None),
+    'language': ('lang', 'peoples-languages'), 'script': ('script', 'peoples-languages'),
+    'sample': ('dna', 'peoples-languages'),
 }
-LENSES = {'geography', 'military', 'economy', 'population', 'disease', 'religion', 'ideas', 'literature', 'people', 'order'}
+LENSES = {'geography', 'military', 'economy', 'population', 'disease', 'religion', 'ideas', 'literature', 'people', 'order', 'language'}
 REL_TYPES = {'controls', 'capital_of', 'part_of', 'located_in', 'born_in', 'died_in', 'ruled', 'participant_in',
              'fought', 'allied_with', 'trades_with', 'founded', 'destroyed', 'succeeded', 'influenced', 'teacher_of',
-             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented'}
+             'translated', 'wrote', 'spread_to', 'migrated_to', 'caused', 'contributed_to', 'prevented', 'derived_from'}
 CAUSAL = {'caused', 'contributed_to', 'prevented'}
 CAUSES = {'war', 'fire', 'earthquake', 'river', 'sea', 'climate', 'trade', 'capital', 'quarried', 'volcano',
           'silt', 'faith', 'disease', 'unknown'}
@@ -89,7 +91,7 @@ def check(r):
 def refs(r):
     """Ids this record points at."""
     out = []
-    for f in ('place', 'from', 'to', 'of', 'capital', 'author'):
+    for f in ('place', 'from', 'to', 'of', 'capital', 'author', 'language', 'family', 'branch'):
         if isinstance(r.get(f), str):
             out.append(r[f])
     for f in ('born', 'died'):
