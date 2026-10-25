@@ -1,6 +1,6 @@
 # VIZ: how the Atlas draws data
 
-The data grammar for the map and the side panel. It sits under `views/pixel/DIRECTION.md` (art direction wins where
+The data grammar for the map and the side panel. It sits under `tools/art/ART.md` (art direction wins where
 the two differ) and is implemented by `views/pixel/grammar.js` (map), `views/pixel/charts.js` (panel charts),
 `views/atlas/lenses/viz.js` (choropleth lens, card charts), `views/atlas/lenses/compare.js` (Compare tab) and
 `views/atlas/lenses/flows.py` (flow data).
