@@ -128,21 +128,21 @@ def svg(rep, path):
     eu = dict(zip(rep['centuries'], regs[0]['records']))
     out = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" font-family="system-ui,sans-serif" font-size="11">',
            f'<rect width="{W}" height="{H}" fill="#fbf8f1"/>',
-           f'<text x="10" y="20" font-size="14" font-weight="600">Records per region and century ({rep["tag"]}): colour = log count, red outline = below 10% of Europe</text>']
+           f'<text x="10" y="20" font-size="14" font-weight="600">Records per region and century ({rep["tag"]}): darker = more (log scale), red outline = below 10% of Europe</text>']
     for j, c in enumerate(cents):
         if c % 500 == 0:
             lab = f'{-c} BCE' if c < 0 else f'{c}'
             out.append(f'<text x="{lx + j * cw}" y="{ty + ch * len(regs) + 16}">{lab}</text>')
     for i, g in enumerate(regs):
-        out.append(f'<text x="10" y="{ty + i * ch + 15}">{g["name"]}</text>')
+        out.append(f'<text x="10" y="{ty + i * ch + 15}">{g["name"].replace("&", "&amp;")}</text>')
         vals = dict(zip(rep['centuries'], g['records']))
         for j, c in enumerate(cents):
             n = vals[c]
-            t = min(1, math.log10(n + 1) / 4)
-            col = '#eee8dc' if n == 0 else f'hsl({200 - 160 * t:.0f},{45 + 25 * t:.0f}%,{88 - 50 * t:.0f}%)'
+            t = min(1, math.log10(n + 1) / 3.5)
+            col = '#eee8dc' if n == 0 else f'hsl({215 - 20 * t:.0f},{35 + 30 * t:.0f}%,{90 - 62 * t:.0f}%)'
             bad = g['code'] != 'europe' and c >= -500 and n < 0.1 * eu[c]
             stroke = ' stroke="#c0392b" stroke-width="1.5"' if bad else ''
-            out.append(f'<rect x="{lx + j * cw}" y="{ty + i * ch}" width="{cw - 2}" height="{ch - 2}" fill="{col}"{stroke}><title>{g["name"]} {c}: {n}</title></rect>')
+            out.append(f'<rect x="{lx + j * cw}" y="{ty + i * ch}" width="{cw - 2}" height="{ch - 2}" fill="{col}"{stroke}><title>{g["name"].replace("&", "&amp;")} {c}: {n}</title></rect>')
     out.append(f'<text x="10" y="{H - 14}" fill="#555">located {rep["located"]} records; {len(rep["below_10pct_of_europe"])} region-centuries after 500 BCE below 10% of Europe</text></svg>')
     open(path, 'w').write('\n'.join(out))
 

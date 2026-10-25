@@ -5,7 +5,7 @@ Usage: python3 ingest/coverage/fetch_things.py RAW_DIR
 Per modern country: items with coordinates (P625), country (P17), a first year from inception (P571),
 start (P580), point in time (P585) or earliest date (P1319), 4+ sitelinks, not a human. Keeps the first
 instance-of class label so the build can sort sites, settlements, buildings and events.
-Splits by era when the endpoint times out. Cache: RAW_DIR/things/<QID>.json.
+Splits by era when the endpoint times out. Cache: RAW_DIR/things/<QID>.json; thin regions again at 2+ sitelinks in things2/.
 """
 import json, os, sys
 from concurrent.futures import ThreadPoolExecutor
@@ -28,17 +28,17 @@ def query(country, era, minsl=4):
 }} GROUP BY ?i ?sl ?y ?coord ?label ?desc'''
 
 
-def fetch(country):
-    out = os.path.join(wdq.RAW, 'things', country + '.json')
+def fetch(country, minsl=4, sub='things'):
+    out = os.path.join(wdq.RAW, sub, country + '.json')
     if os.path.exists(out):
         return country, len(json.load(open(out)))
     try:
-        rows = wdq.sparql(query(country, (-10000, 1850)), tries=1, timeout=70)
+        rows = wdq.sparql(query(country, (-10000, 1850), minsl), tries=2, timeout=200)
     except Exception:
         rows = []
         for era in ERAS:
             try:
-                rows += wdq.sparql(query(country, era), tries=3, timeout=250)
+                rows += wdq.sparql(query(country, era, minsl), tries=3, timeout=250)
             except Exception as e:
                 print('  gave up', country, era, e)
     os.makedirs(os.path.dirname(out), exist_ok=True)
@@ -54,6 +54,14 @@ def main(raw):
     with ThreadPoolExecutor(2) as ex:
         for c, n in ex.map(fetch, cs):
             print(c, n, flush=True)
+    # The thin regions (Africa south of the Sahara, the Americas, Oceania, South and Southeast Asia) again at 2+ sitelinks:
+    # Wikipedia covers them in fewer languages, so the global bar misses most of what is known there.
+    thin = sorted({f['properties']['WIKIDATAID'] for f in feats if f['properties'].get('WIKIDATAID') and (
+        f['properties']['REGION_UN'] in ('Americas', 'Oceania') or (f['properties']['REGION_UN'] == 'Africa' and f['properties']['SUBREGION'] != 'Northern Africa')
+        or f['properties']['SUBREGION'] in ('Southern Asia', 'South-Eastern Asia')) and f['properties']['ADM0_A3'] not in ('USA', 'CAN')})
+    with ThreadPoolExecutor(2) as ex:
+        for c, n in ex.map(lambda c: fetch(c, 2, 'things2'), thin):
+            print('thin', c, n, flush=True)
 
 
 if __name__ == '__main__':

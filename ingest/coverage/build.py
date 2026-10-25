@@ -270,7 +270,7 @@ if os.path.exists(pan_path):
             rec['start_approx'] = True
         if r['deathyear']:
             dy = int(float(r['deathyear']))
-            if dy >= by:
+            if by <= dy <= by + 110:  # longer lives are data errors (calendar slips, wrong person)
                 rec['end'] = dy
                 rec['died'] = {'year': dy, 'place': dp} if dp else {'year': dy}
         new[rec['id']] = rec
@@ -381,7 +381,7 @@ def make_wd_person(p, y, by, cb):
     if born:
         rec['born'] = born
     dy = wd_year(p.get('d'))[0]
-    if dy is not None and dy >= y:
+    if dy is not None and y <= dy <= y + 110:
         rec['end'] = dy
         rec['died'] = {'year': dy}
         if rec.get('_dplace'):
@@ -423,7 +423,7 @@ def make_cb_person(p):
         rec['tags'] = ['index_year']
     # CBDB's index address is the native place (jiguan) for most people, not always the birth place
     rec['place'] = pid
-    if p['dy'] and p['dy'] >= y:
+    if p['dy'] and y <= p['dy'] <= y + 110:
         rec['end'] = p['dy']
         rec['died'] = {'year': p['dy']}
     bits = [p.get('dyn')]
@@ -540,7 +540,7 @@ th_n = 0
 thp = CR + '/thurayya/places.geojson'
 TH_TYPES = {'metropoles': 'city', 'capitals': 'city', 'towns': 'city', 'villages': 'city', 'waystations': 'site', 'sites': 'site'}
 if os.path.exists(thp):
-    TH_CITE = {'cite': 'al-Thurayya Gazetteer (Masoumeh Seydi and Maxim Romanov), after Georgette Cornu, Atlas du monde arabo-islamique à l’époque classique (1985)', 'url': 'https://althurayya.github.io/'}
+    TH_CITE = {'cite': 'al-Thurayya Gazetteer (Masoumeh Seydi and Maxim Romanov), after Georgette Cornu, Atlas du monde arabo-islamique à l’époque classique (1983)', 'url': 'https://althurayya.github.io/'}
     for f in json.load(open(thp))['features']:
         c = f['properties']['cornuData']
         t = c.get('top_type_hom')
@@ -566,7 +566,7 @@ EV_WORDS = r'battle|war\b|siege|treaty|earthquake|eruption|flood|famine|rebellio
 SETTLE = r'\b(city|town|village|settlement|capital|port|municipality|commune|ancient city|human settlement|oasis|metropolis|county seat)\b'
 SITE = r'archaeolog|ruin|temple|mosque|church|palace|fort|castle|stupa|pagoda|monaster|tomb|mausoleum|shrine|cathedral|bridge|wall|dam\b|canal|pyramid|cave|citadel|madrasa|gate|tower|observatory|garden|basilica|minaret|step ?well|rock-cut|inscription|stele|monument|caravanserai|aqueduct|vihara|matha|gurdwara|synagogue|necropolis|mound|geoglyph|statue|library|school|university|college|market|bazaar|bath|lighthouse|harbour|harbor|reservoir|tank|lake|irrigation'
 th_rows = {}
-for f in glob.glob(CR + '/things/*.json'):
+for f in glob.glob(CR + '/things/*.json') + glob.glob(CR + '/things2/*.json'):
     for row in json.load(open(f)):
         q = qid(row['i'])
         if q in th_rows or q in by_qid:
