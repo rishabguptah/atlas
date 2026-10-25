@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Travel grid for the Live a life tab: the pixel map's terrain raster cut to half-degree cells.
+"""Travel grid for the shared motion model (views/atlas/world/route.js): the pixel map's terrain raster cut to half-degree cells.
 
-Usage: python3 ingest/life/grid.py [TERRAIN_L0_PNG]   (default /mnt/project-files/atlas/pixel/terrain/terrain_l0.png)
-Writes data/life/grid.json: 720 x 360 cells (0.5 degree, row 0 at 90N, column 0 at 180W), one value per cell:
+Usage: python3 ingest/motion/grid.py [TERRAIN_L0_PNG]   (default /mnt/project-files/atlas/pixel/terrain/terrain_l0.png)
+Writes data/motion/grid.json: 720 x 360 cells (0.5 degree, row 0 at 90N, column 0 at 180W), one value per cell:
   0 deep ocean, 1 sea or shelf, 2 lake, 3 ice, 4 tundra, 5 boreal forest, 6 temperate forest, 7 tropical forest,
   8 grassland, 9 steppe or savanna, 10 sand desert, 11 rock desert, 12 wetland, 13 hills, 14 mountains, 15 high peaks;
   +16 when a mapped river runs through the cell.
@@ -44,7 +44,7 @@ for r in range(360):
         while j < 720 and vals[j] == vals[i]: j += 1
         s.append(AL[vals[i]] + (str(j - i) if j - i > 1 else '')); i = j
     rows.append(''.join(s))
-out = os.path.join(root, 'data', 'life', 'grid.json')
+out = os.path.join(root, 'data', 'motion', 'grid.json')
 json.dump({'cell': 0.5, 'cols': 720, 'rows': 360, 'source': 'views/pixel terrain L0 (terrain workstream, Natural Earth + Koppen biomes)', 'grid': rows},
           open(out, 'w'), separators=(',', ':'))
 print(out, os.path.getsize(out))

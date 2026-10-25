@@ -2,7 +2,7 @@
 // draft the life of anyone else, or be born an ordinary person in any year and place and live it year by year.
 // The world around you is the Atlas's own data: plague outbreaks, famines, battles, who rules you, cities that fall,
 // trade routes, famous neighbours. Travel runs on a half-degree terrain grid with period speeds, ports, canals,
-// monsoons and winter seas. Rules and sources: data/life/rules.json. Progress stays in this browser (atlas.life.v1).
+// monsoons and winter seas. Rules and sources: data/life/rules.json and data/motion/rules.json; travel from views/atlas/world/route.js. Progress stays in this browser (atlas.life.v1).
 (function () {
   const D = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.life) || null;
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -22,246 +22,15 @@
   const P = Object.assign({ cur: null, done: [], drafts: {} }, load());
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch { /* private window: play on without saving */ } };
 
-  // ---------- the grid ----------
-  const COLS = 720, ROWS = 360, N = COLS * ROWS;
-  let G = null;
-  function grid() {
-    if (G) return G;
-    G = new Uint8Array(N);
-    const AL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef";
-    D().grid.forEach((row, r) => {
-      let c = 0;
-      for (let i = 0; i < row.length;) {
-        const v = AL.indexOf(row[i++]); let n = "";
-        while (i < row.length && row[i] >= "0" && row[i] <= "9") n += row[i++];
-        const k = n ? +n : 1; G.fill(v, r * COLS + c, r * COLS + c + k); c += k;
-      }
-    });
-    return G;
-  }
-  const cellOf = (lon, lat) => Math.min(COLS - 1, Math.max(0, Math.floor((lon + 180) * 2))) + COLS * Math.min(ROWS - 1, Math.max(0, Math.floor((90 - lat) * 2)));
-  const lonOf = i => (i % COLS) / 2 - 180 + 0.25, latOf = i => 90 - Math.floor(i / COLS) / 2 - 0.25;
-  const cls = i => grid()[i] & 15, isWater = i => (grid()[i] & 15) <= 2, hasRiver = i => grid()[i] >= 16;
-  // Straits are crossable both ways; canals open to ships in their year.
-  function channels(y) {
-    const sea = new Set(), ferry = new Set();
-    for (const c of D().rules.channels) {
-      if (c.at) { const i = cellOf(c.at[0], c.at[1]); for (const d of [0, -1, 1, -COLS, COLS]) { sea.add(i + d); ferry.add(i + d); } }
-      else if (c.line && y >= c.from) for (let k = 0; k < c.line.length - 1; k++) {
-        const [a, b] = [c.line[k], c.line[k + 1]], n = Math.ceil(Math.max(Math.abs(b[0] - a[0]), Math.abs(b[1] - a[1])) * 4) + 1;
-        for (let t = 0; t <= n; t++) sea.add(cellOf(a[0] + (b[0] - a[0]) * t / n, a[1] + (b[1] - a[1]) * t / n));
-      }
-    }
-    return { sea, ferry };
-  }
-  const inBox = (b, lon, lat) => lon >= b[0] && lat >= b[1] && lon <= b[2] && lat <= b[3];
-
-  // ---------- who rules where: a coarse cache, since polityAt is slow ----------
-  const polCache = new Map();
-  function polity(lon, lat, y) {
-    const k = Math.round(lon) + "," + Math.round(lat) + "," + y;
-    if (!polCache.has(k)) { let p = null; try { p = window.ATLAS.polityAt ? ATLAS.polityAt(lon, lat, y) : null; } catch { p = null; } polCache.set(k, p ? p.name : null); if (polCache.size > 40000) polCache.clear(); }
-    return polCache.get(k);
-  }
-
-  // ---------- travel: time-dependent A* over land and water ----------
-  function modesFor(y) { return D().rules.modes.filter(m => y >= m.from && (m.to == null || y < m.to)); }
-  function tradeCells(y) {
-    const s = new Set();
-    for (const t of (typeof MONEY !== "undefined" && MONEY.trade) || []) {
-      if (!(t.start <= y && (t.end == null || y <= t.end))) continue;
-      for (let k = 0; k < t.line.length - 1; k++) {
-        const a = t.line[k], b = t.line[k + 1], n = Math.ceil(Math.max(Math.abs(b[0] - a[0]), Math.abs(b[1] - a[1])) * 2) + 1;
-        for (let q = 0; q <= n; q++) { const i = cellOf(a[0] + (b[0] - a[0]) * q / n, a[1] + (b[1] - a[1]) * q / n); s.add(i); s.add(i + 1); s.add(i - 1); s.add(i + COLS); s.add(i - COLS); }
-      }
-    }
-    return s;
-  }
-  // Cities alive this year make ports; the start and end of a trip always count as one.
-  function ports(y, extra) {
-    const s = new Set(), list = [...(typeof ENTRIES !== "undefined" ? ENTRIES.filter(e => e.start <= y && (e.end == null || y < e.end)) : []), ...extra];
-    for (const e of list) {
-      const c = cellOf(e.lon, e.lat), r0 = Math.floor(c / COLS), c0 = c % COLS, rr = e.always ? 4 : 3;
-      for (let dr = -rr; dr <= rr; dr++) for (let dc = -rr; dc <= rr; dc++) { const i = (r0 + dr) * COLS + c0 + dc; if (i >= 0 && i < N && !isWater(i)) s.add(i); }
-    }
-    return s;
-  }
-  function seasonX(y, month, i, medium, dlon, dlat, steam) {
-    let x = 1; const notes = [];
-    const lon = lonOf(i), lat = latOf(i);
-    for (const s of D().rules.seasons) {
-      if (s.medium !== medium || y >= s.before || !s.months.includes(month) || !inBox(s.box, lon, lat)) continue;
-      if (s.terrain && !s.terrain.includes(cls(i))) continue;
-      if (steam && medium === "sea") continue;
-      if (s.heading) {
-        const along = s.heading === "east" ? dlon > 0 : s.heading === "west" ? dlon < 0 : s.heading === "north" ? dlat > 0 : dlat < 0;
-        const across = s.heading === "east" || s.heading === "west" ? dlon === 0 : dlat === 0;
-        if (across) continue;
-        x *= along ? s.x : s.against; notes.push(s.id);
-      } else { x *= s.x; notes.push(s.id); }
-    }
-    return { x, notes };
-  }
-  class Heap {
-    constructor() { this.k = []; this.v = []; }
-    push(k, v) { const K = this.k, V = this.v; let i = K.length; K.push(k); V.push(v); while (i > 0) { const p = (i - 1) >> 1; if (K[p] <= k) break; K[i] = K[p]; V[i] = V[p]; i = p; } K[i] = k; V[i] = v; }
-    pop() { const K = this.k, V = this.v, top = V[0], lk = K.pop(), lv = V.pop(); const n = K.length; if (n) { let i = 0; for (;;) { let c = 2 * i + 1; if (c >= n) break; if (c + 1 < n && K[c + 1] < K[c]) c++; if (K[c] >= lk) break; K[i] = K[c]; V[i] = V[c]; i = c; } K[i] = lk; V[i] = lv; } return top; }
-    get size() { return this.k.length; }
-  }
-  // pref: "fast" | "land" | "sea". Returns the path, legs by mode, days, cost in day-wages and what you will meet.
-  function route(a, b, y, month, pref = "fast") {
-    const rules = D().rules, ms = modesFor(y), T = rules.terrain;
-    const land = ms.filter(m => m.medium === "land"), seaM = ms.filter(m => m.medium === "sea"), riverM = ms.find(m => m.medium === "river");
-    const sea = seaM.sort((p, q) => q.kmd - p.kmd)[0] || null, steam = !!(sea && sea.id === "steam");
-    const ch = channels(y), trade = tradeCells(y), port = ports(y, [{ ...a, always: 1 }, { ...b, always: 1 }]);
-    const rails = rules.rail_regions.filter(r => y >= r.from);
-    const roads = rules.roads.filter(r => r.polity && y >= r.from && y <= r.to);
-    const water = i => (isWater(i) || ch.sea.has(i)) && !(ch.ferry.has(i) && false), dry = i => !isWater(i) || ch.ferry.has(i);
-    const snap = (p, wantDry) => { let i = cellOf(p.lon, p.lat); if (wantDry ? dry(i) : true) return i; let best = i, bd = 1e9; for (let dr = -4; dr <= 4; dr++) for (let dc = -4; dc <= 4; dc++) { const j = i + dr * COLS + dc; if (j >= 0 && j < N && dry(j) && dr * dr + dc * dc < bd) { bd = dr * dr + dc * dc; best = j; } } return best; };
-    const s0 = snap(a, true), t0 = snap(b, true);
-    const landSpeed = (i, lon, lat) => {
-      const c = cls(i); let best = 0, mode = null;
-      for (const m of land) {
-        if (m.rail && !rails.some(r => inBox(r.box, lon, lat))) continue;
-        const tw = T[m.id] || T.foot, v = m.kmd * (tw[c] ?? 0.5);
-        if (v > best) { best = v; mode = m; }
-      }
-      let road = 1;
-      if (trade.has(i)) road = 1.2;
-      if (roads.length && mode && !mode.rail && mode.id !== "motor") { const p = polity(lon, lat, y); for (const r of roads) if (p && p.includes(r.polity)) road = Math.max(road, r.x); }
-      return { v: best * road, mode, road };
-    };
-    const maxV = Math.max(sea ? sea.kmd * 1.35 : 0, ...land.map(m => m.kmd * 1.25), riverM ? riverM.kmd : 0) || 30;
-    const tgt = { lon: lonOf(t0), lat: latOf(t0) };
-    const g = new Float64Array(2 * N).fill(Infinity), from = new Int32Array(2 * N).fill(-1), how = new Uint8Array(2 * N);
-    const H = new Heap(), MODE = ms.map(m => m.id); MODE.push("board");
-    const modeIx = id => MODE.indexOf(id);
-    g[s0] = 0; H.push(km({ lon: lonOf(s0), lat: latOf(s0) }, tgt) / maxV, s0);
-    const seaPen = pref === "land" ? 2.5 : 1, landPen = pref === "sea" ? 2.5 : 1;
-    let found = -1, n = 0;
-    const NB = [[0, 1], [0, -1], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, 1], [-1, -1]];
-    while (H.size && n < 900000) {
-      const s = H.pop(), onW = s >= N, i = onW ? s - N : s, gs = g[s]; n++;
-      if (!onW && i === t0) { found = s; break; }
-      const r = Math.floor(i / COLS), c = i % COLS, lon = lonOf(i), lat = latOf(i);
-      const mo = ((month - 1 + Math.floor(gs / 30.4)) % 12) + 1;
-      // board or land at a port
-      if (sea) {
-        let coast = false; for (const [dr, dc] of NB) { const j = (r + dr) * COLS + ((c + dc + COLS) % COLS); if (j >= 0 && j < N && water(j)) { coast = true; break; } }
-        if (coast && !onW && dry(i)) {
-          const wait = port.has(i) ? rules.ports.wait_days : rules.ports.no_port_days, t = gs + wait * seaPen;
-          if (t < g[i + N]) { g[i + N] = t; from[i + N] = s; how[i + N] = modeIx("board"); H.push(t + km({ lon, lat }, tgt) / maxV, i + N); }
-        }
-        if (onW && dry(i)) { const t = gs + 1; if (t < g[i]) { g[i] = t; from[i] = s; how[i] = modeIx("board"); H.push(t + km({ lon, lat }, tgt) / maxV, i); } }
-      }
-      for (const [dr, dc] of NB) {
-        const rr = r + dr; if (rr < 0 || rr >= ROWS) continue;
-        const j = rr * COLS + ((c + dc + COLS) % COLS), lj = lonOf(j), la = latOf(j);
-        const d = km({ lon, lat }, { lon: lj, lat: la });
-        let t = Infinity, m = -1, sj = j;
-        if (onW) {
-          if (!water(j) && !dry(j)) continue;
-          if (!water(j)) continue;
-          const sx = seasonX(y, mo, j, "sea", dc, -dr, steam);
-          const v = sea.kmd * sx.x; if (v <= 0) continue;
-          t = gs + d / v * seaPen; m = modeIx(sea.id); sj = j + N;
-        } else {
-          if (!dry(j)) continue;
-          const sp = landSpeed(j, lj, la);
-          let v = sp.v, md = sp.mode;
-          if (riverM && hasRiver(i) && hasRiver(j) && riverM.kmd > v) { v = riverM.kmd; md = riverM; }
-          if (!md || v <= 0) continue;
-          v *= seasonX(y, mo, j, "land", dc, -dr, false).x;
-          if (cls(j) === 15 && v < 3) continue;
-          t = gs + d / v * landPen; m = modeIx(md.id);
-        }
-        if (t < g[sj]) { g[sj] = t; from[sj] = s; how[sj] = m; H.push(t + km({ lon: lj, lat: la }, tgt) / maxV, sj); }
-      }
-    }
-    if (found < 0) return null;
-    // walk back
-    const steps = [];
-    for (let s = found; s >= 0; s = from[s]) steps.push(s);
-    steps.reverse();
-    const pts = [], legs = []; let total = 0, cost = 0, notes = new Set();
-    for (let k = 0; k < steps.length; k++) {
-      const s = steps[k], i = s >= N ? s - N : s, p = [lonOf(i), latOf(i)];
-      pts.push(p);
-      if (!k) continue;
-      const m = MODE[how[s]], dt = g[s] - g[steps[k - 1]], ps = pts[k - 1], dk = km({ lon: ps[0], lat: ps[1] }, { lon: p[0], lat: p[1] });
-      const last = legs[legs.length - 1];
-      if (last && last.mode === m) { last.km += dk; last.days += dt; last.to = k; } else legs.push({ mode: m, km: dk, days: dt, from: k - 1, to: k });
-      const mm = ms.find(x => x.id === m); cost += (mm ? mm.cost : 1) * dt;
-      const mo = ((month - 1 + Math.floor(g[s] / 30.4)) % 12) + 1;
-      seasonX(y, mo, i, s >= N ? "sea" : "land", p[0] - ps[0], p[1] - ps[1], steam).notes.forEach(x => notes.add(x));
-    }
-    // undo the penalties used to steer the route: report true days
-    for (const l of legs) { if (l.mode === "board") continue; const onSea = seaM.some(m => m.id === l.mode); l.days /= onSea ? seaPen : landPen; }
-    for (const l of legs) if (l.mode === "board") l.days /= seaPen;
-    total = legs.reduce((s, l) => s + l.days, 0);
-    pts[0] = [a.lon, a.lat]; pts[pts.length - 1] = [b.lon, b.lat];
-    const out = { pts: simplify(pts), legs: legs.filter(l => l.days > 0.01), days: total, cost, notes: [...notes], y, month, pref };
-    out.meet = meetOn(out, y);
-    return out;
-  }
-  function simplify(pts) {
-    const out = [pts[0]];
-    for (let i = 1; i < pts.length - 1; i++) {
-      const a = out[out.length - 1], b = pts[i], c = pts[i + 1];
-      if (Math.abs((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])) > 0.01) out.push(b);
-    }
-    out.push(pts[pts.length - 1]);
-    return out;
-  }
-  function flight(a, b, y) {
-    const air = modesFor(y).find(m => m.id === "air"); if (!air) return null;
-    const d = km(a, b), fare = interp(air.fare, y);
-    return { pts: [[a.lon, a.lat], [b.lon, b.lat]], legs: [{ mode: "air", km: d, days: 1 + d / air.kmd, from: 0, to: 1 }], days: 1 + d / air.kmd, cost: fare * (0.5 + d / 8000), notes: [], y, pref: "air", meet: meetOn({ pts: [[a.lon, a.lat], [b.lon, b.lat]] }, y, true) };
-  }
-  // What lies along the way: borders, war, plague, and the risk of the road.
-  function meetOn(r, y, air) {
-    const H = D().rules.hazards, out = { borders: [], war: [], plague: [], risk: 0 };
-    const samp = [];
-    for (let k = 0; k < r.pts.length - 1; k++) {
-      const [a, b] = [r.pts[k], r.pts[k + 1]], n = Math.max(1, Math.ceil(km({ lon: a[0], lat: a[1] }, { lon: b[0], lat: b[1] }) / 120));
-      for (let q = 0; q < n; q++) samp.push({ lon: a[0] + (b[0] - a[0]) * q / n, lat: a[1] + (b[1] - a[1]) * q / n });
-    }
-    samp.push({ lon: r.pts[r.pts.length - 1][0], lat: r.pts[r.pts.length - 1][1] });
-    if (!air) {
-      let last;
-      for (const p of samp) { const w = polity(p.lon, p.lat, y); if (w && w !== last) { if (!out.borders.length || out.borders[out.borders.length - 1].n !== w) out.borders.push({ n: w, lon: p.lon, lat: p.lat }); last = w; } }
-      const near = (lat, lon, kmMax) => samp.some(p => Math.abs(p.lat - lat) < 4 && km(p, { lon, lat }) < kmMax);
-      for (const bt of battles(y, 0)) if (near(bt.lat, bt.lon, H.war_km)) out.war.push(bt);
-      const pl = plagueYear(y);
-      if (pl.size) for (const p of samp) { const c = cellOf(p.lon, p.lat); if (pl.has(c) || pl.has(c + 1) || pl.has(c - 1) || pl.has(c + COLS) || pl.has(c - COLS)) { out.plague.push(p); } }
-    }
-    const seaDays = (r.legs || []).filter(l => ["sail", "ocean", "steam"].includes(l.mode)).reduce((s, l) => s + l.days, 0), allDays = (r.legs || []).reduce((s, l) => s + l.days, 0);
-    const modern = y >= 1900 ? 0.15 : y >= 1800 ? 0.5 : 1;
-    out.risk = air ? 0.0005 : Math.min(0.6, ((allDays - seaDays) / 100 * H.base_per_100_days + seaDays / 100 * H.sea_per_100_days) * modern + out.war.length * H.war_risk * modern + (out.plague.length ? 0.05 : 0));
-    out.borderDays = Math.max(0, out.borders.length - 1) * H.border_days; out.toll = Math.max(0, out.borders.length - 1) * H.border_toll;
-    return out;
-  }
+  // ---------- travel and the world's pieces come from the shared motion model (views/atlas/world/route.js) ----------
+  const WM = () => window.ATLAS.world.motion;
+  const cellOf = (lon, lat) => WM().cellOf(lon, lat), cls = i => WM().cls(i), isWater = i => WM().isWater(i), COLS = 720;
+  const polity = (lon, lat, y) => WM().polity(lon, lat, y), plagueAt = (lon, lat, y) => WM().plagueAt(lon, lat, y, D().rules.plague.km);
+  const battles = (y, w) => WM().battles(y, w), modesFor = y => WM().modesFor(y), inBox = (b, lon, lat) => WM().inBox(b, lon, lat);
+  const route = (a, b, y, m, pref) => ATLAS.world.route(a, b, { y, m }, { pref }), flight = (a, b, y) => ATLAS.world.route(a, b, y, { pref: "air" });
+  const MR = () => WM().rules();
 
   // ---------- the world's data, near a place in a year ----------
-  const plagueCache = {};
-  function plagueYear(y) {
-    if (plagueCache[y]) return plagueCache[y];
-    const s = (D().plague || {})[y]; const set = new Set();
-    if (s) for (const t of s.split(".")) set.add(parseInt(t, 36));
-    return plagueCache[y] = set;
-  }
-  function plagueAt(lon, lat, y) {
-    const set = plagueYear(y); if (!set.size) return false;
-    const c = cellOf(lon, lat), rr = Math.max(1, Math.round(D().rules.plague.km / 55));
-    for (let dr = -rr; dr <= rr; dr++) for (let dc = -rr; dc <= rr; dc++) if (set.has(c + dr * COLS + dc)) return true;
-    return false;
-  }
-  function battles(y, win) {
-    const W = typeof WAR !== "undefined" ? WAR : null; if (!W) return [];
-    const a = (W.battles || []).filter(b => Math.abs(b.start - y) <= win).map(b => ({ name: b.name, y: b.start, lat: b.lat, lon: b.lon, why: b.why, cur: 1 }));
-    const b = (W.wd || []).filter(r => Math.abs(r[2] - y) <= win).map(r => ({ name: r[0], y: r[2], lat: r[3], lon: r[4], why: r[7] ? `Part of ${r[7]}` : r[6] || "" }));
-    return [...a, ...b];
-  }
   const PPL = () => {
     if (PPL.c) return PPL.c;
     if (typeof PEOPLE === "undefined") return PPL.c = [];
@@ -280,8 +49,8 @@
     }
     const ppl = PPL().filter(p => p.b + 18 <= y && (p.d == null || y <= p.d) && km(at, p) < (opts.pplKm || 400)).slice(0, 3);
     for (const p of ppl) out.push({ k: "person", t: `${p.name} is alive nearby`, why: `${p.occ}, born ${fy(p.b)} in ${p.place}`, p });
-    for (const t of (typeof MONEY !== "undefined" && MONEY.trade) || []) if (t.start <= y && (t.end == null || y <= t.end) && t.line.some(([lo, la]) => km(at, { lon: lo, lat: la }) < 300)) out.push({ k: "trade", t: `The ${t.name} pass near you`, why: t.why, route: t });
-    try { if (window.ATLAS.objects && ATLAS.objects.near) for (const o of ATLAS.objects.near(at.lon, at.lat, y, 300).slice(0, 2)) out.push({ k: "object", t: `${o.name} is here`, why: o.place ? `At ${o.place}${o.owner ? ", held by " + o.owner : ""}` : "", o }); } catch { /* objects lens not on this page */ }
+    for (const t of (typeof MONEY !== "undefined" && MONEY.trade) || []) if (t.start <= y && (t.end == null || y <= t.end) && t.line.some(([lo, la]) => km(at, { lon: lo, lat: la }) < 300)) out.push({ k: "trade", t: `${t.name} run near you`, why: t.why, route: t });
+    try { if (window.ATLAS.objects && ATLAS.objects.near) for (const o of ATLAS.objects.near(at.lon, at.lat, y, 300).slice(0, 2)) out.push({ k: "object", t: `${o.name} is here`, why: o.meet || (o.place ? `At ${o.place}${o.owner ? ", held by " + o.owner : ""}` : ""), o }); } catch { /* objects lens not on this page */ }
     return out;
   }
 
@@ -314,13 +83,48 @@
       log: [], path: [[c0.at.lon, c0.at.lat]], real: [[c0.at.lon, c0.at.lat]], km: 0, tdays: 0, picks: [], div: 0, over: null, phase: "choose", team: life.team || "#a8342a" };
     save(); show(true);
   }
+  // Each chronicle line remembers where it happened, so the life can replay as a Story (WORLD.md L4).
+  function logIt(g, e, pts) {
+    e.at = { n: g.at.n, lon: +g.at.lon.toFixed(2), lat: +g.at.lat.toFixed(2) }; e.m = g.m || 1;
+    if (pts && pts.length > 1) { const st = Math.max(1, Math.ceil(pts.length / 60)); e.pts = pts.filter((_, i) => i % st === 0 || i === pts.length - 1).map(p => [+p[0].toFixed(2), +p[1].toFixed(2)]); }
+    g.log.push(e);
+  }
+  function story(g = G0()) {
+    if (!g) return null;
+    const life = lifeOf(g), who = life ? `person:${life.id}` : null, gen = g.kind !== "real";
+    const conf = e => gen ? "estimated" : e.k === "real" ? "attested" : e.k === "travel" ? "estimated" : "approximate";
+    const scenes = g.log.map((e, i) => {
+      const at = e.at || g.at, cap = e.t.split(/(?<=\.)\s/)[0];
+      return { id: `s${i}`, t: e.y, date: `${Math.round(e.y)}-${String(e.m || 1).padStart(2, "0")}`, view: { lon: at.lon, lat: at.lat, span: e.pts ? 24 : 6 },
+        lenses: ["life"], highlight: [], pins: [{ lon: at.lon, lat: at.lat, n: at.n }], routes: e.pts ? [{ pts: e.pts, conf: "estimated", mode: "travel" }] : [],
+        actors: who ? [who] : [], caption: cap, text: e.t, by: "life", conf: conf(e), generated: gen || undefined,
+        sources: life ? life.sources : [], branch: e.k === "alt" ? "yours" : null, next: i + 1 < g.log.length ? [`s${i + 1}`] : [] };
+    });
+    if (g.over) scenes.push({ id: "end", t: g.over.y, date: `${g.over.y}`, view: { lon: g.at.lon, lat: g.at.lat, span: 8 }, lenses: ["life"], pins: [{ lon: g.at.lon, lat: g.at.lat, n: g.at.n }], routes: [],
+      actors: who ? [who] : [], caption: g.over.t.split(/(?<=\.)\s/)[0], text: [g.over.t, life && life.epilogue].filter(Boolean).join(" "), by: "life", conf: gen || g.over.alt ? "approximate" : "attested", sources: life ? life.sources : [], next: [], ask: "How did the real life go?" });
+    if (scenes.length > 1 && scenes[scenes.length - 2].next) scenes[scenes.length - 2].next = scenes[scenes.length - 1].id === "end" ? ["end"] : [];
+    return { id: `life:${life ? life.id : (g.name || "someone").toLowerCase().replace(/\W+/g, "_")}`, title: life ? `The life of ${life.name}, as you lived it` : `${g.name}, ${g.home ? g.home.n : ""}`, kind: "life", scenes };
+  }
+  // Plays the chronicle as map scenes until a Director lands (WORLD.md L4).
+  let replayT = 0;
+  function replay() {
+    clearTimeout(replayT);
+    const st = story(); if (!st || !api.scene) return;
+    let i = 0;
+    const step = () => {
+      const sc = st.scenes[i++]; if (!sc) { if (api.clearScene) api.clearScene(); return; }
+      api.scene({ year: Math.round(sc.t), view: sc.view, title: sc.caption.slice(0, 220) });
+      replayT = setTimeout(step, 3500);
+    };
+    step();
+  }
   function lifeOf(g) { return g.kind === "real" ? lifeById(g.id) : null; }
   function choose(k) {
     const g = G0(), life = lifeOf(g), ch = life.chapters[g.i], c = ch.choices[k];
     g.picks.push({ i: g.i, real: !!c.real, t: c.t });
     if (!c.real) g.div++;
     for (const [s, v] of Object.entries(c.fx || {})) g.st[s] = Math.max(0, Math.min(10, (g.st[s] || 0) + v));
-    g.log.push({ y: ch.y, k: c.real ? "real" : "alt", t: `${ch.title}: ${c.t}. ${c.out}` });
+    logIt(g, { y: ch.y, k: c.real ? "real" : "alt", t: `${ch.title}: ${c.t}. ${c.out}` });
     g.last = { k, real: !!c.real, out: c.out, end: c.end, p: c.p, realOut: (ch.choices.find(x => x.real) || {}).out, realT: (ch.choices.find(x => x.real) || {}).t };
     g.phase = "result";
     save(); show();
@@ -339,22 +143,40 @@
 
   // ---------- travelling ----------
   let anim = null;
-  function plan(g, to, y, m) {
-    const a = { lon: g.at.lon, lat: g.at.lat }, b = { lon: to.lon, lat: to.lat };
-    const opts = [];
-    for (const pref of ["fast", "land", "sea"]) {
-      const r = route(a, b, y, m, pref); if (!r) continue;
-      if (opts.some(o => Math.abs(o.days - r.days) < 0.5 && o.legs.map(l => l.mode).join() === r.legs.map(l => l.mode).join())) continue;
-      opts.push(r);
-    }
-    const f = flight(a, b, y); if (f) opts.push(f);
-    return opts;
+  // Up to four ways to go: fastest, land only, sea where it can, and by air once there are airliners.
+  // Each route takes a few hundred milliseconds, so they are worked out one per frame and the tab redraws as they come.
+  function plan(g, to, y, m, done) {
+    const a = { lon: g.at.lon, lat: g.at.lat }, b = { lon: to.lon, lat: to.lat }, opts = [], token = (plan.t = (plan.t || 0) + 1);
+    const prefs = ["fast", "land", "sea"];
+    let waits = null;
+    const next = () => {
+      if (token !== plan.t) return;
+      // Seasons slowed the fastest route (monsoon against you, winter seas, snow): try leaving 1 to 6 months later.
+      if (!prefs.length && waits === null) { const f0 = opts[0]; waits = f0 && f0.notes.length && y < 1870 ? [1, 2, 3, 4, 5, 6] : []; }
+      if (!prefs.length && waits && waits.length) {
+        const k = waits.shift(), mm = ((m - 1 + k) % 12) + 1, yy = y + Math.floor((m - 1 + k) / 12);
+        const r = route(a, b, yy, mm, "fast");
+        if (r) { r.wait = k * 30.4; r.pref = "wait"; r.days += r.wait; const best = opts.find(o => o.pref === "wait"); const f0 = opts[0];
+          if ((!best || r.days < best.days) && f0 && r.days < f0.days * 0.9) { if (best) opts.splice(opts.indexOf(best), 1); opts.push(r); done(opts, false); } }
+        setTimeout(next, 30); return;
+      }
+      const pref = prefs.shift();
+      if (!pref) { const f = flight(a, b, y); if (f) opts.push(f); done(opts, true); return; }
+      const r = route(a, b, y, m, pref);
+      const same = r && opts.some(o => Math.abs(o.days - r.days) < 1 && o.legs.map(l => l.mode).join() === r.legs.map(l => l.mode).join());
+      const seaUse = r && r.legs.some(l => ["sail", "ocean", "steam"].includes(l.mode));
+      if (r && !same && !(pref === "sea" && !seaUse)) { opts.push(r); done(opts, false); }
+      setTimeout(next, 30);
+    };
+    setTimeout(next, 30);
   }
   function legText(r) {
-    const rules = D().rules, nm = id => id === "board" ? "waiting for a ship" : (rules.modes.find(m => m.id === id) || { n: id }).n.toLowerCase();
-    const merged = [];
-    for (const l of r.legs) { const last = merged[merged.length - 1]; if (last && last.mode === l.mode) { last.km += l.km; last.days += l.days; } else merged.push({ ...l }); }
-    return merged.filter(l => l.days >= 0.5).map(l => `${nm(l.mode)} ${l.mode === "board" ? days(l.days) : Math.round(l.km).toLocaleString() + " km, " + days(l.days)}`).join(" · ");
+    // Totals per way of travel, in the order you first use them; waiting for ships last.
+    const rules = MR(), nm = id => id === "board" ? "waiting in port" : (rules.modes.find(m => m.id === id) || { n: id }).n.toLowerCase();
+    const tot = new Map();
+    for (const l of r.legs) { const t = tot.get(l.mode) || { mode: l.mode, km: 0, days: 0 }; t.km += l.km; t.days += l.days; tot.set(l.mode, t); }
+    const list = [...tot.values()].sort((a, b) => (a.mode === "board") - (b.mode === "board"));
+    return list.filter(l => l.days >= 0.5).map(l => `${nm(l.mode)} ${l.mode === "board" ? days(l.days) : Math.round(l.km).toLocaleString() + " km, " + days(l.days)}`).join(" · ");
   }
   function travel(r, after) {
     const g = G0(); g.phase = "moving"; save();
@@ -367,8 +189,6 @@
     // a mode for each segment, for the sprite
     const segMode = [];
     for (const l of r.legs) for (let k = l.from; k < l.to; k++) segMode[k] = l.mode;
-    const simpleMode = k => { const p = pts[k]; let best = null, bd = 1e9; for (const l of r.legs) { const a = r._full ? 0 : 0; } return best; };
-    void simpleMode;
     const ms = Math.min(7000, Math.max(2500, 1200 + L / 3));
     const t0 = performance.now();
     anim = { r, pts, seg, L, t0, ms, after, p: { lon: pts[0][0], lat: pts[0][1] }, mode: r.legs[0] ? r.legs[0].mode : "foot" };
@@ -393,7 +213,6 @@
     if (!spriteG || !anim) return;
     const g = G0(), name = anim.mode === "board" || ["sail", "ocean", "steam"].includes(anim.mode) ? seaSprite(g.y, anim.p.lon) : MODE_SPRITE[anim.mode] || "person_pilgrim";
     const key = sprite(name, g.team || "#a8342a"), sp = key && ATLAS.sprites[key];
-    const p = api && window.d3 ? null : null; void p;
     spriteG.datum({ lon: anim.p.lon, lat: anim.p.lat });
     if (sp) spriteG.select("image").attr("href", sp.href).attr("width", sp.w * 3).attr("height", sp.h * 3).attr("x", -(sp.ax ?? sp.w / 2) * 3).attr("y", -(sp.ay ?? sp.h) * 3)
       .attr("transform", anim.flip ? `scale(-1,1)` : null);
@@ -413,7 +232,7 @@
     const r = D().rules, agri = interp(r.agri_share.rows, y), c = cls(cellOf(lon, lat)), coast = [1, -1, COLS, -COLS].some(d => isWater(cellOf(lon, lat) + d));
     const ind = y >= 1780 ? Math.min(0.3, (y - 1780) / 400) : 0, office = y >= 1850 ? Math.min(0.3, (y - 1850) / 500) : 0;
     const out = [];
-    const herd = [4, 9, 10, 11, 13].includes(c) ? 0.5 : 0.05;
+    const herd = [4, 9, 10, 11].includes(c) ? 0.5 : c === 13 || c === 14 ? 0.15 : 0.05;
     for (const ro of r.roles) {
       if (ro.from && y < ro.from) continue;
       let w = ro.w === "agri" ? agri * (ro.id === "herder" ? herd : 1 - herd) : ro.w === "industry" ? ind : ro.w === "office" ? office : ro.w;
@@ -505,7 +324,7 @@
     let years = act.id === "quiet" ? 5 : 1, out = [];
     for (let k = 0; k < years; k++) {
       const r = roll(g, k ? { id: "work" } : act);
-      g.log.push({ y: g.y, k: act.id, t: r.lines.join(" ") || "A year passes." });
+      logIt(g, { y: g.y, k: act.id, t: r.lines.join(" ") || "A year passes." });
       out.push({ y: g.y, ...r });
       if (r.dead) { endLife(g, { y: g.y, t: `You die in ${fy(g.y)} at ${g.y - g.born}, of ${r.cause}. That year your chance of dying was about ${pct(r.die)}.` }); return; }
       g.y++; g.news = yearNews(g);
@@ -562,15 +381,16 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
     draw(ctx) {
       lensProj = ctx.projection; lensG = ctx.g; lensPath = ctx.path;
       const g = G0(); if (!g) { ctx.g.selectAll(".lf-me").remove(); return; }
-      ctx.paths([{ id: "road", pts: g.path }], { cls: "lf-road", title: () => "Your road so far" });
-      if (g.real && g.kind === "real" && (g.showReal || g.phase === "over")) ctx.paths([{ id: "real", pts: g.real }], { cls: "lf-real", title: () => "The real route, from the record" });
-      if (g.plan && g.phase === "travel") ctx.paths(g.plan.map((r, i) => ({ id: "p" + i, pts: r.pts, sel: i === (g.sel || 0) })), { cls: "lf-plan", key: r => r.id, title: () => "A possible route" })
-        .classed("sel", r => r.x.sel);
+      // Lines go to the page's canvas mark layer: your road solid, the record dashed green, route options dashed.
+      if (g.real && g.kind === "real" && (g.showReal || g.phase === "over")) ctx.paths([{ id: "real", pts: g.real }], { cls: "ghost", color: "#2f7a5a", title: () => "The real route, from the record" });
+      if (g.plan && g.phase === "travel") ctx.paths(g.plan.map((r, i) => ({ id: "p" + i, pts: r.pts, sel: i === (g.sel || 0) })), { key: r => r.id, title: () => "A possible route" })
+        .classed("ghost", r => !(r.x || r).sel).style("--c", r => (r.x || r).sel ? "#d0602a" : "#8a7a6a");
+      ctx.paths([{ id: "road", pts: g.path }], { color: "#d0602a", title: () => "Your road so far" }).style("stroke-width", 3);
       const life = lifeOf(g), next = life && life.chapters[g.i + 1];
       const pins = [];
       if (next && g.phase !== "over") pins.push({ id: "next", lon: next.at.lon, lat: next.at.lat, n: next.at.n });
       if (g.dest && g.kind === "ordinary" && g.phase === "travel") pins.push({ id: "next", lon: g.dest.lon, lat: g.dest.lat, n: g.dest.n });
-      ctx.pins(pins, { key: p => p.id, shape: "diamond", label: p => p.n, title: p => `Next: ${p.n}`, always: true });
+      ctx.pins(pins, { key: p => p.id, shape: "diamond", color: "#d0602a", label: p => p.n, title: p => `Next: ${p.n}`, always: true });
       let me = ctx.g.select("g.lf-me");
       if (me.empty()) { me = ctx.g.append("g").attr("class", "pt lf-me always"); me.append("image").style("image-rendering", "pixelated"); }
       spriteG = me;
@@ -630,12 +450,7 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
 .lf .row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 .lf .log { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; max-height: 320px; overflow: auto; }
 .lf .log li span { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-right: 6px; }
-.lpath.lf-road { stroke: #d0602a !important; stroke-width: 2.4px; stroke-opacity: .9; fill: none; }
-.lpath.lf-real { stroke: #2f7a5a !important; stroke-width: 2px; stroke-dasharray: 5 4; fill: none; }
-.lpath.lf-plan { stroke: #d0602a !important; stroke-width: 1.4px; stroke-dasharray: 2 4; stroke-opacity: .55; fill: none; }
-.lpath.lf-plan.sel { stroke-width: 3px; stroke-opacity: .95; stroke-dasharray: 6 3; }
 path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .9; }
-.lpath.lf-road, .lpath.lf-real, .lpath.lf-plan { vector-effect: non-scaling-stroke; }
 `;
   document.head.appendChild(css);
 
@@ -703,15 +518,16 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
   }
   function travelView(g, to, isReal) {
     const r = g.plan || [], sel = g.sel || 0, life = lifeOf(g), next = life && life.chapters[g.i + 1];
+    if (!r.length && g.planning) return `<div class="ch"><span class="k">${esc(g.at.n)} to ${esc(to.n)}</span><p>Working out the roads, sea lanes and seasons of ${esc(fy(g.ty))}…</p></div>`;
     if (!r.length) return `<div class="ch"><p>No route found from here to ${esc(to.n)} with what ${esc(fy(g.ty))} had. </p><button class="go" data-a="jump">Skip ahead${isReal ? "" : " anyway"}</button></div>`;
-    const rules = D().rules, notes = [...new Set(r[sel].notes)].map(id => rules.seasons.find(s => s.id === id)).filter(Boolean);
-    const lab = x => x.pref === "air" ? "Fly" : x.pref === "land" ? "Mostly by land" : x.pref === "sea" ? "Mostly by sea" : "Fastest";
+    const rules = MR(), notes = [...new Set(r[sel].notes)].map(id => rules.seasons.find(s => s.id === id)).filter(Boolean);
+    const lab = x => x.pref === "air" ? "Fly" : x.pref === "land" ? "Only by land" : x.pref === "sea" ? "By sea where you can" : x.pref === "wait" ? `Wait ${Math.round(x.wait / 30.4)} month${x.wait > 40 ? "s" : ""} for the season, then go` : "Leave now, fastest";
     return `<div class="ch"><span class="k">${MONTHS[(g.tm || 1) - 1]} ${esc(fy(g.ty))} · ${esc(g.at.n)} to ${esc(to.n)}</span><h3>Plan the journey</h3>
       ${r.map((x, i) => `<button class="opt${i === sel ? " sel" : ""}" data-a="route" data-i="${i}"><span><b>${lab(x)}</b>: ${days(x.days + (x.meet.borderDays || 0))}, about ${Math.round(x.cost + (x.meet.toll || 0)).toLocaleString()} day-wages</span>
-        <small>${esc(legText(x))}</small><small>${x.meet.borders.length > 1 ? `${x.meet.borders.length - 1} borders (${esc(x.meet.borders.map(b => b.n).slice(0, 5).join(" → "))}) · ` : ""}${x.meet.war.length ? `war on the way (${esc(x.meet.war.slice(0, 2).map(w => w.name).join(", "))}) · ` : ""}${x.meet.plague.length ? "plague on the road · " : ""}risk of dying on the way about ${pct(x.meet.risk)}</small></button>`).join("")}
+        <small>${x.wait ? `waiting at home ${days(x.wait)} · ` : ""}${esc(legText(x))}</small><small>${x.meet.borders.length > 1 ? `${x.meet.borders.length - 1} borders (${esc(x.meet.borders.map(b => b.n).slice(0, 5).join(" → "))}) · ` : ""}${x.meet.war.length ? `war on the way (${esc(x.meet.war.slice(0, 2).map(w => w.name).join(", "))}) · ` : ""}${x.meet.plague.length ? "plague on the road · " : ""}risk of dying on the way about ${pct(x.meet.risk)}</small></button>`).join("")}
       ${notes.length ? `<p class="sub">${notes.map(s => `<b>${esc(s.n)}:</b> ${esc(s.why)}`).join(" ")}</p>` : ""}
       ${isReal && next && next.took ? `<p class="sub"><b>The record:</b> ${esc(next.took)}</p>` : ""}
-      <button class="go" data-a="setout">Set out</button>
+      ${g.planning ? `<p class="sub">Looking for other ways to go…</p>` : ""}<button class="go" data-a="setout">Set out</button>
       <p class="src">Routes run on a half-degree terrain grid with ${esc(fy(g.ty))}'s ways of travel, ports, canals and seasons. Speeds: ${esc(rules.modes.filter(m => modesFor(g.ty).includes(m)).map(m => `${m.n.toLowerCase()} ${m.kmd} km/day`).join(", "))}.</p></div>`;
   }
   function arrivedView(g, life) {
@@ -765,7 +581,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
     }
     return `<div class="lf">${hud(g)}<div class="ch"><span class="k">The end</span><h3>${esc(g.kind === "real" ? life.name : g.name)}, ${fy(g.kind === "real" ? life.born : g.born)}–${fy(o.y)}</h3></div>${rows}
       ${g.kind === "real" ? `<div class="sec"><h3>Your choices</h3><ul class="log">${g.picks.map(p => `<li><span>${p.real ? "record" : "yours"}</span>${esc(p.t)}</li>`).join("")}</ul></div>` : ""}
-      <div class="row"><button class="go" data-a="again">Live another life</button>${g.kind === "real" ? `<button class="btn" data-a="real" data-id="${esc(g.id)}">Try ${esc(life.name)} again</button>` : ""}</div></div>`;
+      <div class="row"><button class="go" data-a="again">Live another life</button><button class="btn" data-a="replay">Replay on the map</button>${g.kind === "real" ? `<button class="btn" data-a="real" data-id="${esc(g.id)}">Try ${esc(life.name)} again</button>` : ""}</div></div>`;
   }
   function render() {
     if (!el || !D()) return;
@@ -781,7 +597,11 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
   }
   function chooseDest(to) {
     const g = G0(); if (!g) return;
-    g.dest = to; g.ty = g.y; g.tm = g.m || 4; g.plan = plan(g, to, g.ty, g.tm); g.sel = 0; g.phase = "travel"; save(); show();
+    g.dest = to; g.ty = g.y; g.tm = g.m || 4; startPlan(g, to);
+  }
+  function startPlan(g, to) {
+    g.plan = []; g.planning = true; g.sel = 0; g.phase = "travel"; render(); api.redraw();
+    plan(g, to, g.ty, g.tm, (opts, fin) => { if (G0() !== g || g.phase !== "travel") return; g.plan = opts; g.planning = !fin; if (fin) save(); render(); api.redraw(); });
   }
   function setOut() {
     const g = G0(), r = g.plan[g.sel || 0]; if (!r) return;
@@ -808,7 +628,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
       if (g.kind === "real") { g.y = next.y; g.m = next.m || 1; g.late = t > next.y + ((next.m || 1) - 1) / 12 + 0.25 ? Math.round((t - next.y - ((next.m || 1) - 1) / 12) * 12) : 0; }
       else { g.y = Math.floor(t); g.m = Math.floor((t - g.y) * 12) + 1; }
       g.phase = "arrived"; g.plan = null; g.showReal = g.kind === "real";
-      g.log.push({ y: g.y, k: "travel", t: `Travelled to ${to.n}: ${days(total)}, ${Math.round(g.trip.km).toLocaleString()} km.${event ? " " + event : ""}` });
+      logIt(g, { y: g.y, k: "travel", t: `Travelled to ${to.n}: ${days(total)}, ${Math.round(g.trip.km).toLocaleString()} km.${event ? " " + event : ""}` }, r.pts);
       save(); api.setYear(g.y, true, 600); show();
     });
   }
@@ -826,12 +646,13 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
     else if (a === "altend") { const life = lifeOf(g), ch = life.chapters[g.i]; endLife(g, { y: ch.y, t: g.last.end, alt: true }); }
     else if (a === "next") {
       const life = lifeOf(g), ch = life.chapters[g.i], next = life.chapters[g.i + 1];
-      if (km(ch.at, next.at) > 30) { g.dest = next.at; g.ty = ch.y; g.tm = ch.m || 1; g.plan = plan(g, next.at, ch.y, ch.m || 1); g.sel = 0; g.phase = "travel"; save(); show(); api.fly({ lon: (ch.at.lon + next.at.lon) / 2, lat: (ch.at.lat + next.at.lat) / 2, span: Math.max(10, Math.abs(ch.at.lon - next.at.lon) * 1.4) }, 900); }
+      if (km(ch.at, next.at) > 30) { g.dest = next.at; g.ty = ch.y; g.tm = ch.m || 1; startPlan(g, next.at); api.fly({ lon: (ch.at.lon + next.at.lon) / 2, lat: (ch.at.lat + next.at.lat) / 2, span: Math.max(10, Math.abs(ch.at.lon - next.at.lon) * 1.4) }, 900); }
       else { g.i++; g.y = next.y; g.m = next.m || 1; g.phase = "choose"; save(); api.setYear(g.y, true, 600); show(); }
     }
     else if (a === "chapter") { g.i++; g.phase = "choose"; g.trip = null; save(); show(); }
     else if (a === "jump") { const life = lifeOf(g); if (life) { const next = life.chapters[g.i + 1]; g.at = next.at; g.y = next.y; g.m = next.m || 1; g.i++; g.phase = "choose"; } else { g.phase = "year"; } save(); show(); }
-    else if (a === "finish") { const life = lifeOf(g); endLife(g, { y: life.died, t: life.epilogue || "" }); }
+    else if (a === "replay") replay();
+    else if (a === "finish") { const life = lifeOf(g); endLife(g, { y: life.died, t: g.div ? `You made ${g.div} of ${g.picks.length} choices your own way, and each time the record pulled you back. You die in ${fy(life.died)}, as ${life.name} did.` : `You lived it as it happened, to the end in ${fy(life.died)}.` }); }
     else if (a === "route") { g.sel = +b.dataset.i; save(); render(); api.redraw(); }
     else if (a === "setout") setOut();
     else if (a === "act") liveYear(b.dataset.id);
@@ -843,12 +664,18 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
     id: "life", name: "Live",
     mount(pane, a) {
       el = pane; api = a;
-      if (!D()) { el.innerHTML = '<p class="sub">The life data is missing from this build.</p>'; return; }
       el.addEventListener("click", onClick);
       el.addEventListener("submit", ev => { if (ev.target.id !== "lf-any") return; ev.preventDefault(); const n = el.querySelector("#lf-name").value.trim(); if (!n) return; const cur = D().lives.find(l => l.name.toLowerCase() === n.toLowerCase()); cur ? startReal(cur) : draft(n); });
-      // A game left mid-trip resumes at the planning step.
-      const g = G0(); if (g && g.phase === "moving") { g.phase = g.plan ? "travel" : g.kind === "real" ? "choose" : "year"; save(); }
-      if (g) setTimeout(() => { api.setOn("life", true); api.redraw(); }, 0);
+      // The game's data may load after the first paint (atlas-files/lens-life.json); wait for it before resuming.
+      let tries = 0;
+      const ready = () => {
+        if (!D() || !ATLAS.world.motionReady()) { el.innerHTML = tries > 150 ? '<p class="sub">The life data did not load.</p>' : '<p class="sub">Loading lives…</p>'; if (tries++ <= 150) setTimeout(ready, 200); return; }
+        // A game left mid-trip resumes at the planning step.
+        const g = G0(); if (g && g.phase === "moving") { g.phase = g.plan ? "travel" : g.kind === "real" ? "choose" : "year"; save(); }
+        if (g) { api.setOn("life", true); api.redraw(); }
+        if (!el.hidden) render();
+      };
+      ready();
       a.onYear(() => { if (el && !el.hidden && !G0()) { clearTimeout(homeT); homeT = setTimeout(render, 250); } });
       if (a.onView) a.onView(() => { if (el && !el.hidden && !G0()) render(); });
     },
@@ -856,5 +683,5 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
   });
   let homeT = 0;
   // For tests and other plugins: the router and the world reader.
-  ATLAS.life = { route, flight, around, hazard: (y, age) => hazard({ st: { health: 5, wealth: 100 } }, y, age), plagueAt };
+  ATLAS.life = { story, route, flight, around, hazard: (y, age) => hazard({ st: { health: 5, wealth: 100 } }, y, age), plagueAt };
 })();
