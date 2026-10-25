@@ -2473,6 +2473,7 @@ Where the specialists disagree, say who the evidence favours.`;
     war: [["battle", "Battle or siege, fading over a dozen years"], ["hourglass", "Strait or mountain pass that armies and trade must cross"]],
   };
   const keyEl = document.getElementById("keycard"), keyBtn = document.getElementById("keybtn");
+  let keyGroups = null;
   function renderKey() {
     if (keyEl.hidden) return;
     const groups = FAMILIES.map(f => {
@@ -2484,7 +2485,11 @@ Where the specialists disagree, say who the evidence favours.`;
       });
       return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${famIcon(f.id)}${esc(f.n)}</b>${rows.join("")}</div>` : "";
     }).join("");
-    keyEl.innerHTML = `<h4>On the map in ${esc(fmtYear(state.year))}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
+    // Year steps only change the heading: keep the rows (and their pixel glyphs) when they are the same.
+    const head = `On the map in ${fmtYear(state.year)}`;
+    if (groups === keyGroups && keyEl.firstElementChild) { keyEl.firstElementChild.textContent = head; return; }
+    keyGroups = groups;
+    keyEl.innerHTML = `<h4>${esc(head)}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
       <h4>Keys</h4><div class="keys"><kbd>← →</kbd><span>Step through time (Shift for bigger steps)</span><kbd>Space</kbd><span>Play or pause time</span><kbd>/</kbd><span>Ask a question</span>
       <kbd>1–6</kbd><span>Switch a lens family on or off</span><kbd>S</kbd><span>Surprise me</span><kbd>F</kbd><span>Focus: map only</span><kbd>K</kbd><span>This key</span><kbd>Esc</kbd><span>Close, clear the caption</span></div>`;
   }

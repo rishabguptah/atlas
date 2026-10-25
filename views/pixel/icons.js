@@ -28,6 +28,9 @@
     star: [".....kk.....", "....kyyk....", "....kyyk....", "kkkkkyykkkkk", "kyyyyyyyyyyk", ".kyyyyyyyyk.", "..kyyyyyyk..", "..kyygGyyk..", ".kyyGkkGyyk.", ".kyGk..kGyk.", "kkkk....kkkk", "............"],
     next: ["............", "....kk......", "....kxk.....", "....kxxk....", "kkkkkxxxk...", "kwwwwxxxxk..", "kxxxxxxxxxk.", "kXXXXxxxxk..", "kkkkkxxxk...", "....kxxk....", "....kXk.....", "....kk......"],
     seal: ["....kkkk....", "..kkxxxxkk..", ".kxxyxxyxxk.", ".kxxxyyxxxk.", "kxxyyxxyyxxk", "kxxxyyyyxxxk", "kxxyyxxyyxxk", ".kxxxyyxxxk.", ".kxxyxxyxxk.", "..kkxxxxkk..", "...kXkkXk...", "...kk..kk..."],
+    stories: ["............", ".kkkkkkkkk..", "kyGkwwwwwwk.", "kGGkwkkkwwk.", ".kkkwwwwwwk.", "...kwkkkkwk.", "...kwwwwwwk.", "...kwkkkwwk.", "...kwwwwwwk.", "..kkkkkkkkkk", "..kwwwwwwkyk", "...kkkkkkkk."],
+    objects: ["...kkkkkk...", "....kxxk....", ".kk.kxxk.kk.", "k..kxxxxk..k", "k.kxyxxxXk.k", ".kkxyxxxXkk.", "..kxyxxxXk..", "..kxxxxxXk..", "...kxxxXk...", "....kxXk....", "....kxXk....", "...kkkkkk..."],
+    lens: ["...kkkk.....", "..kwwwWk....", ".kwyywwWk...", ".kwywwwWk...", ".kwwwwwWk...", ".kwwwwWWk...", "..kWWWWk....", "...kkkkGk...", ".......kGk..", "........kGk.", ".........kGk", "..........k."],
     compass: [".....kk.....", "....kyyk....", "....kyyk....", "...kkyykk...", ".kkwkyykwkk.", "kwwwwkkxxxxk", "kwwwwkkxxxxk", ".kkwkXXkwkk.", "...kkXXkk...", "....kXXk....", "....kXXk....", ".....kk....."],
   };
   const DEFAULT = { k: "#221f1a", w: "#f6f0dc", W: "#d9cfb2", y: "#e8c050", g: "#d8a32c", G: "#8a6418", x: "#4a4035", X: "#2c2620" };

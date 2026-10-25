@@ -6,7 +6,7 @@
 /* Old tokens point at the kit, so plugin panes (codex, what if, charts) follow without edits. */
 :root, :root:not([data-theme="light"]), :root[data-theme="dark"] {
   --paper: var(--vellum); --card: var(--vellum); --rule: var(--vellum-3); --accent: var(--lapis); --warn: var(--rubric);
-  --display: var(--f-head); --fell: var(--f-head); --serif: var(--f-prose); --mono: var(--f-hud);
+  --display: var(--f-head); --fell: var(--f-head); --serif: var(--f-prose); --mono: var(--f-tiny);
   --ink-fixed: #221f1a; --vellum-fixed: #f6f0dc;
   --g: 12px; --pw: clamp(320px, 23vw, 420px); --rail: 44px; --rail-open: 168px; --timeh: 76px;
   --t-codex: var(--gold-2);
@@ -24,7 +24,11 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .yearplate { left: max(var(--g), env(safe-area-inset-left, 0px)); top: var(--g); z-index: 6; display: grid; gap: 2px; padding: 2px 12px 6px; min-width: 150px; text-shadow: none; pointer-events: auto;
   border: 10px solid transparent; border-image: var(--f-plate) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); color: var(--ink); }
 .app .yearplate .yp { font-family: var(--f-head); font-size: 48px; line-height: 46px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.app .yearplate .yp-era { font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--era); display: flex; gap: 6px; align-items: center; white-space: nowrap; }
+.app .yearplate .yp-era { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--era); display: flex; gap: 6px; align-items: center; white-space: nowrap; }
+.app .yearplate .yp-style { all: unset; cursor: pointer; justify-self: start; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink-soft); padding: 0 14px 0 4px; margin: 2px 0 0 -4px; background: linear-gradient(135deg, transparent 50%, currentColor 0) right 4px center / 6px 6px no-repeat; }
+.app .yearplate .yp-style:hover, .app .yearplate .yp-style:focus-visible { color: var(--ink); background-color: var(--wash); outline: 2px dashed var(--gold); outline-offset: 0; }
+.app .yearplate .yp-style option { font-family: var(--f-prose); text-transform: none; color: #221f1a; background: #f6f0dc; }
 .app .yearplate .yp-era::before { content: ""; width: 8px; height: 8px; flex: none; background: var(--era-2); box-shadow: 2px 2px 0 var(--ink-fixed); }
 
 /* ---- the one next thing ---- */
@@ -49,7 +53,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app.asking .askbar { visibility: hidden; }
 
 /* ---- buttons (old .btn markup gets the pixel button) ---- */
-.app .btn { font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+.app .btn { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
   color: var(--ink); background: none; border-radius: 0; padding: 3px 6px; box-shadow: none;
   border: 6px solid transparent; border-image: var(--f-button-q) 3 fill / 6px stretch; image-rendering: pixelated; filter: drop-shadow(0 2px 0 var(--shade)); transition: transform 120ms var(--ease); }
 .app .btn.primary, .app .btn[aria-pressed="true"] { color: var(--vellum-fixed); border-image-source: var(--f-button); background: none; }
@@ -66,15 +70,15 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .mapctl kbd { display: none; }
 .app .keycard { top: 66px; right: calc(var(--pw) + 2 * var(--g)); width: min(320px, calc(100% - 24px)); border-radius: 0; box-shadow: none; background: none; padding: 6px 8px 8px;
   border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
-.app .keycard h4 { font-family: var(--f-hud); font-size: 8px; letter-spacing: .08em; }
+.app .keycard h4 { font-family: var(--f-tiny); font-size: 8px; letter-spacing: .08em; }
 .app .keycard .kg b { font-family: var(--f-head); font-weight: 500; font-size: 16px; }
-.app .keycard kbd { font-family: var(--f-hud); font-size: 8px; border: 0; box-shadow: 0 0 0 2px var(--ink); border-radius: 0; padding: 0 4px; background: var(--vellum-hi); opacity: 1; }
+.app .keycard kbd { font-family: var(--f-tiny); font-size: 8px; border: 0; box-shadow: 0 0 0 2px var(--ink); border-radius: 0; padding: 0 4px; background: var(--vellum-hi); opacity: 1; }
 .app .caption { left: calc(var(--rail) + 2 * var(--g) + 10px); right: auto; bottom: calc(var(--timeh) + 2 * var(--g)); max-width: 380px; border-radius: 0; background: none; box-shadow: none; padding: 4px 10px 6px;
   border: 6px solid transparent; border-image: var(--f-card) 3 fill / 6px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
 .app .caption::before { content: ""; position: absolute; left: -6px; top: -6px; bottom: -6px; width: 6px; background: var(--lc, var(--ink)); }
 .app .caption b { font-family: var(--f-head); font-weight: 500; font-size: 20px; line-height: 1.1; }
-.app .caption .lens { font-family: var(--f-hud); font-size: 8px; letter-spacing: .08em; }
-.app .maphint { left: calc(var(--rail) + 2 * var(--g) + 10px); top: auto; bottom: calc(var(--timeh) + 2 * var(--g)); font-family: var(--f-hud); font-style: normal; font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase;
+.app .caption .lens { font-family: var(--f-tiny); font-size: 8px; letter-spacing: .08em; }
+.app .maphint { left: calc(var(--rail) + 2 * var(--g) + 10px); top: auto; bottom: calc(var(--timeh) + 2 * var(--g)); font-family: var(--f-tiny); font-style: normal; font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase;
   color: var(--vellum-fixed); background: var(--hud); border: 0; border-radius: 0; padding: 4px 8px; box-shadow: 0 0 0 2px var(--gold-2), 4px 4px 0 2px var(--shade); }
 .app .maptip { border-radius: 0; border: 0; box-shadow: 0 0 0 2px var(--ink-fixed), 4px 4px 0 2px var(--shade); background: var(--vellum); font-size: 13px; }
 .app .cx-toasts { right: calc(var(--pw) + 2 * var(--g)); top: 66px; }
@@ -93,7 +97,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app #layers:hover .chip.fam .nm, .app #layers:focus-within .chip.fam .nm { opacity: 1; }
 .app #layers .lab { display: none; }
 .app .chip { --t: var(--ink-2); border-radius: 0; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 2px 8px 2px 4px; cursor: pointer;
-  font-family: var(--f-hud); font-size: 16px; line-height: 16px; letter-spacing: 0; text-transform: uppercase; color: var(--ink);
+  font-family: var(--f-tiny); font-size: 16px; line-height: 16px; letter-spacing: 0; text-transform: uppercase; color: var(--ink);
   border: 6px solid transparent; border-image: var(--f-chip) 3 / 6px stretch; image-rendering: pixelated; background: var(--vellum); background-clip: padding-box;
   filter: drop-shadow(2px 2px 0 var(--shade)); transition: transform 120ms var(--ease); }
 .app .chip:hover { transform: translateX(2px); }
@@ -112,7 +116,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app #sublayers { position: absolute; z-index: 6; left: calc(var(--rail) + var(--g) + 16px); top: 176px; width: 236px; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: stretch;
   border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); padding: 2px 4px 6px; }
 .app #sublayers:empty, .app.sub-shut #sublayers { display: none; }
-.app #sublayers .lab { font-family: var(--f-hud); font-size: 8px; line-height: 16px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding: 0 4px; }
+.app #sublayers .lab { font-family: var(--f-tiny); font-size: 8px; line-height: 16px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding: 0 4px; }
 .app #sublayers .chip { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 8px; align-items: center; padding: 3px 6px; font-family: var(--f-prose); font-size: 14.5px; line-height: 1.25; color: var(--ink); }
 .app #sublayers .chip:hover { background: var(--wash); }
 .app #sublayers .chip:focus-visible { outline: 2px dashed var(--gold); }
@@ -138,10 +142,10 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .time input[type=range]::-moz-range-thumb { width: 16px; height: 22px; background: var(--knob) center / 16px 22px no-repeat; border: 0; border-radius: 0; image-rendering: pixelated; }
 .app .time input[type=range]::-moz-range-track { background: none; }
 .app .time input[type=range]:focus-visible { outline: 2px dashed var(--gold); outline-offset: 4px; }
-.app .time output { font-family: var(--f-hud); font-size: 16px; line-height: 16px; }
-.app .time .speed { font-family: var(--f-hud); font-size: 8px; text-transform: uppercase; border: 0; border-radius: 0; box-shadow: 0 0 0 2px var(--ink); background: var(--vellum-hi); padding: 2px 4px; max-width: 76px; }
+.app .time output { font-family: var(--f-tiny); font-size: 16px; line-height: 16px; }
+.app .time .speed { font-family: var(--f-tiny); font-size: 8px; text-transform: uppercase; border: 0; border-radius: 0; box-shadow: 0 0 0 2px var(--ink); background: var(--vellum-hi); padding: 2px 4px; max-width: 76px; }
 .app .eras { height: 14px; }
-.app .eras button { height: 14px; font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .06em; color: var(--ink-soft); border-left: 2px solid var(--ink-soft); }
+.app .eras button { height: 14px; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .06em; color: var(--ink-soft); border-left: 2px solid var(--ink-soft); }
 .app .eras button[aria-current="true"] { color: var(--vellum); background: var(--era); border-left-color: var(--era-2); font-weight: 400; }
 
 /* ---- the chronicle panel ---- */
@@ -150,7 +154,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .tabs { position: sticky; top: 0; z-index: 4; display: flex; gap: 2px; padding: 0 2px 6px; background: var(--vellum); border-bottom: 0;
   box-shadow: 0 2px 0 var(--vellum-3); margin-bottom: 2px; }
 .app .tab { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px 10px; border: 0; border-radius: 0;
-  font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); background: var(--vellum-3);
+  font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); background: var(--vellum-3);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 6px), 0 100%); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .app .tab .ico { --t: var(--ink-soft); }
 .app .tab[aria-selected="true"] { background: var(--ink); color: var(--vellum); padding-bottom: 16px; margin-bottom: -4px; position: relative; }
@@ -162,7 +166,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .tab:hover:not([aria-selected="true"]) { background: var(--vellum-2); }
 .app .tab:focus-visible { outline: 2px dashed var(--gold); outline-offset: -4px; }
 .app .pane { padding: 8px 6px 20px 4px; gap: 12px; }
-.app .kick, .app .sec > h3, .app .tag, .app .band { font-family: var(--f-hud); font-size: 8px; line-height: 12px; letter-spacing: .08em; font-weight: 400; }
+.app .kick, .app .sec > h3, .app .tag, .app .band { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; font-weight: 400; }
 .app .ttl { font-family: var(--f-head); font-size: 32px; line-height: 1; font-weight: 500; text-wrap: balance; }
 .app .sub { font-size: 14.5px; }
 .app .sec > h3 { border-top: 0; padding-top: 10px; background: linear-gradient(90deg, var(--ink-soft) 50%, transparent 0) top left / 4px 2px repeat-x; }
@@ -170,17 +174,17 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .it { border-radius: 0; padding: 4px 6px 4px 18px; position: relative; }
 .app .it::before { content: ""; position: absolute; left: 2px; top: 7px; width: 12px; height: 12px; background: var(--hand) center / 12px 12px no-repeat; image-rendering: pixelated; opacity: 0; }
 .app .it:hover::before, .app .it:focus-visible::before { opacity: 1; }
-.app .it .y { font-family: var(--f-hud); font-size: 8px; align-self: center; }
+.app .it .y { font-family: var(--f-tiny); font-size: 8px; align-self: center; }
 .app .tag { border-radius: 0; padding: 0 4px; }
 .app .band { border-radius: 0; color: #fffaea; box-shadow: 2px 2px 0 var(--ink-fixed); }
 .app .focus { border-radius: 0; background: none; border: 6px solid transparent; border-image: var(--f-card) 3 fill / 6px stretch; image-rendering: pixelated; padding: 4px 8px 6px 12px; position: relative; }
 .app .focus::before { content: ""; position: absolute; left: -2px; top: 0; bottom: 0; width: 6px; background: var(--c, var(--ink)); }
-.app .focus .fk { font-family: var(--f-hud); font-size: 8px; }
+.app .focus .fk { font-family: var(--f-tiny); font-size: 8px; }
 .app .focus .ft { font-family: var(--f-head); font-size: 24px; line-height: 1.05; font-weight: 500; }
 .app .srcs li::before { content: "§ "; color: var(--rubric); }
 .app .foot, .app .note { font-size: 12.5px; }
 .app .foot { border-top: 0; padding-top: 10px; background: linear-gradient(90deg, var(--ink-soft) 50%, transparent 0) top left / 4px 2px repeat-x; }
-.app .sec details.deep summary::before { font-family: var(--f-hud); }
+.app .sec details.deep summary::before { font-family: var(--f-tiny); }
 
 /* Guide (Ask) */
 .app .askbig textarea, .app .follow textarea, .app .wf textarea { border: 0; border-radius: 0; background: none; padding: 6px 8px; font-family: var(--f-prose); font-size: 17px;
@@ -189,9 +193,9 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .ex { border: 0; border-radius: 0; padding: 6px 6px 6px 20px; font-family: var(--f-prose); position: relative; background: none; box-shadow: 0 2px 0 var(--vellum-3); }
 .app .ex::before { content: ""; position: absolute; left: 2px; top: 10px; width: 12px; height: 12px; background: var(--hand) center / 12px 12px no-repeat; image-rendering: pixelated; opacity: 0; }
 .app .ex:hover::before, .app .ex:focus-visible::before { opacity: 1; }
-.app .ex .tg { font-family: var(--f-hud); font-size: 8px; }
+.app .ex .tg { font-family: var(--f-tiny); font-size: 8px; }
 .app .q { font-family: var(--f-head); font-size: 24px; font-weight: 500; }
-.app .badge { font-family: var(--f-hud); font-size: 8px; border-radius: 0; border: 0; box-shadow: inset 0 0 0 2px var(--rubric); padding: 2px 6px; }
+.app .badge { font-family: var(--f-tiny); font-size: 8px; border-radius: 0; border: 0; box-shadow: inset 0 0 0 2px var(--rubric); padding: 2px 6px; }
 .app .step, .app .link, .app .whatif, .app .wf .sc, .app .wf .wst, .app .cx .quest, .app .cx .stat, .app .wf .stat, .app .cx .switch, .app .cx .ok-msg {
   border: 6px solid transparent; border-radius: 0; background: none; border-image: var(--f-card) 3 fill / 6px stretch; image-rendering: pixelated; box-shadow: none; position: relative; }
 .app .step::before, .app .wf .sc::before, .app .cx .quest::before { content: ""; position: absolute; left: -2px; top: 0; bottom: 0; width: 6px; background: var(--c, var(--y-whatif, var(--gold))); }
@@ -199,7 +203,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .wf .wst.alt { border-image-source: var(--f-card); outline: 2px dashed var(--y-whatif); outline-offset: -8px; }
 .app .step.on, .app .wf .wst.on { border-image-source: var(--f-card-gold); }
 .app .step .t, .app .wf .wst .t, .app .wf .sc b, .app .cx .quest b, .app .view .nm, .app .link .ends, .app .whatif b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 1.2; }
-.app .step .i, .app .step .y, .app .step .ln, .app .conf, .app .pnl .stt, .app .spk b, .app .view .st, .app .wf .sc .meta, .app .wf .wst .y, .app .cx ul.ent li .y, .app .player .count { font-family: var(--f-hud); font-size: 8px; }
+.app .step .i, .app .step .y, .app .step .ln, .app .conf, .app .pnl .stt, .app .spk b, .app .view .st, .app .wf .sc .meta, .app .wf .wst .y, .app .cx ul.ent li .y, .app .player .count { font-family: var(--f-tiny); font-size: 8px; }
 .app .view .st, .app .wf .tagr, .app .wf .tagb, .app .wf .badge2 { border-radius: 0; font-size: 8px; }
 .app .player { background: var(--vellum); border-bottom: 0; box-shadow: 0 2px 0 var(--vellum-3); top: 64px; }
 .app .mrow .bar, .app .wf .pl .bar, .app .cx .bar { border-radius: 0; height: 8px; background: repeating-linear-gradient(90deg, var(--wash) 0 6px, transparent 6px 8px); outline: 0; }
@@ -210,9 +214,9 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .cx .next { border: 6px solid transparent; border-radius: 0; background: none; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; box-shadow: none; filter: drop-shadow(4px 4px 0 var(--shade)); }
 .app .cx .next .k, .app .cx-toast .k { color: var(--gold-2); }
 .app .cx .stat b { font-family: var(--f-head); font-size: 24px; font-weight: 500; }
-.app .cx .stat span, .app .wf .stat span { font-family: var(--f-hud); font-size: 8px; line-height: 12px; text-transform: uppercase; letter-spacing: .06em; }
+.app .cx .stat span, .app .wf .stat span { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; text-transform: uppercase; letter-spacing: .06em; }
 .app .cx .seg, .app .wf .seg { border: 0; border-radius: 0; gap: 2px; box-shadow: none; overflow: visible; }
-.app .cx .seg button, .app .wf .seg button { font-family: var(--f-hud); font-size: 8px; padding: 6px 10px; background: var(--vellum-3); color: var(--ink-2); }
+.app .cx .seg button, .app .wf .seg button { font-family: var(--f-tiny); font-size: 8px; padding: 6px 10px; background: var(--vellum-3); color: var(--ink-2); }
 .app .cx .seg button[aria-pressed="true"], .app .wf .seg button[aria-pressed="true"] { background: var(--ink); color: var(--vellum); box-shadow: 2px 2px 0 var(--gold-2); }
 .app .cx ul.ent li { border-bottom: 0; background: linear-gradient(90deg, var(--vellum-3) 50%, transparent 0) bottom left / 4px 2px repeat-x; }
 .app .cx .lnk { font-size: 8px; color: var(--lapis); text-decoration: underline; text-underline-offset: 3px; }
@@ -227,7 +231,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app.panel-tall .panel { height: auto; bottom: var(--g); }
 }
 .app .grip { position: sticky; bottom: -2px; z-index: 3; margin-top: auto; align-self: stretch; display: flex; justify-content: center; align-items: center; gap: 6px; padding: 4px 0 2px; cursor: pointer;
-  border: 0; background: linear-gradient(transparent, var(--vellum) 40%); font-family: var(--f-hud); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  border: 0; background: linear-gradient(transparent, var(--vellum) 40%); font-family: var(--f-tiny); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
 .app .grip::before { content: ""; width: 24px; height: 6px; background: repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 0 / 24px 2px no-repeat, repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 4px / 24px 2px no-repeat; }
 .app .grip:hover { color: var(--ink); }
 .app .grip:focus-visible { outline: 2px dashed var(--gold); outline-offset: -2px; }
@@ -290,37 +294,23 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app .maphint, .app .pxhud-br { display: none; }
 }
 
-/* ---- the Director caption: a story's scene, bottom centre over the map ---- */
-.app .dcap { position: absolute; z-index: 7; left: 50%; transform: translateX(-50%); bottom: calc(var(--timeh) + 2 * var(--g) + 4px); width: min(560px, calc(100% - 2 * var(--rail) - 6 * var(--g)));
-  display: grid; gap: 6px; padding: 4px 12px 8px 16px; color: var(--ink);
-  border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); }
-.app .dcap[hidden] { display: none; }
-.app .dcap::before { content: ""; position: absolute; left: -2px; top: 0; bottom: 0; width: 6px; background: var(--t); }
-.app .dcap .dc-top { display: flex; align-items: center; gap: 8px; }
-.app .dcap .dc-top .kick { color: var(--ink-2); }
-.app .dcap .dc-n { margin-left: auto; font-size: 8px; color: var(--ink-soft); }
-.app .dcap .dc-x { all: unset; cursor: pointer; margin-right: -6px; }
-.app .dcap .dc-x .ico { --t: var(--ink-soft); width: 24px; height: 24px; }
-.app .dcap .dc-cap { font-family: var(--f-head); font-weight: 500; font-size: 24px; line-height: 28px; text-wrap: balance; }
-.app .dcap .dc-act { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.app .dcap kbd { font-family: var(--f-hud); font-size: 8px; margin-left: 4px; padding: 0 3px; box-shadow: 0 0 0 2px var(--gold-2); color: var(--gold-hi); }
-.app .dcap .dc-conf { margin-left: auto; font-family: var(--f-hud); font-size: 8px; text-transform: uppercase; letter-spacing: .08em; padding: 2px 6px; box-shadow: inset 0 0 0 2px var(--ink-2); }
-.app .dcap .dc-pips { display: flex; gap: 2px; height: 4px; }
-.app .dcap .dc-pips i { flex: 1; background: var(--vellum-3); }
-.app .dcap .dc-pips i.done { background: var(--ink-2); }
-.app .dcap .dc-pips i.on { background: var(--t); }
-/* Confidence grammar (D10): solid attested, hatched estimated, dashed approximate or disputed, fog unknown, dashed gold for a what if. */
-.app .dcap[data-conf="estimated"]::before { background: repeating-linear-gradient(135deg, var(--t) 0 2px, transparent 2px 4px); }
-.app .dcap[data-conf="estimated"] .dc-conf { box-shadow: none; background: repeating-linear-gradient(135deg, var(--wash) 0 2px, transparent 2px 4px); }
-.app .dcap[data-conf="approximate"]::before, .app .dcap[data-conf="disputed"]::before { background: repeating-linear-gradient(180deg, var(--t) 0 6px, transparent 6px 10px); }
-.app .dcap[data-conf="approximate"] .dc-conf, .app .dcap[data-conf="disputed"] .dc-conf { box-shadow: none; outline: 2px dashed var(--ink-2); outline-offset: -2px; }
-.app .dcap[data-conf="unknown"]::before { background: repeating-conic-gradient(var(--t) 0 25%, transparent 0 50%) 0 0 / 4px 4px; }
-.app .dcap[data-conf="speculative"] .dc-conf { box-shadow: none; outline: 2px dashed var(--gold); outline-offset: -2px; color: var(--gold-2); }
-.app .dcap ~ .caption { display: none; }
-@media (max-width: 700px) {
-  .app .dcap { left: 8px; right: 8px; transform: none; width: auto; bottom: calc(var(--peek, 92px) + var(--timeh) + 8px); }
-  .app .dcap .dc-cap { font-size: 16px; line-height: 20px; }
-}
+/* ---- a story on the map: the Director's dialog box in the chronicle's frames (D10 confidence stays the Director's) ---- */
+.app .dr { bottom: calc(var(--timeh) + var(--g)); padding-bottom: var(--g); }
+.app.directing .time, .app.directing #nextcard, .app.directing .askbar { opacity: 0; pointer-events: none; }
+.app.directing .dr { bottom: 0; }
+.app .dr-box { --dr-ink: var(--hud); --dr-gold: var(--gold-hi); box-shadow: none; padding: 6px 12px 8px;
+  border: 10px solid transparent; border-image: var(--f-hud) 4 fill / 10px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); background: none; }
+.app .dr-box.alt { box-shadow: none; outline: 2px dashed var(--t-shocks-lt); outline-offset: -6px; }
+.app .dr-title { font-family: var(--f-head); font-size: 24px; line-height: 1.05; }
+.app .dr-kick, .app .dr-link, .app .dr-cont, .app .dr-strip .nm { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; }
+.app .dr-btn { font-family: var(--f-tiny) !important; font-size: 8px !important; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-fixed, #221f1a);
+  padding: 2px 6px; background: none; box-shadow: none; border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; }
+.app .dr-btn:hover, .app .dr-btn:focus-visible { background: none; transform: translateY(-2px); }
+.app .dr-strip { background: none; box-shadow: none; border: 8px solid transparent; border-image: var(--f-hud) 4 fill / 8px stretch; image-rendering: pixelated; padding: 0 2px; }
+.app .dr-segs button { background: #4a4035; }
+.app .dr-segs button.done { background: var(--gold-2); }
+.app .dr-segs button.on { background: var(--gold-hi); }
+@media (max-width: 700px) { .app .dr { bottom: calc(var(--peek, 92px) - 8px); } }
 
 /* Icons inside the map's own layer are not the map's SVG. */
 .app .map svg.ico { position: static; inset: auto; width: 24px; height: 24px; cursor: inherit; display: block; }
@@ -341,3 +331,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app:not(.panel-tall):not(.panel-min) .pxhud-br { right: max(var(--g), env(safe-area-inset-right, 0px)) !important; bottom: var(--g) !important; }
   .app:not(.panel-tall) .time { right: calc(var(--pw) + 2 * var(--g)); }
 }
+
+/* Focus (and a story playing) gives the map the whole screen, the phone included. */
+.app.focus .map { height: auto; }
+@media (max-width: 700px) { .app.focus { padding-bottom: env(safe-area-inset-bottom, 0px); } }

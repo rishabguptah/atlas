@@ -12,8 +12,8 @@
   let rectT = 0;
 
   // ---------- icons on the existing controls ----------
-  const TAB_ICON = { now: "year", here: "here", guide: "ask", codex: "codex", whatif: "whatif" };
-  const TAB_SHORT = { now: "Year", "Up close": "Close" };
+  const TAB_ICON = { now: "year", here: "here", guide: "ask", codex: "codex", whatif: "whatif", stories: "stories", objects: "objects", upclose: "lens" };
+  const TAB_SHORT = { now: "Year", upclose: "Close" };
   function dressTab(b) {
     if (b.querySelector(".ico")) return;
     const name = b.textContent.replace(/\s+\d+$/, "").trim();
@@ -75,6 +75,16 @@
   syncEraNames(true);
   let rsT = 0;
   addEventListener("resize", () => { clearTimeout(rsT); rsT = setTimeout(() => { syncEraNames(true); emitRects(); }, 150); });
+
+  // The map's era style (views/pixel/eras.js), picked on the cartouche: "By year" follows the year, the rest pin one look.
+  if (A.eraStyles && A.setEraStyle && ypEra) {
+    const sel = document.createElement("select");
+    sel.className = "yp-style"; sel.title = "Map style"; sel.setAttribute("aria-label", "Map style");
+    sel.innerHTML = A.eraStyles.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
+    sel.value = (A.eraStyle && A.eraStyle().choice) || "auto";
+    sel.addEventListener("change", () => A.setEraStyle(sel.value));
+    ypEra.parentNode.appendChild(sel);
+  }
 
   // ---------- the one next thing ----------
   // Providers say what you could do next; the highest priority with something to say wins. A plugin adds one with
@@ -139,7 +149,7 @@
   $(".tabs").addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") $$(".tab").forEach(t => t.dataset.wasOpen = t.getAttribute("aria-selected") === "true" ? "1" : ""); }, true);
   document.addEventListener("keydown", ev => {
     if (ev.target.closest("input, textarea, select, [contenteditable]") || ev.metaKey || ev.ctrlKey || ev.altKey) return;
-    if ((ev.key === "p" || ev.key === "P") && !phone.matches) { ev.preventDefault(); setFold(!app.classList.contains("panel-min") ); }
+    if ((ev.key === "p" || ev.key === "P") && !phone.matches && !app.classList.contains("directing")) { ev.preventDefault(); setFold(!app.classList.contains("panel-min") ); }
   });
   // Anything that writes into Here (a click on the map) opens the panel again.
   new MutationObserver(() => { if (app.classList.contains("panel-min") ) { if ($$(".tab").some(t => t.dataset.tab !== "guide" && t.getAttribute("aria-selected") === "true" && t.dataset.tab === "here")) setFold(false); } })
@@ -157,45 +167,13 @@
   // Plugin panes added later still sit above the grip.
   new MutationObserver(() => { if (panel.lastElementChild !== grip) panel.appendChild(grip); }).observe(panel, { childList: true });
 
-  // ---------- the Director caption: one scene of a story, on the map ----------
-  // ATLAS.directorCaption(scene, { i, n, title, onNext, onPrev, onWhy, onClose }) shows or updates the caption;
-  // ATLAS.directorCaption(null) hides it. scene is the L4 Scene (views/atlas/WORLD.md): caption, t/date, by, conf.
-  // The Director owns playing (Space for next); this only draws. While it shows, the panel folds to its ribbons.
-  const BY_FAMILY = { geographer: "land", geography: "land", military: "power", political: "power", order: "power", economy: "wealth", economic: "wealth",
-    population: "peoples", demographer: "peoples", people: "peoples", disease: "shocks", epidemiologist: "shocks", climate: "shocks", religion: "mind", ideas: "mind", literature: "mind" };
-  const CONF = { attested: "Attested", estimated: "Estimated", approximate: "Approximate", disputed: "Disputed", unknown: "Unknown", speculative: "What if" };
-  let dcap = null, dcapFolded = false;
-  A.directorCaption = (scene, o = {}) => {
-    if (!scene) { if (dcap) dcap.hidden = true; if (dcapFolded) { dcapFolded = false; setFold(false); } emitRects(); return; }
-    if (!dcap) {
-      dcap = document.createElement("section"); dcap.className = "dcap"; dcap.setAttribute("aria-live", "polite"); map.appendChild(dcap);
-      dcap.addEventListener("click", ev => { const b = ev.target.closest("[data-a]"); if (!b) return; const f = dcap._o && dcap._o["on" + b.dataset.a]; if (f) f(); });
-    }
-    dcap._o = o; dcap.hidden = false;
-    const fam = BY_FAMILY[String(scene.by || "").toLowerCase()] || (I.FAMILY[scene.by] ? scene.by : null);
-    const conf = CONF[scene.conf] ? scene.conf : "attested";
-    const when = scene.date || (scene.t != null ? api.fmtYear(scene.t) : "");
-    dcap.dataset.conf = conf; dcap.style.setProperty("--t", fam ? `var(--t-${fam})` : "var(--gold)");
-    const n = o.n || 1, i = Math.min(n, (o.i || 0) + 1);
-    dcap.innerHTML = `<div class="dc-top">${fam ? `<span class="fi">${ico(fam)}</span>` : ""}<span class="kick"></span><span class="dc-n num">${i} / ${n}</span>
-        ${o.onClose ? `<button class="dc-x" type="button" data-a="Close" aria-label="Stop the story">${ico("close")}</button>` : ""}</div>
-      <b class="dc-cap"></b>
-      <div class="dc-act">${o.onPrev && i > 1 ? `<button class="btn" type="button" data-a="Prev" aria-label="Previous scene">${ico("back")}</button>` : ""}
-        ${o.onNext && i < n ? `<button class="btn primary" type="button" data-a="Next">${ico("next")}Next<kbd>Space</kbd></button>` : ""}
-        ${o.onWhy ? `<button class="btn" type="button" data-a="Why">${esc(scene.ask || "Why?")}</button>` : ""}
-        <span class="dc-conf">${CONF[conf]}</span></div>
-      <div class="dc-pips" aria-hidden="true">${Array.from({ length: Math.min(n, 40) }, (_, j) => `<i class="${j < i - 1 ? "done" : j === i - 1 ? "on" : ""}"></i>`).join("")}</div>`;
-    dcap.querySelector(".kick").textContent = [o.title, when].filter(Boolean).join(" · ");
-    dcap.querySelector(".dc-cap").textContent = scene.caption || scene.title || "";
-    if (!phone.matches && !app.classList.contains("panel-min")) { dcapFolded = true; setFold(true); }
-    emitRects();
-  };
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // A story on the map: views/atlas/world/director.js draws the dialog box and puts the page in focus mode;
+  // atlas.css dresses the box in the chronicle's frames.
 
   // ---------- what the HUD covers, for the label engine ----------
   // ATLAS.chromeRects() -> [[x0, y0, x1, y1], ...] in map pixels (the label queue keeps labels out of them);
   // "atlas:chrome" fires on the document when they change.
-  const HUD = [".dcap", ".yearplate", "#nextcard", "#layers", "#sublayers", ".askbar", ".mapctl", ".time", ".panel", ".caption", ".keycard", ".maphint"];
+  const HUD = [".dr-box", ".dr-strip", ".yearplate", "#nextcard", "#layers", "#sublayers", ".askbar", ".mapctl", ".time", ".panel", ".caption", ".keycard", ".maphint"];
   A.chromeRects = () => {
     const m = map.getBoundingClientRect(), out = [];
     for (const s of HUD) for (const el of document.querySelectorAll(s)) {
