@@ -16,7 +16,8 @@
 //   pm.on(fn) / pm.view() / pm.ownWater(on)  for an animation layer above the map (motion.js): fn('layout'|'realms'|'paint') after
 //                                            each pass; view() reads this frame's buffers; ownWater(false) leaves water shimmer to it
 //
-// levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
+// levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine;
+// the finest may be {cell, patches: [{box: [w, s, e, n], url, crop}]} (city-scale terrain around a few cities).
 // land: GeoJSON land (coasts come from it, so they stay sharp at any zoom). rivers: [{rank, line: [[lon,lat],...]}].
 // realms: [{id, name, color, feature}] political polygons for the year; drawn as flat tints with crisp 1-px borders.
 (function (global) {
@@ -40,8 +41,10 @@
 
   function decode(r) {
     if (r.data) return r;
-    const c = document.createElement("canvas"); c.width = r.w = r.img.naturalWidth || r.img.width; c.height = r.h = r.img.naturalHeight || r.img.height;
-    const x = c.getContext("2d"); x.drawImage(r.img, 0, 0);
+    // A tile may be one cell of a packed image (crop [x, y, w, h]), as the city patches are.
+    const q = r.crop, c = document.createElement("canvas");
+    c.width = r.w = q ? q[2] : r.img.naturalWidth || r.img.width; c.height = r.h = q ? q[3] : r.img.naturalHeight || r.img.height;
+    const x = c.getContext("2d"); x.drawImage(r.img, q ? -q[0] : 0, q ? -q[1] : 0);
     r.data = x.getImageData(0, 0, r.w, r.h).data;
     return r;
   }
@@ -62,17 +65,26 @@
     // Tiles load on demand; until a finer tile arrives the coarser level shows, then the map re-renders.
     const levels = opts.levels || [], tiles = {};
     let pending = 0, onTile = null;
+    // A level may instead be a set of patches, {cell, patches: [{box: [w, s, e, n], url}]}: the city-scale terrain
+    // (ingest/city/tiles.py) exists only around a few cities, packed into one image (P.crop). tile(L, li, -1, i) loads patch i.
     function tile(L, li, col, row) {
       const key = li * 100000 + col * 100 + row, t = tiles[key];
       if (t) return t.data ? t : null;
-      const rec = tiles[key] = { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
+      const P = col < 0 ? L.patches[row] : null;
+      const rec = tiles[key] = P ? { x0: P.box[0], y0: P.box[3], cell: L.cell, patch: true, crop: P.crop } : { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
       const img = new Image(); pending++;
       img.onload = () => { rec.img = img; decode(rec); pending--; tileVer++; clearTimeout(onTile); onTile = setTimeout(() => last && render(last), 60); };
       img.onerror = () => { pending--; rec.data = null; rec.failed = true; };
-      img.src = L.url(col, row);
+      img.src = P ? P.url : L.url(col, row);
       return null;
     }
-    const OUT3 = [0, 0, 0, 0];
+    function patchAt(L, lon, lat) {
+      const ps = L.patches, h = L.hit || 0, inside = b => lon >= b[0] && lon < b[2] && lat > b[1] && lat <= b[3];
+      if (ps[h] && inside(ps[h].box)) return h;
+      for (let i = 0; i < ps.length; i++) if (inside(ps[i].box)) return (L.hit = i);
+      return -1;
+    }
+    const OUT3 = [0, 0, 0, 0, 0];
     // Warp noise for class edges (see sample), baked as tiles per zoom scale.
     const warpTiles = new Map();
     function warpFor(cp) {
@@ -81,14 +93,16 @@
       if (!t) { const NT = global.PixelTerrainArt.noiseTile; t = [NT(sc, sc, 5, 1), NT(sc, sc, 5, 2), NT(sm, sm, 9, 3), NT(sm, sm, 9, 4)]; warpTiles.set(sc + "," + sm, t); }
       return t;
     }
-    // OUT3: [class, hillshade, elevation band, elevation in metres (float)].
+    // OUT3: [class, hillshade, elevation band, elevation in metres (float), 1 if from a city patch].
     function sample(lon, lat, need, u, v, exact) {
       let r = null; lon = Math.min(179.9999, lon); lat = Math.max(-89.9999, lat);
       for (let li = 0; li < levels.length; li++) {
         const L = levels[li];
-        if (li > 0 && L.cell * 1.6 < need && r) break;
-        const col = Math.floor((lon + 180) / L.tdeg), row = Math.floor((90 - lat) / L.tdeg);
-        const t = tile(L, li, col, row);
+        // City patches are worth sampling well before their own cell size: 45 m data beats a 3.7 km cell even 12x coarse.
+        if (li > 0 && L.cell * (L.patches ? 12 : 1.6) < need && r) break;
+        let t;
+        if (L.patches) { const pi = patchAt(L, lon, lat); if (pi < 0) continue; t = tile(L, li, -1, pi); }
+        else t = tile(L, li, Math.floor((lon + 180) / L.tdeg), Math.floor((90 - lat) / L.tdeg));
         if (t) r = t;
         if (L.cell <= need) break;
       }
@@ -113,7 +127,7 @@
           OUT3[ch] = t + (b - t) * ay;
         }
       } else { OUT3[1] = D[i + 1]; OUT3[2] = D[i + 2]; }
-      OUT3[3] = OUT3[2] * 25; OUT3[1] = Math.round(OUT3[1]); OUT3[2] = Math.round(OUT3[2]);
+      OUT3[3] = OUT3[2] * 25; OUT3[1] = Math.round(OUT3[1]); OUT3[2] = Math.round(OUT3[2]); OUT3[4] = r.patch ? 1 : 0;
       return OUT3;
     }
 
@@ -194,7 +208,8 @@
         let c = s[0]; const s1 = s[1], s2 = s[2], s3 = s[3];
         // Rivers stay thin lines when zoomed past the data: only the unjittered cell counts.
         if (c === 4 && sample(ll[0], ll[1], need, u, v, true)[0] !== 4) c = 10;
-        const isLand = landM[k * 4 + 3] > 127;
+        // A city patch draws its own coastline (OpenStreetMap, 45 m), finer than the vector land mask.
+        const isLand = s[4] ? c > 2 : landM[k * 4 + 3] > 127;
         // Rasterised rivers only once zoomed in far enough that a cell is about a pixel; vector lines cover the rest.
         if (c === 4 && (need > 0.1 || !isLand)) c = 10;
         if (isLand && WATER(c) && c !== 3) c = 10;

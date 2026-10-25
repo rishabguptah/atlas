@@ -22,6 +22,7 @@ the renderer (views/pixel/), the terrain and borders data (terrain thread) and t
 | L0 | 2160 x 1080, one file `z0.png` | 10' |
 | L1 | 5400 x 2700, one file `z1.png` | 4' |
 | L2 | 10800 x 5400 as 30x30 degree tiles `z2_<col>_<row>.png`, 900 x 900 | 2' |
+| L3 | one patch per story city, `l3/l3_<id>.png` with boxes in `l3/l3.json` (ingest/city/tiles.py), packed by tiles.py into `tiles/l3.png`; the page's level is `{cell, patches: [{box, url, crop}]}` | 1.5" (1/2400 degree, about 45 m) |
 
 Channels: **R** terrain class id, **G** hillshade 0..255 (sun 315 deg, altitude 45, 128 = flat, 128 at sea),
 **B** land `elev_m / 25` or sea `depth_m / 40`, capped at 255.

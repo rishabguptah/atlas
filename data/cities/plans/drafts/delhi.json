@@ -1,0 +1,1592 @@
+{
+ "id": "delhi",
+ "note": "Claude draft for Delhi: Shahjahanabad walls and gates (1650) and the Red Fort (1639-48), Purana Qila (Dinpanah/Shergarh), Siri, Firozabad, Chandni Chowk with its canal and the Nahr-i-Bahisht, the Yamuna once under the Red Fort walls, built-up area by period from Qila Rai Pithora (south of the box) to New Delhi. Tughlaqabad and Jahanpanah walls lie outside the box and are not drawn. Unnamed OSM wall lines (Red Fort, Salimgarh, Purana Qila, Siri, parts of the city wall) cannot be dated by name; the dated draft lines run over them.",
+ "features": [
+  {
+   "k": "wall_dates",
+   "match": "City Wall South of Daryaganj",
+   "t0": 1650,
+   "t1": null,
+   "label": "Shahjahanabad city wall (Daryaganj)",
+   "conf": 1,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India"
+  },
+  {
+   "k": "wall_dates",
+   "match": "Kotla Firoz Shah Ruins",
+   "t0": 1354,
+   "t1": null,
+   "label": "Firoz Shah Kotla (citadel of Firozabad)",
+   "conf": 1,
+   "src": "Feroz Shah Kotla (Wikipedia)"
+  },
+  {
+   "k": "wall",
+   "name": "Shahjahanabad city wall",
+   "t0": 1650,
+   "t1": null,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "line": [
+    [
+     77.2405,
+     28.663
+    ],
+    [
+     77.236,
+     28.6655
+    ],
+    [
+     77.2322,
+     28.6683
+    ],
+    [
+     77.2292,
+     28.6672
+    ],
+    [
+     77.2255,
+     28.6662
+    ],
+    [
+     77.2228,
+     28.6655
+    ],
+    [
+     77.2198,
+     28.6645
+    ],
+    [
+     77.2178,
+     28.662
+    ],
+    [
+     77.215,
+     28.658
+    ],
+    [
+     77.214,
+     28.654
+    ],
+    [
+     77.216,
+     28.648
+    ],
+    [
+     77.2195,
+     28.642
+    ],
+    [
+     77.225,
+     28.64
+    ],
+    [
+     77.2302,
+     28.6393
+    ],
+    [
+     77.236,
+     28.6398
+    ],
+    [
+     77.241,
+     28.6407
+    ],
+    [
+     77.244,
+     28.641
+    ],
+    [
+     77.2458,
+     28.643
+    ],
+    [
+     77.2458,
+     28.65
+    ],
+    [
+     77.2428,
+     28.6524
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Kashmiri Gate",
+   "t0": 1650,
+   "t1": null,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "at": [
+    77.2292,
+    28.6672
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Mori Gate",
+   "t0": 1650,
+   "t1": 1870,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "at": [
+    77.2228,
+    28.6655
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Kabuli Gate",
+   "t0": 1650,
+   "t1": 1870,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "at": [
+    77.2178,
+    28.662
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Lahori Gate (city)",
+   "t0": 1650,
+   "t1": 1870,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "at": [
+    77.215,
+    28.658
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Ajmeri Gate",
+   "t0": 1650,
+   "t1": null,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "at": [
+    77.2195,
+    28.642
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Turkman Gate",
+   "t0": 1650,
+   "t1": null,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "at": [
+    77.2302,
+    28.6393
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Delhi Gate",
+   "t0": 1650,
+   "t1": null,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "at": [
+    77.241,
+    28.6407
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Nigambodh Gate",
+   "t0": 1650,
+   "t1": 1870,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "at": [
+    77.236,
+    28.6655
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Walls of the Red Fort (Qila-i-Mubarak)",
+   "t0": 1639,
+   "t1": null,
+   "conf": 2,
+   "src": "Red Fort (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "line": [
+    [
+     77.2422,
+     28.6524
+    ],
+    [
+     77.2386,
+     28.6535
+    ],
+    [
+     77.2372,
+     28.656
+    ],
+    [
+     77.2378,
+     28.6588
+    ],
+    [
+     77.2405,
+     28.6607
+    ],
+    [
+     77.2438,
+     28.66
+    ],
+    [
+     77.2445,
+     28.6565
+    ],
+    [
+     77.2442,
+     28.6535
+    ],
+    [
+     77.2422,
+     28.6524
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Lahori Gate of the Red Fort",
+   "t0": 1639,
+   "t1": null,
+   "conf": 2,
+   "src": "Red Fort (Wikipedia)",
+   "at": [
+    77.2383,
+    28.6562
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Delhi Gate of the Red Fort",
+   "t0": 1639,
+   "t1": null,
+   "conf": 2,
+   "src": "Red Fort (Wikipedia)",
+   "at": [
+    77.2412,
+    28.6527
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Diwan-i-Am",
+   "t0": 1648,
+   "t1": null,
+   "conf": 2,
+   "src": "Diwan-i-Aam (Red Fort) (Wikipedia)",
+   "at": [
+    77.2412,
+    28.6562
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Rang Mahal and Diwan-i-Khas (riverfront palaces)",
+   "t0": 1648,
+   "t1": null,
+   "conf": 2,
+   "src": "Red Fort (Wikipedia)",
+   "at": [
+    77.2436,
+    28.6565
+   ]
+  },
+  {
+   "k": "house",
+   "name": "British barracks in the Red Fort",
+   "t0": 1858,
+   "t1": null,
+   "conf": 2,
+   "src": "Red Fort (Wikipedia): palace buildings cleared and barracks built after 1857",
+   "at": [
+    77.24,
+    28.6585
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Purana Qila walls (Dinpanah, Shergarh)",
+   "t0": 1538,
+   "t1": null,
+   "conf": 2,
+   "src": "Purana Qila (Wikipedia)",
+   "line": [
+    [
+     77.241,
+     28.607
+    ],
+    [
+     77.2408,
+     28.61
+    ],
+    [
+     77.2418,
+     28.6122
+    ],
+    [
+     77.2445,
+     28.6126
+    ],
+    [
+     77.247,
+     28.6115
+    ],
+    [
+     77.2476,
+     28.609
+    ],
+    [
+     77.2462,
+     28.6065
+    ],
+    [
+     77.244,
+     28.6062
+    ],
+    [
+     77.241,
+     28.607
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bara Darwaza (Purana Qila)",
+   "t0": 1538,
+   "t1": null,
+   "conf": 2,
+   "src": "Purana Qila (Wikipedia)",
+   "at": [
+    77.2409,
+    28.6095
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Humayun Darwaza (Purana Qila)",
+   "t0": 1538,
+   "t1": null,
+   "conf": 2,
+   "src": "Purana Qila (Wikipedia)",
+   "at": [
+    77.2448,
+    28.6063
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Talaqi Darwaza (Purana Qila)",
+   "t0": 1538,
+   "t1": null,
+   "conf": 2,
+   "src": "Purana Qila (Wikipedia)",
+   "at": [
+    77.2445,
+    28.6125
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Lal Darwaza (Sher Shah Gate)",
+   "t0": 1540,
+   "t1": null,
+   "conf": 2,
+   "src": "Sher Shah Suri Gate (Wikipedia)",
+   "at": [
+    77.243,
+    28.6152
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Khooni Darwaza (Kabuli Darwaza of Shergarh)",
+   "t0": 1540,
+   "t1": null,
+   "conf": 2,
+   "src": "Khooni Darwaza (Wikipedia)",
+   "at": [
+    77.2405,
+    28.6363
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Walls of Siri",
+   "t0": 1303,
+   "t1": null,
+   "conf": 2,
+   "src": "Siri Fort (Wikipedia); Peck 2005, Delhi: A Thousand Years of Building",
+   "line": [
+    [
+     77.2215,
+     28.5552
+    ],
+    [
+     77.22368,
+     28.55506
+    ],
+    [
+     77.22577,
+     28.55466
+    ],
+    [
+     77.22767,
+     28.55402
+    ],
+    [
+     77.2293,
+     28.55315
+    ],
+    [
+     77.23059,
+     28.5521
+    ],
+    [
+     77.23149,
+     28.55092
+    ],
+    [
+     77.23194,
+     28.54965
+    ],
+    [
+     77.23194,
+     28.54835
+    ],
+    [
+     77.23149,
+     28.54708
+    ],
+    [
+     77.23059,
+     28.5459
+    ],
+    [
+     77.2293,
+     28.54485
+    ],
+    [
+     77.22767,
+     28.54398
+    ],
+    [
+     77.22577,
+     28.54334
+    ],
+    [
+     77.22368,
+     28.54294
+    ],
+    [
+     77.2215,
+     28.5428
+    ],
+    [
+     77.21932,
+     28.54294
+    ],
+    [
+     77.21723,
+     28.54334
+    ],
+    [
+     77.21533,
+     28.54398
+    ],
+    [
+     77.2137,
+     28.54485
+    ],
+    [
+     77.21241,
+     28.5459
+    ],
+    [
+     77.21151,
+     28.54708
+    ],
+    [
+     77.21106,
+     28.54835
+    ],
+    [
+     77.21106,
+     28.54965
+    ],
+    [
+     77.21151,
+     28.55092
+    ],
+    [
+     77.21241,
+     28.5521
+    ],
+    [
+     77.2137,
+     28.55315
+    ],
+    [
+     77.21533,
+     28.55402
+    ],
+    [
+     77.21723,
+     28.55466
+    ],
+    [
+     77.21932,
+     28.55506
+    ],
+    [
+     77.2215,
+     28.5552
+    ]
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Firoz Shah Kotla (citadel of Firozabad)",
+   "t0": 1354,
+   "t1": null,
+   "conf": 2,
+   "src": "Feroz Shah Kotla (Wikipedia)",
+   "at": [
+    77.2445,
+    28.6355
+   ]
+  },
+  {
+   "k": "column",
+   "name": "Ashokan pillar (Delhi-Topra), set up 1356",
+   "t0": 1356,
+   "t1": null,
+   "conf": 2,
+   "src": "Delhi-Topra pillar (Wikipedia)",
+   "at": [
+    77.2452,
+    28.6358
+   ]
+  },
+  {
+   "k": "mosque",
+   "name": "Kalan Masjid",
+   "t0": 1387,
+   "t1": null,
+   "conf": 2,
+   "src": "Kalan Masjid (Wikipedia)",
+   "at": [
+    77.2268,
+    28.644
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Qutb Minar (Mehrauli)",
+   "t0": 1199,
+   "t1": null,
+   "conf": 2,
+   "src": "Qutb Minar (Wikipedia): begun c. 1199, outside the box to the south",
+   "at": [
+    77.1855,
+    28.5245
+   ]
+  },
+  {
+   "k": "mosque",
+   "name": "Fatehpuri Masjid",
+   "t0": 1650,
+   "t1": null,
+   "conf": 2,
+   "src": "Fatehpuri Masjid (Wikipedia)",
+   "at": [
+    77.2224,
+    28.6566
+   ]
+  },
+  {
+   "k": "column",
+   "name": "Mutiny Memorial",
+   "t0": 1863,
+   "t1": null,
+   "conf": 2,
+   "src": "Mutiny Memorial (Wikipedia)",
+   "at": [
+    77.2155,
+    28.6745
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Old Delhi railway station",
+   "t0": 1864,
+   "t1": null,
+   "conf": 2,
+   "src": "Old Delhi railway station (Wikipedia)",
+   "at": [
+    77.2275,
+    28.6612
+   ]
+  },
+  {
+   "k": "column",
+   "name": "India Gate (All India War Memorial)",
+   "t0": 1931,
+   "t1": null,
+   "conf": 2,
+   "src": "India Gate (Wikipedia): built 1921-1931",
+   "at": [
+    77.2295,
+    28.6129
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Connaught Place",
+   "t0": 1933,
+   "t1": null,
+   "conf": 2,
+   "src": "Connaught Place (Wikipedia)",
+   "at": [
+    77.2195,
+    28.6315
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Chandni Chowk",
+   "t0": 1650,
+   "t1": null,
+   "conf": 2,
+   "src": "Chandni Chowk (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "line": [
+    [
+     77.2382,
+     28.6562
+    ],
+    [
+     77.233,
+     28.656
+    ],
+    [
+     77.228,
+     28.6561
+    ],
+    [
+     77.2225,
+     28.6566
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Khari Baoli",
+   "t0": 1650,
+   "t1": null,
+   "conf": 2,
+   "src": "Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "line": [
+    [
+     77.2225,
+     28.6566
+    ],
+    [
+     77.219,
+     28.6572
+    ],
+    [
+     77.215,
+     28.658
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Faiz Bazar",
+   "t0": 1650,
+   "t1": null,
+   "conf": 2,
+   "src": "Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "line": [
+    [
+     77.2412,
+     28.6527
+    ],
+    [
+     77.2412,
+     28.647
+    ],
+    [
+     77.241,
+     28.6407
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Rajpath (Kingsway)",
+   "t0": 1931,
+   "t1": null,
+   "conf": 2,
+   "src": "Kartavya Path (Wikipedia)",
+   "line": [
+    [
+     77.2,
+     28.6143
+    ],
+    [
+     77.21,
+     28.6138
+    ],
+    [
+     77.22,
+     28.6133
+    ],
+    [
+     77.2295,
+     28.6129
+    ],
+    [
+     77.24,
+     28.611
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Nahr-i-Faiz (Ali Mardan canal) along Chandni Chowk",
+   "t0": 1650,
+   "t1": 1890,
+   "conf": 2,
+   "src": "Blake 1991, Shahjahanabad: The Sovereign City in Mughal India; Chandni Chowk (Wikipedia)",
+   "line": [
+    [
+     77.211,
+     28.665
+    ],
+    [
+     77.215,
+     28.6615
+    ],
+    [
+     77.2178,
+     28.66
+    ],
+    [
+     77.2225,
+     28.6568
+    ],
+    [
+     77.228,
+     28.6563
+    ],
+    [
+     77.233,
+     28.6562
+    ],
+    [
+     77.2382,
+     28.6563
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Nahr-i-Bahisht (Stream of Paradise) in the Red Fort",
+   "t0": 1648,
+   "t1": 1857,
+   "conf": 2,
+   "src": "Nahr-i-Bihisht (Wikipedia); Red Fort (Wikipedia)",
+   "line": [
+    [
+     77.239,
+     28.6592
+    ],
+    [
+     77.2425,
+     28.66
+    ],
+    [
+     77.2437,
+     28.659
+    ],
+    [
+     77.2439,
+     28.6565
+    ],
+    [
+     77.2436,
+     28.654
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Old course of the Yamuna below the Red Fort",
+   "t0": 1354,
+   "t1": 1900,
+   "conf": 2,
+   "src": "Blake 1991, Shahjahanabad: The Sovereign City in Mughal India; Red Fort (Wikipedia): the river once flowed along the eastern walls",
+   "area": [
+    [
+     77.2335,
+     28.672
+    ],
+    [
+     77.239,
+     28.666
+    ],
+    [
+     77.2428,
+     28.6625
+    ],
+    [
+     77.2448,
+     28.658
+    ],
+    [
+     77.245,
+     28.653
+    ],
+    [
+     77.2462,
+     28.645
+    ],
+    [
+     77.2468,
+     28.638
+    ],
+    [
+     77.2478,
+     28.63
+    ],
+    [
+     77.2495,
+     28.63
+    ],
+    [
+     77.2545,
+     28.636
+    ],
+    [
+     77.2585,
+     28.645
+    ],
+    [
+     77.2575,
+     28.651
+    ],
+    [
+     77.2545,
+     28.657
+    ],
+    [
+     77.2495,
+     28.6612
+    ],
+    [
+     77.244,
+     28.6652
+    ],
+    [
+     77.2382,
+     28.67
+    ],
+    [
+     77.235,
+     28.6728
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Qila Rai Pithora and Lal Kot (Mehrauli)",
+   "t0": 1192,
+   "t1": 1303,
+   "conf": 2,
+   "src": "Qila Rai Pithora (Wikipedia); Peck 2005, Delhi: A Thousand Years of Building",
+   "area": [
+    [
+     77.176,
+     28.515
+    ],
+    [
+     77.175,
+     28.528
+    ],
+    [
+     77.18,
+     28.536
+    ],
+    [
+     77.192,
+     28.538
+    ],
+    [
+     77.201,
+     28.532
+    ],
+    [
+     77.202,
+     28.52
+    ],
+    [
+     77.195,
+     28.511
+    ],
+    [
+     77.184,
+     28.51
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Siri",
+   "t0": 1303,
+   "t1": 1321,
+   "conf": 2,
+   "src": "Siri Fort (Wikipedia); Peck 2005, Delhi: A Thousand Years of Building",
+   "area": [
+    [
+     77.2215,
+     28.5552
+    ],
+    [
+     77.22368,
+     28.55506
+    ],
+    [
+     77.22577,
+     28.55466
+    ],
+    [
+     77.22767,
+     28.55402
+    ],
+    [
+     77.2293,
+     28.55315
+    ],
+    [
+     77.23059,
+     28.5521
+    ],
+    [
+     77.23149,
+     28.55092
+    ],
+    [
+     77.23194,
+     28.54965
+    ],
+    [
+     77.23194,
+     28.54835
+    ],
+    [
+     77.23149,
+     28.54708
+    ],
+    [
+     77.23059,
+     28.5459
+    ],
+    [
+     77.2293,
+     28.54485
+    ],
+    [
+     77.22767,
+     28.54398
+    ],
+    [
+     77.22577,
+     28.54334
+    ],
+    [
+     77.22368,
+     28.54294
+    ],
+    [
+     77.2215,
+     28.5428
+    ],
+    [
+     77.21932,
+     28.54294
+    ],
+    [
+     77.21723,
+     28.54334
+    ],
+    [
+     77.21533,
+     28.54398
+    ],
+    [
+     77.2137,
+     28.54485
+    ],
+    [
+     77.21241,
+     28.5459
+    ],
+    [
+     77.21151,
+     28.54708
+    ],
+    [
+     77.21106,
+     28.54835
+    ],
+    [
+     77.21106,
+     28.54965
+    ],
+    [
+     77.21151,
+     28.55092
+    ],
+    [
+     77.21241,
+     28.5521
+    ],
+    [
+     77.2137,
+     28.55315
+    ],
+    [
+     77.21533,
+     28.55402
+    ],
+    [
+     77.21723,
+     28.55466
+    ],
+    [
+     77.21932,
+     28.55506
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Tughlaqabad",
+   "t0": 1321,
+   "t1": 1327,
+   "conf": 2,
+   "src": "Tughlaqabad Fort (Wikipedia); Peck 2005, Delhi: A Thousand Years of Building",
+   "area": [
+    [
+     77.248,
+     28.508
+    ],
+    [
+     77.247,
+     28.519
+    ],
+    [
+     77.251,
+     28.5215
+    ],
+    [
+     77.256,
+     28.523
+    ],
+    [
+     77.27,
+     28.521
+    ],
+    [
+     77.274,
+     28.512
+    ],
+    [
+     77.268,
+     28.504
+    ],
+    [
+     77.256,
+     28.503
+    ],
+    [
+     77.251,
+     28.5045
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Jahanpanah (Qila Rai Pithora to Siri)",
+   "t0": 1327,
+   "t1": 1354,
+   "conf": 2,
+   "src": "Jahanpanah (Wikipedia); Peck 2005, Delhi: A Thousand Years of Building",
+   "area": [
+    [
+     77.175,
+     28.515
+    ],
+    [
+     77.176,
+     28.533
+    ],
+    [
+     77.195,
+     28.545
+    ],
+    [
+     77.211,
+     28.556
+    ],
+    [
+     77.225,
+     28.556
+    ],
+    [
+     77.233,
+     28.548
+    ],
+    [
+     77.228,
+     28.539
+    ],
+    [
+     77.215,
+     28.53
+    ],
+    [
+     77.2,
+     28.518
+    ],
+    [
+     77.185,
+     28.51
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Firozabad",
+   "t0": 1354,
+   "t1": 1533,
+   "conf": 2,
+   "src": "Firozabad (Wikipedia); Peck 2005, Delhi: A Thousand Years of Building",
+   "area": [
+    [
+     77.242,
+     28.629
+    ],
+    [
+     77.2475,
+     28.638
+    ],
+    [
+     77.2455,
+     28.652
+    ],
+    [
+     77.239,
+     28.664
+    ],
+    [
+     77.226,
+     28.674
+    ],
+    [
+     77.214,
+     28.674
+    ],
+    [
+     77.214,
+     28.656
+    ],
+    [
+     77.221,
+     28.642
+    ],
+    [
+     77.232,
+     28.632
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Dinpanah and Shergarh (Purana Qila)",
+   "t0": 1533,
+   "t1": 1639,
+   "conf": 2,
+   "src": "Purana Qila (Wikipedia); Peck 2005, Delhi: A Thousand Years of Building",
+   "area": [
+    [
+     77.238,
+     28.596
+    ],
+    [
+     77.2365,
+     28.615
+    ],
+    [
+     77.238,
+     28.634
+    ],
+    [
+     77.244,
+     28.6385
+    ],
+    [
+     77.248,
+     28.63
+    ],
+    [
+     77.249,
+     28.611
+    ],
+    [
+     77.252,
+     28.596
+    ],
+    [
+     77.247,
+     28.588
+    ],
+    [
+     77.242,
+     28.589
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Shahjahanabad",
+   "t0": 1639,
+   "t1": 1857,
+   "conf": 2,
+   "src": "Shahjahanabad (Wikipedia); Blake 1991, Shahjahanabad: The Sovereign City in Mughal India",
+   "area": [
+    [
+     77.2405,
+     28.6635
+    ],
+    [
+     77.2322,
+     28.669
+    ],
+    [
+     77.2228,
+     28.6662
+    ],
+    [
+     77.217,
+     28.6625
+    ],
+    [
+     77.2135,
+     28.6545
+    ],
+    [
+     77.219,
+     28.6412
+    ],
+    [
+     77.2302,
+     28.6385
+    ],
+    [
+     77.244,
+     28.6402
+    ],
+    [
+     77.2462,
+     28.643
+    ],
+    [
+     77.2462,
+     28.6505
+    ],
+    [
+     77.245,
+     28.657
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Delhi after 1857: walled city, Civil Lines, Sadar Bazar, Paharganj",
+   "t0": 1857,
+   "t1": 1931,
+   "conf": 2,
+   "src": "Peck 2005, Delhi: A Thousand Years of Building; Civil Lines, Delhi (Wikipedia)",
+   "area": [
+    [
+     77.2405,
+     28.6635
+    ],
+    [
+     77.233,
+     28.672
+    ],
+    [
+     77.228,
+     28.688
+    ],
+    [
+     77.219,
+     28.688
+    ],
+    [
+     77.216,
+     28.67
+    ],
+    [
+     77.205,
+     28.669
+    ],
+    [
+     77.201,
+     28.656
+    ],
+    [
+     77.206,
+     28.642
+    ],
+    [
+     77.219,
+     28.64
+    ],
+    [
+     77.2302,
+     28.638
+    ],
+    [
+     77.244,
+     28.64
+    ],
+    [
+     77.2462,
+     28.643
+    ],
+    [
+     77.2462,
+     28.6505
+    ],
+    [
+     77.245,
+     28.657
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Old and New Delhi",
+   "t0": 1931,
+   "t1": null,
+   "conf": 2,
+   "src": "New Delhi (Wikipedia); Peck 2005, Delhi: A Thousand Years of Building",
+   "area": [
+    [
+     77.2405,
+     28.6635
+    ],
+    [
+     77.233,
+     28.672
+    ],
+    [
+     77.228,
+     28.69
+    ],
+    [
+     77.216,
+     28.69
+    ],
+    [
+     77.204,
+     28.672
+    ],
+    [
+     77.192,
+     28.65
+    ],
+    [
+     77.188,
+     28.62
+    ],
+    [
+     77.192,
+     28.595
+    ],
+    [
+     77.21,
+     28.585
+    ],
+    [
+     77.23,
+     28.585
+    ],
+    [
+     77.247,
+     28.588
+    ],
+    [
+     77.249,
+     28.61
+    ],
+    [
+     77.248,
+     28.63
+    ],
+    [
+     77.2462,
+     28.643
+    ],
+    [
+     77.246,
+     28.6505
+    ],
+    [
+     77.245,
+     28.657
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q45957",
+   "names": [
+    [
+     1639,
+     1857,
+     "Qila-i-Mubarak (Red Fort)"
+    ],
+    [
+     1857,
+     null,
+     "Red Fort"
+    ]
+   ],
+   "kinds": [
+    [
+     1639,
+     1857,
+     "palace"
+    ],
+    [
+     1857,
+     null,
+     "fort"
+    ]
+   ],
+   "t0": 1639,
+   "fix_dates": true,
+   "src": "Red Fort (Wikipedia): begun 1639, finished 1648; British garrison after 1857",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q233678",
+   "names": [
+    [
+     1650,
+     null,
+     "Jama Masjid (Masjid-i-Jahan-Numa)"
+    ]
+   ],
+   "kinds": [
+    [
+     1650,
+     null,
+     "mosque"
+    ]
+   ],
+   "t0": 1650,
+   "fix_dates": true,
+   "src": "Jama Masjid, Delhi (Wikipedia): built 1650-1656",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q189648",
+   "names": [
+    [
+     1565,
+     null,
+     "Humayun's Tomb"
+    ]
+   ],
+   "kinds": [
+    [
+     1565,
+     null,
+     "tomb"
+    ]
+   ],
+   "t0": 1565,
+   "fix_dates": true,
+   "src": "Humayun's Tomb (Wikipedia): built 1565-1572",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q2991448",
+   "names": [
+    [
+     1659,
+     null,
+     "Moti Masjid (Red Fort)"
+    ]
+   ],
+   "kinds": [
+    [
+     1659,
+     null,
+     "mosque"
+    ]
+   ],
+   "t0": 1659,
+   "fix_dates": true,
+   "src": "Moti Masjid, Delhi (Wikipedia): built 1659-1660 by Aurangzeb",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q8065104",
+   "names": [
+    [
+     1692,
+     1828,
+     "Madrasa of Ghaziuddin Khan"
+    ],
+    [
+     1828,
+     1975,
+     "Delhi College (Anglo-Arabic College)"
+    ],
+    [
+     1975,
+     null,
+     "Zakir Husain Delhi College"
+    ]
+   ],
+   "kinds": [
+    [
+     1692,
+     null,
+     "school"
+    ]
+   ],
+   "src": "Zakir Husain Delhi College (Wikipedia)",
+   "conf": 2
+  }
+ ]
+}

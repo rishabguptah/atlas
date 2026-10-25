@@ -75,6 +75,17 @@ Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces, Growing 
 (`lenses/e19.*`). Everything loads after the first paint from `atlas-files/world/` and `atlas-files/packs/`, which
 `build.py` writes beside the page: publish them with it (about 20 MB, fetched a slice or pack at a time).
 
+## City scale
+
+The map zooms to about 0.2 degrees across (`K_MAX` in atlas.src.html), enough to stand inside the walls of
+Constantinople in 1453. Around the 18 story cities in `data/cities/cities.json` the pixel map switches to 45 m terrain
+(one patch per city, all packed into `tiles/l3.png`, OpenStreetMap water through Overture Maps plus Terrarium elevation), and the
+city layer (`views/pixel/city.js`, beside the page as `atlas-files/city.js`, loaded the first time you zoom past about
+3 degrees) draws walls, gates, towers, harbours, built-up areas and landmark buildings as they stood in the year, from
+`atlas-files/world/cities.json`. Walls come from OpenStreetMap, landmarks with their dates from Wikidata, and what
+neither has (lost walls, old shorelines, built-up areas by period, names by period) from Claude's drafts, marked as
+drafts. See `data/cities/README.md` to add a city.
+
 ## Travellers in motion
 
 Lenses Journeys and Middle Passage (Peoples) and VOC ships (Wealth), and the Who was there tab: famous journeys move
