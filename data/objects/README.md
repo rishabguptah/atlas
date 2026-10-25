@@ -26,3 +26,14 @@ A stop: `{y, approx?, at: [lon, lat], place, owner?, by, conf, note, meet?, via?
 
 Every journey here is a draft written by Claude from the cited works, waiting for the judge. Routes between stops are
 likely paths, not tracks.
+
+## On the page
+
+- A leg with no `path` is drawn straight and flagged for the shared router (`ATLAS.world.route`, views/atlas/world/route.js):
+  once the router is on the page it replaces the straight line with a likely route when the journey is opened.
+- `ATLAS.objects.journey(id)` returns the journey in the shared shape from views/atlas/WORLD.md (a `route` record,
+  `subtype: "journey"`, legs with `mode`, `start_date`, `end_date`, `conf`). `conf` maps to the shared classes:
+  sure → attested, likely → estimated, legend → unknown; a straight leg between two known places is at best approximate.
+- `ATLAS.objects.story(id)` returns a Story of Scenes (`kind: "object"`) for the shared Director.
+- The Objects tab can trace any object live with Claude (same stop format, streamed); those journeys are marked
+  "AI draft, unchecked" and kept only in the viewer's browser. Good ones should be written up here as files.

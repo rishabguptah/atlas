@@ -1,0 +1,23 @@
+{
+  "id": "zimbabwe_birds",
+  "name": "Zimbabwe Birds",
+  "type": "single",
+  "sprite": "obj_bird",
+  "what": "Eight soapstone birds, each about 40 cm tall on a column, carved at Great Zimbabwe between the 13th and 15th centuries. One is on Zimbabwe's flag.",
+  "why": "Colonial collectors carried them off as proof of a lost non-African civilisation, a myth used to justify Rhodesia. Bringing them home became part of Zimbabwe's independence.",
+  "now": "Seven are in Zimbabwe, mostly at the Great Zimbabwe site museum; one is still at Groote Schuur, Cecil Rhodes's house in Cape Town.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Matenga, E. (1998). The Soapstone Birds of Great Zimbabwe: Symbols of a Nation. African Publishing Group."},
+    {"cite": "Garlake, P. (1973). Great Zimbabwe. Thames & Hudson."},
+    {"cite": "Wikipedia: Zimbabwe Bird", "url": "https://en.wikipedia.org/wiki/Zimbabwe_Bird"}
+  ],
+  "stops": [
+    {"y": 1300, "approx": true, "at": [30.93, -20.27], "place": "Great Zimbabwe", "owner": "Rulers of Great Zimbabwe", "by": "made", "conf": "sure", "note": "Carved for the hill complex and the eastern enclosure of Great Zimbabwe, the capital of a gold-trading state of the 13th-15th centuries. They may stand for royal ancestors.", "meet": "a stone carver of Great Zimbabwe"},
+    {"y": 1889, "at": [18.46, -33.95], "place": "Groote Schuur, Cape Town", "owner": "Cecil Rhodes", "by": "sold", "conf": "sure", "split": true, "via": "land", "note": "The hunter Willi Posselt cut one bird from its column in 1889 and sold it to Cecil Rhodes, who kept it in his house and adopted it as an emblem."},
+    {"y": 1907, "at": [13.4, 52.52], "place": "Berlin", "owner": "Berlin Ethnological Museum", "by": "sold", "conf": "likely", "split": true, "via": "sea", "note": "A German missionary sold the lower half of another bird to the Berlin museum."},
+    {"y": 1945, "at": [30.31, 59.94], "place": "Leningrad", "owner": "Soviet Union", "by": "looted", "conf": "likely", "split": true, "via": "land", "from": 2, "note": "Taken by the Red Army from Berlin at the end of the Second World War; it returned to Germany decades later."},
+    {"y": 1981, "at": [31.05, -17.83], "place": "Harare", "owner": "Zimbabwe", "by": "returned", "conf": "likely", "split": true, "via": "land", "from": 1, "note": "After independence South Africa returned four birds taken in the 1890s, in an exchange of museum collections. The Rhodes bird stayed at Groote Schuur."},
+    {"y": 2003, "at": [30.93, -20.27], "place": "Great Zimbabwe", "owner": "National Museums of Zimbabwe", "by": "returned", "conf": "likely", "split": true, "via": "air", "from": 2, "note": "The Berlin fragment came home in 2003 and was reunited with the top half of its bird.", "meet": "a visitor at the Great Zimbabwe museum"}
+  ]
+}

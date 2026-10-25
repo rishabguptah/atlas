@@ -1,0 +1,27 @@
+{
+  "id": "topkapi_porcelain",
+  "name": "Chinese porcelain at the Ottoman and Safavid courts",
+  "type": "kind",
+  "sprite": "obj_vase",
+  "what": "Yuan and Ming blue-and-white and Longquan celadon, made for export in south China and prized at Islamic courts, where celadon was believed to change colour at the touch of poison.",
+  "why": "The Topkapi Palace in Istanbul holds about 10,000 Chinese pieces, one of the largest collections outside China. Most arrived not by trade but as loot from Tabriz and Cairo, so the porcelain follows the wars of the Ottomans.",
+  "now": "Topkapi Palace Museum, Istanbul; the Ardabil shrine collection is mostly in the National Museum of Iran, Tehran.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Krahl, R. & Ayers, J. (1986). Chinese Ceramics in the Topkapi Saray Museum, Istanbul. 3 vols. Sotheby's."},
+    {"cite": "Pope, J. A. (1956). Chinese Porcelains from the Ardebil Shrine. Freer Gallery of Art."},
+    {"cite": "Finlay, R. (2010). The Pilgrim Art: Cultures of Porcelain in World History. University of California Press."},
+    {"cite": "Wikipedia: Topkapı Palace", "url": "https://en.wikipedia.org/wiki/Topkap%C4%B1_Palace"}
+  ],
+  "stops": [
+    {"y": 1330, "approx": true, "at": [117.18, 29.27], "place": "Jingdezhen", "owner": "Potters of Jingdezhen", "by": "made", "conf": "sure", "note": "In the Yuan dynasty Jingdezhen potters began painting porcelain with cobalt imported from Persia. The big blue-and-white dishes were made for Middle Eastern tables, sized for communal meals.", "meet": "a potter or kiln worker at Jingdezhen"},
+    {"y": 1340, "approx": true, "at": [119.13, 28.08], "place": "Longquan kilns", "owner": "Longquan potters", "by": "made", "conf": "sure", "from": -1, "note": "Green Longquan celadon, Chinese \"martaban\" ware to traders, was the most widely exported Chinese ceramic of the age."},
+    {"y": 1414, "at": [56.45, 27.1], "place": "Hormuz", "owner": "Gulf merchants", "by": "traded", "conf": "likely", "via": "sea", "from": 0, "path": [[117.18, 29.27], [118.6, 24.9], [114, 21], [109, 12], [104.5, 1.3], [98, 6], [80.5, 5.8], [75.78, 11.25], [62, 22], [56.45, 27.1]], "note": "Chinese ceramics had reached the Gulf for centuries. Zheng He's treasure fleets reached Hormuz in 1414, and porcelain went with them as gifts.", "meet": "a sailor of Zheng He's fleet"},
+    {"y": 1480, "approx": true, "at": [46.29, 38.08], "place": "Hasht Behesht palace, Tabriz", "owner": "Aq Qoyunlu, then Safavid shahs", "by": "traded", "conf": "likely", "via": "caravan", "from": 2, "note": "Turkmen and then Safavid rulers kept treasuries of porcelain in Tabriz."},
+    {"y": 1450, "approx": true, "at": [31.26, 30.03], "place": "Cairo", "owner": "Mamluk sultans", "by": "gift", "conf": "likely", "via": "sea", "from": 2, "path": [[56.45, 27.1], [58.5, 23.6], [55, 17], [45, 12.5], [43.3, 12.7], [39.2, 21.5], [34, 27.5], [32.55, 29.95], [31.26, 30.03]], "note": "Mamluk sultans received celadons as diplomatic gifts and bought them through Red Sea ports. Thousands of Chinese sherds have been dug up at Fustat."},
+    {"y": 1514, "at": [28.983, 41.011], "place": "Topkapi Palace, Istanbul", "owner": "Selim I, Ottoman sultan", "by": "looted", "conf": "sure", "via": "land", "from": 3, "path": [[46.29, 38.08], [41.27, 39.9], [37.0, 39.75], [32.85, 39.93], [28.983, 41.011]], "note": "After beating Shah Ismail at Chaldiran in August 1514, Selim I occupied Tabriz and carried the Hasht Behesht treasury, porcelain included, back to Istanbul."},
+    {"y": 1517, "at": [28.983, 41.011], "place": "Topkapi Palace, Istanbul", "owner": "Ottoman sultans", "by": "looted", "conf": "likely", "via": "sea", "from": 4, "path": [[31.26, 30.03], [30.2, 31.3], [29.5, 33], [27, 36.4], [26.2, 39.8], [28.983, 41.011]], "note": "The conquest of Mamluk Egypt in 1517 added Cairo's treasures. Later sultans bought more; palace kitchen registers list hundreds of Chinese plates used at court."},
+    {"y": 1611, "at": [48.3, 38.25], "place": "Shrine of Sheikh Safi, Ardabil", "owner": "Safavid dynastic shrine", "by": "gift", "conf": "sure", "via": "land", "from": 3, "note": "Shah Abbas I gave the family shrine at Ardabil 1,162 pieces of Chinese porcelain, displayed in a hall of niches shaped to hold each vessel."},
+    {"y": 1935, "approx": true, "at": [51.42, 35.69], "place": "National Museum of Iran, Tehran", "owner": "Iranian state", "by": "carried", "conf": "likely", "via": "land", "from": 7, "note": "In the 1930s most of the Ardabil porcelain was moved to Tehran for the new national museum."}
+  ]
+}

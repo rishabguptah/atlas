@@ -1,0 +1,23 @@
+{
+  "id": "gates_of_somnath",
+  "name": "Gates of Somnath",
+  "type": "single",
+  "sprite": "obj_door",
+  "what": "A pair of carved wooden gates from the tomb of Mahmud of Ghazni, said to have been looted from the Shiva temple at Somnath in Gujarat in 1026.",
+  "why": "A story of plunder told for eight centuries, then used by a British governor-general as propaganda. When the gates arrived in India they turned out to be the wrong gates.",
+  "now": "In a storeroom of Agra Fort.",
+  "dispute": "Whether Mahmud took any gates from Somnath at all is doubted; the ones brought back in 1842 are Afghan work.",
+  "status": "draft",
+  "sources": [
+    {"cite": "Thapar, R. (2004). Somanatha: The Many Voices of a History. Verso."},
+    {"cite": "Dalrymple, W. (2013). Return of a King: The Battle for Afghanistan. Bloomsbury."},
+    {"cite": "Wikipedia: Somnath temple", "url": "https://en.wikipedia.org/wiki/Somnath_temple"},
+    {"cite": "Wikipedia: Proclamation of the Gates", "url": "https://en.wikipedia.org/wiki/Proclamation_of_the_Gates"}
+  ],
+  "stops": [
+    {"y": 1000, "approx": true, "at": [70.401, 20.888], "place": "Somnath temple, Prabhas Patan", "owner": "Chaulukya kings and the temple", "by": "made", "conf": "legend", "note": "A rich Shiva temple on the coast of Saurashtra. The gates are known only from later stories, which say they were of sandalwood.", "meet": "a pilgrim at Somnath"},
+    {"y": 1026, "at": [68.42, 33.55], "place": "Ghazni", "owner": "Mahmud of Ghazni", "by": "looted", "conf": "legend", "via": "land", "path": [[70.401, 20.888], [71.6, 23.3], [71.4, 26.9], [71.47, 30.2], [69.9, 32.4], [68.42, 33.55]], "note": "Mahmud's raid on Somnath in January 1026 is real, recorded by al-Biruni and Persian chroniclers. That he carried the temple gates home to Ghazni is a much later story; the earliest sources do not say so."},
+    {"y": 1842, "at": [68.42, 33.55], "place": "Tomb of Mahmud, Ghazni", "owner": "British army in Afghanistan", "by": "seized", "conf": "sure", "note": "Retreating from Afghanistan after the disaster of the First Anglo-Afghan War, General Nott took the gates from Mahmud's tomb on the orders of Lord Ellenborough, whose Proclamation of the Gates promised Hindus revenge for an insult of eight hundred years."},
+    {"y": 1843, "at": [78.02, 27.18], "place": "Agra Fort", "owner": "East India Company", "by": "carried", "conf": "sure", "via": "land", "path": [[68.42, 33.55], [69.17, 34.53], [70.45, 34.43], [71.57, 34.01], [74.6, 30.92], [77.2, 28.6], [78.02, 27.18]], "note": "Paraded across north India and mocked in Parliament, the gates were examined and found to be Afghan deodar wood carved in an Islamic style: nothing to do with Somnath. They were put away in Agra Fort and have stayed there.", "meet": "a sepoy of Nott's army on the march"}
+  ]
+}
