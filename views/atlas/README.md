@@ -98,6 +98,14 @@ redraws all the terrain, so while the year moves it swaps at most every 400 ms. 
 other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
 hearths, land-bridge and ice-sheet names, and climate shocks. Sources and rebuild: `ingest/deep-time/README.md`.
 
+## The whole world (People lens)
+
+People outside Europe come from `data/coverage/` (Pantheon, Wikidata, CBDB; see its README) and load after the first
+paint from `atlas-files/people-world.json` (about 2.3 MB, publish it beside the page). Every person carries a region,
+and the map and This year pick the most remembered person of each region in turn, so a world view at 1200 shows
+Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead of Europe's top 450.
+`views/atlas/world_people.py` builds the rows.
+
 ## Lens families and plugins
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses

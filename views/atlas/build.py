@@ -52,6 +52,13 @@ if os.path.exists(tp):
     for t in L['money']['trade']:
         if t['name'] in snapped:
             t['stops'], t['line'] = t['line'], snapped[t['name']]['line']
+# People outside Europe (data/coverage/) load after the first paint; every row gets a region so the map can balance them.
+sys.path.insert(0, here)
+import world_people
+L['people']['regions'], world = world_people.add(repo, L['people'])
+if world:
+    if inline: L['people']['world'] = world
+    else: late['people:world'] = side('people-world.json', world)
 
 # States & war straight from the kernel records: battles, chokepoints and who held them.
 rows = lambda f: [json.loads(l) for l in open(os.path.join(repo, 'data/states-war', f)) if l.strip()]
