@@ -93,6 +93,35 @@
     LBL.add("sprites", v => pm ? carriedBoxes(pm.spriteBoxes(), pm.drawnAt, v && v.t).map(block => ({ block })) : [], { base: true });
     if (typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) LBL.add("geo", () => pm && isOn("terrain") ? PixelGeoLabels.items(TERRAIN) : [], { base: true });
   }
+  // Once the view and the year have been still for a moment, the pixel map is drawn again with land past every
+  // edge of the screen (only the new margins are painted), so the next pan shows land, not bare paper.
+  let padTimer = 0, padJob = 0, lastRealms = null;
+  const PAD = 64;  // art px = 192 CSS px each side
+  function padSoon() {
+    clearTimeout(padTimer); padTimer = 0;
+    if (padJob) { (window.cancelIdleCallback || clearTimeout)(padJob); padJob = 0; }
+    const t0 = T, y0 = year;
+    // Still the same view and year, and not mid-drag (a render resets the CSS shift the pan is riding on).
+    const still = () => {
+      const svg = svgEl(), cur = svg && d3.zoomTransform(svg);
+      return pm && T === t0 && year === y0 && !pm.pad && pm.same(T) && cur && cur.k === T.k && cur.x === T.x && cur.y === T.y && !document.hidden;
+    };
+    padTimer = setTimeout(() => {
+      padTimer = 0;
+      if (!still()) return;
+      // The new margins' terrain one band per idle slice, then the padded frame itself (realms and paint only).
+      const jobs = pm.padJobs(T, PAD);
+      const next = () => {
+        padJob = idle(() => {
+          padJob = 0;
+          if (!still()) return;
+          if (jobs.length) { jobs.shift()(); next(); return; }
+          pm.render(T, { realms: lastRealms, pad: PAD });
+        });
+      };
+      next();
+    }, 400);
+  }
   let pm = null, proj = null, T = null, year = null, snap = null, statics = [], movers = [], motion = null, lastRender = 0;
   let marks = null, hud = null, watch = null, markTimer = 0;
   const realmCache = {}, NO_REALMS = [], DEEP_REALMS = -4000, DEEP_ERA = -5500;
@@ -309,7 +338,10 @@
       }
       const same = pm.same(t) && !paleoNew;
       eraFor(t, y, !same);
-      if (same) pm.setRealms(realms); else pm.render(t, { realms });
+      // A padded frame (see padSoon) is about twice the pixels: drop the pad for year steps and new views, so they
+      // stay cheap, and draw it again once things are quiet.
+      if (same && !pm.pad) pm.setRealms(realms); else pm.render(t, { realms, pad: 0 });
+      lastRealms = realms; padSoon();
       // Warm the outlines of every frame in this chunk while the browser is idle, so scrubbing on stays cheap.
       // Then the chunks either side (already prefetched by the border loader).
       const B = bordersOf(), all = isOn("borders") && B.chunkRealms && B.chunkRealms(y, t.k);
@@ -328,6 +360,8 @@
       if (motion) motion.year(y);
       provLabels();
     },
+    // CSS px of land drawn past the screen's edges (a pan this short needs no redraw).
+    margin() { return pm ? pm.pad * 3 : 0; },
     move(t) { if (pm) pm.move(t); if (motion) motion.move(t); if (geo) geo.move(t); if (hud) hud.update(t); if (provSvg && T) { const s = t.k / T.k; provSvg.style.transform = `translate(${t.x - T.x * s}px,${t.y - T.y * s}px) scale(${s})`; } },
     unmount() {
       clearTimeout(markTimer); markTimer = 0;

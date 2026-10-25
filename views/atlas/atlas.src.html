@@ -841,7 +841,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     clearTimeout(panTimer); panTimer = 0;
     if (!BASEMAP || !bmT || t.k !== bmT.k) return;
     const off = Math.max(Math.abs(t.x - bmT.x), Math.abs(t.y - bmT.y));
-    if (off < 24) return;
+    if (off < 24 + (BASEMAP.margin ? BASEMAP.margin() : 0)) return;
     panTimer = setTimeout(() => { panTimer = 0; const c = d3.zoomTransform(svg.node()); if (bmT && c.k === bmT.k && (c.x !== bmT.x || c.y !== bmT.y)) renderBasemap(); }, 90);
   }
   const viewWatch = [];  // plugin tabs listening for pans and zooms (ATLAS.api.onView)

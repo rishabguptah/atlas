@@ -228,7 +228,7 @@
     // Run terrainPass on another region of the world grid and hand back its buffers (the view's are left as they were).
     // Wide enough for the terrain art's largest world-anchored pieces (mountain cells, landmark peaks, blur, coast distance).
     const SEAM = 16;
-    let prevView = null, tileVer = 0;
+    let prevView = null, tileVer = 0, pad = 0;
     function region(t, need, ru, rv, rw, rh) {
       const sv = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
       U0 = ru; V0 = rv; w = rw; h = rh; off.width = rw; off.height = rh;
@@ -249,23 +249,61 @@
       }
     }
 
+    // Where the art-pixel grid sits for transform t with `pd` art px of pad past each screen edge.
+    function geom(t, pd) {
+      const W = container.clientWidth, H = container.clientHeight;
+      const ox = ((t.x % PX) + PX) % PX - PX - pd * PX, oy = ((t.y % PX) + PX) % PX - PX - pd * PX;
+      const sw = Math.abs(projection([180, 0])[0] - projection([-180, 0])[0]);
+      return { ox, oy, U0: Math.round((ox - t.x) / PX), V0: Math.round((oy - t.y) / PX), w: Math.ceil((W - ox) / PX) + 1 + pd, h: Math.ceil((H - oy) / PX) + 1 + pd, need: 360 / (sw * t.k / PX) };
+    }
+    const reusable = (P, t, need, u, v, ww, hh) => !!P && P.k === t.k && P.need === need && P.mood === mood && P.ver === tileVer && P.pk === paleoKey && Math.abs(u - P.U0) < ww && Math.abs(v - P.V0) < hh;
+    const regionKey = (t, need) => [t.k, need, mood, tileVer, paleoKey].join();
+    // The rectangles of a new view (U0, V0, w, h) that the last frame P does not cover: up to four bands.
+    function bandsOf(P, u, v, ww, hh) {
+      const iu0 = P.U0 + SEAM, iv0 = P.V0 + SEAM, iu1 = P.U0 + P.w - SEAM, iv1 = P.V0 + P.h - SEAM;
+      const bands = [[u, v, u + ww, Math.max(v, Math.min(v + hh, iv0))], [u, Math.min(v + hh, Math.max(v, iv1)), u + ww, v + hh]];
+      const my0 = Math.max(v, iv0), my1 = Math.min(v + hh, iv1);
+      if (my1 > my0) bands.push([u, my0, Math.max(u, Math.min(u + ww, iu0)), my1], [Math.min(u + ww, Math.max(u, iu1)), my0, u + ww, my1]);
+      return bands.filter(([u0, v0, u1, v1]) => u1 > u0 && v1 > v0);
+    }
+    // Terrain for bands the next render will need, computed ahead one band per call (so idle time can take them in
+    // slices instead of one long task). Cleared by the next render.
+    const preRegions = new Map();
+    function padJobs(t, pd) {
+      const g = geom(t, pd), P = prevView;
+      if (!last || t !== last || !reusable(P, t, g.need, g.U0, g.V0, g.w, g.h)) return [];
+      const pk = regionKey(t, g.need);
+      return bandsOf(P, g.U0, g.V0, g.w, g.h).map(([u0, v0, u1, v1]) => () => {
+        const key = pk + "|" + [u0, v0, u1, v1].join();
+        if (preRegions.has(key) || last !== t || regionKey(t, g.need) !== pk) return;
+        preRegions.set(key, region(t, g.need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM));
+        off.width = w; off.height = h;  // region() resized the realm mask canvas; give it back to the current frame
+      });
+    }
+
     function render(t, o = {}) {
       const W = container.clientWidth, H = container.clientHeight; lastW = W; lastH = H;
       last = t; realmsNow = o.realms || realmsNow; if (o.mood) mood = o.mood; rv++; fade = null;
       // Art pixel (i, j) covers screen x in [ox + i*PX, ox + (i+1)*PX); U0 + i is its column in the zoomed world grid.
-      const ox = ((t.x % PX) + PX) % PX - PX, oy = ((t.y % PX) + PX) % PX - PX;
-      U0 = Math.round((ox - t.x) / PX); V0 = Math.round((oy - t.y) / PX);
-      w = Math.ceil((W - ox) / PX) + 1; h = Math.ceil((H - oy) / PX) + 1;
+      // pad: art pixels drawn past every edge of the screen (sticky until a render asks for another), so a pan
+      // uncovers land that is already painted instead of bare paper.
+      if (o.pad != null) pad = Math.max(0, o.pad | 0);
+      let ox, oy, need;
+      ({ ox, oy, U0, V0, w, h, need } = geom(t, pad));
       canvas.width = w; canvas.height = h;
       Object.assign(canvas.style, { left: ox + "px", top: oy + "px", width: w * PX + "px", height: h * PX + "px", transform: "" });
-      const sw = Math.abs(projection([180, 0])[0] - projection([-180, 0])[0]);
-      const need = 360 / (sw * t.k / PX);
       // A pan at the same zoom keeps every art pixel it already drew (they are anchored to the world grid) and only
       // draws the newly exposed bands, each with a margin so trees, peaks and shorelines join up across the seam.
-      const P = prevView, reuse = P && P.k === t.k && P.need === need && P.mood === mood && P.ver === tileVer && P.pk === paleoKey && !o.full &&
-        Math.abs(U0 - P.U0) < w && Math.abs(V0 - P.V0) < h;
+      const P = prevView, reuse = reusable(P, t, need, U0, V0, w, h) && !o.full;
+      // The same rectangle again (a padded frame coming back after a year step): every pixel is already there.
+      const exact = reuse && P.U0 === U0 && P.V0 === V0 && P.w === w && P.h === h;
+      // Inside the last frame (the pad dropped for a year step): keep that bigger frame as the one to reuse.
+      const inside = reuse && !exact && U0 >= P.U0 + SEAM && V0 >= P.V0 + SEAM && U0 + w <= P.U0 + P.w - SEAM && V0 + h <= P.V0 + P.h - SEAM;
       if (!reuse) { off.width = w; off.height = h; terrainPass(t, need); }
-      else {
+      else if (exact) {
+        ({ base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = P); base = P.base.slice();
+        off.width = w; off.height = h; art = { ...art, anim };
+      } else {
         base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255); hs = new Uint8Array(w * h); band = new Uint8Array(w * h);
         lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h); lonA = new Float32Array(w * h); elevA = new Float32Array(w * h);
         riv = new Uint8Array(w * h); anim = new Uint8Array(w * h);
@@ -273,19 +311,18 @@
         // The old frame's interior (its edge band may lack art anchored just outside it).
         const iu0 = P.U0 + SEAM, iv0 = P.V0 + SEAM, iu1 = P.U0 + P.w - SEAM, iv1 = P.V0 + P.h - SEAM;
         blit(P, view, Math.max(U0, iu0), Math.max(V0, iv0), Math.min(U0 + w, iu1), Math.min(V0 + h, iv1));
-        // New view minus that interior: up to four bands.
-        const bands = [[U0, V0, U0 + w, Math.max(V0, Math.min(V0 + h, iv0))], [U0, Math.min(V0 + h, Math.max(V0, iv1)), U0 + w, V0 + h]];
-        const my0 = Math.max(V0, iv0), my1 = Math.min(V0 + h, iv1);
-        if (my1 > my0) bands.push([U0, my0, Math.max(U0, Math.min(U0 + w, iu0)), my1], [Math.min(U0 + w, Math.max(U0, iu1)), my0, U0 + w, my1]);
-        for (const [u0, v0, u1, v1] of bands) {
-          if (u1 <= u0 || v1 <= v0) continue;
-          const r = region(t, need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM);
+        // New view minus that interior: up to four bands (prepared ahead in idle slices by padJobs, when it ran).
+        const pk = regionKey(t, need);
+        for (const [u0, v0, u1, v1] of bandsOf(P, U0, V0, w, h)) {
+          const key = pk + "|" + [u0, v0, u1, v1].join();
+          const r = preRegions.get(key) || region(t, need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM);
           blit(r, view, u0, v0, u1, v1);
         }
         ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = view);
         off.width = w; off.height = h; art = { ...art, anim };
       }
-      prevView = { k: t.k, need, mood, ver: tileVer, pk: paleoKey, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
+      preRegions.clear();
+      if (!inside && !exact) prevView = { k: t.k, need, mood, ver: tileVer, pk: paleoKey, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
       terrain = base.slice();
       realmRaster.clear();
       applyRealms();
@@ -567,7 +604,17 @@
         return out;
       },
       // The last frame's realm ids and terrain classes per art pixel, for naming realms (realmnames.js).
-      labelGrid() { return ids && last ? { ids, cls, w, h, PX, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top), realms: realmsNow, t: last } : null; },
+      // Only the part on screen (names go where you can read them, not out in the pad).
+      labelGrid() {
+        if (!ids || !last) return null;
+        const L = parseFloat(canvas.style.left), Tp = parseFloat(canvas.style.top);
+        if (!pad) return { ids, cls, w, h, PX, left: L, top: Tp, realms: realmsNow, t: last };
+        const vw = Math.max(1, w - 2 * pad), vh = Math.max(1, h - 2 * pad), vi = new ids.constructor(vw * vh), vc = new Uint8Array(vw * vh);
+        for (let j = 0; j < vh; j++) { const o = (j + pad) * w + pad; vi.set(ids.subarray(o, o + vw), j * vw); vc.set(cls.subarray(o, o + vw), j * vw); }
+        return { ids: vi, cls: vc, w: vw, h: vh, PX, left: L + pad * PX, top: Tp + pad * PX, realms: realmsNow, t: last };
+      },
+      get pad() { return pad; },
+      padJobs,
       // The transform the last frame was drawn at (screen boxes from spriteBoxes and labelGrid are in its pixels).
       get drawnAt() { return last; },
       toPixel(lon, lat) { const p = projection([lon, lat]); return p && [Math.floor((p[0] * last.k) / PX) - U0, Math.floor((p[1] * last.k) / PX) - V0]; },
