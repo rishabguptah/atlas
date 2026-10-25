@@ -15,7 +15,7 @@ bending an existing one, and say so in your PR.
 - Run `python3 tools/build.py` before you push. It fails on any error, and CI runs the same check.
 
 Workstream folders: `kernel`, `living-atlas`, `places-people`, `states-war`, `economy-trade`,
-`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`.
+`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`.
 
 ## Common fields (every record)
 
@@ -64,8 +64,8 @@ Years are integers. Negative is BCE, and there is no year 0 (-1 is 1 BCE).
 | `person` | `person:` | places-people | `born`, `died`: `{ "year", "place" }`. `roles`: e.g. ruler, philosopher, general, merchant, poet. |
 | `group` | `group:` | economy-trade | A people or population, e.g. Bantu speakers, Mongols, Vikings. |
 | `event` | `event:` | whoever needs it first | `subtype`: battle, siege, sack, war, revolt, earthquake, eruption, famine, epidemic, founding, treaty, collapse, migration. `deaths`: `[low, high]`. `destructive`: true for sacks, disasters and the like. |
-| `idea` | `idea:` | religion-ideas | `subtype`: religion, school, theory, technology, institution, movement. |
-| `work` | `work:` | religion-ideas | `subtype`: book, poem, scripture, artwork, map, building. `author`: person id. |
+| `idea` | `idea:` | religion-ideas | `subtype`: religion, school, theory, technology, institution, movement, style (art and architecture: `idea:style:<slug>`, with `family`, `origin`, `spread`). |
+| `work` | `work:` | religion-ideas | `subtype`: book, poem, scripture, artwork, map, building. `author`: person id. `styles`: `idea:style:` ids (art). `styled_from`: year a building founded earlier was rebuilt in its style. `made_at`: where an artwork was made, when lat/lon is that place rather than today's museum. |
 | `route` | `route:` | economy-trade | `subtype`: trade, migration, campaign, pilgrimage, epidemic_spread. `stops`: place ids in order, or `geo`. `goods`: string[]. |
 | `relation` | `rel:` | anyone | See below. |
 | `measure` | `m:` | anyone | See below. |
@@ -111,7 +111,7 @@ One measure record per (thing, metric, source), with id `m:<metric>:<thing slug>
 
 `geography` (land, rivers, chokepoints, climate) · `military` · `economy` (wealth, trade) ·
 `population` (size, migration) · `disease` · `religion` · `ideas` (philosophy, science, technology) ·
-`literature` · `people` · `order` (stability, crisis, collapse).
+`literature` · `people` · `order` (stability, crisis, collapse) · `art` (buildings, works of art, styles).
 
 ## Causes (for dead places, and anything that ended)
 
@@ -119,6 +119,8 @@ One measure record per (thing, metric, source), with id `m:<metric>:<thing slug>
 `silt`, `faith`, `disease`, `unknown`.
 
 ## Changes
+
+v0.2 · 2026-10-25 · `art-architecture` workstream: `art` lens; idea subtype `style` (`family`, `origin`, `spread`); work fields `styles`, `styled_from`, `made_at`.
 
 v0.1 · 2026-10-24 · `geography` workstream: physical-feature subtypes, `tier`, `label_line`, `elevation_m` on places.
 
