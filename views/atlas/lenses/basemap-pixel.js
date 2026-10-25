@@ -84,7 +84,8 @@
     let s = snaps[0]; for (const v of snaps) if (v <= y) s = v;
     snap = s;
     if (realmCache[s]) return realmCache[s];
-    const t = POLITIES[s], fc = topojson.feature(t, Object.values(t.objects)[0]).features;
+    const t = POLITIES[s]; if (!t) return [];  // snapshot not inlined (it loads from borders/ beside the page)
+    const fc = topojson.feature(t, Object.values(t.objects)[0]).features;
     return realmCache[s] = fc.map((f, i) => {
       const p = f.properties || {}, name = (p.NAME || p.SUBJECTO || "").trim(), subj = (p.SUBJECTO || "").trim();
       const emp = typeof EMPIRES !== "undefined" && EMPIRES.find(e => s >= e.start && s <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj)));
@@ -184,7 +185,7 @@
       const levels = [{ cell: 1 / 6, tdeg: 360, url: () => PIXEL.tile0 }, { cell: 1 / 15, tdeg: 30, url: (c, r) => `tiles/l1_${c}_${r}.png` }, { cell: 1 / 30, tdeg: 30, url: (c, r) => `tiles/l2_${c}_${r}.png` }];
       pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers });
       if (detail) {
-        pm.setDetail((G, phase) => detail.draw(G, phase, year, proj));
+        pm.setDetail((G, phase) => detail.draw(G, phase, window.ATLAS.deep && ATLAS.deep.m != null ? Math.floor(ATLAS.deep.m / 12) : year, proj));
         if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("provinces", view => detail.names(view), { base: true });
       }
       // Names of seas, rivers, ranges and deserts in the pixel font, under the Land lens's terrain toggle.

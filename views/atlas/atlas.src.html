@@ -471,6 +471,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       if (!LENS_LAYER[l]) LENS_LAYER[l] = d.id;
     }
   }
+  // A plugin lens whose data loads after the first paint (LATE_FILES) is skipped until it has arrived.
+  const lensReady = d => typeof LATE_FILES === "undefined" || !LATE_FILES["lens:" + d.id] || (typeof LENS_DATA !== "undefined" && !!LENS_DATA[d.id]);
   const BASEMAP0 = ATLAS.basemaps.find(b => b && typeof b.mount === "function") || null;
   const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
   const fmtSpan = (s, e) => `${s == null ? "?" : fmtYear(s)}–${e == null ? "today" : fmtYear(e)}`;
@@ -531,9 +533,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const fragAt = (p, y) => stepAt(p.f, y);
 
   // Curated battles carry sides and a why; the Wikidata ones add breadth (participants, war).
+  const wdBattle = ([name, subtype, start, lat, lon, wd, parts, war]) => ({
+    id: "wd" + wd, name, subtype, start, lat, lon, parts, war, sources: wd ? [{ cite: "Wikidata " + wd, url: "https://www.wikidata.org/wiki/" + wd }] : [] });
   const BATTLES = WAR.battles.map(b => ({ ...b, cur: true })).concat((WAR.wd || []).map(([name, subtype, start, lat, lon, wd, parts, war]) => ({
     id: "wd" + wd, name, subtype, start, lat, lon, parts, war, sources: wd ? [{ cite: "Wikidata " + wd, url: "https://www.wikidata.org/wiki/" + wd }] : [] })));
-  const BAT_BY_YEAR = d3.group(BATTLES, b => b.start);
+  let BAT_BY_YEAR = d3.group(BATTLES, b => b.start);
   const battlesNear = (y, w) => { const out = []; for (let yy = y - w; yy <= y + w; yy++) { const g = BAT_BY_YEAR.get(yy); if (g) out.push(...g); } return out; };
   const CHOKES = WAR.chokepoints;
   const HELD = {};
@@ -633,7 +637,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const y = +fk.slice(1);
     let fc;
     if (fk[0] === "t") fc = (TL.realms(y, 1) || []).map(r => r.feature);
-    else { const t = POLITIES[y]; fc = precise("l0", y, onPrecise(y)) || topojson.feature(t, Object.values(t.objects)[0]).features; }
+    else { const t = POLITIES[y]; fc = precise("l0", y, onPrecise(y)) || (t ? topojson.feature(t, Object.values(t.objects)[0]).features : []); }
     const list = fc.map(f => {
       // A timeline row is shared by every frame of its years, so its shape is projected once.
       if (FEAT.has(f)) return FEAT.get(f);
@@ -1142,12 +1146,26 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const lensItem = (d, r, at) => item(`<b>${esc(r.title)}</b>${r.tag ? ` <span class="tag">${esc(r.tag)}</span>` : ""}`, typeof r.year === "number" ? fmtYear(r.year) : r.year ?? "", r.why || "",
     r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim || (typeof r.year === "number" && Math.abs(r.year - state.year) > 150));
   // What ctx.pins and ctx.paths return: enough of a d3 selection for the calls lenses chain on it (style("--c", ...)).
-  function markSel(recs) {
+  // What ctx.pins and ctx.paths return: enough of a d3 selection for the calls lenses chain on it. Functions get what
+  // the old SVG join bound (the record for pins, {x, id, pts} for paths); styles map onto the record's fields.
+  function markSel(recs, arg) {
+    const val = (v, r) => typeof v === "function" ? v(arg(r)) : v;
+    const STYLE = {
+      "--c": (r, v) => { if (v != null) r.color = v; }, opacity: (r, v) => { if (v != null) r.fade = +v; },
+      "stroke-width": (r, v) => { if (v != null) r.width = parseFloat(v); }, "stroke-opacity": (r, v) => { if (v != null) r.alpha = +v; },
+      "stroke-dasharray": (r, v) => { r.dash = v ? String(v).split(/[\s,]+/).map(Number) : null; },
+    };
     const s = {
-      style(name, v) { if (name === "--c") for (const r of recs) r.color = typeof v === "function" ? v(r.x) : v; return s; },
-      classed(cls, on) { if (cls === "ghost") for (const r of recs) r.ghost = typeof on === "function" ? !!on(r.x) : !!on; return s; },
-      attr() { return s; }, on() { return s; }, text() { return s; }, raise() { return s; }, select() { return s; }, selectAll() { return s; }, filter() { return s; },
-      each(fn) { recs.forEach((r, i) => fn.call(null, r.x, i)); return s; }, size: () => recs.length, nodes: () => [], empty: () => !recs.length,
+      style(name, v) { const f = STYLE[name]; if (f) for (const r of recs) f(r, val(v, r)); return s; },
+      classed(cls, on) {
+        for (const c of String(cls).split(/\s+/)) for (const r of recs) {
+          const yes = !!val(on, r);
+          if (c === "ghost") r.ghost = yes; else if (c === "always") r.always = r.always || yes; else if (c === "hi") r.hi = yes;
+        }
+        return s;
+      },
+      attr(name, v) { if (name === "marker-end") for (const r of recs) r.arrow = !!val(v, r); return s; }, on() { return s; }, text() { return s; }, raise() { return s; }, select() { return s; }, selectAll() { return s; }, filter() { return s; },
+      each(fn) { recs.forEach((r, i) => fn.call(null, arg(r), i)); return s; }, size: () => recs.length, nodes: () => [], empty: () => !recs.length,
     };
     return s;
   }
@@ -1175,17 +1193,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
           return r;
         });
         L.points.push(...recs);
-        return markSel(recs);
+        return markSel(recs, r => r.x);
       },
       paths(list, o = {}) {
         const key = o.key || (x => x.id), co = o.coords || (x => x.pts), cls = " " + (o.cls || "") + " ", ghost = cls.includes(" ghost ");
         const recs = list.map(x => ({ x, id: key(x), pts: co(x) })).filter(r => Array.isArray(r.pts) && r.pts.length > 1).map(r => ({
-          src: r.x, x: r.x, pts: r.pts, kind: "lens", lens: d.id, color: o.color || `var(--y-${d.id})`, ghost, width: o.width ?? (ghost ? 2.4 : 2), alpha: o.alpha ?? (ghost ? .9 : .75),
+          src: r.x, x: r.x, id: r.id, pts: r.pts, kind: "lens", lens: d.id, color: o.color || `var(--y-${d.id})`, ghost, width: o.width ?? (ghost ? 2.4 : 2), alpha: o.alpha ?? (ghost ? .9 : .75),
           dash: o.dash !== undefined ? o.dash : CONF_DASH[o.conf] !== undefined ? CONF_DASH[o.conf] : ghost ? [7, 5] : null, arrow: !!o.arrow, conf: o.conf || null,
           title: o.title ? () => o.title(r.x) : null,
           card: o.card ? () => lensCard(d, { line: r.pts, lon: r.pts[Math.floor(r.pts.length / 2)][0], lat: r.pts[Math.floor(r.pts.length / 2)][1], ...o.card(r.x) }) : null }));
         L.lines.push(...recs);
-        return markSel(recs);
+        return markSel(recs, r => ({ x: r.x, id: r.id, pts: r.pts }));
       },
       _end() {},
     };
@@ -1193,13 +1211,13 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function drawLenses() {
     for (const d of PLUG) {
       const L = MK["lens:" + d.id]; L.points = []; L.lines = [];
-      if (!state.on[d.id] || typeof d.draw !== "function") { G["lens:" + d.id].selectAll("*").remove(); continue; }
+      if (!state.on[d.id] || typeof d.draw !== "function" || !lensReady(d)) { G["lens:" + d.id].selectAll("*").remove(); continue; }
       try { const c = lensCtx(d); d.draw(c); c._end(); } catch (err) { console.error("lens " + d.id, err); }
     }
   }
   // Rows a plugin lens adds to the Here or This year tab, grouped under the lens name.
   function lensRows(fam, fn, at) {
-    return PLUG.filter(d => d.family === fam && typeof d[fn] === "function").map(d => {
+    return PLUG.filter(d => d.family === fam && typeof d[fn] === "function" && lensReady(d)).map(d => {
       let rows = [];
       try { rows = (fn === "here" ? d.here(lensCtx(d), at) : d.now(lensCtx(d))) || []; } catch (err) { console.error("lens " + d.id, err); }
       return sec(d.id, d.name, rows.filter(r => r && r.title).slice(0, 8).map(r => lensItem(d, r, at)));
@@ -1755,23 +1773,27 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     timeRaf = requestAnimationFrame(tick);
   };
   // The strip above the slider: when each lens has something to say.
-  (function drawStrip() {
+  function drawStrip() {
     const st = d3.select("#strip");
+    st.selectAll("*").remove();
     const rows = [
       ["places", ENTRIES.flatMap(e => (EVENTS[e.id] || []).map(v => v[0]))],
       ["disease", SHOCKS.map(e => e.start)],
       ["ideas", JOURNEYS.flatMap(j => j.steps.map(s => s.y))],
       ["war", BATTLES.map(b => b.start)],
     ];
-    for (const d of PLUG) if (typeof d.strip === "function") try { rows.push([d.id, (d.strip((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}) || []).filter(Number.isFinite)]); } catch (err) { console.error("lens " + d.id, err); }
+    for (const d of PLUG) if (typeof d.strip === "function" && lensReady(d)) try { rows.push([d.id, (d.strip((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}) || []).filter(Number.isFinite)]); } catch (err) { console.error("lens " + d.id, err); }
     const rh = 21 / rows.length;
     rows.forEach(([k, ys], i) => {
-      st.append("g").selectAll("line").data(ys.filter(y => y >= MIN && y <= NOW)).join("line")
-        .attr("x1", y => yearToT(y) * 1000).attr("x2", y => yearToT(y) * 1000).attr("y1", 1 + i * rh).attr("y2", Math.max(1.6, rh - 1.3) + 1 + i * rh)
+      // One tick per strip column (a thousand at most), not one per record: 11k battles would be 11k nodes.
+      const xs = [...new Set(ys.filter(y => y >= MIN && y <= NOW).map(y => Math.round(yearToT(y) * 1000)))];
+      st.append("g").selectAll("line").data(xs).join("line")
+        .attr("x1", x => x).attr("x2", x => x).attr("y1", 1 + i * rh).attr("y2", Math.max(1.6, rh - 1.3) + 1 + i * rh)
         .style("stroke", `var(--y-${k})`).style("stroke-opacity", k === "order" ? 0.35 : 0.7);
     });
     st.on("click", ev => { const r = st.node().getBoundingClientRect(); stopTime(); animateYear(tToYear((ev.clientX - r.left) / r.width), 700); });
-  })();
+  }
+  drawStrip();
 
   // ---------- guide overlay ----------
   let overlay = { routes: [], pins: [], lens: "military" };
@@ -2005,7 +2027,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   };
   // Plugin indexes cover all time; keep the pieces that name a year inside the window, or no year at all.
   const plugIndex = (d, w) => {
-    let txt = ""; try { txt = d.index((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}); } catch { return ""; }
+    let txt = ""; if (!lensReady(d)) return ""; try { txt = d.index((typeof LENS_DATA !== "undefined" && LENS_DATA[d.id]) || {}); } catch { return ""; }
     const keep = String(txt).split(/\n|; /).filter(s => { const ys = (s.match(/-?\b\d{3,4}\b/g) || []).map(Number); return !ys.length || ys.some(y => y >= w.from - 50 && y <= w.to + 50); });
     const out = keep.join("\n");
     return `\n${(d.name || d.id).toUpperCase()} (layer ${d.id}):\n${out.length > 5000 ? out.slice(0, 5000) + "\n(cut)" : out}`;
@@ -2464,6 +2486,22 @@ Where the specialists disagree, say who the evidence favours.`;
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
   syncChips();
+  // ---------- late data: what the first paint does not need loads from files beside the page ----------
+  // build.py writes the big blobs (plugin lens data, the Wikidata battles) to atlas-files/ and lists them in LATE_FILES;
+  // they are fetched once the map has painted, then the map, strip and panel redraw.
+  function loadLate() {
+    const files = typeof LATE_FILES !== "undefined" ? LATE_FILES : {};
+    const got = (key, v) => {
+      const [kind, id] = key.split(":");
+      if (kind === "lens") LENS_DATA[id] = v;
+      else if (key === "war:wd") { for (const r of v) BATTLES.push(wdBattle(r)); BAT_BY_YEAR = d3.group(BATTLES, b => b.start); }
+    };
+    let timer = 0;
+    const done = () => { clearTimeout(timer); timer = setTimeout(() => { drawStrip(); drawAll(); refreshPanel(); renderKey(); }, 40); };
+    for (const [key, url] of Object.entries(files))
+      fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(v => { got(key, v); done(); }).catch(err => { console.error("late data " + url, err); done(); });
+  }
+  setTimeout(loadLate, 0);
   setBasemap();
   new ResizeObserver(() => layout()).observe(mapEl);
   layout();
