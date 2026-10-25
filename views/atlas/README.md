@@ -74,6 +74,17 @@ published beside the page:
 python3 views/atlas/lenses/e19.py pub          # writes pub/atlas-files/e19-deep.json (about 2 MB)
 ```
 
+## Travellers in motion
+
+Lenses Journeys and Middle Passage (Peoples) and VOC ships (Wealth), and the Who was there tab: famous journeys move
+along dated legs, every Dutch East India Company ship at sea, the forced crossing of enslaved Africans with the human
+toll, and real co-presence (who was in Vienna in 1913). Data: `data/travels/`. Presences and the slave voyages load
+only when needed, from a sidecar to publish beside the page:
+
+```sh
+python3 views/atlas/lenses/travels.py pub      # writes pub/atlas-files/travels-deep.json (about 2.7 MB)
+```
+
 ## Lens families and plugins
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
@@ -86,7 +97,7 @@ Zoom frames only move the map: labels hide while the scale changes and thinning 
 Every story-like thing plays on the map through one Director (`world/director.js`, WORLD.md L4): the map flies, a
 one-line caption types into a pixel dialog box, Space or → is the next scene, ← goes back, the strip scrubs the story,
 **Why?** (Enter) unfolds the reason, "How do we know" (H) shows sources and the confidence class, P plays by itself, Esc
-gives the panel back. `world/story.js` holds the Scene/Story format, the registry (`ATLAS.world.stories.add/list/get/check`)
+leaves the story. The panel, with Ask, stays open beside the story; the cold open waits until the map has painted. `world/story.js` holds the Scene/Story format, the registry (`ATLAS.world.stories.add/list/get/check`)
 and converters for guide tours, panel answers (live ones keep streaming in), What-ifs (a fork scene, then dashed branch
 scenes), Up close storylines (by the month) and Codex trails. Authored Stories live in `data/stories/*.json`; the Stories
 tab (`lenses/stories.*`) lists them all. The Atlas opens on a cold open (Constantinople 1453) on a first visit or after
@@ -99,7 +110,7 @@ plays one.
 The Travellers lens (Peoples) and the Living world tab show who was on the road, day by day. Engine:
 `views/atlas/world/agents.js` (L3 in WORLD.md: `ATLAS.world.agents / meetings / step / story / passing / add`), data
 from `views/atlas/lenses/living.py` (late file `atlas-files/lens-living.json`). Named travellers follow documented
-journeys (`data/world/journeys/`, and the life RPG's `data/life/lives/`); dates between known stops are spread by
+journeys (the travels kernel via `lenses/travels.py:journeys_as_stops`, and the life RPG's `data/life/lives/`); dates between known stops are spread by
 distance, legs take road time and the rest is a stay. The crowd is generated from 138 recurring travel systems in
 `data/world/flows.json` (season, trips a year, party size, trip time, goods, sources), with names from
 `data/world/names.json` by culture and era, and is always labelled generated. On slave-trade routes the generated
@@ -107,3 +118,15 @@ people are the enslaved, named, never cargo. Meetings: `data/world/meetings.json
 plus co-presence at the moment. Follow a traveller to get a story of scenes; "Play as scenes" hands it to the
 Director; "Tell this story" asks Claude (needs `sample`). Keys in the tab: `,` and `.` step a day.
 `data/world/news.json` and `speeds.json` are ground truth for backtesting the motion model.
+
+## Guess the past
+
+The Guess tab (`lenses/guess.*`) is a calibration game. The map flies to a moment and asks for a number the kernel
+holds: a city's size (Reba et al., after Chandler and Modelski), a continent's people (HYDE), a share of world GDP and
+income per head (Maddison Project 2020), an empire's land at its height (Cliopatria), railway kilometres (CHAT) or the
+days news took to travel. Every answer is read from a sourced measure or record at a year it actually gives, never
+interpolated. You give a range you are 80% sure of; the reveal plays as a Director story (the answer, a comparison or
+the motion model's own estimate for the same trip, then your calibration) with Why? and How do we know. The tab keeps
+calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five with streaks and a copyable
+result, Endless and About here modes, and finds; each reveal also visits the spot for the Codex. Progress stays in
+localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `calibration` and `play(id)`.

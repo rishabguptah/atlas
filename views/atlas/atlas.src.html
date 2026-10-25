@@ -538,8 +538,14 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }).filter(p => p.lat != null).sort((a, b) => b.hpi - a.hpi);
   const adult = (p, y) => y >= p.b + 15 && y <= (p.d ?? p.b + 80);
 
-  const TRADE = MONEY.trade.map((t, i) => ({ ...t, id: "trade" + i, pts: t.line }));
-  const MIGS = MONEY.migs.map((m, i) => ({ ...m, id: "mig" + i, pts: m.line }));
+  // Flows: the economy-trade kernel records (lenses/flows.py: 75 routes, people as [low, high]) when built in, else the extracted layer.
+  const FLOWS = typeof LENS_DATA !== "undefined" && LENS_DATA.flows && LENS_DATA.flows.flows;
+  const fromFlow = f => ({ id: f.id, name: f.n, start: f.s, end: f.e ?? NOW, open: f.e == null, pts: f.line, line: f.line, goods: f.g || [], why: f.why,
+    src: (f.src || []).map(x => ({ cite: x.c, url: x.u })), people: f.p ? Math.round((f.p[0] + f.p[1]) / 2) : null, low: f.p ? f.p[0] : null, high: f.p ? f.p[1] : null,
+    forced: !!f.f, stops: f.st, approx: !!f.ap, draft: !!f.dr, group: f.grp });
+  const TRADE = FLOWS ? FLOWS.filter(f => f.k === "t").map(fromFlow) : MONEY.trade.map((t, i) => ({ ...t, id: "trade" + i, pts: t.line }));
+  const MIGS = FLOWS ? FLOWS.filter(f => f.k === "m").map(fromFlow) : MONEY.migs.map((m, i) => ({ ...m, id: "mig" + i, pts: m.line }));
+  const GR = typeof PixelGrammar !== "undefined" ? PixelGrammar : null;
   const HUBS = MONEY.relays.flatMap(r => r.legs.map(l => ({ ...l, relay: r.name, lon: l.at[0], lat: l.at[1] })));
 
   const PL = Object.fromEntries(PLAGUE.places.map(p => [p.id, p]));
@@ -1088,7 +1094,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const list = state.on.places ? ENTRIES.filter(e => alive(e, y) || state.hi.has("place:" + e.id)) : ENTRIES.filter(e => state.hi.has("place:" + e.id));
     for (const e of list) {
       const p = popAt(e, y), hi = state.hi.has("place:" + e.id), wonder = e.layer === "wonders";
-      out.push(P(e, { kind: "city", shape: "circle", color: wonder ? "var(--y-money)" : "var(--y-places)", fill: hi ? 1 : .55, hi, lbl: true,
+      // Data grammar: the city's size tier, and a tick when it grew or shrank by a quarter over the last 50 years.
+      const p0 = p && GR ? popAt(e, y - 50) : null, grow = p0 ? (p / p0 >= 1.25 ? 1 : p / p0 <= 0.8 ? -1 : 0) : 0;
+      out.push(P(e, { kind: "city", shape: "circle", color: wonder ? "var(--y-money)" : "var(--y-places)", fill: hi ? 1 : .55, hi, lbl: true, tier: GR && !wonder ? GR.tier(p) : null, grow,
         size: p ? Math.max(2.6, Math.min(10, Math.sqrt(p) / 100)) : 2.6, label: nameAt(e, y), pri: 6 + (p ? Math.log10(p) : 0),
         title: () => `${nameAt(e, y)}${p ? ` · about ${fmtN(p)} people` : ""}`, card: cardFn(cityCard, e) }));
     }
@@ -1104,11 +1112,19 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function drawMoney() {
     const y = state.year, on = state.on.money, L = MK.money;
     const tr = on ? TRADE.filter(t => y >= t.start && y <= t.end) : [];
-    const mg = on ? MIGS.filter(m => y >= m.start && y <= m.end) : [];
+    // A migration pours along its line while it happens (Minard: width = people, one art pixel per tenfold) and leaves a fading trace for 40 years.
+    const mg = on ? MIGS.filter(m => y >= m.start && y <= m.end + (m.start > -3000 ? 40 : 0)) : [];
     const hb = on ? HUBS.filter(h => y >= h.start && y <= h.end) : [];
+    const flowConf = d => d.people == null ? (d.start < -3000 ? 3 : 2) : d.low && d.high / d.low > 1.5 ? 1 : 0;
     L.lines = [
-      ...mg.map(d => ({ src: d, pts: d.pts, kind: "mig", color: d.forced ? "var(--warn)" : "var(--y-people)", width: 2, dash: [5, 4], dashed: !!d.forced, alpha: .8, arrow: true, label: d.name, title: () => d.name, card: cardFn(migCard, d) })),
-      ...tr.map(d => ({ src: d, pts: d.pts, kind: "trade", color: "var(--y-money)", width: 2, alpha: .75, label: d.name, title: () => d.name, card: cardFn(tradeCard, d) })),
+      ...mg.map(d => {
+        const w = GR ? GR.flowWidth(d.high || d.people) : 0, span = Math.max(1, d.end - d.start), prog = Math.max(0.04, Math.min(1, (y - d.start + 1) / span));
+        return { src: d, pts: d.pts, kind: "mig", color: "var(--y-people)", forced: !!d.forced, w: w || null, progress: prog, conf: flowConf(d),
+          width: w ? w * 2 : 2, dash: w ? null : [5, 4], fade: y > d.end ? Math.max(0.3, 1 - (y - d.end) / 40) : 1, alpha: .8, arrow: !w, label: d.name,
+          title: () => `${d.name} · ${fmtSpan(d.start, d.open ? null : d.end)}${d.people ? " · " + (d.low !== d.high ? fmtN(d.low) + " to " + fmtN(d.high) : "about " + fmtN(d.people)) + " people" : ""}${d.forced ? " · forced" : ""}`,
+          card: cardFn(migCard, d) };
+      }),
+      ...tr.map(d => ({ src: d, pts: d.pts, kind: "trade", color: "var(--y-money)", width: 2, alpha: .75, conf: 2, label: d.name, title: () => `${d.name} · ${fmtSpan(d.start, d.open ? null : d.end)}`, card: cardFn(tradeCard, d) })),
     ];
     L.points = hb.map(d => P(d, { kind: "hub", shape: "diamond", size: 5, fill: 1, color: "var(--y-money)", label: d.name.replace(/ \(.*\)/, ""), always: true, pri: 8,
       title: () => `${d.name} · trade hub ${fmtSpan(d.start, d.end)}`, card: cardFn(hubCard, d) }));
@@ -1451,12 +1467,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function tradeCard(t) {
     const m = t.pts[Math.floor(t.pts.length / 2)];
     return { kind: "trade", c: "var(--y-money)", lon: m[0], lat: m[1], name: null, kick: "Trade route", title: t.name, year: Math.round((t.start + t.end) / 2), line: t.pts,
-      meta: `${fmtSpan(t.start, t.end)} · ${t.goods.join(", ")}`, body: t.why, sources: src1(t.src) };
+      meta: `${fmtSpan(t.start, t.open ? null : t.end)}${t.goods.length ? " · " + t.goods.join(", ") : ""}`, body: t.why, sources: src1(t.src), flow: t };
   }
   function migCard(m) {
     const p = m.pts[m.pts.length - 1];
     return { kind: "mig", c: "var(--y-people)", lon: p[0], lat: p[1], name: null, kick: m.forced ? "Forced migration" : "Migration", title: m.name, year: m.start, line: m.pts,
-      meta: `${fmtSpan(m.start, m.end)}${m.people ? ` · about ${fmtN(m.people)} people` : ""}${m.stops ? " · " + m.stops.join(" → ") : ""}`, body: m.why, sources: src1(m.src) };
+      meta: `${fmtSpan(m.start, m.open ? null : m.end)}${m.low != null && m.high != null && m.low !== m.high ? ` · ${fmtN(m.low)} to ${fmtN(m.high)} people` : m.people ? ` · about ${fmtN(m.people)} people` : ""}${m.stops ? " · " + m.stops.join(" → ") : ""}`, body: m.why, sources: src1(m.src), flow: m };
   }
   function hubCard(h) {
     return { kind: "hub", c: "var(--y-money)", lon: h.lon, lat: h.lat, name: h.name.replace(/ \(.*\)/, ""), kick: `Trade hub · ${h.relay}`, title: h.name, year: h.start,
@@ -1503,11 +1519,19 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (!c || !c.title) return "";
     return `<div class="focus" style="--c:${c.c}"><span class="fk">${esc(c.kick)}</span><span class="ft">${esc(c.title)}</span>
       ${c.meta ? `<span class="sub">${esc(c.meta)}</span>` : ""}${c.body ? `<p>${esc(c.body)}</p>` : ""}${c.why ? `<p class="why">${esc(c.why)}</p>` : ""}
-      ${c.polity ? sparkHTML(c.polity) : ""}
+      ${c.polity && !(ATLAS.cardViz || []).length ? sparkHTML(c.polity) : ""}${cardViz(c)}
       ${c.holders && c.holders.length ? `<div class="items">${c.holders.map(r => item(`${esc(r.n)}`, fmtSpan(r.s, r.e), "", () => animateYear(r.s), !(state.year >= r.s && state.year <= r.e))).join("")}</div>` : ""}
       ${srcList(c.sources)}
       <div class="row">${c.year != null && c.year !== state.year ? `<button class="btn" data-a="${act(() => animateYear(c.year))}">Go to ${esc(fmtYear(c.year))}</button>` : ""}${c.journey ? journeyNav(c) : ""}<button class="btn" data-a="${act(() => askAbout(c))}">Ask about this</button></div></div>`;
   }
+  // Chart cards (views/atlas/lenses/viz.js, views/pixel/charts.js): plugins append charts to any card with ATLAS.cardViz.push(fn),
+  // fn(card, ctx) -> HTML; ctx gives the page's own readers so a chart needs no data of its own. ATLAS.nowViz does the same for This year.
+  const vizCtx = () => ({ year: state.year, k: state.k, popAt, nameAt, alive, areaAt, fragAt, band, polAlive, holderAt, battlesNear, HELD, POLS, ENTRIES, MIGS, TRADE, SHOCKS,
+    ORDER, POP: typeof POP !== "undefined" ? POP : {}, EVENTS, fmtYear, fmtSpan, fmtN, esc, act, animateYear, select, goCard, cityCard, polityCard, migCard, tradeCard, shockCard,
+    ruledBy: (lon, lat, y) => { const r = ruledBy(lon, lat, y ?? state.year); return r ? (r.emp ? r.emp.name : r.name) : null; } });
+  const vizOf = (list, ...a) => (list || []).map(fn => { try { return fn(...a, vizCtx()) || ""; } catch (err) { console.error("viz", err); return ""; } }).join("");
+  const cardViz = c => vizOf(ATLAS.cardViz, c);
+  ATLAS.vizCtx = vizCtx;
   function journeyNav(c) {
     const j = c.journey, i = c.step.i;
     const go = k => act(() => { const s = j.steps[k]; select(journeyCard(j, s), { fly: true }); animateYear(s.y); });
@@ -1571,6 +1595,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     el.innerHTML = `
       <div><p class="kick">The world in</p><h2 class="ttl">${esc(fmtYear(y))}</h2>
       <p class="sub">${pols.length} states on the map${total.shaky ? `, ${total.shaky} of them fragile` : ""} · ${ppl.length ? PPL.filter(p => adult(p, y)).length + " famous people alive" : "no famous people recorded yet"} · ${tr.length} trade routes running</p></div>
+      ${vizOf(ATLAS.nowViz)}
       ${sec("places", "Happening now", evs.slice(0, 6).map(o => item(`<b>${esc(nameAt(o.e, o.yy))}</b>: ${esc(o.t)}`, fmtYear(o.yy), "", goCard(cityCard(o.e)))))}
       ${lensRows("land", "now")}${sec("places", "Biggest cities", cities.map(o => item(`<b>${esc(nameAt(o.e, y))}</b>`, "~" + fmtN(o.p), "", goCard(cityCard(o.e)))))}
       ${sec("people", "Alive and grown up", ppl.map(p => item(`<b>${esc(p.name)}</b> · ${esc(p.occ)}`, fmtSpan(p.b, p.d), "", goCard(personCard(p)))))}${lensRows("peoples", "now")}
@@ -2406,6 +2431,8 @@ Where the specialists disagree, say who the evidence favours.`;
     // The guide, for the Director's "Why?" and "Go deeper": ask the panel (or open a curated tour), and the answer on screen.
     ask: q => { document.getElementById("qbox").value = q; setTab("guide"); document.getElementById("ask").requestSubmit(); },
     get answer() { return state.answer; },
+    // The benchmark (ingest/judge/bench) always wants the live panel, even for a question a curated tour answers.
+    askLive: q => ask(q, false),
   };
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 

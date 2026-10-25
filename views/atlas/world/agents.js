@@ -363,7 +363,8 @@
       if (A.travel && typeof A.travel.journeys === "function") {
         try {
           for (const j of A.travel.journeys(y, bbox) || []) {
-            if (BYID.has(j.id)) continue;
+            // The kernel journeys are already ours (living.py reads them): skip them by kernel id.
+            if (BYID.has(j.id) || BYID.has("j:" + String(j.id).split(":").pop())) continue;
             const p = A.travel.positionAt ? A.travel.positionAt(j.id, t) : null;
             if (p && p.lon != null && inBox([p.lon, p.lat], bbox)) out.push({ id: j.id, name: j.name || j.carrier, kind: j.kind || "traveller", role: j.role || j.kind || "traveller", gen: false, real: true, lon: p.lon, lat: p.lat, moving: p.moving !== false, at: p.at, to: p.to, sprite: j.sprite || (p.mode === "sea" ? "ship_galleon" : "person_explorer"), conf: p.conf || j.conf, ext: true });
           }

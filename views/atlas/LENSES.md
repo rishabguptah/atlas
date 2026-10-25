@@ -21,8 +21,8 @@ Pick the one your lens belongs to:
 |-----------|--------------------------------------------------------------|
 | `land`    | Terrain, Cities, Borders                                     |
 | `power`   | Rule & law, War & chokepoints, Order & chaos                 |
-| `wealth`  | Trade & migration, Technology, food & energy, Object journeys |
-| `peoples` | People, Peoples & languages                                  |
+| `wealth`  | Trade & migration, Technology, food & energy, Object journeys, VOC ships |
+| `peoples` | People, Peoples & languages, Journeys, Middle Passage        |
 | `mind`    | Ideas & faith, Art & architecture                            |
 | `shocks`  | Plague & climate, Epidemics, Eruptions, famine & cold          |
 
@@ -124,6 +124,10 @@ The Objects tab (`lenses/objects.js`) is the example of a tab that plays a seque
 animate along a leg with `api.redraw()` each frame, caption with `api.scene`). It also exposes `ATLAS.objects` (`list`,
 `journey`, `at(year)`, `near(lon, lat, year, km)`, `follow(id)`) for other plugins.
 
+The Who was there tab (`lenses/travels.js`) is the Contemporaries finder and exposes `ATLAS.travel` (`journeys`,
+`journey(id)` in the shared itinerary format, `positionAt(id, t)`, `travellers(t)`, `ships(t)`, and the promises
+`presentAt(lon, lat, km, y0, y1)`, `contemporaries(personId)`, `lifeline(personId)`). Times are fractional years.
+
 The Codex tab (`lenses/codex.js`) is the example of a plugin that keeps the viewer's progress: it uses `localStorage`
 (wrapped in try/catch, so the page works without it) and never sends it anywhere.
 
@@ -137,6 +141,12 @@ A lens can put its marks into the pixel grid (house rule: one world, one grid). 
 `ATLAS.pixelSprites`; the pixel basemap calls it with `(year, k)` whenever it collects sprites and draws what it
 returns, `[{lon, lat, sprite, pri, grp, dy, team}]`, decluttered with everything else. Call `ATLAS.pixelRefresh()`
 when your marks change without a year change (a month cursor). `lenses/e19.js` is the example.
+
+## Data charts and the visual grammar
+
+How data is drawn (confidence hatching, flow widths, city tiers, ramps, panel charts) is specified in `VIZ.md`. To
+add a chart to a record's card push a function onto `ATLAS.cardViz`; for a tile in "This year" use `ATLAS.nowViz`.
+Give records a `conf` (attested, estimated, approximate, unknown) and the map draws it.
 
 ## Deep regions (time by the month)
 

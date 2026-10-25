@@ -15,7 +15,7 @@ bending an existing one, and say so in your PR.
 - Run `python3 tools/build.py` before you push. It fails on any error, and CI runs the same check.
 
 Workstream folders: `kernel`, `living-atlas`, `places-people`, `states-war`, `economy-trade`,
-`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`, `law`, `europe-19c`, `peoples-languages`, `scholarship`.
+`religion-ideas`, `disease-climate`, `guide`, `order-chaos`, `judge`, `geography`, `art-architecture`, `law`, `europe-19c`, `peoples-languages`, `scholarship`, `travels`.
 
 ## Common fields (every record)
 

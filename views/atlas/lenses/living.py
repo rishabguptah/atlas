@@ -1,5 +1,5 @@
 # Living world: travellers on the move, who meets whom, stories of the road (views/atlas/world/agents.js, L3 in WORLD.md).
-# build(repo) is LENS_DATA.living: documented journeys (data/world/journeys/*.json), recurring travel systems that
+# build(repo) is LENS_DATA.living: documented journeys (the travels kernel, via travels.journeys_as_stops), recurring travel systems that
 # generated travellers come from (data/world/flows.json, plus the trade routes in data/economy-trade/routes.jsonl as
 # low-rate systems), names by culture and era (data/world/names.json) and documented meetings (data/world/meetings.json).
 # Over 40 KB, so the page build puts it in atlas-files/lens-living.json, loaded after the first paint.
@@ -23,14 +23,24 @@ def _src(s):
 
 def build(repo):
     d = os.path.join(repo, 'data', 'world')
+    # Documented journeys come from the travels kernel (data/travels/, one shared dataset; lenses/travels.py).
     journeys = []
-    for f in sorted(glob.glob(os.path.join(d, 'journeys', '*.json'))):
-        j = _load(f, None)
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('atlas_travels', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'travels.py'))
+        tr = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(tr)
+        kj = tr.journeys_as_stops(repo)
+    except Exception as e:  # the lens still works on lives and flows alone
+        print('living: travels kernel unavailable:', e)
+        kj = []
+    for j in kj:
         if not j or not j.get('stops'):
             continue
         journeys.append({
             'id': j['id'], 'name': j['name'], 'person': j.get('person'), 'kind': j.get('kind', 'traveller'), 'summary': j.get('summary', ''),
-            'stops': [{k: (_r(s[k]) if k in ('lon', 'lat') else s[k]) for k in ('place', 'lon', 'lat', 'date', 'until', 'mode', 'note', 'conf', 'via') if s.get(k) is not None}
+            'kernel_id': j.get('kernel_id'),
+            'stops': [{k: (_r(s[k]) if k in ('lon', 'lat') else s[k]) for k in ('place', 'lon', 'lat', 'date', 'until', 'mode', 'note', 'conf', 'via') if s.get(k) not in (None, '')}
                       for s in j['stops'] if s.get('lon') is not None and s.get('lat') is not None],
             'sources': _src(j.get('sources')), 'status': j.get('status', 'draft')})
     # Real lives from the life RPG (data/life/lives/*.json): each chapter is a dated place; chapters at the same place
