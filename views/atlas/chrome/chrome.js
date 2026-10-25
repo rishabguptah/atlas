@@ -12,8 +12,8 @@
   let rectT = 0;
 
   // ---------- icons on the existing controls ----------
-  const TAB_ICON = { now: "year", here: "here", guide: "ask", codex: "codex", whatif: "whatif", stories: "stories", objects: "objects", upclose: "lens", compare: "compare", life: "life" };
-  const TAB_SHORT = { now: "Year", upclose: "Close" };
+  const TAB_ICON = { now: "year", here: "here", guide: "ask", codex: "codex", whatif: "whatif", stories: "stories", objects: "objects", upclose: "lens", compare: "compare", life: "life", travels: "travels", guess: "guess" };
+  const TAB_SHORT = { now: "Year", upclose: "Close", travels: "Who" };
   function dressTab(b) {
     if (b.querySelector(".ico")) return;
     const name = b.textContent.replace(/\s+\d+$/, "").trim();

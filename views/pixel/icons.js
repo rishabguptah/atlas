@@ -33,6 +33,8 @@
     lens: ["...kkkk.....", "..kwwwWk....", ".kwyywwWk...", ".kwywwwWk...", ".kwwwwwWk...", ".kwwwwWWk...", "..kWWWWk....", "...kkkkGk...", ".......kGk..", "........kGk.", ".........kGk", "..........k."],
     compare: [".....kk.....", ".....kk.....", "kkkkkkkkkkkk", "k....kk....k", "k....kk....k", "kk...kk...kk", "xxk..kk..kxx", "kxk..kk..kxk", ".k...kk...k.", ".....kk.....", "...kkkkkk...", "..kxxxxxxk.."],
     life: ["....kkkk....", "...kwwwwk...", "...kwkwkk...", "...kwwwwk...", "....kkkk....", "..kkxxxxkk..", ".kxxxxxxxxk.", ".kxkxxxxkxk.", ".kxkxxxxkxk.", "..kkxXXxkk..", "...kxkkxk...", "...kkk.kkk.."],
+    travels: ["............", ".....k......", "....kxk.....", "...kxxxk....", "..kxxxxxk...", ".....k......", ".....k......", "kkkkkkkkkkk.", ".kwwwwwwwwk.", "..kwwwwwwk..", "...kkkkkk...", "............"],
+    guess: ["...kkkkk....", "..kyyyyyk...", ".kyykkkyyk..", ".kyk...kyk..", "..k...kyyk..", ".....kyyk...", "....kyyk....", "....kyk.....", "....kkk.....", "....kyk.....", "....kyk.....", "....kkk....."],
     compass: [".....kk.....", "....kyyk....", "....kyyk....", "...kkyykk...", ".kkwkyykwkk.", "kwwwwkkxxxxk", "kwwwwkkxxxxk", ".kkwkXXkwkk.", "...kkXXkk...", "....kXXk....", "....kXXk....", ".....kk....."],
   };
   const DEFAULT = { k: "#221f1a", w: "#f6f0dc", W: "#d9cfb2", y: "#e8c050", g: "#d8a32c", G: "#8a6418", x: "#4a4035", X: "#2c2620" };
