@@ -76,3 +76,10 @@ work adds them (`army`, `temple`, `ship`, ...); unknown sprite names fall back t
 
 The guide and the Here tab quote your cards, so make each card say exactly what the record says, with
 its year and source. Prefer one record per real event or span over a summary record.
+
+## Basemap and sprites
+
+`ATLAS.basemap({id, name, mount(el, projection), render(transform, year), move(transform), unmount(), keepTerrain?})`
+draws under the SVG. `render` runs on zoom end, year change, resize and lens toggles; `move` on every zoom frame.
+`ATLAS.polityAt(lon, lat, year)` gives `{name, color}` and `ATLAS.isOn(k)` says whether a lens (or `borders`,
+`terrain`) is on. `ATLAS.sprite(name, {w, h, ax, ay, href | frames: [dataURI]})` registers a sprite for pins.
