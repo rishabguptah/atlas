@@ -88,3 +88,21 @@ draws under the SVG. `render` runs on zoom end, year change, resize and lens tog
 `[{id, n, name, subject_of, color, feature, level}]`: the precise borders (`l0` 5 km, `l1` 1.5 km from zoom 3)
 once they have loaded from `borders/` beside the page, the inline historical-basemaps snapshot until then.
 The page calls the basemap's `render` again when a precise level arrives.
+
+## Tabs
+
+A plugin can add its own tab to the right column (after Here) with `ATLAS.tab`. The What if tab
+(`lenses/whatif.js`) is the example.
+
+```js
+ATLAS.tab({
+  id: "whatif", name: "What if",
+  mount(el, api) { /* el is the empty pane; runs once when the page is up */ },
+  show() { /* the tab was opened */ },
+});
+```
+
+`api` gives: `year`, `k`, `setYear(y, animate = true, ms)`, `scene({year, view: {lon, lat, span}, lens, layers,
+highlight, pins, routes, title})` (the guide's own scene: flies, sets the year, draws pins and routes, shows a
+caption), `clearScene()`, `fly(view, ms)`, `setOn(lensId, on = true)`, `redraw()`, `setTab(id)`, `fmtYear`,
+and `onYear(fn)` (called on every year change, so debounce anything heavy).
