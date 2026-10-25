@@ -3,7 +3,7 @@
 //   const pm = PixelMap(container, projection, { px: 3, rasters, land, rivers, palette })
 //   pm.render(transform, { realms, year })   on zoom end, resize and year change (transform = d3 zoom transform)
 //   pm.move(transform)                       on every zoom frame: shifts the last frame with CSS until render
-//   pm.sprites(list)                         [{lon, lat, sprite, frame?, team?}] drawn into the pixel grid
+//   pm.sprites(list)                         [{lon, lat, sprite, frame?, team?, flip?}] drawn into the pixel grid
 //   pm.tick()                                advance sprite and water animation by one frame (call ~4 fps)
 //
 // levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
@@ -24,6 +24,9 @@
     chronicle: (v, o) => { const l = (v[o] * 0.3 + v[o + 1] * 0.55 + v[o + 2] * 0.15) / 255; v[o] = 58 + l * 186; v[o + 1] = 42 + l * 178; v[o + 2] = 28 + l * 150; },
   };
   const GLOW = { city_metropolis: 22, city_city: 16, city_town: 11, city_village: 7 };
+  // Library settlements (sprites-library.js) glow by their size meta; landmarks like a small town.
+  const GLOW_SIZE = [0, 7, 11, 16, 22, 26];
+  const glowOf = name => { if (GLOW[name]) return GLOW[name]; const S = (global.PIXEL_SPRITES || {})[name]; return S && S.kind === "city" ? GLOW_SIZE[S.size || 2] : 0; };
 
   function decode(r) {
     if (r.data) return r;
@@ -311,8 +314,8 @@
 
     // Sprites are painted into the same pixel grid so they share its crispness.
     const spriteCache = {};
-    function spritePixels(name, team, f, night) {
-      const key = name + "|" + (team || "") + "|" + f + (night ? "|n" : "");
+    function spritePixels(name, team, f, night, flip) {
+      const key = name + "|" + (team || "") + "|" + f + (night ? "|n" : "") + (flip ? "|f" : "");
       if (spriteCache[key]) return spriteCache[key];
       const S = (global.PIXEL_SPRITES || {})[name]; if (!S) return null;
       const fr = S.frames[f % S.frames.length];
@@ -322,7 +325,7 @@
         if (ch === ".") return;
         let c = ch === "x" ? tc : ch === "X" ? td : C[ch]; if (!c) return;
         if (night) c = "wWyog".includes(ch) && name.startsWith("city") ? (ch === "W" ? [232, 150, 60] : [255, 214, 110]) : NIGHT_RGB(c);
-        px.push(x - S.ax, y - S.ay, pack(c));
+        px.push(flip ? S.ax - x : x - S.ax, y - S.ay, pack(c));
       }));
       return spriteCache[key] = px;
     }
@@ -343,7 +346,7 @@
       const night = mood === "night";
       // Night: settlements glow, a dithered warm halo sized by the town.
       if (night) for (const s of list) {
-        const R = GLOW[s.sprite]; if (!R) continue;
+        const R = glowOf(s.sprite); if (!R) continue;
         const p = projection([s.lon, s.lat]); if (!p) continue;
         const ci = Math.floor((p[0] * t.k) / PX) - U0, cj = Math.floor((p[1] * t.k) / PX) - V0 - 4;
         for (let dj = -R; dj <= R; dj++) for (let di = -R; di <= R; di++) {
@@ -359,7 +362,7 @@
       for (const s of list) {
         const p = projection([s.lon, s.lat]); if (!p) continue;
         const i0 = Math.floor((p[0] * t.k) / PX) - U0 + (s.dx || 0), j0 = Math.floor((p[1] * t.k) / PX) - V0 + (s.dy || 0);
-        const px = spritePixels(s.sprite, s.team, (s.frame || 0) + frame, night); if (!px) continue;
+        const px = spritePixels(s.sprite, s.team, (s.frame || 0) + frame, night, s.flip); if (!px) continue;
         for (let q = 0; q < px.length; q += 3) {
           const i = i0 + px[q], j = j0 + px[q + 1];
           if (i >= 0 && j >= 0 && i < w && j < h) out[j * w + i] = px[q + 2];

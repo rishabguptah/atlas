@@ -18,7 +18,7 @@ J = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':'))
 b64 = lambda p, mime: f'data:{mime};base64,' + base64.b64encode(open(p, 'rb').read()).decode()
 
 s = open(os.path.join(here, 'preview.src.html'), encoding='utf-8').read()
-js = '\n'.join(open(os.path.join(here, f), encoding='utf-8').read() for f in ('palette.js', 'sprites.js', 'pixelmap.js', 'borders.js'))
+js = '\n'.join(open(os.path.join(here, f), encoding='utf-8').read() for f in ('palette.js', 'sprites.js', 'era.js', 'pixelmap.js', 'borders.js'))
 lib = os.path.join(here, 'sprites-library.js')
 if os.path.exists(lib):
     js = open(lib, encoding='utf-8').read() + '\n' + js
