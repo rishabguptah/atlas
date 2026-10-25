@@ -1,6 +1,6 @@
 # Usage: python3 views/disease-climate/build_page.py BORDERS_DIR OUT.html [local]
 # Builds the Plague and Climate page from data/disease-climate/ plus the land outline and the
-# 1300, 1530 and 1815 border snapshots from the Living Atlas borders folder (land-50m.json, world_<year>.json).
+# border snapshots (1300 to 1880) from the Living Atlas borders folder (land-50m.json, world_<year>.json).
 # With "local", d3 and topojson load from file:// paths so a headless browser can render it offline.
 import sys, os, json, glob
 
@@ -18,11 +18,21 @@ dc = {
     'stubs': jsonl('stubs.jsonl'),
     'routes': json.load(open(os.path.join(DATA, 'geo', 'spread_routes.geojson'))),
 }
+# Bulk dataset records (Smithsonian, Wikidata, World Peace Foundation), shown lighter than the curated ones.
+dc['bulk'] = [r for f in ('bulk_eruptions.jsonl', 'bulk_wikidata.jsonl', 'bulk_famines.jsonl') for r in jsonl(f)]
+ms = {r['id']: r for r in jsonl('bulk_measures.jsonl') if r['kind'] == 'measure'}
+dc['temp'] = ms['m:temperature_anomaly:earth:pages2k_2019']['points']
+dc['temp31'] = ms['m:temperature_anomaly_31yr:earth:pages2k_2019']['points']
+dc['events'] += [r for r in jsonl('bulk_measures.jsonl') if r['kind'] == 'event']
+# Biraben outbreaks as compact [lon, lat, year, name] rows.
+geo = json.load(open(os.path.join(DATA, 'geo', 'plague_outbreaks.geojson')))
+dc['outbreaks'] = [f['geometry']['coordinates'] + [f['properties']['year'], f['properties']['name']]
+                   for f in geo['features'] if f['properties']['src'] == 'biraben']
 J = lambda o: json.dumps(o, separators=(',', ':'), ensure_ascii=False)
 s = open(os.path.join(os.path.dirname(__file__), 'page.src.html')).read()
 s = s.replace('/*__DC__*/', 'const DC = ' + J(dc) + ';')
 s = s.replace('/*__LAND__*/', 'const LAND = ' + J(json.load(open(os.path.join(borders, 'land-50m.json')))) + ';')
-snaps = {y: json.load(open(os.path.join(borders, 'world_%d.json' % y))) for y in (1300, 1530, 1815)}
+snaps = {y: json.load(open(os.path.join(borders, 'world_%d.json' % y))) for y in (1300, 1400, 1530, 1650, 1715, 1815, 1880)}
 s = s.replace('/*__BORDERS__*/', 'const BORDERS = ' + J(snaps) + ';')
 if local:
     s = s.replace('https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js', 'file://' + local + '/d3-7.8.5/package/dist/d3.min.js')

@@ -87,6 +87,8 @@ button:focus-visible, input:focus-visible { outline: 2px solid var(--plague-hot)
 .play { width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--plague); color: #fff; cursor: pointer; font-size: 15px; }
 input[type=range] { width: 100%; accent-color: var(--plague); }
 .ticks { grid-column: 2; display: flex; justify-content: space-between; font: 400 11px var(--mono); color: var(--ink-soft); }
+.spark { padding-left: 60px; padding-right: 8px; cursor: pointer; }
+.spark svg { display: block; width: 100%; height: 50px; }
 .note { font-size: 12.5px; color: var(--ink-soft); max-width: 80ch; margin: 0; }
 
 /* Shocks view */
@@ -101,6 +103,10 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
 .tl line { stroke: var(--rule); }
 .ev { cursor: pointer; }
 .ev.dim { opacity: 0.15; }
+.ev.gone { display: none; }
+.tl .plabel { font: italic 400 12px var(--display); fill: var(--climate); }
+.tl .hlabel { font: 500 11px var(--mono); fill: var(--ink); }
+.tl .tgrid { stroke: var(--rule); stroke-dasharray: 2 3; }
 .sel { stroke: var(--ink); stroke-width: 2; }
 .detail h2 { font: 400 26px/1.1 var(--display); margin: 4px 0 0; text-wrap: balance; }
 .detail .meta { font: 400 12px var(--mono); color: var(--ink-soft); }
@@ -133,18 +139,19 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
     <div style="display:grid;gap:12px;min-width:0">
       <div class="chips" id="outbreaks"></div>
       <div class="mapbox" id="mapA"><svg id="svgA" viewBox="0 0 960 600" role="img" aria-label="Map of the Black Death spreading across Eurasia and North Africa"></svg><div class="tip" id="tipA" hidden></div></div>
+      <div class="spark" id="spark" hidden></div>
       <div class="controls">
         <button class="play" id="play" aria-label="Play">▶</button>
         <input type="range" id="month" min="0" max="191" step="0.25" value="0" aria-label="Month">
         <div class="ticks" id="ticks"></div>
       </div>
-      <p class="note">Arrival months are approximate (Benedictow 2004 for the Black Death; Pollitzer, McGrew and Rosenberg for cholera; Crosby and Cook for smallpox). Each line joins a city to the place it most likely caught plague from; those links are a model's reading of the trade network and wait for checking. Dashed outlines are the borders of the period.</p>
+      <p class="note">Arrival months are approximate (Benedictow 2004 for the Black Death; Pollitzer, McGrew and Rosenberg for cholera; Crosby and Cook for smallpox). Plague returns plots 11,000 outbreaks from Biraben (1975), digitised by Krauer and Schmid (2022). Each line joins a city to the place it most likely caught plague from; those links are a model's reading of the trade network and wait for checking. Dashed outlines are the borders of the period.</p>
     </div>
     <aside class="ledger" aria-live="polite">
-      <div><div class="eyebrow">Reaches</div><div class="when" id="when">July 1348</div></div>
+      <div><div class="eyebrow" id="whenLabel">Reaches</div><div class="when" id="when">July 1348</div></div>
       <div style="display:grid;gap:6px"><div class="count"><b id="nreached">0</b><span id="nof">of 61 places</span></div><div class="bar"><i id="nbar" style="width:0"></i></div></div>
-      <div><div class="eyebrow" style="margin-bottom:8px">Latest</div><ul class="latest" id="latest"></ul></div>
-      <div class="legend">
+      <div><div class="eyebrow" style="margin-bottom:8px" id="latestLabel">Latest</div><ul class="latest" id="latest"></ul></div>
+      <div class="legend" id="legend">
         <span><i style="background:var(--sea-route)"></i>By sea</span>
         <span><i style="background:var(--river-route)"></i>By river</span>
         <span><i style="background:var(--land-route)"></i>By land</span>
@@ -157,8 +164,9 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
     <div style="display:grid;gap:12px;min-width:0">
       <div class="chips" id="chips"></div>
       <div class="mapbox" id="mapB"><svg id="svgB" viewBox="0 0 960 500" role="img" aria-label="World map of epidemics, famines, eruptions and climate shifts"></svg><div class="tip" id="tipB" hidden></div></div>
+      <div class="tl" id="temp"><div class="eyebrow" style="padding:12px 12px 0">Global temperature, 1–2000 CE · difference from 1961–1990 · PAGES 2k (2019), 30-year line and yearly 95% range · triangles are eruptions of VEI 6+</div></div>
       <div class="tl" id="tl"></div>
-      <p class="note">Bars run from start to end. The time axis stretches recent centuries so modern events are readable; the Toba eruption (about 72,000 BCE) sits off the left edge. Every record is a draft written from the cited works and waits for the judge.</p>
+      <p class="note">Bars run from start to end. The time axis stretches recent centuries so modern events are readable; the Toba eruption (about 72,000 BCE) sits off the left edge. Curated records are drafts written from the cited works and wait for the judge. Lighter marks come from datasets: Smithsonian eruptions of VEI 4 and up, Wikidata epidemics and famines, and the World Peace Foundation famine list; some sit at a country's centre.</p>
     </div>
     <aside class="ledger detail" id="detail"></aside>
   </section>
@@ -205,15 +213,96 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
   let A = null, timer = null;
 
   document.getElementById('outbreaks').innerHTML = Object.entries(SPREADS).map(([id, s]) =>
-    `<button class="chip" aria-pressed="${id === 'event:black_death'}" data-id="${id}">${s.label} <span style="color:var(--ink-soft)">${s.years}</span></button>`).join('');
+    `<button class="chip" aria-pressed="${id === 'event:black_death'}" data-id="${id}">${s.label} <span style="color:var(--ink-soft)">${s.years}</span></button>`).join('') +
+    `<button class="chip" aria-pressed="false" data-id="returns">Plague returns <span style="color:var(--ink-soft)">1347–1900</span></button>`;
   document.querySelectorAll('#outbreaks .chip').forEach(b => b.onclick = () => {
     document.querySelectorAll('#outbreaks .chip').forEach(x => x.setAttribute('aria-pressed', x === b));
-    loadSpread(b.dataset.id);
+    b.dataset.id === 'returns' ? loadOutbreaks() : loadSpread(b.dataset.id);
   });
+
+  function loadOutbreaks() {
+    stop();
+    const Y0 = 1347, Y1 = 1900;
+    const pts = DC.outbreaks.map(d => ({ lon: d[0], lat: d[1], year: d[2], name: d[3] }));
+    const byYear = d3.group(pts, d => d.year);
+    const maxC = d3.max(byYear.values(), v => v.length);
+    const proj = d3.geoAzimuthalEqualArea().rotate([-15, -47])
+      .fitExtent([[24, 24], [W - 24, H - 24]], { type: 'MultiPoint', coordinates: [[-11, 33], [42, 33], [-11, 62], [42, 62]] });
+    const path = d3.geoPath(proj);
+    pts.forEach(p => { [p.x, p.y] = proj([p.lon, p.lat]); });
+    svgA.selectAll('*').remove();
+    const g = svgA.append('g');
+    g.append('path').attr('class', 'grat').attr('d', path(d3.geoGraticule10()));
+    g.append('path').attr('class', 'land').attr('d', path(land));
+    const gb = g.append('g'), gp = g.append('g');
+    const snaps = Object.keys(BORDERS).map(Number).sort((a, b) => a - b);
+    let snap = null;
+    function borders(y) {
+      const s = snaps.filter(v => v <= y + 10).pop() || snaps[0];
+      if (s === snap) return;
+      snap = s;
+      const bt = BORDERS[s];
+      const pol = topojson.feature(bt, Object.values(bt.objects)[0]).features.filter(f => f.properties && f.properties.NAME);
+      gb.selectAll('*').remove();
+      gb.append('g').selectAll('path').data(pol).join('path').attr('class', 'polity').attr('d', path);
+      gb.append('g').selectAll('path').data(pol).join('path').attr('class', 'polity-hit').attr('d', path)
+        .on('pointermove', (ev, d) => tip(tipA, boxA, `<b>${d.properties.NAME}</b><span>borders of ${s}</span>`, ev))
+        .on('pointerleave', () => tipA.hidden = true);
+    }
+    // Curated epidemics that were under way, to name what the dots are.
+    const named = DC.events.filter(e => e.subtype === 'epidemic' && !e.stub && e.start >= 1340 && e.start <= 1900 && e.lat > 25 && e.lon > -15 && e.lon < 60
+      && e.id !== 'event:second_plague_pandemic' && e.status === 'draft');
+
+    const spark = document.getElementById('spark');
+    spark.hidden = false; spark.innerHTML = '';
+    const sx = d3.scaleLinear().domain([Y0, Y1 + 1]).range([0, 960]), sy = d3.scaleLinear().domain([0, maxC]).range([46, 2]);
+    const ss = d3.select(spark).append('svg').attr('viewBox', '0 0 960 50').attr('preserveAspectRatio', 'none');
+    ss.selectAll('rect').data([...byYear].map(([y, v]) => [y, v.length])).join('rect')
+      .attr('x', d => sx(d[0])).attr('width', 1.4).attr('y', d => sy(d[1])).attr('height', d => 46 - sy(d[1])).attr('fill', 'var(--plague)');
+    const cur = ss.append('line').attr('y1', 0).attr('y2', 50).attr('stroke', 'var(--ink)').attr('stroke-width', 1.5);
+    document.getElementById('legend').hidden = true;
+    document.getElementById('latestLabel').textContent = 'This year';
+    document.getElementById('whenLabel').textContent = 'Year';
+
+    slider.max = Y1 - Y0;
+    document.getElementById('ticks').innerHTML = [0, 1, 2, 3, 4, 5].map(i => `<span>${Math.round(Y0 + i * (Y1 - Y0) / 5)}</span>`).join('');
+    DEK.spread = 'Plague did not leave after 1353. Every recorded local outbreak from Biraben\'s catalogue, year by year, until it faded from Europe.';
+    document.getElementById('dek').textContent = DEK.spread;
+
+    function render(t) {
+      const y = Y0 + Math.floor(t);
+      borders(y);
+      const win = [];
+      for (let k = y - 3; k <= y; k++) (byYear.get(k) || []).forEach(p => win.push(p));
+      gp.selectAll('circle').data(win).join('circle').attr('class', 'city on').attr('stroke-width', 0.5)
+        .attr('cx', d => d.x).attr('cy', d => d.y).attr('r', d => d.year === y ? 3.6 : 2.4).attr('opacity', d => 1 - (y - d.year) / 4.2)
+        .on('pointermove', (ev, d) => tip(tipA, boxA, `<b>${d.name}</b><span>plague in ${d.year}</span>`, ev))
+        .on('pointerleave', () => tipA.hidden = true);
+      cur.attr('x1', sx(y + 0.5)).attr('x2', sx(y + 0.5));
+      const now = byYear.get(y) || [];
+      document.getElementById('when').textContent = y;
+      document.getElementById('nreached').textContent = now.length;
+      document.getElementById('nof').textContent = now.length === 1 ? 'place with plague this year' : 'places with plague this year';
+      document.getElementById('nbar').style.width = (100 * now.length / maxC) + '%';
+      const ev = named.filter(e => e.start <= y && (e.end == null ? e.start : e.end) >= y);
+      const names = [...new Set(now.map(d => d.name))];
+      document.getElementById('latest').innerHTML =
+        ev.map(e => `<li><time>${e.start}</time><div><b>${e.name}</b><p>${e.what}</p></div></li>`).join('') +
+        (names.length ? `<li><time>${y}</time><div><b>${names.slice(0, 8).join(', ')}</b>${names.length > 8 ? `<p>and ${names.length - 8} more</p>` : ''}</div></li>` : '<li><time></time><div>No outbreaks recorded this year.</div></li>');
+    }
+    d3.select(spark).on('click', ev => { const r = spark.getBoundingClientRect(); slider.value = Math.round(sx.invert((ev.clientX - r.left) / r.width * 960)) - Y0; stop(); render(+slider.value); });
+    A = { render, tMax: Y1 - Y0, step: () => 0.25 };
+    slider.value = 1630 - Y0;
+    render(+slider.value);
+  }
 
   function loadSpread(evId) {
     stop();
     const S = SPREADS[evId];
+    document.getElementById('spark').hidden = true;
+    document.getElementById('legend').hidden = false;
+    document.getElementById('latestLabel').textContent = 'Latest';
+    document.getElementById('whenLabel').textContent = 'Reaches';
     const spread = DC.relations.filter(r => r.type === 'spread_to' && r.from === evId);
     const y0 = Math.min(...spread.map(r => r.start)), y1 = Math.max(...spread.map(r => r.start));
     const tOf = (y, m) => (y - y0) * 12 + ((m || 6) - 1);
@@ -280,7 +369,7 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
     }
     // Hurry through stretches where nothing new arrives.
     const busy = t => cities.some(c => c.t > t - 2 && c.t <= t + 3);
-    A = { render, tMax, busy };
+    A = { render, tMax, step: t => busy(t) ? 0.125 : 0.75 };
     slider.value = tOf(...S.start);
     render(+slider.value);
   }
@@ -291,7 +380,7 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
     let t = +slider.value; if (t >= A.tMax) t = 0;
     playBtn.textContent = '❚❚'; playBtn.setAttribute('aria-label', 'Pause');
     timer = setInterval(() => {
-      t += A.busy(t) ? 0.125 : 0.75;
+      t += A.step(t);
       if (t >= A.tMax) { t = A.tMax; stop(); }
       slider.value = t; A.render(t);
     }, 40);
@@ -309,15 +398,16 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
     { k: 'collapse', label: 'Collapses', c: 'var(--collapse)' },
   ];
   const TC = Object.fromEntries(TYPES.map(t => [t.k, t]));
-  const evs = DC.events.filter(e => TC[e.subtype] && !e.stub);
+  const evs = [...DC.events.filter(e => TC[e.subtype] && !e.stub), ...DC.bulk.filter(e => TC[e.subtype]).map(e => ({ ...e, bulk: true }))];
   const NAMES = {};
   [...DC.events, ...DC.stubs].forEach(e => NAMES[e.id] = e.name);
   const E = Object.fromEntries(evs.map(e => [e.id, e]));
-  const on = new Set(TYPES.map(t => t.k));
+  const on = new Set([...TYPES.map(t => t.k), 'bulk']);
   let selected = 'event:black_death';
 
   document.getElementById('chips').innerHTML = TYPES.map(t =>
-    `<button class="chip" aria-pressed="true" data-k="${t.k}"><i style="background:${t.c}"></i>${t.label} <span style="color:var(--ink-soft)">${evs.filter(e => e.subtype === t.k).length}</span></button>`).join('');
+    `<button class="chip" aria-pressed="true" data-k="${t.k}"><i style="background:${t.c}"></i>${t.label} <span style="color:var(--ink-soft)">${evs.filter(e => e.subtype === t.k).length}</span></button>`).join('') +
+    `<button class="chip" aria-pressed="true" data-k="bulk">Dataset records <span style="color:var(--ink-soft)">${evs.filter(e => e.bulk).length}</span></button>`;
   document.querySelectorAll('#chips .chip').forEach(b => b.onclick = () => {
     const k = b.dataset.k; on.has(k) ? on.delete(k) : on.add(k);
     b.setAttribute('aria-pressed', on.has(k)); renderB();
@@ -332,18 +422,18 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
   const mapped = evs.filter(e => !(e.lat === 0 && e.lon === 0));
   const rS = d3.scaleSqrt().domain([0, 1e8]).range([3.5, 22]);
   const sym = d => {
-    const r = d.deaths ? rS(d.deaths[1]) : 4.5;
+    const r = d.bulk ? (d.vei ? 1.6 + (d.vei - 4) * 1.6 : d.deaths ? rS(d.deaths[1]) * 0.8 : 2.6) : d.deaths ? rS(d.deaths[1]) : 4.5;
     if (d.subtype === 'famine') return d3.symbol(d3.symbolSquare, r * r * 3.2)();
     if (d.subtype === 'eruption') return d3.symbol(d3.symbolTriangle, r * r * 3.4)();
     if (d.subtype === 'collapse') return d3.symbol(d3.symbolDiamond, r * r * 3.4)();
     return d3.symbol(d3.symbolCircle, r * r * Math.PI)();
   };
-  const msel = svgB.append('g').selectAll('path').data(mapped.sort((a, b) => (b.deaths ? b.deaths[1] : 0) - (a.deaths ? a.deaths[1] : 0))).join('path')
+  const msel = svgB.append('g').selectAll('path').data(mapped.sort((a, b) => (b.bulk ? 0 : 1) - (a.bulk ? 0 : 1) || (b.deaths ? b.deaths[1] : 0) - (a.deaths ? a.deaths[1] : 0))).join('path')
     .attr('class', 'ev').attr('transform', d => 'translate(' + projB([d.lon, d.lat]) + ')').attr('d', sym)
-    .attr('fill', d => d.subtype === 'climate_shift' ? 'none' : TC[d.subtype].c).attr('fill-opacity', 0.8)
-    .attr('stroke', d => d.subtype === 'climate_shift' ? TC[d.subtype].c : 'var(--panel)').attr('stroke-width', d => d.subtype === 'climate_shift' ? 2 : 0.8);
+    .attr('fill', d => d.subtype === 'climate_shift' ? 'none' : TC[d.subtype].c).attr('fill-opacity', d => d.bulk ? 0.45 : 0.8)
+    .attr('stroke', d => d.subtype === 'climate_shift' ? TC[d.subtype].c : d.bulk ? 'none' : 'var(--panel)').attr('stroke-width', d => d.subtype === 'climate_shift' ? 2 : 0.8);
   const boxB = document.getElementById('mapB'), tipB = document.getElementById('tipB');
-  const span = d => fmtY(d.start) + (d.end === d.start ? '' : d.end == null ? ' to today' : '–' + fmtY(d.end));
+  const span = d => fmtY(d.start) + (d.end === undefined || d.end === d.start ? '' : d.end === null ? ' to today' : '–' + fmtY(d.end));
   const fmtD = d => d.deaths ? (d.deaths[0] === d.deaths[1] ? '~' + d3.format('.2~s')(d.deaths[0]) : d3.format('.2~s')(d.deaths[0]) + '–' + d3.format('.2~s')(d.deaths[1])).replace(/G/g, 'B') + ' deaths' : '';
   msel.on('pointermove', (ev, d) => tip(tipB, boxB, `<b>${d.name}</b><span>${span(d)}${d.deaths ? ' · ' + fmtD(d) : ''}</span>`, ev))
     .on('pointerleave', () => tipB.hidden = true).on('click', (ev, d) => select(d.id));
@@ -357,15 +447,56 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
   tl.append('g').selectAll('line').data(ticks).join('line').attr('x1', x).attr('x2', x).attr('y1', 22).attr('y2', TH - 6);
   tl.append('g').selectAll('text').data(ticks).join('text').attr('x', x).attr('y', 14).attr('text-anchor', 'middle').text(d => d === 1 ? '1 CE' : d < 0 ? -d / 1000 + 'k BCE' : d);
   tl.append('g').selectAll('text').data(TYPES).join('text').attr('class', 'lane').attr('x', 8).attr('y', (d, i) => 30 + i * LH + 16).text(d => d.label);
-  const tsel = tl.append('g').selectAll('rect').data(evs.filter(e => e.start >= -4000)).join('rect').attr('class', 'ev')
-    .attr('x', d => x(d.start)).attr('width', d => Math.max(4, x(d.end == null ? 2026 : d.end) - x(d.start)))
-    .attr('y', d => 30 + lanes.indexOf(d.subtype) * LH + 4 + (d.id.length % 3) * 6).attr('height', 9).attr('rx', 2)
-    .attr('fill', d => TC[d.subtype].c);
+  const tsel = tl.append('g').selectAll('rect').data(evs.filter(e => e.start >= -4000).sort((a, b) => (b.bulk ? 1 : 0) - (a.bulk ? 1 : 0))).join('rect').attr('class', 'ev')
+    .attr('x', d => x(d.start)).attr('width', d => Math.max(d.bulk ? 2 : 4, x(d.end === null ? 2026 : d.end === undefined ? d.start : d.end) - x(d.start)))
+    .attr('y', d => 30 + lanes.indexOf(d.subtype) * LH + (d.bulk ? 24 : 4 + (d.id.length % 3) * 6)).attr('height', d => d.bulk ? 5 : 9).attr('rx', 2)
+    .attr('fill', d => TC[d.subtype].c).attr('opacity', d => d.bulk ? 0.45 : 1);
   tsel.on('click', (ev, d) => select(d.id)).append('title').text(d => d.name + ' (' + span(d) + ')');
 
+  // Two thousand years of global temperature, with the big eruptions and named climate periods.
+  {
+    const TW2 = 960, TH2 = 190, L = 44, R = 12, T = 22, B = 34;
+    const tx = d3.scaleLinear().domain([1, 2000]).range([L, TW2 - R]);
+    const ty = d3.scaleLinear().domain([-0.9, 0.7]).range([TH2 - B, T]);
+    const svg = d3.select('#temp').append('svg').attr('viewBox', `0 0 ${TW2} ${TH2}`);
+    const periods = evs.filter(e => e.subtype === 'climate_shift' && !e.bulk && e.end != null && e.end - e.start >= 60 && e.start < 2000 && e.end > 1);
+    svg.append('g').selectAll('rect').data(periods).join('rect')
+      .attr('x', d => tx(Math.max(1, d.start))).attr('width', d => tx(Math.min(2000, d.end)) - tx(Math.max(1, d.start)))
+      .attr('y', T).attr('height', TH2 - B - T).attr('fill', 'var(--climate)').attr('opacity', 0.08);
+    svg.append('g').selectAll('text').data(periods).join('text').attr('class', 'plabel')
+      .attr('x', d => tx(Math.max(1, d.start)) + 4).attr('y', (d, i) => T + 11 + (i % 2) * 12).text(d => d.name);
+    svg.append('g').selectAll('line').data([-0.5, 0, 0.5]).join('line').attr('x1', L).attr('x2', TW2 - R).attr('y1', ty).attr('y2', ty).attr('class', 'tgrid');
+    svg.append('g').selectAll('text').data([-0.5, 0, 0.5]).join('text').attr('x', L - 6).attr('y', d => ty(d) + 3.5).attr('text-anchor', 'end').text(d => (d > 0 ? '+' : '') + d + '°');
+    svg.append('g').selectAll('text').data([1, 250, 500, 750, 1000, 1250, 1500, 1750, 2000]).join('text')
+      .attr('x', tx).attr('y', TH2 - B + 14).attr('text-anchor', 'middle').text(d => d === 1 ? '1 CE' : d);
+    svg.append('path').attr('fill', 'var(--climate)').attr('opacity', 0.16)
+      .attr('d', d3.area().x(d => tx(d[0])).y0(d => ty(d[2])).y1(d => ty(d[3]))(DC.temp));
+    svg.append('path').attr('fill', 'none').attr('stroke', 'var(--climate)').attr('stroke-width', 0.6).attr('opacity', 0.6)
+      .attr('d', d3.line().x(d => tx(d[0])).y(d => ty(d[1]))(DC.temp));
+    svg.append('path').attr('fill', 'none').attr('stroke', 'var(--ink)').attr('stroke-width', 1.8)
+      .attr('d', d3.line().x(d => tx(d[0])).y(d => ty(d[1]))(DC.temp31));
+    const big = evs.filter(e => e.subtype === 'eruption' && e.start >= 1 && e.start <= 2000 && (e.bulk ? e.vei >= 6 : true));
+    const tri = svg.append('g').selectAll('path').data(big).join('path').attr('class', 'ev')
+      .attr('transform', d => `translate(${tx(d.start)},${TH2 - B - 5})`)
+      .attr('d', d => d3.symbol(d3.symbolTriangle, d.bulk ? 40 : 70)()).attr('fill', 'var(--eruption)')
+      .on('click', (ev, d) => select(d.id));
+    tri.append('title').text(d => d.name + (d.vei ? ' (VEI ' + d.vei + ')' : ''));
+    const hover = svg.append('g').attr('pointer-events', 'none');
+    const hl = hover.append('line').attr('y1', T).attr('y2', TH2 - B).attr('stroke', 'var(--ink-soft)').attr('opacity', 0);
+    const ht = hover.append('text').attr('class', 'hlabel').attr('y', T - 6);
+    svg.on('pointermove', ev => {
+      const [mx] = d3.pointer(ev); const y = Math.round(tx.invert(mx));
+      if (y < 1 || y > 2000) return;
+      const p = DC.temp[y - 1], q = DC.temp31.find(r => r[0] === y);
+      hl.attr('x1', tx(y)).attr('x2', tx(y)).attr('opacity', 0.6);
+      ht.attr('x', Math.min(tx(y), TW2 - 200)).text(`${y}: ${p[1] > 0 ? '+' : ''}${p[1].toFixed(2)}°${q ? ` (30-yr ${q[1] > 0 ? '+' : ''}${q[1].toFixed(2)}°)` : ''}`);
+    }).on('pointerleave', () => { hl.attr('opacity', 0); ht.text(''); });
+  }
+
   function renderB() {
-    msel.classed('dim', d => !on.has(d.subtype)).classed('sel', d => d.id === selected);
-    tsel.classed('dim', d => !on.has(d.subtype)).classed('sel', d => d.id === selected);
+    const gone = d => d.bulk && !on.has('bulk');
+    msel.classed('dim', d => !on.has(d.subtype)).classed('gone', gone).classed('sel', d => d.id === selected);
+    tsel.classed('dim', d => !on.has(d.subtype)).classed('gone', gone).classed('sel', d => d.id === selected);
     const d = E[selected];
     const links = DC.relations.filter(r => r.confidence != null && (r.from === selected || r.to === selected));
     const link = r => {
@@ -377,9 +508,10 @@ input[type=range] { width: 100%; accent-color: var(--plague); }
     };
     document.getElementById('detail').innerHTML = `
       <div><div class="eyebrow">${TC[d.subtype].label.replace(/s$/, '')}</div><h2>${d.name}</h2><div class="meta">${span(d)}${d.deaths ? ' · ' + fmtD(d) : ''}</div></div>
-      <p>${d.what}</p><p style="color:var(--ink-soft)">${d.why}</p>
+      ${d.what ? `<p>${d.what}</p>` : ''}${d.why ? `<p style="color:var(--ink-soft)">${d.why}</p>` : ''}
+      ${d.bulk ? `<p class="meta">${[d.vei ? 'Volcanic Explosivity Index ' + d.vei : '', ...(d.tags || []).filter(t => !/^VEI/.test(t))].filter(Boolean).join(' · ')}</p>` : ''}
       ${links.length ? `<div><div class="eyebrow" style="margin-bottom:8px">Why chain</div><div class="chain">${links.map(link).join('')}</div></div>` : ''}
-      <div><div class="eyebrow" style="margin-bottom:6px">Sources <span class="draft">draft</span></div><ol class="srcs">${d.sources.map(s => `<li>${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.cite}</a>` : s.cite}</li>`).join('')}</ol></div>`;
+      <div><div class="eyebrow" style="margin-bottom:6px">Sources <span class="draft">${d.status === 'draft' ? 'draft' : 'from dataset'}</span></div><ol class="srcs">${d.sources.map(s => `<li>${s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.cite}</a>` : s.cite}</li>`).join('')}</ol></div>`;
     document.querySelectorAll('#detail button[data-id]').forEach(b => b.onclick = () => select(b.dataset.id));
   }
   function select(id) { selected = id; renderB(); }
