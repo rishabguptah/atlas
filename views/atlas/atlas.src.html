@@ -1226,7 +1226,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // ---------- plugin lenses and basemap ----------
   const lensCard = (d, c, at) => ({ lon: at ? at.lon : undefined, lat: at ? at.lat : undefined, name: null, ...c, kind: "lens:" + d.id, c: `var(--y-${d.id})`, kick: c.kick || d.name,
-    sources: (c.sources || []).map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c || x.url, url: x.url || x.u }) });
+    sources: (c.sources || []).map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c || x.url, url: x.url || x.u, src: x.src, pages: x.pages }) });
   const lensGo = (d, c, at) => () => { const card = lensCard(d, c, at); if (isFinite(card.lon) && isFinite(card.lat)) select(card, { fly: !at, setYear: card.year != null && !at }); else if (card.year != null) animateYear(card.year); };
   const lensItem = (d, r, at) => item(`<b>${esc(r.title)}</b>${r.tag ? ` <span class="tag">${esc(r.tag)}</span>` : ""}`, typeof r.year === "number" ? fmtYear(r.year) : r.year ?? "", r.why || "",
     r.card ? lensGo(d, r.card, at && !(r.card.lon != null) ? at : null) : r.year != null ? () => animateYear(r.year) : () => {}, r.dim || (typeof r.year === "number" && Math.abs(r.year - state.year) > 150));
@@ -1479,7 +1479,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
 
   // ---------- cards: the same item, wherever it is clicked ----------
-  const src1 = s => !s ? [] : Array.isArray(s) ? s.map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c, url: x.url || x.u }) : [{ cite: s.c || s.cite, url: s.u || s.url }];
+  const src1 = s => !s ? [] : Array.isArray(s) ? s.map(x => typeof x === "string" ? { cite: x } : { cite: x.cite || x.c, url: x.url || x.u, src: x.src, pages: x.pages }) : [{ cite: s.c || s.cite, url: s.u || s.url, src: s.src }];
   const wiki = t => t ? [{ cite: "Wikipedia: " + t.replace(/_/g, " "), url: "https://en.wikipedia.org/wiki/" + encodeURIComponent(t.replace(/ /g, "_")) }] : [];
   function cityCard(e) {
     const y = state.year, p = popAt(e, y), ev = (EVENTS[e.id] || []);
@@ -1547,7 +1547,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (!c || !c.title) return "";
     return `<div class="focus" style="--c:${c.c}"><span class="fk">${esc(c.kick)}</span><span class="ft">${esc(c.title)}</span>
       ${c.meta ? `<span class="sub">${esc(c.meta)}</span>` : ""}${c.body ? `<p>${esc(c.body)}</p>` : ""}${c.why ? `<p class="why">${esc(c.why)}</p>` : ""}
-      ${c.polity && !(ATLAS.cardViz || []).length ? sparkHTML(c.polity) : ""}${cardViz(c)}
+      ${c.html || ""}${c.polity && !(ATLAS.cardViz || []).length ? sparkHTML(c.polity) : ""}${cardViz(c)}${(() => { try { return ATLAS.cardMore ? ATLAS.cardMore(c) : ""; } catch (err) { console.error("cardMore", err); return ""; } })()}
       ${c.holders && c.holders.length ? `<div class="items">${c.holders.map(r => item(`${esc(r.n)}`, fmtSpan(r.s, r.e), "", () => animateYear(r.s), !(state.year >= r.s && state.year <= r.e))).join("")}</div>` : ""}
       ${srcList(c.sources)}
       <div class="row">${c.year != null && c.year !== state.year ? `<button class="btn" data-a="${act(() => animateYear(c.year))}">Go to ${esc(fmtYear(c.year))}</button>` : ""}${c.journey ? journeyNav(c) : ""}<button class="btn" data-a="${act(() => askAbout(c))}">Ask about this</button></div></div>`;
@@ -1582,7 +1582,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const b = ev.target.closest("[data-a]"); if (!b) return;
     const fn = ACTS[+b.dataset.a]; if (fn) fn();
   });
-  const sourceRow = (s, live) => `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite || s.url)}</a>` : esc(s.cite)}${live ? '<span class="unchecked">unchecked</span>' : ""}</li>`;
+  const sourceRow = (s, live) => (ATLAS.cite && ATLAS.cite(s, live)) || `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite || s.url)}</a>` : esc(s.cite)}${live ? '<span class="unchecked">unchecked</span>' : ""}</li>`;
   const srcList = (arr, live) => arr && arr.length ? `<ul class="srcs">${arr.map(s => sourceRow(s, live)).join("")}</ul>` : "";
   const item = (title, y, w, fn, dim) => `<button class="it${dim ? " dim" : ""}" data-a="${act(fn)}"><span>${title}</span><span class="y">${esc(y ?? "")}</span>${w ? `<span class="w">${esc(w)}</span>` : ""}</button>`;
   // Rows from this time lead; rows from other centuries (faded) fold into "other times" so the present reads first.
@@ -2001,7 +2001,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ${(A.views || []).length ? `<div class="sec"><h3 style="border:0;padding:0">Competing explanations</h3>${A.views.map(v => `
         <div class="view"><div class="hd"><span class="nm">${esc(v.name)}</span><span class="sch">${esc(v.school || "")}</span><span class="st ${esc(v.strength || "")}">${esc(v.strength || "")}</span></div>
           <div>${esc(v.claim)}</div>
-          ${v.for ? `<div class="fa"><b>For:</b> ${esc(v.for)}</div>` : ""}${v.against ? `<div class="fa"><b>Against:</b> ${esc(v.against)}</div>` : ""}${srcList(v.sources, live)}</div>`).join("")}</div>` : ""}
+          ${v.for ? `<div class="fa"><b>For:</b> ${esc(v.for)}</div>` : ""}${v.against ? `<div class="fa"><b>Against:</b> ${esc(v.against)}</div>` : ""}${srcList(v.sources, live)}${v.debate && ATLAS.scholar ? `<div class="sch-links">${ATLAS.scholar.debateButton(String(v.debate))}</div>` : ""}</div>`).join("")}</div>` : ""}
       ${(A.whatifs || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What if · simulated, speculative</h3>${A.whatifs.map((w, i) => `
         <button class="whatif" data-w="${i}"><b>${esc(w.q)}</b><span>${esc(w.a)}</span>${w.confidence != null ? `<span class="conf">plausibility ${Math.round(Number(w.confidence) * 100)}%</span>` : ""}</button>`).join("")}</div>` : ""}
       ${(A.unknowns || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What we don't know</h3><ul class="unk">${A.unknowns.map(u => `<li>${esc(u)}</li>`).join("")}</ul></div>` : ""}
@@ -2177,6 +2177,7 @@ JOURNEYS OF IDEAS:\n${cap(JOURNEYS.filter(j => overlaps(j.y0, j.y1, w)).map(j =>
   ];
   // Plugin lenses join the specialist whose lenses they share; a lens nobody owns gets its own specialist.
   for (const d of PLUG) {
+    if (d.specialist && d.specialist.id && !SPECS.some(s => s.id === d.specialist.id)) { SPECS.push({ lenses: ["order"], layers: [d.id], plugs: [], ...d.specialist }); continue; }
     const sp = SPECS.find(s => (d.guide || []).some(l => s.lenses.includes(l)));
     if (sp) { if (!sp.layers.includes(d.id)) sp.layers.push(d.id); (sp.plugs = sp.plugs || []).push(d); }
     else if ((d.guide || []).length) SPECS.push({ id: d.id, name: `${d.name} specialist`, lenses: d.guide.slice(), layers: [d.id], voice: (d.name || d.id).toLowerCase(), plugs: [d], digest: () => "" });
@@ -2191,7 +2192,7 @@ JOURNEYS OF IDEAS:\n${cap(JOURNEYS.filter(j => overlaps(j.y0, j.y1, w)).map(j =>
   const HOUSE = `You are on the Atlas panel: specialist historians who answer Rishi's questions together by driving an interactive world map, each through one lens.
 Rishi wants the feeling of seeing history from a perspective nobody has had. Mix: 55% rigorous, 45% fun. Concrete beats vague: names, numbers, places, years. "We don't know" is a fine answer.
 OUTPUT: JSON Lines only. One JSON object per line, no prose, no markdown, no code fences.
-SOURCE RULES: cite only works you are confident exist (author, title, year) or en.wikipedia.org article URLs you are confident exist. Never invent a URL. Prefer fewer, real sources.`;
+SOURCE RULES: cite only works you are confident exist (author, title, year) or en.wikipedia.org article URLs you are confident exist. Never invent a URL. Prefer fewer, real sources. When a work you lean on is in a BIBLIOGRAPHY below, cite it as {"src":"src:<id>","cite":"Author year","pages":"optional"}: those are checked. Where historians disagree, name the schools and who the evidence favours.`;
   const MAPRULES = `MAP RULES: view.span is how many degrees of longitude the view shows: 300 = whole world, 50 = the Mediterranean, 15 = a country like Italy, 4 = a city and its surroundings. Routes are [lon,lat] pairs (longitude first). Pins mark places not in the index; use real coordinates. Highlight only ids from the indexes below. "layers" switches on map layers that show your evidence: ${LAYERS.map(l => `${l.k} (${l.n})`).join(", ")}.`;
   const roster = () => SPECS.map(s => `${s.id}: ${s.name}, reads ${s.voice}`).join("\n");
   const earlier = () => convo.length ? `\nEARLIER IN THIS CONVERSATION:\n${convo.map(c => `Q: ${c.q}\nA: ${c.a}`).join("\n")}\n` : "";
@@ -2229,7 +2230,7 @@ Lean on YOUR DATA below: it is what the reader sees on the map. Quote its record
 ${MAPRULES}
 
 YOUR DATA (from the Atlas's own layers, inside the window):
-${(() => { try { return sp.digest(w); } catch (e) { console.warn(sp.id, e); return "(this layer's records could not be read)"; } })()}${(sp.plugs || []).map(d => typeof d.index === "function" ? plugIndex(d, w) : "").join("")}
+${(() => { try { return sp.digest(w); } catch (e) { console.warn(sp.id, e); return "(this layer's records could not be read)"; } })()}${(sp.plugs || []).map(d => typeof d.index === "function" ? plugIndex(d, w) : "").join("")}${sp.id !== "historiographer" && ATLAS.scholar ? (() => { try { return ATLAS.scholar.brief(w, sp.lenses); } catch { return ""; } })() : ""}
 
 PLACE INDEX (id|name|lat,lon|start..end):
 ${placeIndex(w)}
@@ -2248,10 +2249,10 @@ Write, in this order:
 1. {"t":"answer","short":"2-4 sentence direct answer that weaves the lenses together","lenses":{"lens name":0.0-1.0 for how much each lens explains, using: ${LENSES.join(", ")}}}
 2. 2 to 4 lines naming the links ACROSS lenses, the chain that only shows when the specialists are heard together:
 {"t":"link","a":step number,"b":step number (a different lens),"why":"one sentence: how a led to, fed, or undercut b"}
-3. 2 to 4 lines: {"t":"view","name":"historian or school","school":"short label","lens":"lens","strength":"strong|medium|weak","claim":"one sentence","for":"evidence for","against":"evidence against","sources":[{"cite":"..."}]}
+3. 2 to 4 lines: {"t":"view","name":"historian or school","school":"short label","lens":"lens","strength":"strong|medium|weak","claim":"one sentence","for":"evidence for","against":"evidence against","sources":[{"cite":"..."}],"debate":"debate:<id> if it is one of the curated debates below"}
 4. 1 or 2 lines: {"t":"whatif","q":"a counterfactual question","a":"2-3 sentences","confidence":0.0-1.0,"year":integer,"view":{"lon":number,"lat":number,"span":number}}
 5. 1 line: {"t":"unknowns","items":["what historians cannot settle", "..."]}
-Where the specialists disagree, say who the evidence favours.`;
+Where the specialists disagree, say who the evidence favours.${(() => { try { return ATLAS.scholar ? ATLAS.scholar.brief(plan.w, null, false) : ""; } catch { return ""; } })()}`;
 
   // use() resolves after the viewer answers; ask() waits for it so an early question is not turned away.
   sampleReady = (async () => {
@@ -2281,7 +2282,7 @@ Where the specialists disagree, say who the evidence favours.`;
       pins: Array.isArray(o.pins) ? o.pins.filter(p => p && isFinite(p.lon) && isFinite(p.lat)).map(p => ({ name: String(p.name || ""), lon: +p.lon, lat: +p.lat })).slice(0, 8) : [],
       routes: Array.isArray(o.routes) ? o.routes.filter(r => r && Array.isArray(r.points)).slice(0, 5) : [],
       confidence: isFinite(o.confidence) ? +o.confidence : null,
-      sources: Array.isArray(o.sources) ? o.sources.filter(s => s && s.cite).map(s => ({ cite: String(s.cite), url: /^https:\/\/en\.wikipedia\.org\//.test(s.url || "") ? s.url : undefined })) : [],
+      sources: Array.isArray(o.sources) ? o.sources.filter(s => s && (s.cite || s.src)).map(s => ({ cite: String(s.cite || s.src), url: /^https:\/\/en\.wikipedia\.org\//.test(s.url || "") ? s.url : undefined, src: ATLAS.scholar && ATLAS.scholar.has(s.src) ? s.src : undefined, pages: s.pages ? String(s.pages) : undefined })) : [],
     };
   }
   const parse = line => { line = line.trim(); if (!line || line[0] !== "{") return null; try { return JSON.parse(line); } catch { return null; } };
@@ -2290,7 +2291,7 @@ Where the specialists disagree, say who the evidence favours.`;
     if (o.t === "answer") { A.short = String(o.short || ""); A.lenses = o.lenses || {}; }
     else if (o.t === "link") { const a = Math.round(o.a) - 1, b = Math.round(o.b) - 1; if (A.steps[a] && A.steps[b] && a !== b) A.links.push({ a, b, why: String(o.why || "") }); }
     else if (o.t === "step") A.steps.push(normStep(o));
-    else if (o.t === "view") A.views.push({ ...o, sources: (o.sources || []).filter(s => s && s.cite) });
+    else if (o.t === "view") A.views.push({ ...o, sources: (o.sources || []).filter(s => s && (s.cite || s.src)).map(s => ({ ...s, cite: s.cite || s.src, src: ATLAS.scholar && ATLAS.scholar.has(s.src) ? s.src : undefined })) });
     else if (o.t === "whatif") { const n = normStep(o); A.whatifs.push({ ...o, view: n.view, year: n.year, pins: [] }); }
     else if (o.t === "unknowns") A.unknowns = (o.items || []).map(String);
     else return false;

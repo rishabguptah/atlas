@@ -55,7 +55,7 @@ def check(r):
     m = ID_RE.match(rid or '')
     if not m or m.group(1) != KINDS[kind][0]:
         errs.append(f'id {rid!r} must look like {KINDS[kind][0]}:lowercase_slug')
-    if kind not in ('relation', 'measure') and not r.get('name'):
+    if kind not in ('relation', 'measure', 'source') and not r.get('name'):
         errs.append('missing name')
     lenses = r.get('lenses')
     if not lenses or not isinstance(lenses, list) or set(lenses) - LENSES:
@@ -162,7 +162,7 @@ def refs(r):
     """Ids this record points at."""
     out = []
     for f in ('place', 'from', 'to', 'of', 'capital', 'author', 'by', 'policy', 'language'):
-        if isinstance(r.get(f), str):
+        if isinstance(r.get(f), str) and (r.get('kind') != 'quote' or ':' in r[f]):   # a quote's author may be a plain name
             out.append(r[f])
     if r.get('kind') == 'language':  # elsewhere `family` is a plain label (europe-19c event families)
         out += [r[f] for f in ('family', 'branch') if isinstance(r.get(f), str)]
