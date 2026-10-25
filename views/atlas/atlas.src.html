@@ -258,17 +258,31 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .unk { margin: 0; padding-left: 18px; font-size: 14px; }
 .short.frame { color: var(--ink-soft); font-style: italic; }
 .pnl { display: grid; gap: 4px; }
-.pnl .who { display: grid; grid-template-columns: auto 1fr auto; gap: 0 8px; align-items: baseline; font-size: 14px; padding: 3px 0; }
-.pnl .dot, .invite .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c); display: inline-block; }
+.pnl .who { display: grid; grid-template-columns: auto 1fr auto; gap: 0 10px; align-items: baseline; font-size: 14px; padding: 3px 0; }
 .pnl .nm { font-family: var(--fell); font-size: 15.5px; }
 .pnl .stt { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
 .pnl .ang { grid-column: 2 / 4; font-size: 13px; color: var(--ink-soft); }
 .pnl .waiting, .pnl .skipped, .pnl .missed { opacity: .55; }
 .pnl .speaking .stt { color: var(--c); }
-@media (prefers-reduced-motion: no-preference) { .pnl .speaking .dot { animation: blink .8s infinite alternate; } }
-.spk { display: grid; gap: 2px; margin-top: 6px; padding-left: 2px; border-bottom: 2px solid var(--c); padding-bottom: 3px; }
-.spk b { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--c); font-weight: 600; }
-.spk span { font-size: 13px; font-style: italic; color: var(--ink-soft); }
+/* Who is talking: a pixel portrait on a vellum plate (stays light in dark mode), and a header that sticks under the player. */
+.pt { flex: none; display: block; background: #f6f0dc; box-shadow: 0 0 0 2px var(--ink), 3px 3px 0 1px rgba(34, 31, 26, .45); }
+.steps { gap: 16px; }
+.spg { display: grid; gap: 8px; }
+.spk { position: sticky; top: var(--spk-top, 0px); z-index: 1; background: var(--paper); display: flex; gap: 12px; align-items: center; padding: 8px 2px 7px 4px; border-bottom: 2px solid var(--c); }
+.spk .who { display: grid; min-width: 0; line-height: 1.2; }
+.spk .nm { font-family: var(--fell); font-size: 18px; color: var(--ink); }
+.spk .role { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--c); }
+.spk .ang { font-size: 13px; font-style: italic; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (prefers-reduced-motion: no-preference) { .spk.speaking .role { animation: blink .8s infinite alternate; } }
+.pass { margin: 0; font-size: 13.5px; font-style: italic; color: var(--ink-soft); border-left: 3px solid var(--c); padding: 1px 0 1px 9px; }
+.pass b { font-style: normal; font-weight: 600; color: var(--ink); }
+.chair { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; align-items: center; }
+.chair .pt { grid-row: 1 / 3; align-self: start; margin-top: 3px; }
+.chair .by { font-family: var(--mono); font-size: 10.5px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.pnl .who .pt { grid-row: 1 / 3; align-self: center; margin: 2px 2px 2px 2px; }
+@media (prefers-reduced-motion: no-preference) { .pnl .speaking .pt { animation: blink .8s infinite alternate; } }
+.invite .btn .pt { margin: -3px 2px -3px 0; }
+.caption .pt { float: left; margin: 3px 10px 2px 2px; }
 .links { display: grid; gap: 6px; }
 .link { text-align: left; border: 1px solid var(--rule); border-left: 4px solid var(--ca); border-right: 4px solid var(--cb); background: var(--card); border-radius: 3px; padding: 7px 10px; cursor: pointer; display: grid; gap: 3px; font: inherit; color: inherit; }
 .link:hover { background: var(--wash); }
@@ -1968,8 +1982,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function showCaption(s) {
     if (!s) { caption.hidden = true; return; }
     caption.hidden = false;
-    caption.style.setProperty("--lc", lensColor(s.lens));
-    caption.innerHTML = `<span class="lens">${esc(s.by && SPEC[s.by] ? SPEC[s.by].name : LENS_NAME[s.lens] || s.lens || "")}${s.year != null ? " · " + esc(fmtYear(clampYear(s.year))) : ""}</span><b>${esc(s.title || s.q || "")}</b>`;
+    // An answer's step names its speaker, with their portrait, as the panel does.
+    const sp = state.answer && (state.answer.steps || []).includes(s) ? specOf(s) : s.by && SPEC[s.by];
+    caption.style.setProperty("--lc", sp ? specColor(sp) : lensColor(s.lens));
+    caption.style.setProperty("--c", sp ? specColor(sp) : lensColor(s.lens));
+    caption.innerHTML = `${sp ? portrait(sp.id, 2) : ""}<span class="lens">${esc(sp ? sp.name : LENS_NAME[s.lens] || s.lens || "")}${s.year != null ? " · " + esc(fmtYear(clampYear(s.year))) : ""}</span><b>${esc(s.title || s.q || "")}</b>`;
   }
   // The guide's one tool: set the year, the view, the lenses and the highlights together.
   function applyScene(s) {
@@ -1984,6 +2001,32 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
 
   // ---------- guide answers ----------
+  // Pixel portraits, so it is always clear who is talking: 12x12 art px drawn at 2x or 3x (DIRECTION D1), on a vellum plate.
+  // Rows split on "/". k ink, s skin, S its shadow, h hair, c the speaker's colour (var(--c)), g gold, w vellum, m steel, b leather.
+  // Each one wears something nobody else does: hood and chain, explorer's hat, helmet, top hat, headscarf, beak mask, monk's hood, quill, wreath, spectacles.
+  const PORTRAITS = {
+    chair: ["............/...kkkkkk.../..kcccccck../.kcchhhhcck./kckhsssshkck/kcksksskskck/kcksssssskck/kckssSSsskck/.kcksssskck./..kgkSSkgk../.kcgccccgck./kccggggggcck", "#e6b48c", "#b9805a", "#9a958a"],
+    geographer: ["............/...kkkkkk.../..kbbbbbbk../.kbccccccbk./kbbbbbbbbbbk/..kskssksk../..kssssssk../..kssSSssk../...kssssk.../..kckSSkck../.kcccccccck./kcccccccccck", "#c68a5a", "#93603c", "#3b2a1e"],
+    military: ["....kcck..../...kmccmk.../..kmmccmmk../.kmmmmmmmmk./..kmssssmk../..kskssksk../..kssssssk../..kssSSssk../...kssssk.../..kmkSSkmk../.kmccccccmk./kmmccccccmmk", "#e8b892", "#bb8662", "#4a3426"],
+    economist: ["...kkkkkk.../...kkkkkk.../...gggggg.../.kkkkkkkkkk./..khsssshk../..kskssksk../..kssssssk../..kssSSssk../...kssssk.../..kckSSkck../.kcccgcccck./kccccgcccckk", "#f0c8a0", "#cf9c74", "#5a3b26"],
+    demographer: ["............/....kkkk..../...kcccck.../..kcccccck../..kcssssck../..kcksskck../..kcssssck../..kcsSSsck../..kccsscck../..kcccccck../.kcccccccck./kcccccccccck", "#8d5a3a", "#64402a", "#1f1a16"],
+    epidemiologist: ["...kkkkkk.../...kkkkkk.../.kkkkkkkkkk./..kwwwwwwk../..kwgwwgwk../..kwwwwwwwk./...kwwwwwwwk/...kwwwkkkk./...kwwwk..../..kckwwkck../.kcccccccck./kcccccccccck", "#e6b48c", "#b9805a", "#2a2420"],
+    scholar: ["............/...kkkkkk.../..kcccccck../.kcccccccck./kcksssssskck/kcksksskskck/kcksssssskck/kckssSSsskck/.kcksssskck./..kckSSkck../.kcwwwwwwck./kcckkkkkkcck", "#c99467", "#9a6844", "#2a2420"],
+    biographer: ["........kw../...kkkkkwk../.kcccccccck./..khhhhhhk../..khsssshk../..kskssksk../..kssssssk../..kssSSssk../...kssssk.../..kckSSkck../.kcccccccck./kcccccccccck", "#b57a4e", "#875634", "#2b211b"],
+    political: ["............/............/...kkkkkk.../..kghhhhgk../..kgssssgk../..kskssksk../..kssssssk../..kssSSssk../...kssssk.../..kwkSSkck../.kwwcccccck./kwwwwccccwwk", "#d9a276", "#a8734f", "#3a2a20"],
+    historiographer: ["............/............/...kkkkkk.../..khhhhhhk../..khsssshk../..kgkggkgk../..kssssssk../..kssSSssk../...kssssk.../..kckSSkck../.kcwwwwwwck./kcckwwwwkcck", "#e8bc98", "#bb8a66", "#b9b2a2"],
+    guest: ["............/............/...kkkkkk.../..khhhhhhk../..khsssshk../..kskssksk../..kssssssk../..kssSSssk../...kssssk.../..kckSSkck../.kcccccccck./kcccccccccck", "#d6a07a", "#a8734f", "#3a2a20"],
+  };
+  const portraitArt = {};
+  function portrait(id, scale = 3) {
+    const k = PORTRAITS[id] ? id : "guest";
+    if (!portraitArt[k]) {
+      const [rows, s, S, h] = PORTRAITS[k], fill = { k: "#221f1a", s, S, h, c: "var(--c)", g: "#d8a32c", w: "#f6f0dc", m: "#9aa3a8", b: "#7a5532" }, d = {};
+      rows.split("/").forEach((r, y) => [...r].forEach((ch, x) => { if (fill[ch]) d[ch] = (d[ch] || "") + `M${x} ${y}h1v1h-1z`; }));
+      portraitArt[k] = Object.entries(d).map(([ch, p]) => `<path fill="${fill[ch]}" d="${p}"/>`).join("");
+    }
+    return `<svg class="pt" width="${12 * scale}" height="${12 * scale}" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">${portraitArt[k]}</svg>`;
+  }
   // The panel: who is at the table, what each was asked, who is speaking. Curated tours get one from their steps' lenses.
   function panelHtml(A, steps) {
     const ids = A.panel && A.panel.length ? A.panel : [...new Set(steps.map(s => specOf(s).id))];
@@ -1991,11 +2034,23 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const st = A.status || {};
     const label = { waiting: "up next", speaking: "speaking", done: "done", missed: "lost the thread", skipped: "didn't get a turn" };
     return `<div class="sec"><h3 style="border:0;padding:0">The panel</h3><div class="pnl">${ids.map(id => { const sp = SPEC[id]; const s = st[id] || (A.live ? "" : "done"); return `
-      <div class="who ${s}" style="--c:${specColor(sp)}"><i class="dot"></i><span class="nm">${esc(sp.name)}</span><span class="stt">${esc(label[s] || "")}</span>${A.plan && A.plan.angles[id] ? `<span class="ang">${esc(A.plan.angles[id])}</span>` : ""}</div>`; }).join("")}</div></div>`;
+      <div class="who ${s}" style="--c:${specColor(sp)}">${portrait(id, 2)}<span class="nm">${esc(sp.name)}</span><span class="stt">${esc(label[s] || "")}</span>${A.plan && A.plan.angles[id] ? `<span class="ang">${esc(A.plan.angles[id])}</span>` : ""}</div>`; }).join("")}</div></div>`;
   }
-  function speakerHtml(A, s) {
-    const sp = specOf(s), prev = A.panel ? A.panel[A.panel.indexOf(sp.id) - 1] : null;
-    return `<div class="spk" style="--c:${specColor(sp)}"><b>${esc(sp.name)}</b>${A.passes && A.passes[sp.id] ? `<span>asks the panel: ${esc(A.passes[sp.id])}</span>` : ""}</div>`;
+  // One block per speaker: a header that sticks under the player while you scroll through that speaker's steps,
+  // so every step on screen says who is talking. Their question for the panel closes the block.
+  function speakerHtml(A, sp, n) {
+    const st = (A.status || {})[sp.id], ang = A.plan && A.plan.angles[sp.id];
+    const role = st === "speaking" ? "speaking…" : `${n} ${n === 1 ? "point" : "points"}${A.live ? "" : " · " + (LENS_NAME[sp.lenses[0]] || "")}`;
+    return `<div class="spk${st === "speaking" ? " speaking" : ""}">${portrait(sp.id, 3)}<span class="who"><span class="nm">${esc(sp.name)}</span><span class="role">${esc(role)}</span>${ang ? `<span class="ang">${esc(ang)}</span>` : ""}</span></div>`;
+  }
+  function stepsHtml(A, steps) {
+    const groups = [];
+    steps.forEach((s, i) => { const sp = specOf(s); if (!groups.length || groups[groups.length - 1].sp !== sp) groups.push({ sp, items: [] }); groups[groups.length - 1].items.push([s, i]); });
+    return groups.map(({ sp, items }) => `<div class="spg" style="--c:${specColor(sp)}" data-by="${esc(sp.id)}">${speakerHtml(A, sp, items.length)}${items.map(([s, i]) => `
+          <div class="step${i === state.active ? " on" : ""}${state.muted.has(s.lens) ? " muted" : ""}" style="--c:${lensColor(s.lens)}" data-i="${i}">
+            <button aria-expanded="${i === state.active}" aria-label="${esc(sp.name)}: ${esc(s.title)}"><span class="i">${String(i + 1).padStart(2, "0")}</span><span class="t">${esc(s.title)}</span><span class="y">${s.year != null ? esc(fmtYear(clampYear(s.year))) : ""}</span><span class="ln">${esc(LENS_NAME[s.lens] || s.lens || "")}</span></button>
+            <div class="body"><p>${esc(s.text)}</p>${s.confidence != null ? `<span class="conf">confidence ${Math.round(Number(s.confidence) * 100)}%</span>` : ""}${srcList(s.sources, A.live)}</div>
+          </div>`).join("")}${A.passes && A.passes[sp.id] ? `<p class="pass"><b>${esc(sp.name)} asks the panel:</b> ${esc(A.passes[sp.id])}</p>` : ""}</div>`).join("");
   }
   // A link scene: both steps' evidence on the map at once, framed to hold them both.
   function applyLink(a, b, why) {
@@ -2020,7 +2075,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       <div class="sec">
         <h2 class="q">${esc(A.question)}</h2>
         <div><span class="badge">${live ? "Live AI draft · sources unchecked" : "Curated draft · sources listed, judge pending"}</span> <button class="btn" id="newq" style="float:right">New question</button></div>
-        ${A.short ? `<p class="short">${esc(A.short)}</p>` : A.frame ? `<p class="short frame">${esc(A.frame)}</p>` : ""}
+        ${A.short || A.frame ? `<div class="${live ? "chair" : ""}" style="--c:#b8892a">${live ? `${portrait("chair", 2)}<b class="by">The chair${A.short ? "" : " frames it"}</b>` : ""}${A.short ? `<p class="short">${esc(A.short)}</p>` : `<p class="short frame">${esc(A.frame)}</p>`}</div>` : ""}
         <div class="status" ${A.loading ? "" : "hidden"}><span class="dot"></span><span>${esc(A.loading || "")}</span></div>
         ${A.error ? `<div class="error">${esc(A.error)}</div>` : ""}
       </div>
@@ -2029,11 +2084,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
         `<button class="mrow${state.muted.has(l) ? " off" : ""}" data-lens="${l}" style="--c:${lensColor(l)}" aria-pressed="${!state.muted.has(l)}"><span class="name">${esc(LENS_NAME[l])}</span><span class="bar"><i style="width:${Math.round(Math.min(1, v) * 100)}%"></i></span><span class="n">${Math.round(Math.min(1, v) * 100)}</span></button>`).join("")}</div></div>` : ""}
       ${steps.length ? `<div class="sec">
         <div class="player"><button class="btn" id="prev" aria-label="Previous step">◀</button><button class="btn primary" id="play">${state.playing ? "Pause" : "Play tour"}</button><button class="btn" id="next" aria-label="Next step">▶</button><span class="count" id="count"></span><span class="prog" id="prog"></span></div>
-        <div class="steps">${steps.map((s, i) => `${i === 0 || specOf(steps[i - 1]) !== specOf(s) ? speakerHtml(A, s) : ""}
-          <div class="step${i === state.active ? " on" : ""}${state.muted.has(s.lens) ? " muted" : ""}" style="--c:${lensColor(s.lens)}" data-i="${i}">
-            <button aria-expanded="${i === state.active}"><span class="i">${String(i + 1).padStart(2, "0")}</span><span class="t">${esc(s.title)}</span><span class="y">${s.year != null ? esc(fmtYear(clampYear(s.year))) : ""}</span><span class="ln">${esc(LENS_NAME[s.lens] || s.lens || "")}</span></button>
-            <div class="body"><p>${esc(s.text)}</p>${s.confidence != null ? `<span class="conf">confidence ${Math.round(Number(s.confidence) * 100)}%</span>` : ""}${srcList(s.sources, live)}</div>
-          </div>`).join("")}</div></div>` : ""}
+        <div class="steps">${stepsHtml(A, steps)}</div></div>` : ""}
       ${(A.links || []).length ? `<div class="sec"><h3 style="border:0;padding:0">How the lenses connect</h3><div class="links">${A.links.map((k, i) => { const a = steps[k.a], b = steps[k.b]; return `
         <button class="link" data-k="${i}" style="--ca:${lensColor(a.lens)};--cb:${lensColor(b.lens)}"><span class="ends"><span class="e a">${String(k.a + 1).padStart(2, "0")} ${esc(a.title)}</span><span class="arr" aria-hidden="true">→</span><span class="e b">${String(k.b + 1).padStart(2, "0")} ${esc(b.title)}</span></span><span class="why">${esc(k.why)}</span></button>`; }).join("")}</div></div>` : ""}
       ${(A.views || []).length ? `<div class="sec"><h3 style="border:0;padding:0">Competing explanations</h3>${A.views.map(v => `
@@ -2043,10 +2094,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ${(A.whatifs || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What if · simulated, speculative</h3>${A.whatifs.map((w, i) => `
         <button class="whatif" data-w="${i}"><b>${esc(w.q)}</b><span>${esc(w.a)}</span>${w.confidence != null ? `<span class="conf">plausibility ${Math.round(Number(w.confidence) * 100)}%</span>` : ""}</button>`).join("")}</div>` : ""}
       ${(A.unknowns || []).length ? `<div class="sec"><h3 style="border:0;padding:0">What we don't know</h3><ul class="unk">${A.unknowns.map(u => `<li>${esc(u)}</li>`).join("")}</ul></div>` : ""}
-      ${A.live && !A.loading && A.plan ? `<div class="sec"><h3 style="border:0;padding:0">Hear from another specialist</h3><div class="invite">${SPECS.filter(sp => !A.panel.includes(sp.id)).map(sp => `<button class="btn" data-sp="${sp.id}" style="--c:${specColor(sp)}"><i class="dot"></i>${esc(sp.name)}</button>`).join("")}</div></div>` : ""}
+      ${A.live && !A.loading && A.plan ? `<div class="sec"><h3 style="border:0;padding:0">Hear from another specialist</h3><div class="invite">${SPECS.filter(sp => !A.panel.includes(sp.id)).map(sp => `<button class="btn" data-sp="${sp.id}" style="--c:${specColor(sp)}">${portrait(sp.id, 2)}${esc(sp.name)}</button>`).join("")}</div></div>` : ""}
       ${!A.loading ? `<form class="follow" id="follow"><textarea id="fbox" rows="2" placeholder="Ask a follow-up" aria-label="Follow-up question"></textarea><div class="row"><button class="btn" type="submit">Follow up</button></div></form>` : ""}`;
     updatePlayer();
+    stickSpeakers();
   }
+  // Speaker headers stick just under the sticky player, wherever the layout puts it.
+  function stickSpeakers() {
+    const pl = answerEl.querySelector(".player"); if (!pl) return;
+    answerEl.style.setProperty("--spk-top", `${(parseFloat(getComputedStyle(pl).top) || 0) + pl.offsetHeight - 1}px`);
+  }
+  addEventListener("resize", () => { if (!answerEl.hidden) stickSpeakers(); });
   answerEl.addEventListener("click", ev => {
     const st = ev.target.closest(".step > button");
     if (st) { stopPlay(); const i = +st.parentElement.dataset.i; activate(i === state.active ? -1 : i); return; }
