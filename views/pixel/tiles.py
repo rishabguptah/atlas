@@ -23,6 +23,7 @@ for f in glob.glob(src + 'z2_*.png'):
     t = out + 'l2_' + os.path.basename(f)[3:]
     if not os.path.exists(t):
         shutil.copy(f, t)
+FFFD_FIXES = {'Arag\ufffdn': 'Arag\u00f3n', 'Teotihuac\ufffdn': 'Teotihuac\u00e1n', 'Monte Alb\ufffdn': 'Monte Alb\u00e1n'}
 # Precise borders (ingest/geography/precise_borders.py) go to OUT_DIR/borders/l0|l1|l2/ for views/pixel/borders.js.
 bsrc = os.path.normpath(os.path.join(src, '..', '..', 'borders-precise'))
 if os.path.isdir(bsrc):
@@ -31,5 +32,9 @@ if os.path.isdir(bsrc):
         for f in glob.glob(os.path.join(bsrc, lv, 'world_*.json')):
             t = os.path.join(out, '..', 'borders', lv, os.path.basename(f))
             if not os.path.exists(t):
-                shutil.copy(f, t)
+                # Some source names carry U+FFFD (a lost accent), which the Artifact publish rejects: restore the known ones, drop the rest.
+                txt = open(f, encoding='utf-8').read()
+                for bad, good in FFFD_FIXES.items():
+                    txt = txt.replace(bad, good)
+                open(t, 'w', encoding='utf-8').write(txt.replace('\ufffd', ''))
 print(out, len(os.listdir(out)), 'tiles')
