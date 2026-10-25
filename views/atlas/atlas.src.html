@@ -1151,7 +1151,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, polityAt: null,
     }
     mapEl.classList.toggle("war-on", state.on.war);
   }
-  function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); }
+  ATLAS.isOn = k => isOn(k);
+  // A lens toggle also re-renders the basemap so anything it draws for a lens (sprites) follows the chip.
+  function redrawToggles() { setBasemap(); drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(); renderBasemap(); }
   // Tap a family: open its lenses below, and switch the family on or off. Tap a lens: just that one.
   layersEl.addEventListener("click", ev => {
     const b = ev.target.closest(".chip"); if (!b) return;
