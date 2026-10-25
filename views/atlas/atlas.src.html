@@ -1292,12 +1292,13 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
         if (r.hi) pri = 100; else if (r.always) pri = Math.max(pri, 72);
       }
       if (pri < 100 && f) pri += L.fam === f ? 30 : -10;
-      const hi = r && r.hi, settle = SETTLEMENT.has(kind), px = hi ? 16 : 12;
+      // Only a highlighted city steps up a size (D2: 12 and 16); other highlights win on priority alone.
+      const hi = r && r.hi, settle = SETTLEMENT.has(kind), px = hi && kind === "city" ? 16 : 12;
       L.font = `${hi || settle ? 600 : 500} ${px}px ${fam}`; L.px = px; L.fill = settle && !hi ? VELLUM : INK; L.halo = settle && !hi ? INK : VELLUM;
       c.font = L.font;
       const w = c.measureText(L.text).width, x0 = L.center ? L.x - w / 2 : L.x, y1 = L.y + px * .25, y0 = y1 - px;
       L.on = false;
-      if (x0 > W || x0 + w < 0 || y1 < 0 || y0 > H) continue;
+      if (x0 < 0 || x0 + w > W || y0 < 0 || y1 > H) continue;  // whole labels only, never cut by the frame
       extra.push({ pri, note: L.note || !settle, text: L.text, box: [x0 - 1, y0, x0 + w + 1, y1], show: on => { L.on = on; } });
     }
     try { LQ.layout(t, W, H, { year: state.year, focus: f, extra }); } catch (err) { console.error("labels", err); }
