@@ -55,7 +55,7 @@ def check(r):
     m = ID_RE.match(rid or '')
     if not m or m.group(1) != KINDS[kind][0]:
         errs.append(f'id {rid!r} must look like {KINDS[kind][0]}:lowercase_slug')
-    if kind not in ('relation', 'measure') and not r.get('name'):
+    if kind not in ('relation', 'measure', 'source') and not r.get('name'):
         errs.append('missing name')
     lenses = r.get('lenses')
     if not lenses or not isinstance(lenses, list) or set(lenses) - LENSES:
