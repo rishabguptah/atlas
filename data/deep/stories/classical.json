@@ -1,0 +1,2246 @@
+{
+ "stories": [
+  {
+   "id": "punic_wars",
+   "title": "Rome against Carthage",
+   "region": "Western Mediterranean",
+   "start": -264,
+   "end": -146,
+   "view": {
+    "lon": 10.0,
+    "lat": 39.0,
+    "span": 30
+   },
+   "blurb": "How did a farming republic in Italy defeat the great sea power of Carthage and end up ruling the western Mediterranean?",
+   "steps": [
+    {
+     "date": "-0264",
+     "name": "First Punic War",
+     "place_name": "Messana",
+     "lat": 38.19,
+     "lon": 15.55,
+     "family": "war",
+     "subtype": "war",
+     "who": [],
+     "what": "Rome answered an appeal from the Mamertine mercenaries holding Messana and sent an army across the strait into Sicily, where Carthage had long held the west of the island.",
+     "why": "A local quarrel over one Sicilian town started 23 years of war between the two largest powers of the western Mediterranean.",
+     "wikipedia": "First Punic War",
+     "wikidata": "Q6286"
+    },
+    {
+     "date": "-0260",
+     "name": "Battle of Mylae",
+     "place_name": "Off Mylae, Sicily",
+     "lat": 38.3,
+     "lon": 15.2,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Gaius Duilius"
+     ],
+     "what": "A newly built Roman fleet using the corvus boarding bridge defeated a Carthaginian fleet off the north coast of Sicily, Rome's first major naval victory.",
+     "why": "Rome showed it could build a navy from scratch and fight Carthage at sea, which the war would be decided by.",
+     "wikipedia": "Battle of Mylae",
+     "wikidata": "Q277345"
+    },
+    {
+     "date": "-0241-03",
+     "date_note": "traditional date 10 March 241 BCE",
+     "name": "Battle of the Aegates",
+     "place_name": "Aegates Islands",
+     "lat": 37.98,
+     "lon": 12.2,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Gaius Lutatius Catulus"
+     ],
+     "what": "A Roman fleet intercepted a laden Carthaginian relief fleet off the Aegates Islands and sank or captured dozens of ships, forcing Carthage to sue for peace.",
+     "why": "Carthage lost Sicily and agreed to pay a large indemnity, leaving Rome with its first overseas province.",
+     "wikipedia": "Battle of the Aegates",
+     "wikidata": "Q1134649"
+    },
+    {
+     "date": "-0241",
+     "end_date": "-0237",
+     "date_note": "c.",
+     "name": "Mercenary War",
+     "place_name": "Carthage",
+     "lat": 36.85,
+     "lon": 10.32,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Hamilcar Barca"
+     ],
+     "what": "Unpaid mercenaries returned from Sicily rebelled, joined by Libyan towns, and besieged Carthage until Hamilcar Barca crushed them after a brutal war.",
+     "why": "The revolt drained Carthage further, and Rome used the moment to seize Sardinia, hardening Carthaginian resentment.",
+     "wikipedia": "Mercenary War",
+     "wikidata": "Q1132393"
+    },
+    {
+     "date": "-0228",
+     "date_note": "c. 228-227 BCE",
+     "name": "Founding of Carthago Nova",
+     "place_name": "Carthago Nova (Cartagena)",
+     "lat": 37.6,
+     "lon": -0.98,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Hasdrubal the Fair"
+     ],
+     "what": "Hasdrubal the Fair founded a new city on a fine harbour in southeast Spain, near rich silver mines, as the capital of Barcid Spain.",
+     "why": "Spanish silver and soldiers gave Carthage the means to rebuild its strength and fight Rome again.",
+     "wikipedia": "Carthago Nova",
+     "wikidata": "Q2727884"
+    },
+    {
+     "date": "-0219",
+     "name": "Siege of Saguntum",
+     "place_name": "Saguntum",
+     "lat": 39.68,
+     "lon": -0.27,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Hannibal"
+     ],
+     "what": "Hannibal besieged and took Saguntum, a Spanish town allied to Rome, after about eight months.",
+     "why": "Rome treated the attack as a cause for war, opening the Second Punic War.",
+     "wikipedia": "Siege of Saguntum",
+     "wikidata": "Q815210"
+    },
+    {
+     "date": "-0218",
+     "date_note": "autumn 218 BCE; exact pass disputed",
+     "name": "Hannibal's crossing of the Alps",
+     "place_name": "Western Alps",
+     "lat": 45.2,
+     "lon": 6.9,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Hannibal"
+     ],
+     "what": "Hannibal marched an army with war elephants from Spain over the Pyrenees, across the Rhone and over the Alps into northern Italy, losing many men to cold and attacks.",
+     "why": "By invading Italy by land he avoided Roman sea power and carried the war to Rome's own allies.",
+     "wikipedia": "Hannibal's crossing of the Alps"
+    },
+    {
+     "date": "-0217",
+     "date_note": "June 217 BCE (Roman calendar)",
+     "name": "Battle of Lake Trasimene",
+     "place_name": "Lake Trasimene",
+     "lat": 43.18,
+     "lon": 12.1,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Hannibal",
+      "Gaius Flaminius"
+     ],
+     "what": "Hannibal ambushed a Roman army in fog on the north shore of Lake Trasimene, killing the consul Flaminius and most of his men.",
+     "why": "The disaster led Rome to appoint Fabius Maximus dictator and adopt a strategy of avoiding pitched battle.",
+     "wikipedia": "Battle of Lake Trasimene",
+     "wikidata": "Q207250"
+    },
+    {
+     "date": "-0216",
+     "date_note": "2 August 216 BCE (Roman calendar)",
+     "name": "Battle of Cannae",
+     "place_name": "Cannae",
+     "lat": 41.31,
+     "lon": 16.13,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Hannibal",
+      "Lucius Aemilius Paullus",
+      "Gaius Terentius Varro"
+     ],
+     "what": "Hannibal encircled a much larger Roman army in Apulia and destroyed it, killing tens of thousands including the consul Paullus.",
+     "why": "Several southern Italian allies defected, yet Rome refused to make peace, and its endurance would decide the war.",
+     "wikipedia": "Battle of Cannae",
+     "wikidata": "Q179591"
+    },
+    {
+     "date": "-0213",
+     "end_date": "-0212",
+     "name": "Siege of Syracuse (213–212 BC)",
+     "place_name": "Syracuse",
+     "lat": 37.08,
+     "lon": 15.29,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Marcus Claudius Marcellus",
+      "Archimedes"
+     ],
+     "what": "Marcellus besieged Syracuse, which had sided with Carthage; the city held out against him for two years with machines attributed to Archimedes, who was killed when it fell.",
+     "why": "Rome regained Sicily and its grain, and the plunder of Greek art from Syracuse began a taste for Greek culture in Rome.",
+     "wikipedia": "Siege of Syracuse (213–212 BC)",
+     "wikidata": "Q533090"
+    },
+    {
+     "date": "-0202",
+     "date_note": "traditionally October 202 BCE; site disputed",
+     "name": "Battle of Zama",
+     "place_name": "Zama, North Africa",
+     "lat": 36.27,
+     "lon": 9.45,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Hannibal",
+      "Scipio Africanus"
+     ],
+     "what": "Scipio, having invaded Africa, defeated Hannibal near Zama with the help of Numidian cavalry under Masinissa.",
+     "why": "Carthage surrendered its fleet and Spain, and lost the right to make war without Rome's permission.",
+     "wikipedia": "Battle of Zama",
+     "wikidata": "Q200056"
+    },
+    {
+     "date": "-0196",
+     "name": "Hannibal's reforms as suffete",
+     "place_name": "Carthage",
+     "lat": 36.85,
+     "lon": 10.32,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Hannibal"
+     ],
+     "what": "Elected suffete, Hannibal reformed Carthage's finances and curbed the power of the oligarchic judges, so the city could pay its war indemnity without new taxes.",
+     "why": "Carthage's quick economic recovery alarmed its enemies, and Hannibal soon fled east to the Seleucid court.",
+     "wikipedia": "Hannibal",
+     "wikidata": "Q36456"
+    },
+    {
+     "date": "-0183",
+     "date_note": "c. 183-181 BCE",
+     "name": "Death of Hannibal",
+     "place_name": "Libyssa, Bithynia",
+     "lat": 40.8,
+     "lon": 29.43,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Hannibal"
+     ],
+     "what": "Hunted by Rome after years of exile, Hannibal took poison at Libyssa in Bithynia rather than be handed over.",
+     "why": "Rome's reach now extended into the Greek East, where no king would long protect its enemies.",
+     "wikipedia": "Hannibal",
+     "wikidata": "Q36456"
+    },
+    {
+     "date": "-0160",
+     "date_note": "c.",
+     "name": "De agri cultura",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Cato the Elder"
+     ],
+     "what": "Cato the Elder wrote a manual on running a farm estate worked by slaves, growing vines and olives for market, the oldest surviving work of Latin prose.",
+     "why": "The wars filled Italy with slaves and cash, changing Roman farming, and Cato was also the senator who urged that Carthage be destroyed.",
+     "wikipedia": "De agri cultura",
+     "wikidata": "Q1180565"
+    },
+    {
+     "date": "-0149",
+     "end_date": "-0146",
+     "name": "Siege of Carthage (Third Punic War)",
+     "place_name": "Carthage",
+     "lat": 36.85,
+     "lon": 10.32,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Scipio Aemilianus"
+     ],
+     "what": "After a three-year siege Scipio Aemilianus stormed Carthage, the city was destroyed and the surviving inhabitants, about 50,000, were sold into slavery.",
+     "why": "Carthage ceased to exist as a state and its territory became the Roman province of Africa.",
+     "wikipedia": "Siege of Carthage (Third Punic War)",
+     "wikidata": "Q815160"
+    },
+    {
+     "date": "-0146",
+     "date_note": "c.; after the fall of Carthage",
+     "name": "Translation of Mago's farming treatise",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "The Roman Senate ordered that the 28-book agricultural treatise of the Carthaginian writer Mago be translated into Latin, while other Punic libraries were given away.",
+     "why": "Rome destroyed the city but kept its farming know-how, a sign of what the conqueror valued.",
+     "wikipedia": "Mago (agricultural writer)",
+     "wikidata": "Q1236554"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "fall_roman_republic",
+   "title": "The fall of the Roman Republic",
+   "region": "Mediterranean",
+   "start": -133,
+   "end": -27,
+   "view": {
+    "lon": 16.0,
+    "lat": 40.0,
+    "span": 35
+   },
+   "blurb": "How did a republic that had conquered the Mediterranean slide into civil war and end up ruled by one man?",
+   "steps": [
+    {
+     "date": "-0133",
+     "name": "Tribunate of Tiberius Gracchus",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Tiberius Gracchus"
+     ],
+     "what": "Tribune Tiberius Gracchus passed a law redistributing public land to poor citizens and was clubbed to death with about 300 supporters by a group of senators.",
+     "why": "It was the first time political conflict in Rome was settled by killing, a precedent for a century of violence.",
+     "wikipedia": "Tiberius Gracchus",
+     "wikidata": "Q212109"
+    },
+    {
+     "date": "-0123",
+     "name": "Grain law of Gaius Gracchus",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Gaius Gracchus"
+     ],
+     "what": "Gaius Gracchus, Tiberius' brother, had the state sell grain to citizens in Rome at a fixed low price; he was killed in 121 BCE in further street fighting.",
+     "why": "Feeding the city's poor became a lasting public duty and a way for politicians to win the urban crowd.",
+     "wikipedia": "Cura annonae",
+     "wikidata": "Q495053"
+    },
+    {
+     "date": "-0107",
+     "date_note": "traditional date; extent of the reforms disputed",
+     "name": "Marian reforms",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Gaius Marius"
+     ],
+     "what": "Consul Gaius Marius enrolled landless volunteers in the legions for his war in Numidia, men who looked to their general for pay and land on discharge.",
+     "why": "Armies loyal to their commanders rather than to the Senate made military coups possible.",
+     "wikipedia": "Marian reforms",
+     "wikidata": "Q1128962"
+    },
+    {
+     "date": "-0091",
+     "end_date": "-0087",
+     "name": "Social War (91–87 BC)",
+     "place_name": "Corfinium",
+     "lat": 42.12,
+     "lon": 13.84,
+     "family": "war",
+     "subtype": "war",
+     "who": [],
+     "what": "Rome's Italian allies, denied citizenship, rebelled and set up their own capital at Corfinium; Rome won the war but granted citizenship to the Italians.",
+     "why": "All of Italy south of the Po became Roman citizens, enlarging the body politic that generals could draw on.",
+     "wikipedia": "Social War (91–87 BC)",
+     "wikidata": "Q677316"
+    },
+    {
+     "date": "-0088",
+     "end_date": "-0081",
+     "name": "Sulla's civil war",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "war",
+     "subtype": "coup",
+     "who": [
+      "Sulla",
+      "Gaius Marius"
+     ],
+     "what": "Sulla marched his legions on Rome in 88 BCE, the first general to do so, and after returning from the east in 82 BCE made himself dictator and published lists of enemies to be killed.",
+     "why": "Sulla showed that an army could take the city, and that lesson was not forgotten.",
+     "wikipedia": "Sulla's civil war"
+    },
+    {
+     "date": "-0073",
+     "end_date": "-0071",
+     "name": "Third Servile War",
+     "place_name": "Capua",
+     "lat": 41.08,
+     "lon": 14.25,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Spartacus",
+      "Marcus Licinius Crassus"
+     ],
+     "what": "About 70 gladiators broke out of a school at Capua under Spartacus and grew into a slave army of tens of thousands before Crassus defeated them; 6,000 captives were crucified along the Appian Way.",
+     "why": "The revolt exposed how much Italy's economy now depended on slave labour, and it made Crassus and Pompey the leading men in Rome.",
+     "wikipedia": "Third Servile War",
+     "wikidata": "Q194378"
+    },
+    {
+     "date": "-0063",
+     "name": "Catilinarian conspiracy",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Cicero",
+      "Catiline"
+     ],
+     "what": "Consul Cicero exposed a plot by the indebted aristocrat Catiline to seize power, and five conspirators were executed without trial.",
+     "why": "Debt and frustrated ambition were pushing parts of the elite toward force, and the executions stayed a political weapon against Cicero.",
+     "wikipedia": "Catilinarian conspiracy",
+     "wikidata": "Q1051202"
+    },
+    {
+     "date": "-0052",
+     "name": "Battle of Alesia",
+     "place_name": "Alesia",
+     "lat": 47.54,
+     "lon": 4.5,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Julius Caesar",
+      "Vercingetorix"
+     ],
+     "what": "Caesar besieged Vercingetorix in the hill town of Alesia behind double siege lines and beat off a large Gallic relief army, ending the main Gallic resistance.",
+     "why": "The conquest of Gaul gave Caesar wealth, fame and a veteran army loyal to him personally.",
+     "wikipedia": "Battle of Alesia",
+     "wikidata": "Q131386"
+    },
+    {
+     "date": "-0049-01",
+     "date_note": "10 or 11 January 49 BCE (Roman calendar)",
+     "name": "Crossing the Rubicon",
+     "place_name": "Rubicon river",
+     "lat": 44.09,
+     "lon": 12.4,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Julius Caesar"
+     ],
+     "what": "Ordered by the Senate to give up his command, Caesar led a legion across the Rubicon, the border between his province and Italy.",
+     "why": "Bringing an army into Italy was an act of war against the state and began the civil war with Pompey.",
+     "wikipedia": "Crossing the Rubicon",
+     "wikidata": "Q25238182"
+    },
+    {
+     "date": "-0048-08",
+     "date_note": "9 August 48 BCE (Roman calendar)",
+     "name": "Battle of Pharsalus",
+     "place_name": "Pharsalus",
+     "lat": 39.3,
+     "lon": 22.38,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Julius Caesar",
+      "Pompey"
+     ],
+     "what": "Caesar defeated the larger army of Pompey and the Senate in Thessaly; Pompey fled to Egypt and was murdered on landing.",
+     "why": "The Senate's main army and leader were gone, leaving Caesar the dominant power in the Roman world.",
+     "wikipedia": "Battle of Pharsalus",
+     "wikidata": "Q203681"
+    },
+    {
+     "date": "-0048",
+     "end_date": "-0047",
+     "name": "Siege of Alexandria (47 BC)",
+     "place_name": "Alexandria",
+     "lat": 31.2,
+     "lon": 29.92,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Julius Caesar",
+      "Cleopatra"
+     ],
+     "what": "Caesar, following Pompey to Egypt, was besieged in Alexandria for months while he backed Cleopatra in her civil war with her brother Ptolemy XIII.",
+     "why": "Caesar's alliance with Cleopatra tied Egypt's wealth to Roman politics for the next two decades.",
+     "wikipedia": "Siege of Alexandria (47 BC)",
+     "wikidata": "Q16208146"
+    },
+    {
+     "date": "-0046",
+     "name": "Julian calendar",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Julius Caesar",
+      "Sosigenes of Alexandria"
+     ],
+     "what": "As dictator, Caesar replaced the drifting lunar calendar with a solar year of 365 days and a leap day every four years, taking effect in 45 BCE.",
+     "why": "Caesar used his sole power to make lasting reforms, and his calendar is the basis of the one used today.",
+     "wikipedia": "Julian calendar",
+     "wikidata": "Q11184"
+    },
+    {
+     "date": "-0044-03-15",
+     "name": "Assassination of Julius Caesar",
+     "place_name": "Curia of Pompey, Rome",
+     "lat": 41.9,
+     "lon": 12.48,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Julius Caesar",
+      "Marcus Junius Brutus",
+      "Gaius Cassius Longinus"
+     ],
+     "what": "A group of about 60 senators led by Brutus and Cassius stabbed Caesar to death at a Senate meeting on the Ides of March.",
+     "why": "The killers hoped to restore the Republic but set off a new round of civil wars.",
+     "wikipedia": "Assassination of Julius Caesar",
+     "wikidata": "Q1025466"
+    },
+    {
+     "date": "-0042-10",
+     "date_note": "two battles, 3 and 23 October 42 BCE",
+     "name": "Battle of Philippi",
+     "place_name": "Philippi",
+     "lat": 41.01,
+     "lon": 24.29,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Mark Antony",
+      "Augustus",
+      "Marcus Junius Brutus",
+      "Gaius Cassius Longinus"
+     ],
+     "what": "Antony and Octavian defeated the armies of Brutus and Cassius in Macedonia, and both leaders of the conspiracy killed themselves.",
+     "why": "The cause of the old Republic was finished militarily; the struggle was now between Caesar's heirs.",
+     "wikipedia": "Battle of Philippi",
+     "wikidata": "Q335330"
+    },
+    {
+     "date": "-0031-09-02",
+     "name": "Battle of Actium",
+     "place_name": "Off Actium",
+     "lat": 38.95,
+     "lon": 20.73,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Augustus",
+      "Marcus Vipsanius Agrippa",
+      "Mark Antony",
+      "Cleopatra"
+     ],
+     "what": "Octavian's fleet under Agrippa defeated the fleet of Antony and Cleopatra off western Greece; both died by suicide in Alexandria the next year.",
+     "why": "Octavian was left without a rival, and Egypt became his personal possession.",
+     "wikipedia": "Battle of Actium",
+     "wikidata": "Q160387"
+    },
+    {
+     "date": "-0027-01-16",
+     "name": "Octavian becomes Augustus",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "culture",
+     "subtype": "reign",
+     "who": [
+      "Augustus"
+     ],
+     "what": "Octavian formally handed power back to the Senate, which gave him the name Augustus and command of the key frontier provinces with most of the legions.",
+     "why": "Republican forms survived, but real power now rested with one man: the start of the Roman Empire.",
+     "wikipedia": "Augustus",
+     "wikidata": "Q1405"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "han_silk_road",
+   "title": "The Han open the Silk Road",
+   "region": "China and Central Asia",
+   "start": -206,
+   "end": 9,
+   "view": {
+    "lon": 90.0,
+    "lat": 40.0,
+    "span": 55
+   },
+   "blurb": "How did a Chinese dynasty at war with steppe nomads end up opening trade and diplomacy across Central Asia?",
+   "steps": [
+    {
+     "date": "-0202",
+     "name": "Han capital at Chang'an",
+     "place_name": "Chang'an",
+     "lat": 34.3,
+     "lon": 108.88,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Emperor Gaozu of Han"
+     ],
+     "what": "After defeating his rival Xiang Yu, Liu Bang proclaimed himself emperor of the Han and chose the Wei valley site of Chang'an for his capital.",
+     "why": "Chang'an became the eastern end of the routes that the Han would push west.",
+     "wikipedia": "Chang'an"
+    },
+    {
+     "date": "-0200",
+     "name": "Battle of Baideng",
+     "place_name": "Baideng, near Pingcheng",
+     "lat": 40.1,
+     "lon": 113.3,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Emperor Gaozu of Han",
+      "Modu Chanyu"
+     ],
+     "what": "The Xiongnu under Modu Chanyu surrounded the emperor and his army at Baideng for seven days; Gaozu escaped and soon agreed to the heqin policy of sending princesses and yearly gifts of silk.",
+     "why": "For sixty years the Han bought peace with the Xiongnu, until Emperor Wu decided to fight and look for allies in the west.",
+     "wikipedia": "Battle of Baideng",
+     "wikidata": "Q3271565"
+    },
+    {
+     "date": "-0138",
+     "date_note": "c.; some sources give 139 BCE",
+     "name": "Zhang Qian sets out",
+     "place_name": "Chang'an",
+     "lat": 34.3,
+     "lon": 108.88,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Zhang Qian"
+     ],
+     "what": "Emperor Wu sent the court officer Zhang Qian with about 100 men to find the Yuezhi and ally with them against the Xiongnu; he was captured by the Xiongnu and held for about ten years.",
+     "why": "The mission was military in aim, but it became the first official Chinese contact with Central Asia.",
+     "wikipedia": "Zhang Qian",
+     "wikidata": "Q197276"
+    },
+    {
+     "date": "-0128",
+     "date_note": "c.",
+     "name": "Zhang Qian in Bactria",
+     "place_name": "Bactria (Daxia)",
+     "lat": 36.76,
+     "lon": 66.9,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Zhang Qian"
+     ],
+     "what": "Escaping, Zhang Qian crossed Ferghana to the Yuezhi and Bactria, where he saw bamboo and cloth from Shu (Sichuan) in the markets, brought via India; he returned to Chang'an about 126 BCE.",
+     "why": "His reports of horses, towns and markets in the west made the emperor see Central Asia as a field for trade and diplomacy.",
+     "wikipedia": "Zhang Qian",
+     "wikidata": "Q197276"
+    },
+    {
+     "date": "-0119",
+     "name": "Battle of Mobei",
+     "place_name": "North of the Gobi",
+     "lat": 47.0,
+     "lon": 106.0,
+     "family": "war",
+     "subtype": "battle",
+     "date_note": "location approximate",
+     "who": [
+      "Wei Qing",
+      "Huo Qubing"
+     ],
+     "what": "Two Han cavalry armies under Wei Qing and Huo Qubing crossed the Gobi and defeated the Xiongnu in their homeland, Huo pushing as far as the Khentii mountains.",
+     "why": "With the Xiongnu driven north, the Hexi Corridor toward the west lay open to Han control.",
+     "wikipedia": "Battle of Mobei",
+     "wikidata": "Q280345"
+    },
+    {
+     "date": "-0117",
+     "date_note": "c.; monopolies set up 119-117 BCE",
+     "name": "Salt and iron monopolies",
+     "place_name": "Chang'an",
+     "lat": 34.3,
+     "lon": 108.88,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Sang Hongyang"
+     ],
+     "what": "To pay for the wars, the court took over the production and sale of salt and iron, staffed by former merchants such as Sang Hongyang.",
+     "why": "State monopolies funded expansion to the west but squeezed private trade and farmers.",
+     "wikipedia": "Salt in Chinese history",
+     "wikidata": "Q9384423"
+    },
+    {
+     "date": "-0115",
+     "date_note": "c.; mission c. 119-115 BCE",
+     "name": "Zhang Qian's mission to the Wusun",
+     "place_name": "Wusun lands, Ili valley",
+     "lat": 43.0,
+     "lon": 78.0,
+     "family": "diplomacy",
+     "subtype": "journey",
+     "who": [
+      "Zhang Qian"
+     ],
+     "what": "Zhang Qian led a large embassy with cattle, sheep and silk to the Wusun near Lake Issyk-Kul and sent deputies on to Ferghana, Sogdia and Bactria; he died soon after his return.",
+     "why": "Regular embassies and exchanges of gifts with the western states began from this mission.",
+     "wikipedia": "Wusun",
+     "wikidata": "Q854062"
+    },
+    {
+     "date": "-0111",
+     "date_note": "c.; date of the commandery disputed",
+     "name": "Founding of Dunhuang",
+     "place_name": "Dunhuang",
+     "lat": 40.14,
+     "lon": 94.66,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [],
+     "what": "The Han set up commanderies along the Hexi Corridor, ending at Dunhuang, with garrisons, farming colonies and an extended wall line.",
+     "why": "Dunhuang became the gateway where the routes north and south of the Taklamakan desert met.",
+     "wikipedia": "Dunhuang",
+     "wikidata": "Q319114"
+    },
+    {
+     "date": "-0104",
+     "end_date": "-0101",
+     "name": "War of the Heavenly Horses",
+     "place_name": "Dayuan (Ferghana)",
+     "lat": 40.78,
+     "lon": 72.35,
+     "family": "war",
+     "subtype": "campaign",
+     "who": [
+      "Li Guangli"
+     ],
+     "what": "After Dayuan refused to trade its prized horses and killed a Han envoy, Li Guangli led two expeditions across the Tarim basin and besieged its capital until it handed over horses.",
+     "why": "The Han showed it could project force 4,000 km west, and the oasis states began sending hostages and tribute.",
+     "wikipedia": "War of the Heavenly Horses",
+     "wikidata": "Q7968690"
+    },
+    {
+     "date": "-0081",
+     "name": "Discourses on Salt and Iron",
+     "place_name": "Chang'an",
+     "lat": 34.3,
+     "lon": 108.88,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Sang Hongyang"
+     ],
+     "what": "At a court debate, Confucian scholars attacked the state monopolies and costly frontier wars, and minister Sang Hongyang defended them; the debate was later written up by Huan Kuan.",
+     "why": "It records the argument over whether empire and trade in the west were worth their cost to ordinary farmers.",
+     "wikipedia": "Discourses on Salt and Iron",
+     "wikidata": "Q5281767"
+    },
+    {
+     "date": "-0060",
+     "name": "Protectorate of the Western Regions",
+     "place_name": "Wulei, Tarim basin",
+     "lat": 41.78,
+     "lon": 84.25,
+     "family": "diplomacy",
+     "subtype": "founding",
+     "who": [
+      "Zheng Ji"
+     ],
+     "what": "After a Xiongnu prince surrendered, the Han appointed Zheng Ji the first Protector General of the Western Regions, based at Wulei near modern Luntai.",
+     "why": "The oasis kingdoms of the Tarim came under a permanent Han office that guarded the caravan routes.",
+     "wikipedia": "Protectorate of the Western Regions",
+     "wikidata": "Q911440"
+    },
+    {
+     "date": "-0036",
+     "name": "Battle of Zhizhi",
+     "place_name": "Talas valley",
+     "lat": 42.9,
+     "lon": 71.4,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Chen Tang",
+      "Gan Yanshou",
+      "Zhizhi Chanyu"
+     ],
+     "what": "Han officers Chen Tang and Gan Yanshou, acting without orders, led Han troops and allies far west to storm the fort of the Xiongnu chanyu Zhizhi and killed him.",
+     "why": "The last hostile Xiongnu power in the west was removed, leaving the routes under Han influence.",
+     "wikipedia": "Battle of Zhizhi",
+     "wikidata": "Q870947"
+    },
+    {
+     "date": "-0033",
+     "name": "Wang Zhaojun's marriage",
+     "place_name": "Chang'an",
+     "lat": 34.3,
+     "lon": 108.88,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Wang Zhaojun",
+      "Huhanye"
+     ],
+     "what": "The palace lady Wang Zhaojun was given in marriage to the Xiongnu chanyu Huhanye, who had come to Chang'an to pay homage.",
+     "why": "War gave way to a heqin alliance on Han terms, and decades of peace on the northern frontier followed.",
+     "wikipedia": "Wang Zhaojun",
+     "wikidata": "Q701037"
+    },
+    {
+     "date": "0002",
+     "name": "Han census of 2 CE",
+     "place_name": "Chang'an",
+     "lat": 34.3,
+     "lon": 108.88,
+     "family": "culture",
+     "subtype": "event",
+     "who": [],
+     "what": "A census recorded about 12.4 million households and 57.7 million people, one of the earliest surviving counts of a whole state's population.",
+     "why": "It shows the scale of the farming empire whose taxes and silk paid for its reach into Central Asia.",
+     "wikipedia": "Han dynasty",
+     "wikidata": "Q7209"
+    },
+    {
+     "date": "0009",
+     "name": "Founding of the Xin dynasty",
+     "place_name": "Chang'an",
+     "lat": 34.3,
+     "lon": 108.88,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Wang Mang"
+     ],
+     "what": "The regent Wang Mang took the throne and declared a new Xin dynasty, interrupting Han rule.",
+     "why": "His reforms and the chaos that followed cost China control of the Western Regions for decades.",
+     "wikipedia": "Xin dynasty",
+     "wikidata": "Q504769"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "maurya_india",
+   "title": "Maurya India",
+   "region": "South Asia",
+   "start": -326,
+   "end": -185,
+   "view": {
+    "lon": 78.0,
+    "lat": 24.0,
+    "span": 32
+   },
+   "blurb": "How did the Mauryas unite most of the Indian subcontinent, and how did Ashoka try to rule it by moral law?",
+   "steps": [
+    {
+     "date": "-0326",
+     "date_note": "c. May 326 BCE",
+     "name": "Battle of the Hydaspes",
+     "place_name": "Hydaspes (Jhelum) river",
+     "lat": 32.95,
+     "lon": 73.73,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Alexander the Great",
+      "Porus"
+     ],
+     "what": "Alexander defeated King Porus on the Jhelum, but his army soon refused to march further east and turned back.",
+     "why": "Alexander's brief invasion left a power vacuum in the northwest that Chandragupta would fill.",
+     "wikipedia": "Battle of the Hydaspes",
+     "wikidata": "Q213074"
+    },
+    {
+     "date": "-0322",
+     "date_note": "c.; dates disputed",
+     "name": "Chandragupta takes Pataliputra",
+     "place_name": "Pataliputra",
+     "lat": 25.61,
+     "lon": 85.14,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Chandragupta Maurya",
+      "Chanakya"
+     ],
+     "what": "Chandragupta, advised according to tradition by the Brahmin Chanakya, overthrew the Nanda kings and took their capital Pataliputra on the Ganges.",
+     "why": "The rich Ganges kingdom of Magadha became the base of the first empire covering most of India.",
+     "wikipedia": "Chandragupta Maurya",
+     "wikidata": "Q188541"
+    },
+    {
+     "date": "-0305",
+     "end_date": "-0303",
+     "date_note": "c.",
+     "name": "Seleucid–Mauryan War",
+     "place_name": "Indus region",
+     "lat": 33.75,
+     "lon": 72.83,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Chandragupta Maurya",
+      "Seleucus I Nicator"
+     ],
+     "what": "Seleucus I invaded the Indus region and then made a treaty ceding Arachosia and Gandhara to Chandragupta in exchange for 500 war elephants and a marriage alliance.",
+     "why": "The Mauryas reached into Afghanistan and opened regular diplomatic contact with the Hellenistic world.",
+     "wikipedia": "Seleucid–Mauryan War",
+     "wikidata": "Q7447941"
+    },
+    {
+     "date": "-0302",
+     "date_note": "c.",
+     "name": "Megasthenes at Pataliputra",
+     "place_name": "Pataliputra",
+     "lat": 25.61,
+     "lon": 85.14,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Megasthenes"
+     ],
+     "what": "The Seleucid envoy Megasthenes lived at Chandragupta's court and wrote the Indica, describing a timber-walled city some 14 km long with 570 towers, and society divided into seven classes.",
+     "why": "His account, surviving in later quotations, is the main outside description of Maurya government and daily life.",
+     "wikipedia": "Megasthenes",
+     "wikidata": "Q312548"
+    },
+    {
+     "date": "-0297",
+     "date_note": "c.; Jain tradition",
+     "name": "Chandragupta at Shravanabelagola",
+     "place_name": "Shravanabelagola",
+     "lat": 12.86,
+     "lon": 76.49,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Chandragupta Maurya",
+      "Bhadrabahu"
+     ],
+     "what": "According to Jain tradition, Chandragupta gave up the throne, travelled south with the monk Bhadrabahu and fasted to death on a hill at Shravanabelagola.",
+     "why": "The story, still honoured at the site, shows how religious renunciation was tied to kingship in this world.",
+     "wikipedia": "Shravanabelagola",
+     "wikidata": "Q1026193"
+    },
+    {
+     "date": "-0285",
+     "date_note": "c.; reign c. 297-273 BCE",
+     "name": "Reign of Bindusara",
+     "place_name": "Pataliputra",
+     "lat": 25.61,
+     "lon": 85.14,
+     "family": "diplomacy",
+     "subtype": "reign",
+     "who": [
+      "Bindusara"
+     ],
+     "what": "Chandragupta's son Bindusara extended the empire south into the Deccan and, according to a Greek writer, asked the Seleucid king for sweet wine, dried figs and a philosopher.",
+     "why": "By his death only Kalinga on the east coast and the far south lay outside Maurya rule.",
+     "wikipedia": "Bindusara",
+     "wikidata": "Q315526"
+    },
+    {
+     "date": "-0261",
+     "date_note": "c.; eighth year of Ashoka's reign",
+     "name": "Kalinga War",
+     "place_name": "Dhauli, Kalinga",
+     "lat": 20.19,
+     "lon": 85.84,
+     "family": "war",
+     "subtype": "war",
+     "who": [
+      "Ashoka"
+     ],
+     "what": "Ashoka conquered Kalinga; his own Rock Edict 13 says 150,000 people were deported and 100,000 killed.",
+     "why": "Ashoka later declared remorse for the slaughter and turned to ruling by dhamma, moral law.",
+     "wikipedia": "Kalinga War",
+     "wikidata": "Q714557"
+    },
+    {
+     "date": "-0260",
+     "date_note": "c.; tenth year of Ashoka's reign",
+     "name": "Kandahar Bilingual Rock Inscription",
+     "place_name": "Kandahar",
+     "lat": 31.61,
+     "lon": 65.71,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Ashoka"
+     ],
+     "what": "An edict in Greek and Aramaic was carved on a rock at Kandahar, telling the Greek-speaking and Iranian subjects that the king had made people more pious and had reduced killing of animals.",
+     "why": "Ashoka addressed his message to every people of the empire in their own language, even at its western edge.",
+     "wikipedia": "Kandahar Bilingual Rock Inscription",
+     "wikidata": "Q27958798"
+    },
+    {
+     "date": "-0257",
+     "date_note": "c.",
+     "name": "Major Rock Edicts",
+     "place_name": "Girnar",
+     "lat": 21.52,
+     "lon": 70.47,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Ashoka"
+     ],
+     "what": "A set of fourteen edicts was carved on rocks across the empire, from Girnar in Gujarat to Kalsi and Dhauli, ordering medical care for people and animals, wells and shade trees on roads, and tolerance between sects.",
+     "why": "The edicts are the first written royal voice in India and set out a programme of welfare and moral rule.",
+     "wikipedia": "Major Rock Edicts",
+     "wikidata": "Q4805795"
+    },
+    {
+     "date": "-0250",
+     "date_note": "traditional date",
+     "name": "Third Buddhist council",
+     "place_name": "Pataliputra",
+     "lat": 25.61,
+     "lon": 85.14,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Ashoka",
+      "Moggaliputta-Tissa"
+     ],
+     "what": "Theravada tradition records a council of monks at Pataliputra under Ashoka's patronage, led by Moggaliputta-Tissa, to purify the monastic order.",
+     "why": "Tradition links this council to sending Buddhist missions to regions beyond the empire.",
+     "wikipedia": "Buddhist councils",
+     "wikidata": "Q752404"
+    },
+    {
+     "date": "-0250",
+     "date_note": "c.; traditional date",
+     "name": "Mahinda's mission to Sri Lanka",
+     "place_name": "Anuradhapura",
+     "lat": 8.35,
+     "lon": 80.39,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Mahinda",
+      "Devanampiya Tissa"
+     ],
+     "what": "Ashoka's son Mahinda, a monk, travelled to Sri Lanka and converted King Devanampiya Tissa at Anuradhapura, according to the Sri Lankan chronicles.",
+     "why": "Sri Lanka became a lasting centre of Buddhism, which later faded in India itself.",
+     "wikipedia": "Mahinda (Buddhist monk)",
+     "wikidata": "Q587284"
+    },
+    {
+     "date": "-0250",
+     "date_note": "c.; 3rd century BCE",
+     "name": "Great Stupa at Sanchi",
+     "place_name": "Sanchi",
+     "lat": 23.48,
+     "lon": 77.74,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ashoka"
+     ],
+     "what": "Ashoka commissioned a brick stupa over relics of the Buddha on a hill at Sanchi, later enlarged in stone with carved gateways paid for by local donors.",
+     "why": "Royal patronage turned Buddhism into a religion of monuments and pilgrimage, funded by merchants and ordinary donors.",
+     "wikipedia": "Sanchi Stupa",
+     "wikidata": "Q181123"
+    },
+    {
+     "date": "-0250",
+     "date_note": "c.",
+     "name": "Lion Capital of Ashoka",
+     "place_name": "Sarnath",
+     "lat": 25.38,
+     "lon": 83.02,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Ashoka"
+     ],
+     "what": "A polished sandstone pillar topped by four lions was raised at Sarnath, where the Buddha first preached; its capital is now India's national emblem.",
+     "why": "Ashoka's pillars marked the sacred geography of the Buddha's life across the Ganges plain.",
+     "wikipedia": "Lion Capital of Ashoka",
+     "wikidata": "Q3595955"
+    },
+    {
+     "date": "-0249",
+     "date_note": "c.; twentieth year of Ashoka's reign",
+     "name": "Lumbini pillar inscription",
+     "place_name": "Lumbini",
+     "lat": 27.47,
+     "lon": 83.28,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Ashoka"
+     ],
+     "what": "Ashoka visited the Buddha's birthplace, set up a pillar, exempted the village from tax and reduced its share of the harvest owed to the state to one eighth.",
+     "why": "A rare glimpse of how Maurya rule reached ordinary villages through taxes on the crop.",
+     "wikipedia": "Lumbini pillar inscription",
+     "wikidata": "Q85782651"
+    },
+    {
+     "date": "-0185",
+     "date_note": "c.",
+     "name": "Fall of the Maurya Empire",
+     "place_name": "Pataliputra",
+     "lat": 25.61,
+     "lon": 85.14,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Brihadratha Maurya",
+      "Pushyamitra Shunga"
+     ],
+     "what": "The general Pushyamitra Shunga killed the last Maurya king, Brihadratha, during a military review and founded the Shunga dynasty.",
+     "why": "The empire had already shrunk after Ashoka; India would not be so united again for centuries.",
+     "wikipedia": "Brihadratha Maurya",
+     "wikidata": "Q24405"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "christianity_rome",
+   "title": "From sect to empire's faith",
+   "region": "Roman Empire",
+   "start": 30,
+   "end": 380,
+   "view": {
+    "lon": 25.0,
+    "lat": 38.0,
+    "span": 40
+   },
+   "blurb": "How did a small Jewish movement from Judea become the official religion of the Roman Empire within 350 years?",
+   "steps": [
+    {
+     "date": "0030",
+     "date_note": "c. 30-33 CE",
+     "name": "Crucifixion of Jesus",
+     "place_name": "Jerusalem",
+     "lat": 31.78,
+     "lon": 35.23,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Jesus",
+      "Pontius Pilate"
+     ],
+     "what": "Jesus of Nazareth, a Jewish preacher from Galilee, was executed by crucifixion in Jerusalem on the orders of the Roman governor Pontius Pilate.",
+     "why": "His followers' belief that he rose from the dead founded a new movement within Judaism.",
+     "wikipedia": "Crucifixion of Jesus",
+     "wikidata": "Q51636"
+    },
+    {
+     "date": "0034",
+     "date_note": "c. 31-36 CE",
+     "name": "Conversion of Paul the Apostle",
+     "place_name": "Road to Damascus",
+     "lat": 33.51,
+     "lon": 36.29,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Paul the Apostle"
+     ],
+     "what": "Paul, a Greek-speaking Jew from Tarsus who had persecuted Jesus' followers, became one of them after a vision on the way to Damascus.",
+     "why": "Paul became the movement's most active missionary to non-Jews across the eastern Mediterranean.",
+     "wikipedia": "Conversion of Paul the Apostle",
+     "wikidata": "Q901397"
+    },
+    {
+     "date": "0050",
+     "date_note": "c. 48-50 CE",
+     "name": "Council of Jerusalem",
+     "place_name": "Jerusalem",
+     "lat": 31.78,
+     "lon": 35.23,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Paul the Apostle",
+      "Saint Peter",
+      "James, brother of Jesus"
+     ],
+     "what": "Leaders of the Jerusalem community met Paul and Barnabas and agreed that gentile converts did not need to be circumcised or keep the full Jewish law.",
+     "why": "The decision opened the movement to non-Jews and started its separation from Judaism.",
+     "wikipedia": "Council of Jerusalem",
+     "wikidata": "Q619950"
+    },
+    {
+     "date": "0051",
+     "date_note": "c. 50-52 CE, dated by the Gallio inscription at Delphi",
+     "name": "Paul at Corinth",
+     "place_name": "Corinth",
+     "lat": 37.91,
+     "lon": 22.88,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Paul the Apostle",
+      "Gallio"
+     ],
+     "what": "Paul spent about 18 months in the port city of Corinth working as a tentmaker and founding a church; he was brought before the governor Gallio, who refused to judge the case.",
+     "why": "Paul's churches grew in busy trading cities among artisans and traders, and his letters to them became part of the New Testament.",
+     "wikipedia": "Gallio",
+     "wikidata": "Q359750"
+    },
+    {
+     "date": "0054",
+     "date_note": "c. 52-55 CE",
+     "name": "Paul at Ephesus",
+     "place_name": "Ephesus",
+     "lat": 37.94,
+     "lon": 27.34,
+     "family": "culture",
+     "subtype": "journey",
+     "who": [
+      "Paul the Apostle"
+     ],
+     "what": "Paul worked for over two years in Ephesus, where Acts reports that silversmiths who made shrines of Artemis rioted in the theatre, fearing for their trade.",
+     "why": "The new faith began to threaten local cults and the businesses tied to them.",
+     "wikipedia": "Ephesus",
+     "wikidata": "Q47611"
+    },
+    {
+     "date": "0064-07",
+     "date_note": "fire began 18-19 July 64 CE",
+     "name": "Great Fire of Rome",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "disaster",
+     "subtype": "event",
+     "who": [
+      "Nero"
+     ],
+     "what": "A fire burned for six days and destroyed much of Rome; according to Tacitus, Nero blamed the Christians and had many put to death.",
+     "why": "It is the first recorded Roman persecution of Christians; tradition places the deaths of Peter and Paul in Rome in these years.",
+     "wikipedia": "Great Fire of Rome",
+     "wikidata": "Q215231"
+    },
+    {
+     "date": "0070-04",
+     "end_date": "0070-09",
+     "name": "Siege of Jerusalem (70 CE)",
+     "place_name": "Jerusalem",
+     "lat": 31.78,
+     "lon": 35.23,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Titus"
+     ],
+     "what": "Titus besieged Jerusalem during the First Jewish-Roman War, took the city and burned the Second Temple.",
+     "why": "Without the Temple, Judaism reorganised around the rabbis, and Christianity grew further apart from it.",
+     "wikipedia": "Siege of Jerusalem (70 CE)",
+     "wikidata": "Q844886"
+    },
+    {
+     "date": "0112",
+     "date_note": "c.",
+     "name": "Pliny's letter on the Christians",
+     "place_name": "Bithynia",
+     "lat": 40.77,
+     "lon": 29.92,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Pliny the Younger",
+      "Trajan"
+     ],
+     "what": "Pliny, governor of Bithynia, wrote to Trajan asking how to treat Christians; Trajan replied they should not be hunted out but punished if accused and they refused to sacrifice.",
+     "why": "The letters show Christianity spreading in towns and countryside and set the pattern of occasional, local persecution.",
+     "wikipedia": "Pliny the Younger on Christians",
+     "wikidata": "Q7205007"
+    },
+    {
+     "date": "0233",
+     "date_note": "c. 232-256 CE",
+     "name": "Dura-Europos church",
+     "place_name": "Dura-Europos",
+     "lat": 34.75,
+     "lon": 40.73,
+     "family": "culture",
+     "subtype": "building",
+     "who": [],
+     "what": "Christians at the frontier town of Dura-Europos on the Euphrates converted a private house into a meeting place with a painted baptistery, the oldest known church building.",
+     "why": "By the third century Christians met in ordinary houses even at the empire's edge, beside Jewish and pagan neighbours.",
+     "wikipedia": "Dura-Europos church",
+     "wikidata": "Q1473691"
+    },
+    {
+     "date": "0250",
+     "name": "Decian persecution",
+     "place_name": "Carthage",
+     "lat": 36.85,
+     "lon": 10.32,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Decius",
+      "Cyprian"
+     ],
+     "what": "Emperor Decius ordered every inhabitant to sacrifice to the gods and obtain a certificate; many Christians complied, and in Carthage bishop Cyprian went into hiding.",
+     "why": "The first empire-wide persecution split churches over whether the lapsed could return, but did not stop growth.",
+     "wikipedia": "Decian persecution",
+     "wikidata": "Q2590336"
+    },
+    {
+     "date": "0303-02",
+     "date_note": "first edict 24 February 303 CE",
+     "name": "Diocletianic Persecution",
+     "place_name": "Nicomedia",
+     "lat": 40.77,
+     "lon": 29.92,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Diocletian",
+      "Galerius"
+     ],
+     "what": "Diocletian and Galerius had the church at Nicomedia destroyed and issued edicts ordering scriptures burned, churches demolished and Christians stripped of rank.",
+     "why": "The harshest persecution came when Christians were already numerous, and it failed.",
+     "wikipedia": "Diocletianic Persecution",
+     "wikidata": "Q1265674"
+    },
+    {
+     "date": "0312-10-28",
+     "name": "Battle of the Milvian Bridge",
+     "place_name": "Milvian Bridge, Rome",
+     "lat": 41.94,
+     "lon": 12.47,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Constantine the Great",
+      "Maxentius"
+     ],
+     "what": "Constantine defeated his rival Maxentius outside Rome after, by Christian accounts, having his soldiers mark a Christian sign on their shields.",
+     "why": "The new ruler of the West credited his victory to the Christian God.",
+     "wikipedia": "Battle of the Milvian Bridge",
+     "wikidata": "Q339321"
+    },
+    {
+     "date": "0313",
+     "name": "Edict of Milan",
+     "place_name": "Milan",
+     "lat": 45.46,
+     "lon": 9.19,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Constantine the Great",
+      "Licinius"
+     ],
+     "what": "Constantine and Licinius agreed at Milan to grant freedom of worship to all and to return confiscated property to the churches.",
+     "why": "Christianity became a legal religion with an emperor as its patron.",
+     "wikipedia": "Edict of Milan",
+     "wikidata": "Q180764"
+    },
+    {
+     "date": "0325",
+     "date_note": "May to July 325 CE",
+     "name": "First Council of Nicaea",
+     "place_name": "Nicaea",
+     "lat": 40.43,
+     "lon": 29.72,
+     "family": "culture",
+     "subtype": "council",
+     "who": [
+      "Constantine the Great",
+      "Arius",
+      "Athanasius of Alexandria"
+     ],
+     "what": "Constantine called about 300 bishops to Nicaea, where they condemned Arius' teaching and agreed a creed and a common date for Easter.",
+     "why": "The emperor now presided over church doctrine, binding the faith to the state.",
+     "wikipedia": "First Council of Nicaea",
+     "wikidata": "Q133331"
+    },
+    {
+     "date": "0380-02-27",
+     "name": "Edict of Thessalonica",
+     "place_name": "Thessalonica",
+     "lat": 40.64,
+     "lon": 22.94,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Theodosius I"
+     ],
+     "what": "Theodosius I and his co-emperors decreed that all subjects should follow the Nicene Christianity of the bishops of Rome and Alexandria.",
+     "why": "Nicene Christianity became the state religion of the Roman Empire.",
+     "wikipedia": "Edict of Thessalonica",
+     "wikidata": "Q1257878"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "third_century_crisis",
+   "title": "Rome's third-century crisis",
+   "region": "Roman Empire",
+   "start": 235,
+   "end": 305,
+   "view": {
+    "lon": 25.0,
+    "lat": 40.0,
+    "span": 45
+   },
+   "blurb": "How did the Roman Empire nearly break apart in the third century, and how was it put back together?",
+   "steps": [
+    {
+     "date": "0235-03",
+     "date_note": "March 235",
+     "name": "Death of Severus Alexander",
+     "place_name": "Moguntiacum (Mainz)",
+     "lat": 50.0,
+     "lon": 8.27,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Severus Alexander",
+      "Maximinus Thrax"
+     ],
+     "what": "Soldiers on the Rhine killed Emperor Severus Alexander and his mother and proclaimed the officer Maximinus Thrax emperor.",
+     "why": "The start of fifty years in which armies made and unmade emperors, with more than twenty claiming the title.",
+     "wikipedia": "Severus Alexander",
+     "wikidata": "Q1769"
+    },
+    {
+     "date": "0238",
+     "name": "Year of the Six Emperors",
+     "place_name": "Thysdrus (El Djem)",
+     "lat": 35.3,
+     "lon": 10.71,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Gordian I",
+      "Maximinus Thrax"
+     ],
+     "what": "A tax revolt by landowners at Thysdrus in Africa proclaimed the old governor Gordian emperor; within the year six men had held the title.",
+     "why": "Heavy taxes to pay the army turned provincial elites against the emperors.",
+     "wikipedia": "Year of the Six Emperors",
+     "wikidata": "Q887817"
+    },
+    {
+     "date": "0248",
+     "date_note": "April 248",
+     "name": "Rome's thousandth anniversary",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "culture",
+     "subtype": "event",
+     "who": [
+      "Philip the Arab"
+     ],
+     "what": "Emperor Philip the Arab held games and spectacles to mark the thousandth year since the traditional founding of Rome.",
+     "why": "The celebration came just before the worst decades of invasion and disorder.",
+     "wikipedia": "Philip the Arab",
+     "wikidata": "Q1817"
+    },
+    {
+     "date": "0250",
+     "date_note": "c. 249-262",
+     "name": "Plague of Cyprian",
+     "place_name": "Carthage",
+     "lat": 36.85,
+     "lon": 10.32,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [
+      "Cyprian"
+     ],
+     "what": "An epidemic, described by Bishop Cyprian of Carthage, spread across the empire for over a decade; at its height thousands a day were reported dying in Rome.",
+     "why": "Disease cut the population of taxpayers and soldiers at the moment the frontiers came under attack.",
+     "wikipedia": "Plague of Cyprian",
+     "wikidata": "Q2321578"
+    },
+    {
+     "date": "0251-06",
+     "name": "Battle of Abritus",
+     "place_name": "Abritus",
+     "lat": 43.52,
+     "lon": 26.53,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Decius",
+      "Cniva"
+     ],
+     "what": "Goths under Cniva trapped the army of Emperor Decius in marshland in Moesia, killing Decius and his son.",
+     "why": "It was the first time a Roman emperor died fighting a foreign enemy.",
+     "wikipedia": "Battle of Abritus",
+     "wikidata": "Q1421082"
+    },
+    {
+     "date": "0260",
+     "date_note": "spring or early summer 260",
+     "name": "Battle of Edessa",
+     "place_name": "Edessa",
+     "lat": 37.16,
+     "lon": 38.79,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Valerian",
+      "Shapur I"
+     ],
+     "what": "The Sasanian king Shapur I defeated and captured Emperor Valerian near Edessa; Valerian died a prisoner in Persia.",
+     "why": "The capture of an emperor shattered Roman prestige in the East and left the provinces to defend themselves.",
+     "wikipedia": "Battle of Edessa",
+     "wikidata": "Q1165502"
+    },
+    {
+     "date": "0260",
+     "name": "Gallic Empire",
+     "place_name": "Colonia Agrippina (Cologne)",
+     "lat": 50.94,
+     "lon": 6.96,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Postumus"
+     ],
+     "what": "The Rhine commander Postumus was proclaimed emperor at Cologne and ruled Gaul, Britain and for a time Spain as a separate state.",
+     "why": "The western provinces broke away to get an emperor close enough to defend them.",
+     "wikipedia": "Gallic Empire",
+     "wikidata": "Q273025"
+    },
+    {
+     "date": "0260",
+     "date_note": "c.; built after 260",
+     "name": "Band-e Kaisar",
+     "place_name": "Shushtar",
+     "lat": 32.05,
+     "lon": 48.85,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Shapur I"
+     ],
+     "what": "Roman prisoners taken by Shapur I were settled in Khuzestan and, by tradition, built a bridge-dam over the Karun river at Shushtar to irrigate the plain.",
+     "why": "Rome's defeats moved engineers and craftsmen into the Sasanian economy.",
+     "wikipedia": "Band-e Kaisar",
+     "wikidata": "Q806225"
+    },
+    {
+     "date": "0268",
+     "date_note": "c.",
+     "name": "Debasement of the antoninianus",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Gallienus"
+     ],
+     "what": "To pay troops, emperors reduced the silver in the standard coin, the antoninianus, until by the 260s it held only a few percent silver over bronze.",
+     "why": "Prices rose and trust in coin fell, pushing the state toward taxes collected in kind.",
+     "wikipedia": "Antoninianus",
+     "wikidata": "Q599170"
+    },
+    {
+     "date": "0270",
+     "name": "Palmyrene Empire",
+     "place_name": "Palmyra",
+     "lat": 34.55,
+     "lon": 38.27,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Zenobia",
+      "Vaballathus"
+     ],
+     "what": "Queen Zenobia of the caravan city of Palmyra, ruling for her son Vaballathus, took Egypt and much of Asia Minor from Roman control.",
+     "why": "A rich trading city had become the real power of the Roman East.",
+     "wikipedia": "Palmyrene Empire",
+     "wikidata": "Q877875"
+    },
+    {
+     "date": "0271",
+     "name": "Aurelian Walls",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Aurelian"
+     ],
+     "what": "After German raiders reached northern Italy, Aurelian began a brick wall about 19 km long around Rome.",
+     "why": "For the first time in centuries the capital itself needed walls.",
+     "wikipedia": "Aurelian Walls",
+     "wikidata": "Q625149"
+    },
+    {
+     "date": "0272",
+     "name": "Battle of Emesa",
+     "place_name": "Emesa",
+     "lat": 34.73,
+     "lon": 36.71,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Aurelian",
+      "Zenobia"
+     ],
+     "what": "Aurelian defeated Zenobia's army at Emesa, then took Palmyra and captured the queen; in 274 he also ended the Gallic Empire.",
+     "why": "Within four years Aurelian reunited the empire, earning the title Restorer of the World.",
+     "wikipedia": "Battle of Emesa",
+     "wikidata": "Q2530973"
+    },
+    {
+     "date": "0284-11-20",
+     "name": "Accession of Diocletian",
+     "place_name": "Nicomedia",
+     "lat": 40.77,
+     "lon": 29.92,
+     "family": "unrest",
+     "subtype": "reign",
+     "who": [
+      "Diocletian"
+     ],
+     "what": "The army proclaimed the officer Diocletian emperor near Nicomedia after the death of Numerian.",
+     "why": "Diocletian would reign for over twenty years, ending the run of short reigns.",
+     "wikipedia": "Diocletian",
+     "wikidata": "Q43107"
+    },
+    {
+     "date": "0293",
+     "name": "Tetrarchy",
+     "place_name": "Nicomedia",
+     "lat": 40.77,
+     "lon": 29.92,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Diocletian",
+      "Maximian",
+      "Galerius",
+      "Constantius Chlorus"
+     ],
+     "what": "Diocletian shared rule with a second senior emperor, Maximian, and two junior Caesars, Galerius and Constantius, each with his own army and capital.",
+     "why": "Four rulers could face several frontiers at once, the key to stopping usurpations.",
+     "wikipedia": "Tetrarchy",
+     "wikidata": "Q174450"
+    },
+    {
+     "date": "0301",
+     "name": "Edict on Maximum Prices",
+     "place_name": "Aphrodisias",
+     "lat": 37.71,
+     "lon": 28.72,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Diocletian"
+     ],
+     "what": "Diocletian fixed maximum prices for over a thousand goods and wages, from wheat and wine to a day of a farm labourer; copies were carved in stone in eastern cities such as Aphrodisias.",
+     "why": "The attempt to stop inflation by decree failed, but the inscriptions are a priceless record of ordinary prices.",
+     "wikipedia": "Edict on Maximum Prices",
+     "wikidata": "Q1643279"
+    },
+    {
+     "date": "0305-05-01",
+     "name": "Diocletian's Palace",
+     "place_name": "Spalatum (Split)",
+     "lat": 43.51,
+     "lon": 16.44,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Diocletian"
+     ],
+     "what": "Diocletian abdicated, the only emperor to do so voluntarily, and retired to a fortified palace he had built on the Dalmatian coast.",
+     "why": "The empire he left was stable but more militarised, taxed and bureaucratic than before the crisis.",
+     "wikipedia": "Diocletian's Palace"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "fall_of_the_west",
+   "title": "The fall of the West",
+   "region": "Western Roman Empire",
+   "start": 376,
+   "end": 476,
+   "view": {
+    "lon": 12.0,
+    "lat": 42.0,
+    "span": 45
+   },
+   "blurb": "How did the Western Roman Empire lose its provinces and its last emperor in a single century?",
+   "steps": [
+    {
+     "date": "0376",
+     "name": "Goths cross the Danube",
+     "place_name": "Danube near Durostorum",
+     "lat": 44.12,
+     "lon": 27.26,
+     "family": "war",
+     "subtype": "event",
+     "who": [
+      "Fritigern",
+      "Valens"
+     ],
+     "what": "Fleeing the Huns, tens of thousands of Goths under Fritigern were allowed to cross the Danube into the empire, then abused and starved by Roman officials and rose in revolt.",
+     "why": "A refugee crisis turned into a war inside Roman territory.",
+     "wikipedia": "Gothic War (376–382)",
+     "wikidata": "Q1366196"
+    },
+    {
+     "date": "0378-08-09",
+     "name": "Battle of Adrianople",
+     "place_name": "Adrianople",
+     "lat": 41.68,
+     "lon": 26.56,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Valens",
+      "Fritigern"
+     ],
+     "what": "The Goths destroyed the eastern Roman field army near Adrianople, killing Emperor Valens and perhaps two thirds of his troops.",
+     "why": "Rome could no longer expel the Goths and settled them as federates with their own leaders.",
+     "wikipedia": "Battle of Adrianople",
+     "wikidata": "Q192473"
+    },
+    {
+     "date": "0394-09",
+     "date_note": "5-6 September 394",
+     "name": "Battle of the Frigidus",
+     "place_name": "Frigidus river",
+     "lat": 45.88,
+     "lon": 13.9,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Theodosius I",
+      "Eugenius",
+      "Arbogast",
+      "Alaric I"
+     ],
+     "what": "Theodosius defeated the western usurper Eugenius and his general Arbogast; Gothic federates, among them Alaric, suffered heavy losses in the front line.",
+     "why": "Roman armies were wasting their strength on civil war and leaning on barbarian troops.",
+     "wikipedia": "Battle of the Frigidus",
+     "wikidata": "Q836944"
+    },
+    {
+     "date": "0395-01",
+     "date_note": "Theodosius died 17 January 395",
+     "name": "Division of the empire",
+     "place_name": "Mediolanum (Milan)",
+     "lat": 45.46,
+     "lon": 9.19,
+     "family": "diplomacy",
+     "subtype": "event",
+     "who": [
+      "Theodosius I",
+      "Honorius",
+      "Arcadius"
+     ],
+     "what": "Theodosius I died at Milan, the last emperor to rule both halves; his young sons Arcadius and Honorius took the East and the West.",
+     "why": "From now on the two halves went separate ways, and the poorer West faced the invasions mostly alone.",
+     "wikipedia": "Theodosius I",
+     "wikidata": "Q46696"
+    },
+    {
+     "date": "0402",
+     "name": "Ravenna becomes capital",
+     "place_name": "Ravenna",
+     "lat": 44.42,
+     "lon": 12.2,
+     "family": "culture",
+     "subtype": "founding",
+     "who": [
+      "Honorius"
+     ],
+     "what": "With Alaric's Goths in Italy, Honorius moved the western court from Milan to Ravenna, protected by marshes and with a port to the East.",
+     "why": "The emperor retreated to safety while the rest of Italy was left exposed.",
+     "wikipedia": "Ravenna",
+     "wikidata": "Q13364"
+    },
+    {
+     "date": "0406-12",
+     "date_note": "traditional date 31 December 406; disputed",
+     "name": "Crossing of the Rhine",
+     "place_name": "Rhine near Moguntiacum",
+     "lat": 50.0,
+     "lon": 8.27,
+     "family": "war",
+     "subtype": "event",
+     "who": [],
+     "what": "Vandals, Alans and Suebi crossed the Rhine into Gaul and over the next years moved through it into Spain.",
+     "why": "The western provinces began to be lost for good to settled barbarian groups.",
+     "wikipedia": "Crossing of the Rhine",
+     "wikidata": "Q684915"
+    },
+    {
+     "date": "0410",
+     "date_note": "c.",
+     "name": "End of Roman rule in Britain",
+     "place_name": "Londinium",
+     "lat": 51.51,
+     "lon": -0.09,
+     "family": "unrest",
+     "subtype": "event",
+     "who": [
+      "Honorius"
+     ],
+     "what": "With the army withdrawn to fight on the continent, Britain was left to look after its own defence; towns, coinage and villas decayed within a generation.",
+     "why": "A whole province dropped out of the Roman economy, showing how much ordinary prosperity had depended on the state.",
+     "wikipedia": "End of Roman rule in Britain",
+     "wikidata": "Q2632793"
+    },
+    {
+     "date": "0410-08-24",
+     "name": "Sack of Rome (410)",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Alaric I"
+     ],
+     "what": "After failing to win land and office from Honorius, Alaric's Visigoths entered Rome and plundered it for three days.",
+     "why": "Rome had not fallen to a foreign enemy in 800 years, and the shock was felt across the empire.",
+     "wikipedia": "Sack of Rome (410)",
+     "wikidata": "Q1463845"
+    },
+    {
+     "date": "0413",
+     "end_date": "0426",
+     "name": "The City of God",
+     "place_name": "Hippo Regius",
+     "lat": 36.88,
+     "lon": 7.75,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Augustine of Hippo"
+     ],
+     "what": "Bishop Augustine of Hippo wrote the City of God over 13 years to answer pagans who blamed the sack of Rome on the abandonment of the old gods.",
+     "why": "It separated the fate of the Christian community from the fate of Rome, shaping Western thought for a thousand years.",
+     "wikipedia": "The City of God",
+     "wikidata": "Q212318"
+    },
+    {
+     "date": "0439-10-19",
+     "name": "Vandal capture of Carthage",
+     "place_name": "Carthage",
+     "lat": 36.85,
+     "lon": 10.32,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Gaiseric"
+     ],
+     "what": "Gaiseric's Vandals, who had crossed from Spain to Africa in 429, took Carthage by surprise and made it their capital.",
+     "why": "The West lost its richest provinces, its main grain supply and much of its tax base.",
+     "wikipedia": "Gaiseric",
+     "wikidata": "Q152127"
+    },
+    {
+     "date": "0451-06",
+     "date_note": "c. 20 June 451; site disputed",
+     "name": "Battle of the Catalaunian Plains",
+     "place_name": "Catalaunian Plains",
+     "lat": 48.95,
+     "lon": 4.36,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Attila",
+      "Flavius Aetius",
+      "Theodoric I"
+     ],
+     "what": "A Roman and Visigothic army under Aetius and King Theodoric fought Attila's Huns to a standstill in Gaul, and Attila withdrew.",
+     "why": "The West could still win battles, but only through alliances with the peoples settled on its land.",
+     "wikipedia": "Battle of the Catalaunian Plains",
+     "wikidata": "Q139808"
+    },
+    {
+     "date": "0452",
+     "name": "Destruction of Aquileia",
+     "place_name": "Aquileia",
+     "lat": 45.77,
+     "lon": 13.37,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Attila"
+     ],
+     "what": "Attila invaded Italy and destroyed the trading city of Aquileia; refugees fled to the islands of the lagoons, an episode later linked to the origins of Venice.",
+     "why": "Northern Italy was ravaged, and the Huns withdrew only after a papal embassy and disease in their army.",
+     "wikipedia": "Aquileia",
+     "wikidata": "Q53216"
+    },
+    {
+     "date": "0455-06",
+     "date_note": "June 455",
+     "name": "Sack of Rome (455)",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Gaiseric"
+     ],
+     "what": "Gaiseric's fleet sailed from Carthage and the Vandals plundered Rome for two weeks, carrying off treasure and captives including the empress.",
+     "why": "The Vandals now ruled the western Mediterranean at sea.",
+     "wikipedia": "Sack of Rome (455)",
+     "wikidata": "Q1463832"
+    },
+    {
+     "date": "0468",
+     "name": "Battle of Cape Bon (468)",
+     "place_name": "Off Cape Bon",
+     "lat": 37.08,
+     "lon": 11.05,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Basiliscus",
+      "Gaiseric"
+     ],
+     "what": "A huge joint expedition of the eastern and western empires against the Vandals, said to have cost over 60,000 pounds of gold, was destroyed by fireships off Cape Bon.",
+     "why": "The last real chance to recover Africa and its revenues for the West was gone.",
+     "wikipedia": "Battle of Cape Bon (468)",
+     "wikidata": "Q612221"
+    },
+    {
+     "date": "0476-09-04",
+     "name": "Deposition of Romulus Augustulus",
+     "place_name": "Ravenna",
+     "lat": 44.42,
+     "lon": 12.2,
+     "family": "unrest",
+     "subtype": "coup",
+     "who": [
+      "Odoacer",
+      "Romulus Augustulus"
+     ],
+     "what": "The general Odoacer deposed the boy emperor Romulus Augustulus, pensioned him off to a villa near Naples, and sent the imperial regalia to Constantinople.",
+     "why": "No new western emperor was named; Italy was ruled by a barbarian king, the traditional end of the Western Empire.",
+     "wikipedia": "Romulus Augustulus",
+     "wikidata": "Q130601"
+    }
+   ],
+   "status": "draft"
+  },
+  {
+   "id": "justinian",
+   "title": "Justinian's gamble",
+   "region": "Mediterranean",
+   "start": 527,
+   "end": 565,
+   "view": {
+    "lon": 20.0,
+    "lat": 38.0,
+    "span": 40
+   },
+   "blurb": "Could the eastern Roman Empire under Justinian win back the lost West, and what did the attempt cost?",
+   "steps": [
+    {
+     "date": "0527-08-01",
+     "name": "Accession of Justinian I",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "culture",
+     "subtype": "reign",
+     "who": [
+      "Justinian I",
+      "Theodora"
+     ],
+     "what": "Justinian, nephew of Justin I, became sole emperor, with his wife Theodora, a former actress, as empress.",
+     "why": "Justinian aimed to restore the Roman Empire in law, faith and territory.",
+     "wikipedia": "Justinian I",
+     "wikidata": "Q41866"
+    },
+    {
+     "date": "0529-04",
+     "date_note": "first Code issued 7 April 529",
+     "name": "Corpus Juris Civilis",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "culture",
+     "subtype": "invention",
+     "who": [
+      "Justinian I",
+      "Tribonian"
+     ],
+     "what": "A commission led by Tribonian issued a new code of imperial laws, followed by the Digest of Roman jurists in 533 and the Institutes textbook.",
+     "why": "The codification preserved Roman law; rediscovered in medieval Italy, it became a basis of European civil law.",
+     "wikipedia": "Corpus Juris Civilis",
+     "wikidata": "Q187719"
+    },
+    {
+     "date": "0530",
+     "name": "Battle of Dara",
+     "place_name": "Dara",
+     "lat": 37.18,
+     "lon": 40.95,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Belisarius"
+     ],
+     "what": "The young general Belisarius defeated a larger Sasanian army outside the frontier fortress of Dara using ditches and flank attacks.",
+     "why": "The victory made Belisarius' name and helped bring peace in the East.",
+     "wikipedia": "Battle of Dara",
+     "wikidata": "Q385604"
+    },
+    {
+     "date": "0532-01",
+     "date_note": "January 532",
+     "name": "Nika riots",
+     "place_name": "Hippodrome of Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "unrest",
+     "subtype": "revolt",
+     "who": [
+      "Justinian I",
+      "Theodora",
+      "Belisarius"
+     ],
+     "what": "The Blue and Green chariot-racing factions united against Justinian, burned much of the city and proclaimed a rival emperor; Belisarius' troops killed about 30,000 people trapped in the Hippodrome.",
+     "why": "Justinian survived with his power strengthened, and the burned centre of the city was rebuilt to his design.",
+     "wikipedia": "Nika riots",
+     "wikidata": "Q162665"
+    },
+    {
+     "date": "0532",
+     "name": "Perpetual Peace (532)",
+     "place_name": "Ctesiphon",
+     "lat": 33.09,
+     "lon": 44.58,
+     "family": "diplomacy",
+     "subtype": "treaty",
+     "who": [
+      "Justinian I",
+      "Khosrow I"
+     ],
+     "what": "Justinian agreed to pay the new Persian king Khosrow I 11,000 pounds of gold for an indefinite peace.",
+     "why": "Peace in the East freed Justinian's armies for the West.",
+     "wikipedia": "Perpetual Peace (532)",
+     "wikidata": "Q1285884"
+    },
+    {
+     "date": "0533-09-13",
+     "name": "Battle of Ad Decimum",
+     "place_name": "Ad Decimum, near Carthage",
+     "lat": 36.73,
+     "lon": 10.2,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Belisarius",
+      "Gelimer"
+     ],
+     "what": "Belisarius landed in Africa with about 15,000 men and defeated the Vandal king Gelimer ten miles from Carthage, entering the city two days later.",
+     "why": "The Vandal kingdom fell within months, and Africa's revenues returned to Roman hands.",
+     "wikipedia": "Battle of Ad Decimum",
+     "wikidata": "Q1127353"
+    },
+    {
+     "date": "0537-03",
+     "end_date": "0538-03",
+     "name": "Siege of Rome (537–538)",
+     "place_name": "Rome",
+     "lat": 41.89,
+     "lon": 12.49,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Belisarius",
+      "Vitiges"
+     ],
+     "what": "After taking Sicily and Naples, Belisarius held Rome for a year against the Ostrogothic king Vitiges, who cut the aqueducts.",
+     "why": "The Gothic war in Italy dragged on for nearly twenty years and wrecked the peninsula.",
+     "wikipedia": "Siege of Rome (537–538)",
+     "wikidata": "Q1834148"
+    },
+    {
+     "date": "0537-12-27",
+     "name": "Dedication of Hagia Sophia",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Justinian I",
+      "Anthemius of Tralles",
+      "Isidore of Miletus"
+     ],
+     "what": "Justinian dedicated the new church of Hagia Sophia, built in under six years by Anthemius and Isidore with a dome about 31 m across.",
+     "why": "It was the largest building of its age and a statement of imperial and Christian power.",
+     "wikipedia": "Hagia Sophia",
+     "wikidata": "Q12506"
+    },
+    {
+     "date": "0540",
+     "name": "Persian sack of Antioch",
+     "place_name": "Antioch",
+     "lat": 36.2,
+     "lon": 36.16,
+     "family": "war",
+     "subtype": "siege",
+     "who": [
+      "Khosrow I"
+     ],
+     "what": "Khosrow I broke the peace, sacked Antioch, one of the empire's greatest cities, and deported its people to a new town near Ctesiphon.",
+     "why": "The war in the West left the East exposed, forcing Justinian to fight on two fronts.",
+     "wikipedia": "Khosrow I",
+     "wikidata": "Q207381"
+    },
+    {
+     "date": "0541",
+     "date_note": "mid-541",
+     "name": "Plague reaches Pelusium",
+     "place_name": "Pelusium",
+     "lat": 31.04,
+     "lon": 32.55,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [],
+     "what": "Bubonic plague appeared at the Egyptian port of Pelusium and spread along grain and trade routes to Alexandria and Palestine.",
+     "why": "The first recorded pandemic of plague in the Mediterranean began here.",
+     "wikipedia": "Plague of Justinian",
+     "wikidata": "Q821711"
+    },
+    {
+     "date": "0542",
+     "date_note": "spring 542",
+     "name": "Plague in Constantinople",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "disaster",
+     "subtype": "plague",
+     "who": [
+      "Procopius",
+      "Justinian I"
+     ],
+     "what": "Procopius reported up to 10,000 deaths a day in the capital at its peak; Justinian himself fell ill and recovered.",
+     "why": "Losses of taxpayers, farmers and soldiers undermined the reconquest, and the plague kept returning for two centuries.",
+     "wikipedia": "Plague of Justinian",
+     "wikidata": "Q821711"
+    },
+    {
+     "date": "0547",
+     "date_note": "consecrated 547",
+     "name": "Basilica of San Vitale",
+     "place_name": "Ravenna",
+     "lat": 44.42,
+     "lon": 12.2,
+     "family": "culture",
+     "subtype": "building",
+     "who": [
+      "Maximianus of Ravenna"
+     ],
+     "what": "Bishop Maximianus consecrated San Vitale in recaptured Ravenna, with mosaics showing Justinian and Theodora with their courts.",
+     "why": "Imperial images placed Justinian's rule visibly in the heart of the old West.",
+     "wikipedia": "Basilica of San Vitale",
+     "wikidata": "Q721817"
+    },
+    {
+     "date": "0552",
+     "date_note": "June or July 552",
+     "name": "Battle of Taginae",
+     "place_name": "Taginae",
+     "lat": 43.27,
+     "lon": 12.78,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Narses",
+      "Totila"
+     ],
+     "what": "The eunuch general Narses defeated and killed the Ostrogothic king Totila in the Apennines.",
+     "why": "The Gothic kingdom was finished, but Italy was depopulated and fell largely to the Lombards from 568.",
+     "wikipedia": "Battle of Taginae",
+     "wikidata": "Q769358"
+    },
+    {
+     "date": "0552",
+     "date_note": "c.",
+     "name": "Smuggling of silkworm eggs",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "culture",
+     "subtype": "trade",
+     "who": [
+      "Justinian I"
+     ],
+     "what": "According to Procopius, monks brought silkworm eggs from Central Asia to Constantinople hidden in hollow canes, letting the empire produce its own silk.",
+     "why": "Ending dependence on Persian middlemen for silk was another way of fighting Persia, by trade.",
+     "wikipedia": "Smuggling of silkworm eggs into the East Roman Empire",
+     "wikidata": "Q16931947"
+    },
+    {
+     "date": "0559",
+     "name": "Battle of Melantias",
+     "place_name": "Melantias, near Constantinople",
+     "lat": 41.05,
+     "lon": 28.6,
+     "family": "war",
+     "subtype": "battle",
+     "who": [
+      "Belisarius"
+     ],
+     "what": "Called out of retirement, the aged Belisarius drove off Kutrigur raiders near the capital with a small force and local villagers.",
+     "why": "Even the capital's hinterland was now raided, showing how stretched the empire was.",
+     "wikipedia": "Battle of Melantias",
+     "wikidata": "Q34588915"
+    },
+    {
+     "date": "0565-11-14",
+     "name": "Death of Justinian I",
+     "place_name": "Constantinople",
+     "lat": 41.01,
+     "lon": 28.98,
+     "family": "culture",
+     "subtype": "death",
+     "who": [
+      "Justinian I"
+     ],
+     "what": "Justinian died after 38 years of rule, months after Belisarius, leaving Africa, Italy and part of Spain reconquered but the treasury empty.",
+     "why": "Much of the reconquest was lost within decades, but his laws and his church outlasted it.",
+     "wikipedia": "Justinian I",
+     "wikidata": "Q41866"
+    }
+   ],
+   "status": "draft"
+  }
+ ]
+}

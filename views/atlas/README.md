@@ -61,18 +61,19 @@ rows from the current time; rows from other centuries fold under "from other tim
 view and lenses (localStorage `atlas.resume.v1`, this browser only). The header question box steps aside while the Ask tab is open.
 Roadmap and critique: https://claude.ai/artifact/6saKUD2YsaVezRGC9M3z6o
 
-## Up close: Europe 1789-1914
+## Up close: any place, any period
 
-The Up close tab studies one region by the month: a month scrubber (1 month, 3 months or a year per second; `[` and
-`]` step a month), ten storylines with a Next button, what happened this month, wars under way, who was born and died.
-Its lenses: Chronicle (3,600 dated events, Power), Railways (26,000 stations by opening date, Wealth), Provinces
-(Land), Growing cities (Wealth), Lives (Peoples). Data: `data/europe-19c/`. The chronicle loads after the first paint
-like other big lens data; railways and lives load only when needed, from `atlas-files/e19-deep.json`, which has to be
-published beside the page:
-
-```sh
-python3 views/atlas/lenses/e19.py pub          # writes pub/atlas-files/e19-deep.json (about 2 MB)
-```
+The Up close tab studies whatever the map shows, by the month: pan or zoom anywhere, pick a span (a dense pack's
+window, a decade, a lifetime, a century, five centuries, or a storyline's), and scrub or play (1 month, a year or ten
+years per second; `[` and `]` step a month). It reads the world index (`views/atlas/world/`, see WORLD.md L1):
+what happened here this month (widening to the year, five years, a generation when that is thin), wars under way,
+who was born, died, lived or worked here, a "how deep" meter with the dense pack that covers the view, and the
+study storylines that pass through (75 of them, from Sumer to 1991, each with a Next button and the journeys of the
+people it names drawn on the map). Where the data is thin, "Fill in with Claude" adds draft rows (dashed on the map,
+marked draft, kept in this browser) and "Write a storyline for here and now" drafts a storyline. Its lenses:
+Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces, Growing cities and railway numbers
+(`lenses/e19.*`). Everything loads after the first paint from `atlas-files/world/` and `atlas-files/packs/`, which
+`build.py` writes beside the page: publish them with it (about 20 MB, fetched a slice or pack at a time).
 
 ## Travellers in motion
 
