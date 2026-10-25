@@ -426,6 +426,8 @@
         }
       }
     }
+    // title/place/date for the Who was there tab (travels thread).
+    for (const o of out) { o.title = o.caption; o.date = o.rec && o.rec.date ? o.rec.date : W.time.fmt(o.t); o.place = o.place || ""; }
     return out.sort((x, y) => (x.kind === "documented" ? 0 : x.kind === "could_have_met" ? 1 : 2) - (y.kind === "documented" ? 0 : y.kind === "could_have_met" ? 1 : 2));
   };
   W.documentedMeetings = () => MEET;
