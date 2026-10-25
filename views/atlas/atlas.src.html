@@ -165,7 +165,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .time .speed { grid-row: 2; grid-column: 3; justify-self: end; max-width: 84px; font-family: var(--mono); font-size: 11.5px; border: 1px solid var(--rule); background: var(--card); border-radius: 4px; padding: 1px 4px; cursor: pointer; }
 
 .panel { grid-area: panel; border-left: 1px solid var(--rule); overflow-y: auto; min-height: 0; display: flex; flex-direction: column; }
-.tabs { position: sticky; top: 0; z-index: 3; background: var(--paper); display: flex; gap: 2px; border-bottom: 1px solid var(--rule); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 12px; }
+.tabs { position: sticky; top: 0; z-index: 3; background: var(--paper); display: flex; flex-wrap: wrap; gap: 0 2px; border-bottom: 1px solid var(--rule); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 12px; }
 .tab { border: 0; background: none; padding: 9px 10px 8px; cursor: pointer; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); border-bottom: 2px solid transparent; }
 .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 .pane { padding: 14px max(16px, env(safe-area-inset-right, 0px)) 40px 16px; display: flex; flex-direction: column; gap: 14px; }
@@ -228,7 +228,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .mrow .n { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-align: right; }
 .mrow.off { opacity: .35; }
 .mrow.off .name { text-decoration: line-through; }
-.player { position: sticky; top: 36px; z-index: 2; background: var(--paper); display: flex; gap: 6px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.player { position: sticky; top: var(--tabs-h, 36px); z-index: 2; background: var(--paper); display: flex; gap: 6px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--rule); }
 .player .count { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin-left: auto; }
 .player .prog { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--ink); width: 0; }
 .steps { display: grid; gap: 8px; }
@@ -288,7 +288,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .map { position: sticky; top: 0; z-index: 4; height: 50vh; border-bottom: 1px solid var(--rule); }
   .panel { border-left: 0; overflow: visible; }
   .tabs { top: 50vh; padding-left: max(12px, env(safe-area-inset-left, 0px)); }
-  .player { top: calc(50vh + 36px); }
+  .player { top: calc(50vh + var(--tabs-h, 36px)); }
   .pane { padding-left: max(16px, env(safe-area-inset-left, 0px)); }
   .yearplate { font-size: 26px; }
   .maphint { top: 40px; }
@@ -387,7 +387,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .panel[data-sheet="peek"] > .pane { overflow: hidden; }
   .grab { display: block; flex: none; width: 100%; height: 22px; border: 0; background: none; cursor: grab; position: relative; touch-action: none; }
   .grab::before { content: ""; position: absolute; left: 50%; top: 8px; width: 40px; height: 5px; margin-left: -20px; border-radius: 3px; background: var(--rule); }
-  .tabs { position: static; top: auto; overflow-x: auto; scrollbar-width: none; flex: none; touch-action: none; }
+  .tabs { position: static; top: auto; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; flex: none; touch-action: none; }
   .tabs::-webkit-scrollbar { display: none; }
   .player { top: 0; }
   .keycard { max-height: calc(100% - 60px); }
@@ -1791,6 +1791,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     document.getElementById("panel").appendChild(el);
   }
   document.querySelectorAll(".tab").forEach(b => b.onclick = () => setTab(b.dataset.tab));
+  // With many plugin tabs the bar wraps onto more rows; sticky bars below it follow its height.
+  { const tb = document.querySelector(".tabs"); new ResizeObserver(() => document.documentElement.style.setProperty("--tabs-h", tb.offsetHeight + "px")).observe(tb); }
   let panelTimer;
   function refreshPanel() { clearTimeout(panelTimer); panelTimer = setTimeout(() => { if (state.tab === "now") renderNow(); else if (state.tab === "here") renderHere(); }, 140); }
 
@@ -1918,7 +1920,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     rows.forEach(([k, ys], i) => {
       // One tick per strip column (a thousand at most), not one per record: 11k battles would be 11k nodes.
       const xs = [...new Set(ys.filter(y => y >= MIN && y <= NOW).map(y => Math.round(yearToT(y) * 1000)))];
-      st.append("g").selectAll("line").data(xs).join("line")
+      const g = st.append("g");
+      g.append("title").text(`${NAME[k] || k}: a tick for each year this lens has something. Click the strip to jump there.`);
+      g.selectAll("line").data(xs).join("line")
         .attr("x1", x => x).attr("x2", x => x).attr("y1", 1 + i * rh).attr("y2", Math.max(1.6, rh - 1.3) + 1 + i * rh)
         .style("stroke", `var(--y-${k})`).style("stroke-opacity", k === "order" ? 0.35 : 0.7);
     });
