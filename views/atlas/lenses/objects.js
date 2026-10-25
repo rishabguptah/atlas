@@ -16,6 +16,7 @@
   const GRIDS = {
     obj_gem: ["..cvvvc..", ".cvvzvvc.", "cvzzvzzvc", ".vzvvvzv.", "..vzvzv..", "...vzv...", "....v...."],
     obj_gem_blue: ["..cbbbc..", ".cbbBbbc.", "cbBBbBBbc", ".bBbbbBb.", "..bBbBb..", "...bBb...", "....b...."],
+    obj_gem_red: ["..cRRRc..", ".cRRrRRc.", "cRrrRrrRc", ".RrRRRrR.", "..RrRrR..", "...RrR...", "....R...."],
     obj_codex: ["NNNNNNNw", "NRRRRRNw", "NRgRgRNw", "NRRgRRNw", "NRgRgRNw", "NRRRRRNw", "NNNNNNNw"],
     obj_marble: ["vvvvvvvvvv", "vzzzzzzzzv", "vzmzzzmzzv", "vmmmzmmmzv", "vzmzzzmzzv", "vzmmzzmmzv", "vzzzzzzzzv", "vvvvvvvvvv"],
     obj_stele: ["..dd....", ".dMMdd..", "dMmmmMd.", "dmMMMmMd", "dMmmmmmd", "dmMMMMmd", "dMmmmmmd", "dmMMMMmd", "dddddddd"],
@@ -27,6 +28,14 @@
     obj_sack: ["...nn...", "..tnnt..", "...tt...", "..tttt..", ".tttttt.", "ttdtdttt", "tttdtdtt", ".tttttt."],
     obj_stirrup: ["..MM..", "..MM..", ".M..M.", "M....M", "M....M", "M....M", "MMMMMM", "mmmmmm"],
     obj_paper: ["wwwwwwww", "wKKKKwww", "wwwwwwww", "wKKKwKKw", "wwwwwwww", "wKKKKKww", "wwwwwwwW", ".WWWWWWW"],
+    obj_throne: ["..b.lb.l..", ".blbgblbl.", "..gggggg..", "..gbGGbg..", "..gGrrGg..", "..gggggg..", ".gyyyyyyg.", ".g.g..g.g.", ".G.G..G.G."],
+    obj_buddha: ["...ll...", "...LL...", "..lLLl..", ".llLLll.", ".lLllLl.", "llLllLll", "lLLLLLLl", "gggggggg", ".GGGGGG."],
+    obj_tiger: ["..oo.......", ".okko..ww..", ".oooo.wssw.", "ookokooowsw", "okokokookw.", "oooooooow..", ".k.k..k.k..", "nnnnnnnnnnn"],
+    obj_shell: ["..WWWW..", ".WwwwwW.", "WwwKwwwW", "Ww.K.wwW", "WwwKwwwW", ".WwwwwW.", "..WWWW.."],
+    obj_feather: ["..lbbbl..", ".lebbbel.", "lebgggbel", "lbgyyygbl", ".lgyyygl.", "..ggggg..", "...rrr...", "...gGg..."],
+    obj_door: ["NnnnnNnnnnN", "NngnnNnngnN", "NnnnnNnnnnN", "NnngnNngnnN", "NnnnnNnnnnN", "NngnnNnngnN", "NnnnnNnnnnN", "NNNNNNNNNNN"],
+    obj_bird: ["..MMM...", ".MmmkM..", "MMmmmMM.", "..MmmmM.", "...MmmM.", "...MmM..", "...mm...", "..MmmM..", "..MmmM..", "..MMMM.."],
+    obj_blackstone: [".mmmmmm.", "mMddddMm", "mdkkKkdm", "mdkKkkdm", "mdkkkKdm", "mMddddMm", ".mmmmmm."],
     obj_potato: ["..nttn..", ".ttttttn", "ttntttnt", "tttttttn", ".nttnttn", "..nnnnn."],
   };
   const KEYS0 = { k: "#221f1a", K: "#4a4035", w: "#f6f0dc", W: "#d9cfb2", r: "#b8382a", R: "#7c2018", y: "#e8c050", g: "#c89a2a", G: "#8a6418",
@@ -86,11 +95,25 @@
     for (const s of ob.stops) s.prev = s.f != null ? ob.stops[s.f] : null;
     ob.y0 = ob.stops[0].y; ob.y1 = ob.stops[ob.stops.length - 1].y;
     // Geodesic length of each leg, for moving along it.
-    for (const s of ob.stops) if (s.L) {
-      s.seg = []; s.len = 0;
-      for (let i = 1; i < s.L.length; i++) { const d = d3.geoDistance(s.L[i - 1], s.L[i]); s.seg.push(d); s.len += d; }
-    }
+    for (const s of ob.stops) if (s.L) measure(s);
     return ob;
+  }
+  function measure(s) {
+    s.seg = []; s.len = 0;
+    for (let i = 1; i < s.L.length; i++) { const d = d3.geoDistance(s.L[i - 1], s.L[i]); s.seg.push(d); s.len += d; }
+  }
+  // Legs where only the endpoints are known go by the shared router once it is on the page (views/atlas/world/route.js),
+  // asked lazily when a journey is opened. Until then, and if it fails, the leg stays a straight line.
+  function routeLegs(o) {
+    const R = ATLAS.world && ATLAS.world.route; if (!R || o.routed) return; o.routed = true;
+    for (const s of o.stops) if (s.r && s.prev && !s.g && s.v !== "air") {
+      try {
+        Promise.resolve(R(s.prev.at, s.at, s.y, { mode: s.v || "land", carrier: "object" })).then(r => {
+          if (!r || !r.path || r.path.length < 2) return;
+          s.L = r.path; s.routed = true; measure(s); if (api) api.redraw();
+        }, () => {});
+      } catch (err) { /* router not ready for this leg */ }
+    }
   }
   // A point t (0-1) of the way along a leg, and the leg up to there.
   function along(s, t) {
@@ -267,6 +290,8 @@
 .obj .stops li p { margin: 4px 0 0; font-size: 13.5px; display: none; }
 .obj .stops li.on p { display: block; }
 .obj .note { font-size: 13px; color: var(--ink-soft); margin: 0; }
+.obj .trace { display: flex; gap: 6px; margin: 8px 0 0; } .obj .trace input { flex: 1; min-width: 0; font: inherit; padding: 6px 8px; border: 1px solid #b9ab8e; border-radius: 6px; background: transparent; color: inherit; }
+.obj .ai { color: #a33a2a; font-weight: 600; }
 .obj .quiz { display: grid; gap: 6px; padding: 10px; border: 2px solid ${COLOR}; border-radius: 8px; }
 .obj .quiz .go { text-align: left; } .obj .quiz .dim { opacity: .45; }
 .obj .quiz .yes { color: #2f7a4b; margin: 0; font-weight: 600; } .obj .quiz .no { color: #a33a2a; margin: 0; font-weight: 600; }
@@ -282,8 +307,11 @@
     const C = C0(), row = o => `<button type="button" class="row" data-id="${esc(o.id)}">${thumb(o.sp)}<div><b>${esc(o.n)}</b><span>${esc(first(o.w))}</span></div><span class="yr">${esc(fmtY(o.y0))} – ${esc(fmtY(o.y1))}</span></button>`;
     pane.innerHTML = `<div class="obj"><p class="lede">Follow a thing through time: who made it, who took it, how it travelled, and how sure we are of each step.</p>
       <div class="ctl"><button type="button" class="go" data-act="surprise">Follow something</button></div>
-      <p class="grp">Famous objects</p>${C.objs.filter(o => o.t === "single").map(row).join("")}
-      <p class="grp">Kinds of things</p>${C.objs.filter(o => o.t === "kind").map(row).join("")}
+      <form id="obj-trace" class="trace"><input id="obj-q" type="text" placeholder="Trace any object: the Holy Lance, tea, the Crown of Saint Stephen…" aria-label="Object to trace" autocomplete="off"><button type="submit" class="go">Trace</button></form>
+      <p class="note" id="obj-hint" aria-live="polite"></p>
+      ${C.objs.some(o => o.ai) ? `<p class="grp">Traced by AI (unchecked drafts)</p>${C.objs.filter(o => o.ai).map(row).join("")}` : ""}
+      <p class="grp">Famous objects</p>${C.objs.filter(o => o.t === "single" && !o.ai).map(row).join("")}
+      <p class="grp">Kinds of things</p>${C.objs.filter(o => o.t === "kind" && !o.ai).map(row).join("")}
       <p class="note">Drafts written from the cited works, waiting for the judge. Routes between stops are drawn as likely paths, not tracks.</p></div>`;
   }
   function renderObj() {
@@ -291,7 +319,7 @@
     const on = follow.id === o.id;
     pane.innerHTML = `<div class="obj">
       <div class="ctl"><button type="button" class="go ghost" data-act="back">← All objects</button></div>
-      <div class="hd">${thumb(o.sp)}<div><h3>${esc(o.n)}</h3><p class="note">${esc(fmtY(o.y0))} – ${esc(fmtY(o.y1))} · ${o.stops.length} stops</p></div></div>
+      <div class="hd">${thumb(o.sp)}<div><h3>${esc(o.n)}</h3><p class="note">${esc(fmtY(o.y0))} – ${esc(fmtY(o.y1))} · ${o.stops.length} stops${o.ai ? ` · <b class="ai">AI draft, unchecked</b>` : ""}</p></div></div>
       <p>${esc(o.w)}</p>${o.why ? `<p class="note">${esc(o.why)}</p>` : ""}
       <div class="ctl">${on ? `<button type="button" class="go ghost" data-act="prev" aria-label="Previous stop">◀</button>
         <button type="button" class="go" data-act="pause">${follow.playing ? "❚❚ Pause" : "▶ Play"}</button>
@@ -411,6 +439,7 @@
   }
   function start(id, game = false) {
     const o = C0().byId[id]; if (!o) return false;
+    routeLegs(o);
     follow.id = id; openId = id; follow.i = 0; follow.quiz = null; follow.game = game ? { score: 0, n: 0 } : null;
     if (api) { api.setTab(ID); playFrom(0); }
     return true;
@@ -442,7 +471,7 @@
       if (!document.getElementById("objects-style")) { const st = document.createElement("style"); st.id = "objects-style"; st.textContent = STYLE; document.head.appendChild(st); }
       el.addEventListener("click", ev => {
         const b = ev.target.closest("[data-act]"); if (b) return act(b.dataset.act);
-        const r = ev.target.closest(".row[data-id]"); if (r) { openId = r.dataset.id; return render(); }
+        const r = ev.target.closest(".row[data-id]"); if (r) { openId = r.dataset.id; routeLegs(C0().byId[openId]); return render(); }
         const li = ev.target.closest("li[data-i]");
         if (li) {
           const C = C0(), o = C.byId[openId], s = o && o.stops[+li.dataset.i]; if (!s) return;
@@ -450,12 +479,113 @@
           run++; follow.playing = false; showStop(s.i, run);
         }
       });
+      el.addEventListener("submit", ev => { if (ev.target.id !== "obj-trace") return; ev.preventDefault(); const q = el.querySelector("#obj-q").value.trim(); if (q) trace(q); });
+      loadTraced();
       // Stop following if the person drags time away from the journey.
       document.addEventListener("keydown", ev => { if (ev.key === "Escape" && follow.id) stop(); });
       render();
     },
     show() { render(); },
   });
+
+
+  // ---------- trace any object (live AI) ----------
+  // For things nobody has curated yet: Claude writes the journey as JSON lines, stop by stop, in the same compact rows
+  // objects.py emits, and it plays like any other. Marked as an unchecked AI draft. Kept in this browser only.
+  let sample = null, tracing = null;
+  const sampleReady = (async () => { try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; } })();
+  const TRACED = "atlas.objects.traced.v1";
+  const TRACE_RULES = () => `You are the Atlas object historian. Trace one object, or one kind of thing, through space and time for a world map: where it was made or first found, every place it went, who held it, how it moved, and how sure we are.
+Mix: 55% vivid, 45% rigorous. Prefer concrete people, dates and numbers. Never present legend as fact: mark it.
+
+OUTPUT: JSON Lines only, one object per line, no prose, no markdown, no code fences.
+1. First line: {"t":"object","name":"its usual English name","type":"single" (one physical thing) or "kind" (a kind of thing that spread, e.g. tea, the compass),"what":"1-2 sentences: what it is","why":"1-2 sentences: why its journey is worth following","now":"where it is today, or null","dispute":"ownership or authenticity dispute, or null","sprite":one of ${JSON.stringify(Object.keys(GRIDS))},"sources":[{"cite":"Author (year). Title.","url":"optional"}]}
+2. Then 5 to 12 stops in time order:
+{"t":"stop","y":integer year (negative = BCE, never 0),"approx":true if the year is approximate,"lon":number,"lat":number,"place":"place name","owner":"who held it","by":"one verb: made, found, carried, traded, looted, seized, gift, sold, bought, hidden, lost, returned, displayed, copied, ...","conf":"sure" (documented) | "likely" (probable, or the route is a guess) | "legend" (tradition only),"via":"land" | "sea" | "river" | "caravan" | "rail" | "air" (how it got here; omit on the first stop),"path":[[lon,lat],...] (for sea legs: waypoints from the previous place that stay in water, round capes and through straits; omit for land),"from":index of the earlier stop it came from (kinds only, when not the previous one),"split":true if only part of it went here (the rest stayed),"copy":true if only copies or casts went here,"end":true if it is lost or destroyed here,"note":"2-3 sentences with names and numbers","meet":"who could have seen it here, e.g. a sailor on the galleon, or null","sources":[{"cite":"..."}]}
+
+MAP RULES: points are [lon,lat], longitude first. Use real coordinates. A single object is in one place at a time: use split or copy for parts or copies that went elsewhere.
+SOURCE RULES: cite works you are confident exist, or en.wikipedia.org URLs you are confident exist. Never invent a URL.`;
+  const ERR = { not_granted: "Tracing is off because Claude access was not allowed for this page.", sampling_disabled: "Claude isn't available for this account here.", rate_limited: "Too many requests at once. Wait a minute and try again.", refused: "Claude declined this one. Try another object." };
+  const fin = Number.isFinite, CONFS = ["sure", "likely", "legend"];
+  const slug = s => "ai_" + String(s).toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 40);
+  function srcIdx(C, list) {
+    return (Array.isArray(list) ? list : []).filter(s => s && s.cite).slice(0, 6).map(s => {
+      const url = /^https:\/\/en\.wikipedia\.org\//.test(s.url || "") ? s.url : undefined;
+      let i = C.D.src.findIndex(r => r[0] === String(s.cite)); if (i < 0) { i = C.D.src.length; C.D.src.push(url ? [String(s.cite), url] : [String(s.cite)]); }
+      return i;
+    });
+  }
+  // One streamed stop line to a compact row, resolving where it came from as objects.py does.
+  function rowFrom(o, st, x) {
+    const y = Math.round(+x.y), at = [Math.max(-180, Math.min(180, +x.lon)), Math.max(-89, Math.min(89, +x.lat))];
+    if (!fin(y) || !y || !fin(at[0]) || !fin(at[1])) return null;
+    const r = { y, p: String(x.place || "?").slice(0, 80), at, by: String(x.by || "carried").slice(0, 20), c: CONFS.includes(x.conf) ? x.conf : "likely", n: String(x.note || "").slice(0, 600) };
+    if (x.approx) r.a = true; if (x.owner) r.o = String(x.owner).slice(0, 80); if (x.meet) r.m = String(x.meet).slice(0, 120);
+    if (x.via) r.v = String(x.via); if (x.end) r.e = true; if (x.copy) r.cp = true; if (x.split) r.sp = true;
+    let f = null;
+    if (fin(+x.from) && +x.from >= 0 && +x.from < st.length) f = +x.from;
+    else if (o.t === "kind") { let best = Infinity; st.forEach((s, i) => { const d = d3.geoDistance(s.at, at); if (s.y <= y && d > 0 && d < best) { best = d; f = i; } }); }
+    else for (let i = st.length - 1; i >= 0; i--) if (!st[i].cp && !st[i].sp) { f = i; break; }
+    const path = Array.isArray(x.path) ? x.path.filter(q => Array.isArray(q) && fin(+q[0]) && fin(+q[1])).map(q => [+q[0], +q[1]]) : [];
+    if (f != null && (path.length > 1 || d3.geoDistance(st[f].at, at) > 1e-4)) { r.f = f; r.L = path.length > 1 ? path : [st[f].at, at]; if (path.length < 2) r.r = 1; }
+    return r;
+  }
+  function addObj(raw) {
+    const C = C0(), old = C.byId[raw.id], ob = mk(raw); ob.ai = true;
+    if (old) C.objs[C.objs.indexOf(old)] = ob; else C.objs.unshift(ob);
+    C.byId[ob.id] = ob; return ob;
+  }
+  function saveTraced(raw) {
+    try { const all = JSON.parse(localStorage.getItem(TRACED) || "[]").filter(x => x.raw.id !== raw.id);
+      all.unshift({ raw, src: raw.s.map(i => C0().D.src[i]), stops: raw.st.map(s => ({ ...s, s: (s.s || []).map(i => C0().D.src[i]) })) });
+      localStorage.setItem(TRACED, JSON.stringify(all.slice(0, 12))); } catch { /* storage off */ }
+  }
+  function loadTraced() {
+    let all = []; try { all = JSON.parse(localStorage.getItem(TRACED) || "[]"); } catch { return; }
+    const C = C0();
+    for (const x of all.reverse()) {
+      if (!x || !x.raw || C.byId[x.raw.id]) continue;
+      const raw = { ...x.raw, s: srcIdx(C, (x.src || []).map(r => ({ cite: r[0], url: r[1] }))), st: (x.stops || []).map(s => ({ ...s, s: srcIdx(C, (s.s || []).map(r => ({ cite: r[0], url: r[1] }))) })) };
+      if (raw.st.length) addObj(raw);
+    }
+  }
+  async function trace(q) {
+    const hint = pane && pane.querySelector("#obj-hint"), say = m => { if (hint) hint.textContent = m; };
+    if (!sample) { say("Connecting to Claude…"); await sampleReady; }
+    if (!sample) { say("Tracing needs this page open in Claude. The curated journeys work anywhere."); return; }
+    if (tracing) tracing.abort();
+    const my = tracing = new AbortController(), C = C0();
+    let raw = null, done = 0, ob = null;
+    const eat = line => {
+      line = line.trim(); if (!line.startsWith("{")) return;
+      let x; try { x = JSON.parse(line); } catch { return; }
+      if (x.t === "object" && !raw) {
+        raw = { id: slug(x.name || q), n: String(x.name || q).slice(0, 80), t: x.type === "kind" ? "kind" : "single", sp: GRIDS[x.sprite] ? x.sprite : "obj_relic",
+          w: String(x.what || "").slice(0, 400), why: x.why ? String(x.why).slice(0, 400) : null, now: x.now ? String(x.now).slice(0, 200) : null,
+          dis: x.dispute ? String(x.dispute).slice(0, 300) : null, st: [], s: srcIdx(C, x.sources), status: "ai draft" };
+      } else if (x.t === "stop" && raw) {
+        const r = rowFrom(raw, raw.st, x); if (!r) return;
+        if (raw.st.length && r.y < raw.st[raw.st.length - 1].y && raw.t === "single") return;  // out of order: drop rather than jump back
+        r.s = srcIdx(C, x.sources); raw.st.push(r);
+        ob = addObj(raw); openId = ob.id; if (!follow.id) render();
+      }
+    };
+    const feed = text => { const ls = text.split("\n"); for (; done < ls.length - 1; done++) eat(ls[done]); if (raw && !follow.id) say(`Tracing ${raw.n}: ${raw.st.length} stops so far…`); };
+    say(`Tracing ${q}…`);
+    try {
+      const res = await sample([{ role: "user", content: TRACE_RULES() }, { role: "user", content: `Trace: ${q}` }], { signal: my.signal, cache: false, onText: ({ text }) => feed(text) });
+      feed(res.text + "\n");
+    } catch (e) {
+      if (e && e.text) feed(e.text + "\n");
+      if (e?.code !== "cancelled") say(ERR[e?.code] || "The connection dropped. Try again.");
+      if (e?.code === "not_granted" || e?.code === "sampling_disabled") sample = null;
+      if (tracing === my) tracing = null;
+      return;
+    }
+    if (tracing === my) tracing = null;
+    if (!raw || raw.st.length < 2) { say("That trace didn't come back in a shape the map can read. Try again, or name the object more exactly."); return; }
+    saveTraced(raw); openId = raw.id; render(); start(raw.id);
+  }
 
   // ---------- for other plugins (the life RPG): which object is where ----------
   const rowOf = (C, o, s, extra) => ({ id: o.id, name: o.n, type: o.t, lon: s.lon, lat: s.lat, place: s.p, owner: s.owner, by: s.by, conf: s.c, meet: s.m || null, year: s.y, card: stopCard(C, s), ...extra });
@@ -467,17 +597,47 @@
     }
     return out;
   };
+  // Confidence in the shared classes: sure is attested, likely estimated, legend unknown. A leg we drew straight between
+  // two known places, or across a gap in the record, is at best approximate.
+  const C5 = { sure: "attested", likely: "estimated", legend: "unknown" }, RANK = ["attested", "estimated", "approximate", "unknown"];
+  const worse = (a, b) => RANK[Math.max(RANK.indexOf(a), RANK.indexOf(b))];
+  const conf5 = s => C5[s.c] || "unknown";
+  const legConf = s => s.g ? "unknown" : s.r && !s.routed ? worse(conf5(s), "approximate") : conf5(s);
+  const date = (y, a) => (y < 0 ? "-" + String(-y).padStart(4, "0") : String(y).padStart(4, "0")) + (a ? "~" : "");
+  const legOf = s => ({ from: s.prev ? s.prev.p : null, to: s.p, from_at: s.prev ? s.prev.at : null, to_at: s.at,
+    start_date: date(s.prev ? Math.max(s.prev.y, s.y - 1) : s.y, s.a), end_date: date(s.y, s.a), mode: s.v || "land", conf: legConf(s),
+    via: s.L, by: s.by, owner: s.owner, branch: s.br, src: srcOf(C0(), s.obj, s) });
+  // A Story of Scenes (views/atlas/WORLD.md, L4) for the shared Director: an opening on why it matters, then one scene per stop.
+  const LENS_OF = { looted: "military", seized: "military", tribute: "military", traded: "economy", paid: "economy", taxed: "economy",
+    gift: "politics", made: "art", copied: "art", read: "ideas", found: "archaeology" };
+  function story(o) {
+    const sid = i => `object:${o.id}:${i}`, C = C0();
+    const first = o.stops[0], scenes = [{ id: sid("open"), t: first.y, view: { ...viewFor(first), span: 60 }, lenses: [ID],
+      highlight: [], pins: [], routes: [], actors: ["object:" + o.id], caption: `${o.n}. ${o.w.split(". ")[0]}.`.slice(0, 160),
+      text: o.why || o.w, by: "object", conf: conf5(first), sources: o.s.map(C.src), branch: null, next: [sid(0)], ask: "Why does it matter?" }];
+    o.stops.forEach((s, i) => scenes.push({ id: sid(i), t: s.y, date: date(s.y, s.a), view: viewFor(s), lenses: [ID],
+      highlight: [], pins: [{ lon: s.lon, lat: s.lat, label: s.p, sprite: sprite(o.sp), conf: conf5(s) }],
+      routes: s.L ? [{ path: s.L, conf: legConf(s), mode: s.v || "land", carrier: s.v === "sea" ? "ship" : "caravan" }] : [],
+      actors: ["object:" + o.id], caption: `${fmtY(s.y)}. ${o.n}: ${s.p}`.slice(0, 160), text: s.n + (s.m ? ` Who could have seen it: ${s.m}.` : ""),
+      by: LENS_OF[s.by] || "history", conf: conf5(s), sources: srcOf(C, o, s), branch: s.br ? sid(o.stops.indexOf(homeAt(o, i))) : null,
+      next: i + 1 < o.stops.length ? [sid(i + 1)] : [], ask: "How do we know?" }));
+    if (o.now) scenes[scenes.length - 1].next = [sid("now")], scenes.push({ id: sid("now"), t: o.y1, view: viewFor(o.stops[o.stops.length - 1]), lenses: [ID], highlight: [], pins: [], routes: [],
+      actors: ["object:" + o.id], caption: `Today: ${o.now}`.slice(0, 160), text: o.dis ? `Disputed: ${o.dis}` : o.now, by: "object",
+      conf: "attested", sources: o.s.map(C.src), branch: null, next: [], ask: null });
+    return { id: "object:" + o.id, title: o.n, kind: "object", scenes };
+  }
   ATLAS.objects = {
     list: () => C0().objs.map(o => ({ id: o.id, name: o.n, type: o.t, what: o.w, sprite: sprite(o.sp), from: o.y0, to: o.y1 })),
+    // The journey in the shared shape (views/atlas/WORLD.md): a route record, subtype journey, one leg per move.
     journey: id => {
-      const o = C0().byId[id]; if (!o) return null;
-      return { id: o.id, name: o.n, type: o.t, what: o.w, why: o.why, now: o.now, dispute: o.dis, sprite: sprite(o.sp),
-        stops: o.stops.map(s => ({ y: s.y, approx: !!s.a, lon: s.lon, lat: s.lat, place: s.p, owner: s.owner, by: s.by, conf: s.c, note: s.n, meet: s.m || null,
-          from: s.f ?? null, path: s.L || null, gap: !!s.g, branch: s.br, sources: srcOf(C0(), o, s) })),
-        // The same journey as legs in the shared itinerary format (ATLAS.world): one leg per move, t0 leaving, t1 arriving.
-        legs: o.stops.filter(s => s.L).map(s => ({ place: s.p, lon: s.lon, lat: s.lat, t0: Math.max(s.prev ? s.prev.y : s.y, s.y - 1), t1: s.y,
-          mode: s.v || "land", conf: s.g ? "legend" : s.c, by: s.by, from: s.prev ? s.prev.p : null, path: s.L, branch: s.br, src: srcOf(C0(), o, s) })) };
+      const C = C0(), o = C.byId[id]; if (!o) return null;
+      return { kind: "route", subtype: "journey", id: "route:object_" + o.id, carrier: "object:" + o.id, name: o.n, type: o.t,
+        what: o.w, why: o.why, now: o.now, dispute: o.dis, sprite: sprite(o.sp), status: o.status, sources: o.s.map(C.src),
+        stops: o.stops.map(s => ({ y: s.y, approx: !!s.a, lon: s.lon, lat: s.lat, place: s.p, owner: s.owner, by: s.by, conf: conf5(s), note: s.n,
+          meet: s.m || null, from: s.f ?? null, path: s.L || null, gap: !!s.g, branch: s.br, sources: srcOf(C, o, s) })),
+        legs: o.stops.filter(s => s.L).map(legOf) };
     },
+    story: id => { const o = C0().byId[id]; return o ? story(o) : null; },
     at,
     near: (lon, lat, y, km = 300) => at(y).filter(r => d3.geoDistance([lon, lat], [r.lon, r.lat]) * 6371 <= km),
     follow: id => start(id),
