@@ -7,7 +7,7 @@
   --f-hud: "Silkscreen", "Pixelify Sans", ui-monospace, monospace;
   --f-prose: "Spectral", Georgia, "Times New Roman", serif;
   --ease: cubic-bezier(.2, .7, .2, 1);
-  --era: var(--lapis); --era-2: var(--rubric);
+  --era: var(--era-accent, var(--lapis)); --era-2: var(--era-frame-b, var(--rubric));
 }
 
 /* Frames: a 9-slice pixel border. The slice and width come from the kit; 2 CSS px per art px. */

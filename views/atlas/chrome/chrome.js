@@ -51,35 +51,30 @@
     dress();
   }
 
-  // ---------- the year cartouche: era line, era accent hook ----------
-  // Eras as the art direction names them (D9). The era-styles thread owns the grade; the chrome only swaps its accent.
-  const ACCENT = [
-    [-99999, -500, "antiquity", "Antiquity"], [-500, 500, "antiquity", "Classical antiquity"], [500, 1000, "medieval", "Early Middle Ages"], [1000, 1450, "medieval", "High and late Middle Ages"],
-    [1450, 1789, "early-modern", "Early modern"], [1789, 1914, "long-19th", "The long 19th century"], [1914, 1991, "20th", "The 20th century"], [1991, 99999, "now", "Now"],
-  ];
+  // ---------- the year cartouche's era line, and era names under the slider ----------
+  // Year steps must stay inside one frame, so this only touches the DOM when the era changes, and measures
+  // the era buttons once per resize. The era-styles thread owns data-era and the --era-* accents on the root.
   const ypEra = $("#ypera");
-  function syncEra(y) {
-    const a = ACCENT.find(e => y >= e[0] && y < e[1]) || ACCENT[ACCENT.length - 1];
-    if (root.dataset.era !== a[2]) root.dataset.era = a[2];
-    const cur = $("#eras button[aria-current='true']");
-    if (ypEra) ypEra.textContent = cur ? (cur.dataset.full || cur.title.split(",")[0]) : a[3];
-  }
-
-  // ---------- eras under the slider: the current one and its neighbours by name, the rest by initials ----------
-  function syncEraNames() {
+  let eraIdx = -2, eraW = null;
+  function syncEraNames(force) {
     const bs = $$("#eras button"), i = bs.findIndex(b => b.getAttribute("aria-current") === "true");
+    if (i === eraIdx && !force) return;
+    eraIdx = i;
+    if (!eraW || force) eraW = bs.map(b => b.getBoundingClientRect().width);
     bs.forEach((b, j) => {
       if (!b.dataset.full) b.dataset.full = b.textContent;
-      const full = b.dataset.full, w = b.getBoundingClientRect().width;
+      const full = b.dataset.full, w = eraW[j] || 0;
       const short = full.split(/[\s-]+/).filter(Boolean).map(s => /^\d/.test(s) ? s : s[0]).join("").toUpperCase();
-      // Full names where they fit near you, initials elsewhere; the name is always in the tooltip.
-      b.textContent = Math.abs(j - i) <= 1 && w >= full.length * 6.4 ? full : w >= short.length * 7 + 6 ? short : "";
+      // Full names near you where they fit, initials elsewhere; the name is always in the tooltip.
+      const t = Math.abs(j - i) <= 1 && w >= full.length * 6.4 ? full : w >= short.length * 7 + 6 ? short : "";
+      if (b.textContent !== t) b.textContent = t;
     });
+    if (ypEra) ypEra.textContent = i >= 0 ? bs[i].dataset.full : "";
   }
-
-  api.onYear(y => { syncEra(y); syncEraNames(); });
-  syncEra(api.year); syncEraNames();
-  addEventListener("resize", () => { syncEraNames(); emitRects(); });
+  api.onYear(() => syncEraNames());
+  syncEraNames(true);
+  let rsT = 0;
+  addEventListener("resize", () => { clearTimeout(rsT); rsT = setTimeout(() => { syncEraNames(true); emitRects(); }, 150); });
 
   // ---------- the one next thing ----------
   // Providers say what you could do next; the highest priority with something to say wins. A plugin adds one with
