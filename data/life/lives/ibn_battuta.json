@@ -1,0 +1,98 @@
+{
+  "id": "ibn_battuta", "name": "Ibn Battuta", "pid": "Ibn Battuta", "born": 1304, "died": 1369, "role": "Traveller and judge", "sprite": "person_pilgrim", "team": "#2f7a5a",
+  "intro": "You are Abu Abdallah Muhammad ibn Battuta, 21, from a family of Berber legal scholars in Tangier. You have studied Maliki law. It is June 1325 and you mean to make the pilgrimage to Mecca. You will not see home again for 24 years.",
+  "sources": [
+    {"cite": "Ibn Battuta, The Travels of Ibn Battuta (Rihla), tr. H. A. R. Gibb and C. F. Beckingham, Hakluyt Society (1958-2000)"},
+    {"cite": "Ross E. Dunn, The Adventures of Ibn Battuta: A Muslim Traveler of the Fourteenth Century (1986; rev. 2012)"},
+    {"cite": "Wikipedia: Ibn Battuta", "url": "https://en.wikipedia.org/wiki/Ibn_Battuta"}
+  ],
+  "chapters": [
+    {"y": 1325, "m": 6, "at": {"n": "Tangier", "lon": -5.81, "lat": 35.78}, "title": "Leaving home",
+     "text": "Your parents are alive and you have no companions for the road. Caravans cross North Africa in stages, from Tlemcen to Bejaia to Tunis.",
+     "choices": [
+       {"t": "Set out for Mecca alone and join caravans on the way", "real": true, "out": "You leave on 14 June 1325, alone, 'swayed by an overmastering impulse'. You will fall ill with fever on the road to Tunis and tie yourself to your saddle to keep going.", "fx": {"renown": 1}},
+       {"t": "Stay and finish your studies in Tangier", "out": "You become a respected Maliki judge in Tangier. No book is written, and the 14th-century world from Mali to China loses its widest-travelled witness.", "end": "A quiet judge in Tangier, remembered only by his family.", "p": 0.6},
+       {"t": "Wait a year for a large pilgrim caravan from Fez", "out": "Safer, but slower. The road east waits for you all the same.", "fx": {"health": 1}}
+     ]},
+    {"y": 1326, "m": 6, "at": {"n": "Aydhab, Red Sea coast", "lon": 36.49, "lat": 22.33},
+     "via": [[-1.32, 34.88], [5.08, 36.75], [10.18, 36.8], [13.19, 32.89], [29.92, 31.2], [31.24, 30.04], [32.76, 25.91], [36.49, 22.33]],
+     "took": "Tangier to Alexandria took about ten months (June 1325 to April 1326) with long stops; then up the Nile and across the desert to Aydhab.", "days": 295,
+     "title": "The blocked crossing",
+     "text": "You planned to sail across the Red Sea to Jeddah. At Aydhab the local Beja chief is at war with the Mamluk governors and has sunk the boats. There is no way across.",
+     "choices": [
+       {"t": "Go back to Cairo and take the Syrian road to Mecca", "real": true, "out": "You go back down the Nile, cross Sinai, see Jerusalem and Damascus, and join the great Syrian pilgrim caravan in September 1326.", "fx": {"learning": 1}},
+       {"t": "Wait at Aydhab until the war ends", "out": "You wait months in a hot, hungry port town. When the boats run again you cross, but you never see Damascus, where you would have studied and married.", "fx": {"health": -1}},
+       {"t": "Hire a small boat anyway", "out": "Red Sea reefs and war boats make it a gamble. Most likely you are turned back; perhaps you drown.", "end": "Lost in the Red Sea in 1326, a name nobody records.", "p": 0.25}
+     ]},
+    {"y": 1326, "m": 11, "at": {"n": "Mecca", "lon": 39.83, "lat": 21.42},
+     "via": [[31.24, 30.04], [34.47, 31.5], [35.23, 31.78], [36.29, 33.51], [39.61, 24.47], [39.83, 21.42]],
+     "took": "Damascus to Mecca with the pilgrim caravan: about seven weeks, early September to late October 1326.", "days": 50,
+     "title": "The pilgrim's choice",
+     "text": "You have completed the hajj. Pilgrims go home now. A caravan of Iraqi pilgrims is leaving for Baghdad, and its leader offers you a place.",
+     "choices": [
+       {"t": "Go with the Iraqi caravan, not home", "real": true, "out": "You cross Arabia to Najaf and Basra, and wander Persia, Tabriz and Baghdad, where you ride in the camp of the Ilkhan Abu Said. Travel has become your life.", "fx": {"renown": 1, "learning": 1}},
+       {"t": "Go home to Tangier as a hajji", "out": "You come home famous in your street and serve as a judge. The rest of the world goes unseen by you.", "end": "Home by 1327: a hajji and a judge in Morocco.", "p": 0.7}
+     ]},
+    {"y": 1330, "m": 1, "at": {"n": "Kilwa", "lon": 39.52, "lat": -8.95},
+     "via": [[39.83, 21.42], [39.17, 21.49], [45.03, 12.79], [43.48, 11.35], [45.34, 2.04], [39.66, -4.04], [39.52, -8.95]],
+     "took": "From Jeddah down the Red Sea to Aden, then by dhow along the Swahili coast with the north-east monsoon. Dunn dates the voyage to 1330.",
+     "title": "The edge of the monsoon world",
+     "text": "Kilwa is a stone town of mosques and merchants, the southern end of the gold trade from Sofala. Its sultan, al-Hasan ibn Sulayman, is famous for giving. The monsoon will soon turn.",
+     "choices": [
+       {"t": "Catch the monsoon back north to Oman and the Gulf", "real": true, "out": "You sail to Dhofar and Oman and cross to Hormuz, then work your way back to Mecca.", "fx": {"renown": 1}},
+       {"t": "Stay and serve the sultan of Kilwa", "out": "A learned Maghribi jurist would be welcome. You marry into a merchant family and live on the coast of gold and ivory.", "end": "A judge in Kilwa, buried by the sea.", "p": 0.35}
+     ]},
+    {"y": 1334, "m": 6, "at": {"n": "Delhi", "lon": 77.21, "lat": 28.61},
+     "via": [[39.83, 21.42], [36.29, 33.51], [30.7, 36.9], [32.85, 39.93], [34.1, 44.95], [45.0, 47.0], [28.98, 41.01], [45.0, 47.0], [60.63, 42.3], [64.42, 39.77], [66.97, 39.65], [66.9, 36.76], [69.17, 34.53], [71.5, 34.0], [77.21, 28.61]],
+     "took": "Mecca to Delhi the long way round: through Anatolia, across the Black Sea to the Golden Horde, a side trip to Constantinople, then the steppe, Bukhara and the Hindu Kush. He reached the Indus on 12 September 1333.",
+     "title": "The sultan's offer",
+     "text": "Sultan Muhammad bin Tughluq rewards foreign scholars lavishly and kills officials who fail him. He offers you the post of judge (qadi) of Delhi with a salary of 12,000 dinars a year.",
+     "choices": [
+       {"t": "Accept the judgeship", "real": true, "out": "You serve about eight years, live grandly, run up huge debts that the sultan pays, and learn how dangerous his favour is.", "fx": {"wealth": 3, "renown": 1}},
+       {"t": "Take his gifts and go home rich", "out": "Leaving a gift-giving sultan without leave is an insult. If you get away, you are a rich man in Fez by 1336.", "end": "Rich and home by 1336, the farthest east he saw was Delhi.", "p": 0.3}
+     ]},
+    {"y": 1342, "m": 8, "at": {"n": "Calicut", "lon": 75.78, "lat": 11.25},
+     "via": [[77.21, 28.61], [78.02, 27.18], [73.0, 21.0], [74.86, 12.87], [75.78, 11.25]],
+     "title": "Shipwreck at Calicut",
+     "text": "The sultan sent you as his envoy to the Mongol emperor of China. At Calicut a storm sank the junk carrying his gifts; the ship with your own goods sailed off without you. You have lost everything the sultan entrusted to you.",
+     "choices": [
+       {"t": "Don't go back to Delhi. Sail for the Maldives", "real": true, "out": "You spend about a year and a half as a judge in the Maldives, marry, quarrel with the vizier, then go on to Ceylon, climb Adam's Peak, and sail east to Bengal and Sumatra.", "fx": {"renown": 1}},
+       {"t": "Go back and explain to the sultan", "out": "Muhammad bin Tughluq forgave some failures and punished others horribly. It is a coin toss.", "end": "Executed or disgraced in Delhi in 1343.", "p": 0.5}
+     ]},
+    {"y": 1346, "m": 4, "at": {"n": "Quanzhou (Zaytun)", "lon": 118.59, "lat": 24.91},
+     "via": [[75.78, 11.25], [73.5, 4.17], [79.86, 6.93], [91.83, 22.34], [97.15, 5.18], [104.0, 1.3], [109.0, 12.0], [118.59, 24.91]],
+     "took": "Calicut to China by way of the Maldives, Ceylon, Bengal and Sumatra, about three and a half years, much of it waiting for monsoons.",
+     "title": "The end of the known world",
+     "text": "Zaytun is the greatest port you have ever seen, with a Muslim quarter, its own judge and merchants from everywhere. You are 42.",
+     "choices": [
+       {"t": "Start the long trip home", "real": true, "out": "You sail back by way of Sumatra, Malabar and the Gulf. Some of what you later say about China, like the visit to Beijing, historians doubt.", "fx": {"learning": 1}},
+       {"t": "Stay in Zaytun among the Muslim merchants", "out": "Zaytun's Muslim community was rich, but the Yuan dynasty was failing; the city's foreigners were massacred in the Ispah rebellion of 1357-66.", "end": "Settled in Zaytun, caught in the wars of the Yuan collapse.", "p": 0.25}
+     ]},
+    {"y": 1348, "m": 7, "at": {"n": "Damascus", "lon": 36.29, "lat": 33.51},
+     "via": [[118.59, 24.91], [97.15, 5.18], [75.78, 11.25], [56.4, 26.5], [47.8, 30.5], [44.36, 33.31], [36.29, 33.51]],
+     "title": "The Great Death",
+     "text": "Plague reaches Syria. In Damascus, you write, 2,400 people die in a day. The whole city fasts and walks out to pray together.",
+     "choices": [
+       {"t": "Make one more pilgrimage, then go home to Morocco", "real": true, "out": "You perform the hajj again and reach Fez in November 1349. On the way you learn that your mother died of the plague a few months before.", "fx": {"health": -1}},
+       {"t": "Stay in Damascus with the family you left in 1326", "out": "You had married in Damascus and had a son. Your son is long dead, as you find out in 1348. The plague comes back again and again.", "fx": {"health": -2}}
+     ]},
+    {"y": 1352, "m": 2, "at": {"n": "Sijilmasa", "lon": -4.27, "lat": 31.28},
+     "via": [[36.29, 33.51], [39.83, 21.42], [31.24, 30.04], [10.18, 36.8], [-5.0, 34.03], [-3.6, 37.18], [-5.0, 34.03], [-4.27, 31.28]],
+     "title": "Across the Sahara",
+     "text": "You have seen Granada. The Sultan of Morocco now wants news of the land of the blacks, Mali, the empire of gold. The salt caravan leaves in February, before the heat.",
+     "choices": [
+       {"t": "Cross the Sahara with the salt caravan", "real": true, "out": "Twenty-five days to the salt mines of Taghaza, houses built of salt slabs, then the deadly stretch to Walata. You stay about eight months at the court of Mansa Sulayman, who disappoints you with a gift of three loaves and some fried beef.", "fx": {"renown": 1}},
+       {"t": "Settle in Fez", "out": "Your book will still be written, but it will have no Mali in it, and one of the best eyewitness accounts of medieval West Africa will never exist.", "fx": {"health": 1}}
+     ]},
+    {"y": 1355, "m": 12, "at": {"n": "Fez", "lon": -5.0, "lat": 34.03},
+     "via": [[-4.27, 31.28], [-6.36, 23.3], [-7.0, 17.0], [-8.38, 11.38], [-3.0, 16.77], [0.04, 16.27], [8.0, 15.5], [-4.27, 31.28], [-5.0, 34.03]],
+     "took": "Sijilmasa to Walata about two months (February to April 1352), Walata to the Mali capital 24 days, home by way of Timbuktu, Gao and Takedda in 1353-54.",
+     "title": "Telling it",
+     "text": "Sultan Abu Inan orders you to dictate your travels to the young scholar Ibn Juzayy. You have few notes; pirates off the Indian coast stripped you of almost everything you had.",
+     "choices": [
+       {"t": "Dictate the Rihla, from memory", "real": true, "out": "A Gift to Those Who Contemplate the Wonders of Cities and the Marvels of Travelling is finished in December 1355. Some passages are borrowed from earlier writers, and some may be imagined, but most check out.", "fx": {"renown": 2}},
+       {"t": "Refuse; let your travels die with you", "out": "You could not refuse a sultan, but suppose you could: we would know almost nothing of the Maldives, Mali or the Delhi Sultanate as a traveller saw them.", "end": "No Rihla. A judge in a Moroccan town, and a story told only at dinner.", "p": 0.1}
+     ]}
+  ],
+  "epilogue": "Ibn Battuta became a judge in a Moroccan provincial town and died around 1368 or 1369. He covered roughly 117,000 km, more than any other known traveller before the age of steam. His book was little known until European scholars translated it in the 19th century."
+}

@@ -163,6 +163,8 @@
     badge();
     return news;
   }
+  // Other plugins (the Live tab's journeys) can visit places too: what you pass on the road joins the codex.
+  window.ATLAS.codex = { visit: (lon, lat, y, r) => visit({ lon, lat }, y, r ?? R_CLICK) };
   function checkQuests() {
     for (const q of D().quests) if (!P.qd[q.id] && qGot(q) >= qNeed(q)) { P.qd[q.id] = Date.now(); toast("Quest complete", q.n, q.d, () => openCodex("quests")); }
     for (const t of D().trails) if (!P.qd[t.id] && trailDone(t) >= t.steps.length) { P.qd[t.id] = Date.now(); toast("Trail complete", t.n, `All ${t.steps.length} stops`, () => openCodex("quests")); }
