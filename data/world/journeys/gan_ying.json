@@ -1,0 +1,101 @@
+{
+ "id": "gan_ying",
+ "name": "Gan Ying",
+ "kind": "envoy",
+ "summary": "Sent by General Ban Chao towards Da Qin (Rome), a Han envoy crosses Parthia to the head of the Persian Gulf and turns back when sailors warn of a long sea voyage.",
+ "start": 97,
+ "end": 98,
+ "stops": [
+  {
+   "place": "Kucha (Ban Chao's headquarters)",
+   "lon": 82.96,
+   "lat": 41.72,
+   "date": "97",
+   "until": "97",
+   "mode": "start",
+   "note": "Protector General Ban Chao dispatches him to Da Qin in the ninth Yongyuan year.",
+   "conf": "likely"
+  },
+  {
+   "place": "Kashgar",
+   "lon": 75.99,
+   "lat": 39.47,
+   "date": "97",
+   "until": "97",
+   "mode": "land",
+   "note": "Leaves the Tarim Basin westwards over the Pamirs.",
+   "conf": "guess"
+  },
+  {
+   "place": "Mulu (Merv)",
+   "lon": 62.19,
+   "lat": 37.66,
+   "date": "97",
+   "until": "97",
+   "mode": "land",
+   "note": "Enters Anxi (Parthia) at its eastern frontier city.",
+   "conf": "guess"
+  },
+  {
+   "place": "Hedu (Hecatompylos)",
+   "lon": 54.37,
+   "lat": 36.14,
+   "date": "97",
+   "until": "97",
+   "mode": "land",
+   "note": "Passes the Parthian royal city.",
+   "conf": "guess"
+  },
+  {
+   "place": "Aman (Ecbatana)",
+   "lon": 48.52,
+   "lat": 34.8,
+   "date": "97",
+   "until": "97",
+   "mode": "land",
+   "note": "The Hou Hanshu route names Aman, west of Anxi.",
+   "conf": "likely"
+  },
+  {
+   "place": "Sibin (Ctesiphon)",
+   "lon": 44.58,
+   "lat": 33.09,
+   "date": "97",
+   "until": "97",
+   "mode": "land",
+   "note": "Reaches Sibin, beside the Tigris.",
+   "conf": "likely"
+  },
+  {
+   "place": "Tiaozhi (Characene)",
+   "lon": 47.8,
+   "lat": 30.5,
+   "date": "97",
+   "until": "97",
+   "mode": "river",
+   "note": "At the sea, Parthian sailors warn him the crossing can take two years, and he gives up.",
+   "conf": "likely"
+  },
+  {
+   "place": "Kucha",
+   "lon": 82.96,
+   "lat": 41.72,
+   "date": "98",
+   "until": "98",
+   "mode": "land",
+   "note": "Returns with reports on Da Qin's walled towns, postal relays and products.",
+   "conf": "guess"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Hou Hanshu ch. 88, trans. John E. Hill, Through the Jade Gate to Rome, 2009",
+   "url": "https://depts.washington.edu/silkroad/texts/hhshu/hou_han_shu.html"
+  },
+  {
+   "cite": "Wikipedia, Gan Ying",
+   "url": "https://en.wikipedia.org/wiki/Gan_Ying"
+  }
+ ],
+ "status": "draft"
+}

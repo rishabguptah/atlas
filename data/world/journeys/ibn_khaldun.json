@@ -1,0 +1,207 @@
+{
+ "id": "ibn_khaldun",
+ "name": "Ibn Khaldun's career",
+ "person": "person:ibn_khaldun",
+ "kind": "scholar",
+ "summary": "The Tunisian historian moves between the courts of Fez, Granada, Bejaia and Tlemcen, withdraws to a desert fortress to write the Muqaddimah, and ends his life as a judge in Mamluk Cairo after meeting Timur at Damascus.",
+ "start": 1352,
+ "end": 1406,
+ "stops": [
+  {
+   "place": "Tunis",
+   "lon": 10.18,
+   "lat": 36.8,
+   "date": "1352",
+   "until": "1352",
+   "mode": "start",
+   "note": "Leaves his post as seal-bearer after Tunis is attacked by the ruler of Constantine.",
+   "conf": "documented"
+  },
+  {
+   "place": "Biskra",
+   "lon": 5.73,
+   "lat": 34.85,
+   "date": "1353",
+   "until": "1353",
+   "mode": "land",
+   "note": "Spends the winter among the Banu Muzni on his way west.",
+   "conf": "likely"
+  },
+  {
+   "place": "Fez",
+   "lon": -4.97,
+   "lat": 34.06,
+   "date": "1354",
+   "until": "1362",
+   "mode": "land",
+   "note": "Serves the Marinid Abu Inan; is jailed 22 months, then becomes a minister.",
+   "conf": "documented"
+  },
+  {
+   "place": "Granada",
+   "lon": -3.6,
+   "lat": 37.18,
+   "date": "1362-12",
+   "until": "1364",
+   "mode": "land",
+   "note": "Welcomed by the Nasrid Muhammad V, whom he had helped in Fez.",
+   "conf": "documented"
+  },
+  {
+   "place": "Seville",
+   "lon": -5.99,
+   "lat": 37.39,
+   "date": "1364",
+   "until": "1364",
+   "mode": "land",
+   "note": "Negotiates a treaty with Pedro the Cruel and declines his offer to stay.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bejaia",
+   "lon": 5.08,
+   "lat": 36.75,
+   "date": "1365",
+   "until": "1366",
+   "mode": "sea",
+   "note": "Becomes chamberlain to the Hafsid emir Abu Abdallah.",
+   "conf": "documented"
+  },
+  {
+   "place": "Biskra",
+   "lon": 5.73,
+   "lat": 34.85,
+   "date": "1366",
+   "until": "1370",
+   "mode": "land",
+   "note": "Takes refuge with the Dawawida Arabs after his patron's death.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tlemcen",
+   "lon": -1.32,
+   "lat": 34.88,
+   "date": "1370",
+   "until": "1372",
+   "mode": "land",
+   "note": "Summoned by the new sultan; works among the Arab tribes.",
+   "conf": "documented"
+  },
+  {
+   "place": "Fez",
+   "lon": -4.97,
+   "lat": 34.06,
+   "date": "1372",
+   "until": "1374",
+   "mode": "land",
+   "note": "Lives under the patronage of the Marinid regent.",
+   "conf": "documented"
+  },
+  {
+   "place": "Granada",
+   "lon": -3.6,
+   "lat": 37.18,
+   "date": "1374",
+   "until": "1375",
+   "mode": "sea",
+   "note": "A brief stay before being sent back to Africa.",
+   "conf": "documented"
+  },
+  {
+   "place": "Qal'at Ibn Salama",
+   "lon": 1.3,
+   "lat": 35.48,
+   "date": "1375",
+   "until": "1378",
+   "mode": "land",
+   "note": "Writes the Muqaddimah in three years of seclusion.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tunis",
+   "lon": 10.18,
+   "lat": 36.8,
+   "date": "1378",
+   "until": "1382-10",
+   "mode": "land",
+   "note": "Completes his history in the service of the Hafsid Abu l-Abbas.",
+   "conf": "documented"
+  },
+  {
+   "place": "Alexandria",
+   "lon": 29.92,
+   "lat": 31.2,
+   "date": "1382-12",
+   "until": "1382-12",
+   "mode": "sea",
+   "note": "Lands, leaving Tunis on the pretext of the hajj.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cairo",
+   "lon": 31.24,
+   "lat": 30.04,
+   "date": "1383-01",
+   "until": "1387-09",
+   "mode": "river",
+   "note": "Becomes professor and Maliki chief judge; his family drowns off Alexandria in 1384.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mecca",
+   "lon": 39.83,
+   "lat": 21.42,
+   "date": "1388-01",
+   "until": "1388-01",
+   "mode": "sea",
+   "note": "Performs the hajj.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cairo",
+   "lon": 31.24,
+   "lat": 30.04,
+   "date": "1388-05",
+   "until": "1400-11",
+   "mode": "sea",
+   "note": "Teaches in Cairo madrasas and is repeatedly made and unmade judge.",
+   "conf": "documented"
+  },
+  {
+   "place": "Damascus",
+   "lon": 36.29,
+   "lat": 33.51,
+   "date": "1400-12",
+   "until": "1401-02",
+   "mode": "land",
+   "note": "Lowered over the city wall by ropes to meet Timur and writes him a report on the Maghreb.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cairo",
+   "lon": 31.24,
+   "lat": 30.04,
+   "date": "1401-03",
+   "until": "1406-03-17",
+   "mode": "land",
+   "note": "Finishes his autobiography and dies a month after his sixth appointment as judge.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Ibn Khaldun, Al-Ta'rif bi-Ibn Khaldun (autobiography), trans. A. Cheddadi, Le voyage d'Occident et d'Orient, Paris 1980"
+  },
+  {
+   "cite": "Allen James Fromherz, Ibn Khaldun: Life and Times, Edinburgh 2010"
+  },
+  {
+   "cite": "Walter J. Fischel, Ibn Khaldun and Tamerlane, Berkeley 1952"
+  },
+  {
+   "cite": "Wikipedia, Ibn Khaldun",
+   "url": "https://en.wikipedia.org/wiki/Ibn_Khaldun"
+  }
+ ],
+ "status": "draft"
+}

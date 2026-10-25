@@ -1,0 +1,214 @@
+{
+ "id": "vasco_da_gama_first_voyage",
+ "name": "Vasco da Gama's first voyage",
+ "person": "person:vasco_da_gama",
+ "kind": "explorer",
+ "summary": "A Portuguese fleet of four ships rounds the Cape of Good Hope, works up the Swahili coast and crosses the Indian Ocean with a Malindi pilot to Calicut, returning after a disastrous scurvy-ridden crossing.",
+ "start": 1497,
+ "end": 1499,
+ "stops": [
+  {
+   "place": "Lisbon (Restelo)",
+   "lon": -9.21,
+   "lat": 38.7,
+   "date": "1497-07-08",
+   "until": "1497-07-08",
+   "mode": "start",
+   "note": "Sails with the Sao Gabriel, Sao Rafael, Berrio and a storeship.",
+   "conf": "documented"
+  },
+  {
+   "place": "Santiago, Cape Verde",
+   "lon": -23.51,
+   "lat": 14.92,
+   "date": "1497-07-27",
+   "until": "1497-08-03",
+   "mode": "sea",
+   "note": "Takes on water and meat before the long swing into the South Atlantic.",
+   "conf": "documented"
+  },
+  {
+   "place": "Saint Helena Bay",
+   "lon": 18.0,
+   "lat": -32.73,
+   "date": "1497-11-07",
+   "until": "1497-11-16",
+   "mode": "sea",
+   "note": "First landfall after three months at sea; skirmish with Khoikhoi.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cape of Good Hope",
+   "lon": 18.47,
+   "lat": -34.36,
+   "date": "1497-11-22",
+   "until": "1497-11-22",
+   "mode": "sea",
+   "note": "Rounds the cape.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mossel Bay (Sao Bras)",
+   "lon": 22.14,
+   "lat": -34.18,
+   "date": "1497-11-25",
+   "until": "1497-12-08",
+   "mode": "sea",
+   "note": "Trades with Khoikhoi herders and breaks up the storeship.",
+   "conf": "documented"
+  },
+  {
+   "place": "Natal coast",
+   "lon": 31.0,
+   "lat": -30.0,
+   "date": "1497-12-25",
+   "until": "1497-12-25",
+   "mode": "sea",
+   "note": "Names the coast Natal for Christmas.",
+   "conf": "documented"
+  },
+  {
+   "place": "Quelimane (Rio dos Bons Sinais)",
+   "lon": 36.89,
+   "lat": -17.88,
+   "date": "1498-01-25",
+   "until": "1498-02-24",
+   "mode": "sea",
+   "note": "Rests a month while scurvy strikes the crews.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mozambique Island",
+   "lon": 40.73,
+   "lat": -15.03,
+   "date": "1498-03-02",
+   "until": "1498-03-29",
+   "mode": "sea",
+   "note": "Meets Muslim merchants and the sultan; relations sour.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mombasa",
+   "lon": 39.67,
+   "lat": -4.06,
+   "date": "1498-04-07",
+   "until": "1498-04-13",
+   "mode": "sea",
+   "note": "Met with hostility and leaves.",
+   "conf": "documented"
+  },
+  {
+   "place": "Malindi",
+   "lon": 40.12,
+   "lat": -3.22,
+   "date": "1498-04-14",
+   "until": "1498-04-24",
+   "mode": "sea",
+   "note": "The sultan supplies a Gujarati pilot for the crossing.",
+   "conf": "documented"
+  },
+  {
+   "place": "Kappad, near Calicut",
+   "lon": 75.78,
+   "lat": 11.25,
+   "date": "1498-05-20",
+   "until": "1498-08-29",
+   "mode": "sea",
+   "note": "Lands and negotiates with the Zamorin, whose court finds his gifts paltry.",
+   "conf": "documented"
+  },
+  {
+   "place": "Anjediva Island",
+   "lon": 74.11,
+   "lat": 14.75,
+   "date": "1498-09",
+   "until": "1498-10-03",
+   "mode": "sea",
+   "note": "Careens the ships before sailing west.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mogadishu",
+   "lon": 45.34,
+   "lat": 2.04,
+   "date": "1499-01-02",
+   "until": "1499-01-02",
+   "mode": "sea",
+   "note": "Sights Africa after a three-month crossing that kills half the crew.",
+   "conf": "documented"
+  },
+  {
+   "place": "Malindi",
+   "lon": 40.12,
+   "lat": -3.22,
+   "date": "1499-01-07",
+   "until": "1499-01-11",
+   "mode": "sea",
+   "note": "Recovers; the Sao Rafael is later burned for lack of hands.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mozambique Island",
+   "lon": 40.73,
+   "lat": -15.03,
+   "date": "1499-02-01",
+   "until": "1499-02-01",
+   "mode": "sea",
+   "note": "Passes south again.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cape of Good Hope",
+   "lon": 18.47,
+   "lat": -34.36,
+   "date": "1499-03-20",
+   "until": "1499-03-20",
+   "mode": "sea",
+   "note": "Rounds the cape homeward.",
+   "conf": "documented"
+  },
+  {
+   "place": "Santiago, Cape Verde",
+   "lon": -23.51,
+   "lat": 14.92,
+   "date": "1499-04",
+   "until": "1499-04",
+   "mode": "sea",
+   "note": "Coelho's Berrio separates and sails straight for Lisbon.",
+   "conf": "likely"
+  },
+  {
+   "place": "Terceira, Azores",
+   "lon": -27.22,
+   "lat": 38.65,
+   "date": "1499-08",
+   "until": "1499-08",
+   "mode": "sea",
+   "note": "His brother Paulo da Gama dies here.",
+   "conf": "likely"
+  },
+  {
+   "place": "Lisbon",
+   "lon": -9.14,
+   "lat": 38.71,
+   "date": "1499-08-29",
+   "until": "1499-09",
+   "mode": "sea",
+   "note": "Arrives on an Azorean caravel (29 August per Barros; other sources say September).",
+   "conf": "likely"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "A Journal of the First Voyage of Vasco da Gama 1497-1499 (Roteiro), trans. E. G. Ravenstein, Hakluyt Society 1898"
+  },
+  {
+   "cite": "Sanjay Subrahmanyam, The Career and Legend of Vasco da Gama, Cambridge 1997"
+  },
+  {
+   "cite": "Wikipedia, Vasco da Gama",
+   "url": "https://en.wikipedia.org/wiki/Vasco_da_Gama"
+  }
+ ],
+ "status": "draft"
+}

@@ -1,0 +1,237 @@
+{
+ "id": "hannibal_italy",
+ "name": "Hannibal's march on Italy",
+ "person": "person:hannibal",
+ "kind": "army",
+ "summary": "The Carthaginian general marches an army with elephants from New Carthage over the Pyrenees and Alps, destroys Roman armies at Trebia, Trasimene and Cannae, and campaigns in Italy for fifteen years before returning to Africa.",
+ "start": -218,
+ "end": -202,
+ "stops": [
+  {
+   "place": "New Carthage (Cartagena)",
+   "lon": -0.98,
+   "lat": 37.6,
+   "date": "-218-05",
+   "until": "-218-05",
+   "mode": "start",
+   "note": "Sets out with about 90,000 foot, 12,000 horse and 37 elephants.",
+   "conf": "likely"
+  },
+  {
+   "place": "Ebro crossing",
+   "lon": 0.52,
+   "lat": 40.8,
+   "date": "-218-06",
+   "until": "-218-06",
+   "mode": "land",
+   "note": "Subdues the tribes north of the Ebro, leaving Hanno in command.",
+   "conf": "likely"
+  },
+  {
+   "place": "Pyrenees",
+   "lon": 2.9,
+   "lat": 42.45,
+   "date": "-218-08",
+   "until": "-218-08",
+   "mode": "land",
+   "note": "Crosses into Gaul after releasing reluctant Iberian troops.",
+   "conf": "likely"
+  },
+  {
+   "place": "Rhone crossing",
+   "lon": 4.78,
+   "lat": 44.05,
+   "date": "-218-09",
+   "until": "-218-09",
+   "mode": "land",
+   "note": "Ferries the elephants across on rafts against hostile Volcae.",
+   "conf": "documented"
+  },
+  {
+   "place": "Alpine pass",
+   "lon": 7.04,
+   "lat": 44.7,
+   "date": "-218-10",
+   "until": "-218-10",
+   "mode": "land",
+   "note": "Crosses the Alps in snow in about fifteen days, losing many men; the pass is disputed.",
+   "conf": "guess"
+  },
+  {
+   "place": "Taurini (Turin)",
+   "lon": 7.69,
+   "lat": 45.07,
+   "date": "-218-11",
+   "until": "-218-11",
+   "mode": "land",
+   "note": "Storms the main Taurini town after descending into Italy.",
+   "conf": "documented"
+  },
+  {
+   "place": "Ticinus river",
+   "lon": 9.16,
+   "lat": 45.19,
+   "date": "-218-11",
+   "until": "-218-11",
+   "mode": "land",
+   "note": "Defeats Scipio's cavalry; the consul is wounded.",
+   "conf": "documented"
+  },
+  {
+   "place": "Trebia river",
+   "lon": 9.6,
+   "lat": 45.0,
+   "date": "-218-12",
+   "until": "-218-12",
+   "mode": "land",
+   "note": "Ambushes and destroys Sempronius's army in winter.",
+   "conf": "documented"
+  },
+  {
+   "place": "Arno marshes",
+   "lon": 10.6,
+   "lat": 43.7,
+   "date": "-217-04",
+   "until": "-217-04",
+   "mode": "land",
+   "note": "Marches four days through floods and loses an eye to infection.",
+   "conf": "documented"
+  },
+  {
+   "place": "Lake Trasimene",
+   "lon": 12.1,
+   "lat": 43.18,
+   "date": "-217-06",
+   "until": "-217-06",
+   "mode": "land",
+   "note": "Traps and annihilates Flaminius's army on the lake shore.",
+   "conf": "documented"
+  },
+  {
+   "place": "Picenum (Adriatic coast)",
+   "lon": 13.6,
+   "lat": 43.3,
+   "date": "-217-07",
+   "until": "-217-07",
+   "mode": "land",
+   "note": "Rests and re-equips his army with Roman weapons.",
+   "conf": "documented"
+  },
+  {
+   "place": "Ager Falernus",
+   "lon": 14.0,
+   "lat": 41.15,
+   "date": "-217-09",
+   "until": "-217-09",
+   "mode": "land",
+   "note": "Escapes Fabius by driving cattle with burning torches on their horns.",
+   "conf": "documented"
+  },
+  {
+   "place": "Gerunium",
+   "lon": 15.0,
+   "lat": 41.75,
+   "date": "-217-11",
+   "until": "-216-06",
+   "mode": "land",
+   "note": "Winters in Apulia.",
+   "conf": "documented"
+  },
+  {
+   "place": "Cannae",
+   "lon": 16.13,
+   "lat": 41.31,
+   "date": "-216-08-02",
+   "until": "-216-08-02",
+   "mode": "land",
+   "note": "Encircles and destroys the largest Roman army yet fielded.",
+   "conf": "documented"
+  },
+  {
+   "place": "Capua",
+   "lon": 14.25,
+   "lat": 41.08,
+   "date": "-216-10",
+   "until": "-216-10",
+   "mode": "land",
+   "note": "Capua defects to him; winters there.",
+   "conf": "documented"
+  },
+  {
+   "place": "Nola",
+   "lon": 14.53,
+   "lat": 40.93,
+   "date": "-216-11",
+   "until": "-216-11",
+   "mode": "land",
+   "note": "Repulsed by Marcellus.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tarentum",
+   "lon": 17.24,
+   "lat": 40.47,
+   "date": "-212-01",
+   "until": "-212-01",
+   "mode": "land",
+   "note": "Takes the city by night through treachery, though the citadel holds out.",
+   "conf": "documented"
+  },
+  {
+   "place": "Gates of Rome",
+   "lon": 12.5,
+   "lat": 41.9,
+   "date": "-211",
+   "until": "-211",
+   "mode": "land",
+   "note": "Marches on Rome to relieve Capua but withdraws.",
+   "conf": "documented"
+  },
+  {
+   "place": "Croton (Bruttium)",
+   "lon": 17.13,
+   "lat": 39.08,
+   "date": "-205",
+   "until": "-203",
+   "mode": "land",
+   "note": "Holds out in the toe of Italy and sets up his bilingual inscription at the Lacinian temple.",
+   "conf": "documented"
+  },
+  {
+   "place": "Hadrumetum",
+   "lon": 10.64,
+   "lat": 35.83,
+   "date": "-203-10",
+   "until": "-203-10",
+   "mode": "sea",
+   "note": "Lands in Africa, recalled to face Scipio.",
+   "conf": "documented"
+  },
+  {
+   "place": "Zama",
+   "lon": 9.2,
+   "lat": 36.1,
+   "date": "-202-10",
+   "until": "-202-10",
+   "mode": "land",
+   "note": "Defeated by Scipio and Masinissa, ending the war.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Polybius, Histories books 3, 7-9, 15, trans. W. R. Paton, Loeb"
+  },
+  {
+   "cite": "Livy, History of Rome books 21-30"
+  },
+  {
+   "cite": "Dexter Hoyos, Hannibal's War, Oxford 2013; Adrian Goldsworthy, The Fall of Carthage, London 2000"
+  },
+  {
+   "cite": "Wikipedia, Hannibal's crossing of the Alps",
+   "url": "https://en.wikipedia.org/wiki/Hannibal%27s_crossing_of_the_Alps"
+  }
+ ],
+ "status": "draft"
+}

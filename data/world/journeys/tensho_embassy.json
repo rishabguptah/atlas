@@ -1,0 +1,313 @@
+{
+ "id": "tensho_embassy",
+ "name": "Tensho embassy (Mancio Ito)",
+ "kind": "envoy",
+ "summary": "Four Japanese Christian youths led by Mancio Ito travel with Jesuits from Nagasaki to Lisbon, Philip II's Madrid and Pope Gregory XIII's Rome, and return after eight years with a printing press.",
+ "start": 1582,
+ "end": 1591,
+ "stops": [
+  {
+   "place": "Nagasaki",
+   "lon": 129.87,
+   "lat": 32.75,
+   "date": "1582-02-20",
+   "until": "1582-02-20",
+   "mode": "start",
+   "note": "Mancio Ito, Miguel Chijiwa, Juliao Nakaura and Martinho Hara sail with Valignano.",
+   "conf": "documented"
+  },
+  {
+   "place": "Macau",
+   "lon": 113.54,
+   "lat": 22.19,
+   "date": "1582-03-09",
+   "until": "1582-12-31",
+   "mode": "sea",
+   "note": "Wait nine months for the monsoon.",
+   "conf": "documented"
+  },
+  {
+   "place": "Malacca",
+   "lon": 102.25,
+   "lat": 2.19,
+   "date": "1583-01",
+   "until": "1583-02",
+   "mode": "sea",
+   "note": "Pass through the straits.",
+   "conf": "likely"
+  },
+  {
+   "place": "Cochin",
+   "lon": 76.24,
+   "lat": 9.97,
+   "date": "1583-04",
+   "until": "1583-09",
+   "mode": "sea",
+   "note": "Wait on the Malabar coast.",
+   "conf": "likely"
+  },
+  {
+   "place": "Goa",
+   "lon": 73.83,
+   "lat": 15.5,
+   "date": "1583-09",
+   "until": "1584-02-20",
+   "mode": "sea",
+   "note": "Valignano stays behind as provincial and Nuno Rodrigues takes charge.",
+   "conf": "documented"
+  },
+  {
+   "place": "Saint Helena",
+   "lon": -5.71,
+   "lat": -15.96,
+   "date": "1584-05",
+   "until": "1584-06",
+   "mode": "sea",
+   "note": "Water stop in the South Atlantic.",
+   "conf": "likely"
+  },
+  {
+   "place": "Lisbon",
+   "lon": -9.14,
+   "lat": 38.71,
+   "date": "1584-08-10",
+   "until": "1584-09",
+   "mode": "sea",
+   "note": "Land in Europe after two and a half years.",
+   "conf": "documented"
+  },
+  {
+   "place": "Evora",
+   "lon": -7.91,
+   "lat": 38.57,
+   "date": "1584-09",
+   "until": "1584-09",
+   "mode": "land",
+   "note": "Guests of Archbishop Teotonio de Braganca.",
+   "conf": "documented"
+  },
+  {
+   "place": "Toledo",
+   "lon": -4.03,
+   "lat": 39.86,
+   "date": "1584-10-01",
+   "until": "1584-10",
+   "mode": "land",
+   "note": "Received by Archbishop Gaspar de Quiroga.",
+   "conf": "documented"
+  },
+  {
+   "place": "Madrid",
+   "lon": -3.7,
+   "lat": 40.42,
+   "date": "1584-10-20",
+   "until": "1584-11-25",
+   "mode": "land",
+   "note": "Received by Philip II on 14 November and see the king's Indian rhinoceros.",
+   "conf": "documented"
+  },
+  {
+   "place": "Alcala de Henares",
+   "lon": -3.37,
+   "lat": 40.48,
+   "date": "1584-11-26",
+   "until": "1584-11-26",
+   "mode": "land",
+   "note": "Visit the university.",
+   "conf": "documented"
+  },
+  {
+   "place": "Murcia",
+   "lon": -1.13,
+   "lat": 37.99,
+   "date": "1584-12-25",
+   "until": "1584-12-25",
+   "mode": "land",
+   "note": "Spend Christmas.",
+   "conf": "documented"
+  },
+  {
+   "place": "Alicante",
+   "lon": -0.48,
+   "lat": 38.35,
+   "date": "1585-01",
+   "until": "1585-02",
+   "mode": "land",
+   "note": "Embark for Italy.",
+   "conf": "documented"
+  },
+  {
+   "place": "Livorno",
+   "lon": 10.31,
+   "lat": 43.55,
+   "date": "1585-03-01",
+   "until": "1585-03-01",
+   "mode": "sea",
+   "note": "Land in Tuscany.",
+   "conf": "documented"
+  },
+  {
+   "place": "Pisa",
+   "lon": 10.4,
+   "lat": 43.72,
+   "date": "1585-03-02",
+   "until": "1585-03-06",
+   "mode": "land",
+   "note": "Guests of Grand Duke Francesco I de' Medici.",
+   "conf": "documented"
+  },
+  {
+   "place": "Florence",
+   "lon": 11.26,
+   "lat": 43.77,
+   "date": "1585-03-07",
+   "until": "1585-03-12",
+   "mode": "land",
+   "note": "Tour the Medici city.",
+   "conf": "documented"
+  },
+  {
+   "place": "Rome",
+   "lon": 12.45,
+   "lat": 41.9,
+   "date": "1585-03-22",
+   "until": "1585-06-03",
+   "mode": "land",
+   "note": "Embraced by Gregory XIII, attend Sixtus V's coronation and are knighted.",
+   "conf": "documented"
+  },
+  {
+   "place": "Loreto",
+   "lon": 13.61,
+   "lat": 43.44,
+   "date": "1585-06",
+   "until": "1585-06",
+   "mode": "land",
+   "note": "Pilgrimage to the Holy House.",
+   "conf": "documented"
+  },
+  {
+   "place": "Venice",
+   "lon": 12.33,
+   "lat": 45.44,
+   "date": "1585-06-25",
+   "until": "1585-07",
+   "mode": "river",
+   "note": "Arrive by riverboat from Ferrara amid great acclaim.",
+   "conf": "documented"
+  },
+  {
+   "place": "Milan",
+   "lon": 9.19,
+   "lat": 45.46,
+   "date": "1585-07-25",
+   "until": "1585-08",
+   "mode": "land",
+   "note": "Continue via Mantua and Verona.",
+   "conf": "documented"
+  },
+  {
+   "place": "Genoa",
+   "lon": 8.93,
+   "lat": 44.41,
+   "date": "1585-08-08",
+   "until": "1585-08-08",
+   "mode": "land",
+   "note": "Embark for Spain.",
+   "conf": "documented"
+  },
+  {
+   "place": "Barcelona",
+   "lon": 2.17,
+   "lat": 41.39,
+   "date": "1585-08-16",
+   "until": "1585-09",
+   "mode": "sea",
+   "note": "Visit Montserrat, then Monzon and Zaragoza.",
+   "conf": "documented"
+  },
+  {
+   "place": "Coimbra",
+   "lon": -8.43,
+   "lat": 40.21,
+   "date": "1586-02",
+   "until": "1586-02",
+   "mode": "land",
+   "note": "Visit the Jesuit college on the way back to Lisbon.",
+   "conf": "likely"
+  },
+  {
+   "place": "Lisbon",
+   "lon": -9.14,
+   "lat": 38.71,
+   "date": "1586-04-08",
+   "until": "1586-04-08",
+   "mode": "land",
+   "note": "Sail for home with a Gutenberg-style printing press.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mozambique Island",
+   "lon": 40.73,
+   "lat": -15.03,
+   "date": "1586-08",
+   "until": "1587-03",
+   "mode": "sea",
+   "note": "Winter in East Africa.",
+   "conf": "documented"
+  },
+  {
+   "place": "Goa",
+   "lon": 73.83,
+   "lat": 15.5,
+   "date": "1587-05-29",
+   "until": "1588-04",
+   "mode": "sea",
+   "note": "Reunited with Valignano; Hara gives a Latin oration.",
+   "conf": "documented"
+  },
+  {
+   "place": "Macau",
+   "lon": 113.54,
+   "lat": 22.19,
+   "date": "1588-08",
+   "until": "1590-06",
+   "mode": "sea",
+   "note": "Wait two years as Hideyoshi has banned missionaries.",
+   "conf": "documented"
+  },
+  {
+   "place": "Nagasaki",
+   "lon": 129.87,
+   "lat": 32.75,
+   "date": "1590-07-21",
+   "until": "1590-07-21",
+   "mode": "sea",
+   "note": "Return to a Japan transformed by Hideyoshi.",
+   "conf": "documented"
+  },
+  {
+   "place": "Kyoto (Jurakudai)",
+   "lon": 135.75,
+   "lat": 35.03,
+   "date": "1591-03-03",
+   "until": "1591-03-03",
+   "mode": "land",
+   "note": "Play European music for Toyotomi Hideyoshi.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Michael Cooper, The Japanese Mission to Europe 1582-1590, Folkestone 2005"
+  },
+  {
+   "cite": "Duarte de Sande, De Missione Legatorum Iaponensium ad Romanam Curiam, Macau 1590"
+  },
+  {
+   "cite": "Wikipedia, Tensho embassy",
+   "url": "https://en.wikipedia.org/wiki/Tensh%C5%8D_embassy"
+  }
+ ],
+ "status": "draft"
+}

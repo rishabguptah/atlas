@@ -1,0 +1,213 @@
+{
+ "id": "cabeza_de_vaca",
+ "name": "Alvar Nunez Cabeza de Vaca",
+ "kind": "explorer",
+ "summary": "Treasurer of Narvaez's failed conquest of Florida, he is wrecked on the Texas coast, lives six years among Native peoples, and walks with three companions across the continent to New Spain as a healer.",
+ "start": 1527,
+ "end": 1537,
+ "stops": [
+  {
+   "place": "Sanlucar de Barrameda",
+   "lon": -6.35,
+   "lat": 36.78,
+   "date": "1527-06-17",
+   "until": "1527-06-17",
+   "mode": "start",
+   "note": "Sails as treasurer with Panfilo de Narvaez's 600 colonists.",
+   "conf": "documented"
+  },
+  {
+   "place": "Santo Domingo",
+   "lon": -69.89,
+   "lat": 18.47,
+   "date": "1527-08",
+   "until": "1527-09",
+   "mode": "sea",
+   "note": "Over a hundred men desert the expedition.",
+   "conf": "documented"
+  },
+  {
+   "place": "Trinidad, Cuba",
+   "lon": -79.98,
+   "lat": 21.8,
+   "date": "1527-11",
+   "until": "1527-11",
+   "mode": "sea",
+   "note": "A hurricane destroys two ships and kills sixty men.",
+   "conf": "documented"
+  },
+  {
+   "place": "Jagua (Cienfuegos)",
+   "lon": -80.44,
+   "lat": 22.15,
+   "date": "1527-12",
+   "until": "1528-02",
+   "mode": "sea",
+   "note": "Winters in Cuba.",
+   "conf": "likely"
+  },
+  {
+   "place": "Boca Ciega Bay, Florida",
+   "lon": -82.75,
+   "lat": 27.78,
+   "date": "1528-04-15",
+   "until": "1528-05-01",
+   "mode": "sea",
+   "note": "Lands; Narvaez separates the army from the ships, which are never seen again.",
+   "conf": "documented"
+  },
+  {
+   "place": "Apalachee",
+   "lon": -84.28,
+   "lat": 30.44,
+   "date": "1528-06-25",
+   "until": "1528-07-20",
+   "mode": "land",
+   "note": "Finds a town of forty houses, not the rich city hoped for.",
+   "conf": "documented"
+  },
+  {
+   "place": "Bay of Horses",
+   "lon": -84.2,
+   "lat": 30.15,
+   "date": "1528-08",
+   "until": "1528-09-22",
+   "mode": "land",
+   "note": "Kills the horses and builds five rafts to sail for Panuco.",
+   "conf": "documented"
+  },
+  {
+   "place": "Isla de Malhado (Galveston)",
+   "lon": -94.83,
+   "lat": 29.27,
+   "date": "1528-11-06",
+   "until": "1529",
+   "mode": "sea",
+   "note": "Cast ashore; most survivors die over the winter.",
+   "conf": "documented"
+  },
+  {
+   "place": "Texas coast and mainland",
+   "lon": -96.0,
+   "lat": 28.7,
+   "date": "1529",
+   "until": "1534-09",
+   "mode": "land",
+   "note": "Lives as a captive and trader in shells and skins among coastal peoples.",
+   "conf": "likely"
+  },
+  {
+   "place": "Prickly-pear grounds",
+   "lon": -97.8,
+   "lat": 28.0,
+   "date": "1534-09",
+   "until": "1534-09",
+   "mode": "land",
+   "note": "Escapes with Dorantes, Castillo and Esteban during the tuna harvest.",
+   "conf": "likely"
+  },
+  {
+   "place": "Rio Grande crossing",
+   "lon": -99.1,
+   "lat": 26.5,
+   "date": "1535",
+   "until": "1535",
+   "mode": "land",
+   "note": "Travels west as a healer, followed by crowds from village to village.",
+   "conf": "guess"
+  },
+  {
+   "place": "La Junta de los Rios",
+   "lon": -104.4,
+   "lat": 29.56,
+   "date": "1535-12",
+   "until": "1535-12",
+   "mode": "land",
+   "note": "Meets settled farming people at the Conchos-Rio Grande confluence.",
+   "conf": "likely"
+  },
+  {
+   "place": "Corazones (Sonora)",
+   "lon": -110.39,
+   "lat": 29.43,
+   "date": "1536-01",
+   "until": "1536-02",
+   "mode": "land",
+   "note": "Given six hundred deer hearts; sees turquoise and emeralds from the north.",
+   "conf": "likely"
+  },
+  {
+   "place": "Sinaloa river",
+   "lon": -108.2,
+   "lat": 25.8,
+   "date": "1536-04",
+   "until": "1536-04",
+   "mode": "land",
+   "note": "Meets Spanish slave hunters, to their mutual astonishment.",
+   "conf": "documented"
+  },
+  {
+   "place": "Culiacan",
+   "lon": -107.39,
+   "lat": 24.8,
+   "date": "1536-05",
+   "until": "1536-05",
+   "mode": "land",
+   "note": "Received by Melchor Diaz.",
+   "conf": "documented"
+  },
+  {
+   "place": "Compostela",
+   "lon": -104.9,
+   "lat": 21.23,
+   "date": "1536-06",
+   "until": "1536-06",
+   "mode": "land",
+   "note": "Sees governor Nuno de Guzman.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mexico City",
+   "lon": -99.13,
+   "lat": 19.43,
+   "date": "1536-07-24",
+   "until": "1537-04",
+   "mode": "land",
+   "note": "Welcomed by Viceroy Mendoza and Cortes.",
+   "conf": "documented"
+  },
+  {
+   "place": "Veracruz",
+   "lon": -96.13,
+   "lat": 19.17,
+   "date": "1537-04",
+   "until": "1537-04",
+   "mode": "land",
+   "note": "Sails for Spain.",
+   "conf": "likely"
+  },
+  {
+   "place": "Lisbon",
+   "lon": -9.14,
+   "lat": 38.71,
+   "date": "1537-08-09",
+   "until": "1537-08-09",
+   "mode": "sea",
+   "note": "Arrives after a voyage via Havana and the Azores.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "Alvar Nunez Cabeza de Vaca, La Relacion (1542), ed. and trans. Rolena Adorno and Patrick Charles Pautz, Alvar Nunez Cabeza de Vaca: His Account, His Life, and the Expedition of Panfilo de Narvaez, Lincoln 1999"
+  },
+  {
+   "cite": "Andres Resendez, A Land So Strange: The Epic Journey of Cabeza de Vaca, New York 2007"
+  },
+  {
+   "cite": "Wikipedia, Alvar Nunez Cabeza de Vaca",
+   "url": "https://en.wikipedia.org/wiki/%C3%81lvar_N%C3%BA%C3%B1ez_Cabeza_de_Vaca"
+  }
+ ],
+ "status": "draft"
+}

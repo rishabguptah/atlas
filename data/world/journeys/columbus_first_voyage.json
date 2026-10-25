@@ -1,0 +1,204 @@
+{
+ "id": "columbus_first_voyage",
+ "name": "Columbus's first voyage",
+ "person": "person:christopher_columbus",
+ "kind": "explorer",
+ "summary": "A Genoese captain sails west for Castile with three ships, reaches the Bahamas, Cuba and Hispaniola, loses the Santa Maria, and returns via the Azores and Lisbon.",
+ "start": 1492,
+ "end": 1493,
+ "stops": [
+  {
+   "place": "Palos de la Frontera",
+   "lon": -6.89,
+   "lat": 37.23,
+   "date": "1492-08-03",
+   "until": "1492-08-03",
+   "mode": "start",
+   "note": "Sails with the Santa Maria, Pinta and Nina.",
+   "conf": "documented"
+  },
+  {
+   "place": "Gran Canaria",
+   "lon": -15.41,
+   "lat": 28.1,
+   "date": "1492-08-09",
+   "until": "1492-08-31",
+   "mode": "sea",
+   "note": "Repairs the Pinta's rudder and re-rigs the Nina.",
+   "conf": "documented"
+  },
+  {
+   "place": "San Sebastian de La Gomera",
+   "lon": -17.11,
+   "lat": 28.09,
+   "date": "1492-09-02",
+   "until": "1492-09-06",
+   "mode": "sea",
+   "note": "Takes on water and provisions and leaves the known world.",
+   "conf": "documented"
+  },
+  {
+   "place": "Sargasso Sea",
+   "lon": -40.0,
+   "lat": 28.0,
+   "date": "1492-09-16",
+   "until": "1492-09-16",
+   "mode": "sea",
+   "note": "Sails into great mats of floating weed.",
+   "conf": "likely"
+  },
+  {
+   "place": "Guanahani (San Salvador)",
+   "lon": -74.53,
+   "lat": 24.05,
+   "date": "1492-10-12",
+   "until": "1492-10-14",
+   "mode": "sea",
+   "note": "Lands, claims the island for Castile and meets the Lucayan Taino.",
+   "conf": "documented"
+  },
+  {
+   "place": "Santa Maria de la Concepcion (Rum Cay)",
+   "lon": -74.84,
+   "lat": 23.68,
+   "date": "1492-10-15",
+   "until": "1492-10-15",
+   "mode": "sea",
+   "note": "Names the second island.",
+   "conf": "likely"
+  },
+  {
+   "place": "Fernandina (Long Island)",
+   "lon": -75.1,
+   "lat": 23.2,
+   "date": "1492-10-16",
+   "until": "1492-10-18",
+   "mode": "sea",
+   "note": "Trades with islanders and sees hammocks.",
+   "conf": "likely"
+  },
+  {
+   "place": "Isabela (Crooked Island)",
+   "lon": -74.2,
+   "lat": 22.7,
+   "date": "1492-10-19",
+   "until": "1492-10-24",
+   "mode": "sea",
+   "note": "Searches for gold and a king.",
+   "conf": "likely"
+  },
+  {
+   "place": "Bay of Bariay, Cuba",
+   "lon": -75.65,
+   "lat": 21.07,
+   "date": "1492-10-28",
+   "until": "1492-11-12",
+   "mode": "sea",
+   "note": "Believes Cuba is the Asian mainland and sends envoys inland, who see tobacco smoking.",
+   "conf": "documented"
+  },
+  {
+   "place": "Mole Saint-Nicolas, Hispaniola",
+   "lon": -73.38,
+   "lat": 19.8,
+   "date": "1492-12-06",
+   "until": "1492-12-07",
+   "mode": "sea",
+   "note": "Reaches the island he names La Isla Espanola.",
+   "conf": "documented"
+  },
+  {
+   "place": "Tortuga",
+   "lon": -72.78,
+   "lat": 20.05,
+   "date": "1492-12-14",
+   "until": "1492-12-15",
+   "mode": "sea",
+   "note": "Explores the island off Hispaniola's north coast.",
+   "conf": "documented"
+  },
+  {
+   "place": "La Navidad",
+   "lon": -72.2,
+   "lat": 19.75,
+   "date": "1492-12-25",
+   "until": "1493-01-02",
+   "mode": "sea",
+   "note": "The Santa Maria runs aground; leaves 39 men in a fort built from its timbers.",
+   "conf": "documented"
+  },
+  {
+   "place": "Monte Cristi",
+   "lon": -71.65,
+   "lat": 19.85,
+   "date": "1493-01-06",
+   "until": "1493-01-08",
+   "mode": "sea",
+   "note": "Rejoins Martin Alonso Pinzon and the Pinta.",
+   "conf": "documented"
+  },
+  {
+   "place": "Samana Bay",
+   "lon": -69.4,
+   "lat": 19.2,
+   "date": "1493-01-13",
+   "until": "1493-01-16",
+   "mode": "sea",
+   "note": "First armed clash with natives; sails for home.",
+   "conf": "documented"
+  },
+  {
+   "place": "Santa Maria, Azores",
+   "lon": -25.1,
+   "lat": 36.97,
+   "date": "1493-02-18",
+   "until": "1493-02-24",
+   "mode": "sea",
+   "note": "After a great storm, half the crew is arrested by the Portuguese while at prayer.",
+   "conf": "documented"
+  },
+  {
+   "place": "Lisbon (Restelo)",
+   "lon": -9.21,
+   "lat": 38.7,
+   "date": "1493-03-04",
+   "until": "1493-03-13",
+   "mode": "sea",
+   "note": "Storm-driven into the Tagus; meets King John II.",
+   "conf": "documented"
+  },
+  {
+   "place": "Palos de la Frontera",
+   "lon": -6.89,
+   "lat": 37.23,
+   "date": "1493-03-15",
+   "until": "1493-03-15",
+   "mode": "sea",
+   "note": "Returns to his home port.",
+   "conf": "documented"
+  },
+  {
+   "place": "Barcelona",
+   "lon": 2.17,
+   "lat": 41.39,
+   "date": "1493-04",
+   "until": "1493-04",
+   "mode": "land",
+   "note": "Received by Ferdinand and Isabella with Taino captives and gold.",
+   "conf": "documented"
+  }
+ ],
+ "sources": [
+  {
+   "cite": "The Diario of Christopher Columbus's First Voyage to America 1492-1493, abstracted by Las Casas, trans. Oliver Dunn and James E. Kelley, Norman 1989"
+  },
+  {
+   "cite": "Samuel Eliot Morison, Admiral of the Ocean Sea, Boston 1942"
+  },
+  {
+   "cite": "Wikipedia, Voyages of Christopher Columbus",
+   "url": "https://en.wikipedia.org/wiki/Voyages_of_Christopher_Columbus"
+  }
+ ],
+ "status": "draft"
+}

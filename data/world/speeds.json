@@ -1,0 +1,1955 @@
+[
+ {
+  "id": "pliny_messina_alexandria_galerius",
+  "from": "Strait of Messina",
+  "from_lon": 15.6,
+  "from_lat": 38.2,
+  "to": "Alexandria",
+  "to_lon": 29.92,
+  "to_lat": 31.2,
+  "year": 25,
+  "days": 7,
+  "mode": "sea",
+  "who": "Galerius, prefect of Egypt (16-31 AD)",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Pliny the Elder, Natural History 19.3-4",
+    "url": "https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Pliny_the_Elder/19*.html"
+   },
+   {
+    "cite": "Lionel Casson, 'Speed under Sail of Ancient Ships', TAPA 82 (1951) 136-148; Ships and Seamanship in the Ancient World (1971), ch. 12"
+   },
+   {
+    "cite": "W. Scheidel & E. Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World",
+    "url": "https://orbis.stanford.edu/"
+   }
+  ],
+  "note": "Fair-wind record, with the Etesians; Pliny cites it as remarkable."
+ },
+ {
+  "id": "pliny_messina_alexandria_balbillus",
+  "from": "Strait of Messina",
+  "from_lon": 15.6,
+  "from_lat": 38.2,
+  "to": "Alexandria",
+  "to_lon": 29.92,
+  "to_lat": 31.2,
+  "year": 55,
+  "days": 6,
+  "mode": "sea",
+  "who": "Ti. Claudius Balbillus, prefect of Egypt (55-59 AD)",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Pliny the Elder, Natural History 19.3-4",
+    "url": "https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Pliny_the_Elder/19*.html"
+   },
+   {
+    "cite": "Lionel Casson, 'Speed under Sail of Ancient Ships', TAPA 82 (1951) 136-148; Ships and Seamanship in the Ancient World (1971), ch. 12"
+   },
+   {
+    "cite": "W. Scheidel & E. Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World",
+    "url": "https://orbis.stanford.edu/"
+   }
+  ]
+ },
+ {
+  "id": "pliny_tarraco_ostia",
+  "from": "Tarraco",
+  "from_lon": 1.25,
+  "from_lat": 41.12,
+  "to": "Ostia",
+  "to_lon": 12.29,
+  "to_lat": 41.76,
+  "year": 60,
+  "days": 4,
+  "mode": "sea",
+  "who": "Valerius Marianus, senator, from Hispania Citerior",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Pliny the Elder, Natural History 19.3-4",
+    "url": "https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Pliny_the_Elder/19*.html"
+   },
+   {
+    "cite": "Lionel Casson, 'Speed under Sail of Ancient Ships', TAPA 82 (1951) 136-148; Ships and Seamanship in the Ancient World (1971), ch. 12"
+   },
+   {
+    "cite": "W. Scheidel & E. Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World",
+    "url": "https://orbis.stanford.edu/"
+   }
+  ],
+  "note": "Pliny says 'from Hither Spain'; Tarraco assumed."
+ },
+ {
+  "id": "pliny_gades_ostia",
+  "from": "Gades",
+  "from_lon": -6.29,
+  "from_lat": 36.53,
+  "to": "Ostia",
+  "to_lon": 12.29,
+  "to_lat": 41.76,
+  "year": 60,
+  "days": 7,
+  "mode": "sea",
+  "who": "record passage cited by Pliny",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Pliny the Elder, Natural History 19.3-4",
+    "url": "https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Pliny_the_Elder/19*.html"
+   },
+   {
+    "cite": "Lionel Casson, 'Speed under Sail of Ancient Ships', TAPA 82 (1951) 136-148; Ships and Seamanship in the Ancient World (1971), ch. 12"
+   },
+   {
+    "cite": "W. Scheidel & E. Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World",
+    "url": "https://orbis.stanford.edu/"
+   }
+  ]
+ },
+ {
+  "id": "pliny_narbo_ostia",
+  "from": "Narbo",
+  "from_lon": 3.0,
+  "from_lat": 43.18,
+  "to": "Ostia",
+  "to_lon": 12.29,
+  "to_lat": 41.76,
+  "year": 60,
+  "days": 3,
+  "mode": "sea",
+  "who": "record passage cited by Pliny (from Gallia Narbonensis)",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Pliny the Elder, Natural History 19.3-4",
+    "url": "https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Pliny_the_Elder/19*.html"
+   },
+   {
+    "cite": "Lionel Casson, 'Speed under Sail of Ancient Ships', TAPA 82 (1951) 136-148; Ships and Seamanship in the Ancient World (1971), ch. 12"
+   },
+   {
+    "cite": "W. Scheidel & E. Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World",
+    "url": "https://orbis.stanford.edu/"
+   }
+  ]
+ },
+ {
+  "id": "pliny_africa_ostia",
+  "from": "Carthage",
+  "from_lon": 10.32,
+  "from_lat": 36.85,
+  "to": "Ostia",
+  "to_lon": 12.29,
+  "to_lat": 41.76,
+  "year": 60,
+  "days": 2,
+  "mode": "sea",
+  "who": "C. Flavius, legate of the proconsul Vibius Crispus, 'even with a very gentle wind'",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Pliny the Elder, Natural History 19.3-4",
+    "url": "https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Pliny_the_Elder/19*.html"
+   },
+   {
+    "cite": "Lionel Casson, 'Speed under Sail of Ancient Ships', TAPA 82 (1951) 136-148; Ships and Seamanship in the Ancient World (1971), ch. 12"
+   },
+   {
+    "cite": "W. Scheidel & E. Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World",
+    "url": "https://orbis.stanford.edu/"
+   }
+  ],
+  "note": "Pliny says 'from Africa'; Carthage assumed."
+ },
+ {
+  "id": "cato_fig_carthage_rome",
+  "from": "Carthage",
+  "from_lon": 10.32,
+  "from_lat": 36.85,
+  "to": "Rome",
+  "to_lon": 12.48,
+  "to_lat": 41.89,
+  "year": -150,
+  "days": 3,
+  "days_range": [
+   2,
+   3
+  ],
+  "mode": "sea",
+  "who": "Cato the Elder's fresh fig, picked 'two days ago' in Carthage, shown to the Senate",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Pliny, Natural History 15.74-76",
+    "url": "https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Pliny_the_Elder/15*.html"
+   },
+   {
+    "cite": "Plutarch, Cato Maior 27"
+   }
+  ]
+ },
+ {
+  "id": "alexandria_rome_westbound_typical",
+  "from": "Alexandria",
+  "from_lon": 29.92,
+  "from_lat": 31.2,
+  "to": "Ostia",
+  "to_lon": 12.29,
+  "to_lat": 41.76,
+  "year": 50,
+  "days": 55,
+  "days_range": [
+   30,
+   70
+  ],
+  "mode": "sea",
+  "who": "grain ships against the Etesian winds, via Crete/Malta",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Lionel Casson, 'Speed under Sail of Ancient Ships', TAPA 82 (1951) 136-148; Ships and Seamanship in the Ancient World (1971), ch. 12"
+   },
+   {
+    "cite": "W. Scheidel & E. Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World",
+    "url": "https://orbis.stanford.edu/"
+   }
+  ],
+  "note": "Westbound is 3-5x slower than eastbound in summer; Acts 27-28 is a narrative example."
+ },
+ {
+  "id": "caesar_rome_rhone",
+  "from": "Rome",
+  "from_lon": 12.48,
+  "from_lat": 41.89,
+  "to": "Geneva",
+  "to_lon": 6.14,
+  "to_lat": 46.2,
+  "year": -58,
+  "days": 8,
+  "mode": "land",
+  "who": "Julius Caesar, travelling fast by carriage to meet the Helvetii",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Plutarch, Caesar 17",
+    "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Caesar*.html"
+   },
+   {
+    "cite": "Caesar, Bellum Gallicum 1.7"
+   },
+   {
+    "cite": "Suetonius, Divus Julius 57 (100 miles a day in a hired carriage)"
+   }
+  ],
+  "note": "Plutarch: reached the Rhone on the eighth day. ~1,100 km."
+ },
+ {
+  "id": "icelus_rome_clunia",
+  "from": "Rome",
+  "from_lon": 12.48,
+  "from_lat": 41.89,
+  "to": "Clunia",
+  "to_lon": -3.37,
+  "to_lat": 41.79,
+  "year": 68,
+  "days": 7,
+  "mode": "courier",
+  "who": "Icelus, Galba's freedman, with news of Nero's death",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Plutarch, Galba 7",
+    "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Plutarch/Lives/Galba*.html"
+   }
+  ],
+  "note": "~2,000 km; ~280 km/day. See news.json death_of_nero_68."
+ },
+ {
+  "id": "horace_rome_brundisium",
+  "from": "Rome",
+  "from_lon": 12.48,
+  "from_lat": 41.89,
+  "to": "Brundisium",
+  "to_lon": 17.94,
+  "to_lat": 40.64,
+  "year": -37,
+  "days": 15,
+  "days_range": [
+   13,
+   17
+  ],
+  "mode": "land",
+  "who": "Horace, Maecenas's party, on the Via Appia (leisurely, with stops)",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Horace, Satires 1.5",
+    "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.02.0062:book=1:poem=5"
+   },
+   {
+    "cite": "W. Scheidel & E. Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World",
+    "url": "https://orbis.stanford.edu/"
+   }
+  ],
+  "note": "Day count reconstructed from the poem's stages."
+ },
+ {
+  "id": "cicero_britain_rome_letters",
+  "from": "Kent (Caesar's camp)",
+  "from_lon": 1.1,
+  "from_lat": 51.15,
+  "to": "Rome",
+  "to_lon": 12.48,
+  "to_lat": 41.89,
+  "year": -54,
+  "days": 30,
+  "days_range": [
+   26,
+   34
+  ],
+  "mode": "courier",
+  "who": "letters of Caesar and Quintus Cicero from Britain to Cicero",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Cicero, Ad Quintum fratrem 3.1.13, 3.1.17, 3.1.25; Ad Atticum 4.18"
+   },
+   {
+    "cite": "W. M. Ramsay, 'The Speed of the Roman Imperial Post', JRS 15 (1925) 60-74"
+   }
+  ],
+  "note": "Letter-carriers (tabellarii), Channel crossing included."
+ },
+ {
+  "id": "pheidippides_athens_sparta",
+  "from": "Athens",
+  "from_lon": 23.73,
+  "from_lat": 37.98,
+  "to": "Sparta",
+  "to_lon": 22.43,
+  "to_lat": 37.07,
+  "year": -490,
+  "days": 1.5,
+  "mode": "courier",
+  "who": "Pheidippides (Philippides), hemerodromos, asking Sparta for help before Marathon",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Herodotus 6.105-106",
+    "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0126:book=6:chapter=106"
+   }
+  ],
+  "note": "'He was in Sparta on the day after leaving Athens'; ~240 km on foot."
+ },
+ {
+  "id": "spartans_sparta_attica",
+  "from": "Sparta",
+  "from_lon": 22.43,
+  "from_lat": 37.07,
+  "to": "Athens",
+  "to_lon": 23.73,
+  "to_lat": 37.98,
+  "year": -490,
+  "days": 3,
+  "mode": "land",
+  "who": "2,000 Spartan hoplites marching after the full moon",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Herodotus 6.120",
+    "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0126:book=6:chapter=120"
+   }
+  ],
+  "note": "Arrived in Attica on the third day, too late for the battle. Army forced march ~75 km/day."
+ },
+ {
+  "id": "royal_road_sardis_susa",
+  "from": "Sardis",
+  "from_lon": 28.04,
+  "from_lat": 38.49,
+  "to": "Susa",
+  "to_lon": 48.25,
+  "to_lat": 32.19,
+  "year": -500,
+  "days": 90,
+  "mode": "land",
+  "who": "ordinary traveller on the Persian Royal Road (111 stations)",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Herodotus 5.52-54",
+    "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0126:book=5:chapter=53"
+   }
+  ],
+  "note": "Herodotus' figure at 150 stades/day; royal couriers (angaros) much faster (Herodotus 8.98), est. 7-9 days."
+ },
+ {
+  "id": "wulfstan_hedeby_truso",
+  "from": "Hedeby",
+  "from_lon": 9.57,
+  "from_lat": 54.49,
+  "to": "Truso",
+  "to_lon": 19.4,
+  "to_lat": 54.17,
+  "year": 890,
+  "days": 7,
+  "mode": "sea",
+  "who": "Wulfstan, sailing 'day and night', reported to King Alfred",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Old English Orosius (Voyages of Ohthere and Wulfstan)",
+    "url": "https://en.wikipedia.org/wiki/Wulfstan_of_H%C3%A6dum"
+   }
+  ]
+ },
+ {
+  "id": "ohthere_kaupang_hedeby",
+  "from": "Kaupang",
+  "from_lon": 10.03,
+  "from_lat": 59.03,
+  "to": "Hedeby",
+  "to_lon": 9.57,
+  "to_lat": 54.49,
+  "year": 890,
+  "days": 5,
+  "mode": "sea",
+  "who": "Ohthere of Halogaland, from Sciringes heal",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Old English Orosius (Voyages of Ohthere and Wulfstan)",
+    "url": "https://en.wikipedia.org/wiki/Ohthere_of_H%C3%A5logaland"
+   }
+  ]
+ },
+ {
+  "id": "kamakura_courier_kyoto",
+  "from": "Kyoto",
+  "from_lon": 135.77,
+  "from_lat": 35.0,
+  "to": "Kamakura",
+  "to_lon": 139.55,
+  "to_lat": 35.32,
+  "year": 1250,
+  "days": 3,
+  "days_range": [
+   3,
+   7
+  ],
+  "mode": "courier",
+  "who": "Rokuhara hikyaku mounted relay of the Kamakura shogunate",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Wikipedia: Hikyaku",
+    "url": "https://en.wikipedia.org/wiki/Hikyaku"
+   }
+  ],
+  "note": "'Sometimes within 72 hours' (~480 km)."
+ },
+ {
+  "id": "carpini_batu_guyuk",
+  "from": "Batu's camp, lower Volga",
+  "from_lon": 46.0,
+  "from_lat": 47.5,
+  "to": "Sira Ordo (near Karakorum)",
+  "to_lon": 102.5,
+  "to_lat": 47.3,
+  "year": 1246,
+  "days": 105,
+  "mode": "land",
+  "who": "John of Plano Carpini, papal envoy, on Mongol yam horses",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "John of Plano Carpini, Ystoria Mongalorum ch. 9"
+   },
+   {
+    "cite": "Wikipedia: Giovanni da Pian del Carpine",
+    "url": "https://en.wikipedia.org/wiki/Giovanni_da_Pian_del_Carpine"
+   }
+  ],
+  "note": "Left Batu c. 8 April 1246 (Easter), reached Guyuk's ordo 22 July 1246; ~4,500 km. Camp location approximate."
+ },
+ {
+  "id": "clavijo_trebizond_samarkand",
+  "from": "Trebizond",
+  "from_lon": 39.72,
+  "from_lat": 41.0,
+  "to": "Samarkand",
+  "to_lon": 66.98,
+  "to_lat": 39.65,
+  "year": 1404,
+  "days": 150,
+  "mode": "caravan",
+  "who": "Ruy Gonzalez de Clavijo, Castilian embassy to Timur",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Clavijo, Embajada a Tamorlan (tr. Le Strange 1928)"
+   },
+   {
+    "cite": "Wikipedia: Ruy Gonzalez de Clavijo",
+    "url": "https://en.wikipedia.org/wiki/Ruy_Gonz%C3%A1lez_de_Clavijo"
+   }
+  ],
+  "note": "Arrived Trebizond 11 April 1404, Samarkand 8 September 1404; includes halts at Tabriz and Sultaniyeh."
+ },
+ {
+  "id": "pegolotti_tana_khanbaliq",
+  "from": "Tana",
+  "from_lon": 39.43,
+  "from_lat": 47.1,
+  "to": "Khanbaliq (Beijing)",
+  "to_lon": 116.39,
+  "to_lat": 39.91,
+  "year": 1340,
+  "days": 282,
+  "days_range": [
+   270,
+   290
+  ],
+  "mode": "caravan",
+  "who": "merchant itinerary: ox-wagon, river boat, camel and pack-ass stages",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Francesco Balducci Pegolotti, La pratica della mercatura (c. 1340), ch. 1; tr. Yule, Cathay and the Way Thither vol. 3"
+   },
+   {
+    "cite": "Wikipedia: Francesco Balducci Pegolotti",
+    "url": "https://en.wikipedia.org/wiki/Francesco_Balducci_Pegolotti"
+   }
+  ],
+  "note": "Sum of Pegolotti's stage days (Tana-Astrakhan 25, -Sarai 1, -Saraichuk 8, -Urgench 20, -Otrar 35-40, -Almalik 45, -Gansu 70, -Hangzhou 45, -Khanbaliq 30); excludes rest days."
+ },
+ {
+  "id": "samarkand_changan_caravan",
+  "from": "Samarkand",
+  "from_lon": 66.98,
+  "from_lat": 39.65,
+  "to": "Chang'an",
+  "to_lon": 108.94,
+  "to_lat": 34.26,
+  "year": 700,
+  "days": 160,
+  "days_range": [
+   120,
+   200
+  ],
+  "mode": "caravan",
+  "who": "Sogdian caravan (Tang era)",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Etienne de la Vaissiere, Sogdian Traders (2005)"
+   },
+   {
+    "cite": "Valerie Hansen, The Silk Road: A New History (2012)"
+   }
+  ],
+  "note": "ROUGH: no single dated trip; derived from caravan rates (~25 km/day over ~4,000 km) with halts."
+ },
+ {
+  "id": "shahrukh_embassy_herat_beijing",
+  "from": "Herat",
+  "from_lon": 62.2,
+  "from_lat": 34.35,
+  "to": "Beijing",
+  "to_lon": 116.39,
+  "to_lat": 39.91,
+  "year": 1420,
+  "days": 376,
+  "mode": "caravan",
+  "who": "Timurid embassy of Shah Rukh (Ghiyath al-Din Naqqash's diary)",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ghiyath al-Din Naqqash, account in Abd al-Razzaq Samarqandi; tr. K. M. Maitra, A Persian Embassy to China (1934)"
+   },
+   {
+    "cite": "Wikipedia: Ghiyath al-din Naqqash",
+    "url": "https://en.wikipedia.org/wiki/Ghiy%C4%81th_al-d%C4%ABn_Naqq%C4%81sh"
+   }
+  ],
+  "note": "Left Herat 4 Dec 1419, entered Beijing 14 Dec 1420; includes months of waiting at the Ming frontier."
+ },
+ {
+  "id": "ibn_battuta_sijilmasa_walata",
+  "from": "Sijilmasa",
+  "from_lon": -4.27,
+  "from_lat": 31.28,
+  "to": "Walata",
+  "to_lon": -7.03,
+  "to_lat": 17.3,
+  "year": 1352,
+  "days": 59,
+  "days_range": [
+   55,
+   62
+  ],
+  "mode": "caravan",
+  "who": "Ibn Battuta with a trans-Saharan salt caravan via Taghaza",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Ibn Battuta, Rihla (tr. Gibb & Beckingham, vol. 4)"
+   },
+   {
+    "cite": "Wikipedia: Ibn Battuta",
+    "url": "https://en.wikipedia.org/wiki/Ibn_Battuta"
+   }
+  ],
+  "note": "Left 1 Muharram 753 (18 Feb 1352); 'two months' to Iwalatan."
+ },
+ {
+  "id": "hajj_cairo_mecca",
+  "from": "Cairo",
+  "from_lon": 31.24,
+  "from_lat": 30.04,
+  "to": "Mecca",
+  "to_lon": 39.83,
+  "to_lat": 21.42,
+  "year": 1550,
+  "days": 37,
+  "days_range": [
+   30,
+   45
+  ],
+  "mode": "caravan",
+  "who": "Egyptian Hajj caravan with the mahmal (Darb al-Hajj via Aqaba)",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Suraiya Faroqhi, Pilgrims and Sultans: The Hajj under the Ottomans (1994)"
+   },
+   {
+    "cite": "Jacques Jomier, Le Mahmal et la caravane egyptienne des pelerins de la Mecque (1953)"
+   }
+  ]
+ },
+ {
+  "id": "hajj_damascus_mecca",
+  "from": "Damascus",
+  "from_lon": 36.29,
+  "from_lat": 33.51,
+  "to": "Mecca",
+  "to_lon": 39.83,
+  "to_lat": 21.42,
+  "year": 1600,
+  "days": 40,
+  "days_range": [
+   30,
+   50
+  ],
+  "mode": "caravan",
+  "who": "Syrian Hajj caravan",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Faroqhi 1994"
+   },
+   {
+    "cite": "Wikipedia: Hajj caravan",
+    "url": "https://en.wikipedia.org/wiki/Hajj_caravan"
+   }
+  ]
+ },
+ {
+  "id": "macartney_beijing_hangzhou",
+  "from": "Beijing",
+  "from_lon": 116.39,
+  "from_lat": 39.91,
+  "to": "Hangzhou",
+  "to_lon": 120.16,
+  "to_lat": 30.27,
+  "year": 1793,
+  "days": 33,
+  "days_range": [
+   30,
+   35
+  ],
+  "mode": "river",
+  "who": "Macartney embassy returning south by the Grand Canal",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "George Macartney, An Embassy to China: Journal (ed. Cranmer-Byng, 1962)"
+   },
+   {
+    "cite": "Wikipedia: Macartney Embassy",
+    "url": "https://en.wikipedia.org/wiki/Macartney_Embassy"
+   }
+  ],
+  "note": "Left Beijing 7 Oct 1793, Hangzhou c. 9 Nov; verify day of Hangzhou arrival."
+ },
+ {
+  "id": "macartney_beijing_guangzhou",
+  "from": "Beijing",
+  "from_lon": 116.39,
+  "from_lat": 39.91,
+  "to": "Guangzhou",
+  "to_lon": 113.26,
+  "to_lat": 23.13,
+  "year": 1793,
+  "days": 73,
+  "mode": "river",
+  "who": "Macartney embassy, Grand Canal then Gan river and Meiling pass",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Macartney Journal (Cranmer-Byng 1962)"
+   },
+   {
+    "cite": "Wikipedia: Macartney Embassy",
+    "url": "https://en.wikipedia.org/wiki/Macartney_Embassy"
+   }
+  ],
+  "note": "7 Oct to c. 19 Dec 1793; official escort, not hurried."
+ },
+ {
+  "id": "qing_courier_guangzhou_beijing",
+  "from": "Guangzhou",
+  "from_lon": 113.26,
+  "from_lat": 23.13,
+  "to": "Beijing",
+  "to_lon": 116.39,
+  "to_lat": 39.91,
+  "year": 1840,
+  "days": 20,
+  "days_range": [
+   12,
+   35
+  ],
+  "mode": "courier",
+  "who": "Qing post (yizhan) memorial; 600-li express possible",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "J. K. Fairbank & S. Y. Teng, 'On the Transmission of Ch'ing Documents', HJAS 4 (1939) 12-46"
+   }
+  ],
+  "note": "Ordinary memorials took ~month; graded express rates (300/400/600 li per day) shorten it. Range wide; check Fairbank & Teng tables."
+ },
+ {
+  "id": "columbus_gomera_guanahani",
+  "from": "La Gomera",
+  "from_lon": -17.11,
+  "from_lat": 28.09,
+  "to": "Guanahani (San Salvador)",
+  "to_lon": -74.5,
+  "to_lat": 24.05,
+  "year": 1492,
+  "days": 36,
+  "mode": "sea",
+  "who": "Columbus, first voyage (Santa Maria, Pinta, Nina)",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Columbus, Diario (Las Casas abstract)"
+   },
+   {
+    "cite": "Wikipedia: Voyages of Christopher Columbus",
+    "url": "https://en.wikipedia.org/wiki/Voyages_of_Christopher_Columbus"
+   }
+  ],
+  "note": "6 Sept to 12 Oct 1492."
+ },
+ {
+  "id": "da_gama_lisbon_calicut",
+  "from": "Lisbon",
+  "from_lon": -9.14,
+  "from_lat": 38.71,
+  "to": "Calicut",
+  "to_lon": 75.78,
+  "to_lat": 11.25,
+  "year": 1497,
+  "days": 316,
+  "mode": "sea",
+  "who": "Vasco da Gama, first voyage",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Alvaro Velho (attrib.), Roteiro"
+   },
+   {
+    "cite": "Wikipedia: Vasco da Gama",
+    "url": "https://en.wikipedia.org/wiki/Vasco_da_Gama"
+   }
+  ],
+  "note": "8 July 1497 to 20 May 1498; first passage, with long stops."
+ },
+ {
+  "id": "carreira_lisbon_goa_typical",
+  "from": "Lisbon",
+  "from_lon": -9.14,
+  "from_lat": 38.71,
+  "to": "Goa",
+  "to_lon": 73.83,
+  "to_lat": 15.5,
+  "year": 1600,
+  "days": 180,
+  "days_range": [
+   150,
+   240
+  ],
+  "mode": "sea",
+  "who": "Carreira da India, annual nau fleet",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "C. R. Boxer, The Portuguese Seaborne Empire (1969)"
+   },
+   {
+    "cite": "Wikipedia: Portuguese India Armadas",
+    "url": "https://en.wikipedia.org/wiki/Portuguese_India_Armadas"
+   }
+  ]
+ },
+ {
+  "id": "urdaneta_cebu_acapulco",
+  "from": "Cebu",
+  "from_lon": 123.9,
+  "from_lat": 10.3,
+  "to": "Acapulco",
+  "to_lon": -99.88,
+  "to_lat": 16.85,
+  "year": 1565,
+  "days": 129,
+  "mode": "sea",
+  "who": "Andres de Urdaneta / Felipe de Salcedo on the San Pedro, first tornaviaje",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Andres de Urdaneta",
+    "url": "https://en.wikipedia.org/wiki/Andr%C3%A9s_de_Urdaneta"
+   }
+  ],
+  "note": "Left Cebu 1 June 1565, reached Acapulco 8 Oct 1565."
+ },
+ {
+  "id": "manila_galleon_acapulco_manila",
+  "from": "Acapulco",
+  "from_lon": -99.88,
+  "from_lat": 16.85,
+  "to": "Manila",
+  "to_lon": 120.97,
+  "to_lat": 14.59,
+  "year": 1650,
+  "days": 90,
+  "days_range": [
+   75,
+   120
+  ],
+  "mode": "sea",
+  "who": "Manila galleon westbound with the trade winds",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "William Lytle Schurz, The Manila Galleon (1939)"
+   },
+   {
+    "cite": "Wikipedia: Manila galleon",
+    "url": "https://en.wikipedia.org/wiki/Manila_galleon"
+   }
+  ]
+ },
+ {
+  "id": "manila_galleon_manila_acapulco",
+  "from": "Manila",
+  "from_lon": 120.97,
+  "from_lat": 14.59,
+  "to": "Acapulco",
+  "to_lon": -99.88,
+  "to_lat": 16.85,
+  "year": 1650,
+  "days": 165,
+  "days_range": [
+   120,
+   210
+  ],
+  "mode": "sea",
+  "who": "Manila galleon eastbound via the Kuroshio and North Pacific",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Schurz 1939"
+   },
+   {
+    "cite": "Wikipedia: Manila galleon",
+    "url": "https://en.wikipedia.org/wiki/Manila_galleon"
+   }
+  ],
+  "note": "'At least four months'; six or more common."
+ },
+ {
+  "id": "voc_texel_batavia",
+  "from": "Texel",
+  "from_lon": 4.8,
+  "from_lat": 53.05,
+  "to": "Batavia",
+  "to_lon": 106.81,
+  "to_lat": -6.13,
+  "year": 1700,
+  "days": 240,
+  "days_range": [
+   150,
+   330
+  ],
+  "mode": "sea",
+  "who": "VOC East Indiaman via the Cape and the Brouwer route",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "J. R. Bruijn, F. S. Gaastra & I. Schoffer, Dutch-Asiatic Shipping in the 17th and 18th Centuries (1979-87)",
+    "url": "https://resources.huygens.knaw.nl/das"
+   },
+   {
+    "cite": "Wikipedia: Brouwer Route",
+    "url": "https://en.wikipedia.org/wiki/Brouwer_Route"
+   }
+  ],
+  "note": "Average ~8 months incl. Cape stop; per-voyage dates in the DAS database."
+ },
+ {
+  "id": "mayflower_plymouth_cape_cod",
+  "from": "Plymouth",
+  "from_lon": -4.14,
+  "from_lat": 50.37,
+  "to": "Cape Cod (Provincetown)",
+  "to_lon": -70.19,
+  "to_lat": 42.05,
+  "year": 1620,
+  "days": 66,
+  "mode": "sea",
+  "who": "the Mayflower",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "William Bradford, Of Plymouth Plantation"
+   },
+   {
+    "cite": "Wikipedia: Mayflower",
+    "url": "https://en.wikipedia.org/wiki/Mayflower"
+   }
+  ],
+  "note": "6 Sept to 9 Nov 1620 (Old Style)."
+ },
+ {
+  "id": "venice_news_from_london",
+  "from": "London",
+  "from_lon": -0.13,
+  "from_lat": 51.51,
+  "to": "Venice",
+  "to_lon": 12.34,
+  "to_lat": 45.44,
+  "year": 1515,
+  "days": 27,
+  "days_range": [
+   9,
+   52
+  ],
+  "mode": "courier",
+  "who": "letters/news noted in Marino Sanudo's diaries, 1497-1532",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Fernand Braudel, The Mediterranean and the Mediterranean World in the Age of Philip II, vol. 1 (1972), pp. 362-366, after Pierre Sardella, Nouvelles et speculations a Venise au debut du XVIe siecle (1948)"
+   }
+  ],
+  "note": "Average and min-max days for news to reach Venice. Figures recalled from Braudel's reproduction of Sardella's table; verify against the printed table."
+ },
+ {
+  "id": "venice_news_from_paris",
+  "from": "Paris",
+  "from_lon": 2.35,
+  "from_lat": 48.86,
+  "to": "Venice",
+  "to_lon": 12.34,
+  "to_lat": 45.44,
+  "year": 1515,
+  "days": 12,
+  "days_range": [
+   7,
+   34
+  ],
+  "mode": "courier",
+  "who": "letters/news noted in Marino Sanudo's diaries, 1497-1532",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Fernand Braudel, The Mediterranean and the Mediterranean World in the Age of Philip II, vol. 1 (1972), pp. 362-366, after Pierre Sardella, Nouvelles et speculations a Venise au debut du XVIe siecle (1948)"
+   }
+  ],
+  "note": "Average and min-max days for news to reach Venice. Figures recalled from Braudel's reproduction of Sardella's table; verify against the printed table."
+ },
+ {
+  "id": "venice_news_from_lisbon",
+  "from": "Lisbon",
+  "from_lon": -9.14,
+  "from_lat": 38.71,
+  "to": "Venice",
+  "to_lon": 12.34,
+  "to_lat": 45.44,
+  "year": 1515,
+  "days": 46,
+  "days_range": [
+   27,
+   69
+  ],
+  "mode": "courier",
+  "who": "letters/news noted in Marino Sanudo's diaries, 1497-1532",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Fernand Braudel, The Mediterranean and the Mediterranean World in the Age of Philip II, vol. 1 (1972), pp. 362-366, after Pierre Sardella, Nouvelles et speculations a Venise au debut du XVIe siecle (1948)"
+   }
+  ],
+  "note": "Average and min-max days for news to reach Venice. Figures recalled from Braudel's reproduction of Sardella's table; verify against the printed table."
+ },
+ {
+  "id": "venice_news_from_constantinople",
+  "from": "Constantinople",
+  "from_lon": 28.95,
+  "from_lat": 41.01,
+  "to": "Venice",
+  "to_lon": 12.34,
+  "to_lat": 45.44,
+  "year": 1515,
+  "days": 37,
+  "days_range": [
+   15,
+   81
+  ],
+  "mode": "courier",
+  "who": "letters/news noted in Marino Sanudo's diaries, 1497-1532",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Fernand Braudel, The Mediterranean and the Mediterranean World in the Age of Philip II, vol. 1 (1972), pp. 362-366, after Pierre Sardella, Nouvelles et speculations a Venise au debut du XVIe siecle (1948)"
+   }
+  ],
+  "note": "Average and min-max days for news to reach Venice. Figures recalled from Braudel's reproduction of Sardella's table; verify against the printed table."
+ },
+ {
+  "id": "venice_news_from_alexandria",
+  "from": "Alexandria",
+  "from_lon": 29.92,
+  "from_lat": 31.2,
+  "to": "Venice",
+  "to_lon": 12.34,
+  "to_lat": 45.44,
+  "year": 1515,
+  "days": 65,
+  "days_range": [
+   17,
+   89
+  ],
+  "mode": "sea",
+  "who": "letters/news noted in Marino Sanudo's diaries, 1497-1532",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Fernand Braudel, The Mediterranean and the Mediterranean World in the Age of Philip II, vol. 1 (1972), pp. 362-366, after Pierre Sardella, Nouvelles et speculations a Venise au debut du XVIe siecle (1948)"
+   }
+  ],
+  "note": "Average and min-max days for news to reach Venice. Figures recalled from Braudel's reproduction of Sardella's table; verify against the printed table."
+ },
+ {
+  "id": "venice_news_from_damascus",
+  "from": "Damascus",
+  "from_lon": 36.29,
+  "from_lat": 33.51,
+  "to": "Venice",
+  "to_lon": 12.34,
+  "to_lat": 45.44,
+  "year": 1515,
+  "days": 80,
+  "days_range": [
+   37,
+   102
+  ],
+  "mode": "caravan",
+  "who": "letters/news noted in Marino Sanudo's diaries, 1497-1532",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Fernand Braudel, The Mediterranean and the Mediterranean World in the Age of Philip II, vol. 1 (1972), pp. 362-366, after Pierre Sardella, Nouvelles et speculations a Venise au debut du XVIe siecle (1948)"
+   }
+  ],
+  "note": "Average and min-max days for news to reach Venice. Figures recalled from Braudel's reproduction of Sardella's table; verify against the printed table."
+ },
+ {
+  "id": "venice_news_from_rome",
+  "from": "Rome",
+  "from_lon": 12.48,
+  "from_lat": 41.89,
+  "to": "Venice",
+  "to_lon": 12.34,
+  "to_lat": 45.44,
+  "year": 1515,
+  "days": 4,
+  "days_range": [
+   1,
+   9
+  ],
+  "mode": "courier",
+  "who": "letters/news noted in Marino Sanudo's diaries, 1497-1532",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Fernand Braudel, The Mediterranean and the Mediterranean World in the Age of Philip II, vol. 1 (1972), pp. 362-366, after Pierre Sardella, Nouvelles et speculations a Venise au debut du XVIe siecle (1948)"
+   }
+  ],
+  "note": "Average and min-max days for news to reach Venice. Figures recalled from Braudel's reproduction of Sardella's table; verify against the printed table."
+ },
+ {
+  "id": "venice_news_from_naples",
+  "from": "Naples",
+  "from_lon": 14.25,
+  "from_lat": 40.85,
+  "to": "Venice",
+  "to_lon": 12.34,
+  "to_lat": 45.44,
+  "year": 1515,
+  "days": 9,
+  "days_range": [
+   4,
+   20
+  ],
+  "mode": "courier",
+  "who": "letters/news noted in Marino Sanudo's diaries, 1497-1532",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Fernand Braudel, The Mediterranean and the Mediterranean World in the Age of Philip II, vol. 1 (1972), pp. 362-366, after Pierre Sardella, Nouvelles et speculations a Venise au debut du XVIe siecle (1948)"
+   }
+  ],
+  "note": "Average and min-max days for news to reach Venice. Figures recalled from Braudel's reproduction of Sardella's table; verify against the printed table."
+ },
+ {
+  "id": "black_ball_newyork_liverpool",
+  "from": "New York",
+  "from_lon": -74.01,
+  "from_lat": 40.71,
+  "to": "Liverpool",
+  "to_lon": -2.99,
+  "to_lat": 53.41,
+  "year": 1825,
+  "days": 23,
+  "days_range": [
+   16,
+   30
+  ],
+  "mode": "sea",
+  "who": "Black Ball Line sailing packet, eastbound",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Robert G. Albion, Square-Riggers on Schedule (1938)"
+   },
+   {
+    "cite": "Wikipedia: Black Ball Line (trans-Atlantic packet)",
+    "url": "https://en.wikipedia.org/wiki/Black_Ball_Line_(trans-Atlantic_packet)"
+   }
+  ]
+ },
+ {
+  "id": "black_ball_liverpool_newyork",
+  "from": "Liverpool",
+  "from_lon": -2.99,
+  "from_lat": 53.41,
+  "to": "New York",
+  "to_lon": -74.01,
+  "to_lat": 40.71,
+  "year": 1825,
+  "days": 40,
+  "days_range": [
+   25,
+   60
+  ],
+  "mode": "sea",
+  "who": "Black Ball Line sailing packet, westbound",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Albion 1938"
+   },
+   {
+    "cite": "Wikipedia: SS Sirius (1837) ('normal westbound passage by sailing packet was 40 days')",
+    "url": "https://en.wikipedia.org/wiki/SS_Sirius_(1837)"
+   }
+  ]
+ },
+ {
+  "id": "sirius_cork_newyork",
+  "from": "Cork",
+  "from_lon": -8.47,
+  "from_lat": 51.9,
+  "to": "New York",
+  "to_lon": -74.01,
+  "to_lat": 40.71,
+  "year": 1838,
+  "days": 18,
+  "mode": "steam",
+  "who": "SS Sirius, first crossing wholly under steam",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: SS Sirius (1837)",
+    "url": "https://en.wikipedia.org/wiki/SS_Sirius_(1837)"
+   }
+  ],
+  "note": "4-22 April 1838."
+ },
+ {
+  "id": "great_western_bristol_newyork",
+  "from": "Avonmouth (Bristol)",
+  "from_lon": -2.7,
+  "from_lat": 51.5,
+  "to": "New York",
+  "to_lon": -74.01,
+  "to_lat": 40.71,
+  "year": 1838,
+  "days": 15,
+  "mode": "steam",
+  "who": "SS Great Western (Brunel), maiden voyage",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: SS Great Western",
+    "url": "https://en.wikipedia.org/wiki/SS_Great_Western"
+   }
+  ],
+  "note": "8-23 April 1838."
+ },
+ {
+  "id": "britannia_liverpool_boston",
+  "from": "Liverpool",
+  "from_lon": -2.99,
+  "from_lat": 53.41,
+  "to": "Boston",
+  "to_lon": -71.06,
+  "to_lat": 42.36,
+  "year": 1840,
+  "days": 14.3,
+  "mode": "steam",
+  "who": "Cunard's RMS Britannia, first mail run, via Halifax",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: RMS Britannia (1840)",
+    "url": "https://en.wikipedia.org/wiki/RMS_Britannia_(1840)"
+   }
+  ],
+  "note": "4 July 1840 departure; 14 days 8 hours."
+ },
+ {
+  "id": "mauretania_queenstown_newyork",
+  "from": "Queenstown (Cobh)",
+  "from_lon": -8.29,
+  "from_lat": 51.85,
+  "to": "New York",
+  "to_lon": -74.01,
+  "to_lat": 40.71,
+  "year": 1909,
+  "days": 4.45,
+  "mode": "steam",
+  "who": "RMS Mauretania, Blue Riband westbound record (26.06 kn)",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: RMS Mauretania (1906)",
+    "url": "https://en.wikipedia.org/wiki/RMS_Mauretania_(1906)"
+   },
+   {
+    "cite": "Wikipedia: Blue Riband",
+    "url": "https://en.wikipedia.org/wiki/Blue_Riband"
+   }
+  ],
+  "note": "4 d 10 h 51 m, Sept 1909, Daunt's Rock to Ambrose."
+ },
+ {
+  "id": "flying_cloud_newyork_sanfrancisco",
+  "from": "New York",
+  "from_lon": -74.01,
+  "from_lat": 40.71,
+  "to": "San Francisco",
+  "to_lon": -122.42,
+  "to_lat": 37.77,
+  "year": 1851,
+  "days": 89.9,
+  "days_range": [
+   89.3,
+   89.9
+  ],
+  "mode": "sea",
+  "who": "clipper Flying Cloud (Capt. Josiah Creesy) via Cape Horn",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Flying Cloud (clipper)",
+    "url": "https://en.wikipedia.org/wiki/Flying_Cloud_(clipper)"
+   }
+  ],
+  "note": "89 d 21 h in 1851; 89 d 8 h in 1854. Typical clipper passage 120+ days."
+ },
+ {
+  "id": "thermopylae_gravesend_melbourne",
+  "from": "Gravesend",
+  "from_lon": 0.37,
+  "from_lat": 51.44,
+  "to": "Melbourne",
+  "to_lon": 144.9,
+  "to_lat": -37.85,
+  "year": 1868,
+  "days": 63,
+  "mode": "sea",
+  "who": "clipper Thermopylae, maiden voyage",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Thermopylae (clipper)",
+    "url": "https://en.wikipedia.org/wiki/Thermopylae_(clipper)"
+   }
+  ],
+  "note": "Record under sail; her first 10 outward passages averaged 69 days from the Lizard."
+ },
+ {
+  "id": "thermopylae_fuzhou_london",
+  "from": "Fuzhou",
+  "from_lon": 119.3,
+  "from_lat": 26.08,
+  "to": "London",
+  "to_lon": -0.13,
+  "to_lat": 51.51,
+  "year": 1869,
+  "days": 91,
+  "mode": "sea",
+  "who": "clipper Thermopylae with tea",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Thermopylae (clipper)",
+    "url": "https://en.wikipedia.org/wiki/Thermopylae_(clipper)"
+   }
+  ],
+  "note": "Left Fuzhou 3 July 1869; homeward tea passages averaged 106.5 days."
+ },
+ {
+  "id": "london_bombay_overland_route",
+  "from": "London",
+  "from_lon": -0.13,
+  "from_lat": 51.51,
+  "to": "Bombay",
+  "to_lon": 72.84,
+  "to_lat": 18.94,
+  "year": 1845,
+  "days": 35,
+  "days_range": [
+   30,
+   45
+  ],
+  "mode": "steam",
+  "who": "P&O / Overland Route mail via Marseille or Gibraltar, Alexandria-Suez overland",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Daniel R. Headrick, The Tools of Empire (1981), ch. 7"
+   },
+   {
+    "cite": "Wikipedia: Overland route (India)",
+    "url": "https://en.wikipedia.org/wiki/Waghorn"
+   }
+  ]
+ },
+ {
+  "id": "london_bombay_cape_sail",
+  "from": "London",
+  "from_lon": -0.13,
+  "from_lat": 51.51,
+  "to": "Bombay",
+  "to_lon": 72.84,
+  "to_lat": 18.94,
+  "year": 1800,
+  "days": 150,
+  "days_range": [
+   120,
+   180
+  ],
+  "mode": "sea",
+  "who": "East Indiaman via the Cape of Good Hope",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Headrick 1981"
+   },
+   {
+    "cite": "H. V. Bowen, The Business of Empire (2006)"
+   }
+  ]
+ },
+ {
+  "id": "pony_express_first_westbound",
+  "from": "St. Joseph",
+  "from_lon": -94.85,
+  "from_lat": 39.77,
+  "to": "Sacramento",
+  "to_lon": -121.49,
+  "to_lat": 38.58,
+  "year": 1860,
+  "days": 10,
+  "mode": "courier",
+  "who": "Pony Express, first westbound run",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Pony Express",
+    "url": "https://en.wikipedia.org/wiki/Pony_Express"
+   }
+  ],
+  "note": "3-13 April 1860; ~3,100 km."
+ },
+ {
+  "id": "pony_express_lincoln_inaugural",
+  "from": "Fort Kearny",
+  "from_lon": -98.95,
+  "from_lat": 40.64,
+  "to": "Fort Churchill",
+  "to_lon": -119.27,
+  "to_lat": 39.29,
+  "year": 1861,
+  "days": 7.7,
+  "mode": "courier",
+  "who": "Pony Express carrying Lincoln's inaugural address between telegraph ends",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Pony Express",
+    "url": "https://en.wikipedia.org/wiki/Pony_Express"
+   }
+  ],
+  "note": "7 days 17 hours, March 1861; the record run."
+ },
+ {
+  "id": "butterfield_stlouis_sanfrancisco",
+  "from": "St. Louis",
+  "from_lon": -90.2,
+  "from_lat": 38.63,
+  "to": "San Francisco",
+  "to_lon": -122.42,
+  "to_lat": 37.77,
+  "year": 1858,
+  "days": 24,
+  "mode": "land",
+  "who": "Butterfield Overland Mail stagecoach (Waterman Ormsby aboard the first westbound)",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Butterfield Overland Mail",
+    "url": "https://en.wikipedia.org/wiki/Butterfield_Overland_Mail"
+   }
+  ],
+  "note": "Left 16 Sept, arrived 10 Oct 1858 (23 d 23 h); contract limit 25 days."
+ },
+ {
+  "id": "transcontinental_rail_typical_1870",
+  "from": "New York",
+  "from_lon": -74.01,
+  "from_lat": 40.71,
+  "to": "San Francisco",
+  "to_lon": -122.42,
+  "to_lat": 37.77,
+  "year": 1870,
+  "days": 7,
+  "days_range": [
+   6.5,
+   8
+  ],
+  "mode": "rail",
+  "who": "ordinary passenger via the first transcontinental railroad",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Wikipedia: First transcontinental railroad",
+    "url": "https://en.wikipedia.org/wiki/First_transcontinental_railroad"
+   }
+  ]
+ },
+ {
+  "id": "transcontinental_express_1876",
+  "from": "New York",
+  "from_lon": -74.01,
+  "from_lat": 40.71,
+  "to": "San Francisco",
+  "to_lon": -122.42,
+  "to_lat": 37.77,
+  "year": 1876,
+  "days": 3.49,
+  "mode": "rail",
+  "who": "Jarrett & Palmer 'Transcontinental Express' publicity train",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Transcontinental Express",
+    "url": "https://en.wikipedia.org/wiki/Transcontinental_Express"
+   }
+  ],
+  "note": "83 h 39 m, arriving 4 June 1876."
+ },
+ {
+  "id": "erie_canal_seneca_chief",
+  "from": "Buffalo",
+  "from_lon": -78.88,
+  "from_lat": 42.89,
+  "to": "New York",
+  "to_lon": -74.01,
+  "to_lat": 40.71,
+  "year": 1825,
+  "days": 9,
+  "mode": "river",
+  "who": "Governor DeWitt Clinton on the Seneca Chief, opening the Erie Canal and Hudson",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Erie Canal",
+    "url": "https://en.wikipedia.org/wiki/Erie_Canal"
+   }
+  ],
+  "note": "26 Oct to 4 Nov 1825."
+ },
+ {
+  "id": "erie_canal_cannon_relay",
+  "from": "Buffalo",
+  "from_lon": -78.88,
+  "from_lat": 42.89,
+  "to": "New York",
+  "to_lon": -74.01,
+  "to_lat": 40.71,
+  "year": 1825,
+  "days": 0.056,
+  "mode": "courier",
+  "who": "relay of cannon shots announcing the canal's opening",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Erie Canal",
+    "url": "https://en.wikipedia.org/wiki/Erie_Canal"
+   },
+   {
+    "cite": "Peter L. Bernstein, Wedding of the Waters (2005)"
+   }
+  ],
+  "via": "signal relay",
+  "note": "About 81 minutes (accounts vary to ~90)."
+ },
+ {
+  "id": "robert_e_lee_new_orleans_stlouis",
+  "from": "New Orleans",
+  "from_lon": -90.07,
+  "from_lat": 29.95,
+  "to": "St. Louis",
+  "to_lon": -90.2,
+  "to_lat": 38.63,
+  "year": 1870,
+  "days": 3.76,
+  "mode": "steam",
+  "who": "steamboat Robert E. Lee racing the Natchez up the Mississippi",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Robert E. Lee (steamboat)",
+    "url": "https://en.wikipedia.org/wiki/Robert_E._Lee_(steamboat)"
+   }
+  ],
+  "note": "3 d 18 h 14 m, 30 June-4 July 1870."
+ },
+ {
+  "id": "chappe_lille_paris",
+  "from": "Lille",
+  "from_lon": 3.06,
+  "from_lat": 50.63,
+  "to": "Paris",
+  "to_lon": 2.35,
+  "to_lat": 48.86,
+  "year": 1794,
+  "days": 0.04,
+  "mode": "courier",
+  "who": "Chappe optical telegraph: recapture of Conde-sur-l'Escaut announced to the Convention",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Semaphore line",
+    "url": "https://en.wikipedia.org/wiki/Semaphore_line"
+   }
+  ],
+  "via": "optical telegraph",
+  "note": "Under an hour, 30 Aug/1 Sept 1794 (accounts differ on the day)."
+ },
+ {
+  "id": "london_edinburgh_coach_1754",
+  "from": "London",
+  "from_lon": -0.13,
+  "from_lat": 51.51,
+  "to": "Edinburgh",
+  "to_lon": -3.19,
+  "to_lat": 55.95,
+  "year": 1754,
+  "days": 10,
+  "days_range": [
+   10,
+   12
+  ],
+  "mode": "land",
+  "who": "Edinburgh stage coach (advertised 10 days in summer, 12 in winter)",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Advertisement in the Edinburgh Courant, 1754; quoted in W. T. Jackman, The Development of Transportation in Modern England (1916)"
+   }
+  ]
+ },
+ {
+  "id": "london_edinburgh_mail_1836",
+  "from": "London",
+  "from_lon": -0.13,
+  "from_lat": 51.51,
+  "to": "Edinburgh",
+  "to_lon": -3.19,
+  "to_lat": 55.95,
+  "year": 1836,
+  "days": 1.8,
+  "days_range": [
+   1.7,
+   2.0
+  ],
+  "mode": "land",
+  "who": "Royal Mail coach at the height of the coaching age",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Jackman 1916"
+   },
+   {
+    "cite": "Dorian Gerhold, 'The Development of Stage Coaching and the Impact of Turnpike Roads, 1653-1840', Economic History Review 67 (2014)"
+   }
+  ],
+  "note": "About 42-45 hours."
+ },
+ {
+  "id": "london_edinburgh_rail_1888",
+  "from": "London",
+  "from_lon": -0.13,
+  "from_lat": 51.51,
+  "to": "Edinburgh",
+  "to_lon": -3.19,
+  "to_lat": 55.95,
+  "year": 1888,
+  "days": 0.31,
+  "days_range": [
+   0.31,
+   0.44
+  ],
+  "mode": "rail",
+  "who": "East Coast route, 'Race to the North'",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Wikipedia: Races to the North",
+    "url": "https://en.wikipedia.org/wiki/Races_to_the_North"
+   }
+  ],
+  "note": "~7.5 h in the 1888 race; scheduled ~9-10.5 h."
+ },
+ {
+  "id": "trans_siberian_moscow_vladivostok",
+  "from": "Moscow",
+  "from_lon": 37.62,
+  "from_lat": 55.75,
+  "to": "Vladivostok",
+  "to_lon": 131.89,
+  "to_lat": 43.12,
+  "year": 1913,
+  "days": 9.5,
+  "days_range": [
+   8,
+   16
+  ],
+  "mode": "rail",
+  "who": "Trans-Siberian express",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Wikipedia: Trans-Siberian Railway",
+    "url": "https://en.wikipedia.org/wiki/Trans-Siberian_Railway"
+   },
+   {
+    "cite": "Steven G. Marks, Road to Power (1991)"
+   }
+  ],
+  "note": "Rough; c. 1903 trips took ~2 weeks, 1913 express ~9-10 days."
+ },
+ {
+  "id": "chasqui_quito_cusco",
+  "from": "Quito",
+  "from_lon": -78.47,
+  "from_lat": -0.18,
+  "to": "Cusco",
+  "to_lon": -71.97,
+  "to_lat": -13.53,
+  "year": 1560,
+  "days": 10,
+  "days_range": [
+   5,
+   10
+  ],
+  "mode": "courier",
+  "who": "chasqui relay runners (as used by both Inca and Spaniards)",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Polo de Ondegardo (c. 1571), quoted in Wikipedia: Chasqui",
+    "url": "https://en.wikipedia.org/wiki/Chasqui"
+   },
+   {
+    "cite": "John Hyslop, The Inka Road System (1984)"
+   }
+  ],
+  "note": "Ondegardo: Quito-Cusco and back 'in less than 20 days'; ~2,000 km."
+ },
+ {
+  "id": "chasqui_lima_cusco",
+  "from": "Lima",
+  "from_lon": -77.03,
+  "from_lat": -12.05,
+  "to": "Cusco",
+  "to_lon": -71.97,
+  "to_lat": -13.53,
+  "year": 1560,
+  "days": 4,
+  "mode": "courier",
+  "who": "chasqui runners carrying Spanish letters, seen by Polo de Ondegardo",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Polo de Ondegardo, quoted in Wikipedia: Chasqui",
+    "url": "https://en.wikipedia.org/wiki/Chasqui"
+   }
+  ],
+  "note": "'120 leagues' over very rough roads."
+ },
+ {
+  "id": "hikyaku_edo_osaka",
+  "from": "Edo",
+  "from_lon": 139.75,
+  "from_lat": 35.69,
+  "to": "Osaka",
+  "to_lon": 135.5,
+  "to_lat": 34.69,
+  "year": 1750,
+  "days": 6,
+  "days_range": [
+   3,
+   10
+  ],
+  "mode": "courier",
+  "who": "commercial hikyaku (hikyaku-ya), regular service",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Constantine Vaporis, Breaking Barriers: Travel and the State in Early Modern Japan (1994)"
+   },
+   {
+    "cite": "Wikipedia: Hikyaku",
+    "url": "https://en.wikipedia.org/wiki/Hikyaku"
+   }
+  ],
+  "note": "Express services ~3-4 days, ordinary 6-10; ~550 km on the Tokaido. See news.json ako_incident_1701 for a 4.5-day emergency run."
+ },
+ {
+  "id": "tokaido_walk_edo_kyoto",
+  "from": "Edo",
+  "from_lon": 139.75,
+  "from_lat": 35.69,
+  "to": "Kyoto",
+  "to_lon": 135.77,
+  "to_lat": 35.0,
+  "year": 1750,
+  "days": 14,
+  "days_range": [
+   12,
+   16
+  ],
+  "mode": "land",
+  "who": "ordinary traveller on foot along the 53 stations of the Tokaido",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Vaporis 1994"
+   },
+   {
+    "cite": "Wikipedia: Tokaido (road)",
+    "url": "https://en.wikipedia.org/wiki/T%C5%8Dkaid%C5%8D_(road)"
+   }
+  ]
+ },
+ {
+  "id": "nellie_bly_around_the_world",
+  "from": "New York",
+  "from_lon": -74.01,
+  "from_lat": 40.71,
+  "to": "New York",
+  "to_lon": -74.01,
+  "to_lat": 40.71,
+  "year": 1889,
+  "days": 72.26,
+  "mode": "steam",
+  "who": "Nellie Bly (New York World), steamship and rail around the world",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Nellie Bly",
+    "url": "https://en.wikipedia.org/wiki/Nellie_Bly"
+   }
+  ],
+  "note": "14 Nov 1889 to 25 Jan 1890, 72 d 6 h 11 m. Rival Elizabeth Bisland took 76.5 days the other way."
+ },
+ {
+  "id": "alcock_brown_transatlantic",
+  "from": "St. John's",
+  "from_lon": -52.71,
+  "from_lat": 47.56,
+  "to": "Clifden",
+  "to_lon": -10.02,
+  "to_lat": 53.49,
+  "year": 1919,
+  "days": 0.67,
+  "mode": "air",
+  "who": "John Alcock and Arthur Whitten Brown, Vickers Vimy, first non-stop transatlantic flight",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Transatlantic flight of Alcock and Brown",
+    "url": "https://en.wikipedia.org/wiki/Transatlantic_flight_of_Alcock_and_Brown"
+   }
+  ],
+  "note": "14-15 June 1919, ~16 hours."
+ },
+ {
+  "id": "airmail_transcontinental_1921",
+  "from": "San Francisco",
+  "from_lon": -122.42,
+  "from_lat": 37.77,
+  "to": "Mineola (Hazelhurst Field)",
+  "to_lon": -73.62,
+  "to_lat": 40.73,
+  "year": 1921,
+  "days": 1.39,
+  "mode": "air",
+  "who": "US Air Mail relay incl. Jack Knight's night legs",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Jack Knight (aviator)",
+    "url": "https://en.wikipedia.org/wiki/Jack_Knight_(aviator)"
+   },
+   {
+    "cite": "Smithsonian National Postal Museum: Airmail",
+    "url": "https://postalmuseum.si.edu/"
+   }
+  ],
+  "note": "33 h 20 m, 22-23 Feb 1921; trains took ~4 days."
+ },
+ {
+  "id": "lindbergh_newyork_paris",
+  "from": "Roosevelt Field",
+  "from_lon": -73.61,
+  "from_lat": 40.74,
+  "to": "Le Bourget",
+  "to_lon": 2.44,
+  "to_lat": 48.95,
+  "year": 1927,
+  "days": 1.4,
+  "mode": "air",
+  "who": "Charles Lindbergh, Spirit of St. Louis",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: Spirit of St. Louis",
+    "url": "https://en.wikipedia.org/wiki/Spirit_of_St._Louis"
+   }
+  ],
+  "note": "33.5 hours, 20-21 May 1927."
+ },
+ {
+  "id": "imperial_airways_london_karachi",
+  "from": "London",
+  "from_lon": -0.13,
+  "from_lat": 51.51,
+  "to": "Karachi",
+  "to_lon": 67.01,
+  "to_lat": 24.86,
+  "year": 1929,
+  "days": 7,
+  "days_range": [
+   6,
+   8
+  ],
+  "mode": "air",
+  "who": "Imperial Airways first through air-mail service (air and rail legs)",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Wikipedia: Imperial Airways",
+    "url": "https://en.wikipedia.org/wiki/Imperial_Airways"
+   }
+  ]
+ },
+ {
+  "id": "china_clipper_alameda_manila",
+  "from": "Alameda",
+  "from_lon": -122.3,
+  "from_lat": 37.78,
+  "to": "Manila",
+  "to_lon": 120.97,
+  "to_lat": 14.59,
+  "year": 1935,
+  "days": 7,
+  "mode": "air",
+  "who": "Pan Am China Clipper, first transpacific airmail via Honolulu, Midway, Wake, Guam",
+  "conf": "documented",
+  "sources": [
+   {
+    "cite": "Wikipedia: China Clipper",
+    "url": "https://en.wikipedia.org/wiki/China_Clipper"
+   }
+  ],
+  "note": "22-29 Nov 1935; ~60 flying hours."
+ },
+ {
+  "id": "atlantic_cable_1858_message",
+  "from": "Valentia Island",
+  "from_lon": -10.3,
+  "from_lat": 51.93,
+  "to": "Trinity Bay, Newfoundland",
+  "to_lon": -53.7,
+  "to_lat": 47.8,
+  "year": 1858,
+  "days": 0.69,
+  "mode": "courier",
+  "who": "Queen Victoria's 98-word message to President Buchanan on the first cable",
+  "conf": "typical",
+  "sources": [
+   {
+    "cite": "Wikipedia: Transatlantic telegraph cable",
+    "url": "https://en.wikipedia.org/wiki/Transatlantic_telegraph_cable"
+   }
+  ],
+  "via": "submarine telegraph",
+  "note": "About 16-17 hours to transmit on the failing 1858 cable; the 1866 cable carried ~8 words/minute."
+ }
+]

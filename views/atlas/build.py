@@ -103,7 +103,7 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
     for f in ('palette.js', 'sprites-library.js', 'sprites.js', 'era.js', 'pixelmap.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
-for f in sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
+for f in sorted(glob.glob(os.path.join(here, 'sprites', '*.js'))) + sorted(glob.glob(os.path.join(here, 'world', '*.js'))) + sorted(glob.glob(os.path.join(lens_dir, '*.js'))):
     scripts.append('<script>\n' + open(f, encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
 
 land = J(json.load(open(atlas + 'borders/land-50m.json')))
