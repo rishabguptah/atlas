@@ -112,7 +112,7 @@
     if (!ex) return null;
     return { kick: "Start here · a guided tour", title: ex.firstChild.textContent.trim(), go: () => { toured = true; try { localStorage.setItem("atlas.toured.v1", "1"); } catch (e) {} api.setTab("guide"); ex.click(); } };
   } });
-  A.nextThing({ id: "surprise", pri: 0, get: () => ({ kick: "Next · press S", title: "Surprise me: a moment worth seeing", go: () => { const b = document.getElementById("surprise"); if (b) b.click(); } }) });
+  A.nextThing({ id: "surprise", pri: 0, get: () => ({ kick: "Next · press R", title: "Surprise me: a moment worth seeing", go: () => { const b = document.getElementById("surprise"); if (b) b.click(); } }) });
 
   const map = $("#map");
   let card = document.getElementById("nextcard");
