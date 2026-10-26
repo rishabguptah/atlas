@@ -46,6 +46,14 @@
     b.insertAdjacentHTML("afterbegin", ico(n));
   }
   const ask = $("#ask"); if (ask && !ask.querySelector(".ico")) ask.insertAdjacentHTML("afterbegin", ico("ask"));
+  // The ask well folds to a short chip so it never covers the map's top border and the era's title plate; it opens while you type.
+  const qb = $("#qbox");
+  if (ask && qb && !ask.dataset.fold) {
+    ask.dataset.fold = "1"; const long = qb.placeholder;
+    const fold = () => { const open = ask.contains(document.activeElement); ask.classList.toggle("open", open); qb.placeholder = open ? long : "Ask anything"; };
+    ask.addEventListener("focusin", fold); ask.addEventListener("focusout", () => setTimeout(fold)); fold();
+    ask.addEventListener("click", e => { if (!e.target.closest("button, input")) qb.focus(); });
+  }
   // Play: the page writes ▶ or ❚❚ into the button; show the matching pixel glyph instead.
   const play = $("#playyear");
   if (play) {
@@ -278,6 +286,9 @@
   };
   function emitRects() { clearTimeout(rectT); rectT = setTimeout(() => document.dispatchEvent(new CustomEvent("atlas:chrome", { detail: A.chromeRects() })), 60); }
   new MutationObserver(emitRects).observe(app, { attributes: true, attributeFilter: ["class"] });
+  // The era's title plate on the map's top edge slides between the buttons; repaint when they have moved over it.
+  const replate = () => { const E = window.PixelEras; if (E && E.replate && E.replate() && A.pixelRefresh) A.pixelRefresh(); };
+  document.addEventListener("atlas:chrome", () => { replate(); setTimeout(replate, 400); });   // again once fades and slides have settled
   new MutationObserver(emitRects).observe($("#sublayers"), { childList: true });
 
   // A family's lenses fly out beside the rail and fold away when you click anywhere else.
