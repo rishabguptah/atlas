@@ -453,8 +453,8 @@ a { color: var(--accent); text-underline-offset: 2px; }
     <div class="maphint" id="maphint">Click anywhere to see every lens there</div>
     <div class="caption" id="caption" hidden></div>
     <div class="mapctl" role="toolbar" aria-label="Map controls">
-      <button class="btn" id="surprise" type="button" title="Jump to a random moment worth seeing (S)">Surprise me<kbd>S</kbd></button>
-      <button class="btn" id="keybtn" type="button" aria-pressed="false" aria-controls="keycard" title="What's on the map, and keyboard shortcuts (K)">Key<kbd>K</kbd></button>
+      <button class="btn" id="surprise" type="button" title="Jump to a random moment worth seeing (R)">Surprise me<kbd>R</kbd></button>
+      <button class="btn" id="keybtn" type="button" aria-pressed="false" aria-controls="keycard" title="What's on the map (K); every key: ?">Key<kbd>K</kbd></button>
       <button class="btn" id="focusbtn" type="button" aria-pressed="false" title="Map only (F)">Focus<kbd>F</kbd></button>
     </div>
     <div class="keycard" id="keycard" hidden></div>
@@ -859,9 +859,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // counter-scaling, thinning and label layout run once per frame at most, the rest when it settles.
   // City scale: at K_MAX a 1400 px map shows about a fifth of a degree (20 km), enough for a siege or a street plan.
   const K_MAX = 1600;
-  let zoomK0 = 1, zoomRaf = 0, drawnK = 1;
+  // keyMove: held keys are moving the map (see the keyboard section); each key frame is its own tiny zoom gesture, so
+  // the settle work below waits until the keys are let go.
+  let zoomK0 = 1, zoomRaf = 0, drawnK = 1, keyMove = false;
   const zoomFrame = () => { zoomRaf = 0; svg.style("--k", state.k); placeScaled(); paintMarks(); };
-  const zoom = d3.zoom().scaleExtent([1, K_MAX]).on("start", ev => { zoomK0 = ev.transform.k; }).on("zoom", ev => {
+  const zoom = d3.zoom().scaleExtent([1, K_MAX]).on("start", ev => { if (!keyMove) zoomK0 = ev.transform.k; }).on("zoom", ev => {
     root.attr("transform", ev.transform);
     state.k = ev.transform.k;
     if (state.k !== zoomK0) mapEl.classList.add("moving");
@@ -883,6 +885,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   const viewWatch = [];  // plugin tabs listening for pans and zooms (ATLAS.api.onView)
   zoom.on("end", () => {
+    if (keyMove) return;
     clearTimeout(panTimer); panTimer = 0;
     mapEl.classList.remove("moving");
     for (const fn of viewWatch) try { fn(); } catch (err) { console.error(err); }
@@ -2687,8 +2690,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     if (groups === keyGroups && keyEl.firstElementChild) { keyEl.firstElementChild.textContent = head; return; }
     keyGroups = groups;
     keyEl.innerHTML = `<h4>${esc(head)}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
-      <h4>Keys</h4><div class="keys"><kbd>← →</kbd><span>Step through time (Shift for bigger steps)</span><kbd>Space</kbd><span>Play or pause time</span><kbd>/</kbd><span>Ask a question</span>
-      <kbd>1–6</kbd><span>Switch a lens family on or off</span><kbd>S</kbd><span>Surprise me</span><kbd>F</kbd><span>Focus: map only</span><kbd>K</kbd><span>This key</span><kbd>Esc</kbd><span>Close, clear the caption</span></div>`;
+      <h4>Keys</h4><div class="keys"><kbd>WASD</kbd><span>Pan; Q E zoom</span><kbd>, .</kbd><span>Step through time (Shift for bigger steps)</span><kbd>Space</kbd><span>Play or pause time</span><kbd>?</kbd><span>Every key</span></div>`;
   }
   function toggleKey(v = keyEl.hidden) { keyEl.hidden = !v; keyBtn.setAttribute("aria-pressed", v); renderKey(); }
   keyBtn.onclick = () => toggleKey();
@@ -2723,26 +2725,107 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   }
   document.getElementById("surprise").onclick = () => surprise();
 
-  // ---------- keyboard: time, play, ask, lenses, focus ----------
+  // ---------- keyboard: a game pad for the map ----------
+  // Arrows or WASD pan, Q/E or +/- zoom: held keys glide and speed up, all moves run in one frame loop. , and . step
+  // the year (Shift for ten times further), Space plays. ? shows every key. Keys never fire while typing, and keys
+  // with Ctrl, Cmd or Alt are the browser's.
   function stepYear(dir, big) {
     stopTime(); cancelAnimationFrame(yearAnim);
     const t = Math.max(0, Math.min(1, yearToT(state.year) + dir * (big ? 0.01 : 0.001)));
     let y = tToYear(t); if (y === state.year) y += dir * grain(y + dir);
     setYear(y);
   }
+  const PAN = { ArrowLeft: [-1, 0], KeyA: [-1, 0], ArrowRight: [1, 0], KeyD: [1, 0], ArrowUp: [0, -1], KeyW: [0, -1], ArrowDown: [0, 1], KeyS: [0, 1] };
+  const ZOOM = { KeyE: 1, Equal: 1, NumpadAdd: 1, KeyQ: -1, Minus: -1, NumpadSubtract: -1 };
+  const held = new Set(), cross = document.createElement("div");
+  cross.className = "kbcross"; mapEl.appendChild(cross);
+  let padRaf = 0, padT = 0, padT0 = 0, padPaint = 0, padFast = false;
+  function padFrame(now) {
+    const dt = Math.min(0.05, (now - padT) / 1000); padT = now;
+    let dx = 0, dy = 0, dz = 0;
+    for (const c of held) { if (PAN[c]) { dx += PAN[c][0]; dy += PAN[c][1]; } else if (ZOOM[c]) dz += ZOOM[c]; }
+    if (!dx && !dy && !dz) return padStop();
+    // Ease in over half a second to full speed; Shift runs.
+    const ramp = Math.min(1, (now - padT0) / 500), run = (0.35 + 0.65 * ramp * ramp) * (padFast ? 2.2 : 1);
+    if (dx || dy) { const n = Math.hypot(dx, dy), v = Math.min(W, 1600) * 0.6 * run * dt / state.k; svg.call(zoom.translateBy, -dx / n * v, -dy / n * v); }
+    if (dz) svg.call(zoom.scaleBy, Math.exp(Math.sign(dz) * 1.9 * run * dt));
+    // A long glide runs past the land the basemap painted around the screen. A repaint costs several frames, so it
+    // waits until a strip of paper shows, and comes at most three times a second.
+    if (BASEMAP && bmT && !dz && now - padPaint > 330) {
+      const t = d3.zoomTransform(svg.node()), off = Math.max(Math.abs(t.x - bmT.x), Math.abs(t.y - bmT.y));
+      if (t.k === bmT.k && off > Math.max(W * 0.08, 24 + (BASEMAP.margin ? BASEMAP.margin() : 0))) { renderBasemap(); padPaint = performance.now(); }
+    }
+    padRaf = requestAnimationFrame(padFrame);
+  }
+  function padStart() {
+    if (padRaf) return;
+    svg.interrupt(); keyMove = true; zoomK0 = state.k;
+    appEl.classList.add("panning"); cross.classList.add("on");
+    padT = padT0 = performance.now(); padRaf = requestAnimationFrame(padFrame);
+  }
+  function padStop() {
+    held.clear(); cancelAnimationFrame(padRaf); padRaf = 0;
+    if (!keyMove) return;
+    keyMove = false; appEl.classList.remove("panning");
+    setTimeout(() => { if (!padRaf) cross.classList.remove("on"); }, 900);
+    svg.call(zoom.translateBy, 0, 0);  // one last gesture runs the settle work (layers, labels, basemap)
+  }
+  addEventListener("blur", padStop);
+  document.addEventListener("keyup", ev => { held.delete(ev.code); padFast = ev.shiftKey; });
+  const typing = t => t.closest && t.closest("input, textarea, select, [contenteditable]");
+  function lookHere() {  // Enter: what is under the crosshair, as a click there would show
+    const r = svg.node().getBoundingClientRect();
+    svg.node().dispatchEvent(new MouseEvent("click", { clientX: r.left + r.width / 2, clientY: r.top + r.height / 2, bubbles: true }));
+  }
+  function cycleTab(dir) {
+    const ids = [...document.querySelectorAll(".tab")].map(b => b.dataset.tab);
+    if (ids.length) setTab(ids[(ids.indexOf(state.tab) + dir + ids.length) % ids.length]);
+  }
+  function wholeWorld() { const c = projection.invert([W / 2, H / 2]); flyTo({ lon: c[0], lat: c[1], zoom: kMin }, 900); }
+
+  // ? : every key on one pixel card.
+  const cheatEl = document.createElement("div");
+  cheatEl.className = "cheat"; cheatEl.hidden = true; cheatEl.setAttribute("role", "dialog"); cheatEl.setAttribute("aria-label", "Keyboard controls");
+  const KB = s => s.split(" ").map(k => `<kbd>${k}</kbd>`).join("");
+  const CHEAT = [
+    ["Move", [["W A S D", "Pan (or the arrow keys)"], ["Q E", "Zoom out, in (or − +)"], ["Shift", "Hold to go faster"], ["0", "The whole world"], ["Enter", "What's here, under the cross"]]],
+    ["Time", [[", .", "A step back, forward"], ["< >", "Ten steps (Shift+, .)"], ["Space", "Play or pause"], ["[ ]", "A month, in Up close"]]],
+    ["Look", [["1 – 6", "Lens families on or off"], ["T", "Next tab (Shift+T back)"], ["/", "Ask a question"], ["R", "Surprise me"], ["N", "Night and day"]]],
+    ["Screen", [["H", "Hide the interface"], ["P", "Fold the panel"], ["F", "Focus: map only"], ["K", "Map key"], ["Esc", "Back, close"]]],
+    ["In a story", [["Space →", "Next scene"], ["←", "Back a scene"], ["W", "Why?"], ["P", "Autoplay"]]],
+  ];
+  cheatEl.innerHTML = `<h3>Controls</h3><div class="ch-g">${CHEAT.map(([n, rows]) => `<section><h4>${n}</h4>${rows.map(([k, t]) => `<div class="ch-r"><span class="ch-k">${KB(k)}</span><span>${t}</span></div>`).join("")}</section>`).join("")}</div><p class="ch-f">${KB("?")} or ${KB("Esc")} to close</p>`;
+  cheatEl.addEventListener("click", () => toggleCheat(false));
+  mapEl.appendChild(cheatEl);
+  function toggleCheat(v = cheatEl.hidden) { cheatEl.hidden = !v; }
+  // Esc closes the card before anything else hears it (a story's Esc would leave the story).
+  addEventListener("keydown", ev => { if (ev.key === "Escape" && !cheatEl.hidden) { toggleCheat(false); ev.preventDefault(); ev.stopImmediatePropagation(); } }, true);
+
   document.addEventListener("keydown", ev => {
     if (ev.metaKey || ev.ctrlKey || ev.altKey || ev.defaultPrevented) return;
     const t = ev.target;
-    if (t.closest && t.closest("input, textarea, select, [contenteditable]")) { if (ev.key === "Escape" && t.blur) t.blur(); return; }
+    if (typing(t)) { if (ev.key === "Escape" && t.blur) t.blur(); return; }
     if (t.closest && t.closest("button, a, summary") && (ev.key === " " || ev.key === "Enter")) return;
+    padFast = ev.shiftKey;
+    if (PAN[ev.code] || ZOOM[ev.code]) { held.add(ev.code); padStart(); ev.preventDefault(); return; }
     const k = ev.key.length === 1 ? ev.key.toLowerCase() : ev.key;
-    if (k === "ArrowLeft" || k === "ArrowRight") stepYear(k === "ArrowLeft" ? -1 : 1, ev.shiftKey);
+    if (ev.repeat && !",.<>".includes(k)) { if (k.length === 1 || k === "Enter") ev.preventDefault(); return; }
+    if (k === "," || k === "." || k === "<" || k === ">") stepYear(k === "," || k === "<" ? -1 : 1, ev.shiftKey || k === "<" || k === ">");
     else if (k === " ") playBtn.click();
     else if (k === "/") { if (appEl.classList.contains("focus")) toggleFocus(false); const q = state.tab === "guide" ? q2 : document.getElementById("qbox"); q.focus(); }
-    else if (k === "s") surprise();
+    else if (k === "r") surprise();
     else if (k === "f") toggleFocus();
-    else if (k === "k" || k === "?") toggleKey();
-    else if (k === "Escape") { if (!keyEl.hidden) toggleKey(false); else if (appEl.classList.contains("focus")) toggleFocus(false); else showCaption(null); }
+    else if (k === "k") toggleKey();
+    else if (k === "?") toggleCheat();
+    else if (k === "t") cycleTab(ev.shiftKey ? -1 : 1);
+    else if (k === "0") wholeWorld();
+    else if (k === "Enter") lookHere();
+    else if (k === "Escape") {
+      // The key closes first; a game or mode (chrome.js) gets Esc next.
+      if (!keyEl.hidden) { toggleKey(false); ev.stopImmediatePropagation(); }
+      else if (appEl.classList.contains("in-mode")) return;
+      else if (appEl.classList.contains("focus")) toggleFocus(false); else showCaption(null);
+    }
     else if (/^[1-6]$/.test(k) && FAMILIES[+k - 1]) famChips[FAMILIES[+k - 1].id].click();
     else return;
     ev.preventDefault();

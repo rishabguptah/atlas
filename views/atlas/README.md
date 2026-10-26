@@ -59,9 +59,14 @@ Order & chaos reads `data/order-chaos/lab.json`, War & chokepoints reads `data/s
 
 ## Flow (keyboard, key, focus, resume)
 
-Keys: ←/→ step the year (Shift for bigger steps), Space plays time, / jumps to the question box, 1–6 switch lens families,
-S is Surprise me (a random curated battle, shock, idea journey or city event, flown to and captioned, with Here filled in),
-F is focus (map only), K or ? opens the key, P folds the panel, Esc closes. The key lists exactly the marks drawn for the lenses that are on;
+Keys (a game pad; ? shows them all on a pixel card): arrows or WASD pan and Q/E or +/- zoom, held keys glide and speed up
+(Shift runs), one frame loop, settle work once the keys are let go; 0 shows the whole world, Enter opens Here at the
+crosshair. , and . step the year (Shift or < > for ten times further), Space plays time, / jumps to the question box,
+1–6 switch lens families, T / Shift+T cycle tabs, R is Surprise me (a random curated battle, shock, idea journey or city
+event, flown to and captioned, with Here filled in), F is focus (map only), K opens the key, N night, H hides the
+interface, P folds the panel, Esc closes or leaves a mode. Keys never fire while typing or with Ctrl, Cmd or Alt held.
+A story owns Space, arrows, W, H, P and Esc while it plays (world/director.js). `node tools/keys/keys.js` checks them all.
+The key lists exactly the marks drawn for the lenses that are on;
 a plugin lens can describe its own marks with `key: [[glyph, text], ...]` (glyphs: dot, small, line, arrow, diamond, square,
 halo, ring, cross, battle, hourglass, border, sprite). Eras sit under the slider and jump on tap. Here and This year lead with
 rows from the current time; rows from other centuries fold under "from other times". The page reopens on the last year,
