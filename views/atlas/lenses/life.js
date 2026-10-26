@@ -643,7 +643,11 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
     else if (a === "ordinary") { const v = api.view() || { lon: 30, lat: 35 }; startOrdinary({ lon: v.lon, lat: v.lat }, api.year, el.querySelector("#lf-sex").value); }
     else if (a === "pickplace") { const sex = el.querySelector("#lf-sex").value; pickWait = at => startOrdinary({ lon: at.lon, lat: at.lat }, api.year, sex); b.textContent = "Now click the map…"; }
     else if (a === "as") { const p = PPL().find(x => x.name === b.dataset.n); if (p) { drafting = null; startOrdinary({ lon: p.lon, lat: p.lat }, p.b + 16, "m", null, { name: p.name }); } }
-    else if (a === "quit") { if (g && g.phase !== "over" && !confirm("Leave this life? It will not be saved to your chronicle.")) return; P.cur = null; anim = null; save(); render(); api.redraw(); }
+    else if (a === "quit") {
+      // confirm() is blocked inside the sandboxed artifact frame (it returns false), so ask with a second tap instead
+      if (g && g.phase !== "over" && !b.dataset.sure) { b.dataset.sure = "1"; b.textContent = "Leave? Tap again"; b.title = "This life will not be saved to your chronicle"; setTimeout(() => { if (b.isConnected) { delete b.dataset.sure; b.textContent = "Leave"; b.title = ""; } }, 4000); return; }
+      P.cur = null; anim = null; save(); render(); api.redraw();
+    }
     else if (a === "again") { P.cur = null; save(); render(); api.redraw(); }
     else if (a === "pick") choose(+b.dataset.k);
     else if (a === "altend") { const life = lifeOf(g), ch = life.chapters[g.i]; endLife(g, { y: ch.y, t: g.last.end, alt: true }); }

@@ -51,6 +51,9 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .askbar input { border: 0; background: none; border-radius: 0; outline: none; font-family: var(--f-prose); font-size: 16px; padding: 6px 2px; }
 .app .askbar input::placeholder { color: var(--ink-soft); font-style: italic; }
 .app.asking .askbar { visibility: hidden; }
+.app .askbar:not(.open) { right: auto; min-width: 0; cursor: text; }
+.app .askbar:not(.open) input { flex: 0 0 auto; width: 12ch; text-overflow: ellipsis; }
+.app .askbar:not(.open) #go { display: none; }
 
 /* ---- buttons (old .btn markup gets the pixel button) ---- */
 .app .btn { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
