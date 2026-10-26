@@ -20,6 +20,29 @@ layers = (args[2] if len(args) > 2 else atlas + 'unified/layers').rstrip('/') + 
 here = os.path.dirname(os.path.abspath(__file__))
 repo = os.path.dirname(os.path.dirname(here))
 J = lambda o: json.dumps(o, ensure_ascii=False, separators=(',', ':'))
+# Lines of [x, y] pairs (rivers, routes, land arcs) are written as {"_p": [scale, x0, y0, dx1, dy1, ...]}: whole-number
+# deltas at the scale that reproduces every value exactly, about half the bytes. __unpack (in the page) restores them
+# before any code reads the data. JP(o) is J(o) packed and wrapped in __unpack when anything was packed.
+def _pack(o):
+    if isinstance(o, list):
+        if len(o) >= 3 and all(isinstance(p, list) and len(p) == 2 and all(type(c) in (int, float) for c in p) for p in o):
+            for sc in (1, 10, 100, 1000):
+                ints = [(round(x * sc), round(y * sc)) for x, y in o]
+                if all(a / sc == x and b / sc == y for (a, b), (x, y) in zip(ints, o)):
+                    flat, px, py = [sc], 0, 0
+                    for a, b in ints: flat += [a - px, b - py]; px, py = a, b
+                    return {'_p': flat}
+            return o
+        return [_pack(v) for v in o]
+    if isinstance(o, dict): return {k: _pack(v) for k, v in o.items()}
+    return o
+def JP(o):
+    t = J(_pack(o))
+    return '__unpack(' + t + ')' if '{"_p":' in t else t
+UNPACK_JS = ('function __unpack(o) { if (Array.isArray(o)) { for (let i = 0; i < o.length; i++) { const v = o[i]; if (v && typeof v === "object") o[i] = __unpack(v); } return o; }'
+  ' if (o && typeof o === "object") { const p = o._p; if (p) { const s = p[0], out = new Array((p.length - 1) / 2); let x = 0, y = 0;'
+  ' for (let i = 1, j = 0; i < p.length; i += 2, j++) { x += p[i]; y += p[i + 1]; out[j] = [x / s, y / s]; } return out; }'
+  ' for (const k in o) { const v = o[k]; if (v && typeof v === "object") o[k] = __unpack(v); } } return o; }\n')
 side_dir = os.path.join(os.path.dirname(os.path.abspath(out)), 'atlas-files')
 late = {}  # key -> url, fetched by the page after the first paint
 def side(name, data):
@@ -98,7 +121,7 @@ if not inline and L['war'].get('wd'):
 if not inline and order.get('polities'):
     series = {p['id']: [p.pop('a', None), p.pop('f', None)] for p in order['polities'] if 'id' in p}
     late['order:series'] = side('order-series.json', series)
-data = '\n'.join(f'const {k.upper()} = {J(v)};' for k, v in L.items()) + f'\nconst ORDER = {J(order)};\nconst RELIEF = {J(relief)};\nconst RELIEF_POL = {J(relief_pol)};\n'
+data = UNPACK_JS + '\n'.join(f'const {k.upper()} = {JP(v)};' for k, v in L.items()) + f'\nconst ORDER = {JP(order)};\nconst RELIEF = {J(relief)};\nconst RELIEF_POL = {J(relief_pol)};\n'
 if 'terrain' not in L: data += 'const TERRAIN = null;\n'
 
 # Plugin lenses: views/atlas/lenses/<id>.py gives the data (build(repo) -> dict), <id>.js draws it.
@@ -148,7 +171,7 @@ if os.path.exists(pixel_src + 'terrain/terrain_l0.png'):
     if os.path.exists(pixel_src + 'city-lights.json'):
         lb = open(pixel_src + 'city-lights.json', 'rb').read()
         lights = side('city-lights.json', lb) if 'side' in globals() and not globals().get('inline') else json.loads(lb)
-    data += 'const PIXEL = ' + J({'tile0': tile0, 'rivers': rv, 'lights': lights}) + ';\n'
+    data += 'const PIXEL = ' + JP({'tile0': tile0, 'rivers': rv, 'lights': lights}) + ';\n'
     for f in ('palette.js', 'icons.js', 'grammar.js', 'charts.js', 'sprites-library.js', 'sprites.js', 'era.js', 'terrain-art.js', 'pixelmap.js', 'paleo.js', 'eras.js', 'borders.js', 'geolabels.js', 'marks.js', 'hud.js', 'detail.js', 'realmnames.js', 'motion.js'):
         if os.path.exists(os.path.join(pixel_dir, f)):
             scripts.append('<script>\n' + open(os.path.join(pixel_dir, f), encoding='utf-8').read().replace('</script', '<\\/script') + '\n</script>')
@@ -189,7 +212,7 @@ if 'PIXEL_ICONS' not in '\n'.join(scripts):
     scripts.insert(0, '<script>\n' + open(os.path.join(repo, 'views/pixel/icons.js'), encoding='utf-8').read() + '\n</script>')
 chrome_js = '<script>\n' + re.sub(r'(?m)^\s*//.*\n', '', open(os.path.join(here, 'chrome', 'chrome.js'), encoding='utf-8').read()).replace('</script', '<\\/script') + '\n</script>'
 
-land = J(json.load(open(atlas + 'borders/land-50m.json')))
+land = JP(json.load(open(atlas + 'borders/land-50m.json')))
 tours = [json.load(open(f)) for f in sorted(glob.glob(os.path.join(repo, 'data/guide/tours/*.json')))]
 s = s.replace('/*__ENTRIES__*/', ent).replace('/*__LAYERS__*/', data).replace('/*__LAND__*/', land).replace('/*__TOURS__*/', J(tours)).replace('/*__TERRAIN_JS__*/', terrain_js).replace('<!--__LENS_SCRIPTS__-->', '\n'.join(scripts)).replace('/*__CHROME_CSS__*/', chrome_css).replace('<!--__CHROME_JS__-->', chrome_js)
 if local:
