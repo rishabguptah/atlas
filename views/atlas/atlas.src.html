@@ -1544,6 +1544,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     let best = null, bd = tol;
     for (const e of ENTRIES) { const d = near(e.lon, e.lat); if (d < bd) { bd = d; best = { lon: e.lon, lat: e.lat, name: nameAt(e, state.year) }; } }
     for (const p of NAMED) { const d = near(p.lon, p.lat); if (d < bd) { bd = d; best = { ...p }; } }
+    // At city zoom, a gate, palace or church under the click names the spot, ahead of the city it stands in.
+    const C = ATLAS.city;
+    if (C && C.at && state.k >= 100) {
+      const f = C.at(ll[0], ll[1], state.year);
+      if (f && near(f.at[0], f.at[1]) < tol * 1.5) best = { lon: f.at[0], lat: f.at[1], name: C.nameAt(f, state.year) || f.name };
+    }
     select(best || { lon: ll[0], lat: ll[1], name: null });
   });
 
