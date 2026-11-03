@@ -275,7 +275,10 @@
   }
 
   // ---------- paint ----------
-  function paint(S) {
+  // paintSteps is the same pass as a generator that yields between its stages, so a caller can spread one frame over
+  // several tasks (pixelmap's renderSoon); paint runs it straight through.
+  function paint(S) { const g = paintSteps(S); for (;;) { const r = g.next(); if (r.done) return r.value; } }
+  function* paintSteps(S) {
     const { w, h, U0, V0, need, cls, hs, band, latA, lonA, base } = S;
     const elev = S.elev || null, riv = S.riv || null, mood = S.mood || "day";
     const TM = [performance.now()];
@@ -285,7 +288,7 @@
     const edgeDeg = Math.max(0.25, need * 5);
     const isLandC = c => c >= 4 && c !== 255;
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 1. Clean speckle: a land pixel that matches at most one of its eight neighbours takes the local majority.
     const cnt = new Int16Array(18), src = cls.slice();
     for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) {
@@ -299,7 +302,7 @@
       cls[k] = best;
     }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 2. Smoothed light and height: a [1 2 1] blur (twice when zoomed out, where the source is busier than the grid), so
     // slopes read as shapes, not grain.
     function blur(src, passes) {
@@ -315,7 +318,7 @@
     const el = blur(elev || Float32Array.from(band, b => b * 25), 2);
     for (let k = 0; k < N; k++) if (cls[k] <= 3) el[k] = 0;
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 3. Ground: a ramp per pixel (gR), an effective biome (gC) and a tone 0..4 (tn).
     const gR = new Uint8Array(N), gC = new Uint8Array(N), tn = new Int8Array(N), mn = new Float32Array(N);
     const winter = mood === "winter";
@@ -364,7 +367,7 @@
       tn[k] = Math.max(0, Math.min(4, Math.round((r === ID.rock ? 1.5 : 2) + lit[k] * steep + (calm ? nb * 0.4 + d * 0.3 : n * 0.85 + d * 0.55))));
     }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 4. Rivers: arid land beside a river turns irrigated green (the Nile's ribbon), wider as you zoom; oases and deltas too.
     const rib = [1, 1, 2, 3][tier];
     let ring = new Uint8Array(N);
@@ -394,7 +397,7 @@
       }
     }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 5. Biome seams: one (two, close in) dithered pixel where open ground meets other ground, like an autotile edge.
     const FOREST = g => g >= 7 && g <= 9;
     const swap = new Uint8Array(N);
@@ -412,7 +415,7 @@
     }
     for (let k = 0; k < N; k++) if (swap[k]) gR[k] = swap[k] - 1;
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 6. Water: distance to the coast (chamfer, capped), then quiet two-tone seas, a shelf band, shore light and foam.
     const DMAX = 8, dist = new Uint8Array(N);
     for (let k = 0; k < N; k++) dist[k] = cls[k] <= 3 ? DMAX : 0;
@@ -448,7 +451,7 @@
       if (c < 2 && ((i + 1 < w && cls[k + 1] === 2) || (j + 1 < h && cls[k + w] === 2) || (i > 0 && cls[k - 1] === 2) || (j > 0 && cls[k - w] === 2)) && (u + v) & 1) base[k] = RM[ID.shelf][2];
     }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 7. Land base colours, beaches on low sandy or grassy coasts.
     for (let k = 0; k < N; k++) { const c = cls[k]; if (c <= 3 || c === 255) continue; base[k] = RM[gR[k]][tn[k]]; }
     if (tier >= 1) for (let j = 1; j < h - 1; j++) for (let i = 1; i < w - 1; i++) {
@@ -471,7 +474,7 @@
     }
     const tone = (k, dt) => RM[gR[k]][Math.max(0, Math.min(4, tn[k] + dt))];
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 8. Forests: a dark understorey, then crowns stamped back to front on a staggered, world-anchored lattice, so a
     // forest reads as a canopy mass with a bumpy rim; crowns cast a shadow onto open ground below the forest edge.
     const isF = new Uint8Array(N);
@@ -519,7 +522,7 @@
       }
     }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 9. Open-ground detail on a jittered world grid: dune crescents, desert mesas, steppe tufts, acacias, tundra ponds,
     // reeds, crevasses. None at world zoom (calm first); denser as you come in.
     if (tier >= 1) {
@@ -552,7 +555,7 @@
       }
     }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 10. Terraces: on hill slopes in the rice and Andean regions, contour stripes from the elevation, once close in.
     if (tier >= 2 && elev) {
       const step = tier === 3 ? 18 : 35;
@@ -566,11 +569,11 @@
       }
     }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 11. Rivers: drawn lines (riv) and raster rivers; great rivers lighter in the channel. Banks darken a little.
     for (let k = 0; k < N; k++) if (cls[k] === 4) { base[k] = RM[ID.river][riv && riv[k] === 2 ? 3 : 2]; anim[k] = 3; }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 12. Wave glyphs on open water, sparse, one tone above the water under them (the motion layer may cycle them).
     // Cells are jittered and thinned by slow noise so they never read as a lattice; a third as many at world zoom.
     {
@@ -593,7 +596,7 @@
       }
     }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 13. Mountains: one peak per world cell at the cell's highest mountain pixel (so ranges follow real ridgelines),
     // sized by height, snow by the latitude's snowline, drawn back to front so ranges overlap like an illustration.
     const marks = [];
@@ -653,14 +656,14 @@
     }
     for (const hl of hills) { if (!covered[hl.k]) drawSprite(hl.i, hl.j, hl.spr, RM[gR[hl.k]], RM[gR[hl.k]]); }
     for (const pk of peaks) drawSprite(pk.i, pk.j, pk.spr, RK);
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     // 14. Landmarks last, in front of their range.
     marks.sort((a, b) => a.j - b.j);
     for (const m of marks) { const spr = landmark(m.L, tier); if (spr) drawSprite(m.i, m.j, spr, RK); }
 
-    TM.push(performance.now());
+    TM.push(performance.now()); yield;
     return { anim, tier, peaks: peaks.length, marks: marks.map(m => m.L.name), ms: TM.slice(1).map((t, i) => +(t - TM[i]).toFixed(1)) };
   }
 
-  global.PixelTerrainArt = { paint, LANDMARKS, GREEN, REG, snowline, vnoise, noiseTile, peak, landmark };
+  global.PixelTerrainArt = { paint, paintSteps, LANDMARKS, GREEN, REG, snowline, vnoise, noiseTile, peak, landmark };
 })(typeof window !== "undefined" ? window : globalThis);
