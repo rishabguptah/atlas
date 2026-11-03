@@ -94,6 +94,9 @@
       img.src = opts.tile;
     }
     let T = null, W = 0, H = 0;
+    const size = () => { W = mapEl.clientWidth; H = mapEl.clientHeight; };
+    const ro = typeof ResizeObserver === "function" ? new ResizeObserver(() => { size(); if (T) api.update(T); }) : null;
+    if (ro) ro.observe(mapEl);
     // The main view's corners in the minimap: both maps are NaturalEarth1, so it is a straight rescale.
     function viewRect() {
       const s = mp.scale() / projection.scale(), [mx, my] = mp.translate(), [px, py] = projection.translate();
@@ -150,9 +153,11 @@
     }
 
     let raf = 0;
-    return {
+    const api = {
       update(t) {
-        T = t; W = mapEl.clientWidth; H = mapEl.clientHeight;
+        // The size comes from a ResizeObserver: reading clientWidth here, inside every zoom event, forced a layout
+        // each frame (about 9 ms, nearly a second over one 1.6 s flight).
+        T = t; if (!W) size();
         if (raf) return;
         raf = requestAnimationFrame(() => {
           raf = 0;
@@ -162,8 +167,9 @@
           drawScale();
         });
       },
-      remove() { cancelAnimationFrame(raf); br.remove(); },
+      remove() { cancelAnimationFrame(raf); if (ro) ro.disconnect(); br.remove(); },
     };
+    return api;
   }
   global.PixelHUD = PixelHUD;
 })(typeof window !== "undefined" ? window : globalThis);

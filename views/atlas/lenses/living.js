@@ -84,11 +84,23 @@
       meta: [r.moving ? `on the road from ${r.from} to ${r.to}` : `at ${r.at}`, r.conf ? `path ${r.conf}` : null].filter(Boolean).join(" · "),
       body: a.summary || "", why: (a.legs && a.legs[0] && a.legs[0].note) || "", sources: a.sources || [] };
   };
-  let lastList = [], lastT = null;
-  function listAt(t) {
-    if (lastT === t) return lastList;
-    lastT = t; lastList = W.agents(t);
-    return lastList;
+  // Who is on the roads at t, inside box (or the whole world). The map asks for the view only (see viewBox): walking
+  // every recurring flow in the world on each playback tick was the lens's main cost.
+  const lists = new Map();
+  function listAt(t, box = null) {
+    const key = t + "|" + (box ? box.join() : "world");
+    let l = lists.get(key);
+    if (!l) { if (lists.size > 8) lists.clear(); l = W.agents(t, box); lists.set(key, l); }
+    return l;
+  }
+  // The view, padded by half a screen and snapped to 10 degrees (so small pans reuse the list); null when the view is
+  // most of the world or crosses the date line.
+  function viewBox() {
+    const v = ATLAS.api && ATLAS.api.view && ATLAS.api.view();
+    if (!v || !isFinite(v.w) || v.w > 200) return null;
+    const s = d => Math.floor(d / 10) * 10, c = d => Math.ceil(d / 10) * 10;
+    const b = [s(v.lon - v.w), Math.max(-90, s(v.lat - v.h)), c(v.lon + v.w), Math.min(90, c(v.lat + v.h))];
+    return b[0] < -180 || b[2] > 180 ? null : b;
   }
   ATLAS.lens({
     id: "living", name: "Travellers", family: "peoples", color: COLOR, on: false,
@@ -98,7 +110,7 @@
     draw(ctx) {
       if (!ok()) return;
       loadWater();
-      const t = now(ctx.year), list = listAt(t);
+      const t = now(ctx.year), list = listAt(t, viewBox());
       const real = list.filter(r => r.real), gen = list.filter(r => !r.real);
       ctx.pins(real, { key: r => r.id, shape: "triangle", size: 5, always: true, pri: 9, label: r => r.name, title: r => `${r.name}: ${r.moving ? "to " + r.to : "at " + r.at}`, card });
       const cap = Math.round(60 * Math.pow(ctx.k, 1.2));
@@ -135,7 +147,7 @@
   (ATLAS.pixelSprites || (ATLAS.pixelSprites = [])).push((y, k) => {
     const out = [];
     if (!ok() || !ATLAS.isOn || !ATLAS.isOn("living")) return out;
-    const t = now(y), list = listAt(t);
+    const t = now(y), list = listAt(t, viewBox());
     let g = 0;
     const budget = Math.round(10 + 14 * k);
     for (const r of list) {
@@ -144,7 +156,7 @@
     }
     return out;
   });
-  const refresh = () => { lastT = null; if (S.api) S.api.redraw(); if (ATLAS.pixelRefresh) try { ATLAS.pixelRefresh(); } catch (e) { console.error(e); } };
+  const refresh = () => { lists.clear(); if (S.api) S.api.redraw(); if (ATLAS.pixelRefresh) try { ATLAS.pixelRefresh(); } catch (e) { console.error(e); } };
 
   // ---------- on-map caption (one element, pixel type) ----------
   function caption(text, kind) {
@@ -255,7 +267,7 @@
     const KICK = { meeting: "They could have met", crossed: "On the road", danger: "Nearby", object: "Seen here" };
     return { id: story.id, title: story.title, kind: "simulation", blurb: (W.agent(id) || {}).summary || "", status: "draft",
       scenes: story.scenes.map(sc => ({ ...sc, tt: sc.t, t: T.year(sc.t), date: T.iso(sc.t), lenses: ["living"], kick: KICK[sc.kind] || null,
-        show: s => { S.t = s.tt; S.follow = id; if (!S.story || S.story.id !== story.id) { S.story = story; } lastT = null; refresh(); } })) };
+        show: s => { S.t = s.tt; S.follow = id; if (!S.story || S.story.id !== story.id) { S.story = story; } refresh(); } })) };
   }
   const dStories = new Map();
   function directorStory(id) {
@@ -268,6 +280,10 @@
     if (dStories.has(a.id)) return dStories.get(a.id);
     if (!lazy.has(a.id)) {
       const st = { id: "story:" + a.id, title: a.name, kind: "simulation", blurb: a.summary || "", status: a.status || "draft" };
+      // What a story card shows (legs and years) without working out the scenes: that walks every leg against the
+      // whole world (about 25 ms a journey, two seconds for the Stories tab).
+      const legs = a.legs || [], t1 = legs.length ? legs[legs.length - 1].t1 : a.t0;
+      if (isFinite(a.t0) && isFinite(t1)) Object.defineProperty(st, "brief", { value: { legs: legs.length, y0: T.year(a.t0), y1: T.year(t1) } });
       Object.defineProperty(st, "scenes", { enumerable: true, configurable: true, get() { const d = directorStory(a.id); Object.defineProperty(st, "scenes", { value: d.scenes, enumerable: true, writable: true }); return d.scenes; } });
       lazy.set(a.id, st);
     }
@@ -372,7 +388,7 @@
         if (b.dataset.scene) return goScene(+b.dataset.scene);
         if (b.dataset.moment) { stop(); S.tell = null; return startFollow(b.dataset.moment, true); }
       });
-      api.onYear(y => { if (S.t != null && T.year(S.t) !== y) S.t = null; lastT = null; if (!el.hidden) renderSoon(); });
+      api.onYear(y => { if (S.t != null && T.year(S.t) !== y) S.t = null; lists.clear(); if (!el.hidden) renderSoon(); });
       if (api.onView) api.onView(() => { if (!el.hidden) renderSoon(); });
       render();
     },

@@ -61,6 +61,7 @@
     for (let i = 0; i < 6; i++) out.push(Math.round(lo + (hi - lo) * i / 5));
     return out;
   }
+  let landF = null;
   function drawThumb(cv, y) {
     const rs = ATLAS.borders && ATLAS.borders.realms(y, 1); if (!rs) return false;
     const W = 120, H = 62, c = cv.getContext("2d"); cv.width = W; cv.height = H;
@@ -69,7 +70,7 @@
       [v.lon - lonSpan / 2, v.lat - latSpan / 2], [v.lon + lonSpan / 2, v.lat - latSpan / 2], [v.lon + lonSpan / 2, v.lat + latSpan / 2], [v.lon - lonSpan / 2, v.lat + latSpan / 2], [v.lon - lonSpan / 2, v.lat - latSpan / 2]]] } });
     const path = d3.geoPath(proj, c);
     c.fillStyle = "#2f5a6e"; c.fillRect(0, 0, W, H);
-    if (typeof LAND !== "undefined") { c.fillStyle = "#a49c7e"; c.beginPath(); path(topojson.feature(LAND, LAND.objects.land)); c.fill(); }
+    if (typeof LAND !== "undefined") { c.fillStyle = "#a49c7e"; c.beginPath(); path(landF || (landF = topojson.feature(LAND, LAND.objects.land))); c.fill(); }
     for (const r of rs) { c.fillStyle = r.color || "#b0a080"; c.beginPath(); path(r.feature); c.fill(); }
     // Crisp it up: snap to a 4-colour-per-pixel read and draw 1-px ink borders where realms meet.
     const img = c.getImageData(0, 0, W, H), d = img.data, key = new Int32Array(W * H);
@@ -85,10 +86,20 @@
     const el = pane && pane.querySelector(".cmp-film"); if (!el) return;
     const ys = filmYears(a, b);
     el.innerHTML = ys.map(y => `<button data-y="${y}" class="${y === api.year ? "on" : ""}" title="Go to ${fmtY(y)}"><canvas width="120" height="62"></canvas><span>${fmtY(y)}</span></button>`).join("");
-    let missing = 0;
-    [...el.querySelectorAll("canvas")].forEach((cv, i) => { if (!drawThumb(cv, ys[i])) missing++; });
-    clearTimeout(film); if (missing) film = setTimeout(() => open && renderFilm(a, b), 700);
+    // One thumbnail per frame (each is every realm on the map, 30-200 ms): the tab shows at once, the strip fills in.
+    const cvs = [...el.querySelectorAll("canvas")], gen = ++filmGen;
+    let missing = 0, i = 0;
+    cancelAnimationFrame(filmRaf);
+    const next = () => {
+      filmRaf = 0;
+      if (gen !== filmGen || !open || !el.isConnected) return;
+      if (!drawThumb(cvs[i], ys[i])) missing++;
+      if (++i < cvs.length) { filmRaf = requestAnimationFrame(next); return; }
+      clearTimeout(film); if (missing) film = setTimeout(() => open && renderFilm(a, b), 700);
+    };
+    if (cvs.length) filmRaf = requestAnimationFrame(next);
   }
+  let filmGen = 0, filmRaf = 0;
 
   // ---------- the tab ----------
   function render() {

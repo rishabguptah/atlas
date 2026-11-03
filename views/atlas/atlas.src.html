@@ -618,6 +618,21 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   if (PEOPLE.world) addPeople(PEOPLE.world);
   // The n people to show: the most remembered of each region in turn, so a world view is not just Europe's famous.
+  // The people alive and grown in year y, in PPL order (most famous first). PPL is tens of thousands of rows once the
+  // world file is in, so they are kept in 25-year buckets: a year step filters one bucket, not the whole list.
+  let pplIx = null;
+  function adultsAt(y) {
+    if (!pplIx || pplIx.n !== PPL.length || pplIx.top !== PPL[0]) {
+      const by = new Map();
+      for (const p of PPL) {
+        const a = Math.floor((p.b + 15) / 25), z = Math.floor((p.d ?? p.b + 80) / 25);
+        if (!isFinite(a) || !isFinite(z)) continue;
+        for (let w = a; w <= z && w - a < 400; w++) { let l = by.get(w); if (!l) by.set(w, l = []); l.push(p); }
+      }
+      pplIx = { n: PPL.length, top: PPL[0], by };
+    }
+    return (pplIx.by.get(Math.floor(y / 25)) || []).filter(p => adult(p, y));
+  }
   function balanced(list, n) {
     const by = new Map();
     for (const p of list) { let b = by.get(p.rg); if (!b) by.set(p.rg, b = []); b.push(p); }
@@ -849,11 +864,18 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // Points keep their screen size while the map zooms.
   function placeScaled() {
     const k = state.k;
-    root.selectAll(".pt").filter(d => d && d.lon != null).attr("transform", d => { const p = projection([d.lon, d.lat]); return p ? `translate(${p[0]},${p[1]}) scale(${1 / k})` : null; });
-    gPolyLab.selectAll("text").attr("transform", d => `translate(${d.c[0]},${d.c[1]}) scale(${1 / k})`);
-    root.selectAll(".linelab, .routelab").attr("transform", d => `translate(${d.lx},${d.ly}) scale(${1 / k})`);
-    mapEl.classList.toggle("zoomed", k >= 4);
-    mapEl.classList.toggle("close", k >= 14);
+    // Each year step runs this too: a node already placed for this zoom, datum and projection keeps its transform
+    // (rewriting every transform restyled and repainted the whole SVG on each step).
+    const at = (sel, fn) => sel.each(function (d) {
+      if (this.__pk === k && this.__pd === d && this.__pv === projV) return;
+      this.__pk = k; this.__pd = d; this.__pv = projV;
+      const v = fn(d); if (v == null) this.removeAttribute("transform"); else this.setAttribute("transform", v);
+    });
+    at(root.selectAll(".pt").filter(d => d && d.lon != null), d => { const p = projection([d.lon, d.lat]); return p ? `translate(${p[0]},${p[1]}) scale(${1 / k})` : null; });
+    at(gPolyLab.selectAll("text"), d => `translate(${d.c[0]},${d.c[1]}) scale(${1 / k})`);
+    at(root.selectAll(".linelab, .routelab"), d => `translate(${d.lx},${d.ly}) scale(${1 / k})`);
+    if (mapEl.classList.contains("zoomed") !== k >= 4) mapEl.classList.toggle("zoomed", k >= 4);
+    if (mapEl.classList.contains("close") !== k >= 14) mapEl.classList.toggle("close", k >= 14);
   }
   // Each zoom frame only moves the root group; labels hide while the scale changes and the
   // counter-scaling, thinning and label layout run once per frame at most, the rest when it settles.
@@ -892,7 +914,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (Math.abs(Math.log(state.k / drawnK)) > 0.15) { drawnK = state.k; drawPeople(); drawWar(); drawLenses(); marksChanged(); }
     paintMarks();
     if (terrainT) terrainT.update(state.k); if (realmsT) realmsT.update(state.k);
-    renderBasemap();
+    renderBasemap(true);
   });
   svg.call(zoom).on("dblclick.zoom", null);
 
@@ -927,7 +949,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const k = Math.max(kMin, Math.min(K_MAX, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
     const [x, y] = projection([v.lon, v.lat]);
     const t = fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
-    svg.interrupt().transition().duration(reduceMotion() ? 0 : ms).call(zoom.transform, t);
+    // No time to fly: jump now, in this call (a zero-length transition would still wait a frame and render twice).
+    if (!ms || reduceMotion()) svg.interrupt().call(zoom.transform, t);
+    else svg.interrupt().transition().duration(ms).call(zoom.transform, t);
     if (BASEMAP && BASEMAP.fly) try { BASEMAP.fly(v, reduceMotion() ? 0 : ms); } catch (err) { console.error(err); }
   }
   // Pan only if the point is off screen; keep the zoom the person chose.
@@ -1219,7 +1243,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function drawPeople() {
     const y = state.year, out = MK.people.points = [];
     const n = Math.min(450, Math.round(14 + 22 * Math.pow(state.k, 1.25)));
-    const list = state.on.people ? balanced(PPL.filter(p => adult(p, y)), n) : [];
+    const list = state.on.people ? balanced(adultsAt(y), n) : [];
     list.forEach((d, i) => out.push(P(d, { kind: "person", shape: "circle", color: "var(--y-people)", fill: .8, size: 2 + Math.max(0, d.hpi - 60) / 9,
       label: d.name, lbl: true, always: i < 6, pri: d.hpi / 20, title: () => `${d.name} · ${d.occ} · ${fmtSpan(d.b, d.d)} · born ${d.place}`, card: cardFn(personCard, d) })));
   }
@@ -1398,8 +1422,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   ATLAS.polityAt = (lon, lat, y) => { const r = ruledBy(lon, lat, y ?? state.year); return r ? { name: r.emp ? r.emp.name : r.name, color: r.emp ? r.emp.color : hashColor(r.name || "") } : null; };
   const bmEl = document.getElementById("basemap");
   let BASEMAP = null, bmYear = null;
-  function renderBasemap() {
+  function renderBasemap(landed) {
     if (!BASEMAP || !BASEMAP.render) return;
+    // Mid-flight (a tour step, the opening scene, Take me there) the basemap only slides and scales (BASEMAP.move);
+    // a full render there costs 100-500 ms for a zoom that is gone a frame later and stutters the flight. The
+    // zoom's "end" renders once the flight lands, with whatever year and borders arrived meanwhile.
+    if (!landed && d3.active(svg.node())) return;
     bmYear = state.year; bmT = d3.zoomTransform(svg.node());
     const t0 = performance.now();
     try { BASEMAP.render(bmT, state.year); } catch (err) { console.error("basemap", err); }
@@ -1472,6 +1500,14 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // The canvas mark layer's labels (paintMarks) join the queue too: each gets a priority from what it is, the queue
   // answers which ones fit, and only those are painted, in the D5 label tiers (ink on vellum; settlements vellum on ink).
+  // Label widths by font and text: the same few hundred names are measured on every year step and zoom frame.
+  const textWs = new Map();
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", () => textWs.clear());   // a web font changes widths
+  function textW(c, font, text) {
+    const key = font + "|" + text; let w = textWs.get(key);
+    if (w == null) { if (textWs.size > 20000) textWs.clear(); c.font = font; w = c.measureText(text).width; textWs.set(key, w); }
+    return w;
+  }
   function queueLabels(c, labels, t, f, pixel) {
     const extra = lensLabels(t), INK = "#221f1a", VELLUM = "#f6f0dc", fam = pixel ? FONT.pixel : FONT.serif;
     for (const L of labels) {
@@ -1485,8 +1521,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       // Only a highlighted city steps up a size (D2: 12 and 16); other highlights win on priority alone.
       const hi = r && r.hi, settle = SETTLEMENT.has(kind), px = hi && kind === "city" ? 16 : 12;
       L.font = `${hi || settle ? 600 : 500} ${px}px ${fam}`; L.px = px; L.fill = settle && !hi ? VELLUM : INK; L.halo = settle && !hi ? INK : VELLUM;
-      c.font = L.font;
-      const w = c.measureText(L.text).width, x0 = L.center ? L.x - w / 2 : L.x, y1 = L.y + px * .25, y0 = y1 - px;
+      const w = textW(c, L.font, L.text), x0 = L.center ? L.x - w / 2 : L.x, y1 = L.y + px * .25, y0 = y1 - px;
       L.on = false;
       if (x0 < 0 || x0 + w > W || y0 < 0 || y1 > H) continue;  // whole labels only, never cut by the frame
       extra.push({ pri, note: L.note || !settle, text: L.text, box: [x0 - 1, y0, x0 + w + 1, y1], show: on => { L.on = on; } });
@@ -1502,7 +1537,18 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // The map's own chrome (controls, hint, minimap, compass), in map coordinates: labels keep out from under it.
   // ATLAS.chromeRects() when the interface provides it, else the elements we know.
+  // Reading them forces a layout (5-10 ms mid-zoom, every frame), so they are kept for 250 ms, and dropped when the
+  // interface says they moved ("atlas:chrome") or the map is laid out again.
+  let chromeCache = null, chromeAt = 0;
+  document.addEventListener("atlas:chrome", ev => { chromeCache = Array.isArray(ev.detail) ? ev.detail : null; chromeAt = performance.now(); });
   function chromeRects() {
+    const now = performance.now();
+    if (chromeCache && now - chromeAt < 250 && chromeW === W && chromeH === H) return chromeCache;
+    chromeCache = chromeRects0(); chromeAt = now; chromeW = W; chromeH = H;
+    return chromeCache;
+  }
+  let chromeW = 0, chromeH = 0;
+  function chromeRects0() {
     const m = mapEl.getBoundingClientRect(), rel = r => [r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top];
     if (typeof ATLAS.chromeRects === "function") try { return ATLAS.chromeRects().map(r => Array.isArray(r) ? r : rel(r)); } catch (err) { console.error(err); }
     const out = [];
@@ -1690,7 +1736,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     for (const e of ENTRIES) for (const [yy, t, bad] of (EVENTS[e.id] || [])) if (Math.abs(yy - y) <= 25) evs.push({ e, yy, t, bad });
     evs.sort((a, b) => Math.abs(a.yy - y) - Math.abs(b.yy - y));
     const cities = ENTRIES.filter(e => alive(e, y)).map(e => ({ e, p: popAt(e, y) })).filter(o => o.p).sort((a, b) => b.p - a.p).slice(0, 6);
-    const ppl = balanced(PPL.filter(p => adult(p, y)), 8);
+    const ppl = balanced(adultsAt(y), 8);
     const tr = TRADE.filter(t => y >= t.start && y <= t.end), mg = MIGS.filter(m => y >= m.start && y <= m.end);
     const hubs = HUBS.filter(h => y >= h.start && y <= h.end);
     const sh = SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 5 && y <= (e.end ?? NOW) + 10).sort((a, b) => Math.abs(a.start - y) - Math.abs(b.start - y)).slice(0, 6);
@@ -1709,7 +1755,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const ind = MONEY.econ.india, uk = MONEY.econ.uk, gi = interp(ind.gdp_per_capita, y), gu = interp(uk.gdp_per_capita, y);
     el.innerHTML = `
       <div><p class="kick">The world in</p><h2 class="ttl">${esc(fmtYear(y))}</h2>
-      <p class="sub">${pols.length} states on the map${total.shaky ? `, ${total.shaky} of them fragile` : ""} · ${ppl.length ? PPL.filter(p => adult(p, y)).length + " famous people alive" : "no famous people recorded yet"} · ${tr.length} trade routes running</p></div>
+      <p class="sub">${pols.length} states on the map${total.shaky ? `, ${total.shaky} of them fragile` : ""} · ${ppl.length ? adultsAt(y).length + " famous people alive" : "no famous people recorded yet"} · ${tr.length} trade routes running</p></div>
       ${vizOf(ATLAS.nowViz)}
       ${sec("places", "Happening now", evs.slice(0, 6).map(o => item(`<b>${esc(nameAt(o.e, o.yy))}</b>: ${esc(o.t)}`, fmtYear(o.yy), "", goCard(cityCard(o.e)))))}
       ${lensRows("land", "now")}${sec("places", "Biggest cities", cities.map(o => item(`<b>${esc(nameAt(o.e, y))}</b>`, "~" + fmtN(o.p), "", goCard(cityCard(o.e)))))}
@@ -1770,7 +1816,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     // its time slice is in, else the page's own list. A later visit picks the index up when it arrives.
     const born = worldBorn(lon, lat, y) || nearby(PPL, lon, lat, 60);
     const here = born.filter(o => adult(o.x, y)).slice(0, 6), ever = born.filter(o => !adult(o.x, y)).slice(0, 6);
-    const alivePeople = nearby(PPL.filter(p => adult(p, y)), lon, lat, R_KM).filter(o => o.d > 60).slice(0, 5);
+    const alivePeople = nearby(adultsAt(y), lon, lat, R_KM).filter(o => o.d > 60).slice(0, 5);
     const pItems = [
       ...here.map(o => item(`<b>${esc(o.x.name)}</b> <span class="tag now">alive</span> · ${esc(o.x.occ)}`, fmtSpan(o.x.b, o.x.d), "", goCard(personCard(o.x)))),
       ...alivePeople.map(o => item(`<b>${esc(o.x.name)}</b> <span class="tag now">alive</span> · ${esc(o.x.occ)}`, `${Math.round(o.d)} km`, "", goCard(personCard(o.x)))),
@@ -2925,9 +2971,11 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
       fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(v => { got(key, v); done(); }).catch(err => { console.error("late data " + url, err); done(); });
   }
   setTimeout(loadLate, 0);
-  setBasemap();
-  new ResizeObserver(() => layout()).observe(mapEl);
-  layout();
+  // The first view is set before the basemap mounts, so the pixel terrain is drawn once, at the opening view
+  // (mounting first drew the whole world, then drew again at the opening zoom: two 400 ms passes).
+  let laidOut = "";
+  new ResizeObserver(() => { const r = mapEl.getBoundingClientRect(), key = r.width + "x" + r.height; if (key !== laidOut) { laidOut = key; layout(); } }).observe(mapEl);
+  layout(); { const r = mapEl.getBoundingClientRect(); laidOut = r.width + "x" + r.height; }
   setYear(RESUME ? RESUME.year : 1348);
   syncEra(state.year);
   setTab("guide");
@@ -2935,6 +2983,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(1, Math.min(K_MAX, +RESUME.k || 1)) }, 0);
     document.getElementById("maphint").textContent = `Picked up where you left off, in ${fmtYear(state.year)}. Press S for a surprise.`;
   } else flyTo({ lon: 45, lat: 35, span: 140 }, 0);
+  setBasemap();
 })();
 </script>
 <!--__CHROME_JS__-->

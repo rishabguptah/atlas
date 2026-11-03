@@ -85,11 +85,23 @@
       const P = col < 0 ? L.patches[row] : null;
       const rec = tiles[key] = P ? { x0: P.box[0], y0: P.box[3], cell: L.cell, patch: true, crop: P.crop } : { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
       const img = new Image(); pending++;
-      img.onload = () => { rec.img = img; decode(rec); pending--; tileVer++; clearTimeout(onTile); onTile = setTimeout(() => last && render(last), 60); };
-      img.onerror = () => { pending--; rec.data = null; rec.failed = true; };
+      img.onload = () => { rec.img = img; decode(rec); pending--; tileVer++; tileSoon(); };
+      img.onerror = () => { pending--; rec.data = null; rec.failed = true; tileSoon(); };
       img.src = P ? P.url : L.url(col, row);
       return null;
     }
+    // A finer tile redraws all the terrain (100-500 ms), so a view that asked for several waits for the batch: one
+    // redraw when the last arrives (60 ms after it), or every 600 ms while a slow batch is still coming in.
+    let tileWait = 0;
+    function tileSoon() {
+      clearTimeout(onTile);
+      if (!tileWait) tileWait = performance.now();
+      const ms = pending ? Math.max(0, 600 - (performance.now() - tileWait)) : 60;
+      onTile = setTimeout(() => { tileWait = 0; if (last && fresh() && !(opts.busy && opts.busy())) render(last); }, ms);
+    }
+    // Only when a tile that arrived since the last render changes it (tileVer moves on every load). opts.busy() says
+    // the map is mid-zoom or mid-flight: the render at the end of it takes the new tiles.
+    const fresh = () => !prevView || prevView.ver !== tileVer;
     // Patches in view (L.live, set by terrainPass) are the only ones tested per pixel; no closure, last hit first.
     function patchAt(L, lon, lat) {
       const ps = L.patches, live = L.live, h = L.hit || 0;
