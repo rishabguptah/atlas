@@ -133,13 +133,16 @@
       frames[key] = { all, list };
       return list;
     }
+    let lastY = null;
     function timeRealms(y, k) {
       const c = chunkFor(y), want = levelFor(k);
       if (!c || y < index.years[0]) return [];
       loadChunk(c, want);
-      // Fetch the neighbouring chunks too, so playing or scrubbing across a chunk edge does not wait on the network.
-      const ci = index.chunks.indexOf(c);
-      if (Array.isArray(cache["t" + want + ":" + c[2]])) for (const n of [index.chunks[ci + 1], index.chunks[ci - 1]]) if (n) loadChunk(n, want);
+      // Fetch the neighbouring chunks too, so playing or scrubbing across a chunk edge does not wait on the network,
+      // and a second one in the direction the years are moving: modern chunks span only 12-25 years, so one chunk
+      // ahead arrived mid-scrub and every outline in it was then built inside year steps.
+      const ci = index.chunks.indexOf(c), dir = lastY == null || y >= lastY ? 1 : -1; lastY = y;
+      if (Array.isArray(cache["t" + want + ":" + c[2]])) for (const n of [index.chunks[ci + dir], index.chunks[ci - dir], index.chunks[ci + 2 * dir]]) if (n) loadChunk(n, want);
       for (let l = want; l >= 0; l--) { const r = frame(c, l, y); if (r) return r; if (l < want) loadChunk(c, l); }
       for (let l = want + 1; l <= 2; l++) { const r = frame(c, l, y); if (r) return r; }
       return null;

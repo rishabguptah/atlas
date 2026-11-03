@@ -150,7 +150,7 @@
   let marks = null, hud = null, watch = null, markTimer = 0;
   const realmCache = {}, NO_REALMS = [], DEEP_REALMS = -4000, DEEP_ERA = -5500;
   let paleoKey = "", paleoAt = 0, paleoTimer = 0;
-  let warmed = null;
+  let warmed = null, warmedTier = 0, warmedMore = 0;
   function realmsFor(y) {
     if (typeof POLITIES === "undefined") return [];
     const snaps = Object.keys(POLITIES).map(Number).sort((a, b) => a - b);
@@ -379,13 +379,18 @@
       if (same && !pm.pad) pm.setRealms(realms, { paint: false }); else pm.render(t, { realms, pad: 0 });
       lastRealms = realms; padSoon();
       // Warm the outlines of every frame in this chunk while the browser is idle, so scrubbing on stays cheap.
-      // Then the chunks either side (already prefetched by the border loader).
+      // Then the chunks either side (two deep), once the border loader has prefetched them (warmed again when they arrive: a
+      // scrub that crossed into an unwarmed chunk built every outline mid-step, 15-20 ms per new border frame).
+      // Outlines are built per zoom tier (pixelmap's tierOf), so zooming to another tier warms again too.
       const B = bordersOf(), all = isOn("borders") && B.chunkRealms && B.chunkRealms(y, t.k);
-      if (all && all !== warmed && pm.warm) {
-        warmed = all;
-        const ix = B.timeline(), ci = ix ? ix.chunks.findIndex(c => c[0] <= y && y <= c[1]) : -1, near = ci >= 0 ? [ix.chunks[ci + 1], ix.chunks[ci - 1]] : [];
+      if (all && pm.warm) {
+        const ix = B.timeline(), ci = ix ? ix.chunks.findIndex(c => c[0] <= y && y <= c[1]) : -1, near = ci >= 0 ? [ix.chunks[ci - 2], ix.chunks[ci + 2], ix.chunks[ci - 1], ix.chunks[ci + 1]] : [];
         const more = near.filter(Boolean).map(c => B.chunkRealms(c[0], t.k)).filter(Boolean);
-        pm.warm([...more.flat(), ...all].map(r => r.feature));
+        const tier = Math.pow(2, Math.ceil(Math.log2(Math.max(1, t.k))));
+        if (all !== warmed || tier !== warmedTier || more.length !== warmedMore) {
+          warmed = all; warmedTier = tier; warmedMore = more.length;
+          pm.warm([...more.flat(), ...all].map(r => r.feature));   // built from the end: this chunk, then the nearest
+        }
       }
       nameRealms();
       if (geo) {

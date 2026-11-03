@@ -305,7 +305,10 @@
       return C && C.length ? C.map(c => c.bbox) : null;
     }
     const inBox = (B, lon, lat) => { for (const b of B) if (lon >= b[0] && lon <= b[2] && lat >= b[1] && lat <= b[3]) return true; return false; };
+    // Below this zoom places() draws nothing: hamlets start at 10x, mapped places at 12x (ports) and up.
+    const PLACES_K = 10;
     function places(G, year) {
+      if (G.k < PLACES_K) return;
       const K = G.k, D = density(year), { w, h, U0, V0, cls, lonA, latA, hash } = G, CB = cityBoxes(K);
       // A hamlet cell covers less land the closer the view: thin them out past 60x so the countryside stays countryside.
       const thin = K > 60 ? (60 / K) * (60 / K) : 1;
@@ -353,11 +356,16 @@
     // replays the cached pixels.
     let last = { box: null, list: [] }, grid0 = null, view = "", underKey = "", under = null, overKey = "", over = null;
     const bucket = y => Math.floor(y / 10) * 10;
-    function standing(year) {
+    // Only what can be drawn at this zoom counts (the same tests as lines() and places()): in a Europe view at 3x,
+    // the hamlets, castles and side roads changing every year forced a full over pass on every year step.
+    function standing(year, K) {
       let h = 0;
       for (const t of last.list) {
-        for (let i = 0; i < t.lines.length; i++) { const L = t.lines[i]; if (L.a <= year && year <= L.b + (L.kind === "rr" ? OLD_ROAD : 0)) h = (h * 31 + i * 2 + (year > L.b ? 1 : 0)) | 0; }
-        for (let i = 0; i < t.pts.length; i++) { const p = t.pts[i]; if (p.a <= year && year <= p.b) h = (h * 17 + i) | 0; }
+        for (let i = 0; i < t.lines.length; i++) {
+          const L = t.lines[i]; if (K < (L.main ? T0 : T1)[L.kind]) continue;
+          if (L.a <= year && year <= L.b + (L.kind === "rr" ? OLD_ROAD : 0)) h = (h * 31 + i * 2 + (year > L.b ? 1 : 0)) | 0;
+        }
+        if (K >= PLACES_K) for (let i = 0; i < t.pts.length; i++) { const p = t.pts[i]; if (p.a <= year && year <= p.b) h = (h * 17 + i) | 0; }
       }
       return h;
     }
@@ -378,7 +386,7 @@
         under = B.slice(); underKey = key;
         return;
       }
-      const key = bucket(year) + ":" + standing(year) + ":" + last.list.length;
+      const key = bucket(year) + ":" + standing(year, G.k) + ":" + last.list.length;
       if (key === overKey && over) { for (let i = 0; i < over.length; i += 2) B[over[i]] = over[i + 1]; return; }
       const before = B.slice();
       occ = new Uint8Array(G.w * G.h);
