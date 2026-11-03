@@ -89,7 +89,7 @@ svg.map-labels g { transition: opacity .3s; }
     let last = null, mood = "day", debug = null;
     // Shapes depend only on the view, so while the year scrubs they are reused; the drawing is redone only when the
     // set of winners changes.
-    let shapes = new WeakMap(), shapeKey = "", drawnList = [];
+    let shapes = new WeakMap(), shapeKey = "", drawnList = [], drawnSig = null;
 
     // Screen geometry for one item: its collision boxes and how to draw it, or null if it cannot be placed here.
     function shape(it, view) {
@@ -160,8 +160,11 @@ svg.map-labels g { transition: opacity .3s; }
 
     function layout(t, W, H, o = {}) {
       last = t;
-      svg.style.transform = ""; svg.setAttribute("width", W); svg.setAttribute("height", H);
-      svg.classList.toggle("quiet", !!o.focus);
+      // Only touch the SVG when something changed: each write restyles the label layer.
+      if (svg.style.transform) svg.style.transform = "";
+      if (svg.getAttribute("width") !== String(W)) svg.setAttribute("width", W);
+      if (svg.getAttribute("height") !== String(H)) svg.setAttribute("height", H);
+      if (svg.classList.contains("quiet") !== !!o.focus) svg.classList.toggle("quiet", !!o.focus);
       const key = [t.k, t.x, t.y, W, H].join();
       if (key !== shapeKey) { shapeKey = key; shapes = new WeakMap(); drawnList = null; }
       const view = { k: t.k, t, year: o.year, W, H, focus: o.focus || null,
@@ -193,8 +196,17 @@ svg.map-labels g { transition: opacity .3s; }
       const AGAINST = { R: ["R", "G"], G: ["R", "G", "P"], P: ["R", "G", "P"] }, MUST = ["G", "P"];
       // One budget per zoom for everything but realm names, which are limited only by room.
       const max = Math.round(20 + 14 * Math.pow(t.k, 0.85));
-      const cellsOf = b => { const out = []; for (let cy = Math.floor((b[1] - pad) / CELL); cy <= Math.floor((b[3] + pad) / CELL); cy++) for (let cx = Math.floor((b[0] - pad) / CELL); cx <= Math.floor((b[2] + pad) / CELL); cx++) out.push(cx + "," + cy); return out; };
-      const hit = (b, planes) => { for (const key of cellsOf(b)) for (const pl of planes) for (const o2 of grids[pl].get(key) || []) if (b[0] - pad <= o2[2] && b[2] + pad >= o2[0] && b[1] - pad <= o2[3] && b[3] + pad >= o2[1]) return true; return false; };
+      // Cells are numbers (cx * 4096 + cy, offset so negatives stay apart), walked in place: no strings or arrays per test.
+      const cellRange = b => [Math.floor((b[0] - pad) / CELL), Math.floor((b[1] - pad) / CELL), Math.floor((b[2] + pad) / CELL), Math.floor((b[3] + pad) / CELL)];
+      const cellsOf = b => { const [x0, y0, x1, y1] = cellRange(b), out = []; for (let cy = y0; cy <= y1; cy++) for (let cx = x0; cx <= x1; cx++) out.push((cx + 1024) * 4096 + cy + 1024); return out; };
+      const hit = (b, planes) => {
+        const x0 = Math.floor((b[0] - pad) / CELL), y0 = Math.floor((b[1] - pad) / CELL), x1 = Math.floor((b[2] + pad) / CELL), y1 = Math.floor((b[3] + pad) / CELL);
+        for (let cy = y0; cy <= y1; cy++) for (let cx = x0; cx <= x1; cx++) {
+          const key = (cx + 1024) * 4096 + cy + 1024;
+          for (const pl of planes) { const l = grids[pl].get(key); if (l) for (const o2 of l) if (b[0] - pad <= o2[2] && b[2] + pad >= o2[0] && b[1] - pad <= o2[3] && b[3] + pad >= o2[1]) return true; }
+        }
+        return false;
+      };
       const blocked = b => blocks.some(o => b[0] <= o[2] && b[2] >= o[0] && b[1] <= o[3] && b[3] >= o[1]);
       let n = 0; const notes = new Set(), won = [];
       debug = api.debug ? [] : null;
@@ -209,11 +221,17 @@ svg.map-labels g { transition: opacity .3s; }
         if (c.ext) { try { c.ext.show(ok); } catch (err) { console.error(err); } }
         else if (ok) won.push(c);
       }
-      if (!drawnList || won.length !== drawnList.length || won.some((c, i) => c !== drawnList[i])) {
+      // Redraw the SVG only when what it shows changed: sources hand back new objects every year step (realm names of
+      // the next border frame), but most steps the same names land in the same places, and rebuilding the curved text
+      // relaid every glyph.
+      const r1 = v => Math.round(v * 2) / 2;
+      const sig = won.map(c => [c.text, c.cls, c.fs, c.sp, c.wt, c.fill, c.peak ? 1 : 0, c.pts ? c.pts.map(p => r1(p[0]) + " " + r1(p[1])).join(" ") : r1(c.x) + " " + r1(c.y)].join("|")).join("\n");
+      if (!drawnList || sig !== drawnSig) {
         defs.textContent = ""; g.textContent = "";
         won.forEach((c, i) => draw(c, i + 1));
-        drawnList = won;
+        drawnSig = sig;
       }
+      drawnList = won;
       return n;
     }
 

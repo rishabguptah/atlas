@@ -392,6 +392,8 @@
         const on = isOn("terrain"), key = on ? [t.k, t.x, t.y, el0.clientWidth, el0.clientHeight].join() : "off";
         if (key !== geoKey) { geoKey = key; if (on) geo.render(t, el0.clientWidth, el0.clientHeight); else geo.clear(); }
       }
+      // This paint carries the marks too: a marks repaint still waiting would paint the same picture again.
+      clearTimeout(markTimer); markTimer = 0;
       collect(y, t.k); draw();
       if (motion) motion.year(y);
       provLabels();

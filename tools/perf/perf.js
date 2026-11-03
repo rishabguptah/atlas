@@ -89,10 +89,46 @@ const pct = (a, q) => { const s = [...a].sort((x, y) => x - y); return s[Math.fl
     return { median: Math.round(median(t) * 10) / 10, p90: Math.round(pct(t, 0.9) * 10) / 10, max: Math.round(Math.max(...t)) };
   }
 
+  // Diagnosis only (not gated): the same world steps again, with every frame, timer, idle and worker callback timed by
+  // where it was scheduled, plus long tasks, so a slow CI run shows where its step time went.
+  async function diagnose(view, y0, n) {
+    const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+    await p.addInitScript(() => {
+      const acc = window.__cb = {}; window.__on = false;
+      const tag = kind => kind + " " + ((new Error().stack.split("\n")[3] || "").trim().replace(/^at /, "").replace(/\(?https?:\/\/[^)]*\/([^/:)]+):(\d+):\d+\)?/, "$1:$2").slice(0, 60));
+      const wrap = (orig, kind) => function (f, ...a) {
+        if (typeof f !== "function") return orig.call(this, f, ...a);
+        const k = tag(kind);
+        return orig.call(this, function (...x) { if (!window.__on) return f.apply(this, x); const s = performance.now(); try { return f.apply(this, x); } finally { const c = acc[k] || (acc[k] = [0, 0]); c[0] += performance.now() - s; c[1]++; } }, ...a);
+      };
+      window.requestAnimationFrame = wrap(window.requestAnimationFrame, "frame");
+      window.setTimeout = wrap(window.setTimeout, "timer");
+      if (window.requestIdleCallback) window.requestIdleCallback = wrap(window.requestIdleCallback, "idle");
+      window.__lt = []; new PerformanceObserver(l => { if (window.__on) for (const e of l.getEntries()) window.__lt.push(e.duration); }).observe({ type: "longtask" });
+    });
+    await p.goto(URL0, { waitUntil: "load", timeout: 120000 });
+    await p.waitForFunction(() => window.ATLAS && ATLAS.api, null, { timeout: 60000 });
+    await p.waitForTimeout(2500);
+    await p.evaluate(([v, y]) => { ATLAS.api.setYear(y - 1, false); ATLAS.api.fly(v, 0); }, [view, y0]);
+    await p.waitForTimeout(3000);
+    const d = await p.evaluate(async ([y0, n]) => {
+      const frame = () => new Promise(r => requestAnimationFrame(() => r(performance.now())));
+      await frame(); window.__on = true; let sync = 0; const t0 = performance.now();
+      for (let i = 0; i < n; i++) { const s = performance.now(); ATLAS.api.setYear(y0 + i, false); sync += performance.now() - s; await frame(); }
+      window.__on = false;
+      const per = v => Math.round(v / n * 10) / 10;
+      return { msPerStep: per(performance.now() - t0), setYearMsPerStep: per(sync), longTasks: window.__lt.length, longTaskMsPerStep: per(window.__lt.reduce((a, x) => a + x, 0)),
+        callbacksMsPerStep: Object.entries(window.__cb).sort((a, b) => b[1][0] - a[1][0]).slice(0, 12).map(([k, v]) => `${per(v[0])} ms (${v[1]}x) ${k}`) };
+    }, [y0, n]);
+    await p.close();
+    return d;
+  }
+
   result.mapLocal = Math.min(await load(0, 0), await load(0, 0));
   result.map25 = await load(25, 40);
   result.stepsWorld1800s = await steps({ lon: 20, lat: 30, zoom: 1 }, 1801, 40);
   result.stepsEurope1800s = await steps({ lon: 12, lat: 49, zoom: 3 }, 1801, 40);
+  result.diagnosis = { world1800s: await diagnose({ lon: 20, lat: 30, zoom: 1 }, 1801, 40) };
   result.errors = [...new Set(errors)].slice(0, 10);
   await b.close(); server.close();
 
@@ -109,7 +145,8 @@ const pct = (a, q) => { const s = [...a].sort((x, y) => x - y); return s[Math.fl
   }
   if (result.errors.length) { rows.push(`| page errors | ${result.errors.length} | 0 | **over** |`); fail.push("errors"); }
   const md = ["### Atlas performance", "", "| measure | now | limit | |", "|---|---|---|---|", ...rows, "",
-    result.errors.length ? "Errors: " + result.errors.map(e => "`" + e.slice(0, 120) + "`").join(", ") : ""].join("\n");
+    result.errors.length ? "Errors: " + result.errors.map(e => "`" + e.slice(0, 120) + "`").join(", ") : "",
+    "", "Where world year-step time goes (a separate, ungated pass; per step):", "```", JSON.stringify(result.diagnosis.world1800s, null, 1), "```"].join("\n");
   console.log(md);
   if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + "\n");
   if (OUT) fs.writeFileSync(OUT, JSON.stringify(result, null, 2));
