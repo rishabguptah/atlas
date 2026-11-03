@@ -247,7 +247,9 @@
       }
       return best;
     }
-    return { draw, names, at, pick, nameAt, kindAt, load, get cities() { return cities; }, get shown() { return shown; } };
+    // Forget what was drawn (the pixel map was switched off), so nothing invisible can be picked.
+    function clear() { shown = []; overShown = []; over = null; overKey = ""; }
+    return { draw, names, at, pick, clear, nameAt, kindAt, load, get cities() { return cities; }, get shown() { return shown; } };
   }
   PixelCity.ART = ART; PixelCity.STAMPS = S; PixelCity.COLORS = C;
   global.PixelCity = PixelCity;

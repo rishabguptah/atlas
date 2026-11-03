@@ -1579,10 +1579,21 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     setTab("here");
     renderHere();
   }
+  // At city zoom, the drawn gate, palace or church under a point (PixelCity, while the pixel map shows it), hit-tested
+  // against its stamp in screen space since stamps stand above their anchor point.
+  function cityFeatureAt(mx, my) {
+    const C = ATLAS.city, sc = state.k;
+    if (!C || !C.pick || sc < 100) return null;
+    const f = C.pick((lon, lat) => { const p = projection([lon, lat]); return p && [p[0] * sc, p[1] * sc]; }, mx * sc, my * sc, 3, sc);
+    return f ? { lon: f.at[0], lat: f.at[1], name: C.nameAt(f, state.year) || f.name } : null;
+  }
   svg.on("click", ev => {
     const [sx, sy] = d3.pointer(ev, svg.node()), hit = markAt(sx, sy);
-    if (hit) { const c = hit.card(); if (c) return select(c); }
     const [mx, my] = d3.pointer(ev, root.node());
+    const inCity = cityFeatureAt(mx, my);
+    // A building beats the city's own dot it stands beside; any other lens mark keeps its priority.
+    if (hit && !(inCity && (MK.places ? MK.places.points : []).includes(hit))) { const c = hit.card(); if (c) return select(c); }
+    if (inCity) return select(inCity);
     const ll = projection.invert([mx, my]);
     if (!ll || !isFinite(ll[0])) return;
     // Snap to the nearest named place within a few pixels.
@@ -1590,14 +1601,6 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     let best = null, bd = tol;
     for (const e of ENTRIES) { const d = near(e.lon, e.lat); if (d < bd) { bd = d; best = { lon: e.lon, lat: e.lat, name: nameAt(e, state.year) }; } }
     for (const p of NAMED) { const d = near(p.lon, p.lat); if (d < bd) { bd = d; best = { ...p }; } }
-    // At city zoom, a gate, palace or church under the click names the spot, ahead of the city it stands in.
-    // Hit-tested against the drawn stamp in screen space, since stamps stand above their anchor point.
-    const C = ATLAS.city;
-    if (C && C.pick && state.k >= 100) {
-      const sc = state.k;
-      const f = C.pick((lon, lat) => { const p = projection([lon, lat]); return p && [p[0] * sc, p[1] * sc]; }, mx * sc, my * sc, 3, sc);
-      if (f) best = { lon: f.at[0], lat: f.at[1], name: C.nameAt(f, state.year) || f.name };
-    }
     select(best || { lon: ll[0], lat: ll[1], name: null });
   });
 
