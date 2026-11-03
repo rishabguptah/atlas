@@ -308,7 +308,9 @@
       const step = dl => {
         const pk = projection.scale() + "," + projection.translate().join(",") + "," + tierOf(last ? last.k : 1);
         const P = rawProj(), tier = tierOf(last ? last.k : 1);
-        while (warmQ.length && dl.timeRemaining() > 2) {
+        // At most ~10 ms per idle slice: an idle period can run to 50 ms, and a click or wheel arriving then would wait.
+        const end = performance.now() + 10;
+        while (warmQ.length && dl.timeRemaining() > 2 && performance.now() < end) {
           const f = warmQ.pop();
           if (P && f.raw && !f.raw.cross) rawPathOf(f.raw, tier, P.s);
           else { const c = pathCache.get(f); if (!c || c.pk !== pk) pathOf(f, pk); }

@@ -834,6 +834,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // Terrain basemap: painted relief, rivers and named ranges, deserts, seas, straits and passes.
   let terrainT = null, realmsT = null, realmSnap;
+  const terrainHidden = () => !!BASEMAP && BASEMAP.keepTerrain !== true && mapEl.classList.contains("basemap-on");
   const isPolitical = () => !!(state.political && state.terrain && TERRAIN && RELIEF_POL && window.drawRealms);
   // Paradox-style realms: one flat colour per state, thick borders, the name curved across its largest piece.
   function drawRealmsLayer(force) {
@@ -924,7 +925,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     for (const fn of viewWatch) try { fn(); } catch (err) { console.error(err); }
     if (Math.abs(Math.log(state.k / drawnK)) > 0.15) { drawnK = state.k; drawPeople(); drawWar(); drawLenses(); marksChanged(); }
     paintMarks();
-    if (terrainT) terrainT.update(state.k); if (realmsT) realmsT.update(state.k);
+    // The SVG terrain layer is hidden under a basemap that paints its own; its label declutter measures text (getBBox),
+    // which forced a full layout on every landing, so it runs only while the layer shows (and again when it is unhidden).
+    if (terrainT && !terrainHidden()) terrainT.update(state.k); if (realmsT) realmsT.update(state.k);
     renderBasemap(true);
   });
   svg.call(zoom).on("dblclick.zoom", null);
@@ -1460,6 +1463,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     bmEl.innerHTML = ""; BASEMAP = want;
     mapEl.classList.toggle("basemap-on", !!BASEMAP);
     gTerrain.classed("hide", !!BASEMAP && BASEMAP.keepTerrain !== true);
+    if (terrainT && !terrainHidden()) terrainT.update(state.k);
     if (BASEMAP) { try { BASEMAP.mount(bmEl, projection); } catch (err) { console.error("basemap", err); BASEMAP = null; mapEl.classList.remove("basemap-on"); return; } renderBasemap(); }
   }
 
