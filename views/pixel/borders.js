@@ -17,7 +17,74 @@
   // Stable colour per realm id, so a realm keeps its colour across centuries.
   const colorOf = id => { let h = 0; for (const c of id) h = (h * 31 + c.charCodeAt(0)) | 0; const R = REALM(); return R[Math.abs(h) % R.length]; };
   const lastAtOrBefore = (arr, y) => { let lo = 0, hi = arr.length - 1, r = -1; while (lo <= hi) { const m = (lo + hi) >> 1; if (arr[m] <= y) { r = m; lo = m + 1; } else hi = m - 1; } return r; };
-  const readTopo = t => { const out = []; for (const o of Object.values(t.objects)) for (const f of topojson.feature(t, o).features) out.push(f); return out; };
+  // Features decode their geometry on first use: a chunk holds hundreds of realms across many frames, and decoding them
+  // all at once when it arrives (about 100 ms for an l1 chunk) would land on a year step.
+  const lazyFeature = (t, g) => { let geo; return { type: "Feature", id: g.id, properties: g.properties || {}, get geometry() { return geo || (geo = topojson.feature(t, g).geometry); } }; };
+  const readTopo = t => { const out = []; for (const o of Object.values(t.objects)) for (const g of o.type === "GeometryCollection" ? o.geometries : [o]) out.push(lazyFeature(t, g)); return out; };
+
+  // Chunks are fetched, parsed and decoded in a worker, which also projects every outline (Natural Earth, before scale
+  // and translate) into flat arrays. A year step then only fills ready paths: no JSON parse, topology decode or
+  // projection on the main thread. Each feature keeps a GeoJSON geometry (built on first use) for anything else.
+  // Without workers (or if one fails) chunks decode on the main thread as before.
+  function workerSource() {
+    const R = Math.PI / 180;
+    const raw = (l, p) => { const p2 = p * p, p4 = p2 * p2; return [l * (0.8707 - 0.131979 * p2 + p4 * (-0.013791 + p4 * (0.003971 * p2 - 0.001529 * p4))),
+      p * (1.007226 + p2 * (0.015085 + p4 * (-0.044475 + 0.028874 * p2 - 0.005916 * p4)))]; };
+    onmessage = async ev => {
+      const { url, key } = ev.data;
+      try {
+        const res = await fetch(url); if (!res.ok) throw new Error(res.status);
+        const t = await res.json(), T = t.transform;
+        const arcs = t.arcs.map(a => { const o = new Float64Array(a.length * 2); let x = 0, y = 0;
+          for (let i = 0; i < a.length; i++) { if (T) { x += a[i][0]; y += a[i][1]; o[2 * i] = x * T.scale[0] + T.translate[0]; o[2 * i + 1] = y * T.scale[1] + T.translate[1]; } else { o[2 * i] = a[i][0]; o[2 * i + 1] = a[i][1]; } }
+          return o; });
+        const ring = idx => { const pts = [];
+          for (const i of idx) { const a = arcs[i < 0 ? ~i : i], n = a.length / 2; if (pts.length) pts.length -= 2;
+            if (i < 0) for (let j = n - 1; j >= 0; j--) pts.push(a[2 * j], a[2 * j + 1]); else for (let j = 0; j < n; j++) pts.push(a[2 * j], a[2 * j + 1]); }
+          return pts; };
+        const out = [], bufs = [];
+        for (const o of Object.values(t.objects)) for (const g of o.type === "GeometryCollection" ? o.geometries : [o]) {
+          const polys = g.type === "Polygon" ? [g.arcs] : g.type === "MultiPolygon" ? g.arcs : [];
+          const rings = [], first = [];
+          for (const poly of polys) poly.forEach((r, i) => { rings.push(ring(r)); first.push(i === 0 ? 1 : 0); });
+          let n = 0; for (const r of rings) n += r.length;
+          const ll = new Float32Array(n), xy = new Float32Array(n), lens = new Int32Array(rings.length), news = Uint8Array.from(first);
+          let o2 = 0, cross = false, x0 = 180, y0 = 90, x1 = -180, y1 = -90;
+          rings.forEach((r, ri) => { lens[ri] = r.length / 2;
+            for (let i = 0; i < r.length; i += 2) { const lo = r[i], la = r[i + 1];
+              if (la > 89 || la < -89 || lo >= 180 || lo <= -180 || (i && Math.abs(lo - r[i - 2]) > 90)) cross = true;
+              if (lo < x0) x0 = lo; if (lo > x1) x1 = lo; if (la < y0) y0 = la; if (la > y1) y1 = la;
+              const q = raw(lo * R, la * R); ll[o2] = lo; ll[o2 + 1] = la; xy[o2] = q[0]; xy[o2 + 1] = q[1]; o2 += 2; } });
+          out.push({ id: g.id, properties: g.properties || {}, type: g.type, ll, xy, lens, news, cross, bbox: rings.length ? [x0, y0, x1, y1] : null });
+          bufs.push(ll.buffer, xy.buffer, lens.buffer, news.buffer);
+        }
+        postMessage({ key, feats: out }, bufs);
+      } catch (err) { postMessage({ key, error: String(err) }); }
+    };
+  }
+  let sharedWorker;
+  function borderWorker() {
+    if (sharedWorker !== undefined) return sharedWorker;
+    try {
+      const src = "(" + workerSource.toString() + ")()";
+      sharedWorker = new Worker(URL.createObjectURL(new Blob([src], { type: "text/javascript" })));
+      sharedWorker.jobs = {};
+      // A page that may not start workers (a strict sandbox) falls back to the main thread, pending chunks included.
+      sharedWorker.onerror = () => { const jobs = sharedWorker.jobs; sharedWorker = null; for (const k in jobs) jobs[k]({ error: "worker" }); };
+      sharedWorker.onmessage = ev => { const j = sharedWorker.jobs[ev.data.key]; delete sharedWorker.jobs[ev.data.key]; if (j) j(ev.data); };
+    } catch (err) { sharedWorker = null; }
+    return sharedWorker;
+  }
+  // A worker feature as GeoJSON-shaped: geometry is rebuilt from the decoded rings only when something asks for it.
+  function workerFeature(d) {
+    let geo;
+    return { type: "Feature", id: d.id, properties: d.properties, raw: d, get geometry() {
+      if (geo) return geo;
+      const polys = []; let o = 0;
+      for (let r = 0; r < d.lens.length; r++) { const ring = []; for (let i = 0; i < d.lens[r]; i++, o += 2) ring.push([d.ll[o], d.ll[o + 1]]); if (d.news[r] || !polys.length) polys.push([]); polys[polys.length - 1].push(ring); }
+      return geo = d.type === "Polygon" ? { type: "Polygon", coordinates: polys[0] || [] } : { type: "MultiPolygon", coordinates: polys };
+    } };
+  }
 
   function PixelBorders(opts = {}) {
     const base = opts.base || "borders/", tbase = opts.timeBase === undefined ? "borders-time/" : opts.timeBase;
@@ -37,10 +104,19 @@
     function get(url, key, parse) {
       if (cache[key] || failed[key]) return;
       cache[key] = "loading";
-      fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(t => {
+      const W = opts.worker === false ? null : borderWorker();
+      const main = () => fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(t => {
         cache[key] = parse(readTopo(t));
         if (opts.onLoad) opts.onLoad();
       }).catch(() => { delete cache[key]; failed[key] = 1; });
+      if (!W) return main();
+      const job = Math.random().toString(36).slice(2) + ":" + key;
+      W.jobs[job] = d => {
+        if (d.error) { if (/^Error: \d+$/.test(d.error)) { delete cache[key]; failed[key] = 1; } else main(); return; }
+        cache[key] = parse(d.feats.map(workerFeature));
+        if (opts.onLoad) opts.onLoad();
+      };
+      W.postMessage({ url: new URL(url, location.href).href, key: job });
     }
     const loadSnap = (s, l) => get(`${base}l${l}/world_${label(s)}.json`, l + ":" + s,
       feats => feats.filter(f => f.properties && f.properties.id).map(f => toRealm(f.properties, f)));

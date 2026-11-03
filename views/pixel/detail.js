@@ -299,8 +299,16 @@
       }
     }
 
+    // Inside a city with a plan, at city zoom, the city layer (city.js) draws the buildings: no hamlets or castles there.
+    function cityBoxes(K) {
+      const C = K >= 110 && global.ATLAS && ATLAS.city && ATLAS.city.cities;
+      return C && C.length ? C.map(c => c.bbox) : null;
+    }
+    const inBox = (B, lon, lat) => { for (const b of B) if (lon >= b[0] && lon <= b[2] && lat >= b[1] && lat <= b[3]) return true; return false; };
     function places(G, year) {
-      const K = G.k, D = density(year), { w, h, U0, V0, cls, lonA, latA, hash } = G;
+      const K = G.k, D = density(year), { w, h, U0, V0, cls, lonA, latA, hash } = G, CB = cityBoxes(K);
+      // A hamlet cell covers less land the closer the view: thin them out past 60x so the countryside stays countryside.
+      const thin = K > 60 ? (60 / K) * (60 / K) : 1;
       // Procedural hamlets where the farmland is densely peopled: one candidate per world-anchored cell.
       if (K >= 10 && D) {
         const VW = K >= 20 ? 10 : 13, VH = K >= 20 ? 7 : 9;
@@ -311,8 +319,9 @@
           if (i < 1 || j < 1 || i >= w - 1 || j >= h - 1) continue;
           const k = j * w + i, c = cls[k]; if (c === 255 || c <= 4 || !ARABLE[c]) continue;
           const d = densAt(D, lonA[k], latA[k]);
-          const p = Math.min(0.3, Math.max(0, (d - 6) / 160)) * ARABLE[c];
+          const p = Math.min(0.3, Math.max(0, (d - 6) / 160)) * ARABLE[c] * thin;
           if (hash(cu, cv) > p) continue;
+          if (CB && inBox(CB, lonA[k], latA[k])) continue;
           // Windmills stood among the fields of north-western Europe from the 1180s until steam and electricity.
           if (K >= 16 && r2 < 0.18 && year >= 1180 && year <= 1920 && latA[k] > 44 && latA[k] < 58 && lonA[k] > -10 && lonA[k] < 30)
             stamp(G, i, j, MILL, { s: C.white, w: P("#8a6a46"), d: C.ink });
@@ -327,6 +336,7 @@
       for (const p of rows) {
         const need = p.kind === "p" ? 12 : p.kind === "v" ? 24 : p.kind === "x" || p.kind === "w" ? 36 : p.kind === "z" ? 99 : 12;
         if (K < need) continue;
+        if (CB && inBox(CB, p.lon, p.lat)) continue;
         const q = G.toPixel(p.lon, p.lat); if (!q) continue;
         const [i, j] = q; if (i < 0 || j < 0 || i >= w || j >= h) continue;
         if (p.kind === "v") village(G, i, j, p.lon, p.lat, year, 2, hash(i + U0, j + V0));

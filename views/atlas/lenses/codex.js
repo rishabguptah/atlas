@@ -26,8 +26,9 @@
   const km = (a, b) => { const r = Math.PI / 180, x = Math.sin((b.lat - a.lat) * r / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin((b.lon - a.lon) * r / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
   const century = y => {
     if (y <= -3000) { const m = Math.ceil(-y / 1000); return `${m}${m === 1 ? "st" : m === 2 ? "nd" : m === 3 ? "rd" : "th"} millennium BCE`; } const n = y < 0 ? Math.ceil(-y / 100) : Math.floor(y / 100) + 1; const sfx = n % 10 === 1 && n !== 11 ? "st" : n % 10 === 2 && n !== 12 ? "nd" : n % 10 === 3 && n !== 13 ? "rd" : "th"; return `${n}${sfx} century${y < 0 ? " BCE" : ""}`; };
-  let byId = null;
-  const sites = () => { const S = D().sites; if (!byId) byId = new Map(S.map(s => [s.id, s])); return S; };
+  // The index is rebuilt when the data changes: the page may load this lens's data after the first call.
+  let byId = null, bySrc = null;
+  const sites = () => { const S = D().sites; if (bySrc !== S) { byId = new Map(S.map(s => [s.id, s])); bySrc = S; } return S; };
   const site = id => (sites(), byId.get(id));
   const alive = (s, y) => (s.s == null || y >= s.s) && (s.e == null || y <= s.e);
   // A rough region for a hint, from the coordinates (the clue should not give the answer away).
@@ -134,7 +135,7 @@
   // ---------- visiting ----------
   // Being near a site in some year finds it; being there while it stood, or in its last years, adds a star.
   function visit(at, y, r) {
-    const news = [];
+    const news = [], before = D().quests.map(qGot);
     for (const s of sites()) {
       if (s.k === "b") { if (Math.abs(y - s.s) > BATTLE_YEARS || km(at, s) > Math.min(r, R_BATTLE)) continue; }
       else if (km(at, s) > r) continue;
@@ -148,8 +149,13 @@
       }
       if (R.target && R.st && R.target.id === s.id && !R.st.ok) solveRiddle(true);
     }
+    // A visit can move a quest on without a new find (a star with a wider window): say so.
+    D().quests.forEach((q, i) => { const g = qGot(q); if (g > before[i] && g < qNeed(q) && !P.qd[q.id]) news.push([null, "quest", q, g]); });
     if (!news.length) return news;
     save();
+    for (const [, , q, g] of news.filter(x => x[1] === "quest")) toast(`Quest · ${g} of ${qNeed(q)}`, q.n, "One more counted.", () => openCodex("quests"));
+    news.splice(0, news.length, ...news.filter(x => x[1] !== "quest"));
+    if (!news.length) { checkQuests(); if (el && !el.hidden) render(); return news; }
     for (const [s, why] of news.slice(0, 2)) {
       const total = sites().filter(x => x.k === s.k).length, got = sites().filter(x => x.k === s.k && P.f[x.id]).length;
       const go = () => { openCodex("codex"); if (api) api.select(card(s)); };
@@ -258,7 +264,7 @@
   const yesterday = () => { const d = new Date(); d.setDate(d.getDate() - 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
   const hash = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
   const R = { target: null, st: null };
-  const norm = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/^(the |battle of |siege of |sack of )/, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
+  const norm = s => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/^(the |battle of |siege of |sack of )/, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
   const names = s => { const out = new Set([norm(s.n)]); for (const m of s.n.match(/\(([^)]+)\)/g) || []) out.add(norm(m)); out.add(norm(s.n.replace(/\([^)]*\)/g, ""))); for (const p of s.n.split(/,| and /)) if (p.trim().length > 3) out.add(norm(p)); out.delete(""); return [...out]; };
   function lev(a, b) { const m = Array.from({ length: a.length + 1 }, (_, i) => [i]); for (let j = 1; j <= b.length; j++) m[0][j] = j; for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) m[i][j] = Math.min(m[i - 1][j] + 1, m[i][j - 1] + 1, m[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); return m[a.length][b.length]; }
   const matches = (s, g) => { g = norm(g); if (g.length < 3) return false; return names(s).some(n => n === g || (g.length >= 5 && (n.includes(g) || g.includes(n))) || (n.length >= 5 && lev(n, g) <= (n.length >= 9 ? 2 : 1))); };
@@ -296,14 +302,32 @@
 
   // ---------- pointing the way, without giving it away ----------
   // A locked site gets a fuzzy view: a few degrees off, zoomed out enough that you still have to look.
-  function pointMe(s) {
+  function pointMe(s, y) {
     const h = hash(s.id), dx = ((h & 255) / 255 - .5) * 6, dy = (((h >> 8) & 255) / 255 - .5) * 4;
-    const y = s.k === "b" ? s.s : s.s != null && s.e != null ? Math.round((s.s + s.e) / 2) : s.s ?? api.year;
+    if (y == null) y = s.k === "b" ? s.s : s.s != null && s.e != null ? Math.round((s.s + s.e) / 2) : s.s ?? api.year;
     api.setYear(y);
     api.fly({ lon: s.lon + dx, lat: s.lat + dy, span: 22 }, 1300);
     toast("Somewhere around here", `${KIND[s.k][0]} · ${region(s)}`, `${fy(y)}. Zoom in on it or click near it to find it.`);
   }
   const nearestLocked = (list, from) => list.filter(s => !found(s.id)).map(s => ({ s, d: km(from, s) })).sort((a, b) => a.d - b.d).map(o => o.s);
+  // What a quest asks of you, in one line, and the years in which a site counts for it.
+  const qWin = q => q.win || FALL_YEARS;
+  const qHow = q => q.mode === "fall" ? `How: set the year to a site's last ${qWin(q)} years, then click on it or zoom in on it.`
+    : q.mode === "alive" ? "How: set the year to when the place still stood, then click on it or zoom in on it."
+    : q.ids.every(id => (site(id) || {}).k === "b") ? "How: go to the battle in the year it was fought, then click on it or zoom in on it." : "How: click on a site or zoom in on it, in any year.";
+  const qSpan = (q, s) => q.mode === "fall" && s.e != null ? [s.e - qWin(q), s.e] : q.mode === "alive" ? [s.s, s.e] : s.k === "b" ? [s.s - BATTLE_YEARS, s.s + BATTLE_YEARS] : null;
+  const qYear = (q, s) => q.mode === "fall" && s.e != null ? s.e - Math.round(Math.min(qWin(q), FALL_YEARS) / 2) : q.mode === "alive" && s.s != null && s.e != null ? Math.round((s.s + s.e) / 2) : s.k === "b" ? s.s : null;
+  // The next site a quest still needs: the nearest one not yet counted.
+  const qTarget = (q, from) => q.ids.map(site).filter(s => s && !qOk(q, s.id)).map(s => ({ s, d: km(from, s) })).sort((a, b) => a.d - b.d).map(o => o.s)[0];
+  function goQuest(q) {
+    const s = qTarget(q, (api.view && api.view()) || { lon: 30, lat: 35 }); if (!s) return;
+    const y = qYear(q, s);
+    if (!found(s.id)) return pointMe(s, y ?? undefined);
+    // Found already, but not in the right years: go straight there, in a year that counts.
+    if (y != null) api.setYear(y);
+    api.fly({ lon: s.lon, lat: s.lat, span: 6 }, 1200);
+    toast(`Quest · ${q.n}`, s.n, `${fy(y ?? api.year)}. Click on it or zoom in to count it.`);
+  }
 
   // ---------- the tab ----------
   // The count sits in its own element when the chrome gave the tab an icon and a name span (.nm).
@@ -316,7 +340,7 @@
     for (const t of D().trails) { const i = trailNext(t); if (i >= 0 && trailDone(t) > 0) return trailNextHTML(t, i, "Continue your trail"); }
     const v = api && api.view ? api.view() : null, from = v ? v : { lon: 30, lat: 35 };
     const q = D().quests.find(q => !P.qd[q.id] && qGot(q) > 0) || D().quests.find(q => !P.qd[q.id]);
-    if (q) { const s = nearestLocked(q.ids.map(site).filter(Boolean), from)[0]; if (s) return `<div class="next"><span class="k">Quest · ${esc(q.n)} · ${qGot(q)} of ${qNeed(q)}</span><b>${esc(KIND[s.k][0])} somewhere in ${esc(region(s))}</b><p class="note">${esc(q.d)}</p><div class="row"><button class="btn primary" data-a="point" data-id="${esc(s.id)}">Point me there</button></div></div>`; }
+    if (q) { const s = qTarget(q, from); if (s) return `<div class="next"><span class="k">Quest · ${esc(q.n)} · ${qGot(q)} of ${qNeed(q)}</span><b>${found(s.id) ? `${esc(s.n)}, in a year that counts` : `${esc(KIND[s.k][0])} somewhere in ${esc(region(s))}`}</b><p class="note">${esc(qHow(q))}</p><div class="row"><button class="btn primary" data-a="qnext" data-q="${esc(q.id)}">Take me there</button></div></div>`; }
     const t = D().trails.find(t => trailNext(t) >= 0);
     return t ? trailNextHTML(t, trailNext(t), "Start a trail") : `<div class="next"><span class="k">All done</span><b>Every quest and trail is finished.</b></div>`;
   }
@@ -358,9 +382,13 @@
   function renderQuests() {
     const qHTML = q => {
       const g = qGot(q), n = qNeed(q), done = !!P.qd[q.id];
-      const items = q.ids.length <= 8 ? `<ul class="ent">${q.ids.map(site).filter(Boolean).map(s => qOk(q, s.id) ? `<li><button class="nm" data-a="go" data-id="${esc(s.id)}">${esc(s.n)}${stars(s)}</button><span class="y">${esc(when(s))}</span></li>` : `<li class="lock"><button class="nm" data-a="point" data-id="${esc(s.id)}">${found(s.id) ? esc(s.n) : "? ? ?"}</button><span class="y">${esc(region(s))}</span></li>`).join("")}</ul>` : "";
-      return `<div class="quest${done ? " done" : ""}"><div class="hd"><b>${esc(q.n)}</b><span>${done ? "done ✓" : `${Math.min(g, n)} of ${n}`}</span></div><p class="note">${esc(q.d)}</p>${meter(Math.min(g, n), n)}${items}
-        ${!done ? `<div class="row"><button class="lnk" data-a="qnext" data-q="${esc(q.id)}">Point me at the nearest</button></div>` : ""}</div>`;
+      const need = s => { const sp = qSpan(q, s); return sp && sp[0] != null && sp[1] != null ? `counts ${fy(sp[0])} to ${fy(sp[1])}` : ""; };
+      const items = q.ids.length <= 8 ? `<ul class="ent">${q.ids.map(site).filter(Boolean).map(s => qOk(q, s.id) ? `<li><button class="nm" data-a="go" data-id="${esc(s.id)}">${esc(s.n)} ✓${stars(s)}</button><span class="y">${esc(when(s))}</span></li>`
+        : `<li class="lock"><button class="nm" data-a="qsite" data-q="${esc(q.id)}" data-id="${esc(s.id)}">${found(s.id) ? esc(s.n) : "? ? ?"}</button><span class="y">${esc(region(s))}</span>${q.mode !== "found" ? `<span class="sub">${found(s.id) ? "Found, but not yet in the right years: " : ""}${esc(need(s))}</span>` : ""}</li>`).join("")}</ul>` : "";
+      const unit = q.ids.every(id => (site(id) || {}).k === "b") ? "battles" : "sites";
+      return `<div class="quest${done ? " done" : ""}"><div class="hd"><b>${esc(q.n)}</b><span>${done ? "done ✓" : `${Math.min(g, n)} / ${n} ${unit}`}</span></div><p class="note">${esc(q.d)}</p>${meter(Math.min(g, n), n)}
+        ${!done ? `<p class="note"><b>${esc(qHow(q))}</b></p>` : ""}${items}
+        ${!done ? `<div class="row"><button class="btn" data-a="qnext" data-q="${esc(q.id)}">Take me there</button><span class="note">the nearest ${unit === "battles" ? "battle" : "site"} still to do, in a year that counts</span></div>` : ""}</div>`;
     };
     const tHTML = t => {
       const done = P.tr[t.id] || [], nx = trailNext(t);
@@ -390,7 +418,8 @@
     if (a === "mode") { mode = b.dataset.m; render(); }
     else if (a === "go") { const s = site(b.dataset.id); if (s && (found(s.id) || (R.target === s && R.st.ok))) { if (s.k === "b" || s.s != null) api.setYear(s.k === "b" ? s.s : alive(s, api.year) ? api.year : s.s); api.select(card(s)); } }
     else if (a === "point") { const s = site(b.dataset.id); if (s) pointMe(s); }
-    else if (a === "qnext") { const q = D().quests.find(q => q.id === b.dataset.q); const v = api.view() || { lon: 30, lat: 35 }; const s = q && (nearestLocked(q.ids.map(site).filter(Boolean), v)[0] || q.ids.map(site).find(s => s && !qOk(q, s.id))); if (s) found(s.id) && q.mode !== "found" ? hintStar(q, s) : pointMe(s); }
+    else if (a === "qnext") { const q = D().quests.find(q => q.id === b.dataset.q); if (q) goQuest(q); }
+    else if (a === "qsite") { const q = D().quests.find(q => q.id === b.dataset.q), s = site(b.dataset.id); if (q && s) found(s.id) ? hintStar(q, s) : pointMe(s, qYear(q, s) ?? undefined); }
     else if (a === "stop") { const t = D().trails.find(t => t.id === b.dataset.t), st = t && t.steps[+b.dataset.i]; if (st) api.scene({ year: st.year, view: { lon: st.lon, lat: st.lat, span: st.span }, title: st.n }); }
     else if (a === "all") { showAll[b.dataset.k] = !showAll[b.dataset.k]; render(); }
     else if (a === "clue") { R.st.c++; R.st.bad = ""; save(); render(); }
@@ -398,8 +427,8 @@
   }
   // Found already, but the quest wants a star: send the viewer to the right years.
   function hintStar(q, s) {
-    const y = q.mode === "fall" ? s.e - Math.min(q.win || FALL_YEARS, 10) : s.s != null && s.e != null ? Math.round((s.s + s.e) / 2) : s.s;
-    api.setYear(y); api.fly({ lon: s.lon, lat: s.lat, span: 10 }, 1200);
+    const y = qYear(q, s) ?? api.year;
+    api.setYear(y); api.fly({ lon: s.lon, lat: s.lat, span: 6 }, 1200);
     toast(q.mode === "fall" ? "Its last years" : "While it stood", s.n, `${fy(y)}. Zoom in or click on it to earn the star.`);
   }
 
@@ -439,7 +468,7 @@
       for (const t of D().trails) { const i = trailNext(t); if (i >= 0 && trailDone(t) > 0) { const st = t.steps[i]; return { kick: `Your trail · stop ${i + 1} of ${t.steps.length}`, title: st.n, go: () => api.scene({ year: st.year, view: { lon: st.lon, lat: st.lat, span: st.span }, title: st.n }) }; } }
       const v = api.view ? api.view() : null, from = v || { lon: 30, lat: 35 };
       const q = D().quests.find(q => !P.qd[q.id] && qGot(q) > 0);
-      if (q) { const s = nearestLocked(q.ids.map(site).filter(Boolean), from)[0]; if (s) return { kick: `Quest · ${q.n} · ${qGot(q)} of ${qNeed(q)}`, title: `${KIND[s.k][0]} somewhere in ${region(s)}`, go: () => pointMe(s) }; }
+      if (q) { const s = qTarget(q, from); if (s) return { kick: `Quest · ${q.n} · ${qGot(q)} of ${qNeed(q)}`, title: found(s.id) ? `${s.n}, in a year that counts` : `${KIND[s.k][0]} somewhere in ${region(s)}`, go: () => goQuest(q) }; }
       return null;
     },
   });

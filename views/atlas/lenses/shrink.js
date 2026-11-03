@@ -182,7 +182,7 @@
 
   // ---------- the lens ----------
   A.lens({
-    id: "shrink", name: "Travel time", family: "land", color: "#b2462c", on: false,
+    id: "shrink", name: "Travel time", family: "land", color: "#b2462c", on: false, optIn: true,
     guide: ["geography", "economy", "technology"],
     key: [["halo", "Travel-time rings from the chosen city: red within a week, ochre within a month, blue within a season"], ["arrow", "News on its way, with the days it took"], ["diamond", "Wandering centres of the world: cities, trade, ideas"]],
     index: d => "Travel time lens: isochrones from " + d.hubs.map(h => h.n).join(", ") + " by year (7, 30, 90 days); news arrivals: " + d.news.map(n => `${n.n} (${n.y})`).join("; "),

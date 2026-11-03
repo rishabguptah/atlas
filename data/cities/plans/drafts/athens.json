@@ -1,0 +1,2084 @@
+{
+ "id": "athens",
+ "note": "Claude draft for Athens and Piraeus: dates for the OpenStreetMap wall lines, the lost walls (Mycenaean Acropolis wall, Themistoclean circuit, Long Walls and Phaleric Wall, Piraeus walls, Valerian and post-Herulian walls, Wall of Haseki), built-up area by period from the Mycenaean citadel to 1900, gates, the Agora and Roman monuments, the three harbours of Piraeus, the Panathenaic and Sacred Ways, the Phaleron marsh, and the temple-church-mosque history of the best-known monuments. Shapes are reconstructions (conf 2) from the named sources.",
+ "features": [
+  {
+   "k": "wall_dates",
+   "name": "Cononian Walls of Piraeus",
+   "t0": -393,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Piraeus; Wikipedia: Long Walls (rebuilt by Conon 394-391 BCE)",
+   "match": "Κονώνεια Τείχη",
+   "label": "Cononian Walls of Piraeus"
+  },
+  {
+   "k": "wall_dates",
+   "name": "Ancient walls of Piraeus",
+   "t0": -493,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Piraeus; Wikipedia: Themistocles",
+   "match": "Ancient walls of Piraeus",
+   "label": "Ancient walls of Piraeus"
+  },
+  {
+   "k": "wall_dates",
+   "name": "Ancient walls (Themistoclean circuit and Piraeus)",
+   "t0": -479,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971); unnamed OpenStreetMap lines (Philopappos hill, Eetioneia)",
+   "match": "",
+   "label": "Ancient walls (Themistoclean circuit and Piraeus)"
+  },
+  {
+   "k": "wall_dates",
+   "name": "Walls of the Acropolis",
+   "t0": -465,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Acropolis of Athens (Cimonian wall, c. 465 BCE)",
+   "match": "Τείχη της Ακρόπολεως",
+   "label": "Walls of the Acropolis"
+  },
+  {
+   "k": "wall",
+   "name": "Mycenaean wall of the Acropolis (Pelargikon)",
+   "t0": -1250,
+   "t1": -480,
+   "conf": 2,
+   "src": "Wikipedia: Acropolis of Athens; Wikipedia: Pelargikon",
+   "line": [
+    [
+     23.7235,
+     37.9716
+    ],
+    [
+     23.7243,
+     37.9724
+    ],
+    [
+     23.7258,
+     37.9728
+    ],
+    [
+     23.7275,
+     37.9726
+    ],
+    [
+     23.729,
+     37.9719
+    ],
+    [
+     23.7288,
+     37.9711
+    ],
+    [
+     23.727,
+     37.9706
+    ],
+    [
+     23.725,
+     37.9707
+    ],
+    [
+     23.7238,
+     37.9711
+    ],
+    [
+     23.7235,
+     37.9716
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Themistoclean Wall",
+   "t0": -479,
+   "t1": 580,
+   "conf": 2,
+   "src": "Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "line": [
+    [
+     23.7185,
+     37.9785
+    ],
+    [
+     23.724,
+     37.981
+    ],
+    [
+     23.728,
+     37.9806
+    ],
+    [
+     23.7325,
+     37.979
+    ],
+    [
+     23.734,
+     37.977
+    ],
+    [
+     23.733,
+     37.9725
+    ],
+    [
+     23.7312,
+     37.9692
+    ],
+    [
+     23.7295,
+     37.966
+    ],
+    [
+     23.7245,
+     37.9645
+    ],
+    [
+     23.719,
+     37.966
+    ],
+    [
+     23.715,
+     37.97
+    ],
+    [
+     23.714,
+     37.974
+    ],
+    [
+     23.7158,
+     37.9765
+    ],
+    [
+     23.7185,
+     37.9785
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "North Long Wall",
+   "t0": -458,
+   "t1": -404,
+   "conf": 2,
+   "src": "Wikipedia: Long Walls; Conwell, Connecting a City to the Sea (2008)",
+   "line": [
+    [
+     23.714,
+     37.974
+    ],
+    [
+     23.695,
+     37.9682
+    ],
+    [
+     23.67,
+     37.962
+    ],
+    [
+     23.643,
+     37.9558
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "North Long Wall (rebuilt by Conon)",
+   "t0": -393,
+   "t1": -86,
+   "conf": 2,
+   "src": "Wikipedia: Long Walls; Conwell, Connecting a City to the Sea (2008)",
+   "line": [
+    [
+     23.714,
+     37.974
+    ],
+    [
+     23.695,
+     37.9682
+    ],
+    [
+     23.67,
+     37.962
+    ],
+    [
+     23.643,
+     37.9558
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Middle (South) Long Wall",
+   "t0": -445,
+   "t1": -404,
+   "conf": 2,
+   "src": "Wikipedia: Long Walls; Conwell, Connecting a City to the Sea (2008)",
+   "line": [
+    [
+     23.7155,
+     37.9695
+    ],
+    [
+     23.6955,
+     37.9662
+    ],
+    [
+     23.6705,
+     37.9603
+    ],
+    [
+     23.647,
+     37.9535
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Middle Long Wall (rebuilt by Conon)",
+   "t0": -393,
+   "t1": -86,
+   "conf": 2,
+   "src": "Wikipedia: Long Walls; Conwell, Connecting a City to the Sea (2008)",
+   "line": [
+    [
+     23.7155,
+     37.9695
+    ],
+    [
+     23.6955,
+     37.9662
+    ],
+    [
+     23.6705,
+     37.9603
+    ],
+    [
+     23.647,
+     37.9535
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Phaleric Wall",
+   "t0": -458,
+   "t1": -404,
+   "conf": 2,
+   "src": "Wikipedia: Long Walls; Conwell, Connecting a City to the Sea (2008)",
+   "line": [
+    [
+     23.719,
+     37.966
+    ],
+    [
+     23.71,
+     37.958
+    ],
+    [
+     23.7,
+     37.948
+    ],
+    [
+     23.693,
+     37.934
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Themistoclean walls of Piraeus",
+   "t0": -493,
+   "t1": -404,
+   "conf": 2,
+   "src": "Wikipedia: Piraeus; Wikipedia: Themistocles; Garland, The Piraeus (1987)",
+   "line": [
+    [
+     23.618,
+     37.947
+    ],
+    [
+     23.6245,
+     37.953
+    ],
+    [
+     23.633,
+     37.9558
+    ],
+    [
+     23.643,
+     37.9558
+    ],
+    [
+     23.648,
+     37.953
+    ],
+    [
+     23.656,
+     37.948
+    ],
+    [
+     23.662,
+     37.943
+    ],
+    [
+     23.6625,
+     37.939
+    ],
+    [
+     23.66,
+     37.9368
+    ],
+    [
+     23.652,
+     37.934
+    ],
+    [
+     23.645,
+     37.931
+    ],
+    [
+     23.635,
+     37.9282
+    ],
+    [
+     23.628,
+     37.929
+    ],
+    [
+     23.624,
+     37.934
+    ],
+    [
+     23.6255,
+     37.9395
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Walls of Piraeus (rebuilt by Conon)",
+   "t0": -393,
+   "t1": -86,
+   "conf": 2,
+   "src": "Wikipedia: Piraeus; Garland, The Piraeus (1987)",
+   "line": [
+    [
+     23.618,
+     37.947
+    ],
+    [
+     23.6245,
+     37.953
+    ],
+    [
+     23.633,
+     37.9558
+    ],
+    [
+     23.643,
+     37.9558
+    ],
+    [
+     23.648,
+     37.953
+    ],
+    [
+     23.656,
+     37.948
+    ],
+    [
+     23.662,
+     37.943
+    ],
+    [
+     23.6625,
+     37.939
+    ],
+    [
+     23.66,
+     37.9368
+    ],
+    [
+     23.652,
+     37.934
+    ],
+    [
+     23.645,
+     37.931
+    ],
+    [
+     23.635,
+     37.9282
+    ],
+    [
+     23.628,
+     37.929
+    ],
+    [
+     23.624,
+     37.934
+    ],
+    [
+     23.6255,
+     37.9395
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Valerian Wall",
+   "t0": 253,
+   "t1": 580,
+   "conf": 2,
+   "src": "Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "line": [
+    [
+     23.734,
+     37.977
+    ],
+    [
+     23.7385,
+     37.9742
+    ],
+    [
+     23.739,
+     37.97
+    ],
+    [
+     23.737,
+     37.967
+    ],
+    [
+     23.7325,
+     37.9652
+    ],
+    [
+     23.7295,
+     37.966
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Post-Herulian Wall",
+   "t0": 280,
+   "t1": 1200,
+   "conf": 2,
+   "src": "Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971); Frantz, The Athenian Agora XXIV (1988)",
+   "line": [
+    [
+     23.7245,
+     37.9722
+    ],
+    [
+     23.7238,
+     37.974
+    ],
+    [
+     23.7242,
+     37.9756
+    ],
+    [
+     23.7262,
+     37.9766
+    ],
+    [
+     23.7285,
+     37.9758
+    ],
+    [
+     23.729,
+     37.9738
+    ],
+    [
+     23.7282,
+     37.9722
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Wall of Haseki",
+   "t0": 1778,
+   "t1": 1835,
+   "conf": 2,
+   "src": "Wikipedia: Hadji Ali Haseki; Wikipedia: Ottoman Athens",
+   "line": [
+    [
+     23.718,
+     37.9775
+    ],
+    [
+     23.7255,
+     37.98
+    ],
+    [
+     23.731,
+     37.9792
+    ],
+    [
+     23.735,
+     37.9765
+    ],
+    [
+     23.7372,
+     37.972
+    ],
+    [
+     23.7348,
+     37.968
+    ],
+    [
+     23.73,
+     37.966
+    ],
+    [
+     23.725,
+     37.967
+    ],
+    [
+     23.7205,
+     37.969
+    ],
+    [
+     23.718,
+     37.972
+    ],
+    [
+     23.717,
+     37.975
+    ],
+    [
+     23.718,
+     37.9775
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Mycenaean citadel of Athens",
+   "t0": -1400,
+   "t1": -1101,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "area": [
+    [
+     23.723,
+     37.9718
+    ],
+    [
+     23.7245,
+     37.9735
+    ],
+    [
+     23.7262,
+     37.974
+    ],
+    [
+     23.728,
+     37.9738
+    ],
+    [
+     23.73,
+     37.9725
+    ],
+    [
+     23.7295,
+     37.9705
+    ],
+    [
+     23.7265,
+     37.9698
+    ],
+    [
+     23.7238,
+     37.9705
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Geometric and early Archaic Athens",
+   "t0": -1100,
+   "t1": -601,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "area": [
+    [
+     23.7195,
+     37.9745
+    ],
+    [
+     23.723,
+     37.9775
+    ],
+    [
+     23.728,
+     37.9775
+    ],
+    [
+     23.7315,
+     37.9745
+    ],
+    [
+     23.731,
+     37.97
+    ],
+    [
+     23.727,
+     37.968
+    ],
+    [
+     23.722,
+     37.969
+    ],
+    [
+     23.7195,
+     37.9715
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Archaic Athens (Solon and the Peisistratids)",
+   "t0": -600,
+   "t1": -480,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "area": [
+    [
+     23.718,
+     37.976
+    ],
+    [
+     23.722,
+     37.979
+    ],
+    [
+     23.729,
+     37.979
+    ],
+    [
+     23.733,
+     37.976
+    ],
+    [
+     23.7335,
+     37.9705
+    ],
+    [
+     23.729,
+     37.967
+    ],
+    [
+     23.722,
+     37.967
+    ],
+    [
+     23.7175,
+     37.9715
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Classical and Hellenistic Athens",
+   "t0": -479,
+   "t1": -87,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971); Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "area": [
+    [
+     23.7185,
+     37.9785
+    ],
+    [
+     23.724,
+     37.981
+    ],
+    [
+     23.728,
+     37.9806
+    ],
+    [
+     23.7325,
+     37.979
+    ],
+    [
+     23.734,
+     37.977
+    ],
+    [
+     23.733,
+     37.9725
+    ],
+    [
+     23.7312,
+     37.9692
+    ],
+    [
+     23.7295,
+     37.966
+    ],
+    [
+     23.7245,
+     37.9645
+    ],
+    [
+     23.719,
+     37.966
+    ],
+    [
+     23.715,
+     37.97
+    ],
+    [
+     23.714,
+     37.974
+    ],
+    [
+     23.7158,
+     37.9765
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Roman Athens (with Hadrianopolis)",
+   "t0": -86,
+   "t1": 266,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971); Wikipedia: Arch of Hadrian (Athens)",
+   "area": [
+    [
+     23.7185,
+     37.9785
+    ],
+    [
+     23.724,
+     37.981
+    ],
+    [
+     23.728,
+     37.9806
+    ],
+    [
+     23.7325,
+     37.979
+    ],
+    [
+     23.734,
+     37.977
+    ],
+    [
+     23.7385,
+     37.9742
+    ],
+    [
+     23.739,
+     37.97
+    ],
+    [
+     23.737,
+     37.967
+    ],
+    [
+     23.7325,
+     37.9652
+    ],
+    [
+     23.7295,
+     37.966
+    ],
+    [
+     23.7245,
+     37.9645
+    ],
+    [
+     23.719,
+     37.966
+    ],
+    [
+     23.715,
+     37.97
+    ],
+    [
+     23.714,
+     37.974
+    ],
+    [
+     23.7158,
+     37.9765
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Late antique Athens (after the Herulian sack)",
+   "t0": 267,
+   "t1": 579,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971); Wikipedia: Herulian sack of Athens",
+   "area": [
+    [
+     23.72,
+     37.975
+    ],
+    [
+     23.724,
+     37.9785
+    ],
+    [
+     23.73,
+     37.978
+    ],
+    [
+     23.734,
+     37.975
+    ],
+    [
+     23.7335,
+     37.97
+    ],
+    [
+     23.728,
+     37.968
+    ],
+    [
+     23.723,
+     37.969
+    ],
+    [
+     23.72,
+     37.9715
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Byzantine Athens",
+   "t0": 580,
+   "t1": 1203,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971); Wikipedia: Byzantine Athens",
+   "area": [
+    [
+     23.7215,
+     37.975
+    ],
+    [
+     23.7245,
+     37.978
+    ],
+    [
+     23.7295,
+     37.9778
+    ],
+    [
+     23.733,
+     37.9752
+    ],
+    [
+     23.7325,
+     37.9712
+    ],
+    [
+     23.7285,
+     37.9692
+    ],
+    [
+     23.724,
+     37.97
+    ],
+    [
+     23.7215,
+     37.972
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Frankish Athens (Duchy of Athens)",
+   "t0": 1204,
+   "t1": 1455,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971); Wikipedia: Duchy of Athens",
+   "area": [
+    [
+     23.722,
+     37.9748
+    ],
+    [
+     23.7248,
+     37.9775
+    ],
+    [
+     23.7292,
+     37.9772
+    ],
+    [
+     23.7322,
+     37.975
+    ],
+    [
+     23.7318,
+     37.9715
+    ],
+    [
+     23.7282,
+     37.9695
+    ],
+    [
+     23.7242,
+     37.9702
+    ],
+    [
+     23.7222,
+     37.9722
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ottoman Athens",
+   "t0": 1456,
+   "t1": 1833,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971); Wikipedia: Ottoman Athens",
+   "area": [
+    [
+     23.7185,
+     37.9772
+    ],
+    [
+     23.7255,
+     37.9796
+    ],
+    [
+     23.7308,
+     37.9788
+    ],
+    [
+     23.7345,
+     37.9762
+    ],
+    [
+     23.7365,
+     37.9722
+    ],
+    [
+     23.734,
+     37.9685
+    ],
+    [
+     23.7298,
+     37.9668
+    ],
+    [
+     23.725,
+     37.9676
+    ],
+    [
+     23.7208,
+     37.9694
+    ],
+    [
+     23.7185,
+     37.9722
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Athens, capital of Greece",
+   "t0": 1834,
+   "t1": 1900,
+   "conf": 2,
+   "src": "Wikipedia: History of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971); Wikipedia: Kleanthis-Schaubert plan? ; Wikipedia: Athens (19th century)",
+   "area": [
+    [
+     23.714,
+     37.979
+    ],
+    [
+     23.718,
+     37.987
+    ],
+    [
+     23.726,
+     37.993
+    ],
+    [
+     23.733,
+     37.995
+    ],
+    [
+     23.742,
+     37.989
+    ],
+    [
+     23.748,
+     37.98
+    ],
+    [
+     23.748,
+     37.973
+    ],
+    [
+     23.742,
+     37.966
+    ],
+    [
+     23.733,
+     37.962
+    ],
+    [
+     23.723,
+     37.962
+    ],
+    [
+     23.716,
+     37.968
+    ],
+    [
+     23.713,
+     37.974
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Piraeus (Hippodamian town)",
+   "t0": -479,
+   "t1": -87,
+   "conf": 2,
+   "src": "Wikipedia: Piraeus; Wikipedia: Hippodamus of Miletus",
+   "area": [
+    [
+     23.625,
+     37.944
+    ],
+    [
+     23.633,
+     37.954
+    ],
+    [
+     23.643,
+     37.955
+    ],
+    [
+     23.655,
+     37.948
+    ],
+    [
+     23.66,
+     37.94
+    ],
+    [
+     23.65,
+     37.938
+    ],
+    [
+     23.642,
+     37.94
+    ],
+    [
+     23.634,
+     37.942
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Piraeus (refounded port town)",
+   "t0": 1835,
+   "t1": 1900,
+   "conf": 2,
+   "src": "Wikipedia: Piraeus",
+   "area": [
+    [
+     23.628,
+     37.945
+    ],
+    [
+     23.635,
+     37.952
+    ],
+    [
+     23.645,
+     37.953
+    ],
+    [
+     23.655,
+     37.947
+    ],
+    [
+     23.658,
+     37.94
+    ],
+    [
+     23.65,
+     37.937
+    ],
+    [
+     23.642,
+     37.939
+    ],
+    [
+     23.635,
+     37.942
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Dipylon Gate",
+   "t0": -478,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Dipylon; Wikipedia: Kerameikos",
+   "at": [
+    23.7181,
+    37.9785
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Sacred Gate",
+   "t0": -478,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Kerameikos",
+   "at": [
+    23.7176,
+    37.9778
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Piraeus Gate",
+   "t0": -478,
+   "t1": 580,
+   "conf": 2,
+   "src": "Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "at": [
+    23.715,
+    37.9762
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Acharnian Gate",
+   "t0": -478,
+   "t1": 580,
+   "conf": 2,
+   "src": "Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "at": [
+    23.728,
+    37.9805
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Diochares Gate",
+   "t0": -478,
+   "t1": 580,
+   "conf": 2,
+   "src": "Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "at": [
+    23.7338,
+    37.9776
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Itonian Gate",
+   "t0": -478,
+   "t1": 580,
+   "conf": 2,
+   "src": "Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "at": [
+    23.73,
+    37.9658
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Melitides Gate",
+   "t0": -478,
+   "t1": 580,
+   "conf": 2,
+   "src": "Wikipedia: Walls of Athens; Travlos, Pictorial Dictionary of Ancient Athens (1971)",
+   "at": [
+    23.7175,
+    37.9678
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Propylaea",
+   "t0": -437,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Propylaea",
+   "at": [
+    23.725,
+    37.9715
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Ancient Agora of Athens",
+   "t0": -600,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Ancient Agora of Athens",
+   "at": [
+    23.7225,
+    37.975
+   ],
+   "names": [
+    [
+     -600,
+     266,
+     "Agora"
+    ],
+    [
+     267,
+     1930,
+     "Agora (built over; Vlassarou quarter)"
+    ],
+    [
+     1931,
+     null,
+     "Ancient Agora (excavated)"
+    ]
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Stoa Poikile",
+   "t0": -460,
+   "t1": 400,
+   "conf": 2,
+   "src": "Wikipedia: Stoa Poikile",
+   "at": [
+    23.7233,
+    37.9762
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Stoa of Attalos",
+   "t0": -150,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Stoa of Attalos",
+   "at": [
+    23.7243,
+    37.975
+   ],
+   "names": [
+    [
+     -150,
+     266,
+     "Stoa of Attalos"
+    ],
+    [
+     267,
+     1955,
+     "Stoa of Attalos (ruin)"
+    ],
+    [
+     1956,
+     null,
+     "Stoa of Attalos (rebuilt museum)"
+    ]
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Pnyx",
+   "t0": -507,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Pnyx",
+   "at": [
+    23.7194,
+    37.9717
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Areopagus",
+   "t0": -600,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Areopagus",
+   "at": [
+    23.7235,
+    37.9725
+   ]
+  },
+  {
+   "k": "tomb",
+   "name": "Kerameikos cemetery",
+   "t0": -1100,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Kerameikos",
+   "at": [
+    23.7182,
+    37.9782
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Roman Agora",
+   "t0": -19,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Roman Agora",
+   "at": [
+    23.7265,
+    37.9745
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Tower of the Winds",
+   "t0": -50,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Tower of the Winds",
+   "at": [
+    23.72675,
+    37.9744
+   ],
+   "names": [
+    [
+     -50,
+     1755,
+     "Tower of the Winds (Horologion of Andronikos)"
+    ],
+    [
+     1756,
+     1833,
+     "Tower of the Winds (dervish tekke)"
+    ],
+    [
+     1834,
+     null,
+     "Tower of the Winds"
+    ]
+   ]
+  },
+  {
+   "k": "school",
+   "name": "Library of Hadrian",
+   "t0": 132,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Hadrian's Library",
+   "at": [
+    23.7259,
+    37.9758
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Temple of Olympian Zeus",
+   "t0": -515,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Temple of Olympian Zeus, Athens",
+   "at": [
+    23.733,
+    37.9693
+   ],
+   "names": [
+    [
+     -515,
+     130,
+     "Olympieion (unfinished)"
+    ],
+    [
+     131,
+     266,
+     "Temple of Olympian Zeus"
+    ],
+    [
+     267,
+     null,
+     "Temple of Olympian Zeus (ruin)"
+    ]
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Odeon of Herodes Atticus",
+   "t0": 161,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Odeon of Herodes Atticus",
+   "at": [
+    23.72452,
+    37.97084
+   ]
+  },
+  {
+   "k": "mosque",
+   "name": "Fethiye Mosque",
+   "t0": 1668,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Fethiye Mosque, Athens",
+   "at": [
+    23.726,
+    37.9747
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Kantharos (Great Harbour of Piraeus)",
+   "t0": -493,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Port of Piraeus; Garland, The Piraeus (1987)",
+   "at": [
+    23.6365,
+    37.943
+   ],
+   "names": [
+    [
+     -493,
+     -86,
+     "Kantharos (Great Harbour of Piraeus)"
+    ],
+    [
+     -85,
+     1834,
+     "Porto Leone"
+    ],
+    [
+     1835,
+     null,
+     "Port of Piraeus"
+    ]
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Zea Harbour (ship sheds)",
+   "t0": -493,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Pasalimani; Garland, The Piraeus (1987)",
+   "at": [
+    23.648,
+    37.9365
+   ],
+   "names": [
+    [
+     -493,
+     -86,
+     "Zea (naval harbour, ship sheds)"
+    ],
+    [
+     -85,
+     null,
+     "Pasalimani"
+    ]
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Munichia Harbour",
+   "t0": -493,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Mikrolimano; Garland, The Piraeus (1987)",
+   "at": [
+    23.6585,
+    37.9375
+   ],
+   "names": [
+    [
+     -493,
+     -86,
+     "Munichia (naval harbour)"
+    ],
+    [
+     -85,
+     null,
+     "Mikrolimano (Tourkolimano)"
+    ]
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Phaleron (old harbour of Athens)",
+   "t0": -700,
+   "t1": -480,
+   "conf": 2,
+   "src": "Wikipedia: Phalerum",
+   "at": [
+    23.69,
+    37.933
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Emporion of Piraeus",
+   "t0": -450,
+   "t1": -86,
+   "conf": 2,
+   "src": "Wikipedia: Piraeus; Garland, The Piraeus (1987)",
+   "at": [
+    23.636,
+    37.9465
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Panathenaic Way",
+   "t0": -566,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Panathenaic Way",
+   "line": [
+    [
+     23.7181,
+     37.9785
+    ],
+    [
+     23.7205,
+     37.9772
+    ],
+    [
+     23.723,
+     37.9758
+    ],
+    [
+     23.7243,
+     37.974
+    ],
+    [
+     23.7245,
+     37.9725
+    ],
+    [
+     23.725,
+     37.9715
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Sacred Way to Eleusis",
+   "t0": -600,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Sacred Way",
+   "line": [
+    [
+     23.7176,
+     37.9778
+    ],
+    [
+     23.705,
+     37.983
+    ],
+    [
+     23.685,
+     37.992
+    ],
+    [
+     23.66,
+     38.003
+    ],
+    [
+     23.6358,
+     38.0125
+    ]
+   ],
+   "names": [
+    [
+     -600,
+     1833,
+     "Sacred Way to Eleusis"
+    ],
+    [
+     1834,
+     null,
+     "Iera Odos"
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Hamaxitos (road between the Long Walls)",
+   "t0": -458,
+   "t1": -86,
+   "conf": 2,
+   "src": "Wikipedia: Long Walls; Conwell, Connecting a City to the Sea (2008)",
+   "line": [
+    [
+     23.7148,
+     37.9717
+    ],
+    [
+     23.6952,
+     37.9672
+    ],
+    [
+     23.6702,
+     37.9611
+    ],
+    [
+     23.645,
+     37.9545
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Halipedon marshes (Phaleron)",
+   "t0": -1400,
+   "t1": 1925,
+   "conf": 2,
+   "src": "Wikipedia: Phalerum; Wikipedia: Moschato",
+   "area": [
+    [
+     23.662,
+     37.946
+    ],
+    [
+     23.67,
+     37.95
+    ],
+    [
+     23.68,
+     37.949
+    ],
+    [
+     23.687,
+     37.944
+    ],
+    [
+     23.685,
+     37.9425
+    ],
+    [
+     23.676,
+     37.9425
+    ],
+    [
+     23.67,
+     37.9428
+    ],
+    [
+     23.664,
+     37.9435
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Parthenon (ruin)",
+   "t0": -447,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Parthenon",
+   "wd": "Q10288",
+   "names": [
+    [
+     -447,
+     599,
+     "Parthenon (Temple of Athena Parthenos)"
+    ],
+    [
+     600,
+     1203,
+     "Church of the Theotokos Atheniotissa"
+    ],
+    [
+     1204,
+     1459,
+     "Notre-Dame d'Athènes (Latin cathedral)"
+    ],
+    [
+     1460,
+     1687,
+     "Parthenon Mosque"
+    ],
+    [
+     1688,
+     null,
+     "Parthenon (ruin)"
+    ]
+   ],
+   "kinds": [
+    [
+     null,
+     599,
+     "temple"
+    ],
+    [
+     600,
+     1459,
+     "church"
+    ],
+    [
+     1460,
+     1687,
+     "mosque"
+    ],
+    [
+     1688,
+     null,
+     "temple"
+    ]
+   ],
+   "fix_dates": true
+  },
+  {
+   "k": "rename",
+   "name": "Small mosque in the Parthenon ruins",
+   "t0": 1460,
+   "t1": 1843,
+   "conf": 2,
+   "src": "Wikipedia: Parthenon (Ottoman mosque)",
+   "wd": "Q111632444",
+   "names": [
+    [
+     1460,
+     1687,
+     "Parthenon Mosque"
+    ],
+    [
+     1715,
+     1843,
+     "Small mosque in the Parthenon ruins"
+    ]
+   ],
+   "fix_dates": true
+  },
+  {
+   "k": "rename",
+   "name": "Erechtheion",
+   "t0": -421,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Erechtheion",
+   "wd": "Q242741",
+   "names": [
+    [
+     -421,
+     599,
+     "Erechtheion"
+    ],
+    [
+     600,
+     1203,
+     "Erechtheion (church)"
+    ],
+    [
+     1204,
+     1457,
+     "Erechtheion (palace of the Frankish dukes)"
+    ],
+    [
+     1458,
+     1833,
+     "Erechtheion (harem of the Ottoman garrison commander)"
+    ],
+    [
+     1834,
+     null,
+     "Erechtheion"
+    ]
+   ],
+   "kinds": [
+    [
+     null,
+     599,
+     "temple"
+    ],
+    [
+     600,
+     1203,
+     "church"
+    ],
+    [
+     1204,
+     1833,
+     "house"
+    ],
+    [
+     1834,
+     null,
+     "temple"
+    ]
+   ],
+   "fix_dates": true
+  },
+  {
+   "k": "rename",
+   "name": "Temple of Hephaestus",
+   "t0": -449,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Temple of Hephaestus",
+   "wd": "Q756824",
+   "names": [
+    [
+     -449,
+     699,
+     "Temple of Hephaestus"
+    ],
+    [
+     700,
+     1833,
+     "Church of St George Akamates"
+    ],
+    [
+     1834,
+     1934,
+     "Theseion (national museum)"
+    ],
+    [
+     1935,
+     null,
+     "Temple of Hephaestus"
+    ]
+   ],
+   "kinds": [
+    [
+     null,
+     699,
+     "temple"
+    ],
+    [
+     700,
+     1833,
+     "church"
+    ],
+    [
+     1834,
+     null,
+     "temple"
+    ]
+   ],
+   "fix_dates": true
+  },
+  {
+   "k": "rename",
+   "name": "Temple of Athena Nike (re-erected)",
+   "t0": -426,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Temple of Athena Nike",
+   "wd": "Q384813",
+   "names": [
+    [
+     -426,
+     1685,
+     "Temple of Athena Nike"
+    ],
+    [
+     1686,
+     1834,
+     "Temple of Athena Nike (dismantled into an Ottoman bastion)"
+    ],
+    [
+     1835,
+     null,
+     "Temple of Athena Nike (re-erected)"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Tzistarakis Mosque (museum)",
+   "t0": 1759,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Tzistarakis Mosque",
+   "wd": "Q15958739",
+   "names": [
+    [
+     1759,
+     1833,
+     "Tzistarakis Mosque"
+    ],
+    [
+     1834,
+     1917,
+     "Tzistarakis Mosque (prison, barracks, store)"
+    ],
+    [
+     1918,
+     null,
+     "Tzistarakis Mosque (museum)"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Hellenic Parliament (Old Royal Palace)",
+   "t0": 1836,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Old Royal Palace",
+   "wd": "Q7084890",
+   "names": [
+    [
+     1836,
+     1934,
+     "Royal Palace"
+    ],
+    [
+     1935,
+     null,
+     "Hellenic Parliament (Old Royal Palace)"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Daphni Monastery",
+   "t0": 1100,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Daphni Monastery",
+   "wd": "Q500444",
+   "names": [
+    [
+     1100,
+     1206,
+     "Daphni Monastery"
+    ],
+    [
+     1207,
+     1458,
+     "Daphni Abbey (Cistercian)"
+    ],
+    [
+     1459,
+     null,
+     "Daphni Monastery"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Panathenaic Stadium (rebuilt for the 1896 Olympics)",
+   "t0": -329,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Panathenaic Stadium",
+   "wd": "Q208811",
+   "names": [
+    [
+     -329,
+     1868,
+     "Panathenaic Stadium"
+    ],
+    [
+     1869,
+     1895,
+     "Panathenaic Stadium (excavated)"
+    ],
+    [
+     1896,
+     null,
+     "Panathenaic Stadium (rebuilt for the 1896 Olympics)"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Choragic Monument of Lysicrates",
+   "t0": -335,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Choragic Monument of Lysicrates",
+   "wd": "Q1160691",
+   "names": [
+    [
+     -335,
+     1668,
+     "Choragic Monument of Lysicrates"
+    ],
+    [
+     1669,
+     1821,
+     "Lantern of Diogenes (in the Capuchin monastery)"
+    ],
+    [
+     1822,
+     null,
+     "Choragic Monument of Lysicrates"
+    ]
+   ],
+   "fix_dates": true
+  },
+  {
+   "k": "rename",
+   "name": "Arch of Hadrian",
+   "t0": 131,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Arch of Hadrian (Athens)",
+   "wd": "Q1567576",
+   "names": [
+    [
+     131,
+     1777,
+     "Arch of Hadrian"
+    ],
+    [
+     1778,
+     1834,
+     "Arch of Hadrian (gate in the Wall of Haseki)"
+    ],
+    [
+     1835,
+     null,
+     "Arch of Hadrian"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "National Historical Museum (Old Parliament)",
+   "t0": 1875,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Old Parliament House, Athens",
+   "wd": "Q19363322",
+   "names": [
+    [
+     1875,
+     1931,
+     "Parliament House"
+    ],
+    [
+     1932,
+     1959,
+     "Old Parliament House"
+    ],
+    [
+     1960,
+     null,
+     "National Historical Museum (Old Parliament)"
+    ]
+   ]
+  }
+ ]
+}

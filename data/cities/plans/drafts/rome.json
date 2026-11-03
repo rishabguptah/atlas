@@ -1,0 +1,2530 @@
+{
+ "id": "rome",
+ "note": "Claude draft for Rome: reconstructed walls (Servian circuit, Leonine Wall), built-up extents from the regal city to 1900, lost and relocated landmarks, main roads, two lost water bodies and name/kind changes. Shapes are approximate (conf 2) or estimated (conf 1); positions anchored on Wikidata coordinates and the topography of the hills and the Tiber bend. Note: the 33 OpenStreetMap wall lines named \"Porta Asinaria\" are unnamed walls of mixed date (Vatican, Janiculum, Aurelian) that picked up that name in the plan build, so they are left undated here.",
+ "features": [
+  {
+   "k": "wall_dates",
+   "match": "Servian walls",
+   "name": "Servian Wall",
+   "label": "Servian Wall",
+   "t0": -378,
+   "t1": null,
+   "conf": 1,
+   "src": "Servian Wall"
+  },
+  {
+   "k": "wall_dates",
+   "match": "Mura gianicolensi",
+   "name": "Janiculum Walls of Urban VIII",
+   "label": "Janiculum Walls of Urban VIII",
+   "t0": 1641,
+   "t1": null,
+   "conf": 1,
+   "src": "Janiculum"
+  },
+  {
+   "k": "wall",
+   "name": "Servian Wall (reconstructed circuit)",
+   "t0": -378,
+   "t1": -27,
+   "conf": 2,
+   "src": "Servian Wall",
+   "line": [
+    [
+     12.4805,
+     41.8918
+    ],
+    [
+     12.483,
+     41.8953
+    ],
+    [
+     12.485,
+     41.897
+    ],
+    [
+     12.4862,
+     41.8995
+    ],
+    [
+     12.489,
+     41.9015
+    ],
+    [
+     12.4935,
+     41.904
+    ],
+    [
+     12.4986,
+     41.9058
+    ],
+    [
+     12.5005,
+     41.904
+    ],
+    [
+     12.5011,
+     41.9025
+    ],
+    [
+     12.5015,
+     41.899
+    ],
+    [
+     12.5013,
+     41.8958
+    ],
+    [
+     12.499,
+     41.892
+    ],
+    [
+     12.4962,
+     41.8885
+    ],
+    [
+     12.4952,
+     41.8857
+    ],
+    [
+     12.4905,
+     41.8839
+    ],
+    [
+     12.4868,
+     41.8805
+    ],
+    [
+     12.4836,
+     41.8801
+    ],
+    [
+     12.4802,
+     41.8808
+    ],
+    [
+     12.479,
+     41.884
+    ],
+    [
+     12.4795,
+     41.8866
+    ],
+    [
+     12.479,
+     41.8895
+    ],
+    [
+     12.4805,
+     41.8918
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Leonine Wall",
+   "t0": 852,
+   "t1": 1564,
+   "conf": 2,
+   "src": "Leonine Wall",
+   "line": [
+    [
+     12.466,
+     41.903
+    ],
+    [
+     12.462,
+     41.9033
+    ],
+    [
+     12.458,
+     41.9035
+    ],
+    [
+     12.456,
+     41.9035
+    ],
+    [
+     12.4545,
+     41.9048
+    ],
+    [
+     12.453,
+     41.9056
+    ],
+    [
+     12.4515,
+     41.9045
+    ],
+    [
+     12.4515,
+     41.9025
+    ],
+    [
+     12.453,
+     41.9008
+    ],
+    [
+     12.4555,
+     41.8999
+    ],
+    [
+     12.459,
+     41.9
+    ],
+    [
+     12.4616,
+     41.9003
+    ],
+    [
+     12.464,
+     41.9005
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Regal Rome (Palatine, Forum, Capitol)",
+   "t0": -753,
+   "t1": -509,
+   "conf": 2,
+   "src": "Coarelli, Rome and Environs: An Archaeological Guide (2007)",
+   "area": [
+    [
+     12.48,
+     41.8915
+    ],
+    [
+     12.4815,
+     41.8945
+    ],
+    [
+     12.484,
+     41.896
+    ],
+    [
+     12.4865,
+     41.8975
+    ],
+    [
+     12.4895,
+     41.8985
+    ],
+    [
+     12.493,
+     41.8975
+    ],
+    [
+     12.4965,
+     41.896
+    ],
+    [
+     12.4975,
+     41.8935
+    ],
+    [
+     12.496,
+     41.8905
+    ],
+    [
+     12.4935,
+     41.8885
+    ],
+    [
+     12.4915,
+     41.8865
+    ],
+    [
+     12.488,
+     41.8855
+    ],
+    [
+     12.485,
+     41.886
+    ],
+    [
+     12.482,
+     41.887
+    ],
+    [
+     12.4795,
+     41.8885
+    ],
+    [
+     12.479,
+     41.89
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Republican Rome (within the Servian Wall, Forum Boarium, southern Campus Martius)",
+   "t0": -509,
+   "t1": -27,
+   "conf": 2,
+   "src": "Coarelli, Rome and Environs: An Archaeological Guide (2007)",
+   "area": [
+    [
+     12.476,
+     41.893
+    ],
+    [
+     12.473,
+     41.895
+    ],
+    [
+     12.476,
+     41.8975
+    ],
+    [
+     12.481,
+     41.8965
+    ],
+    [
+     12.485,
+     41.899
+    ],
+    [
+     12.488,
+     41.9025
+    ],
+    [
+     12.493,
+     41.9045
+    ],
+    [
+     12.498,
+     41.906
+    ],
+    [
+     12.5015,
+     41.903
+    ],
+    [
+     12.502,
+     41.899
+    ],
+    [
+     12.5015,
+     41.895
+    ],
+    [
+     12.499,
+     41.891
+    ],
+    [
+     12.4965,
+     41.887
+    ],
+    [
+     12.492,
+     41.8835
+    ],
+    [
+     12.488,
+     41.8795
+    ],
+    [
+     12.483,
+     41.8785
+    ],
+    [
+     12.479,
+     41.88
+    ],
+    [
+     12.4775,
+     41.8835
+    ],
+    [
+     12.4785,
+     41.8875
+    ],
+    [
+     12.478,
+     41.89
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Augustan and High Imperial Rome",
+   "t0": -27,
+   "t1": 200,
+   "conf": 2,
+   "src": "Coarelli, Rome and Environs: An Archaeological Guide (2007)",
+   "area": [
+    [
+     12.4745,
+     41.907
+    ],
+    [
+     12.48,
+     41.9065
+    ],
+    [
+     12.486,
+     41.906
+    ],
+    [
+     12.492,
+     41.9075
+    ],
+    [
+     12.499,
+     41.908
+    ],
+    [
+     12.505,
+     41.905
+    ],
+    [
+     12.508,
+     41.9
+    ],
+    [
+     12.509,
+     41.895
+    ],
+    [
+     12.506,
+     41.889
+    ],
+    [
+     12.501,
+     41.885
+    ],
+    [
+     12.496,
+     41.881
+    ],
+    [
+     12.491,
+     41.878
+    ],
+    [
+     12.484,
+     41.876
+    ],
+    [
+     12.479,
+     41.8775
+    ],
+    [
+     12.476,
+     41.879
+    ],
+    [
+     12.472,
+     41.881
+    ],
+    [
+     12.467,
+     41.885
+    ],
+    [
+     12.4655,
+     41.89
+    ],
+    [
+     12.4675,
+     41.894
+    ],
+    [
+     12.471,
+     41.895
+    ],
+    [
+     12.4705,
+     41.8975
+    ],
+    [
+     12.47,
+     41.901
+    ],
+    [
+     12.4715,
+     41.9045
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Rome at its peak, within the Aurelian Walls (c. 300)",
+   "t0": 200,
+   "t1": 500,
+   "conf": 2,
+   "src": "Aurelian Walls",
+   "area": [
+    [
+     12.4765,
+     41.9112
+    ],
+    [
+     12.4815,
+     41.9125
+    ],
+    [
+     12.4893,
+     41.9095
+    ],
+    [
+     12.4975,
+     41.9105
+    ],
+    [
+     12.502,
+     41.9095
+    ],
+    [
+     12.5085,
+     41.907
+    ],
+    [
+     12.51,
+     41.903
+    ],
+    [
+     12.5115,
+     41.899
+    ],
+    [
+     12.5152,
+     41.8916
+    ],
+    [
+     12.5175,
+     41.8875
+    ],
+    [
+     12.5085,
+     41.8838
+    ],
+    [
+     12.4985,
+     41.88
+    ],
+    [
+     12.5025,
+     41.8765
+    ],
+    [
+     12.5015,
+     41.8735
+    ],
+    [
+     12.493,
+     41.873
+    ],
+    [
+     12.481,
+     41.8763
+    ],
+    [
+     12.474,
+     41.877
+    ],
+    [
+     12.4725,
+     41.8805
+    ],
+    [
+     12.461,
+     41.8843
+    ],
+    [
+     12.4672,
+     41.8936
+    ],
+    [
+     12.469,
+     41.896
+    ],
+    [
+     12.47,
+     41.901
+    ],
+    [
+     12.472,
+     41.906
+    ],
+    [
+     12.4745,
+     41.91
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Late antique Rome, shrinking",
+   "t0": 500,
+   "t1": 800,
+   "conf": 1,
+   "src": "Krautheimer, Rome: Profile of a City, 312-1308 (1980)",
+   "area": [
+    [
+     12.4705,
+     41.907
+    ],
+    [
+     12.478,
+     41.907
+    ],
+    [
+     12.485,
+     41.903
+    ],
+    [
+     12.493,
+     41.901
+    ],
+    [
+     12.4995,
+     41.899
+    ],
+    [
+     12.502,
+     41.893
+    ],
+    [
+     12.5065,
+     41.887
+    ],
+    [
+     12.503,
+     41.884
+    ],
+    [
+     12.496,
+     41.885
+    ],
+    [
+     12.49,
+     41.884
+    ],
+    [
+     12.484,
+     41.882
+    ],
+    [
+     12.479,
+     41.884
+    ],
+    [
+     12.474,
+     41.884
+    ],
+    [
+     12.468,
+     41.887
+    ],
+    [
+     12.467,
+     41.8925
+    ],
+    [
+     12.47,
+     41.896
+    ],
+    [
+     12.4695,
+     41.901
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Medieval abitato (Tiber bend, Trastevere, Borgo)",
+   "t0": 800,
+   "t1": 1400,
+   "conf": 2,
+   "src": "Krautheimer, Rome: Profile of a City, 312-1308 (1980)",
+   "area": [
+    [
+     12.456,
+     41.9045
+    ],
+    [
+     12.466,
+     41.9045
+    ],
+    [
+     12.472,
+     41.9045
+    ],
+    [
+     12.477,
+     41.904
+    ],
+    [
+     12.481,
+     41.901
+    ],
+    [
+     12.4835,
+     41.8975
+    ],
+    [
+     12.4838,
+     41.894
+    ],
+    [
+     12.482,
+     41.8905
+    ],
+    [
+     12.4805,
+     41.8875
+    ],
+    [
+     12.477,
+     41.886
+    ],
+    [
+     12.473,
+     41.8845
+    ],
+    [
+     12.469,
+     41.8868
+    ],
+    [
+     12.4668,
+     41.8905
+    ],
+    [
+     12.4672,
+     41.894
+    ],
+    [
+     12.465,
+     41.8975
+    ],
+    [
+     12.4615,
+     41.9
+    ],
+    [
+     12.4565,
+     41.9
+    ],
+    [
+     12.4545,
+     41.902
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Renaissance Rome",
+   "t0": 1400,
+   "t1": 1560,
+   "conf": 2,
+   "src": "Nolli map",
+   "area": [
+    [
+     12.4545,
+     41.902
+    ],
+    [
+     12.456,
+     41.905
+    ],
+    [
+     12.466,
+     41.905
+    ],
+    [
+     12.472,
+     41.907
+    ],
+    [
+     12.4755,
+     41.91
+    ],
+    [
+     12.4785,
+     41.908
+    ],
+    [
+     12.4815,
+     41.904
+    ],
+    [
+     12.4845,
+     41.9005
+    ],
+    [
+     12.485,
+     41.896
+    ],
+    [
+     12.484,
+     41.8925
+    ],
+    [
+     12.482,
+     41.8895
+    ],
+    [
+     12.48,
+     41.887
+    ],
+    [
+     12.4765,
+     41.8855
+    ],
+    [
+     12.473,
+     41.8835
+    ],
+    [
+     12.469,
+     41.886
+    ],
+    [
+     12.4665,
+     41.8905
+    ],
+    [
+     12.466,
+     41.8955
+    ],
+    [
+     12.463,
+     41.8995
+    ],
+    [
+     12.457,
+     41.8998
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Papal Rome, Baroque to 1870 (Nolli plan)",
+   "t0": 1560,
+   "t1": 1870,
+   "conf": 2,
+   "src": "Nolli map",
+   "area": [
+    [
+     12.4545,
+     41.902
+    ],
+    [
+     12.456,
+     41.905
+    ],
+    [
+     12.466,
+     41.905
+    ],
+    [
+     12.472,
+     41.908
+    ],
+    [
+     12.476,
+     41.911
+    ],
+    [
+     12.479,
+     41.91
+    ],
+    [
+     12.483,
+     41.9065
+    ],
+    [
+     12.487,
+     41.9035
+    ],
+    [
+     12.491,
+     41.9015
+    ],
+    [
+     12.495,
+     41.899
+    ],
+    [
+     12.4985,
+     41.8975
+    ],
+    [
+     12.495,
+     41.8945
+    ],
+    [
+     12.49,
+     41.8935
+    ],
+    [
+     12.486,
+     41.8935
+    ],
+    [
+     12.4838,
+     41.892
+    ],
+    [
+     12.4815,
+     41.888
+    ],
+    [
+     12.477,
+     41.8858
+    ],
+    [
+     12.4735,
+     41.883
+    ],
+    [
+     12.469,
+     41.886
+    ],
+    [
+     12.4665,
+     41.8905
+    ],
+    [
+     12.466,
+     41.8955
+    ],
+    [
+     12.463,
+     41.8995
+    ],
+    [
+     12.457,
+     41.8998
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Rome, capital of Italy (Esquilino, Prati, Testaccio)",
+   "t0": 1870,
+   "t1": null,
+   "conf": 2,
+   "src": "History of Rome",
+   "area": [
+    [
+     12.452,
+     41.901
+    ],
+    [
+     12.453,
+     41.908
+    ],
+    [
+     12.458,
+     41.913
+    ],
+    [
+     12.466,
+     41.914
+    ],
+    [
+     12.472,
+     41.911
+    ],
+    [
+     12.477,
+     41.9115
+    ],
+    [
+     12.483,
+     41.909
+    ],
+    [
+     12.49,
+     41.908
+    ],
+    [
+     12.498,
+     41.909
+    ],
+    [
+     12.506,
+     41.906
+    ],
+    [
+     12.511,
+     41.901
+    ],
+    [
+     12.513,
+     41.894
+    ],
+    [
+     12.508,
+     41.888
+    ],
+    [
+     12.504,
+     41.887
+    ],
+    [
+     12.496,
+     41.887
+    ],
+    [
+     12.49,
+     41.888
+    ],
+    [
+     12.485,
+     41.887
+    ],
+    [
+     12.481,
+     41.883
+    ],
+    [
+     12.478,
+     41.878
+    ],
+    [
+     12.474,
+     41.8765
+    ],
+    [
+     12.472,
+     41.881
+    ],
+    [
+     12.468,
+     41.885
+    ],
+    [
+     12.466,
+     41.89
+    ],
+    [
+     12.465,
+     41.896
+    ],
+    [
+     12.459,
+     41.899
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Roman Ghetto",
+   "t0": 1555,
+   "t1": 1888,
+   "conf": 2,
+   "src": "Roman Ghetto",
+   "area": [
+    [
+     12.4768,
+     41.8928
+    ],
+    [
+     12.4783,
+     41.8936
+    ],
+    [
+     12.48,
+     41.8932
+    ],
+    [
+     12.4802,
+     41.8922
+    ],
+    [
+     12.4785,
+     41.8917
+    ],
+    [
+     12.477,
+     41.892
+    ]
+   ]
+  },
+  {
+   "k": "church",
+   "name": "Archbasilica of St John Lateran",
+   "t0": 324,
+   "t1": null,
+   "conf": 1,
+   "src": "Archbasilica of Saint John Lateran",
+   "at": [
+    12.50556,
+    41.88583
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Lateran Palace (papal residence)",
+   "t0": 313,
+   "t1": null,
+   "conf": 1,
+   "src": "Lateran Palace",
+   "at": [
+    12.5049,
+    41.8865
+   ]
+  },
+  {
+   "k": "church",
+   "name": "Santa Maria Maggiore",
+   "t0": 432,
+   "t1": null,
+   "conf": 1,
+   "src": "Santa Maria Maggiore",
+   "at": [
+    12.4985,
+    41.8976
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Curia Julia (Senate House)",
+   "t0": -29,
+   "t1": 630,
+   "conf": 1,
+   "src": "Curia Julia",
+   "at": [
+    12.4853,
+    41.8927
+   ]
+  },
+  {
+   "k": "church",
+   "name": "Sant'Adriano al Foro (in the Curia)",
+   "t0": 630,
+   "t1": 1935,
+   "conf": 1,
+   "src": "Curia Julia",
+   "at": [
+    12.4853,
+    41.8927
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Forum of Augustus",
+   "t0": -2,
+   "t1": null,
+   "conf": 1,
+   "src": "Forum of Augustus",
+   "at": [
+    12.4877,
+    41.8941
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Forum of Nerva",
+   "t0": 97,
+   "t1": null,
+   "conf": 1,
+   "src": "Forum of Nerva",
+   "at": [
+    12.487,
+    41.8934
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Trajan's Market",
+   "t0": 110,
+   "t1": null,
+   "conf": 1,
+   "src": "Trajan's Market",
+   "at": [
+    12.4865,
+    41.8958
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Forum Boarium",
+   "t0": -600,
+   "t1": null,
+   "conf": 2,
+   "src": "Forum Boarium",
+   "at": [
+    12.4813,
+    41.8891
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Temple of Saturn",
+   "t0": -497,
+   "t1": null,
+   "conf": 1,
+   "src": "Temple of Saturn",
+   "at": [
+    12.48438,
+    41.89245
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Temple of Vesta",
+   "t0": -700,
+   "t1": null,
+   "conf": 2,
+   "src": "Temple of Vesta",
+   "at": [
+    12.48617,
+    41.89181
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Temple of Apollo Palatinus",
+   "t0": -28,
+   "t1": 363,
+   "conf": 1,
+   "src": "Temple of Apollo Palatinus",
+   "at": [
+    12.4861,
+    41.8884
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Temple of Hercules Victor",
+   "t0": -120,
+   "t1": null,
+   "conf": 1,
+   "src": "Temple of Hercules Victor",
+   "at": [
+    12.4809,
+    41.88857
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Temple of Portunus",
+   "t0": -100,
+   "t1": 872,
+   "conf": 1,
+   "src": "Temple of Portunus",
+   "at": [
+    12.48083,
+    41.88928
+   ]
+  },
+  {
+   "k": "church",
+   "name": "Santa Maria Egiziaca (in the Temple of Portunus)",
+   "t0": 872,
+   "t1": 1921,
+   "conf": 1,
+   "src": "Temple of Portunus",
+   "at": [
+    12.48083,
+    41.88928
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Temple of Juno Moneta (Arx)",
+   "t0": -344,
+   "t1": 400,
+   "conf": 2,
+   "src": "Temple of Juno Moneta",
+   "at": [
+    12.4832,
+    41.894
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Tabularium (state archive)",
+   "t0": -78,
+   "t1": null,
+   "conf": 1,
+   "src": "Tabularium",
+   "at": [
+    12.4837,
+    41.893
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Palace of Domitian (Domus Augustana and Domus Flavia)",
+   "t0": 92,
+   "t1": null,
+   "conf": 1,
+   "src": "Domus Augustana",
+   "at": [
+    12.4866,
+    41.8882
+   ]
+  },
+  {
+   "k": "house",
+   "name": "House of Augustus",
+   "t0": -30,
+   "t1": null,
+   "conf": 1,
+   "src": "House of Augustus",
+   "at": [
+    12.4853,
+    41.8891
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Baths of Agrippa",
+   "t0": -25,
+   "t1": null,
+   "conf": 1,
+   "src": "Baths of Agrippa",
+   "at": [
+    12.4756,
+    41.8977
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Baths of Trajan",
+   "t0": 109,
+   "t1": null,
+   "conf": 1,
+   "src": "Baths of Trajan",
+   "at": [
+    12.4958,
+    41.8938
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Baths of Caracalla",
+   "t0": 216,
+   "t1": null,
+   "conf": 1,
+   "src": "Baths of Caracalla",
+   "at": [
+    12.4925,
+    41.8791
+   ]
+  },
+  {
+   "k": "aqueduct",
+   "name": "Baths of Diocletian",
+   "t0": 306,
+   "t1": null,
+   "conf": 1,
+   "src": "Baths of Diocletian",
+   "at": [
+    12.4979,
+    41.9029
+   ]
+  },
+  {
+   "k": "church",
+   "name": "Santa Maria degli Angeli (in the Baths of Diocletian)",
+   "t0": 1562,
+   "t1": null,
+   "conf": 1,
+   "src": "Santa Maria degli Angeli e dei Martiri",
+   "at": [
+    12.4968,
+    41.9031
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Saepta Julia",
+   "t0": -26,
+   "t1": null,
+   "conf": 2,
+   "src": "Saepta Julia",
+   "at": [
+    12.4783,
+    41.8982
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Porticus Octaviae",
+   "t0": -27,
+   "t1": null,
+   "conf": 1,
+   "src": "Porticus Octaviae",
+   "at": [
+    12.4791,
+    41.8926
+   ]
+  },
+  {
+   "k": "column",
+   "name": "Septizodium",
+   "t0": 203,
+   "t1": 1588,
+   "conf": 1,
+   "src": "Septizodium",
+   "at": [
+    12.4885,
+    41.8857
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Castra Praetoria",
+   "t0": 23,
+   "t1": 312,
+   "conf": 1,
+   "src": "Castra Praetoria",
+   "at": [
+    12.5065,
+    41.9055
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Circus of Nero (Vatican Circus)",
+   "t0": 40,
+   "t1": 320,
+   "conf": 2,
+   "src": "Circus of Nero",
+   "at": [
+    12.4539,
+    41.9017
+   ]
+  },
+  {
+   "k": "column",
+   "name": "Vatican Obelisk on the spina of the Circus of Nero",
+   "t0": 37,
+   "t1": 1586,
+   "conf": 1,
+   "src": "Vatican obelisk",
+   "at": [
+    12.454,
+    41.9015
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Emporium and Porticus Aemilia (river port)",
+   "t0": -193,
+   "t1": 500,
+   "conf": 2,
+   "src": "Porticus Aemilia",
+   "at": [
+    12.4755,
+    41.879
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Porto di Ripa Grande",
+   "t0": 1200,
+   "t1": 1880,
+   "conf": 2,
+   "src": "Ripa (rione of Rome)",
+   "at": [
+    12.4742,
+    41.8855
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Porto di Ripetta",
+   "t0": 1704,
+   "t1": 1890,
+   "conf": 1,
+   "src": "Porto di Ripetta",
+   "at": [
+    12.4747,
+    41.9049
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Pons Aelius (Ponte Sant'Angelo)",
+   "t0": 134,
+   "t1": null,
+   "conf": 1,
+   "src": "Ponte Sant'Angelo",
+   "at": [
+    12.4665,
+    41.9015
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Pons Aemilius (Ponte Rotto after 1598)",
+   "t0": -179,
+   "t1": 1598,
+   "conf": 1,
+   "src": "Pons Aemilius",
+   "at": [
+    12.4796,
+    41.8893
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Pons Neronianus",
+   "t0": 60,
+   "t1": 400,
+   "conf": 2,
+   "src": "Pons Neronianus",
+   "at": [
+    12.4653,
+    41.9005
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Pons Milvius (Ponte Milvio)",
+   "t0": -206,
+   "t1": null,
+   "conf": 1,
+   "src": "Ponte Milvio",
+   "at": [
+    12.467,
+    41.9356
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Palazzo Senatorio (seat of the Commune)",
+   "t0": 1144,
+   "t1": null,
+   "conf": 1,
+   "src": "Palazzo Senatorio",
+   "at": [
+    12.4827,
+    41.8931
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Palazzo Venezia",
+   "t0": 1455,
+   "t1": null,
+   "conf": 1,
+   "src": "Palazzo Venezia",
+   "at": [
+    12.4817,
+    41.8958
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Porta Fontinalis (Servian Wall)",
+   "t0": -378,
+   "t1": -27,
+   "conf": 2,
+   "src": "Servian Wall",
+   "at": [
+    12.4835,
+    41.8953
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Porta Carmentalis (Servian Wall)",
+   "t0": -378,
+   "t1": -27,
+   "conf": 2,
+   "src": "Servian Wall",
+   "at": [
+    12.4805,
+    41.8919
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Porta Flaminia (Porta del Popolo)",
+   "t0": 271,
+   "t1": null,
+   "conf": 1,
+   "src": "Porta del Popolo",
+   "at": [
+    12.4764,
+    41.9115
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Porta Appia (Porta San Sebastiano)",
+   "t0": 271,
+   "t1": null,
+   "conf": 1,
+   "src": "Porta San Sebastiano",
+   "at": [
+    12.5015,
+    41.8735
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Porta Ostiensis (Porta San Paolo)",
+   "t0": 271,
+   "t1": null,
+   "conf": 1,
+   "src": "Porta San Paolo",
+   "at": [
+    12.4809,
+    41.8762
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Porta Praenestina (Porta Maggiore)",
+   "t0": 271,
+   "t1": null,
+   "conf": 1,
+   "src": "Porta Maggiore",
+   "at": [
+    12.5152,
+    41.8916
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Porta Tiburtina (Porta San Lorenzo)",
+   "t0": 271,
+   "t1": null,
+   "conf": 1,
+   "src": "Porta Tiburtina",
+   "at": [
+    12.5112,
+    41.8988
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Porta Aurelia (Porta San Pancrazio)",
+   "t0": 271,
+   "t1": null,
+   "conf": 1,
+   "src": "Porta San Pancrazio",
+   "at": [
+    12.4605,
+    41.8844
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Via Sacra",
+   "t0": -600,
+   "t1": null,
+   "conf": 2,
+   "src": "Via Sacra",
+   "line": [
+    [
+     12.4895,
+     41.8905
+    ],
+    [
+     12.4886,
+     41.8907
+    ],
+    [
+     12.4875,
+     41.8913
+    ],
+    [
+     12.4866,
+     41.8917
+    ],
+    [
+     12.4856,
+     41.8921
+    ],
+    [
+     12.4847,
+     41.8926
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Via Appia",
+   "t0": -312,
+   "t1": null,
+   "conf": 2,
+   "src": "Appian Way",
+   "line": [
+    [
+     12.4905,
+     41.8839
+    ],
+    [
+     12.495,
+     41.88
+    ],
+    [
+     12.499,
+     41.876
+    ],
+    [
+     12.5015,
+     41.8735
+    ],
+    [
+     12.505,
+     41.868
+    ],
+    [
+     12.51,
+     41.862
+    ],
+    [
+     12.515,
+     41.8575
+    ],
+    [
+     12.5196,
+     41.8524
+    ],
+    [
+     12.528,
+     41.843
+    ],
+    [
+     12.536,
+     41.835
+    ],
+    [
+     12.545,
+     41.826
+    ],
+    [
+     12.55,
+     41.82
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Via Flaminia (Via Lata, Via del Corso)",
+   "t0": -220,
+   "t1": null,
+   "conf": 2,
+   "src": "Via Flaminia",
+   "line": [
+    [
+     12.4825,
+     41.8965
+    ],
+    [
+     12.481,
+     41.9
+    ],
+    [
+     12.4797,
+     41.903
+    ],
+    [
+     12.4785,
+     41.906
+    ],
+    [
+     12.4772,
+     41.909
+    ],
+    [
+     12.4763,
+     41.9107
+    ],
+    [
+     12.475,
+     41.914
+    ],
+    [
+     12.473,
+     41.92
+    ],
+    [
+     12.4705,
+     41.927
+    ],
+    [
+     12.4685,
+     41.933
+    ],
+    [
+     12.467,
+     41.9355
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Via Ostiensis",
+   "t0": -400,
+   "t1": null,
+   "conf": 2,
+   "src": "Via Ostiensis",
+   "line": [
+    [
+     12.481,
+     41.8763
+    ],
+    [
+     12.48,
+     41.872
+    ],
+    [
+     12.479,
+     41.867
+    ],
+    [
+     12.478,
+     41.862
+    ],
+    [
+     12.4772,
+     41.8586
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Via Giulia",
+   "t0": 1508,
+   "t1": null,
+   "conf": 2,
+   "src": "Via Giulia",
+   "line": [
+    [
+     12.4655,
+     41.8995
+    ],
+    [
+     12.4672,
+     41.8975
+    ],
+    [
+     12.469,
+     41.895
+    ],
+    [
+     12.471,
+     41.8925
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Strada Pia (Via XX Settembre)",
+   "t0": 1561,
+   "t1": null,
+   "conf": 2,
+   "src": "Via XX Settembre",
+   "line": [
+    [
+     12.488,
+     41.9005
+    ],
+    [
+     12.492,
+     41.9025
+    ],
+    [
+     12.4965,
+     41.905
+    ],
+    [
+     12.5013,
+     41.9093
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Via Nazionale",
+   "t0": 1864,
+   "t1": null,
+   "conf": 2,
+   "src": "Via Nazionale (Rome)",
+   "line": [
+    [
+     12.4966,
+     41.9025
+    ],
+    [
+     12.493,
+     41.9005
+    ],
+    [
+     12.4895,
+     41.8985
+    ],
+    [
+     12.4865,
+     41.8965
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Stagnum Agrippae (artificial lake)",
+   "t0": -19,
+   "t1": 400,
+   "conf": 1,
+   "src": "Baths of Agrippa",
+   "area": [
+    [
+     12.4735,
+     41.8975
+    ],
+    [
+     12.4755,
+     41.8977
+    ],
+    [
+     12.4762,
+     41.8962
+    ],
+    [
+     12.4745,
+     41.8955
+    ],
+    [
+     12.4732,
+     41.8962
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Lake of Nero's Domus Aurea",
+   "t0": 64,
+   "t1": 72,
+   "conf": 1,
+   "src": "Domus Aurea",
+   "area": [
+    [
+     12.491,
+     41.891
+    ],
+    [
+     12.4935,
+     41.891
+    ],
+    [
+     12.494,
+     41.8897
+    ],
+    [
+     12.4922,
+     41.889
+    ],
+    [
+     12.4905,
+     41.8897
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q99309",
+   "name": "Pantheon (Santa Maria ad Martyres)",
+   "names": [
+    [
+     null,
+     609,
+     "Pantheon (temple of all the gods)"
+    ],
+    [
+     609,
+     null,
+     "Pantheon (Santa Maria ad Martyres)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Pantheon, Rome",
+   "kinds": [
+    [
+     null,
+     609,
+     "temple"
+    ],
+    [
+     609,
+     null,
+     "church"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q486382",
+   "name": "Castel Sant'Angelo",
+   "names": [
+    [
+     null,
+     401,
+     "Mausoleum of Hadrian"
+    ],
+    [
+     401,
+     590,
+     "Mausoleum of Hadrian (fortress)"
+    ],
+    [
+     590,
+     null,
+     "Castel Sant'Angelo"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Castel Sant'Angelo",
+   "kinds": [
+    [
+     null,
+     401,
+     "tomb"
+    ],
+    [
+     401,
+     null,
+     "fort"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q659138",
+   "name": "Theatre of Marcellus (Savelli and Orsini palace)",
+   "names": [
+    [
+     null,
+     1100,
+     "Theatre of Marcellus"
+    ],
+    [
+     1100,
+     null,
+     "Theatre of Marcellus (Savelli and Orsini palace)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Theatre of Marcellus",
+   "kinds": [
+    [
+     null,
+     1100,
+     "forum"
+    ],
+    [
+     1100,
+     null,
+     "palace"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q10285",
+   "name": "Colosseum",
+   "names": [
+    [
+     null,
+     1000,
+     "Flavian Amphitheatre"
+    ],
+    [
+     1000,
+     null,
+     "Colosseum"
+    ]
+   ],
+   "t0": 80,
+   "conf": 1,
+   "src": "Colosseum",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q522924",
+   "name": "Basilica Aemilia",
+   "names": [
+    [
+     null,
+     null,
+     "Basilica Aemilia"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Basilica Aemilia",
+   "kinds": [
+    [
+     null,
+     null,
+     "forum"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q371921",
+   "name": "Basilica of Maxentius and Constantine",
+   "names": [
+    [
+     null,
+     null,
+     "Basilica of Maxentius and Constantine"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Basilica of Maxentius",
+   "kinds": [
+    [
+     null,
+     null,
+     "forum"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q752555",
+   "name": "San Lorenzo in Miranda (Temple of Antoninus and Faustina)",
+   "names": [
+    [
+     null,
+     700,
+     "Temple of Antoninus and Faustina"
+    ],
+    [
+     700,
+     null,
+     "San Lorenzo in Miranda (Temple of Antoninus and Faustina)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Temple of Antoninus and Faustina",
+   "kinds": [
+    [
+     null,
+     700,
+     "temple"
+    ],
+    [
+     700,
+     null,
+     "church"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q770847",
+   "name": "Mausoleum of Augustus",
+   "names": [
+    [
+     null,
+     1100,
+     "Mausoleum of Augustus"
+    ],
+    [
+     1100,
+     1780,
+     "Mausoleum of Augustus (Colonna stronghold, then garden)"
+    ],
+    [
+     1780,
+     1907,
+     "Anfiteatro Corea (in the Mausoleum of Augustus)"
+    ],
+    [
+     1907,
+     null,
+     "Mausoleum of Augustus"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Mausoleum of Augustus",
+   "kinds": [
+    [
+     null,
+     1100,
+     "tomb"
+    ],
+    [
+     1100,
+     1780,
+     "fort"
+    ],
+    [
+     1780,
+     1907,
+     "forum"
+    ],
+    [
+     1907,
+     null,
+     "tomb"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q223079",
+   "name": "Quirinal Palace",
+   "names": [
+    [
+     null,
+     1870,
+     "Quirinal Palace (papal palace)"
+    ],
+    [
+     1870,
+     1946,
+     "Quirinal Palace (royal palace)"
+    ],
+    [
+     1946,
+     null,
+     "Quirinal Palace"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Quirinal Palace"
+  },
+  {
+   "k": "rename",
+   "wd": "Q622438",
+   "name": "Domus Aurea (Nero's Golden House)",
+   "names": [
+    [
+     null,
+     null,
+     "Domus Aurea (Nero's Golden House)"
+    ]
+   ],
+   "t0": 64,
+   "conf": 1,
+   "src": "Domus Aurea",
+   "fix_dates": true,
+   "t1": 104
+  },
+  {
+   "k": "rename",
+   "wd": "Q963671",
+   "name": "Piazza Navona (on the Stadium of Domitian)",
+   "names": [
+    [
+     null,
+     1477,
+     "Stadium of Domitian"
+    ],
+    [
+     1477,
+     null,
+     "Piazza Navona (on the Stadium of Domitian)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Stadium of Domitian",
+   "kinds": [
+    [
+     null,
+     1477,
+     "forum"
+    ],
+    [
+     1477,
+     null,
+     "market"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q944814",
+   "name": "Theatre of Pompey (built over, Campo de' Fiori)",
+   "names": [
+    [
+     null,
+     600,
+     "Theatre of Pompey"
+    ],
+    [
+     600,
+     null,
+     "Theatre of Pompey (built over, Campo de' Fiori)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Theatre of Pompey"
+  },
+  {
+   "k": "rename",
+   "wd": "Q645181",
+   "name": "Lateran Obelisk",
+   "names": [
+    [
+     null,
+     null,
+     "Lateran Obelisk"
+    ]
+   ],
+   "t0": 1588,
+   "conf": 1,
+   "src": "Lateran Obelisk",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q1444766",
+   "name": "Vatican Obelisk",
+   "names": [
+    [
+     null,
+     null,
+     "Vatican Obelisk"
+    ]
+   ],
+   "t0": 1586,
+   "conf": 1,
+   "src": "Vatican obelisk",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q568194",
+   "name": "Flaminio Obelisk",
+   "names": [
+    [
+     null,
+     null,
+     "Flaminio Obelisk"
+    ]
+   ],
+   "t0": 1589,
+   "conf": 1,
+   "src": "Flaminio Obelisk",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q740755",
+   "name": "Obelisk of Montecitorio",
+   "names": [
+    [
+     null,
+     null,
+     "Obelisk of Montecitorio"
+    ]
+   ],
+   "t0": 1792,
+   "conf": 1,
+   "src": "Obelisk of Montecitorio",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q826635",
+   "name": "Elephant and Obelisk",
+   "names": [
+    [
+     null,
+     null,
+     "Elephant and Obelisk"
+    ]
+   ],
+   "t0": 1667,
+   "conf": 1,
+   "src": "Elephant and Obelisk",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q619135",
+   "name": "Apollo Belvedere",
+   "names": [
+    [
+     null,
+     null,
+     "Apollo Belvedere"
+    ]
+   ],
+   "t0": 1508,
+   "conf": 1,
+   "src": "Apollo Belvedere",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q667124",
+   "name": "Augustus of Prima Porta",
+   "names": [
+    [
+     null,
+     null,
+     "Augustus of Prima Porta"
+    ]
+   ],
+   "t0": 1863,
+   "conf": 1,
+   "src": "Augustus of Prima Porta",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q1728619",
+   "name": "Capitoline Venus",
+   "names": [
+    [
+     null,
+     null,
+     "Capitoline Venus"
+    ]
+   ],
+   "t0": 1752,
+   "conf": 1,
+   "src": "Capitoline Venus",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q907387",
+   "name": "Equestrian Statue of Marcus Aurelius",
+   "names": [
+    [
+     null,
+     null,
+     "Equestrian Statue of Marcus Aurelius"
+    ]
+   ],
+   "t0": 1538,
+   "conf": 1,
+   "src": "Equestrian Statue of Marcus Aurelius",
+   "fix_dates": true,
+   "t1": null
+  },
+  {
+   "k": "rename",
+   "wd": "Q1924755",
+   "name": "Meta Sudans",
+   "names": [
+    [
+     null,
+     null,
+     "Meta Sudans"
+    ]
+   ],
+   "t0": 90,
+   "conf": 1,
+   "src": "Meta Sudans",
+   "kinds": [
+    [
+     null,
+     null,
+     "column"
+    ]
+   ],
+   "fix_dates": true,
+   "t1": 1936
+  },
+  {
+   "k": "rename",
+   "wd": "Q256546",
+   "name": "Porta Pinciana",
+   "names": [
+    [
+     null,
+     null,
+     "Porta Pinciana"
+    ]
+   ],
+   "t0": 271,
+   "conf": 1,
+   "src": "Porta Pinciana"
+  },
+  {
+   "k": "rename",
+   "wd": "Q1422040",
+   "name": "Porta Settimiana",
+   "names": [
+    [
+     null,
+     null,
+     "Porta Settimiana"
+    ]
+   ],
+   "t0": 271,
+   "conf": 1,
+   "src": "Porta Settimiana"
+  },
+  {
+   "k": "rename",
+   "wd": "Q3908831",
+   "name": "Porta Santo Spirito",
+   "names": [
+    [
+     null,
+     null,
+     "Porta Santo Spirito"
+    ]
+   ],
+   "t0": 852,
+   "conf": 1,
+   "src": "Porta Santo Spirito"
+  },
+  {
+   "k": "rename",
+   "wd": "Q2547165",
+   "name": "Torre delle Milizie",
+   "names": [
+    [
+     null,
+     null,
+     "Torre delle Milizie"
+    ]
+   ],
+   "t0": 1200,
+   "conf": 2,
+   "src": "Torre delle Milizie"
+  },
+  {
+   "k": "rename",
+   "wd": "Q616887",
+   "name": "Arch of Gallienus (Porta Esquilina)",
+   "names": [
+    [
+     null,
+     262,
+     "Porta Esquilina"
+    ],
+    [
+     262,
+     null,
+     "Arch of Gallienus (Porta Esquilina)"
+    ]
+   ],
+   "t0": null,
+   "conf": 1,
+   "src": "Arch of Gallienus"
+  }
+ ]
+}

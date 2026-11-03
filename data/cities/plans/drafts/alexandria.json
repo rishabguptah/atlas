@@ -1,0 +1,1480 @@
+{
+ "id": "alexandria",
+ "note": "Claude draft for Alexandria: OpenStreetMap has no wall lines here, so the Ptolemaic and medieval Arab walls are drafted whole; built-up area by period from the foundation (331 BCE) to 1900, the Pharos island and the Heptastadion with the sea on either side that has since silted into the Mansheya/Gomrok neck, Lake Mareotis and Lake Hadra before reclamation, the harbours, gates, the Canopic Way and the lost Ptolemaic and Roman monuments. The ancient street grid follows Mahmoud el-Falaki (1866-72); every shape is approximate (conf 2).",
+ "features": [
+  {
+   "k": "wall",
+   "name": "Ptolemaic walls of Alexandria",
+   "t0": -331,
+   "t1": 640,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972); Wikipedia: Ancient Alexandria",
+   "line": [
+    [
+     29.88,
+     31.196
+    ],
+    [
+     29.893,
+     31.1995
+    ],
+    [
+     29.9,
+     31.2015
+    ],
+    [
+     29.906,
+     31.2048
+    ],
+    [
+     29.9125,
+     31.212
+    ],
+    [
+     29.918,
+     31.209
+    ],
+    [
+     29.922,
+     31.204
+    ],
+    [
+     29.925,
+     31.196
+    ],
+    [
+     29.92,
+     31.188
+    ],
+    [
+     29.91,
+     31.184
+    ],
+    [
+     29.9,
+     31.18
+    ],
+    [
+     29.89,
+     31.1795
+    ],
+    [
+     29.883,
+     31.183
+    ],
+    [
+     29.8775,
+     31.189
+    ],
+    [
+     29.88,
+     31.196
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Arab walls of Alexandria",
+   "t0": 870,
+   "t1": 1885,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972); Wikipedia: Alexandria (Shallalat Gardens wall remains)",
+   "line": [
+    [
+     29.892,
+     31.199
+    ],
+    [
+     29.902,
+     31.203
+    ],
+    [
+     29.91,
+     31.203
+    ],
+    [
+     29.9145,
+     31.1985
+    ],
+    [
+     29.911,
+     31.19
+    ],
+    [
+     29.9,
+     31.1855
+    ],
+    [
+     29.893,
+     31.186
+    ],
+    [
+     29.888,
+     31.192
+    ],
+    [
+     29.892,
+     31.199
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ptolemaic Alexandria",
+   "t0": -331,
+   "t1": -31,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "area": [
+    [
+     29.88,
+     31.196
+    ],
+    [
+     29.893,
+     31.1995
+    ],
+    [
+     29.9,
+     31.2015
+    ],
+    [
+     29.906,
+     31.2048
+    ],
+    [
+     29.9125,
+     31.212
+    ],
+    [
+     29.918,
+     31.209
+    ],
+    [
+     29.922,
+     31.204
+    ],
+    [
+     29.925,
+     31.196
+    ],
+    [
+     29.92,
+     31.188
+    ],
+    [
+     29.91,
+     31.184
+    ],
+    [
+     29.9,
+     31.18
+    ],
+    [
+     29.89,
+     31.1795
+    ],
+    [
+     29.883,
+     31.183
+    ],
+    [
+     29.8775,
+     31.189
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Roman Alexandria",
+   "t0": -30,
+   "t1": 271,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "area": [
+    [
+     29.878,
+     31.196
+    ],
+    [
+     29.893,
+     31.1995
+    ],
+    [
+     29.9,
+     31.2015
+    ],
+    [
+     29.906,
+     31.2048
+    ],
+    [
+     29.9125,
+     31.212
+    ],
+    [
+     29.92,
+     31.21
+    ],
+    [
+     29.93,
+     31.208
+    ],
+    [
+     29.933,
+     31.2
+    ],
+    [
+     29.925,
+     31.193
+    ],
+    [
+     29.91,
+     31.183
+    ],
+    [
+     29.9,
+     31.179
+    ],
+    [
+     29.888,
+     31.1785
+    ],
+    [
+     29.88,
+     31.182
+    ],
+    [
+     29.876,
+     31.189
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Late antique Alexandria (Brucheion in ruins)",
+   "t0": 272,
+   "t1": 640,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972); Wikipedia: Aurelian (destruction of the Brucheion, 272)",
+   "area": [
+    [
+     29.88,
+     31.196
+    ],
+    [
+     29.893,
+     31.1995
+    ],
+    [
+     29.9,
+     31.2015
+    ],
+    [
+     29.905,
+     31.203
+    ],
+    [
+     29.91,
+     31.199
+    ],
+    [
+     29.918,
+     31.195
+    ],
+    [
+     29.92,
+     31.188
+    ],
+    [
+     29.91,
+     31.184
+    ],
+    [
+     29.9,
+     31.18
+    ],
+    [
+     29.89,
+     31.1795
+    ],
+    [
+     29.883,
+     31.183
+    ],
+    [
+     29.8775,
+     31.189
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Early Islamic Alexandria",
+   "t0": 641,
+   "t1": 869,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972); Wikipedia: Muslim conquest of Egypt",
+   "area": [
+    [
+     29.884,
+     31.1955
+    ],
+    [
+     29.893,
+     31.1995
+    ],
+    [
+     29.902,
+     31.203
+    ],
+    [
+     29.91,
+     31.2025
+    ],
+    [
+     29.916,
+     31.197
+    ],
+    [
+     29.913,
+     31.189
+    ],
+    [
+     29.9,
+     31.183
+    ],
+    [
+     29.888,
+     31.1835
+    ],
+    [
+     29.882,
+     31.189
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Medieval walled Alexandria",
+   "t0": 870,
+   "t1": 1516,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "area": [
+    [
+     29.892,
+     31.199
+    ],
+    [
+     29.902,
+     31.203
+    ],
+    [
+     29.91,
+     31.203
+    ],
+    [
+     29.9145,
+     31.1985
+    ],
+    [
+     29.911,
+     31.19
+    ],
+    [
+     29.9,
+     31.1855
+    ],
+    [
+     29.893,
+     31.186
+    ],
+    [
+     29.888,
+     31.192
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ottoman Alexandria (the Turkish town on the isthmus)",
+   "t0": 1517,
+   "t1": 1800,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972); Wikipedia: French campaign in Egypt and Syria (Alexandria 1798)",
+   "area": [
+    [
+     29.87,
+     31.2005
+    ],
+    [
+     29.88,
+     31.1998
+    ],
+    [
+     29.89,
+     31.1992
+    ],
+    [
+     29.8925,
+     31.2
+    ],
+    [
+     29.888,
+     31.2025
+    ],
+    [
+     29.885,
+     31.205
+    ],
+    [
+     29.883,
+     31.208
+    ],
+    [
+     29.879,
+     31.2075
+    ],
+    [
+     29.874,
+     31.2045
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Alexandria under Muhammad Ali",
+   "t0": 1801,
+   "t1": 1860,
+   "conf": 2,
+   "src": "Wikipedia: Alexandria; Wikipedia: Muhammad Ali of Egypt; Ilbert, Alexandrie 1830-1930 (1996)",
+   "area": [
+    [
+     29.87,
+     31.199
+    ],
+    [
+     29.874,
+     31.194
+    ],
+    [
+     29.882,
+     31.193
+    ],
+    [
+     29.892,
+     31.1945
+    ],
+    [
+     29.9,
+     31.196
+    ],
+    [
+     29.905,
+     31.2
+    ],
+    [
+     29.901,
+     31.2025
+    ],
+    [
+     29.8935,
+     31.2005
+    ],
+    [
+     29.887,
+     31.2065
+    ],
+    [
+     29.883,
+     31.2105
+    ],
+    [
+     29.876,
+     31.206
+    ],
+    [
+     29.87,
+     31.203
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Cosmopolitan Alexandria",
+   "t0": 1861,
+   "t1": 1900,
+   "conf": 2,
+   "src": "Wikipedia: Alexandria; Ilbert, Alexandrie 1830-1930 (1996)",
+   "area": [
+    [
+     29.868,
+     31.196
+    ],
+    [
+     29.872,
+     31.188
+    ],
+    [
+     29.88,
+     31.182
+    ],
+    [
+     29.895,
+     31.181
+    ],
+    [
+     29.91,
+     31.185
+    ],
+    [
+     29.93,
+     31.195
+    ],
+    [
+     29.94,
+     31.205
+    ],
+    [
+     29.933,
+     31.212
+    ],
+    [
+     29.915,
+     31.211
+    ],
+    [
+     29.9,
+     31.203
+    ],
+    [
+     29.89,
+     31.206
+    ],
+    [
+     29.883,
+     31.211
+    ],
+    [
+     29.874,
+     31.206
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Pharos island (Ptolemaic settlement)",
+   "t0": -280,
+   "t1": 1000,
+   "conf": 2,
+   "src": "Wikipedia: Pharos, Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "area": [
+    [
+     29.866,
+     31.2
+    ],
+    [
+     29.868,
+     31.205
+    ],
+    [
+     29.872,
+     31.207
+    ],
+    [
+     29.877,
+     31.208
+    ],
+    [
+     29.877,
+     31.211
+    ],
+    [
+     29.881,
+     31.2125
+    ],
+    [
+     29.8845,
+     31.215
+    ],
+    [
+     29.8858,
+     31.213
+    ],
+    [
+     29.885,
+     31.2085
+    ],
+    [
+     29.882,
+     31.2068
+    ],
+    [
+     29.876,
+     31.204
+    ],
+    [
+     29.87,
+     31.201
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Ramleh (suburb along the tramway)",
+   "t0": 1863,
+   "t1": 1900,
+   "conf": 2,
+   "src": "Wikipedia: Raml Station; Wikipedia: Alexandria Tram",
+   "area": [
+    [
+     29.93,
+     31.212
+    ],
+    [
+     29.94,
+     31.205
+    ],
+    [
+     29.955,
+     31.22
+    ],
+    [
+     29.97,
+     31.235
+    ],
+    [
+     29.98,
+     31.245
+    ],
+    [
+     29.975,
+     31.25
+    ],
+    [
+     29.96,
+     31.24
+    ],
+    [
+     29.945,
+     31.225
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Sea between Pharos and the mainland, west of the Heptastadion (silted into the isthmus)",
+   "t0": -331,
+   "t1": 1000,
+   "conf": 2,
+   "src": "Wikipedia: Heptastadion; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "area": [
+    [
+     29.87,
+     31.2
+    ],
+    [
+     29.876,
+     31.1995
+    ],
+    [
+     29.883,
+     31.1985
+    ],
+    [
+     29.89,
+     31.199
+    ],
+    [
+     29.8915,
+     31.2
+    ],
+    [
+     29.8875,
+     31.2025
+    ],
+    [
+     29.8848,
+     31.2045
+    ],
+    [
+     29.8818,
+     31.2068
+    ],
+    [
+     29.879,
+     31.205
+    ],
+    [
+     29.874,
+     31.203
+    ],
+    [
+     29.8705,
+     31.2015
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Lake Mareotis (before modern reclamation)",
+   "t0": -331,
+   "t1": 1950,
+   "conf": 2,
+   "src": "Wikipedia: Lake Mariout",
+   "area": [
+    [
+     29.85,
+     31.15
+    ],
+    [
+     29.848,
+     31.16
+    ],
+    [
+     29.86,
+     31.168
+    ],
+    [
+     29.88,
+     31.172
+    ],
+    [
+     29.9,
+     31.1745
+    ],
+    [
+     29.92,
+     31.176
+    ],
+    [
+     29.95,
+     31.178
+    ],
+    [
+     29.98,
+     31.178
+    ],
+    [
+     29.98,
+     31.15
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Lake Hadra (drained for Smouha)",
+   "t0": -331,
+   "t1": 1925,
+   "conf": 2,
+   "src": "Wikipedia: Smouha",
+   "area": [
+    [
+     29.94,
+     31.195
+    ],
+    [
+     29.948,
+     31.205
+    ],
+    [
+     29.962,
+     31.207
+    ],
+    [
+     29.97,
+     31.198
+    ],
+    [
+     29.965,
+     31.188
+    ],
+    [
+     29.95,
+     31.186
+    ],
+    [
+     29.942,
+     31.189
+    ],
+    [
+     29.939,
+     31.192
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Heptastadion",
+   "t0": -280,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Heptastadion",
+   "line": [
+    [
+     29.8925,
+     31.1995
+    ],
+    [
+     29.888,
+     31.202
+    ],
+    [
+     29.8852,
+     31.2045
+    ],
+    [
+     29.882,
+     31.2075
+    ]
+   ],
+   "names": [
+    [
+     -280,
+     1000,
+     "Heptastadion (causeway to Pharos)"
+    ],
+    [
+     1001,
+     null,
+     "Heptastadion line (now the isthmus streets)"
+    ]
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Great Harbour",
+   "t0": -331,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Ancient Alexandria; Goddio, Alexandria: The Submerged Royal Quarters (1998)",
+   "at": [
+    29.898,
+    31.205
+   ],
+   "names": [
+    [
+     -331,
+     640,
+     "Great Harbour (Megas Limen)"
+    ],
+    [
+     641,
+     1830,
+     "New Port"
+    ],
+    [
+     1831,
+     null,
+     "Eastern Harbour"
+    ]
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Eunostos Harbour",
+   "t0": -331,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Ancient Alexandria",
+   "at": [
+    29.878,
+    31.193
+   ],
+   "names": [
+    [
+     -331,
+     640,
+     "Eunostos (Harbour of Happy Return)"
+    ],
+    [
+     641,
+     1830,
+     "Old Port"
+    ],
+    [
+     1831,
+     null,
+     "Western Harbour"
+    ]
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Kibotos",
+   "t0": -280,
+   "t1": 900,
+   "conf": 2,
+   "src": "Wikipedia: Ancient Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "at": [
+    29.884,
+    31.194
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Lake harbour of Mareotis",
+   "t0": -300,
+   "t1": 900,
+   "conf": 2,
+   "src": "Wikipedia: Lake Mariout; Strabo, Geography 17.1.7",
+   "at": [
+    29.9,
+    31.177
+   ]
+  },
+  {
+   "k": "harbour",
+   "name": "Arsenal of Muhammad Ali",
+   "t0": 1829,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Muhammad Ali of Egypt; Wikipedia: Alexandria",
+   "at": [
+    29.872,
+    31.195
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Gate of the Sun (Canopic Gate)",
+   "t0": -331,
+   "t1": 640,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "at": [
+    29.923,
+    31.2
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Gate of the Moon",
+   "t0": -331,
+   "t1": 640,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "at": [
+    29.883,
+    31.192
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Rosetta Gate (Bab Rashid)",
+   "t0": 870,
+   "t1": 1885,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "at": [
+    29.9145,
+    31.1985
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab Sidra",
+   "t0": 870,
+   "t1": 1885,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "at": [
+    29.893,
+    31.186
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Sea Gate (Bab el-Bahr)",
+   "t0": 870,
+   "t1": 1885,
+   "conf": 2,
+   "src": "Wikipedia: History of Alexandria; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "at": [
+    29.893,
+    31.1995
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Royal Palaces (Brucheion)",
+   "t0": -300,
+   "t1": 271,
+   "conf": 2,
+   "src": "Wikipedia: Ancient Alexandria; Wikipedia: Brucheion",
+   "at": [
+    29.912,
+    31.208
+   ]
+  },
+  {
+   "k": "school",
+   "name": "Mouseion",
+   "t0": -283,
+   "t1": 271,
+   "conf": 2,
+   "src": "Wikipedia: Musaeum",
+   "at": [
+    29.907,
+    31.203
+   ]
+  },
+  {
+   "k": "tomb",
+   "name": "Soma (Tomb of Alexander)",
+   "t0": -290,
+   "t1": 400,
+   "conf": 2,
+   "src": "Wikipedia: Tomb of Alexander the Great",
+   "at": [
+    29.9035,
+    31.1985
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Caesareum",
+   "t0": -30,
+   "t1": 912,
+   "conf": 2,
+   "src": "Wikipedia: Caesareum of Alexandria",
+   "at": [
+    29.9005,
+    31.2005
+   ],
+   "names": [
+    [
+     -30,
+     390,
+     "Caesareum (Sebasteum)"
+    ],
+    [
+     391,
+     912,
+     "Caesareum (Church of St Michael, cathedral)"
+    ]
+   ],
+   "kinds": [
+    [
+     null,
+     390,
+     "temple"
+    ],
+    [
+     391,
+     null,
+     "church"
+    ]
+   ]
+  },
+  {
+   "k": "column",
+   "name": "Cleopatra's Needles",
+   "t0": -12,
+   "t1": 1879,
+   "conf": 1,
+   "src": "Wikipedia: Cleopatra's Needle",
+   "at": [
+    29.901,
+    31.2012
+   ]
+  },
+  {
+   "k": "column",
+   "name": "Pompey's Pillar",
+   "t0": 298,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Pompey's Pillar (column)",
+   "at": [
+    29.8964,
+    31.1825
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Kom el-Dikka Roman theatre",
+   "t0": 300,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Kom El Deka",
+   "at": [
+    29.9045,
+    31.1945
+   ],
+   "names": [
+    [
+     300,
+     1959,
+     "Roman theatre (under Kom el-Dikka mound)"
+    ],
+    [
+     1960,
+     null,
+     "Kom el-Dikka Roman theatre"
+    ]
+   ]
+  },
+  {
+   "k": "church",
+   "name": "St Mark's Church (Coptic cathedral)",
+   "t0": 60,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Saint Mark's Coptic Orthodox Cathedral (Alexandria)",
+   "at": [
+    29.902,
+    31.197
+   ]
+  },
+  {
+   "k": "tomb",
+   "name": "Western Necropolis (Gabbari)",
+   "t0": -300,
+   "t1": 640,
+   "conf": 2,
+   "src": "Wikipedia: Ancient Alexandria; Wikipedia: Necropolis",
+   "at": [
+    29.878,
+    31.183
+   ]
+  },
+  {
+   "k": "tomb",
+   "name": "Shatby Necropolis",
+   "t0": -300,
+   "t1": -200,
+   "conf": 2,
+   "src": "Wikipedia: Shatby",
+   "at": [
+    29.9175,
+    31.2085
+   ]
+  },
+  {
+   "k": "forum",
+   "name": "Place des Consuls",
+   "t0": 1834,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Mansheya; Wikipedia: Equestrian statue of Muhammad Ali (Alexandria)",
+   "at": [
+    29.8958,
+    31.1995
+   ],
+   "names": [
+    [
+     1834,
+     1872,
+     "Place des Consuls"
+    ],
+    [
+     1873,
+     null,
+     "Place Mohamed Ali (Mansheya Square)"
+    ]
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Fort Kom el-Dikka",
+   "t0": 1798,
+   "t1": 1882,
+   "conf": 2,
+   "src": "Wikipedia: French campaign in Egypt and Syria; Wikipedia: Bombardment of Alexandria",
+   "at": [
+    29.9035,
+    31.193
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Canopic Way",
+   "t0": -331,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Canopic Way; Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "line": [
+    [
+     29.878,
+     31.1915
+    ],
+    [
+     29.889,
+     31.1942
+    ],
+    [
+     29.9,
+     31.1965
+    ],
+    [
+     29.91,
+     31.199
+    ],
+    [
+     29.923,
+     31.2
+    ],
+    [
+     29.935,
+     31.205
+    ]
+   ],
+   "names": [
+    [
+     -331,
+     1799,
+     "Canopic Way"
+    ],
+    [
+     1800,
+     1921,
+     "Rue Rosette"
+    ],
+    [
+     1922,
+     null,
+     "Fouad Street / Horreya Road"
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Street of the Soma (R1)",
+   "t0": -331,
+   "t1": null,
+   "conf": 2,
+   "src": "Mahmoud Bey el-Falaki, L'antique Alexandrie (1872); Fraser, Ptolemaic Alexandria (1972)",
+   "line": [
+    [
+     29.901,
+     31.2025
+    ],
+    [
+     29.9035,
+     31.1985
+    ],
+    [
+     29.9055,
+     31.1905
+    ]
+   ],
+   "names": [
+    [
+     -331,
+     1799,
+     "Street of the Soma (R1)"
+    ],
+    [
+     1800,
+     null,
+     "Rue Nabi Daniel"
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Canal from the Nile (Schedia canal)",
+   "t0": -331,
+   "t1": 1300,
+   "conf": 2,
+   "src": "Wikipedia: Mahmoudiyah Canal; Strabo, Geography 17.1.10",
+   "line": [
+    [
+     29.975,
+     31.188
+    ],
+    [
+     29.94,
+     31.185
+    ],
+    [
+     29.91,
+     31.183
+    ],
+    [
+     29.895,
+     31.187
+    ],
+    [
+     29.885,
+     31.192
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Pharos (ruined by earthquakes)",
+   "t0": -279,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Lighthouse of Alexandria",
+   "wd": "Q43244",
+   "names": [
+    [
+     -279,
+     1302,
+     "Pharos of Alexandria"
+    ],
+    [
+     1303,
+     1480,
+     "Pharos (ruined by earthquakes)"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Daughter library (Serapeum)",
+   "t0": -301,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Library of Alexandria",
+   "wd": "Q435",
+   "names": [
+    [
+     -283,
+     271,
+     "Library of Alexandria (Mouseion)"
+    ],
+    [
+     272,
+     400,
+     "Daughter library (Serapeum)"
+    ]
+   ],
+   "kinds": [
+    [
+     null,
+     null,
+     "school"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Serapeum",
+   "t0": -287,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Serapeum of Alexandria",
+   "wd": "Q521646",
+   "names": [
+    [
+     -287,
+     391,
+     "Serapeum"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Attarine Mosque",
+   "t0": 370,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Attarine Mosque",
+   "wd": "Q12204272",
+   "names": [
+    [
+     370,
+     640,
+     "Church of St Athanasius"
+    ],
+    [
+     641,
+     1900,
+     "Mosque of a Thousand Columns"
+    ],
+    [
+     1901,
+     null,
+     "Attarine Mosque"
+    ]
+   ],
+   "kinds": [
+    [
+     null,
+     640,
+     "church"
+    ],
+    [
+     641,
+     null,
+     "mosque"
+    ]
+   ],
+   "fix_dates": true
+  },
+  {
+   "k": "rename",
+   "name": "El-Mursi Abul Abbas Mosque",
+   "t0": 1307,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: El-Mursi Abul Abbas Mosque",
+   "wd": "Q1323845",
+   "names": [
+    [
+     1307,
+     1942,
+     "Shrine of Abu al-Abbas al-Mursi"
+    ],
+    [
+     1943,
+     null,
+     "El-Mursi Abul Abbas Mosque"
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "name": "Eliyahu Hanavi Synagogue (rebuilt)",
+   "t0": 1354,
+   "t1": null,
+   "conf": 1,
+   "src": "Wikipedia: Eliyahu Hanavi Synagogue",
+   "wd": "Q1331109",
+   "names": [
+    [
+     1354,
+     1798,
+     "Eliyahu Hanavi Synagogue"
+    ],
+    [
+     1850,
+     null,
+     "Eliyahu Hanavi Synagogue (rebuilt)"
+    ]
+   ],
+   "fix_dates": true
+  },
+  {
+   "k": "rename",
+   "name": "Citadel of Qaitbay (maritime museum)",
+   "t0": 1477,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Citadel of Qaitbay",
+   "wd": "Q1938065",
+   "names": [
+    [
+     1477,
+     1881,
+     "Citadel of Qaitbay"
+    ],
+    [
+     1882,
+     1983,
+     "Citadel of Qaitbay (damaged in the 1882 bombardment, restored)"
+    ],
+    [
+     1984,
+     null,
+     "Citadel of Qaitbay (maritime museum)"
+    ]
+   ]
+  }
+ ]
+}

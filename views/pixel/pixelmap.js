@@ -16,7 +16,8 @@
 //   pm.on(fn) / pm.view() / pm.ownWater(on)  for an animation layer above the map (motion.js): fn('layout'|'realms'|'paint') after
 //                                            each pass; view() reads this frame's buffers; ownWater(false) leaves water shimmer to it
 //
-// levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine.
+// levels: [{cell, tdeg, url(col, row)}] equirectangular terrain tiles (R class, G hillshade, B elevation band), coarse to fine;
+// the finest may be {cell, patches: [{box: [w, s, e, n], url, crop}]} (city-scale terrain around a few cities).
 // land: GeoJSON land (coasts come from it, so they stay sharp at any zoom). rivers: [{rank, line: [[lon,lat],...]}].
 // realms: [{id, name, color, feature}] political polygons for the year; drawn as flat tints with crisp 1-px borders.
 (function (global) {
@@ -40,8 +41,10 @@
 
   function decode(r) {
     if (r.data) return r;
-    const c = document.createElement("canvas"); c.width = r.w = r.img.naturalWidth || r.img.width; c.height = r.h = r.img.naturalHeight || r.img.height;
-    const x = c.getContext("2d"); x.drawImage(r.img, 0, 0);
+    // A tile may be one cell of a packed image (crop [x, y, w, h]), as the city patches are.
+    const q = r.crop, c = document.createElement("canvas");
+    c.width = r.w = q ? q[2] : r.img.naturalWidth || r.img.width; c.height = r.h = q ? q[3] : r.img.naturalHeight || r.img.height;
+    const x = c.getContext("2d"); x.drawImage(r.img, q ? -q[0] : 0, q ? -q[1] : 0);
     r.data = x.getImageData(0, 0, r.w, r.h).data;
     return r;
   }
@@ -55,6 +58,15 @@
     Object.assign(canvas.style, { position: "absolute", left: 0, top: 0, imageRendering: "pixelated", transformOrigin: "0 0", pointerEvents: "none" });
     container.prepend(canvas);
     const ctx = canvas.getContext("2d");
+    // The era's neatline and title plate sit on their own canvas over the map (and over the motion layers, which
+    // insert themselves right after the map canvas). move() never shifts it, so the frame stays on the screen's edge
+    // while the land slides under it.
+    const chromeC = document.createElement("canvas");
+    chromeC.className = "pixelmap-frame";
+    Object.assign(chromeC.style, { position: "absolute", left: 0, top: 0, imageRendering: "pixelated", pointerEvents: "none", display: "none" });
+    canvas.after(chromeC);
+    const cctx = chromeC.getContext("2d");
+    let chromeKey = "";
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
     let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, elevA = null, riv = null, anim = null, art = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [], paleo = null, paleoKey = "";
 
@@ -62,17 +74,35 @@
     // Tiles load on demand; until a finer tile arrives the coarser level shows, then the map re-renders.
     const levels = opts.levels || [], tiles = {};
     let pending = 0, onTile = null;
+    // A level may instead be a set of patches, {cell, patches: [{box: [w, s, e, n], url}]}: the city-scale terrain
+    // (ingest/city/tiles.py) exists only around a few cities, packed into one image (P.crop). tile(L, li, -1, i) loads patch i.
     function tile(L, li, col, row) {
-      const key = li * 100000 + col * 100 + row, t = tiles[key];
-      if (t) return t.data ? t : null;
-      const rec = tiles[key] = { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
+      const key = li * 100000 + col * 100 + row;
+      // Neighbouring pixels nearly always hit the same tile as the last call on this level.
+      if (L._key === key) return L._tile;
+      const t = tiles[key];
+      if (t) { if (t.data) { L._key = key; L._tile = t; } return t.data ? t : null; }
+      const P = col < 0 ? L.patches[row] : null;
+      const rec = tiles[key] = P ? { x0: P.box[0], y0: P.box[3], cell: L.cell, patch: true, crop: P.crop } : { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
       const img = new Image(); pending++;
       img.onload = () => { rec.img = img; decode(rec); pending--; tileVer++; clearTimeout(onTile); onTile = setTimeout(() => last && render(last), 60); };
       img.onerror = () => { pending--; rec.data = null; rec.failed = true; };
-      img.src = L.url(col, row);
+      img.src = P ? P.url : L.url(col, row);
       return null;
     }
-    const OUT3 = [0, 0, 0, 0];
+    // Patches in view (L.live, set by terrainPass) are the only ones tested per pixel; no closure, last hit first.
+    function patchAt(L, lon, lat) {
+      const ps = L.patches, live = L.live, h = L.hit || 0;
+      let b = ps[h] && ps[h].box;
+      if (b && lon >= b[0] && lon < b[2] && lat > b[1] && lat <= b[3]) return h;
+      const n = live ? live.length : ps.length;
+      for (let q = 0; q < n; q++) {
+        const i = live ? live[q] : q; b = ps[i].box;
+        if (lon >= b[0] && lon < b[2] && lat > b[1] && lat <= b[3]) return (L.hit = i);
+      }
+      return -1;
+    }
+    const OUT3 = [0, 0, 0, 0, 0];
     // Warp noise for class edges (see sample), baked as tiles per zoom scale.
     const warpTiles = new Map();
     function warpFor(cp) {
@@ -81,14 +111,16 @@
       if (!t) { const NT = global.PixelTerrainArt.noiseTile; t = [NT(sc, sc, 5, 1), NT(sc, sc, 5, 2), NT(sm, sm, 9, 3), NT(sm, sm, 9, 4)]; warpTiles.set(sc + "," + sm, t); }
       return t;
     }
-    // OUT3: [class, hillshade, elevation band, elevation in metres (float)].
+    // OUT3: [class, hillshade, elevation band, elevation in metres (float), 1 if from a city patch].
     function sample(lon, lat, need, u, v, exact) {
       let r = null; lon = Math.min(179.9999, lon); lat = Math.max(-89.9999, lat);
       for (let li = 0; li < levels.length; li++) {
         const L = levels[li];
-        if (li > 0 && L.cell * 1.6 < need && r) break;
-        const col = Math.floor((lon + 180) / L.tdeg), row = Math.floor((90 - lat) / L.tdeg);
-        const t = tile(L, li, col, row);
+        // City patches are worth sampling well before their own cell size: 45 m data beats a 3.7 km cell even 12x coarse.
+        if (li > 0 && L.cell * (L.patches ? 12 : 1.6) < need && r) break;
+        let t;
+        if (L.patches) { if (L.live && !L.live.length) continue; const pi = patchAt(L, lon, lat); if (pi < 0) continue; t = tile(L, li, -1, pi); }
+        else t = tile(L, li, Math.floor((lon + 180) / L.tdeg), Math.floor((90 - lat) / L.tdeg));
         if (t) r = t;
         if (L.cell <= need) break;
       }
@@ -113,7 +145,7 @@
           OUT3[ch] = t + (b - t) * ay;
         }
       } else { OUT3[1] = D[i + 1]; OUT3[2] = D[i + 2]; }
-      OUT3[3] = OUT3[2] * 25; OUT3[1] = Math.round(OUT3[1]); OUT3[2] = Math.round(OUT3[2]);
+      OUT3[3] = OUT3[2] * 25; OUT3[1] = Math.round(OUT3[1]); OUT3[2] = Math.round(OUT3[2]); OUT3[4] = r.patch ? 1 : 0;
       return OUT3;
     }
 
@@ -123,10 +155,50 @@
       const t = last;
       octx.setTransform(t.k / PX, 0, 0, t.k / PX, -U0, -V0);
       // Projected outlines are cached as Path2D per feature (and per projection), then filled through the zoom transform.
-      const pk = projection.scale() + "," + projection.translate().join(",");
-      feats.forEach((f, i) => { octx.fillStyle = fill(f, i); octx.fill(pathOf(f, pk)); });
+      const pk = projection.scale() + "," + projection.translate().join(",") + "," + tierOf(t.k);
+      // Realms wholly outside this region are skipped, so a zoomed-in view never projects the rest of the world.
+      const vb = viewBounds(t);
+      // Outlines the border worker already projected (views/pixel/borders.js) are filled in raw Natural Earth units
+      // through one transform; anything else goes through pathOf.
+      const P = rawProj(), tier = tierOf(t.k);
+      feats.forEach((f, i) => {
+        const b = vb && llBounds(f);
+        if (b && (b[2] < vb[0] || b[0] > vb[2] || b[3] < vb[1] || b[1] > vb[3])) return;
+        octx.fillStyle = fill(f, i);
+        if (P && f.raw && !f.raw.cross) {
+          octx.setTransform(t.k * P.s / PX, 0, 0, -t.k * P.s / PX, t.k * P.tx / PX - U0, t.k * P.ty / PX - V0);
+          octx.fill(rawPathOf(f.raw, tier, P.s));
+          octx.setTransform(t.k / PX, 0, 0, t.k / PX, -U0, -V0);
+        } else octx.fill(pathOf(f, pk));
+      });
       octx.setTransform(1, 0, 0, 1, 0, 0);
       return octx.getImageData(0, 0, w, h).data;
+    }
+    // Longitude/latitude box of the region (U0, V0, w, h), padded; null when it reaches the antimeridian or a pole.
+    function viewBounds(t) {
+      if (t.k < 1.5) return null;
+      let x0 = 180, x1 = -180, y0 = 90, y1 = -90;
+      for (let s = 0; s <= 8; s++) for (const [i, j] of [[s / 8 * w, 0], [s / 8 * w, h], [0, s / 8 * h], [w, s / 8 * h]]) {
+        const ll = projection.invert([(i + U0) * PX / t.k, (j + V0) * PX / t.k]);
+        if (!ll || !isFinite(ll[0]) || !isFinite(ll[1])) return null;
+        x0 = Math.min(x0, ll[0]); x1 = Math.max(x1, ll[0]); y0 = Math.min(y0, ll[1]); y1 = Math.max(y1, ll[1]);
+      }
+      if (x1 - x0 > 200 || y1 > 84 || y0 < -84) return null;
+      const pad = 2 + (x1 - x0) * 0.05;
+      return [x0 - pad, y0 - pad, x1 + pad, y1 + pad];
+    }
+    const llCache = new WeakMap();
+    function llBounds(f) {
+      if (f && f.raw) return f.raw.bbox;
+      let b = llCache.get(f);
+      if (b !== undefined) return b;
+      b = [180, 90, -180, -90];
+      const walk = c => { if (typeof c[0] === "number") { if (c[0] < b[0]) b[0] = c[0]; if (c[0] > b[2]) b[2] = c[0]; if (c[1] < b[1]) b[1] = c[1]; if (c[1] > b[3]) b[3] = c[1]; } else for (const x of c) walk(x); };
+      const g = f && (f.geometry || f);
+      if (g && g.coordinates) walk(g.coordinates); else b = null;
+      // A shape straddling the antimeridian looks world-wide here, so it is always drawn (safe, just not culled).
+      llCache.set(f, b);
+      return b;
     }
 
     // Build the projected outlines of features ahead of time, in idle slices, so the first visit to a border frame
@@ -136,15 +208,85 @@
     function pathOf(f, pk) {
       let c = pathCache.get(f);
       // Projected straight into a Path2D (no SVG string to build and parse).
-      if (!c || c.pk !== pk) { const p2 = new Path2D(); ctxPath.context(p2)(f); pathCache.set(f, c = { pk, p: p2 }); }
+      // Resampling off: border vertices are far denser than an art pixel, so straight segments look the same and
+      // projecting costs about half.
+      if (!c || c.pk !== pk) {
+        let p2 = fastPath(f);
+        if (!p2) {
+          p2 = new Path2D(); const pr = projection.precision(); projection.precision(0);
+          try { ctxPath.context(p2)(f); } finally { projection.precision(pr); }
+        }
+        pathCache.set(f, c = { pk, p: p2 });
+      }
       return c.p;
+    }
+    // The page's Natural Earth projection evaluated directly (no stream, clipping or resampling): about five times
+    // quicker than d3.geoPath. Used for shapes that stay off the antimeridian and the poles, which need d3's clipping.
+    const RAW = (() => {
+      if (projection.rotate().some(v => v)) return null;
+      // d3.geoNaturalEarth1Raw inlined (no array per point); the check below falls back to d3 for any other projection.
+      const raw = (l, p) => { const p2 = p * p, p4 = p2 * p2; OUT2[0] = l * (0.8707 - 0.131979 * p2 + p4 * (-0.013791 + p4 * (0.003971 * p2 - 0.001529 * p4)));
+        OUT2[1] = p * (1.007226 + p2 * (0.015085 + p4 * (-0.044475 + 0.028874 * p2 - 0.005916 * p4))); return OUT2; };
+      const s = projection.scale(), [tx, ty] = projection.translate(), R = Math.PI / 180;
+      const f = (lon, lat) => { const p = raw(lon * R, lat * R); return [tx + s * p[0], ty - s * p[1]]; };
+      for (const [lo, la] of [[0, 0], [100, 40], [-60, -30]]) { const a = projection([lo, la]), b = f(lo, la); if (!a || Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) > 1e-6) return null; }
+      return { raw, s, tx, ty, R, key: s + "," + tx + "," + ty };
+    });
+    let rawP = null; const OUT2 = [0, 0];
+    // Zoom tiers for simplified outlines (powers of two), so a path built at one zoom serves until the next tier.
+    const tierOf = k => Math.pow(2, Math.ceil(Math.log2(Math.max(1, k))));
+    function rawProj() {
+      const pk = projection.scale() + "," + projection.translate().join(",");
+      if (!rawP || rawP.pk !== pk) rawP = { pk, P: RAW() };
+      return rawP.P;
+    }
+    // A worker-projected outline as a Path2D in raw units, dropping vertices closer than a third of an art pixel.
+    const rawCache = new WeakMap();
+    function rawPathOf(d, tier, s) {
+      const key = tier + "," + s; let c = rawCache.get(d);
+      if (c && c.key === key) return c.p;
+      const p2 = new Path2D(), xy = d.xy, tol = PX / tier / s / 3;
+      let o = 0;
+      for (let r = 0; r < d.lens.length; r++) {
+        const n = d.lens[r]; let lx = xy[o], ly = xy[o + 1];
+        p2.moveTo(lx, ly);
+        for (let i = 1; i < n; i++) { const x = xy[o + 2 * i], y = xy[o + 2 * i + 1]; if (i === n - 1 || Math.abs(x - lx) + Math.abs(y - ly) > tol) { p2.lineTo(x, y); lx = x; ly = y; } }
+        p2.closePath(); o += 2 * n;
+      }
+      rawCache.set(d, c = { key, p: p2 });
+      return p2;
+    }
+    function fastPath(f) {
+      const g = f && f.geometry; if (!g) return null;
+      const polys = g.type === "Polygon" ? [g.coordinates] : g.type === "MultiPolygon" ? g.coordinates : null; if (!polys) return null;
+      const P = rawProj(); if (!P) return null;
+      for (const poly of polys) for (const ring of poly) for (let i = 0; i < ring.length; i++) {
+        const c = ring[i]; if (c[1] > 89 || c[1] < -89 || c[0] >= 180 || c[0] <= -180) return null;
+        if (i && Math.abs(c[0] - ring[i - 1][0]) > 90) return null;
+      }
+      // Vertices closer than a third of an art pixel at this zoom tier are dropped: they cannot change the raster.
+      const { raw, s, tx, ty, R } = P, p2 = new Path2D(), tol = PX / tierOf(last ? last.k : 1) / 3;
+      for (const poly of polys) for (const ring of poly) {
+        let lx = 0, ly = 0;
+        for (let i = 0, n = ring.length; i < n; i++) {
+          const q = raw(ring[i][0] * R, ring[i][1] * R), x = tx + s * q[0], y = ty - s * q[1];
+          if (!i) { p2.moveTo(x, y); lx = x; ly = y; } else if (i === n - 1 || Math.abs(x - lx) + Math.abs(y - ly) > tol) { p2.lineTo(x, y); lx = x; ly = y; }
+        }
+        p2.closePath();
+      }
+      return p2;
     }
     function warm(feats) {
       warmQ = feats.slice();
       if (warmOn) return; warmOn = true;
       const step = dl => {
-        const pk = projection.scale() + "," + projection.translate().join(",");
-        while (warmQ.length && dl.timeRemaining() > 2) { const f = warmQ.pop(), c = pathCache.get(f); if (!c || c.pk !== pk) pathOf(f, pk); }
+        const pk = projection.scale() + "," + projection.translate().join(",") + "," + tierOf(last ? last.k : 1);
+        const P = rawProj(), tier = tierOf(last ? last.k : 1);
+        while (warmQ.length && dl.timeRemaining() > 2) {
+          const f = warmQ.pop();
+          if (P && f.raw && !f.raw.cross) rawPathOf(f.raw, tier, P.s);
+          else { const c = pathCache.get(f); if (!c || c.pk !== pk) pathOf(f, pk); }
+        }
         if (warmQ.length) idle(step); else warmOn = false;
       };
       idle(step);
@@ -178,6 +320,15 @@
         for (let y = -1; y <= 2 && !any; y++) for (let x = -1; x <= 2; x++) if (gok[(gj + y) * gw + gi + x]) { any = 1; break; }
         paper[gj * gw + gi] = !any;
       }
+      // Which city patches this view can touch (from the grid's corners, padded a cell): most views touch none, and
+      // then the patch level costs nothing per pixel.
+      let vw = 180, vs = 90, ve = -180, vn = -90, any = 0;
+      for (let q = 0; q < gw * gh; q++) if (gok[q]) { any = 1; vw = Math.min(vw, gl[q * 2]); ve = Math.max(ve, gl[q * 2]); vs = Math.min(vs, gl[q * 2 + 1]); vn = Math.max(vn, gl[q * 2 + 1]); }
+      const wide = !any || ve - vw > 180;
+      for (const L of levels) if (L.patches) {
+        const pad = 0.05;
+        L.live = wide ? null : L.patches.map((P, i) => (P.box[0] <= ve + pad && P.box[2] >= vw - pad && P.box[1] <= vn + pad && P.box[3] >= vs - pad ? i : -1)).filter(i => i >= 0);
+      }
       const ll = [0, 0];
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, u = U0 + i, v = V0 + j;
@@ -194,7 +345,8 @@
         let c = s[0]; const s1 = s[1], s2 = s[2], s3 = s[3];
         // Rivers stay thin lines when zoomed past the data: only the unjittered cell counts.
         if (c === 4 && sample(ll[0], ll[1], need, u, v, true)[0] !== 4) c = 10;
-        const isLand = landM[k * 4 + 3] > 127;
+        // A city patch draws its own coastline (OpenStreetMap, 45 m), finer than the vector land mask.
+        const isLand = s[4] ? c > 2 : landM[k * 4 + 3] > 127;
         // Rasterised rivers only once zoomed in far enough that a cell is about a pixel; vector lines cover the rest.
         if (c === 4 && (need > 0.1 || !isLand)) c = 10;
         if (isLand && WATER(c) && c !== 3) c = 10;
@@ -219,7 +371,7 @@
     // Run terrainPass on another region of the world grid and hand back its buffers (the view's are left as they were).
     // Wide enough for the terrain art's largest world-anchored pieces (mountain cells, landmark peaks, blur, coast distance).
     const SEAM = 16;
-    let prevView = null, tileVer = 0;
+    let prevView = null, tileVer = 0, pad = 0;
     function region(t, need, ru, rv, rw, rh) {
       const sv = { U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
       U0 = ru; V0 = rv; w = rw; h = rh; off.width = rw; off.height = rh;
@@ -240,23 +392,61 @@
       }
     }
 
+    // Where the art-pixel grid sits for transform t with `pd` art px of pad past each screen edge.
+    function geom(t, pd) {
+      const W = container.clientWidth, H = container.clientHeight;
+      const ox = ((t.x % PX) + PX) % PX - PX - pd * PX, oy = ((t.y % PX) + PX) % PX - PX - pd * PX;
+      const sw = Math.abs(projection([180, 0])[0] - projection([-180, 0])[0]);
+      return { ox, oy, U0: Math.round((ox - t.x) / PX), V0: Math.round((oy - t.y) / PX), w: Math.ceil((W - ox) / PX) + 1 + pd, h: Math.ceil((H - oy) / PX) + 1 + pd, need: 360 / (sw * t.k / PX) };
+    }
+    const reusable = (P, t, need, u, v, ww, hh) => !!P && P.k === t.k && P.need === need && P.mood === mood && P.ver === tileVer && P.pk === paleoKey && Math.abs(u - P.U0) < ww && Math.abs(v - P.V0) < hh;
+    const regionKey = (t, need) => [t.k, need, mood, tileVer, paleoKey].join();
+    // The rectangles of a new view (U0, V0, w, h) that the last frame P does not cover: up to four bands.
+    function bandsOf(P, u, v, ww, hh) {
+      const iu0 = P.U0 + SEAM, iv0 = P.V0 + SEAM, iu1 = P.U0 + P.w - SEAM, iv1 = P.V0 + P.h - SEAM;
+      const bands = [[u, v, u + ww, Math.max(v, Math.min(v + hh, iv0))], [u, Math.min(v + hh, Math.max(v, iv1)), u + ww, v + hh]];
+      const my0 = Math.max(v, iv0), my1 = Math.min(v + hh, iv1);
+      if (my1 > my0) bands.push([u, my0, Math.max(u, Math.min(u + ww, iu0)), my1], [Math.min(u + ww, Math.max(u, iu1)), my0, u + ww, my1]);
+      return bands.filter(([u0, v0, u1, v1]) => u1 > u0 && v1 > v0);
+    }
+    // Terrain for bands the next render will need, computed ahead one band per call (so idle time can take them in
+    // slices instead of one long task). Cleared by the next render.
+    const preRegions = new Map();
+    function padJobs(t, pd) {
+      const g = geom(t, pd), P = prevView;
+      if (!last || t !== last || !reusable(P, t, g.need, g.U0, g.V0, g.w, g.h)) return [];
+      const pk = regionKey(t, g.need);
+      return bandsOf(P, g.U0, g.V0, g.w, g.h).map(([u0, v0, u1, v1]) => () => {
+        const key = pk + "|" + [u0, v0, u1, v1].join();
+        if (preRegions.has(key) || last !== t || regionKey(t, g.need) !== pk) return;
+        preRegions.set(key, region(t, g.need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM));
+        off.width = w; off.height = h;  // region() resized the realm mask canvas; give it back to the current frame
+      });
+    }
+
     function render(t, o = {}) {
       const W = container.clientWidth, H = container.clientHeight; lastW = W; lastH = H;
       last = t; realmsNow = o.realms || realmsNow; if (o.mood) mood = o.mood; rv++; fade = null;
       // Art pixel (i, j) covers screen x in [ox + i*PX, ox + (i+1)*PX); U0 + i is its column in the zoomed world grid.
-      const ox = ((t.x % PX) + PX) % PX - PX, oy = ((t.y % PX) + PX) % PX - PX;
-      U0 = Math.round((ox - t.x) / PX); V0 = Math.round((oy - t.y) / PX);
-      w = Math.ceil((W - ox) / PX) + 1; h = Math.ceil((H - oy) / PX) + 1;
+      // pad: art pixels drawn past every edge of the screen (sticky until a render asks for another), so a pan
+      // uncovers land that is already painted instead of bare paper.
+      if (o.pad != null) pad = Math.max(0, o.pad | 0);
+      let ox, oy, need;
+      ({ ox, oy, U0, V0, w, h, need } = geom(t, pad));
       canvas.width = w; canvas.height = h;
       Object.assign(canvas.style, { left: ox + "px", top: oy + "px", width: w * PX + "px", height: h * PX + "px", transform: "" });
-      const sw = Math.abs(projection([180, 0])[0] - projection([-180, 0])[0]);
-      const need = 360 / (sw * t.k / PX);
       // A pan at the same zoom keeps every art pixel it already drew (they are anchored to the world grid) and only
       // draws the newly exposed bands, each with a margin so trees, peaks and shorelines join up across the seam.
-      const P = prevView, reuse = P && P.k === t.k && P.need === need && P.mood === mood && P.ver === tileVer && P.pk === paleoKey && !o.full &&
-        Math.abs(U0 - P.U0) < w && Math.abs(V0 - P.V0) < h;
+      const P = prevView, reuse = reusable(P, t, need, U0, V0, w, h) && !o.full;
+      // The same rectangle again (a padded frame coming back after a year step): every pixel is already there.
+      const exact = reuse && P.U0 === U0 && P.V0 === V0 && P.w === w && P.h === h;
+      // Inside the last frame (the pad dropped for a year step): keep that bigger frame as the one to reuse.
+      const inside = reuse && !exact && U0 >= P.U0 + SEAM && V0 >= P.V0 + SEAM && U0 + w <= P.U0 + P.w - SEAM && V0 + h <= P.V0 + P.h - SEAM;
       if (!reuse) { off.width = w; off.height = h; terrainPass(t, need); }
-      else {
+      else if (exact) {
+        ({ base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = P); base = P.base.slice();
+        off.width = w; off.height = h; art = { ...art, anim };
+      } else {
         base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255); hs = new Uint8Array(w * h); band = new Uint8Array(w * h);
         lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h); lonA = new Float32Array(w * h); elevA = new Float32Array(w * h);
         riv = new Uint8Array(w * h); anim = new Uint8Array(w * h);
@@ -264,19 +454,18 @@
         // The old frame's interior (its edge band may lack art anchored just outside it).
         const iu0 = P.U0 + SEAM, iv0 = P.V0 + SEAM, iu1 = P.U0 + P.w - SEAM, iv1 = P.V0 + P.h - SEAM;
         blit(P, view, Math.max(U0, iu0), Math.max(V0, iv0), Math.min(U0 + w, iu1), Math.min(V0 + h, iv1));
-        // New view minus that interior: up to four bands.
-        const bands = [[U0, V0, U0 + w, Math.max(V0, Math.min(V0 + h, iv0))], [U0, Math.min(V0 + h, Math.max(V0, iv1)), U0 + w, V0 + h]];
-        const my0 = Math.max(V0, iv0), my1 = Math.min(V0 + h, iv1);
-        if (my1 > my0) bands.push([U0, my0, Math.max(U0, Math.min(U0 + w, iu0)), my1], [Math.min(U0 + w, Math.max(U0, iu1)), my0, U0 + w, my1]);
-        for (const [u0, v0, u1, v1] of bands) {
-          if (u1 <= u0 || v1 <= v0) continue;
-          const r = region(t, need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM);
+        // New view minus that interior: up to four bands (prepared ahead in idle slices by padJobs, when it ran).
+        const pk = regionKey(t, need);
+        for (const [u0, v0, u1, v1] of bandsOf(P, U0, V0, w, h)) {
+          const key = pk + "|" + [u0, v0, u1, v1].join();
+          const r = preRegions.get(key) || region(t, need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM);
           blit(r, view, u0, v0, u1, v1);
         }
         ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = view);
         off.width = w; off.height = h; art = { ...art, anim };
       }
-      prevView = { k: t.k, need, mood, ver: tileVer, pk: paleoKey, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
+      preRegions.clear();
+      if (!inside && !exact) prevView = { k: t.k, need, mood, ver: tileVer, pk: paleoKey, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
       terrain = base.slice();
       realmRaster.clear();
       applyRealms();
@@ -345,7 +534,7 @@
       if (realmRaster.size > RASTER_MAX) realmRaster.delete(realmRaster.keys().next().value);
     }
     // The one place where realms are done and sprites come next (year-dependent passes over base go here).
-    function realmsDone() { detail("over"); paint(); emit("realms"); }
+    function realmsDone(o) { detail("over"); if (!o || o.paint !== false) paint(); emit("realms"); }
     const hooks = [];
     function emit(kind) { for (const fn of hooks) try { fn(kind); } catch (err) { console.error("pixel hook", err); } }
     function detail(phase) {
@@ -478,6 +667,7 @@
       if (overlay) try { overlay(frameInfo()); } catch (err) { console.error("pixel overlay", err); }
       const vis = [Math.ceil(-parseFloat(canvas.style.left) / PX), Math.ceil(-parseFloat(canvas.style.top) / PX), Math.floor((lastW - parseFloat(canvas.style.left)) / PX) - 1, Math.floor((lastH - parseFloat(canvas.style.top)) / PX) - 1];
       if (era && era.over) try { era.over({ out, pre, w, h, px: PX, frame, vis, cls, sprite: spriteMask, U0, V0, k: t.k, projection, at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] }); } catch (err) { console.error("pixel era", err); }
+      paintChrome(vis);
       // Era crossfade: the old frame dissolves into the new one through an ordered-dither mask, in a few steps.
       if (fade) { if (fade.prev.length === out.length && fade.U0 === U0 && fade.V0 === V0) { const m = fade.mask, p = fade.prev, f = fade.t; for (let k = 0; k < out.length; k++) if (m[k] >= f) out[k] = p[k]; } }
       lastOut = out;
@@ -486,14 +676,30 @@
       emit("paint");
     }
 
+    // The era frame layer: redrawn only when the view's size, the era or the plate's text changes.
+    function paintChrome(vis) {
+      const on = !!(era && era.chrome);
+      const key = on ? [era.id, w, h, vis.join(), canvas.style.left, canvas.style.top, era.chromeKey ? era.chromeKey() : ""].join("|") : "";
+      if (key === chromeKey) return;
+      chromeKey = key;
+      if (!on) { chromeC.style.display = "none"; return; }
+      if (chromeC.width !== w || chromeC.height !== h) { chromeC.width = w; chromeC.height = h; }
+      Object.assign(chromeC.style, { left: canvas.style.left, top: canvas.style.top, width: canvas.style.width, height: canvas.style.height, display: "" });
+      const cimg = cctx.createImageData(w, h), cout = new Uint32Array(cimg.data.buffer);
+      try { era.chrome({ out: cout, w, h, px: PX, vis }); } catch (err) { console.error("pixel era frame", err); }
+      cctx.putImageData(cimg, 0, 0);
+    }
+
     return {
       canvas,
+      frameCanvas: chromeC,
       render,
       warm,
       move(t) { if (!last) return; const s = t.k / last.k; canvas.style.transform = `translate(${t.x - last.x * s}px,${t.y - last.y * s}px) scale(${s})`; canvas.style.transformOrigin = `${-parseFloat(canvas.style.left)}px ${-parseFloat(canvas.style.top)}px`; },
       sprites(l, o) { allSprites = l; spriteOpts = o || {}; paint(); },
       // A new year with the same view: keep the terrain pass, redo only realms and sprites.
-      setRealms(r) { realmsNow = r || NONE; if (!terrain) return; applyRealms(); realmsDone(); },
+      // o.paint false: the caller sets sprites next, which paints (one paint per year step, not two).
+      setRealms(r, o) { realmsNow = r || NONE; if (!terrain) return; applyRealms(); realmsDone(o); },
       // Is the last render for this transform (so a year change can use setRealms)?
       same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === container.clientWidth && lastH === container.clientHeight; },
       // Switch era style (null = today's look): regrade, then dissolve from the old frame over about 400 ms.
@@ -542,7 +748,19 @@
         return out;
       },
       // The last frame's realm ids and terrain classes per art pixel, for naming realms (realmnames.js).
-      labelGrid() { return ids && last ? { ids, cls, w, h, PX, left: parseFloat(canvas.style.left), top: parseFloat(canvas.style.top), realms: realmsNow } : null; },
+      // Only the part on screen (names go where you can read them, not out in the pad).
+      labelGrid() {
+        if (!ids || !last) return null;
+        const L = parseFloat(canvas.style.left), Tp = parseFloat(canvas.style.top);
+        if (!pad) return { ids, cls, w, h, PX, left: L, top: Tp, realms: realmsNow, t: last };
+        const vw = Math.max(1, w - 2 * pad), vh = Math.max(1, h - 2 * pad), vi = new ids.constructor(vw * vh), vc = new Uint8Array(vw * vh);
+        for (let j = 0; j < vh; j++) { const o = (j + pad) * w + pad; vi.set(ids.subarray(o, o + vw), j * vw); vc.set(cls.subarray(o, o + vw), j * vw); }
+        return { ids: vi, cls: vc, w: vw, h: vh, PX, left: L + pad * PX, top: Tp + pad * PX, realms: realmsNow, t: last };
+      },
+      get pad() { return pad; },
+      padJobs,
+      // The transform the last frame was drawn at (screen boxes from spriteBoxes and labelGrid are in its pixels).
+      get drawnAt() { return last; },
       toPixel(lon, lat) { const p = projection([lon, lat]); return p && [Math.floor((p[0] * last.k) / PX) - U0, Math.floor((p[1] * last.k) / PX) - V0]; },
       get size() { return { w, h, PX }; },
       // Terrain art of the last render: { anim (1 foam, 2 wave glyph, 3 river, 4 smoke), tier, ms } (terrain-art.js).

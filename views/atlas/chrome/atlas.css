@@ -51,6 +51,9 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .askbar input { border: 0; background: none; border-radius: 0; outline: none; font-family: var(--f-prose); font-size: 16px; padding: 6px 2px; }
 .app .askbar input::placeholder { color: var(--ink-soft); font-style: italic; }
 .app.asking .askbar { visibility: hidden; }
+.app .askbar:not(.open) { right: auto; min-width: 0; cursor: text; }
+.app .askbar:not(.open) input { flex: 0 0 auto; width: 12ch; text-overflow: ellipsis; }
+.app .askbar:not(.open) #go { display: none; }
 
 /* ---- buttons (old .btn markup gets the pixel button) ---- */
 .app .btn { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
@@ -113,7 +116,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .chip.fam[data-k="land"] { --t: var(--t-land); } .app .chip.fam[data-k="power"] { --t: var(--t-power); } .app .chip.fam[data-k="wealth"] { --t: var(--t-wealth); }
 .app .chip.fam[data-k="peoples"] { --t: var(--t-peoples); } .app .chip.fam[data-k="mind"] { --t: var(--t-mind); } .app .chip.fam[data-k="shocks"] { --t: var(--t-shocks); }
 .app .chip.fam > i { display: none; }
-.app #sublayers { position: absolute; z-index: 6; left: calc(var(--rail) + var(--g) + 16px); top: 176px; width: 236px; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: stretch;
+.app #sublayers { position: absolute; z-index: 8; left: calc(var(--rail-open) + var(--g) + 10px); top: 176px; width: 236px; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: stretch;
   border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); padding: 2px 4px 6px; }
 .app #sublayers:empty, .app.sub-shut #sublayers { display: none; }
 .app #sublayers .lab { font-family: var(--f-tiny); font-size: 8px; line-height: 16px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding: 0 4px; }
@@ -203,11 +206,11 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .wf .wst.alt { border-image-source: var(--f-card); outline: 2px dashed var(--y-whatif); outline-offset: -8px; }
 .app .step.on, .app .wf .wst.on { border-image-source: var(--f-card-gold); }
 .app .step .t, .app .wf .wst .t, .app .wf .sc b, .app .cx .quest b, .app .view .nm, .app .link .ends, .app .whatif b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 1.2; }
-.app .step .i, .app .step .y, .app .step .ln, .app .conf, .app .pnl .stt, .app .spk b, .app .view .st, .app .wf .sc .meta, .app .wf .wst .y, .app .cx ul.ent li .y, .app .player .count { font-family: var(--f-tiny); font-size: 8px; }
+.app .step .i, .app .step .y, .app .step .ln, .app .conf, .app .pnl .stt, .app .spk .role, .app .chair .by, .app .lrow .n, .app .view .st, .app .wf .sc .meta, .app .wf .wst .y, .app .cx ul.ent li .y, .app .player .count { font-family: var(--f-tiny); font-size: 8px; }
 .app .view .st, .app .wf .tagr, .app .wf .tagb, .app .wf .badge2 { border-radius: 0; font-size: 8px; }
-.app .player { background: var(--vellum); border-bottom: 0; box-shadow: 0 2px 0 var(--vellum-3); top: 64px; }
-.app .mrow .bar, .app .wf .pl .bar, .app .cx .bar { border-radius: 0; height: 8px; background: repeating-linear-gradient(90deg, var(--wash) 0 6px, transparent 6px 8px); outline: 0; }
-.app .mrow .bar i, .app .wf .pl .bar i, .app .cx .bar i { border-radius: 0; background: repeating-linear-gradient(90deg, var(--c, var(--y-whatif, var(--gold))) 0 6px, transparent 6px 8px); }
+.app .player { background: var(--vellum); border-bottom: 0; box-shadow: 0 2px 0 var(--vellum-3); top: var(--tabs-h, 64px); }
+.app .wf .pl .bar, .app .cx .bar { border-radius: 0; height: 8px; background: repeating-linear-gradient(90deg, var(--wash) 0 6px, transparent 6px 8px); outline: 0; }
+.app .wf .pl .bar i, .app .cx .bar i { border-radius: 0; background: repeating-linear-gradient(90deg, var(--c, var(--y-whatif, var(--gold))) 0 6px, transparent 6px 8px); }
 .app .cx .bar i { background: repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 8px); }
 .app .cx .meter i { outline: 0; box-shadow: inset 0 0 0 2px var(--vellum-3); }
 .app .cx .meter i.on { background: var(--gold); box-shadow: inset 0 0 0 2px var(--gold-2); }
@@ -235,7 +238,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .grip::before { content: ""; width: 24px; height: 6px; background: repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 0 / 24px 2px no-repeat, repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 4px / 24px 2px no-repeat; }
 .app .grip:hover { color: var(--ink); }
 .app .grip:focus-visible { outline: 2px dashed var(--gold); outline-offset: -2px; }
-@media (max-width: 700px) { .app .grip { display: none; } }
+@media (max-width: 700px) { .app .grip { display: none; } .app .player { top: 0; } }
 
 /* ---- the panel folded to its ribbons (P): the map runs the full width ---- */
 @media (min-width: 701px) {
@@ -350,3 +353,89 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app .dr { justify-items: start; padding-left: max(var(--g), env(safe-area-inset-left, 0px)); }
   .app .dr-strip { width: min(680px, 100%); }
 }
+
+/* ---- show or hide the interface (the eye, H): chrome slides off its nearest edge in three steps (D8) ---- */
+.app #focusbtn { display: none; }
+.app .yearplate, .app #nextcard, .app .modeplate, .app #layers, .app #sublayers, .app .askbar, .app .mapctl, .app .panel, .app .time, .app .pxhud-br, .app .caption, .app .keycard, .app .cx-toasts {
+  transition: transform 150ms steps(3, end), opacity 150ms steps(3, end); }
+.app.ui-hidden #layers, .app.ui-hidden #sublayers { transform: translateX(calc(-100% - 2 * var(--g))); pointer-events: none; }
+.app.ui-hidden .panel, .app.ui-hidden .keycard, .app.ui-hidden .cx-toasts { transform: translateX(calc(100% + 2 * var(--g))); pointer-events: none; }
+.app.ui-hidden #nextcard, .app.ui-hidden .modeplate, .app.ui-hidden .askbar { transform: translateY(calc(-100% - 120px)); pointer-events: none; }
+.app.ui-hidden .time, .app.ui-hidden .pxhud-br, .app.ui-hidden .caption { transform: translateY(calc(100% + 2 * var(--g) + 40px)); pointer-events: none; }
+.app.ui-hidden .mapctl .btn:not(.eyebtn) { opacity: 0; pointer-events: none; }
+.app.ui-hidden .mapctl { right: max(var(--g), env(safe-area-inset-right, 0px)); }
+.app.ui-hidden .yearplate { transform: scale(.75); transform-origin: 0 0; }
+.app.ui-hidden .yearplate, .app.ui-hidden .eyebtn { opacity: .4; }
+.app.ui-hidden .yearplate:hover, .app.ui-hidden .eyebtn:hover, .app.ui-hidden .eyebtn:focus-visible { opacity: 1; }
+.app .eyebtn[aria-pressed="true"] { color: var(--vellum-fixed); border-image-source: var(--f-button); }
+/* Dragging the map: the interface becomes a ghost until you let go; hovering it brings it back. */
+.app.panning :is(.yearplate, #nextcard, .modeplate, #layers, .askbar, .mapctl, .panel, .time, .pxhud-br, .caption):not(:hover) { opacity: .25; transition: opacity 120ms steps(2, end); }
+
+/* ---- a game or mode: one plate, top left, the same in every mode ---- */
+.app .modeplate { position: absolute; z-index: 7; left: max(var(--g), env(safe-area-inset-left, 0px)); top: 104px; display: flex; align-items: center; gap: 8px; padding: 2px 4px;
+  border: 10px solid transparent; border-image: var(--f-plate) 5 fill / 10px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); }
+.app .modeplate[hidden], .app.in-mode #nextcard { display: none; }
+.app .modeplate button { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.app .mp-back { color: var(--vellum-fixed); padding: 2px 6px; border: 6px solid transparent; border-image: var(--f-button) 3 fill / 6px stretch; }
+.app .mp-back .ico { --t: var(--gold-hi); width: 12px; height: 12px; }
+.app .mp-back kbd { font-family: var(--f-tiny); font-size: 8px; opacity: .7; }
+.app .mp-back:hover, .app .mp-back:focus-visible { transform: translateY(-2px); }
+.app .mp-nm { font-family: var(--f-head); font-size: 16px; color: var(--ink); white-space: nowrap; }
+.app .mp-peek { color: var(--ink-soft); border-bottom: 2px dotted var(--ink-soft); }
+.app .mp-peek:hover, .app .mp-peek:focus-visible { color: var(--ink); }
+.app.directing .modeplate { display: none; }
+@media (max-width: 700px) {
+  .app .modeplate { top: auto; bottom: calc(var(--peek, 92px) + var(--timeh) + 8px); left: 8px; }
+  .app .mp-peek, .app .mp-back kbd { display: none; }
+  .app .eyebtn { position: fixed; right: 12px; bottom: calc(var(--peek, 92px) + var(--timeh) + 12px); z-index: 25; }
+  .app.ui-hidden .eyebtn { bottom: 16px; }
+  .app.ui-hidden .yearplate { transform: scale(.75); }
+}
+@media (prefers-reduced-motion: reduce) { .app .yearplate, .app #layers, .app .panel, .app .time { transition: none; } }
+/* Folded on the Ask ribbon, the question box is the only way to ask, so it stays. */
+.app.panel-min.asking .askbar, .app.panel-min.asking #qbox, .app.panel-min.asking #go { visibility: visible; }
+@media (max-width: 860px) { .app.panel-min.asking #qbox, .app.panel-min.asking #go { display: revert; } }
+.app.ui-hidden .maphint { opacity: 0; }
+.app.ui-hidden .pxhud-br { transform: translateY(calc(100% + 200px)); }
+.app.in-mode .askbar, .app.in-mode .maphint { display: none; }
+/* Folded, the ribbons are one row of emblems (the names are in the tooltips). */
+@media (min-width: 701px) {
+  .app.panel-min .tabs { flex-wrap: wrap; gap: 0; padding: 0; }
+  .app.panel-min .tabs .tab, .app.panel-min .tabs.many .tab[aria-selected] { flex: 0 0 auto; width: 30px; padding: 4px 3px; margin: 0; }
+  .app.panel-min .tabs .tab .nm, .app.panel-min .tabs.many .tab[aria-selected] .nm { display: none; }
+}
+.app .mp-back .ico { transform: scaleX(-1); }
+@media (max-width: 700px) { .app.ui-hidden { padding-bottom: env(safe-area-inset-bottom, 0px); } .app.ui-hidden .panel { transform: translateY(100%); } }
+/* The eye stays findable when everything else has gone: vellum, ink line. A one-time hint says how to come back. */
+.app.ui-hidden .eyebtn { opacity: .85; color: var(--ink-fixed); border-image-source: var(--f-button-q); }
+.app .uihint { position: absolute; z-index: 30; top: 64px; right: max(var(--g), env(safe-area-inset-right, 0px)); padding: 4px 8px; font-family: var(--f-tiny); font-size: 8px; line-height: 12px;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--ink); border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; pointer-events: none; }
+@media (max-width: 700px) { .app .uihint { top: auto; bottom: 64px; } .app.ui-hidden .time { transform: translateY(calc(100% + var(--peek, 92px) + 60px)); } }
+/* In a game the panel holds the question; the map's caption card would say it twice. */
+@media (min-width: 701px) { .app.in-mode .caption { display: none; } }
+/* Panes never run wider than the panel. */
+.app .panel .pane { min-width: 0; max-width: 100%; overflow-x: hidden; overflow-wrap: anywhere; }
+.app .panel .pane * { max-width: 100%; box-sizing: border-box; }
+/* Phone: the lens families are one row of emblems, like the desktop rail. */
+@media (max-width: 700px) {
+  .app .nextcard { top: 84px; }
+  .app #layers { left: max(8px, env(safe-area-inset-left, 0px)); right: auto; top: 128px; width: 40px; flex-direction: column; overflow: visible; padding: 0; gap: 4px; }
+  .app #layers .chip.fam, .app #layers:hover .chip.fam, .app #layers:focus-within .chip.fam { width: 40px; padding: 2px; justify-content: center; }
+  .app #layers .chip.fam .nm { display: none; }
+  .app #sublayers { left: 56px; right: 8px; top: 128px; }
+}
+
+/* ---- keyboard: the crosshair while keys move the map, and the controls card (?) ---- */
+.app .kbcross { position: absolute; left: 50%; top: 50%; width: 15px; height: 15px; margin: -7px 0 0 -7px; z-index: 4; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: linear-gradient(var(--ink), var(--ink)) 6px 0 / 3px 15px no-repeat, linear-gradient(var(--ink), var(--ink)) 0 6px / 15px 3px no-repeat; filter: drop-shadow(0 0 0 var(--vellum-hi)) drop-shadow(1px 1px 0 var(--vellum-hi)); }
+.app .kbcross.on { opacity: .8; }
+.app .cheat { position: absolute; z-index: 40; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(760px, calc(100% - 32px)); max-height: calc(100% - 40px); overflow-y: auto; box-sizing: border-box;
+  padding: 8px 14px 10px; color: var(--ink); border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); image-rendering: pixelated; cursor: pointer; }
+.app .cheat h3 { margin: 0 0 6px; font-family: var(--f-head); font-weight: 500; font-size: 22px; }
+.app .cheat .ch-g { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 12px 22px; }
+.app .cheat h4 { margin: 0 0 4px; font-family: var(--f-tiny); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); font-weight: 400; }
+.app .cheat .ch-r { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 8px; align-items: center; font-size: 13px; line-height: 1.3; margin: 3px 0; }
+.app .cheat .ch-k { display: flex; flex-wrap: wrap; gap: 6px 5px; padding: 2px; }
+.app .cheat kbd { font-family: var(--f-tiny); font-size: 8px; line-height: 16px; min-width: 10px; text-align: center; padding: 0 4px; background: var(--vellum-hi); box-shadow: 0 0 0 2px var(--ink), 2px 2px 0 2px var(--shade); }
+.app .cheat .ch-f { margin: 8px 0 0; font-size: 12px; color: var(--ink-soft); }
+.app .cheat .ch-f kbd { margin: 0 4px; }

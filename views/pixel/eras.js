@@ -612,11 +612,17 @@
         else g.base.set(graded);
         if (g.ids) realms(g, new Uint8Array(g.base.buffer, g.base.byteOffset, g.base.length * 4));
       },
+      // Map content (sea creatures): drawn into the map's own pixels, so it pans with the land.
       over(g) {
         if (s.creatures) creatures(g, s);
+      },
+      // Screen chrome (the neatline and the title plate): drawn on the pixel map's fixed frame layer, which stays put
+      // while the map pans and zooms under it. chromeKey changes whenever the plate's text does.
+      chrome(g) {
         frame(g, s.frame);
         plate(g, s);
       },
+      chromeKey() { return JSON.stringify(s.title ? s.title(curYear) : null) + plateGen; },
     };
   }
 
@@ -748,8 +754,37 @@
     f.corners(5, (x, y) => CORNERS[fr.corner || "box"](f, x, y, c));
   }
 
+  // The Atlas's buttons along the top edge (ask chip, map buttons, panel) would hide the plate: keep it centred when it is
+  // clear, else slide it into the nearest gap between them that fits, else leave it off (the year cartouche names the era).
+  // The layout is read once per change (replate, resize), not on every year step.
+  let lastPlate = null, plateGen = 0, hudLayout = null;
+  if (typeof addEventListener === "function") addEventListener("resize", () => { hudLayout = null; });
+  function plateX(f, cx, pw, ph) {
+    const map = typeof document !== "undefined" && document.getElementById("map"); if (!map) return cx;
+    const L = hudLayout || (hudLayout = { mr: map.getBoundingClientRect(), rects: [...document.querySelectorAll(".app .askbar, .app .mapctl, .app .panel, .app .yearplate, .app .modeplate")]
+      .filter(e => !e.checkVisibility || e.checkVisibility({ visibilityProperty: true, opacityProperty: true }))
+      .map(e => e.getBoundingClientRect()).filter(r => r.width).sort((a, b) => a.left - b.left) });
+    const mr = L.mr, k = mr.width / (f.i1 - f.i0 + 1); if (!(k > 0)) return cx;
+    const bottom = mr.top + (ph + 4) * k, half = (pw / 2 + 3) * k, want = mr.left + (cx - f.i0) * k;
+    const gaps = []; let x = mr.left + 8 * k;
+    for (const r of L.rects) { if (r.top >= bottom || r.bottom <= mr.top) continue; if (r.left > x) gaps.push([x, r.left]); x = Math.max(x, r.right); }
+    if (mr.right - 8 * k > x) gaps.push([x, mr.right - 8 * k]);
+    let best = null;
+    for (const [a, b] of gaps) {
+      if (b - a < 2 * half) continue;
+      const at = Math.min(Math.max(want, a + half), b - half);
+      if (best == null || Math.abs(at - want) < Math.abs(best - want)) best = at;
+    }
+    return best == null ? null : Math.round(f.i0 + (best - mr.left) / k);
+  }
+  // True when the buttons have moved so the plate belongs somewhere else. The frame layer's key changes with it, so the
+  // page's next repaint redraws the plate.
+  const replate = () => { hudLayout = null; const stale = !!lastPlate && plateX(lastPlate.f, lastPlate.cx0, lastPlate.pw, lastPlate.ph) !== lastPlate.cx; if (stale) plateGen++; return stale; };
+
   // Title plate, centred on the top edge: the era's title and the year in its own numerals (and the silk scroll's seal).
   function plate(g, s) {
+    // The interface hidden (the Atlas's eye or H): the title plate goes with it.
+    if (typeof document !== "undefined" && document.documentElement.classList.contains("ui-bare")) return;
     const t = s.title ? s.title(curYear) : {};
     const lines = [];
     if (s.seal) lines.push({ seal: true });
@@ -760,9 +795,11 @@
     const f = framer(g), ink = P_(s.plateInk || s.ink), fill = P_(s.plate || s.paper), edge = P_(s.ink);
     const widthOf = l => l.cune ? l.cune * 4 - 1 : l.seal ? 18 : textWidth(l.text), heightOf = l => l.seal ? 10 : 5;
     const pw = Math.max(...lines.map(widthOf)) + (t.star ? 10 : 0) + 8, ph = lines.reduce((a, l) => a + heightOf(l) + 2, 0) + 4;
-    const cx = Math.round((f.i0 + f.i1) / 2), x0 = cx - (pw >> 1) - (t.star ? 5 : 0), y0 = f.j0 + 2;
     // Phones: the year cartouche already names the era, and the plate would sit under it.
     if (pw > f.i1 - f.i0 - 40 || f.i1 - f.i0 < 230) return;
+    const cx0 = Math.round((f.i0 + f.i1) / 2), cx = plateX(f, cx0, pw, ph);
+    lastPlate = { f: { i0: f.i0, i1: f.i1 }, cx0, pw, ph, cx }; if (cx == null) return;
+    const x0 = cx - (pw >> 1) - (t.star ? 5 : 0), y0 = f.j0 + 2;
     f.box(x0, y0, pw, ph, edge, fill);
     let y = y0 + 3;
     for (const l of lines) {
@@ -797,5 +834,5 @@
     for (const k of ["--era-accent", "--era-ink", "--era-paper", "--era-frame-a", "--era-frame-b"]) if (v[k]) root.style.setProperty(k, v[k]); else root.style.removeProperty(k);
   }
 
-  global.PixelEras = { LIST, STYLES, FRAME_W, pick, style, chrome, setYear(y) { curYear = y; }, roman, hijri, arabic };
+  global.PixelEras = { LIST, STYLES, FRAME_W, pick, style, chrome, replate, setYear(y) { curYear = y; }, roman, hijri, arabic };
 })(typeof window !== "undefined" ? window : globalThis);

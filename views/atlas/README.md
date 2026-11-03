@@ -45,6 +45,13 @@ Every change to the page keeps these (headless Chromium, 1440x900; measure befor
 - Work on every year step stays O(what is visible); cache anything keyed by border frame or view.
 - Idle (nothing moving) under 10% of one core; animation timers pause when the tab is hidden.
 - Zoom or pan settling under 100 ms.
+- Border chunks, and any other big data, are parsed and decoded off the main thread (see the worker in
+  `views/pixel/borders.js`) or in idle slices, never all at once on a year step.
+
+CI runs `tools/perf/perf.js` on every pull request and fails it when a number goes over the limits in
+`tools/perf/budget.json` (the budget above plus headroom for slower machines). Run it locally with Playwright
+installed: `node tools/perf/perf.js`. A step that fits in one frame measures about 16.7 ms, so p90 is the number that
+shows stalls.
 
 
 Order & chaos reads `data/order-chaos/lab.json`, War & chokepoints reads `data/states-war/` (curated plus Wikidata battles); Terrain reads terrain.json, terrain.js and terrain-relief.webp from LAYERS_DIR when present; tours come from `data/guide/tours/`. Next step: read
@@ -52,9 +59,14 @@ Order & chaos reads `data/order-chaos/lab.json`, War & chokepoints reads `data/s
 
 ## Flow (keyboard, key, focus, resume)
 
-Keys: ←/→ step the year (Shift for bigger steps), Space plays time, / jumps to the question box, 1–6 switch lens families,
-S is Surprise me (a random curated battle, shock, idea journey or city event, flown to and captioned, with Here filled in),
-F is focus (map only), K or ? opens the key, P folds the panel, Esc closes. The key lists exactly the marks drawn for the lenses that are on;
+Keys (a game pad; ? shows them all on a pixel card): arrows or WASD pan and Q/E or +/- zoom, held keys glide and speed up
+(Shift runs), one frame loop, settle work once the keys are let go; 0 shows the whole world, Enter opens Here at the
+crosshair. , and . step the year (Shift or < > for ten times further), Space plays time, / jumps to the question box,
+1–6 switch lens families, T / Shift+T cycle tabs, R is Surprise me (a random curated battle, shock, idea journey or city
+event, flown to and captioned, with Here filled in), F is focus (map only), K opens the key, N night, H hides the
+interface, P folds the panel, Esc closes or leaves a mode. Keys never fire while typing or with Ctrl, Cmd or Alt held.
+A story owns Space, arrows, W, H, P and Esc while it plays (world/director.js). `node tools/keys/keys.js` checks them all.
+The key lists exactly the marks drawn for the lenses that are on;
 a plugin lens can describe its own marks with `key: [[glyph, text], ...]` (glyphs: dot, small, line, arrow, diamond, square,
 halo, ring, cross, battle, hourglass, border, sprite). Eras sit under the slider and jump on tap. Here and This year lead with
 rows from the current time; rows from other centuries fold under "from other times". The page reopens on the last year,
@@ -74,6 +86,17 @@ marked draft, kept in this browser) and "Write a storyline for here and now" dra
 Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces, Growing cities and railway numbers
 (`lenses/e19.*`). Everything loads after the first paint from `atlas-files/world/` and `atlas-files/packs/`, which
 `build.py` writes beside the page: publish them with it (about 20 MB, fetched a slice or pack at a time).
+
+## City scale
+
+The map zooms to about 0.2 degrees across (`K_MAX` in atlas.src.html), enough to stand inside the walls of
+Constantinople in 1453. Around the 18 story cities in `data/cities/cities.json` the pixel map switches to 45 m terrain
+(one patch per city, all packed into `tiles/l3.png`, OpenStreetMap water through Overture Maps plus Terrarium elevation), and the
+city layer (`views/pixel/city.js`, beside the page as `atlas-files/city.js`, loaded the first time you zoom past about
+3 degrees) draws walls, gates, towers, harbours, built-up areas and landmark buildings as they stood in the year, from
+`atlas-files/world/cities.json`. Walls come from OpenStreetMap, landmarks with their dates from Wikidata, and what
+neither has (lost walls, old shorelines, built-up areas by period, names by period) from Claude's drafts, marked as
+drafts. See `data/cities/README.md` to add a city.
 
 ## Travellers in motion
 
@@ -105,6 +128,12 @@ also drawn on canvas with `PIXEL_ICONS.draw`); the six family emblems live there
 - `ATLAS.chromeRects()` returns the boxes the interface covers, `[[x0, y0, x1, y1], ...]` in map pixels, and
   `atlas:chrome` fires on the document when they change, so labels can stay out from under it.
 - The Director's dialog box is dressed in the same frames; the Director draws it.
+- Map first: the panel starts folded to a row of emblem ribbons and opens when a ribbon is tapped, a place clicked or a
+  question asked. The eye button (or **H**) hides the whole interface but a faint year plate and the eye; dragging the map
+  turns the interface into a ghost until you let go.
+- Games and modes (Codex, Guess, Live, What if, Stories, Who was there, Objects, Compare, Up close) share one way out: a
+  "Back to map" plate top left (or **Esc**) puts back the year, view, lenses and tab you came from and folds the panel.
+  `ATLAS.exitMode()` does the same; `ATLAS.api.lenses()` lists the lenses that are on.
 - Preview of the three directions considered: https://claude.ai/artifact/4wm6AUUts9hzFK2trCmmq2
 
 ## Deep time (300,000 years ago to 4000 BCE)
@@ -146,6 +175,20 @@ tab (`lenses/stories.*`) lists them all. The Atlas opens on a cold open (Constan
 twelve hours away; `#story=<id>` plays any story on load and `#nostory` skips it. Other threads emit Stories and register
 them with `ATLAS.world.stories.add(story)` or a provider `{kind, list()}`; `ATLAS.world.director.play(story, {at, auto})`
 plays one.
+
+## Living world (travellers, meetings, stories of the road)
+
+The Travellers lens (Peoples) and the Living world tab show who was on the road, day by day. Engine:
+`views/atlas/world/agents.js` (L3 in WORLD.md: `ATLAS.world.agents / meetings / step / story / passing / add`), data
+from `views/atlas/lenses/living.py` (late file `atlas-files/lens-living.json`). Named travellers follow documented
+journeys (the travels kernel via `lenses/travels.py:journeys_as_stops`, and the life RPG's `data/life/lives/`); dates between known stops are spread by
+distance, legs take road time and the rest is a stay. The crowd is generated from 138 recurring travel systems in
+`data/world/flows.json` (season, trips a year, party size, trip time, goods, sources), with names from
+`data/world/names.json` by culture and era, and is always labelled generated. On slave-trade routes the generated
+people are the enslaved, named, never cargo. Meetings: `data/world/meetings.json` (documented, disputed, legend)
+plus co-presence at the moment. Follow a traveller to get a story of scenes; "Play as scenes" hands it to the
+Director; "Tell this story" asks Claude (needs `sample`). Keys in the tab: `,` and `.` step a day.
+`data/world/news.json` and `speeds.json` are ground truth for backtesting the motion model.
 
 ## Guess the past
 

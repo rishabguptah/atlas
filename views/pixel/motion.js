@@ -7,7 +7,7 @@
 //   mo.move(t)               on zoom frames: the canvases follow the map's CSS transform
 //   mo.jump()                before rendering a big instant year jump: the old frame dissolves into the new one
 //   mo.fly(view, ms)         a camera flight started: a pixel ping marks where it lands
-//   mo.pulse(lon, lat, o)    a stepped ring ({color, r, repeat}); pulse(null) clears the repeating ones
+//   mo.pulse(lon, lat, o)    a stepped ring ({color, r, repeat}); pulse(null) clears the repeating ones, pulse(null, {all: true}) every one
 //   mo.layer(id, fn)         fn(g) paints into the motion canvas each step (g: out, w, h, frame, at, toPixel, sprite, cls)
 //   mo.onStep(fn), mo.frame  the step counter, for anything that wants to march in time
 //   mo.set({sky, month, weather, motion}), mo.settings, mo.destroy()
@@ -842,13 +842,16 @@
     if (pm.view()) layout();
     start();
 
+    let flyRing = 0;
     const self = {
       year(y) { if (y !== year) { year = y; changed(); } },
       move,
       jump,
-      fly(v, ms) { if (v && isFinite(v.lon) && isFinite(v.lat)) setTimeout(() => self.pulse(v.lon, v.lat, { color: "#d8a32c", r: 10 }), (ms || 0) + SETTLE + 60); },
+      // A newer flight cancels the last one's landing ring, so leaving a mode mid-flight leaves no ring behind.
+      fly(v, ms) { clearTimeout(flyRing); if (v && isFinite(v.lon) && isFinite(v.lat)) flyRing = setTimeout(() => self.pulse(v.lon, v.lat, { color: "#d8a32c", r: 10 }), (ms || 0) + SETTLE + 60); },
       pulse(lon, lat, o = {}) {
-        if (lon == null) { pulses = pulses.filter(p => !p.repeat); return; }
+        // Clearing every ring repaints now: a flight freezes the canvas, and a ring on it would ride along.
+        if (lon == null) { const all = !!(lat && lat.all); pulses = all ? [] : pulses.filter(p => !p.repeat); if (all) draw(false); return; }
         pulses.push({ lon, lat, color: o.color, r: o.r, repeat: !!o.repeat, f0: frame });
         if (!timer) { // reduced motion: one still ring, then gone
           if (V && settled) { draw(true); setTimeout(() => { pulses = pulses.filter(p => p.repeat); if (V && settled) draw(true); }, 1200); }

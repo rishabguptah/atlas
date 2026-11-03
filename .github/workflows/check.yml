@@ -17,3 +17,26 @@ jobs:
         run: python3 views/living-atlas/export.py dist/living-atlas.js
       - name: Judge audit (plausibility and sourcing)
         run: python3 ingest/judge/audit.py dist/kernel.json
+  perf:
+    # The performance budget (views/atlas/README.md) as a gate: page size, first map paint and year steps.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright and the map libraries
+        run: |
+          pip install pillow
+          npm install --no-save --no-package-lock playwright@1.47.2 d3@7.8.5 topojson-client@3.1.0
+          npx playwright install --with-deps chromium
+      - name: Time the Atlas against its budget
+        run: node tools/perf/perf.js --out perf-report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: perf-report
+          path: perf-report.json
