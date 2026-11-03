@@ -80,8 +80,8 @@
 .sech .n { margin-left: auto; }
 
 /* Pixel meters: a stepped bar, 2 art px tall, in steps of 4 art px. */
-.meter { height: 8px; background: repeating-linear-gradient(90deg, var(--wash) 0 6px, transparent 6px 8px); position: relative; }
-.meter i { position: absolute; inset: 0 auto 0 0; background: repeating-linear-gradient(90deg, var(--t, var(--ink)) 0 6px, transparent 6px 8px); }
+.pxmeter { height: 8px; background: repeating-linear-gradient(90deg, var(--wash) 0 6px, transparent 6px 8px); position: relative; }
+.pxmeter i { position: absolute; inset: 0 auto 0 0; background: repeating-linear-gradient(90deg, var(--t, var(--ink)) 0 6px, transparent 6px 8px); }
 
 /* Tags: tiny Silkscreen caps on a tinted plate. */
 .ptag { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .06em; text-transform: uppercase; padding: 0 4px; background: var(--wash); color: var(--ink-2); display: inline-block; }

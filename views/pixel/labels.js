@@ -164,7 +164,7 @@ svg.map-labels g { transition: opacity .3s; }
       svg.classList.toggle("quiet", !!o.focus);
       const key = [t.k, t.x, t.y, W, H].join();
       if (key !== shapeKey) { shapeKey = key; shapes = new WeakMap(); drawnList = null; }
-      const view = { k: t.k, year: o.year, W, H, focus: o.focus || null,
+      const view = { k: t.k, t, year: o.year, W, H, focus: o.focus || null,
         project: (lon, lat) => { const p = projection([lon, lat]); return p ? [p[0] * t.k + t.x, p[1] * t.k + t.y] : null; } };
       const cands = [], blocks = [];
       for (const s of sources) {

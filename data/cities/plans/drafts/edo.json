@@ -1,0 +1,4034 @@
+{
+ "id": "edo",
+ "note": "Claude draft (unchecked). Water areas are Edo Bay and the Hibiya Inlet before reclamation, as approximate polygons over today's terrain, each with t1 = the year it became land; Edo-period shorelines follow Naito (2003) and the standard reclamation sequence, 20th-century fills are dated to their completion roughly. Extents are approximate built-up areas by period, cut so they never overlap water alive in the same year. Gates and moats are placed on surviving sites where they exist.",
+ "features": [
+  {
+   "k": "water",
+   "name": "Hibiya Inlet (Hibiya-irie)",
+   "t0": 1457,
+   "t1": 1600,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Hibiya",
+   "area": [
+    [
+     139.7605,
+     35.6885
+    ],
+    [
+     139.7578,
+     35.6855
+    ],
+    [
+     139.7568,
+     35.6805
+    ],
+    [
+     139.7556,
+     35.6762
+    ],
+    [
+     139.7537,
+     35.6722
+    ],
+    [
+     139.7522,
+     35.6682
+    ],
+    [
+     139.7526,
+     35.663
+    ],
+    [
+     139.756,
+     35.663
+    ],
+    [
+     139.76,
+     35.663
+    ],
+    [
+     139.7612,
+     35.6672
+    ],
+    [
+     139.7626,
+     35.6718
+    ],
+    [
+     139.7641,
+     35.676
+    ],
+    [
+     139.7655,
+     35.68
+    ],
+    [
+     139.766,
+     35.6848
+    ],
+    [
+     139.7635,
+     35.688
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Shiodome and Shiba shore (early Edo fills)",
+   "t0": 1457,
+   "t1": 1629,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Shiodome",
+   "area": [
+    [
+     139.7526,
+     35.663
+    ],
+    [
+     139.753,
+     35.658
+    ],
+    [
+     139.751,
+     35.653
+    ],
+    [
+     139.7493,
+     35.6495
+    ],
+    [
+     139.746,
+     35.644
+    ],
+    [
+     139.752,
+     35.645
+    ],
+    [
+     139.756,
+     35.65
+    ],
+    [
+     139.759,
+     35.6555
+    ],
+    [
+     139.7598,
+     35.6585
+    ],
+    [
+     139.76,
+     35.663
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Hamagoten shallows (Hamarikyu reclamation)",
+   "t0": 1457,
+   "t1": 1654,
+   "conf": 2,
+   "src": "Wikipedia: Hamarikyu Gardens",
+   "area": [
+    [
+     139.76,
+     35.6632
+    ],
+    [
+     139.764,
+     35.663
+    ],
+    [
+     139.7665,
+     35.661
+    ],
+    [
+     139.769,
+     35.659
+    ],
+    [
+     139.7682,
+     35.6578
+    ],
+    [
+     139.767,
+     35.657
+    ],
+    [
+     139.763,
+     35.6563
+    ],
+    [
+     139.76,
+     35.658
+    ],
+    [
+     139.7598,
+     35.661
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Hatchobori, Kayabacho and Reiganjima shallows",
+   "t0": 1457,
+   "t1": 1629,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Hatchōbori",
+   "area": [
+    [
+     139.768,
+     35.669
+    ],
+    [
+     139.771,
+     35.674
+    ],
+    [
+     139.774,
+     35.679
+    ],
+    [
+     139.777,
+     35.682
+    ],
+    [
+     139.78,
+     35.685
+    ],
+    [
+     139.783,
+     35.688
+    ],
+    [
+     139.786,
+     35.691
+    ],
+    [
+     139.788,
+     35.694
+    ],
+    [
+     139.7895,
+     35.688
+    ],
+    [
+     139.789,
+     35.682
+    ],
+    [
+     139.788,
+     35.677
+    ],
+    [
+     139.785,
+     35.674
+    ],
+    [
+     139.782,
+     35.672
+    ],
+    [
+     139.779,
+     35.6705
+    ],
+    [
+     139.774,
+     35.672
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Tsukiji shallows (filled after the Meireki fire)",
+   "t0": 1457,
+   "t1": 1658,
+   "conf": 2,
+   "src": "Wikipedia: Tsukiji; Great fire of Meireki",
+   "area": [
+    [
+     139.76,
+     35.6635
+    ],
+    [
+     139.764,
+     35.6645
+    ],
+    [
+     139.768,
+     35.669
+    ],
+    [
+     139.774,
+     35.672
+    ],
+    [
+     139.779,
+     35.6705
+    ],
+    [
+     139.7782,
+     35.668
+    ],
+    [
+     139.7765,
+     35.665
+    ],
+    [
+     139.7745,
+     35.662
+    ],
+    [
+     139.773,
+     35.6595
+    ],
+    [
+     139.769,
+     35.659
+    ],
+    [
+     139.7665,
+     35.661
+    ],
+    [
+     139.764,
+     35.663
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Fukagawa tidal flats (inner, south of the Onagi canal)",
+   "t0": 1457,
+   "t1": 1629,
+   "conf": 2,
+   "src": "Wikipedia: Fukagawa, Tokyo; Onagi River",
+   "area": [
+    [
+     139.7895,
+     35.688
+    ],
+    [
+     139.8,
+     35.6885
+    ],
+    [
+     139.82,
+     35.689
+    ],
+    [
+     139.85,
+     35.69
+    ],
+    [
+     139.85,
+     35.676
+    ],
+    [
+     139.845,
+     35.675
+    ],
+    [
+     139.82,
+     35.672
+    ],
+    [
+     139.803,
+     35.6705
+    ],
+    [
+     139.795,
+     35.673
+    ],
+    [
+     139.788,
+     35.677
+    ],
+    [
+     139.789,
+     35.682
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Fukagawa outer flats (Kiba, Etchujima, Sunamura)",
+   "t0": 1457,
+   "t1": 1700,
+   "conf": 2,
+   "src": "Wikipedia: Kiba, Tokyo; Fukagawa, Tokyo",
+   "area": [
+    [
+     139.788,
+     35.677
+    ],
+    [
+     139.795,
+     35.673
+    ],
+    [
+     139.803,
+     35.6705
+    ],
+    [
+     139.82,
+     35.672
+    ],
+    [
+     139.845,
+     35.675
+    ],
+    [
+     139.85,
+     35.676
+    ],
+    [
+     139.85,
+     35.664
+    ],
+    [
+     139.82,
+     35.663
+    ],
+    [
+     139.805,
+     35.664
+    ],
+    [
+     139.795,
+     35.664
+    ],
+    [
+     139.786,
+     35.665
+    ],
+    [
+     139.7875,
+     35.671
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Sumida mouth shallows (Tsukudajima and Ishikawajima)",
+   "t0": 1457,
+   "t1": 1644,
+   "conf": 2,
+   "src": "Wikipedia: Tsukuda, Tokyo",
+   "area": [
+    [
+     139.782,
+     35.6705
+    ],
+    [
+     139.7845,
+     35.6712
+    ],
+    [
+     139.787,
+     35.671
+    ],
+    [
+     139.788,
+     35.6695
+    ],
+    [
+     139.788,
+     35.668
+    ],
+    [
+     139.786,
+     35.665
+    ],
+    [
+     139.784,
+     35.6652
+    ],
+    [
+     139.7825,
+     35.6655
+    ],
+    [
+     139.7815,
+     35.6668
+    ],
+    [
+     139.7815,
+     35.669
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Tsukishima No. 1 landfill site",
+   "t0": 1457,
+   "t1": 1892,
+   "conf": 2,
+   "src": "Wikipedia: Tsukishima",
+   "area": [
+    [
+     139.7815,
+     35.6655
+    ],
+    [
+     139.784,
+     35.6652
+    ],
+    [
+     139.786,
+     35.665
+    ],
+    [
+     139.7875,
+     35.6625
+    ],
+    [
+     139.788,
+     35.66
+    ],
+    [
+     139.785,
+     35.658
+    ],
+    [
+     139.782,
+     35.6583
+    ],
+    [
+     139.78,
+     35.659
+    ],
+    [
+     139.7792,
+     35.661
+    ],
+    [
+     139.7795,
+     35.663
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Shintsukishima and Kachidoki landfill site",
+   "t0": 1457,
+   "t1": 1913,
+   "conf": 2,
+   "src": "Wikipedia: Tsukishima; Kachidoki",
+   "area": [
+    [
+     139.788,
+     35.66
+    ],
+    [
+     139.792,
+     35.661
+    ],
+    [
+     139.7925,
+     35.657
+    ],
+    [
+     139.79,
+     35.6545
+    ],
+    [
+     139.785,
+     35.653
+    ],
+    [
+     139.78,
+     35.652
+    ],
+    [
+     139.776,
+     35.6535
+    ],
+    [
+     139.7765,
+     35.6565
+    ],
+    [
+     139.7792,
+     35.661
+    ],
+    [
+     139.78,
+     35.659
+    ],
+    [
+     139.785,
+     35.658
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Harumi (Tsukishima No. 4) landfill site",
+   "t0": 1457,
+   "t1": 1931,
+   "conf": 2,
+   "src": "Wikipedia: Harumi, Tokyo",
+   "area": [
+    [
+     139.776,
+     35.6535
+    ],
+    [
+     139.78,
+     35.652
+    ],
+    [
+     139.785,
+     35.653
+    ],
+    [
+     139.79,
+     35.6545
+    ],
+    [
+     139.788,
+     35.648
+    ],
+    [
+     139.785,
+     35.644
+    ],
+    [
+     139.781,
+     35.644
+    ],
+    [
+     139.777,
+     35.646
+    ],
+    [
+     139.775,
+     35.65
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Toyosu landfill site",
+   "t0": 1457,
+   "t1": 1937,
+   "conf": 2,
+   "src": "Wikipedia: Toyosu",
+   "area": [
+    [
+     139.7925,
+     35.661
+    ],
+    [
+     139.799,
+     35.662
+    ],
+    [
+     139.804,
+     35.66
+    ],
+    [
+     139.804,
+     35.652
+    ],
+    [
+     139.8,
+     35.645
+    ],
+    [
+     139.795,
+     35.643
+    ],
+    [
+     139.788,
+     35.645
+    ],
+    [
+     139.788,
+     35.648
+    ],
+    [
+     139.79,
+     35.6545
+    ],
+    [
+     139.7925,
+     35.657
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Shinonome, Shiohama and Edagawa landfill site",
+   "t0": 1457,
+   "t1": 1935,
+   "conf": 2,
+   "src": "Wikipedia: Kōtō, Tokyo",
+   "area": [
+    [
+     139.804,
+     35.66
+    ],
+    [
+     139.805,
+     35.664
+    ],
+    [
+     139.82,
+     35.663
+    ],
+    [
+     139.825,
+     35.662
+    ],
+    [
+     139.823,
+     35.656
+    ],
+    [
+     139.818,
+     35.65
+    ],
+    [
+     139.81,
+     35.646
+    ],
+    [
+     139.804,
+     35.645
+    ],
+    [
+     139.8,
+     35.645
+    ],
+    [
+     139.804,
+     35.652
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Tatsumi, Shiomi and Yumenoshima landfill site",
+   "t0": 1457,
+   "t1": 1967,
+   "conf": 2,
+   "src": "Wikipedia: Yumenoshima",
+   "area": [
+    [
+     139.825,
+     35.662
+    ],
+    [
+     139.835,
+     35.663
+    ],
+    [
+     139.84,
+     35.658
+    ],
+    [
+     139.838,
+     35.648
+    ],
+    [
+     139.83,
+     35.644
+    ],
+    [
+     139.82,
+     35.644
+    ],
+    [
+     139.81,
+     35.646
+    ],
+    [
+     139.818,
+     35.65
+    ],
+    [
+     139.823,
+     35.656
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Shin-Kiba and Wakasu landfill site",
+   "t0": 1457,
+   "t1": 1975,
+   "conf": 2,
+   "src": "Wikipedia: Shinkiba; Wakasu",
+   "area": [
+    [
+     139.835,
+     35.663
+    ],
+    [
+     139.85,
+     35.664
+    ],
+    [
+     139.85,
+     35.62
+    ],
+    [
+     139.84,
+     35.62
+    ],
+    [
+     139.83,
+     35.63
+    ],
+    [
+     139.825,
+     35.638
+    ],
+    [
+     139.83,
+     35.644
+    ],
+    [
+     139.838,
+     35.648
+    ],
+    [
+     139.84,
+     35.658
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Ariake landfill site",
+   "t0": 1457,
+   "t1": 1975,
+   "conf": 2,
+   "src": "Wikipedia: Ariake, Tokyo",
+   "area": [
+    [
+     139.785,
+     35.644
+    ],
+    [
+     139.788,
+     35.645
+    ],
+    [
+     139.795,
+     35.643
+    ],
+    [
+     139.804,
+     35.645
+    ],
+    [
+     139.81,
+     35.646
+    ],
+    [
+     139.82,
+     35.644
+    ],
+    [
+     139.815,
+     35.634
+    ],
+    [
+     139.8,
+     35.63
+    ],
+    [
+     139.79,
+     35.629
+    ],
+    [
+     139.782,
+     35.632
+    ],
+    [
+     139.78,
+     35.64
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Odaiba waterfront landfill site (Daiba, Aomi)",
+   "t0": 1457,
+   "t1": 1993,
+   "conf": 2,
+   "src": "Wikipedia: Odaiba",
+   "area": [
+    [
+     139.77,
+     35.636
+    ],
+    [
+     139.78,
+     35.64
+    ],
+    [
+     139.782,
+     35.632
+    ],
+    [
+     139.79,
+     35.629
+    ],
+    [
+     139.788,
+     35.62
+    ],
+    [
+     139.782,
+     35.615
+    ],
+    [
+     139.774,
+     35.616
+    ],
+    [
+     139.77,
+     35.622
+    ],
+    [
+     139.768,
+     35.63
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Central Breakwater landfill site",
+   "t0": 1457,
+   "t1": 2000,
+   "conf": 2,
+   "src": "Wikipedia: Central Breakwater (Tokyo)",
+   "area": [
+    [
+     139.788,
+     35.62
+    ],
+    [
+     139.8,
+     35.628
+    ],
+    [
+     139.815,
+     35.628
+    ],
+    [
+     139.83,
+     35.625
+    ],
+    [
+     139.83,
+     35.61
+    ],
+    [
+     139.815,
+     35.602
+    ],
+    [
+     139.8,
+     35.6
+    ],
+    [
+     139.788,
+     35.605
+    ],
+    [
+     139.785,
+     35.612
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Shibaura landfill site",
+   "t0": 1457,
+   "t1": 1925,
+   "conf": 2,
+   "src": "Wikipedia: Shibaura",
+   "area": [
+    [
+     139.7603,
+     35.6558
+    ],
+    [
+     139.763,
+     35.6563
+    ],
+    [
+     139.767,
+     35.657
+    ],
+    [
+     139.766,
+     35.65
+    ],
+    [
+     139.762,
+     35.644
+    ],
+    [
+     139.756,
+     35.638
+    ],
+    [
+     139.747,
+     35.637
+    ],
+    [
+     139.7448,
+     35.6372
+    ],
+    [
+     139.752,
+     35.645
+    ],
+    [
+     139.756,
+     35.65
+    ],
+    [
+     139.7598,
+     35.6553
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Shinagawa shore (Konan, Tennozu and Shinagawa Wharf landfill site)",
+   "t0": 1457,
+   "t1": 1960,
+   "conf": 2,
+   "src": "Wikipedia: Kōnan, Minato; Tennōzu Isle",
+   "area": [
+    [
+     139.7448,
+     35.6372
+    ],
+    [
+     139.747,
+     35.637
+    ],
+    [
+     139.756,
+     35.638
+    ],
+    [
+     139.764,
+     35.634
+    ],
+    [
+     139.77,
+     35.625
+    ],
+    [
+     139.765,
+     35.615
+    ],
+    [
+     139.75,
+     35.615
+    ],
+    [
+     139.7435,
+     35.617
+    ],
+    [
+     139.743,
+     35.622
+    ],
+    [
+     139.742,
+     35.63
+    ],
+    [
+     139.7448,
+     35.6372
+    ]
+   ]
+  },
+  {
+   "k": "water",
+   "name": "Oi and Yashio landfill site",
+   "t0": 1457,
+   "t1": 1975,
+   "conf": 2,
+   "src": "Wikipedia: Ōi Wharf; Yashio, Shinagawa",
+   "area": [
+    [
+     139.7435,
+     35.617
+    ],
+    [
+     139.75,
+     35.615
+    ],
+    [
+     139.765,
+     35.615
+    ],
+    [
+     139.77,
+     35.605
+    ],
+    [
+     139.768,
+     35.598
+    ],
+    [
+     139.75,
+     35.598
+    ],
+    [
+     139.739,
+     35.6
+    ],
+    [
+     139.7395,
+     35.608
+    ],
+    [
+     139.742,
+     35.613
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Ōta Dōkan's Edo Castle earthworks",
+   "t0": 1457,
+   "t1": 1589,
+   "conf": 3,
+   "src": "Wikipedia: Edo Castle; Ōta Dōkan",
+   "line": [
+    [
+     139.753,
+     35.6898
+    ],
+    [
+     139.756,
+     35.6898
+    ],
+    [
+     139.7578,
+     35.6872
+    ],
+    [
+     139.7572,
+     35.6845
+    ],
+    [
+     139.7545,
+     35.6835
+    ],
+    [
+     139.7522,
+     35.6852
+    ],
+    [
+     139.753,
+     35.6898
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Honmaru stone walls",
+   "t0": 1606,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.7528,
+     35.69
+    ],
+    [
+     139.7548,
+     35.6905
+    ],
+    [
+     139.7565,
+     35.689
+    ],
+    [
+     139.7572,
+     35.6868
+    ],
+    [
+     139.7568,
+     35.6845
+    ],
+    [
+     139.7552,
+     35.6836
+    ],
+    [
+     139.7535,
+     35.6845
+    ],
+    [
+     139.7525,
+     35.687
+    ],
+    [
+     139.7528,
+     35.69
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Inner moat circuit (Uchibori)",
+   "t0": 1606,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.7527,
+     35.6775
+    ],
+    [
+     139.758,
+     35.676
+    ],
+    [
+     139.7595,
+     35.6805
+    ],
+    [
+     139.7605,
+     35.684
+    ],
+    [
+     139.759,
+     35.687
+    ],
+    [
+     139.757,
+     35.69
+    ],
+    [
+     139.753,
+     35.6925
+    ],
+    [
+     139.75,
+     35.6935
+    ],
+    [
+     139.7465,
+     35.69
+    ],
+    [
+     139.7445,
+     35.685
+    ],
+    [
+     139.7455,
+     35.68
+    ],
+    [
+     139.748,
+     35.677
+    ],
+    [
+     139.7527,
+     35.6775
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Outer moat (Sotobori), western arc",
+   "t0": 1636,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Sotobori; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.7495,
+     35.6695
+    ],
+    [
+     139.744,
+     35.671
+    ],
+    [
+     139.74,
+     35.6725
+    ],
+    [
+     139.737,
+     35.6775
+    ],
+    [
+     139.7355,
+     35.681
+    ],
+    [
+     139.7305,
+     35.686
+    ],
+    [
+     139.733,
+     35.689
+    ],
+    [
+     139.7355,
+     35.6917
+    ],
+    [
+     139.74,
+     35.697
+    ],
+    [
+     139.7432,
+     35.7017
+    ],
+    [
+     139.7452,
+     35.7022
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Outer moat (Sotobori), eastern arc",
+   "t0": 1629,
+   "t1": 1950,
+   "conf": 2,
+   "src": "Wikipedia: Sotobori; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.762,
+     35.6905
+    ],
+    [
+     139.769,
+     35.688
+    ],
+    [
+     139.7717,
+     35.6865
+    ],
+    [
+     139.77,
+     35.682
+    ],
+    [
+     139.7678,
+     35.6778
+    ],
+    [
+     139.7625,
+     35.673
+    ],
+    [
+     139.7605,
+     35.67
+    ],
+    [
+     139.7575,
+     35.6662
+    ],
+    [
+     139.752,
+     35.668
+    ],
+    [
+     139.7495,
+     35.6695
+    ]
+   ]
+  },
+  {
+   "k": "tower",
+   "name": "Edo Castle keep (tenshu)",
+   "t0": 1607,
+   "t1": 1657,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle",
+   "at": [
+    139.754,
+    35.6892
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Honmaru Palace of Edo Castle",
+   "t0": 1606,
+   "t1": 1863,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle",
+   "at": [
+    139.755,
+    35.6868
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Edo Castle (Ōta Dōkan)",
+   "t0": 1457,
+   "t1": 1589,
+   "conf": 2,
+   "src": "Wikipedia: Ōta Dōkan; Edo Castle",
+   "at": [
+    139.7548,
+    35.687
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Ōte-mon gate",
+   "t0": 1607,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7578,
+    35.6858
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Hirakawa-mon gate",
+   "t0": 1607,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7573,
+    35.6896
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Kitahanebashi-mon gate",
+   "t0": 1607,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7535,
+    35.6906
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Inui-mon gate",
+   "t0": 1614,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.75,
+    35.689
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Kikyō-mon gate",
+   "t0": 1614,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7573,
+    35.6837
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Sakurada-mon gate",
+   "t0": 1636,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7527,
+    35.6775
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Hanzō-mon gate",
+   "t0": 1607,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7445,
+    35.6852
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Tayasu-mon gate",
+   "t0": 1636,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7502,
+    35.6934
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Wadakura-mon gate",
+   "t0": 1636,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7609,
+    35.6838
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Babasaki-mon gate",
+   "t0": 1636,
+   "t1": 1873,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7591,
+    35.6801
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Hibiya-mon gate",
+   "t0": 1636,
+   "t1": 1873,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7593,
+    35.6748
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Toranomon gate",
+   "t0": 1636,
+   "t1": 1873,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7493,
+    35.6697
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Akasaka-mitsuke gate",
+   "t0": 1636,
+   "t1": 1872,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.737,
+    35.6782
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Kuichigai-mitsuke gate",
+   "t0": 1636,
+   "t1": 1872,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.735,
+    35.6815
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Yotsuya-mitsuke gate",
+   "t0": 1636,
+   "t1": 1872,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7305,
+    35.686
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Ichigaya-mitsuke gate",
+   "t0": 1636,
+   "t1": 1872,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7355,
+    35.6917
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Ushigome-mitsuke gate",
+   "t0": 1636,
+   "t1": 1872,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7433,
+    35.7017
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Koishikawa-mon gate",
+   "t0": 1636,
+   "t1": 1873,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7522,
+    35.7022
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Sujikai-mitsuke gate",
+   "t0": 1636,
+   "t1": 1872,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7705,
+    35.6973
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Asakusa-mitsuke gate",
+   "t0": 1636,
+   "t1": 1873,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7856,
+    35.6973
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Tokiwabashi-mon gate",
+   "t0": 1629,
+   "t1": 1873,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7717,
+    35.6865
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Sukiyabashi-mon gate",
+   "t0": 1629,
+   "t1": 1873,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7625,
+    35.673
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Kajibashi-mon gate",
+   "t0": 1629,
+   "t1": 1873,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "at": [
+    139.7678,
+    35.6778
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Nihonbashi",
+   "t0": 1603,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Nihonbashi (bridge)",
+   "at": [
+    139.77446,
+    35.68405
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Kyōbashi",
+   "t0": 1603,
+   "t1": 1959,
+   "conf": 2,
+   "src": "Wikipedia: Kyōbashi",
+   "at": [
+    139.7702,
+    35.6768
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Ryōgoku Bridge",
+   "t0": 1659,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Ryōgoku Bridge",
+   "at": [
+    139.7888,
+    35.6945
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Shin-Ōhashi",
+   "t0": 1693,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Shin-Ōhashi",
+   "at": [
+    139.7928,
+    35.688
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Senju Ōhashi",
+   "t0": 1594,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Senju Ōhashi",
+   "at": [
+    139.801,
+    35.738
+   ]
+  },
+  {
+   "k": "bridge",
+   "name": "Shinbashi bridge",
+   "t0": 1603,
+   "t1": 1964,
+   "conf": 2,
+   "src": "Wikipedia: Shinbashi",
+   "at": [
+    139.7598,
+    35.6685
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Kanda River cut (Sendai-bori, Ochanomizu)",
+   "t0": 1620,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Kanda River; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.7445,
+     35.702
+    ],
+    [
+     139.7525,
+     35.7022
+    ],
+    [
+     139.758,
+     35.7015
+    ],
+    [
+     139.764,
+     35.7
+    ],
+    [
+     139.771,
+     35.6975
+    ],
+    [
+     139.778,
+     35.6972
+    ],
+    [
+     139.785,
+     35.697
+    ],
+    [
+     139.7895,
+     35.6955
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Hirakawa, old course into the Hibiya Inlet",
+   "t0": 1457,
+   "t1": 1620,
+   "conf": 3,
+   "src": "Wikipedia: Kanda River; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.7525,
+     35.7022
+    ],
+    [
+     139.7545,
+     35.6975
+    ],
+    [
+     139.7565,
+     35.693
+    ],
+    [
+     139.7585,
+     35.69
+    ],
+    [
+     139.7605,
+     35.6885
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Dōsanbori canal",
+   "t0": 1590,
+   "t1": 1909,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.7605,
+     35.6855
+    ],
+    [
+     139.765,
+     35.6858
+    ],
+    [
+     139.77,
+     35.686
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Nihonbashi River",
+   "t0": 1600,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Nihonbashi River",
+   "line": [
+    [
+     139.759,
+     35.6905
+    ],
+    [
+     139.762,
+     35.6905
+    ],
+    [
+     139.766,
+     35.6888
+    ],
+    [
+     139.7717,
+     35.6868
+    ],
+    [
+     139.7745,
+     35.684
+    ],
+    [
+     139.7765,
+     35.683
+    ],
+    [
+     139.78,
+     35.681
+    ],
+    [
+     139.784,
+     35.6795
+    ],
+    [
+     139.787,
+     35.678
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Onagi River (salt canal)",
+   "t0": 1590,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Onagi River",
+   "line": [
+    [
+     139.7905,
+     35.6878
+    ],
+    [
+     139.8,
+     35.6884
+    ],
+    [
+     139.815,
+     35.6888
+    ],
+    [
+     139.83,
+     35.6893
+    ],
+    [
+     139.845,
+     35.6898
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Tatekawa canal",
+   "t0": 1659,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Sumida, Tokyo; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.7905,
+     35.6925
+    ],
+    [
+     139.8,
+     35.693
+    ],
+    [
+     139.815,
+     35.6935
+    ],
+    [
+     139.83,
+     35.694
+    ],
+    [
+     139.845,
+     35.6945
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Ōyokogawa canal (Honjo)",
+   "t0": 1659,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Sumida, Tokyo; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.814,
+     35.708
+    ],
+    [
+     139.8142,
+     35.699
+    ],
+    [
+     139.8145,
+     35.689
+    ],
+    [
+     139.814,
+     35.676
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Kanda Aqueduct (Kanda jōsui)",
+   "t0": 1629,
+   "t1": 1901,
+   "conf": 2,
+   "src": "Wikipedia: Kanda Aqueduct",
+   "line": [
+    [
+     139.72,
+     35.7105
+    ],
+    [
+     139.73,
+     35.708
+    ],
+    [
+     139.74,
+     35.705
+    ],
+    [
+     139.748,
+     35.703
+    ],
+    [
+     139.753,
+     35.7025
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Tamagawa Aqueduct (Tamagawa jōsui)",
+   "t0": 1654,
+   "t1": 1965,
+   "conf": 2,
+   "src": "Wikipedia: Tamagawa Aqueduct",
+   "line": [
+    [
+     139.65,
+     35.68
+    ],
+    [
+     139.668,
+     35.675
+    ],
+    [
+     139.687,
+     35.68
+    ],
+    [
+     139.705,
+     35.685
+    ],
+    [
+     139.7186,
+     35.688
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Tōkaidō (Nihonbashi to Shinagawa)",
+   "t0": 1601,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Tōkaidō (road)",
+   "line": [
+    [
+     139.77446,
+     35.68405
+    ],
+    [
+     139.7702,
+     35.6768
+    ],
+    [
+     139.765,
+     35.6716
+    ],
+    [
+     139.7598,
+     35.6685
+    ],
+    [
+     139.757,
+     35.662
+    ],
+    [
+     139.7545,
+     35.656
+    ],
+    [
+     139.75,
+     35.65
+    ],
+    [
+     139.747,
+     35.646
+    ],
+    [
+     139.7415,
+     35.638
+    ],
+    [
+     139.739,
+     35.63
+    ],
+    [
+     139.7405,
+     35.6195
+    ],
+    [
+     139.7385,
+     35.61
+    ],
+    [
+     139.737,
+     35.6
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Nakasendō (Nihonbashi to Sugamo)",
+   "t0": 1601,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Nakasendō",
+   "line": [
+    [
+     139.77446,
+     35.68405
+    ],
+    [
+     139.774,
+     35.69
+    ],
+    [
+     139.771,
+     35.6975
+    ],
+    [
+     139.765,
+     35.704
+    ],
+    [
+     139.76,
+     35.708
+    ],
+    [
+     139.756,
+     35.715
+    ],
+    [
+     139.748,
+     35.725
+    ],
+    [
+     139.739,
+     35.733
+    ],
+    [
+     139.725,
+     35.745
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Ōshū and Nikkō Kaidō (Nihonbashi to Senju)",
+   "t0": 1601,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Ōshū Kaidō; Nikkō Kaidō",
+   "line": [
+    [
+     139.77446,
+     35.68405
+    ],
+    [
+     139.78,
+     35.689
+    ],
+    [
+     139.7856,
+     35.6973
+    ],
+    [
+     139.7915,
+     35.704
+    ],
+    [
+     139.7963,
+     35.711
+    ],
+    [
+     139.8,
+     35.72
+    ],
+    [
+     139.8,
+     35.73
+    ],
+    [
+     139.801,
+     35.738
+    ],
+    [
+     139.803,
+     35.75
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Kōshū Kaidō (Hanzōmon to Naitō-Shinjuku)",
+   "t0": 1601,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Kōshū Kaidō",
+   "line": [
+    [
+     139.7445,
+     35.6852
+    ],
+    [
+     139.738,
+     35.6855
+    ],
+    [
+     139.7305,
+     35.686
+    ],
+    [
+     139.7186,
+     35.688
+    ],
+    [
+     139.706,
+     35.6905
+    ],
+    [
+     139.7,
+     35.688
+    ],
+    [
+     139.687,
+     35.681
+    ],
+    [
+     139.667,
+     35.6745
+    ],
+    [
+     139.65,
+     35.672
+    ]
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Nihon-zutsumi levee (to Yoshiwara)",
+   "t0": 1620,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Yoshiwara; Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "line": [
+    [
+     139.803,
+     35.72
+    ],
+    [
+     139.799,
+     35.723
+    ],
+    [
+     139.795,
+     35.7255
+    ],
+    [
+     139.791,
+     35.729
+    ]
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Shinagawa Daiba No. 3 (Daiba Park)",
+   "t0": 1853,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Odaiba (Shinagawa Daiba)",
+   "at": [
+    139.7735,
+    35.6335
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Shinagawa Daiba No. 6",
+   "t0": 1854,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Odaiba (Shinagawa Daiba)",
+   "at": [
+    139.764,
+    35.6375
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Shinagawa Daiba No. 1",
+   "t0": 1853,
+   "t1": 1965,
+   "conf": 3,
+   "src": "Wikipedia: Odaiba (Shinagawa Daiba)",
+   "at": [
+    139.76,
+    35.629
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Shinagawa Daiba No. 2",
+   "t0": 1853,
+   "t1": 1962,
+   "conf": 3,
+   "src": "Wikipedia: Odaiba (Shinagawa Daiba)",
+   "at": [
+    139.767,
+    35.631
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Shinagawa Daiba No. 5",
+   "t0": 1854,
+   "t1": 1965,
+   "conf": 3,
+   "src": "Wikipedia: Odaiba (Shinagawa Daiba)",
+   "at": [
+    139.757,
+    35.633
+   ]
+  },
+  {
+   "k": "fort",
+   "name": "Gotenyama-shita Daiba",
+   "t0": 1854,
+   "t1": 1965,
+   "conf": 3,
+   "src": "Wikipedia: Odaiba (Shinagawa Daiba)",
+   "at": [
+    139.7465,
+    35.623
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Nihonbashi fish market",
+   "t0": 1603,
+   "t1": 1923,
+   "conf": 2,
+   "src": "Wikipedia: Tsukiji fish market; Nihonbashi",
+   "at": [
+    139.7752,
+    35.685
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Ginza silver mint (Ginza)",
+   "t0": 1612,
+   "t1": 1800,
+   "conf": 2,
+   "src": "Wikipedia: Ginza",
+   "at": [
+    139.766,
+    35.6725
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Kodenmachō prison",
+   "t0": 1613,
+   "t1": 1875,
+   "conf": 2,
+   "src": "Wikipedia: Kodenmachō Prison",
+   "at": [
+    139.779,
+    35.6905
+   ]
+  },
+  {
+   "k": "temple",
+   "name": "Hongan-ji Edo branch, first site (Hamachō)",
+   "t0": 1617,
+   "t1": 1657,
+   "conf": 3,
+   "src": "Wikipedia: Tsukiji Hongan-ji",
+   "at": [
+    139.784,
+    35.687
+   ]
+  },
+  {
+   "k": "market",
+   "name": "Ryōgoku hirokoji (fire-break square and fairground)",
+   "t0": 1659,
+   "t1": 1868,
+   "conf": 2,
+   "src": "Wikipedia: Ryōgoku; Great fire of Meireki",
+   "at": [
+    139.786,
+    35.6935
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Nishinomaru Palace of Edo Castle",
+   "t0": 1592,
+   "t1": 1863,
+   "conf": 2,
+   "src": "Wikipedia: Edo Castle",
+   "at": [
+    139.752,
+    35.682
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Moto-Yoshiwara pleasure quarter",
+   "t0": 1617,
+   "t1": 1657,
+   "conf": 2,
+   "src": "Wikipedia: Yoshiwara",
+   "area": [
+    [
+     139.7815,
+     35.6875
+    ],
+    [
+     139.7845,
+     35.688
+    ],
+    [
+     139.7852,
+     35.6858
+    ],
+    [
+     139.7822,
+     35.6852
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Shin-Yoshiwara pleasure quarter",
+   "t0": 1657,
+   "t1": 1958,
+   "conf": 2,
+   "src": "Wikipedia: Yoshiwara",
+   "area": [
+    [
+     139.7905,
+     35.7258
+    ],
+    [
+     139.794,
+     35.725
+    ],
+    [
+     139.7942,
+     35.7228
+    ],
+    [
+     139.7908,
+     35.723
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Daimyō-kōji (daimyo residences, Marunouchi)",
+   "t0": 1601,
+   "t1": 1871,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "area": [
+    [
+     139.7605,
+     35.6855
+    ],
+    [
+     139.765,
+     35.6858
+    ],
+    [
+     139.77,
+     35.686
+    ],
+    [
+     139.769,
+     35.682
+    ],
+    [
+     139.767,
+     35.678
+    ],
+    [
+     139.764,
+     35.6745
+    ],
+    [
+     139.76,
+     35.6745
+    ],
+    [
+     139.7593,
+     35.6775
+    ],
+    [
+     139.7598,
+     35.681
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Marunouchi business district (Mitsubishi)",
+   "t0": 1890,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Marunouchi",
+   "area": [
+    [
+     139.7605,
+     35.6855
+    ],
+    [
+     139.77,
+     35.686
+    ],
+    [
+     139.769,
+     35.682
+    ],
+    [
+     139.767,
+     35.678
+    ],
+    [
+     139.764,
+     35.6745
+    ],
+    [
+     139.76,
+     35.6745
+    ],
+    [
+     139.7598,
+     35.681
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Sakurada and Hibiya daimyo residences",
+   "t0": 1601,
+   "t1": 1871,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Kasumigaseki",
+   "area": [
+    [
+     139.747,
+     35.6765
+    ],
+    [
+     139.7525,
+     35.677
+    ],
+    [
+     139.758,
+     35.6755
+    ],
+    [
+     139.759,
+     35.6705
+    ],
+    [
+     139.757,
+     35.668
+    ],
+    [
+     139.752,
+     35.6685
+    ],
+    [
+     139.747,
+     35.671
+    ],
+    [
+     139.7455,
+     35.674
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Kasumigaseki government district",
+   "t0": 1880,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Kasumigaseki",
+   "area": [
+    [
+     139.747,
+     35.6765
+    ],
+    [
+     139.7525,
+     35.677
+    ],
+    [
+     139.756,
+     35.6755
+    ],
+    [
+     139.755,
+     35.6705
+    ],
+    [
+     139.752,
+     35.669
+    ],
+    [
+     139.747,
+     35.671
+    ],
+    [
+     139.7455,
+     35.674
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Banchō hatamoto quarter",
+   "t0": 1610,
+   "t1": 1868,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Chiyoda, Tokyo",
+   "area": [
+    [
+     139.733,
+     35.687
+    ],
+    [
+     139.7445,
+     35.686
+    ],
+    [
+     139.7465,
+     35.69
+    ],
+    [
+     139.748,
+     35.695
+    ],
+    [
+     139.742,
+     35.697
+    ],
+    [
+     139.737,
+     35.693
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Nihonbashi and Kanda merchant quarter (shitamachi)",
+   "t0": 1603,
+   "t1": 1868,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003)",
+   "area": [
+    [
+     139.77,
+     35.686
+    ],
+    [
+     139.7717,
+     35.6865
+    ],
+    [
+     139.774,
+     35.69
+    ],
+    [
+     139.771,
+     35.697
+    ],
+    [
+     139.778,
+     35.6972
+    ],
+    [
+     139.7856,
+     35.697
+    ],
+    [
+     139.787,
+     35.693
+    ],
+    [
+     139.784,
+     35.688
+    ],
+    [
+     139.78,
+     35.685
+    ],
+    [
+     139.777,
+     35.682
+    ],
+    [
+     139.774,
+     35.679
+    ],
+    [
+     139.771,
+     35.679
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Hatchōbori yoriki and dōshin residences",
+   "t0": 1630,
+   "t1": 1868,
+   "conf": 2,
+   "src": "Wikipedia: Hatchōbori",
+   "area": [
+    [
+     139.773,
+     35.677
+    ],
+    [
+     139.778,
+     35.679
+    ],
+    [
+     139.781,
+     35.676
+    ],
+    [
+     139.779,
+     35.672
+    ],
+    [
+     139.7745,
+     35.6725
+    ],
+    [
+     139.772,
+     35.6745
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Zōjō-ji precinct (Shiba)",
+   "t0": 1598,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Zōjō-ji",
+   "area": [
+    [
+     139.7445,
+     35.66
+    ],
+    [
+     139.752,
+     35.6605
+    ],
+    [
+     139.7525,
+     35.656
+    ],
+    [
+     139.751,
+     35.653
+    ],
+    [
+     139.746,
+     35.6535
+    ],
+    [
+     139.744,
+     35.6565
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Kan'ei-ji precinct (Tōeizan, Ueno)",
+   "t0": 1625,
+   "t1": 1868,
+   "conf": 2,
+   "src": "Wikipedia: Kan'ei-ji; Ueno Park",
+   "area": [
+    [
+     139.769,
+     35.724
+    ],
+    [
+     139.776,
+     35.725
+    ],
+    [
+     139.779,
+     35.718
+    ],
+    [
+     139.7735,
+     35.7105
+    ],
+    [
+     139.77,
+     35.712
+    ],
+    [
+     139.768,
+     35.718
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Ueno Park",
+   "t0": 1873,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Ueno Park",
+   "area": [
+    [
+     139.769,
+     35.724
+    ],
+    [
+     139.776,
+     35.725
+    ],
+    [
+     139.779,
+     35.718
+    ],
+    [
+     139.7735,
+     35.7105
+    ],
+    [
+     139.77,
+     35.712
+    ],
+    [
+     139.768,
+     35.718
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Sensō-ji precinct (Asakusa)",
+   "t0": 1590,
+   "t1": null,
+   "conf": 2,
+   "src": "Wikipedia: Sensō-ji",
+   "area": [
+    [
+     139.794,
+     35.7175
+    ],
+    [
+     139.799,
+     35.718
+    ],
+    [
+     139.7995,
+     35.711
+    ],
+    [
+     139.7965,
+     35.71
+    ],
+    [
+     139.794,
+     35.712
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Kaga domain residence (Hongō)",
+   "t0": 1617,
+   "t1": 1871,
+   "conf": 2,
+   "src": "Wikipedia: University of Tokyo; Akamon",
+   "area": [
+    [
+     139.7575,
+     35.7165
+    ],
+    [
+     139.765,
+     35.717
+    ],
+    [
+     139.766,
+     35.711
+    ],
+    [
+     139.764,
+     35.7085
+    ],
+    [
+     139.758,
+     35.7095
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Mito domain Koishikawa residence",
+   "t0": 1629,
+   "t1": 1869,
+   "conf": 2,
+   "src": "Wikipedia: Koishikawa Kōrakuen",
+   "area": [
+    [
+     139.744,
+     35.709
+    ],
+    [
+     139.7535,
+     35.7085
+    ],
+    [
+     139.754,
+     35.703
+    ],
+    [
+     139.746,
+     35.703
+    ],
+    [
+     139.743,
+     35.7055
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Owari domain Ichigaya residence",
+   "t0": 1657,
+   "t1": 1871,
+   "conf": 2,
+   "src": "Wikipedia: Ichigaya",
+   "area": [
+    [
+     139.723,
+     35.6955
+    ],
+    [
+     139.732,
+     35.696
+    ],
+    [
+     139.734,
+     35.6925
+    ],
+    [
+     139.73,
+     35.6895
+    ],
+    [
+     139.724,
+     35.6905
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Tsukiji foreign settlement",
+   "t0": 1869,
+   "t1": 1899,
+   "conf": 2,
+   "src": "Wikipedia: Tsukiji",
+   "area": [
+    [
+     139.7735,
+     35.6705
+    ],
+    [
+     139.779,
+     35.6703
+    ],
+    [
+     139.7782,
+     35.666
+    ],
+    [
+     139.774,
+     35.6655
+    ],
+    [
+     139.7725,
+     35.668
+    ]
+   ]
+  },
+  {
+   "k": "district",
+   "name": "Ginza Bricktown",
+   "t0": 1872,
+   "t1": 1923,
+   "conf": 2,
+   "src": "Wikipedia: Ginza",
+   "area": [
+    [
+     139.7678,
+     35.6778
+    ],
+    [
+     139.772,
+     35.6745
+    ],
+    [
+     139.768,
+     35.669
+    ],
+    [
+     139.763,
+     35.666
+    ],
+    [
+     139.76,
+     35.669
+    ],
+    [
+     139.7625,
+     35.673
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Edo under Ōta Dōkan and the Go-Hōjō (castle town)",
+   "t0": 1457,
+   "t1": 1600,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Edo",
+   "area": [
+    [
+     139.7505,
+     35.69
+    ],
+    [
+     139.756,
+     35.6915
+    ],
+    [
+     139.761,
+     35.6905
+    ],
+    [
+     139.766,
+     35.689
+    ],
+    [
+     139.77,
+     35.687
+    ],
+    [
+     139.769,
+     35.684
+    ],
+    [
+     139.766,
+     35.685
+    ],
+    [
+     139.764,
+     35.6885
+    ],
+    [
+     139.7608,
+     35.689
+    ],
+    [
+     139.7578,
+     35.6858
+    ],
+    [
+     139.7545,
+     35.6832
+    ],
+    [
+     139.7515,
+     35.685
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Edo c. 1600-1629 (early Tokugawa city)",
+   "t0": 1601,
+   "t1": 1629,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Edo",
+   "area": [
+    [
+     139.738,
+     35.683
+    ],
+    [
+     139.7445,
+     35.6852
+    ],
+    [
+     139.747,
+     35.694
+    ],
+    [
+     139.7525,
+     35.7022
+    ],
+    [
+     139.765,
+     35.703
+    ],
+    [
+     139.772,
+     35.7
+    ],
+    [
+     139.7856,
+     35.6973
+    ],
+    [
+     139.788,
+     35.694
+    ],
+    [
+     139.786,
+     35.691
+    ],
+    [
+     139.783,
+     35.688
+    ],
+    [
+     139.78,
+     35.685
+    ],
+    [
+     139.777,
+     35.682
+    ],
+    [
+     139.774,
+     35.679
+    ],
+    [
+     139.771,
+     35.674
+    ],
+    [
+     139.768,
+     35.669
+    ],
+    [
+     139.76,
+     35.6635
+    ],
+    [
+     139.7526,
+     35.663
+    ],
+    [
+     139.747,
+     35.667
+    ],
+    [
+     139.743,
+     35.674
+    ],
+    [
+     139.739,
+     35.679
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Edo before the Meireki fire (1630-1656)",
+   "t0": 1630,
+   "t1": 1656,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Edo",
+   "area": [
+    [
+     139.73,
+     35.68
+    ],
+    [
+     139.733,
+     35.69
+    ],
+    [
+     139.74,
+     35.698
+    ],
+    [
+     139.745,
+     35.706
+    ],
+    [
+     139.756,
+     35.71
+    ],
+    [
+     139.768,
+     35.714
+    ],
+    [
+     139.776,
+     35.713
+    ],
+    [
+     139.79,
+     35.718
+    ],
+    [
+     139.799,
+     35.718
+    ],
+    [
+     139.793,
+     35.704
+    ],
+    [
+     139.7895,
+     35.6955
+    ],
+    [
+     139.796,
+     35.689
+    ],
+    [
+     139.8,
+     35.676
+    ],
+    [
+     139.7895,
+     35.677
+    ],
+    [
+     139.785,
+     35.674
+    ],
+    [
+     139.779,
+     35.6705
+    ],
+    [
+     139.774,
+     35.672
+    ],
+    [
+     139.768,
+     35.669
+    ],
+    [
+     139.76,
+     35.6635
+    ],
+    [
+     139.76,
+     35.658
+    ],
+    [
+     139.752,
+     35.651
+    ],
+    [
+     139.744,
+     35.655
+    ],
+    [
+     139.736,
+     35.665
+    ],
+    [
+     139.732,
+     35.673
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Edo after the Meireki fire (1657-1679)",
+   "t0": 1657,
+   "t1": 1679,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Edo",
+   "area": [
+    [
+     139.723,
+     35.678
+    ],
+    [
+     139.725,
+     35.69
+    ],
+    [
+     139.735,
+     35.702
+    ],
+    [
+     139.745,
+     35.712
+    ],
+    [
+     139.758,
+     35.718
+    ],
+    [
+     139.77,
+     35.725
+    ],
+    [
+     139.785,
+     35.723
+    ],
+    [
+     139.799,
+     35.72
+    ],
+    [
+     139.802,
+     35.708
+    ],
+    [
+     139.82,
+     35.702
+    ],
+    [
+     139.825,
+     35.69
+    ],
+    [
+     139.82,
+     35.674
+    ],
+    [
+     139.803,
+     35.672
+    ],
+    [
+     139.7895,
+     35.677
+    ],
+    [
+     139.785,
+     35.674
+    ],
+    [
+     139.779,
+     35.6705
+    ],
+    [
+     139.774,
+     35.672
+    ],
+    [
+     139.768,
+     35.669
+    ],
+    [
+     139.76,
+     35.6635
+    ],
+    [
+     139.76,
+     35.658
+    ],
+    [
+     139.752,
+     35.645
+    ],
+    [
+     139.744,
+     35.638
+    ],
+    [
+     139.74,
+     35.625
+    ],
+    [
+     139.733,
+     35.64
+    ],
+    [
+     139.728,
+     35.66
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Edo c. 1700 (about one million people)",
+   "t0": 1680,
+   "t1": 1749,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Edo",
+   "area": [
+    [
+     139.7385,
+     35.615
+    ],
+    [
+     139.734,
+     35.635
+    ],
+    [
+     139.723,
+     35.655
+    ],
+    [
+     139.715,
+     35.675
+    ],
+    [
+     139.703,
+     35.687
+    ],
+    [
+     139.71,
+     35.695
+    ],
+    [
+     139.725,
+     35.71
+    ],
+    [
+     139.74,
+     35.722
+    ],
+    [
+     139.752,
+     35.729
+    ],
+    [
+     139.768,
+     35.729
+    ],
+    [
+     139.79,
+     35.727
+    ],
+    [
+     139.801,
+     35.721
+    ],
+    [
+     139.805,
+     35.708
+    ],
+    [
+     139.825,
+     35.705
+    ],
+    [
+     139.83,
+     35.69
+    ],
+    [
+     139.825,
+     35.675
+    ],
+    [
+     139.803,
+     35.671
+    ],
+    [
+     139.795,
+     35.6735
+    ],
+    [
+     139.788,
+     35.6772
+    ],
+    [
+     139.783,
+     35.6712
+    ],
+    [
+     139.7782,
+     35.668
+    ],
+    [
+     139.774,
+     35.661
+    ],
+    [
+     139.769,
+     35.6585
+    ],
+    [
+     139.76,
+     35.656
+    ],
+    [
+     139.752,
+     35.645
+    ],
+    [
+     139.744,
+     35.638
+    ],
+    [
+     139.7405,
+     35.63
+    ],
+    [
+     139.742,
+     35.62
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Edo c. 1800",
+   "t0": 1750,
+   "t1": 1849,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Edo",
+   "area": [
+    [
+     139.7385,
+     35.611
+    ],
+    [
+     139.734,
+     35.635
+    ],
+    [
+     139.723,
+     35.652
+    ],
+    [
+     139.715,
+     35.675
+    ],
+    [
+     139.702,
+     35.687
+    ],
+    [
+     139.708,
+     35.696
+    ],
+    [
+     139.722,
+     35.713
+    ],
+    [
+     139.738,
+     35.725
+    ],
+    [
+     139.752,
+     35.731
+    ],
+    [
+     139.768,
+     35.731
+    ],
+    [
+     139.79,
+     35.728
+    ],
+    [
+     139.802,
+     35.722
+    ],
+    [
+     139.807,
+     35.709
+    ],
+    [
+     139.827,
+     35.706
+    ],
+    [
+     139.833,
+     35.69
+    ],
+    [
+     139.83,
+     35.67
+    ],
+    [
+     139.82,
+     35.664
+    ],
+    [
+     139.795,
+     35.6645
+    ],
+    [
+     139.7865,
+     35.6665
+    ],
+    [
+     139.78,
+     35.6662
+    ],
+    [
+     139.776,
+     35.664
+    ],
+    [
+     139.77,
+     35.6585
+    ],
+    [
+     139.76,
+     35.656
+    ],
+    [
+     139.752,
+     35.645
+    ],
+    [
+     139.744,
+     35.638
+    ],
+    [
+     139.7405,
+     35.63
+    ],
+    [
+     139.742,
+     35.62
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Edo / Tokyo c. 1868",
+   "t0": 1850,
+   "t1": 1892,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Edo",
+   "area": [
+    [
+     139.7385,
+     35.61
+    ],
+    [
+     139.733,
+     35.635
+    ],
+    [
+     139.722,
+     35.652
+    ],
+    [
+     139.714,
+     35.675
+    ],
+    [
+     139.701,
+     35.687
+    ],
+    [
+     139.707,
+     35.697
+    ],
+    [
+     139.721,
+     35.714
+    ],
+    [
+     139.738,
+     35.726
+    ],
+    [
+     139.752,
+     35.732
+    ],
+    [
+     139.768,
+     35.732
+    ],
+    [
+     139.79,
+     35.729
+    ],
+    [
+     139.803,
+     35.723
+    ],
+    [
+     139.808,
+     35.71
+    ],
+    [
+     139.828,
+     35.707
+    ],
+    [
+     139.834,
+     35.69
+    ],
+    [
+     139.83,
+     35.67
+    ],
+    [
+     139.82,
+     35.664
+    ],
+    [
+     139.795,
+     35.6645
+    ],
+    [
+     139.7865,
+     35.6665
+    ],
+    [
+     139.78,
+     35.6662
+    ],
+    [
+     139.776,
+     35.664
+    ],
+    [
+     139.77,
+     35.6585
+    ],
+    [
+     139.76,
+     35.656
+    ],
+    [
+     139.752,
+     35.645
+    ],
+    [
+     139.744,
+     35.638
+    ],
+    [
+     139.7405,
+     35.63
+    ],
+    [
+     139.742,
+     35.62
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Tokyo c. 1900",
+   "t0": 1893,
+   "t1": 1923,
+   "conf": 2,
+   "src": "Naito Akira, \"Edo, the City That Became Tokyo\" (2003); Wikipedia: Edo",
+   "area": [
+    [
+     139.7385,
+     35.605
+    ],
+    [
+     139.728,
+     35.63
+    ],
+    [
+     139.705,
+     35.65
+    ],
+    [
+     139.695,
+     35.665
+    ],
+    [
+     139.693,
+     35.685
+    ],
+    [
+     139.698,
+     35.705
+    ],
+    [
+     139.71,
+     35.725
+    ],
+    [
+     139.735,
+     35.735
+    ],
+    [
+     139.755,
+     35.74
+    ],
+    [
+     139.775,
+     35.738
+    ],
+    [
+     139.795,
+     35.735
+    ],
+    [
+     139.81,
+     35.725
+    ],
+    [
+     139.82,
+     35.715
+    ],
+    [
+     139.838,
+     35.708
+    ],
+    [
+     139.84,
+     35.69
+    ],
+    [
+     139.835,
+     35.67
+    ],
+    [
+     139.82,
+     35.664
+    ],
+    [
+     139.795,
+     35.6645
+    ],
+    [
+     139.788,
+     35.662
+    ],
+    [
+     139.788,
+     35.66
+    ],
+    [
+     139.785,
+     35.658
+    ],
+    [
+     139.78,
+     35.659
+    ],
+    [
+     139.7792,
+     35.661
+    ],
+    [
+     139.776,
+     35.664
+    ],
+    [
+     139.77,
+     35.6585
+    ],
+    [
+     139.763,
+     35.6563
+    ],
+    [
+     139.759,
+     35.6555
+    ],
+    [
+     139.752,
+     35.645
+    ],
+    [
+     139.744,
+     35.638
+    ],
+    [
+     139.7405,
+     35.63
+    ],
+    [
+     139.742,
+     35.62
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q500681",
+   "names": [
+    [
+     1457,
+     1867,
+     "Edo Castle"
+    ],
+    [
+     1868,
+     1887,
+     "Tokyo Castle (imperial residence)"
+    ],
+    [
+     1888,
+     null,
+     "Tokyo Imperial Palace"
+    ]
+   ],
+   "kinds": [
+    [
+     1457,
+     1867,
+     "fort"
+    ],
+    [
+     1868,
+     null,
+     "palace"
+    ]
+   ],
+   "t0": 1457,
+   "t1": null,
+   "fix_dates": true,
+   "conf": 1,
+   "src": "Wikipedia: Edo Castle; Tokyo Imperial Palace"
+  },
+  {
+   "k": "rename",
+   "wd": "Q1033333",
+   "names": [
+    [
+     1654,
+     1708,
+     "Kōfu domain shore villa (Hama-yashiki)"
+    ],
+    [
+     1709,
+     1869,
+     "Hama Goten (shogunal villa)"
+    ],
+    [
+     1870,
+     1945,
+     "Hama Rikyū (imperial detached palace)"
+    ],
+    [
+     1946,
+     null,
+     "Hamarikyu Gardens"
+    ]
+   ],
+   "t0": 1654,
+   "t1": null,
+   "fix_dates": true,
+   "conf": 1,
+   "src": "Wikipedia: Hamarikyu Gardens"
+  },
+  {
+   "k": "rename",
+   "wd": "Q3266874",
+   "names": [
+    [
+     1686,
+     1890,
+     "Rakujuen (Ōkubo residence garden)"
+    ],
+    [
+     1891,
+     1923,
+     "Shiba Rikyū"
+    ],
+    [
+     1924,
+     null,
+     "Kyu Shiba Rikyu Garden"
+    ]
+   ],
+   "conf": 1,
+   "src": "Wikipedia: Kyu Shiba Rikyu Garden"
+  },
+  {
+   "k": "rename",
+   "wd": "Q943255",
+   "names": [
+    [
+     1679,
+     null,
+     "Tsukiji Hongan-ji"
+    ]
+   ],
+   "t0": 1679,
+   "t1": null,
+   "fix_dates": true,
+   "conf": 2,
+   "src": "Wikipedia: Tsukiji Hongan-ji"
+  },
+  {
+   "k": "rename",
+   "wd": "Q7842",
+   "names": [
+    [
+     1877,
+     1885,
+     "Tokyo University"
+    ],
+    [
+     1886,
+     1896,
+     "Imperial University"
+    ],
+    [
+     1897,
+     1946,
+     "Tokyo Imperial University"
+    ],
+    [
+     1947,
+     null,
+     "University of Tokyo"
+    ]
+   ],
+   "conf": 1,
+   "src": "Wikipedia: University of Tokyo"
+  },
+  {
+   "k": "rename",
+   "wd": "Q3142926",
+   "names": [
+    [
+     1636,
+     null,
+     "Takadanobaba (riding ground)"
+    ]
+   ],
+   "kinds": [
+    [
+     1636,
+     null,
+     "forum"
+    ]
+   ],
+   "conf": 1,
+   "src": "Wikipedia: Takadanobaba"
+  }
+ ]
+}

@@ -22,6 +22,7 @@ the renderer (views/pixel/), the terrain and borders data (terrain thread) and t
 | L0 | 2160 x 1080, one file `z0.png` | 10' |
 | L1 | 5400 x 2700, one file `z1.png` | 4' |
 | L2 | 10800 x 5400 as 30x30 degree tiles `z2_<col>_<row>.png`, 900 x 900 | 2' |
+| L3 | one patch per story city, `l3/l3_<id>.png` with boxes in `l3/l3.json` (ingest/city/tiles.py), packed by tiles.py into `tiles/l3.png`; the page's level is `{cell, patches: [{box, url, crop}]}` | 1.5" (1/2400 degree, about 45 m) |
 
 Channels: **R** terrain class id, **G** hillshade 0..255 (sun 315 deg, altitude 45, 128 = flat, 128 at sea),
 **B** land `elev_m / 25` or sea `depth_m / 40`, capped at 255.
@@ -124,3 +125,12 @@ crawls its routes month by month, armies march between consecutive battles of a 
 trade routes, smoke rises from battles and eruptions, a big instant year jump dissolves through a Bayer threshold.
 Hooks for other layers: `ATLAS.motion.layer(id, fn)`, `.onStep(fn)`, `.frame`, `.pulse(lon, lat, {color, r, repeat})`.
 City lights data: `python3 ingest/pixel/city_lights.py historical_urban_population.csv /mnt/project-files/atlas/pixel/city-lights.json`.
+
+### City art (city-art.js)
+Rides with city.js (same side file) and replaces `PixelCity.ART` entries: buildings by building tradition from
+`PixelEra.culture` (Byzantine, Romanesque and Gothic churches; Ottoman, Persian, Arab and Mughal mosques; classical, East
+Asian, Hindu and Mesoamerican temples; palaces, gates, tombs, schools and houses per tradition), walls in local material
+(Byzantine brick courses, mudbrick, Chinese grey brick, Indian sandstone) with crenels from k 180 and towers from k 260,
+roads, canals and the Golden Horn chain, and two area hooks city.js calls when present: `area:extent`/`area:district`
+(roofscape: staggered blocks, T-junction streets, gardens, squares, courtyards in flat-roofed traditions) and `area:water`.
+The built-up texture does not count as occupied, so buildings stand inside it. Stamps are fills; `bake()` inks the outline.

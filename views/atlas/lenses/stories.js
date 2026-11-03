@@ -32,10 +32,13 @@
 
   const seen = () => { try { return JSON.parse(localStorage.getItem("atlas.stories.v1") || "{}"); } catch { return {}; } };
   const span = s => { const ts = s.scenes.map(c => c.t).filter(Number.isFinite); if (!ts.length) return ""; const a = Math.min(...ts), b = Math.max(...ts); return a === b ? api.fmtYear(a) : `${api.fmtYear(a)} to ${api.fmtYear(b)}`; };
+  // A story whose scenes are still a lazy getter (living.js journeys) shows its brief, so listing does not build them.
+  const lazy = s => { const d = Object.getOwnPropertyDescriptor(s, "scenes"); return !!(d && d.get && s.brief); };
   function card(s, hero) {
-    const sn = seen()[s.id];
+    const sn = seen()[s.id], b = lazy(s) ? s.brief : null;
+    const meta = b ? `${b.legs} ${b.legs === 1 ? "leg" : "legs"} · ${esc(Math.round(b.y0) === Math.round(b.y1) ? api.fmtYear(Math.round(b.y0)) : `${api.fmtYear(Math.round(b.y0))} to ${api.fmtYear(Math.round(b.y1))}`)}` : `${s.scenes.length} scenes · ${esc(span(s))}`;
     return `<button class="st${hero ? " hero" : ""}${sn ? " seen" : ""}" data-id="${esc(s.id)}"><span class="pl" aria-hidden="true">${sn ? "↺" : "▶"}</span><b>${esc(s.title)}</b>
-      <small>${s.blurb ? esc(s.blurb) + " " : ""}<span class="m">${s.scenes.length} scenes · ${esc(span(s))}${s.live ? " · live draft" : ""}</span></small></button>`;
+      <small>${s.blurb ? esc(s.blurb) + " " : ""}<span class="m">${meta}${s.live ? " · live draft" : ""}</span></small></button>`;
   }
   function liveAnswer() {
     const ans = api.answer;

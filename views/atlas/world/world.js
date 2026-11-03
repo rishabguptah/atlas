@@ -153,7 +153,7 @@
   };
   let G = null;
   function grid(bbox, sp) {
-    if (G === null) { G = false; json(BASE + "density.json").then(g => { G = g; fire(); }).catch(() => {}); }
+    if (G === null && S.index && S.index.density) { G = false; json(BASE + S.index.density).then(g => { G = g; fire(); }).catch(() => {}); }
     if (!G || !bbox) return null;
     const c = G.cell_deg, y = Math.floor((sp[0] + sp[1]) / 24), bi = G.t_bins.findIndex(([a, b]) => y >= a && y < b);
     if (bi < 0) return null;
@@ -200,8 +200,10 @@
   // ---------- storylines (served to Up close and, as Stories, to the Director) ----------
   // Named storylines() so it never clobbers the Story registry ATLAS.world.stories (story.js).
   const STORIES = { list: null, p: null };
+  // The file (~600 KB) waits for the page's load event and an idle moment so it never competes with first paint.
+  const afterPaint = () => new Promise(r => { const go = () => (window.requestIdleCallback ? requestIdleCallback(() => r(), { timeout: 6000 }) : setTimeout(r, 1500)); if (document.readyState === "complete") go(); else addEventListener("load", go, { once: true }); });
   W.storylines = function () {
-    if (!STORIES.p) STORIES.p = W.ready.then(ix => ix ? json(BASE + ix.stories_file) : { stories: [] }).then(d => { STORIES.list = d.stories; fire(); return d.stories; })
+    if (!STORIES.p) STORIES.p = W.ready.then(ix => ix ? afterPaint().then(() => json(BASE + ix.stories_file)) : { stories: [] }).then(d => { STORIES.list = d.stories; fire(); return d.stories; })
       .catch(e => { console.warn("storylines", e); STORIES.list = []; return []; });
     return STORIES.p;
   };

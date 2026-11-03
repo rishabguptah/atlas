@@ -1,0 +1,1503 @@
+{
+ "id": "baghdad",
+ "note": "Claude draft for Baghdad: the Round City of al-Mansur (762) on the west bank as placed by Lassner and Le Strange, its gates, avenues and centre; the Abbasid east wall (1095-1870) and its gates; the Sarat, Isa and Mualla canals; built-up area by period; date and name fixes. Shapes and the Round City position are reconstructions (conf 2).",
+ "features": [
+  {
+   "k": "canal",
+   "name": "Moat of the Round City",
+   "t0": 762,
+   "t1": 1000,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Round city of Baghdad (Wikipedia)",
+   "line": [
+    [
+     44.352,
+     33.36071
+    ],
+    [
+     44.35443,
+     33.36053
+    ],
+    [
+     44.3568,
+     33.36001
+    ],
+    [
+     44.35901,
+     33.35914
+    ],
+    [
+     44.36101,
+     33.35797
+    ],
+    [
+     44.36274,
+     33.35653
+    ],
+    [
+     44.36414,
+     33.35486
+    ],
+    [
+     44.36517,
+     33.35301
+    ],
+    [
+     44.36581,
+     33.35103
+    ],
+    [
+     44.36602,
+     33.349
+    ],
+    [
+     44.36581,
+     33.34697
+    ],
+    [
+     44.36517,
+     33.34499
+    ],
+    [
+     44.36414,
+     33.34314
+    ],
+    [
+     44.36274,
+     33.34147
+    ],
+    [
+     44.36101,
+     33.34003
+    ],
+    [
+     44.35901,
+     33.33886
+    ],
+    [
+     44.3568,
+     33.33799
+    ],
+    [
+     44.35443,
+     33.33747
+    ],
+    [
+     44.352,
+     33.33729
+    ],
+    [
+     44.34957,
+     33.33747
+    ],
+    [
+     44.3472,
+     33.33799
+    ],
+    [
+     44.34499,
+     33.33886
+    ],
+    [
+     44.34299,
+     33.34003
+    ],
+    [
+     44.34126,
+     33.34147
+    ],
+    [
+     44.33986,
+     33.34314
+    ],
+    [
+     44.33883,
+     33.34499
+    ],
+    [
+     44.33819,
+     33.34697
+    ],
+    [
+     44.33798,
+     33.349
+    ],
+    [
+     44.33819,
+     33.35103
+    ],
+    [
+     44.33883,
+     33.35301
+    ],
+    [
+     44.33986,
+     33.35486
+    ],
+    [
+     44.34126,
+     33.35653
+    ],
+    [
+     44.34299,
+     33.35797
+    ],
+    [
+     44.34499,
+     33.35914
+    ],
+    [
+     44.3472,
+     33.36001
+    ],
+    [
+     44.34957,
+     33.36053
+    ],
+    [
+     44.352,
+     33.36071
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Round City outer wall",
+   "t0": 762,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Round city of Baghdad (Wikipedia)",
+   "line": [
+    [
+     44.352,
+     33.35999
+    ],
+    [
+     44.35428,
+     33.35982
+    ],
+    [
+     44.3565,
+     33.35933
+    ],
+    [
+     44.35858,
+     33.35852
+    ],
+    [
+     44.36046,
+     33.35742
+    ],
+    [
+     44.36208,
+     33.35606
+    ],
+    [
+     44.36339,
+     33.3545
+    ],
+    [
+     44.36436,
+     33.35276
+    ],
+    [
+     44.36496,
+     33.35091
+    ],
+    [
+     44.36516,
+     33.349
+    ],
+    [
+     44.36496,
+     33.34709
+    ],
+    [
+     44.36436,
+     33.34524
+    ],
+    [
+     44.36339,
+     33.3435
+    ],
+    [
+     44.36208,
+     33.34194
+    ],
+    [
+     44.36046,
+     33.34058
+    ],
+    [
+     44.35858,
+     33.33948
+    ],
+    [
+     44.3565,
+     33.33867
+    ],
+    [
+     44.35428,
+     33.33818
+    ],
+    [
+     44.352,
+     33.33801
+    ],
+    [
+     44.34972,
+     33.33818
+    ],
+    [
+     44.3475,
+     33.33867
+    ],
+    [
+     44.34542,
+     33.33948
+    ],
+    [
+     44.34354,
+     33.34058
+    ],
+    [
+     44.34192,
+     33.34194
+    ],
+    [
+     44.34061,
+     33.3435
+    ],
+    [
+     44.33964,
+     33.34524
+    ],
+    [
+     44.33904,
+     33.34709
+    ],
+    [
+     44.33884,
+     33.349
+    ],
+    [
+     44.33904,
+     33.35091
+    ],
+    [
+     44.33964,
+     33.35276
+    ],
+    [
+     44.34061,
+     33.3545
+    ],
+    [
+     44.34192,
+     33.35606
+    ],
+    [
+     44.34354,
+     33.35742
+    ],
+    [
+     44.34542,
+     33.35852
+    ],
+    [
+     44.3475,
+     33.35933
+    ],
+    [
+     44.34972,
+     33.35982
+    ],
+    [
+     44.352,
+     33.35999
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Round City main wall",
+   "t0": 762,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Round city of Baghdad (Wikipedia)",
+   "line": [
+    [
+     44.352,
+     33.35891
+    ],
+    [
+     44.35406,
+     33.35876
+    ],
+    [
+     44.35606,
+     33.35831
+    ],
+    [
+     44.35793,
+     33.35758
+    ],
+    [
+     44.35963,
+     33.35659
+    ],
+    [
+     44.36109,
+     33.35537
+    ],
+    [
+     44.36227,
+     33.35395
+    ],
+    [
+     44.36315,
+     33.35239
+    ],
+    [
+     44.36368,
+     33.35072
+    ],
+    [
+     44.36386,
+     33.349
+    ],
+    [
+     44.36368,
+     33.34728
+    ],
+    [
+     44.36315,
+     33.34561
+    ],
+    [
+     44.36227,
+     33.34405
+    ],
+    [
+     44.36109,
+     33.34263
+    ],
+    [
+     44.35963,
+     33.34141
+    ],
+    [
+     44.35793,
+     33.34042
+    ],
+    [
+     44.35606,
+     33.33969
+    ],
+    [
+     44.35406,
+     33.33924
+    ],
+    [
+     44.352,
+     33.33909
+    ],
+    [
+     44.34994,
+     33.33924
+    ],
+    [
+     44.34794,
+     33.33969
+    ],
+    [
+     44.34607,
+     33.34042
+    ],
+    [
+     44.34437,
+     33.34141
+    ],
+    [
+     44.34291,
+     33.34263
+    ],
+    [
+     44.34173,
+     33.34405
+    ],
+    [
+     44.34085,
+     33.34561
+    ],
+    [
+     44.34032,
+     33.34728
+    ],
+    [
+     44.34014,
+     33.349
+    ],
+    [
+     44.34032,
+     33.35072
+    ],
+    [
+     44.34085,
+     33.35239
+    ],
+    [
+     44.34173,
+     33.35395
+    ],
+    [
+     44.34291,
+     33.35537
+    ],
+    [
+     44.34437,
+     33.35659
+    ],
+    [
+     44.34607,
+     33.35758
+    ],
+    [
+     44.34794,
+     33.35831
+    ],
+    [
+     44.34994,
+     33.35876
+    ],
+    [
+     44.352,
+     33.35891
+    ]
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "Round City inner wall (central court)",
+   "t0": 766,
+   "t1": 1000,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages",
+   "line": [
+    [
+     44.352,
+     33.35459
+    ],
+    [
+     44.35349,
+     33.35445
+    ],
+    [
+     44.3549,
+     33.35403
+    ],
+    [
+     44.35617,
+     33.35337
+    ],
+    [
+     44.35723,
+     33.35248
+    ],
+    [
+     44.35802,
+     33.35142
+    ],
+    [
+     44.35852,
+     33.35024
+    ],
+    [
+     44.35869,
+     33.349
+    ],
+    [
+     44.35852,
+     33.34776
+    ],
+    [
+     44.35802,
+     33.34658
+    ],
+    [
+     44.35723,
+     33.34552
+    ],
+    [
+     44.35617,
+     33.34463
+    ],
+    [
+     44.3549,
+     33.34397
+    ],
+    [
+     44.35349,
+     33.34355
+    ],
+    [
+     44.352,
+     33.34341
+    ],
+    [
+     44.35051,
+     33.34355
+    ],
+    [
+     44.3491,
+     33.34397
+    ],
+    [
+     44.34783,
+     33.34463
+    ],
+    [
+     44.34677,
+     33.34552
+    ],
+    [
+     44.34598,
+     33.34658
+    ],
+    [
+     44.34548,
+     33.34776
+    ],
+    [
+     44.34531,
+     33.349
+    ],
+    [
+     44.34548,
+     33.35024
+    ],
+    [
+     44.34598,
+     33.35142
+    ],
+    [
+     44.34677,
+     33.35248
+    ],
+    [
+     44.34783,
+     33.35337
+    ],
+    [
+     44.3491,
+     33.35403
+    ],
+    [
+     44.35051,
+     33.35445
+    ],
+    [
+     44.352,
+     33.35459
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Khurasan Gate (Bab Khurasan)",
+   "t0": 762,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Round city of Baghdad (Wikipedia)",
+   "at": [
+    44.3613,
+    33.35677
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Avenue from the Khurasan Gate",
+   "t0": 766,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages",
+   "line": [
+    [
+     44.36191,
+     33.35728
+    ],
+    [
+     44.35673,
+     33.35295
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Basra Gate (Bab al-Basra)",
+   "t0": 762,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Round city of Baghdad (Wikipedia)",
+   "at": [
+    44.3613,
+    33.34123
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Avenue from the Basra Gate",
+   "t0": 766,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages",
+   "line": [
+    [
+     44.36191,
+     33.34072
+    ],
+    [
+     44.35673,
+     33.34505
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Kufa Gate (Bab al-Kufa)",
+   "t0": 762,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Round city of Baghdad (Wikipedia)",
+   "at": [
+    44.3427,
+    33.34123
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Avenue from the Kufa Gate",
+   "t0": 766,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages",
+   "line": [
+    [
+     44.34209,
+     33.34072
+    ],
+    [
+     44.34727,
+     33.34505
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Syria Gate (Bab al-Sham)",
+   "t0": 762,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Round city of Baghdad (Wikipedia)",
+   "at": [
+    44.3427,
+    33.35677
+   ]
+  },
+  {
+   "k": "road",
+   "name": "Avenue from the Syria Gate",
+   "t0": 766,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages",
+   "line": [
+    [
+     44.34209,
+     33.35728
+    ],
+    [
+     44.34727,
+     33.35295
+    ]
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Palace of the Golden Gate (Qasr al-Dhahab, Green Dome)",
+   "t0": 766,
+   "t1": 941,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Round city of Baghdad (Wikipedia)",
+   "at": [
+    44.352,
+    33.3495
+   ]
+  },
+  {
+   "k": "mosque",
+   "name": "Mosque of al-Mansur (Jami al-Mansur)",
+   "t0": 766,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Round city of Baghdad (Wikipedia)",
+   "at": [
+    44.3508,
+    33.3481
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Khuld Palace",
+   "t0": 775,
+   "t1": 979,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate",
+   "at": [
+    44.3655,
+    33.3565
+   ]
+  },
+  {
+   "k": "house",
+   "name": "Bimaristan al-Adudi (hospital on the Khuld site)",
+   "t0": 982,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate; Bimaristan (Wikipedia)",
+   "at": [
+    44.3665,
+    33.3555
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Rusafa: palace and mosque of al-Mahdi",
+   "t0": 776,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate",
+   "at": [
+    44.3625,
+    33.3668
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Dar al-Khilafa (Hasani and Taj palaces)",
+   "t0": 892,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate; Lassner 1970, The Topography of Baghdad in the Early Middle Ages",
+   "at": [
+    44.4035,
+    33.3335
+   ]
+  },
+  {
+   "k": "mosque",
+   "name": "Al-Kazimayn Shrine",
+   "t0": 799,
+   "t1": null,
+   "conf": 2,
+   "src": "Al-Kadhimiya Mosque (Wikipedia)",
+   "at": [
+    44.33783,
+    33.37998
+   ]
+  },
+  {
+   "k": "tomb",
+   "name": "Shrine of Abd al-Qadir al-Gilani",
+   "t0": 1166,
+   "t1": null,
+   "conf": 2,
+   "src": "Abdul Qadir Gilani (Wikipedia)",
+   "at": [
+    44.4083,
+    33.3322
+   ]
+  },
+  {
+   "k": "tomb",
+   "name": "Tomb of Maruf al-Karkhi",
+   "t0": 815,
+   "t1": null,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate",
+   "at": [
+    44.3782,
+    33.3398
+   ]
+  },
+  {
+   "k": "palace",
+   "name": "Qishla (Ottoman Serail)",
+   "t0": 1861,
+   "t1": null,
+   "conf": 2,
+   "src": "Qishla of Baghdad (Wikipedia)",
+   "at": [
+    44.3884,
+    33.3416
+   ]
+  },
+  {
+   "k": "wall",
+   "name": "East Baghdad wall (al-Mustazhir)",
+   "t0": 1095,
+   "t1": 1870,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate; Bab al-Wastani (Wikipedia); Gates of Baghdad (Wikipedia)",
+   "line": [
+    [
+     44.3725,
+     33.349
+    ],
+    [
+     44.383,
+     33.3468
+    ],
+    [
+     44.392,
+     33.35
+    ],
+    [
+     44.4,
+     33.3525
+    ],
+    [
+     44.4041,
+     33.3518
+    ],
+    [
+     44.4095,
+     33.348
+    ],
+    [
+     44.4128,
+     33.3411
+    ],
+    [
+     44.415,
+     33.334
+    ],
+    [
+     44.4148,
+     33.3275
+    ],
+    [
+     44.4105,
+     33.3245
+    ],
+    [
+     44.4075,
+     33.3235
+    ]
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Wastani (Bab al-Zafariya)",
+   "t0": 1221,
+   "t1": null,
+   "conf": 2,
+   "src": "Bab al-Wastani (Wikipedia); Gates of Baghdad (Wikipedia)",
+   "at": [
+    44.4041,
+    33.3518
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Muadham (Bab al-Sultan)",
+   "t0": 1221,
+   "t1": 1870,
+   "conf": 2,
+   "src": "Gates of Baghdad (Wikipedia)",
+   "at": [
+    44.383,
+    33.3468
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Talisman Gate (Bab al-Talsim, Bab al-Halba)",
+   "t0": 1221,
+   "t1": 1917,
+   "conf": 2,
+   "src": "Gates of Baghdad (Wikipedia)",
+   "at": [
+    44.41282,
+    33.34105
+   ]
+  },
+  {
+   "k": "gate",
+   "name": "Bab al-Sharqi (Bab al-Basaliya)",
+   "t0": 1221,
+   "t1": 1937,
+   "conf": 2,
+   "src": "Gates of Baghdad (Wikipedia)",
+   "at": [
+    44.4148,
+    33.3275
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Sarat canal",
+   "t0": 762,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate; Lassner 1970, The Topography of Baghdad in the Early Middle Ages",
+   "line": [
+    [
+     44.285,
+     33.322
+    ],
+    [
+     44.31,
+     33.327
+    ],
+    [
+     44.33,
+     33.331
+    ],
+    [
+     44.345,
+     33.3335
+    ],
+    [
+     44.36,
+     33.3345
+    ],
+    [
+     44.367,
+     33.338
+    ],
+    [
+     44.373,
+     33.3435
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Nahr Isa",
+   "t0": 762,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate; Lassner 1970, The Topography of Baghdad in the Early Middle Ages",
+   "line": [
+    [
+     44.285,
+     33.31
+    ],
+    [
+     44.32,
+     33.315
+    ],
+    [
+     44.35,
+     33.318
+    ],
+    [
+     44.375,
+     33.3205
+    ],
+    [
+     44.39,
+     33.3225
+    ],
+    [
+     44.4035,
+     33.3235
+    ]
+   ]
+  },
+  {
+   "k": "canal",
+   "name": "Nahr al-Mualla (east-bank palace canal)",
+   "t0": 892,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate",
+   "line": [
+    [
+     44.455,
+     33.375
+    ],
+    [
+     44.44,
+     33.36
+    ],
+    [
+     44.425,
+     33.345
+    ],
+    [
+     44.413,
+     33.337
+    ],
+    [
+     44.405,
+     33.332
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Round City, Harbiya and Karkh",
+   "t0": 762,
+   "t1": 850,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Le Strange 1900, Baghdad during the Abbasid Caliphate",
+   "area": [
+    [
+     44.334,
+     33.344
+    ],
+    [
+     44.333,
+     33.356
+    ],
+    [
+     44.34,
+     33.366
+    ],
+    [
+     44.352,
+     33.372
+    ],
+    [
+     44.362,
+     33.369
+    ],
+    [
+     44.369,
+     33.36
+    ],
+    [
+     44.369,
+     33.35
+    ],
+    [
+     44.376,
+     33.343
+    ],
+    [
+     44.389,
+     33.336
+    ],
+    [
+     44.398,
+     33.327
+    ],
+    [
+     44.4,
+     33.321
+    ],
+    [
+     44.388,
+     33.319
+    ],
+    [
+     44.37,
+     33.324
+    ],
+    [
+     44.356,
+     33.331
+    ],
+    [
+     44.342,
+     33.334
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Abbasid Baghdad at its height, both banks",
+   "t0": 850,
+   "t1": 1258,
+   "conf": 2,
+   "src": "Lassner 1970, The Topography of Baghdad in the Early Middle Ages; Le Strange 1900, Baghdad during the Abbasid Caliphate",
+   "area": [
+    [
+     44.325,
+     33.383
+    ],
+    [
+     44.335,
+     33.39
+    ],
+    [
+     44.35,
+     33.387
+    ],
+    [
+     44.362,
+     33.392
+    ],
+    [
+     44.376,
+     33.386
+    ],
+    [
+     44.39,
+     33.372
+    ],
+    [
+     44.405,
+     33.358
+    ],
+    [
+     44.418,
+     33.344
+    ],
+    [
+     44.424,
+     33.33
+    ],
+    [
+     44.42,
+     33.316
+    ],
+    [
+     44.41,
+     33.312
+    ],
+    [
+     44.392,
+     33.313
+    ],
+    [
+     44.37,
+     33.318
+    ],
+    [
+     44.345,
+     33.325
+    ],
+    [
+     44.33,
+     33.334
+    ],
+    [
+     44.322,
+     33.35
+    ],
+    [
+     44.322,
+     33.37
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Baghdad after the Mongol sack: walled east bank and Karkh",
+   "t0": 1258,
+   "t1": 1534,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate; Siege of Baghdad (1258) (Wikipedia)",
+   "area": [
+    [
+     44.383,
+     33.3462
+    ],
+    [
+     44.392,
+     33.3485
+    ],
+    [
+     44.401,
+     33.3505
+    ],
+    [
+     44.408,
+     33.3465
+    ],
+    [
+     44.4115,
+     33.34
+    ],
+    [
+     44.4135,
+     33.333
+    ],
+    [
+     44.4125,
+     33.3275
+    ],
+    [
+     44.4085,
+     33.325
+    ],
+    [
+     44.401,
+     33.3265
+    ],
+    [
+     44.394,
+     33.3275
+    ],
+    [
+     44.384,
+     33.3315
+    ],
+    [
+     44.376,
+     33.3375
+    ],
+    [
+     44.3745,
+     33.3435
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Ottoman Baghdad",
+   "t0": 1534,
+   "t1": 1850,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate; History of Baghdad (Wikipedia)",
+   "area": [
+    [
+     44.3735,
+     33.3485
+    ],
+    [
+     44.383,
+     33.3465
+    ],
+    [
+     44.392,
+     33.3495
+    ],
+    [
+     44.4,
+     33.3515
+    ],
+    [
+     44.4085,
+     33.3475
+    ],
+    [
+     44.4125,
+     33.3405
+    ],
+    [
+     44.4145,
+     33.3335
+    ],
+    [
+     44.414,
+     33.3275
+    ],
+    [
+     44.4095,
+     33.3245
+    ],
+    [
+     44.4,
+     33.3245
+    ],
+    [
+     44.391,
+     33.3265
+    ],
+    [
+     44.381,
+     33.3305
+    ],
+    [
+     44.373,
+     33.3365
+    ],
+    [
+     44.3705,
+     33.3425
+    ]
+   ]
+  },
+  {
+   "k": "extent",
+   "name": "Baghdad about 1900 (walls razed 1870)",
+   "t0": 1850,
+   "t1": null,
+   "conf": 2,
+   "src": "Le Strange 1900, Baghdad during the Abbasid Caliphate; Midhat Pasha (Wikipedia)",
+   "area": [
+    [
+     44.372,
+     33.351
+    ],
+    [
+     44.383,
+     33.3505
+    ],
+    [
+     44.393,
+     33.3535
+    ],
+    [
+     44.403,
+     33.3545
+    ],
+    [
+     44.411,
+     33.349
+    ],
+    [
+     44.4155,
+     33.341
+    ],
+    [
+     44.418,
+     33.333
+    ],
+    [
+     44.4175,
+     33.3255
+    ],
+    [
+     44.412,
+     33.321
+    ],
+    [
+     44.401,
+     33.321
+    ],
+    [
+     44.389,
+     33.3235
+    ],
+    [
+     44.377,
+     33.329
+    ],
+    [
+     44.369,
+     33.3355
+    ],
+    [
+     44.3665,
+     33.3445
+    ]
+   ]
+  },
+  {
+   "k": "rename",
+   "wd": "Q15260416",
+   "names": [
+    [
+     1227,
+     null,
+     "Mustansiriya Madrasa"
+    ]
+   ],
+   "kinds": [
+    [
+     1227,
+     null,
+     "school"
+    ]
+   ],
+   "t0": 1227,
+   "t1": null,
+   "fix_dates": true,
+   "src": "Mustansiriya Madrasah (Wikipedia): built 1227-1234 by caliph al-Mustansir",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q310842",
+   "names": [
+    [
+     1963,
+     null,
+     "Al-Mustansiriya University"
+    ]
+   ],
+   "kinds": [
+    [
+     1963,
+     null,
+     "school"
+    ]
+   ],
+   "t0": 1963,
+   "t1": null,
+   "fix_dates": true,
+   "src": "Mustansiriyah University (Wikipedia): modern university founded 1963",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q12204233",
+   "names": [
+    [
+     902,
+     1258,
+     "Palace Mosque of the Caliphs (Jami al-Qasr)"
+    ],
+    [
+     1258,
+     null,
+     "Al-Khulafa Mosque"
+    ]
+   ],
+   "kinds": [
+    [
+     902,
+     null,
+     "mosque"
+    ]
+   ],
+   "src": "Al-Khulafa Mosque (Wikipedia)",
+   "conf": 1
+  },
+  {
+   "k": "rename",
+   "wd": "Q33018",
+   "names": [
+    [
+     800,
+     1258,
+     "House of Wisdom (site approximate)"
+    ]
+   ],
+   "kinds": [
+    [
+     800,
+     1258,
+     "school"
+    ]
+   ],
+   "src": "House of Wisdom (Wikipedia): its site is not known",
+   "conf": 2
+  },
+  {
+   "k": "rename",
+   "wd": "Q12235873",
+   "names": [
+    [
+     1066,
+     null,
+     "Abu Hanifa Mosque (al-Imam al-Adham)"
+    ]
+   ],
+   "kinds": [
+    [
+     1066,
+     null,
+     "mosque"
+    ]
+   ],
+   "src": "Abu Hanifa Mosque (Wikipedia): shrine built 1066 by the Seljuk vizier",
+   "conf": 1
+  }
+ ]
+}

@@ -226,16 +226,16 @@
   // ---------- rendering ----------
   const css = document.createElement("style");
   css.textContent = `
-.gp { --gp: #b4542f; display: grid; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
+.gp { --gp: #b4542f; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
 .gp p { margin: 0; }
-.gp .seg { display: flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; width: max-content; max-width: 100%; }
-.gp .seg button { border: 0; background: transparent; padding: 6px 12px; cursor: pointer; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.gp .seg { display: flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; width: max-content; max-width: 100%; }
+.gp .seg button { border: 0; background: transparent; padding: 6px 8px; cursor: pointer; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; flex: 1 1 auto; color: var(--ink-soft); }
 .gp .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 .gp .gp-top { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .gp .stat { border: 1px solid var(--rule); background: var(--card); padding: 7px 10px; display: grid; gap: 1px; }
 .gp .stat b { font-family: var(--mono); font-size: 18px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .gp .stat span { font-size: 11.5px; color: var(--ink-soft); line-height: 1.3; }
-.gp .card { border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); background: var(--card); padding: 12px 14px; display: grid; gap: 10px; }
+.gp .card { border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); background: var(--card); padding: 12px 14px; display: grid;  grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .gp .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gp); display: flex; gap: 10px; }
 .gp .k span:last-child { margin-left: auto; color: var(--ink-soft); }
 .gp .qq { font-family: var(--fell); font-weight: 400; font-size: 21px; line-height: 1.25; margin: 0; }

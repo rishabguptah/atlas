@@ -42,6 +42,30 @@
     if (pm.same(T)) pm.setRealms(realms); else pm.render(T, { realms });
     if (window.ATLAS.labels && ATLAS.labels.refresh) ATLAS.labels.refresh(); else provLabels();
   } }) : null;
+  // City plans (walls, gates, buildings by year) past about 3 degrees across, from atlas-files/world/cities.json.
+  // The layer's code (views/pixel/city.js) sits beside the page too and loads the first time the map zooms that far.
+  let city = null, cityAsked = false;
+  const cityRedraw = () => {
+    if (!pm || !T) return;
+    const realms = isOn("borders") && year >= DEEP_REALMS ? (bordersOf().realms(year, T.k) || realmsFor(year)) : NO_REALMS;
+    pm.render(T, { realms });
+    if (window.ATLAS.labels && ATLAS.labels.refresh) ATLAS.labels.refresh();
+  };
+  function cityLayer(k) {
+    if (city || k < 100) return city;
+    if (typeof PixelCity === "function") {
+      city = window.ATLAS.city = PixelCity({ url: "atlas-files/world/cities.json", onLoad: cityRedraw });
+      if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("city", view => city.names(view), { base: true });
+      return city;
+    }
+    if (!cityAsked) {
+      cityAsked = true;
+      const sc = document.createElement("script"); sc.src = "atlas-files/city.js";
+      sc.onload = () => { if (cityLayer(T ? T.k : 0)) cityRedraw(); };
+      document.head.appendChild(sc);
+    }
+    return null;
+  }
   let provSvg = null;
   // Province names: through the shared label engine when the page has one, else a small layer of our own.
   function provLabels() {
@@ -65,7 +89,17 @@
   // Names go to the page's one label engine (views/pixel/labels.js): realm names curved across what you can see of
   // each realm, and the terrain names; both step back when a lens has focus.
   const LBL = window.ATLAS && ATLAS.labels;
-  let realmItems = [];
+  let realmItems = [], realmAt = null;
+  // Realm names and sprite boxes are found in the screen pixels of the last pixel-map frame. While the map pans or
+  // zooms the queue lays labels out again every frame, so carry them along with the land (a frame drawn at transform
+  // a, shown at transform b), instead of leaving them pinned to the screen until the map settles.
+  const carry = (a, b) => {
+    if (!a || !b || (a.k === b.k && a.x === b.x && a.y === b.y)) return null;
+    const s = b.k / a.k;
+    return (x, y) => [b.x + (x - a.x) * s, b.y + (y - a.y) * s];
+  };
+  const carriedItems = (items, a, b) => { const f = carry(a, b); return f ? items.map(it => it.path ? { ...it, path: it.path.map(p => f(p[0], p[1])) } : it) : items; };
+  const carriedBoxes = (boxes, a, b) => { const f = carry(a, b); if (!f) return boxes; return boxes.map(q => { const p0 = f(q[0], q[1]), p1 = f(q[2], q[3]); return [p0[0], p0[1], p1[0], p1[1]]; }); };
   // Finding the curves takes a few ms, so it waits for an idle moment instead of sitting in a year step's frame.
   let nameJob = 0;
   const idle = window.requestIdleCallback ? fn => requestIdleCallback(fn, { timeout: 150 }) : fn => setTimeout(fn, 30);
@@ -73,14 +107,44 @@
     if (nameJob) return;
     nameJob = idle(() => {
       nameJob = 0;
-      realmItems = pm && typeof PixelRealmNames === "function" && isOn("borders") ? PixelRealmNames(pm.labelGrid()) : [];
+      const grid = pm && typeof PixelRealmNames === "function" && isOn("borders") ? pm.labelGrid() : null;
+      realmItems = grid ? PixelRealmNames(grid) : []; realmAt = grid && grid.t;
       if (LBL) LBL.refresh();
     });
   }
   if (LBL) {
-    LBL.add("realms", () => pm && isOn("borders") ? realmItems : [], { base: true });
-    LBL.add("sprites", () => pm ? pm.spriteBoxes().map(block => ({ block })) : [], { base: true });
+    LBL.add("realms", v => pm && isOn("borders") ? carriedItems(realmItems, realmAt, v && v.t) : [], { base: true });
+    LBL.add("sprites", v => pm ? carriedBoxes(pm.spriteBoxes(), pm.drawnAt, v && v.t).map(block => ({ block })) : [], { base: true });
     if (typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) LBL.add("geo", () => pm && isOn("terrain") ? PixelGeoLabels.items(TERRAIN) : [], { base: true });
+  }
+  // Once the view and the year have been still for a moment, the pixel map is drawn again with land past every
+  // edge of the screen (only the new margins are painted), so the next pan shows land, not bare paper.
+  let padTimer = 0, padJob = 0, lastRealms = null;
+  const PAD = 64;  // art px = 192 CSS px each side
+  function padSoon() {
+    clearTimeout(padTimer); padTimer = 0;
+    if (padJob) { (window.cancelIdleCallback || clearTimeout)(padJob); padJob = 0; }
+    const t0 = T, y0 = year;
+    // Still the same view and year, and not mid-drag (a render resets the CSS shift the pan is riding on).
+    const still = () => {
+      const svg = svgEl(), cur = svg && d3.zoomTransform(svg);
+      return pm && T === t0 && year === y0 && !pm.pad && pm.same(T) && cur && cur.k === T.k && cur.x === T.x && cur.y === T.y && !document.hidden;
+    };
+    padTimer = setTimeout(() => {
+      padTimer = 0;
+      if (!still()) return;
+      // The new margins' terrain one band per idle slice, then the padded frame itself (realms and paint only).
+      const jobs = pm.padJobs(T, PAD);
+      const next = () => {
+        padJob = idle(() => {
+          padJob = 0;
+          if (!still()) return;
+          if (jobs.length) { jobs.shift()(); next(); return; }
+          pm.render(T, { realms: lastRealms, pad: PAD });
+        });
+      };
+      next();
+    }, 400);
   }
   let pm = null, proj = null, T = null, year = null, snap = null, statics = [], movers = [], motion = null, lastRender = 0;
   let marks = null, hud = null, watch = null, markTimer = 0;
@@ -259,9 +323,21 @@
       proj = projection; el0 = el;
       if (!document.getElementById("pixel-basemap-style")) { const st = document.createElement("style"); st.id = "pixel-basemap-style"; st.textContent = STYLE; document.head.appendChild(st); }
       const levels = [{ cell: 1 / 6, tdeg: 360, url: () => PIXEL.tile0 }, { cell: 1 / 15, tdeg: 30, url: (c, r) => `tiles/l1_${c}_${r}.png` }, { cell: 1 / 30, tdeg: 30, url: (c, r) => `tiles/l2_${c}_${r}.png` }];
-      pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers });
+      pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers, busy: () => mapOf(el).classList.contains("moving") });
+      // City-scale terrain (about 45 m a pixel) around the story cities: tiles/l3.json lists one patch per city, all packed into tiles/l3.png.
+      fetch("tiles/l3.json").then(r => (r.ok ? r.json() : null)).then(ix => {
+        if (!ix || !ix.patches || !ix.patches.length) return;
+        levels.push({ cell: ix.cell, patches: ix.patches.map(p => ({ id: p.id, box: p.box, url: "tiles/" + p.f, crop: p.crop })) });
+        window.ATLAS.cityPatches = ix.patches;
+        if (pm && T && T.k > 60) pm.render(T, {});
+      }).catch(() => {});
       if (detail) {
-        pm.setDetail((G, phase) => detail.draw(G, phase, window.ATLAS.deep && ATLAS.deep.m != null ? Math.floor(ATLAS.deep.m / 12) : year, proj));
+        pm.setDetail((G, phase) => {
+          const y = window.ATLAS.deep && ATLAS.deep.m != null ? Math.floor(ATLAS.deep.m / 12) : year;
+          const r = detail.draw(G, phase, y, proj);
+          const c = cityLayer(G.k); if (c) c.draw(G, phase, y, proj);
+          return r;
+        });
         if (window.ATLAS.labels && ATLAS.labels.add) ATLAS.labels.add("provinces", view => detail.names(view), { base: true });
       }
       // Data grammar (views/pixel/grammar.js): a choropleth under the sprites; compare overlay with the marks.
@@ -298,7 +374,10 @@
       }
       const same = pm.same(t) && !paleoNew;
       eraFor(t, y, !same);
-      if (same) pm.setRealms(realms); else pm.render(t, { realms });
+      // A padded frame (see padSoon) is about twice the pixels: drop the pad for year steps and new views, so they
+      // stay cheap, and draw it again once things are quiet. A year step only swaps realms; the paint comes once per step.
+      if (same && !pm.pad) pm.setRealms(realms, { paint: false }); else pm.render(t, { realms, pad: 0 });
+      lastRealms = realms; padSoon();
       // Warm the outlines of every frame in this chunk while the browser is idle, so scrubbing on stays cheap.
       // Then the chunks either side (already prefetched by the border loader).
       const B = bordersOf(), all = isOn("borders") && B.chunkRealms && B.chunkRealms(y, t.k);
@@ -317,6 +396,8 @@
       if (motion) motion.year(y);
       provLabels();
     },
+    // CSS px of land drawn past the screen's edges (a pan this short needs no redraw).
+    margin() { return pm ? pm.pad * 3 : 0; },
     move(t) { if (pm) pm.move(t); if (motion) motion.move(t); if (geo) geo.move(t); if (hud) hud.update(t); if (provSvg && T) { const s = t.k / T.k; provSvg.style.transform = `translate(${t.x - T.x * s}px,${t.y - T.y * s}px) scale(${s})`; } },
     unmount() {
       clearTimeout(markTimer); markTimer = 0;
