@@ -1512,13 +1512,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // The canvas mark layer's labels (paintMarks) join the queue too: each gets a priority from what it is, the queue
   // answers which ones fit, and only those are painted, in the D5 label tiers (ink on vellum; settlements vellum on ink).
   // Label widths by font and text: the same few hundred names are measured on every year step and zoom frame.
-  const textWs = new Map();
-  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", () => textWs.clear());   // a web font changes widths
+  // One map per font (no key string built per label), and the font strings themselves made once.
+  const textWs = new Map(); let textWn = 0;
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", () => { textWs.clear(); textWn = 0; });   // a web font changes widths
   function textW(c, font, text) {
-    const key = font + "|" + text; let w = textWs.get(key);
-    if (w == null) { if (textWs.size > 20000) textWs.clear(); c.font = font; w = c.measureText(text).width; textWs.set(key, w); }
+    let m = textWs.get(font); if (!m) textWs.set(font, m = new Map());
+    let w = m.get(text);
+    if (w === undefined) { if (++textWn > 20000) { textWs.clear(); textWn = 1; textWs.set(font, m = new Map()); } c.font = font; w = c.measureText(text).width; m.set(text, w); }
     return w;
   }
+  const labelFonts = new Map();
+  const labelFont = (wt, px, fam) => { const k = wt + px + fam; let f = labelFonts.get(k); if (!f) labelFonts.set(k, f = `${wt} ${px}px ${fam}`); return f; };
   function queueLabels(c, labels, t, f, pixel) {
     const extra = lensLabels(t), INK = "#221f1a", VELLUM = "#f6f0dc", fam = pixel ? FONT.pixel : FONT.serif;
     for (const L of labels) {
@@ -1531,10 +1535,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       if (pri < 100 && f) pri += L.fam === f ? 30 : -10;
       // Only a highlighted city steps up a size (D2: 12 and 16); other highlights win on priority alone.
       const hi = r && r.hi, settle = SETTLEMENT.has(kind), px = hi && kind === "city" ? 16 : 12;
-      L.font = `${hi || settle ? 600 : 500} ${px}px ${fam}`; L.px = px; L.fill = settle && !hi ? VELLUM : INK; L.halo = settle && !hi ? INK : VELLUM;
-      const w = textW(c, L.font, L.text), x0 = L.center ? L.x - w / 2 : L.x, y1 = L.y + px * .25, y0 = y1 - px;
       L.on = false;
-      if (x0 < 0 || x0 + w > W || y0 < 0 || y1 > H) continue;  // whole labels only, never cut by the frame
+      const y1 = L.y + px * .25, y0 = y1 - px;
+      if (y0 < 0 || y1 > H || L.x < 0 && !L.center || L.x > W) continue;  // off the frame: no need to measure it
+      L.font = labelFont(hi || settle ? 600 : 500, px, fam); L.px = px; L.fill = settle && !hi ? VELLUM : INK; L.halo = settle && !hi ? INK : VELLUM;
+      const w = textW(c, L.font, L.text), x0 = L.center ? L.x - w / 2 : L.x;
+      if (x0 < 0 || x0 + w > W) continue;  // whole labels only, never cut by the frame
       extra.push({ pri, note: L.note || !settle, text: L.text, box: [x0 - 1, y0, x0 + w + 1, y1], show: on => { L.on = on; } });
     }
     try { LQ.layout(t, W, H, { year: state.year, focus: f, extra, avoid: chromeRects() }); } catch (err) { console.error("labels", err); }
