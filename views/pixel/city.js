@@ -7,7 +7,7 @@
 //   C.draw(G, phase, year, proj)     the pixel map's detail hook (only the "over" pass draws)
 //   C.names(view)                    landmark names for the label engine (ATLAS.labels)
 //   C.at(lon, lat, year)             the feature near a point, or null
-//   C.pick(project, x, y, px)        the drawn building whose stamp covers a screen point (for click cards)
+//   C.pick(project, x, y, px, k)     the drawn building whose stamp covers a screen point (for click cards)
 //
 // Art: every mark goes through ART[kind](put, i, j, f, year) (lines: ART["line:" + kind] per pixel, with its index n
 // along the line); PixelCity.ART is the default set of plain stamps and
@@ -67,7 +67,7 @@
 
   function PixelCity(opts) {
     const url = (opts && opts.url) || "atlas-files/world/cities.json", inlined = global.PIXEL_CITIES, onLoad = (opts && opts.onLoad) || (() => {});
-    let cities = null, loading = false, over = null, overKey = "", shown = [];
+    let cities = null, loading = false, over = null, overKey = "", overShown = [], shown = [];
     function load() {
       if (cities || loading) return;
       loading = true;
@@ -91,7 +91,8 @@
     const overlaps = (a, b) => a[0] <= b[2] && a[2] >= b[0] && a[1] <= b[3] && a[3] >= b[1];
 
     function draw(G, phase, year, proj) {
-      if (phase !== "over" || year == null || G.k < K_WALLS || !proj) return;
+      if (phase !== "over" || year == null || !proj) return;
+      if (G.k < K_WALLS) { shown = []; return; }
       if (!cities) { load(); return; }
       const box = inView(G, proj); if (!box) return;
       const here = cities.filter(c => overlaps(c.bbox, box) && year >= c.t0 - 50);
@@ -108,7 +109,7 @@
         if (f.names || f.kinds) sig = (sig * 31 + hash(kindAt(f, year) + "|" + (nameAt(f, year) || ""))) | 0;
       }
       const key = [G.k, G.U0, G.V0, G.w, G.h, here.length, sig].join();
-      if (key === overKey && over) { for (let i = 0; i < over.length; i += 2) B[over[i]] = over[i + 1]; return; }
+      if (key === overKey && over) { for (let i = 0; i < over.length; i += 2) B[over[i]] = over[i + 1]; shown = overShown; shownYear = year; return; }
       const before = B.slice(), occ = new Uint8Array(G.w * G.h), { w, h, cls } = G;
       const toPx = (lon, lat) => { const p = proj([lon, lat]); return p && [Math.floor((p[0] * G.k) / G.PX) - G.U0, Math.floor((p[1] * G.k) / G.PX) - G.V0]; };
       const mkPut = wet => (i, j, c) => {
@@ -171,7 +172,7 @@
       }
       const diff = [];
       for (let i = 0; i < B.length; i++) if (B[i] !== before[i]) diff.push(i, B[i]);
-      over = new Uint32Array(diff); overKey = key;
+      over = new Uint32Array(diff); overKey = key; overShown = shown;
     }
 
     // Water that is now land (a filled harbour, a drained lake, a shore before reclamation): flat water over the terrain.
@@ -232,7 +233,8 @@
     }
     // The drawn building whose stamp covers a screen point, for click cards. project(lon, lat) -> screen [x, y];
     // px is screen pixels per art cell. Stamps stand on their anchor: ww cells wide, hh tall above it.
-    function pick(project, x, y, px = 3) {
+    function pick(project, x, y, px = 3, k = K_WALLS) {
+      if (k < K_WALLS) return null;  // no stamps drawn below this zoom (draw is not even called under k 100)
       let best = null, bd = 1e9;
       for (const f of shown) {
         if (!f.at) continue;
