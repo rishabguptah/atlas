@@ -78,6 +78,9 @@ def build(repo):
         keep = {k: f[k] for k in ('id', 'name', 'kind', 'role', 'sprite', 'mode', 'start', 'end', 'depart', 'return', 'return_months', 'per_year', 'party', 'days',
                                    'days_range', 'goods_out', 'goods_back', 'culture', 'note', 'conf') if f.get(k) is not None}
         keep['stops'] = [{'name': s['name'], 'lon': _r(s['lon']), 'lat': _r(s['lat'])} for s in f['stops'] if s.get('lon') is not None]
+        # A different way home (the flota via Havana and the Azores, the galleon via Guam); prepFlow() routes the return along it.
+        if f.get('return_stops'):
+            keep['return_stops'] = [{'name': s['name'], 'lon': _r(s['lon']), 'lat': _r(s['lat'])} for s in f['return_stops'] if s.get('lon') is not None]
         keep['sources'] = _src(f.get('sources'))
         if isinstance(paths.get(f['id']), list) and len(paths[f['id']]) > 1:
             keep['path'] = paths[f['id']]
