@@ -6,7 +6,8 @@
 //   const C = PixelCity({ url: "atlas-files/world/cities.json", onLoad })
 //   C.draw(G, phase, year, proj)     the pixel map's detail hook (only the "over" pass draws)
 //   C.names(view)                    landmark names for the label engine (ATLAS.labels)
-//   C.at(lon, lat, year)             the feature under a point (for click cards), or null
+//   C.at(lon, lat, year)             the feature near a point, or null
+//   C.pick(project, x, y, px)        the drawn building whose stamp covers a screen point (for click cards)
 //
 // Art: every mark goes through ART[kind](put, i, j, f, year) (lines: ART["line:" + kind] per pixel, with its index n
 // along the line); PixelCity.ART is the default set of plain stamps and
@@ -229,7 +230,22 @@
       }
       return best && bd < 0.004 ? best : null;
     }
-    return { draw, names, at, nameAt, kindAt, load, get cities() { return cities; }, get shown() { return shown; } };
+    // The drawn building whose stamp covers a screen point, for click cards. project(lon, lat) -> screen [x, y];
+    // px is screen pixels per art cell. Stamps stand on their anchor: ww cells wide, hh tall above it.
+    function pick(project, x, y, px = 3) {
+      let best = null, bd = 1e9;
+      for (const f of shown) {
+        if (!f.at) continue;
+        const p = project(f.at[0], f.at[1]); if (!p) continue;
+        const rows = S[kindAt(f, shownYear)] || S.house, hw = ((rows[0].length >> 1) + 1) * px, top = (rows.length + 1) * px;
+        const dx = x - p[0], dy = p[1] - y;
+        if (Math.abs(dx) > hw || dy < -2 * px || dy > top) continue;
+        const d = Math.hypot(dx, dy - top / 2);
+        if (d < bd) { bd = d; best = f; }
+      }
+      return best;
+    }
+    return { draw, names, at, pick, nameAt, kindAt, load, get cities() { return cities; }, get shown() { return shown; } };
   }
   PixelCity.ART = ART; PixelCity.STAMPS = S; PixelCity.COLORS = C;
   global.PixelCity = PixelCity;
