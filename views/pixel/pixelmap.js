@@ -423,17 +423,29 @@
     }
     // Terrain for bands the next render will need, computed ahead one band per call (so idle time can take them in
     // slices instead of one long task). Cleared by the next render.
-    const preRegions = new Map();
+    const preRegions = new Map(), PIECE = 24000;
     function padJobs(t, pd) {
       const g = geom(t, pd), P = prevView;
       if (!last || t !== last || !reusable(P, t, g.need, g.U0, g.V0, g.w, g.h)) return [];
       const pk = regionKey(t, g.need);
-      return bandsOf(P, g.U0, g.V0, g.w, g.h).map(([u0, v0, u1, v1]) => () => {
-        const key = pk + "|" + [u0, v0, u1, v1].join();
-        if (preRegions.has(key) || last !== t || regionKey(t, g.need) !== pk) return;
-        preRegions.set(key, region(t, g.need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM));
-        off.width = w; off.height = h;  // region() resized the realm mask canvas; give it back to the current frame
-      });
+      // A whole margin band is 60-100 ms of terrain: one long task in an idle slice, felt as a hitch if a pan starts
+      // then. Each band is computed in pieces of about PIECE art pixels (one per job), and the render blits them.
+      const jobs = [];
+      for (const [u0, v0, u1, v1] of bandsOf(P, g.U0, g.V0, g.w, g.h)) {
+        const key = pk + "|" + [u0, v0, u1, v1].join(), wide = u1 - u0 >= v1 - v0;
+        const across = (wide ? v1 - v0 : u1 - u0) + 2 * SEAM, along = wide ? u1 - u0 : v1 - v0;
+        const step = Math.ceil(along / Math.max(1, Math.round(along * across / PIECE))), count = Math.ceil(along / step), pieces = [];
+        for (let a = 0; a < along; a += step) {
+          const r = wide ? [u0 + a, v0, Math.min(u1, u0 + a + step), v1] : [u0, v0 + a, u1, Math.min(v1, v0 + a + step)];
+          jobs.push(() => {
+            if (preRegions.has(key) || last !== t || regionKey(t, g.need) !== pk) return;
+            pieces.push({ rect: r, r: region(t, g.need, r[0] - SEAM, r[1] - SEAM, r[2] - r[0] + 2 * SEAM, r[3] - r[1] + 2 * SEAM) });
+            off.width = w; off.height = h;  // region() resized the realm mask canvas; give it back to the current frame
+            if (pieces.length === count) preRegions.set(key, { pieces });
+          });
+        }
+      }
+      return jobs;
     }
 
     function render(t, o = {}) {
@@ -470,8 +482,9 @@
         const pk = regionKey(t, need);
         for (const [u0, v0, u1, v1] of bandsOf(P, U0, V0, w, h)) {
           const key = pk + "|" + [u0, v0, u1, v1].join();
-          const r = preRegions.get(key) || region(t, need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM);
-          blit(r, view, u0, v0, u1, v1);
+          const pre = preRegions.get(key);
+          if (pre) for (const { rect, r } of pre.pieces) blit(r, view, rect[0], rect[1], rect[2], rect[3]);
+          else blit(region(t, need, u0 - SEAM, v0 - SEAM, u1 - u0 + 2 * SEAM, v1 - v0 + 2 * SEAM), view, u0, v0, u1, v1);
         }
         ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = view);
         off.width = w; off.height = h; art = { ...art, anim };
