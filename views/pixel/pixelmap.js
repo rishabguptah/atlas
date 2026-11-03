@@ -97,7 +97,7 @@
       clearTimeout(onTile);
       if (!tileWait) tileWait = performance.now();
       const ms = pending ? Math.max(0, 600 - (performance.now() - tileWait)) : 60;
-      onTile = setTimeout(() => { tileWait = 0; if (last && fresh() && !(opts.busy && opts.busy())) render(last); }, ms);
+      onTile = setTimeout(() => { tileWait = 0; if (last && fresh() && !prog && !(opts.busy && opts.busy())) renderSoon(last, {}); }, ms);  // a landing under way restarts itself
     }
     // Only when a tile that arrived since the last render changes it (tileVer moves on every load). opts.busy() says
     // the map is mid-zoom or mid-flight: the render at the end of it takes the new tiles.
@@ -217,7 +217,21 @@
     // only fills paths. warm(features) queues them; already-built ones are skipped.
     let warmQ = [], warmOn = false, fadeTimer = 0;
     const idle = global.requestIdleCallback || (fn => setTimeout(() => fn({ timeRemaining: () => 8 }), 30));
+    // The land outline is filled at every new zoom: its outline per tier is kept (about 100 ms to build), so zooming back
+    // to a tier already seen costs nothing. Other features keep only their latest tier.
+    // The land reaches the antimeridian and the poles, so it goes through d3's clipping at full detail, the same path
+    // at every tier: then one outline serves every zoom.
+    const landPaths = new Map();
+    let landWhole = null;
     function pathOf(f, pk) {
+      if (f !== opts.land) return pathOf0(f, pk);
+      if (landWhole === null) landWhole = !fastPath(f);
+      const key = landWhole ? pk.slice(0, pk.lastIndexOf(",")) : pk;
+      let p = landPaths.get(key);
+      if (!p) { if (landPaths.size > 8) landPaths.clear(); pathCache.delete(f); p = pathOf0(f, pk); landPaths.set(key, p); }
+      return p;
+    }
+    function pathOf0(f, pk) {
       let c = pathCache.get(f);
       // Projected straight into a Path2D (no SVG string to build and parse).
       // Resampling off: border vertices are far denser than an art pixel, so straight segments look the same and
@@ -305,8 +319,11 @@
     }
 
     // The terrain of the current region (U0, V0, w, h): classes, rivers, then the terrain art (terrain-art.js) and the rim.
-    function terrainPass(t, need) {
+    function terrainPass(t, need) { const g = terrainSteps(t, need); while (!g.next().done); }
+    // The same pass as a generator that yields every few dozen rows and between the terrain art's stages (renderSoon).
+    function* terrainSteps(t, need) {
       const landM = maskFor([opts.land], () => "#fff");
+      yield;
       base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255);
       hs = new Uint8Array(w * h); band = new Uint8Array(w * h); NEED = need; lowNoise = new Float32Array(w * h); latA = new Float32Array(w * h); lonA = new Float32Array(w * h); elevA = new Float32Array(w * h);
       // Inverse projection on a coarse grid, interpolated inside cells whose corners are all on the globe and do not
@@ -342,7 +359,7 @@
         L.live = wide ? null : L.patches.map((P, i) => (P.box[0] <= ve + pad && P.box[2] >= vw - pad && P.box[1] <= vn + pad && P.box[3] >= vs - pad ? i : -1)).filter(i => i >= 0);
       }
       const ll = [0, 0];
-      for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+      for (let j = 0; j < h; j++) { for (let i = 0; i < w; i++) {
         const k = j * w + i, u = U0 + i, v = V0 + j;
         const gi = Math.floor(u / G) - gU, gj = Math.floor(v / G) - gV, a = gj * gw + gi, b = a + 1, c2 = a + gw, d2 = c2 + 1;
         if (paper[a]) { base[k] = OUTP; continue; }
@@ -367,11 +384,13 @@
         cls[k] = c; hs[k] = s1; band[k] = s2;
         latA[k] = ll[1]; lonA[k] = ll[0]; elevA[k] = s3;
         lowNoise[k] = Math.sin(ll[0] * 1.7 + Math.sin(ll[1] * 2.3)) * Math.sin(ll[1] * 2.1 + ll[0] * 0.6);
-      }
+      } if ((j & 31) === 31) yield; }
       // Rivers first (they mark cls 4 and riv), then the terrain art paints every pixel from the classes (terrain-art.js).
       riv = new Uint8Array(w * h);
       drawRivers(t, need);
-      art = global.PixelTerrainArt.paint({ w, h, U0, V0, need, cls, hs, band, elev: elevA, latA, lonA, riv, base, mood,
+      yield;
+      const TA = global.PixelTerrainArt;
+      art = yield* (TA.paintSteps || function* (S) { return TA.paint(S); })({ w, h, U0, V0, need, cls, hs, band, elev: elevA, latA, lonA, riv, base, mood,
         l0: tiles[0] && tiles[0].data ? tiles[0] : null, toPx: (lon, lat) => { const p = projection([lon, lat]); return p && [Math.floor((p[0] * t.k) / PX) - U0, Math.floor((p[1] * t.k) / PX) - V0]; } });
       anim = art.anim;
       // Rim of the world: one ink pixel where the sphere meets the paper.
@@ -466,7 +485,12 @@
       const exact = reuse && P.U0 === U0 && P.V0 === V0 && P.w === w && P.h === h;
       // Inside the last frame (the pad dropped for a year step): keep that bigger frame as the one to reuse.
       const inside = reuse && !exact && U0 >= P.U0 + SEAM && V0 >= P.V0 + SEAM && U0 + w <= P.U0 + P.w - SEAM && V0 + h <= P.V0 + P.h - SEAM;
-      if (!reuse) { off.width = w; off.height = h; terrainPass(t, need); }
+      // Terrain prepared ahead in slices by renderSoon, for exactly this frame: take its arrays as they are.
+      const pre = o.pre && o.pre.key === regionKey(t, need) && o.pre.U0 === U0 && o.pre.V0 === V0 && o.pre.w === w && o.pre.h === h ? o.pre : null;
+      if (pre) {
+        ({ base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim, art } = pre);
+        off.width = w; off.height = h; NEED = need;
+      } else if (!reuse) { off.width = w; off.height = h; terrainPass(t, need); }
       else if (exact) {
         ({ base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim } = P); base = P.base.slice();
         off.width = w; off.height = h; art = { ...art, anim };
@@ -490,12 +514,75 @@
         off.width = w; off.height = h; art = { ...art, anim };
       }
       preRegions.clear();
-      if (!inside && !exact) prevView = { k: t.k, need, mood, ver: tileVer, pk: paleoKey, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
+      if (pre || !inside && !exact) prevView = { k: t.k, need, mood, ver: tileVer, pk: paleoKey, U0, V0, w, h, base: base.slice(), cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim };
       terrain = base.slice();
       realmRaster.clear();
       applyRealms();
       realmsDone();
       emit("layout");
+    }
+
+    // A new zoom (nothing of the last frame can be reused) is a full terrain pass: 200-600 ms in one task, a visible
+    // stall right as a zoom lands. renderSoon runs that same pass (terrainSteps) in slices of about SLICE ms, one per
+    // task, while the old frame stays on screen scaled to the new view (move()) and keeps answering view(), isWater and
+    // year steps; then render() takes the finished buffers as its terrain. The output is the same as a direct render.
+    // Same-zoom renders (pans, year steps, the first frame) are quick and run at once. Returns true when it rendered
+    // now; false when the frame is coming. done() runs and hooks get "landed" once it is drawn (not if a later render
+    // replaced it). A tile batch arriving lands this way as well.
+    let prog = null;
+    const SLICE = 12;
+    const FRAME_VARS = () => ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim, art, NEED, last, live: levels.map(L => L.live) });
+    function setFrameVars(F) {
+      ({ U0, V0, w, h, base, cls, hs, band, lowNoise, latA, lonA, elevA, riv, anim, art, NEED, last } = F);
+      levels.forEach((L, n) => { L.live = F.live[n]; });
+      off.width = w; off.height = h;
+    }
+    // The terrain, then the outlines of the realms in view at the new zoom tier (built here a few at a time rather than
+    // all inside the landing render's realm fill).
+    function* landingSteps(t, need) {
+      yield* terrainSteps(t, need);
+      const P = rawProj(), tier = tierOf(t.k), vb = viewBounds(t);
+      if (!P) return;
+      let n = 0;
+      for (const r of realmsNow) {
+        const f = r && r.feature, b = f && vb && llBounds(f);
+        if (!f || !f.raw || f.raw.cross || (b && (b[2] < vb[0] || b[0] > vb[2] || b[3] < vb[1] || b[1] > vb[3]))) continue;
+        rawPathOf(f.raw, tier, P.s);
+        if (++n % 8 === 0) yield;
+      }
+    }
+    function cancelSoon() { if (prog) { clearTimeout(prog.timer); prog = null; } }
+    function renderSoon(t, o = {}, done) {
+      const pd = o.pad != null ? Math.max(0, o.pad | 0) : pad, g = geom(t, pd);
+      if (!last || !terrain || o.full || reusable(prevView, t, g.need, g.U0, g.V0, g.w, g.h)) { cancelSoon(); render(t, o); return true; }
+      const key = regionKey(t, g.need), at = [g.U0, g.V0, g.w, g.h, key].join();
+      if (prog && prog.at === at) { prog.o = { ...prog.o, ...o }; prog.done = done; return false; }
+      cancelSoon();
+      // The new frame's variables, swapped in for each slice and out again after it.
+      const mine = { ...FRAME_VARS(), U0: g.U0, V0: g.V0, w: g.w, h: g.h, last: t };
+      const me = prog = { at, o, done, timer: 0, gen: null };
+      const land = () => {
+        prog = null;
+        render(t, { ...me.o, pad: pd, pre: { key, U0: mine.U0, V0: mine.V0, w: mine.w, h: mine.h, base: mine.base, cls: mine.cls, hs: mine.hs, band: mine.band,
+          lowNoise: mine.lowNoise, latA: mine.latA, lonA: mine.lonA, elevA: mine.elevA, riv: mine.riv, anim: mine.anim, art: mine.art } });
+        if (me.done) me.done();
+        emit("landed");
+      };
+      const step = () => {
+        if (prog !== me) return;
+        // Something changed under it (a tile arrived, the mood): start the job over with it.
+        if (regionKey(t, g.need) !== key) { prog = null; if (renderSoon(t, me.o, me.done)) { if (me.done) me.done(); emit("landed"); } return; }
+        const theirs = FRAME_VARS(); setFrameVars(mine);
+        let finished = false;
+        try {
+          if (!me.gen) me.gen = landingSteps(t, g.need);
+          const t0 = performance.now();
+          while (!(finished = me.gen.next().done) && performance.now() - t0 < SLICE);
+        } finally { Object.assign(mine, FRAME_VARS()); setFrameVars(theirs); }
+        if (finished) land(); else me.timer = setTimeout(step, 0);
+      };
+      me.timer = setTimeout(step, 0);
+      return false;
     }
 
     function setPx(i, j, col) { if (i >= 0 && j >= 0 && i < w && j < h) base[j * w + i] = col; }
@@ -718,7 +805,10 @@
     return {
       canvas,
       frameCanvas: chromeC,
-      render,
+      render(t, o) { cancelSoon(); render(t, o); },
+      renderSoon,
+      // Is a new zoom's terrain still being built (renderSoon)? Its landing re-renders with whatever arrived meanwhile.
+      landing() { return !!prog; },
       warm,
       move(t) { if (!last) return; const s = t.k / last.k; canvas.style.transform = `translate(${t.x - last.x * s}px,${t.y - last.y * s}px) scale(${s})`; canvas.style.transformOrigin = `${-parseFloat(canvas.style.left)}px ${-parseFloat(canvas.style.top)}px`; },
       sprites(l, o) { allSprites = l; spriteOpts = o || {}; paint(); },

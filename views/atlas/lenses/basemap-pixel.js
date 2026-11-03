@@ -33,11 +33,11 @@
   // The page shares its own border loader (ATLAS.borders) so each chunk is fetched and parsed once; it re-renders the
   // basemap when a chunk arrives. Standalone, the basemap keeps its own.
   let own = null;
-  const bordersOf = () => window.ATLAS.borders || own || (own = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders")) { if (pm.same(T)) pm.setRealms(year >= DEEP_REALMS ? own.realms(year, T.k) : NO_REALMS); else pm.render(T, { realms: year >= DEEP_REALMS ? own.realms(year, T.k) : NO_REALMS }); nameRealms(); } } }));
+  const bordersOf = () => window.ATLAS.borders || own || (own = PixelBorders({ base: "borders/", onLoad: () => { if (pm && T && isOn("borders") && !(pm.landing && pm.landing())) { if (pm.same(T)) pm.setRealms(year >= DEEP_REALMS ? own.realms(year, T.k) : NO_REALMS); else pm.render(T, { realms: year >= DEEP_REALMS ? own.realms(year, T.k) : NO_REALMS }); nameRealms(); } } }));
   let geo = null, geoKey = "", el0 = null;
   // Zoom detail (roads, walls, fields, villages, ports, castles, province names) from detail/ next to the page.
   const detail = typeof PixelDetail === "function" ? PixelDetail({ base: "detail/", onLoad: () => {
-    if (!pm || !T) return;
+    if (!pm || !T || (pm.landing && pm.landing())) return;  // a zoom landing re-renders with it anyway
     const realms = isOn("borders") && year >= DEEP_REALMS ? (bordersOf().realms(year, T.k) || realmsFor(year)) : NO_REALMS;
     if (pm.same(T)) pm.setRealms(realms); else pm.render(T, { realms });
     if (window.ATLAS.labels && ATLAS.labels.refresh) ATLAS.labels.refresh(); else provLabels();
@@ -140,7 +140,8 @@
           padJob = 0;
           if (!still()) return;
           if (jobs.length) { jobs.shift()(); next(); return; }
-          pm.render(T, { realms: lastRealms, pad: PAD });
+          // Through renderSoon: if a tile batch landed meanwhile, the padded frame is a new terrain pass, built in slices.
+          if (pm.renderSoon) pm.renderSoon(T, { realms: lastRealms, pad: PAD }); else pm.render(T, { realms: lastRealms, pad: PAD });
         });
       };
       next();
@@ -324,6 +325,8 @@
       if (!document.getElementById("pixel-basemap-style")) { const st = document.createElement("style"); st.id = "pixel-basemap-style"; st.textContent = STYLE; document.head.appendChild(st); }
       const levels = [{ cell: 1 / 6, tdeg: 360, url: () => PIXEL.tile0 }, { cell: 1 / 15, tdeg: 30, url: (c, r) => `tiles/l1_${c}_${r}.png` }, { cell: 1 / 30, tdeg: 30, url: (c, r) => `tiles/l2_${c}_${r}.png` }];
       pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers, busy: () => mapOf(el).classList.contains("moving") });
+      // A new zoom (or a tile batch) built over a few frames has landed: sprites, labels and motion follow it now.
+      pm.on(kind => { if (kind === "landed" && ATLAS.pixelRerender) ATLAS.pixelRerender(); });
       // City-scale terrain (about 45 m a pixel) around the story cities: tiles/l3.json lists one patch per city, all packed into tiles/l3.png.
       fetch("tiles/l3.json").then(r => (r.ok ? r.json() : null)).then(ix => {
         if (!ix || !ix.patches || !ix.patches.length) return;
@@ -376,7 +379,11 @@
       eraFor(t, y, !same);
       // A padded frame (see padSoon) is about twice the pixels: drop the pad for year steps and new views, so they
       // stay cheap, and draw it again once things are quiet. A year step only swaps realms; the paint comes once per step.
-      if (same && !pm.pad) pm.setRealms(realms, { paint: false }); else pm.render(t, { realms, pad: 0 });
+      if (same && !pm.pad) pm.setRealms(realms, { paint: false });
+      // A new zoom builds its terrain over a few frames (the old frame stays on screen, scaled); the rest of this
+      // render (sprites, labels, motion) runs once it has landed (the "landed" hook in mount).
+      else if (pm.renderSoon) { if (!pm.renderSoon(t, { realms, pad: 0 })) return; }
+      else pm.render(t, { realms, pad: 0 });
       lastRealms = realms; padSoon();
       // Warm the outlines of every frame in this chunk while the browser is idle, so scrubbing on stays cheap.
       // Then the chunks either side (two deep), once the border loader has prefetched them (warmed again when they arrive: a
