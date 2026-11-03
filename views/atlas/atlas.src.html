@@ -333,7 +333,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .chip.fam.some { border-style: dashed; }
 .chip.fam.open { box-shadow: 0 0 0 1.5px var(--c, var(--ink)) inset; }
 .basemap { position: absolute; inset: 0; pointer-events: none; }
-.basemap-on .sphere, .basemap-on .land, .basemap-on .grat { fill: none; stroke: none; }
+.basemap-on .sphere, .basemap-on .land, .basemap-on .grat { display: none; }  /* hidden under the basemap: no layout or paint of the 1 MB land outline */
 .map.basemap-on .poly, .map.basemap-on .poly.emp { fill-opacity: 0; stroke-opacity: 0; }
 .map.basemap-on .poly.hi { fill-opacity: .2; stroke-opacity: 1; }
 .basemap-on .g-relief, .basemap-on .g-realms, .basemap-on .g-terrain.hide { display: none; }
@@ -705,6 +705,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const mapEl = document.getElementById("map");
   const svg = d3.select("#svg");
   const root = svg.append("g");
+  // Live lists of the SVG's labelled points and line labels (the browser keeps them current; no query per step).
+  const svgPts = root.node().getElementsByClassName("pt"), svgLineLabs = root.node().getElementsByClassName("linelab"), svgRouteLabs = root.node().getElementsByClassName("routelab");
   const projection = d3.geoNaturalEarth1();
   const path = d3.geoPath(projection);
   const land = topojson.feature(LAND, LAND.objects.land);
@@ -797,7 +799,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
         get area() { return this._a ?? (this._a = path.area(f)); }, get c() { return this._c ?? (this._c = path.centroid(f)); } };
       if (fk[0] === "t") FEAT.set(f, d);
       return d;
-    }).filter(d => d.f.geometry);
+    }).filter(d => typeof d.f.hasGeom === "boolean" ? d.f.hasGeom : d.f.geometry);   // hasGeom: no decoding just to check
     // Playing through time visits hundreds of frames; keep the most recent ones.
     if (featCache.size > 80) featCache.delete(featCache.keys().next().value);
     featCache.set(fk, list);
@@ -811,16 +813,24 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     // Under the pixel basemap the fills are invisible, so only highlighted states get an SVG outline.
     const isHi = d => !!d.emp && state.hi.has("polity:" + d.emp.id), onlyHi = !!BASEMAP && !isPolitical();
     const hiKey = onlyHi ? [...state.hi].join() : "";
+    // Under the pixel basemap with no state highlighted, the SVG shows nothing: don't build the frame's feature list
+    // (on every new border frame that matched each new realm against the empires, a large share of a year step).
+    const anyHi = [...state.hi].some(h => h.startsWith("polity:"));
+    if (onlyHi && !anyHi) {
+      if (curSnap !== s || curHi !== hiKey || force) { curSnap = s; curHi = hiKey; gPoly.selectAll("path").remove(); gPolyLab.selectAll("text").remove(); }
+      return;
+    }
     if (force || s !== curSnap || hiKey !== curHi) {
       curSnap = s; curHi = hiKey;
       const list = s == null ? [] : onlyHi ? featuresFor(s).filter(isHi) : featuresFor(s);
       gPoly.selectAll("path").data(list).join("path").attr("class", "poly").attr("d", d => d.d)
         .attr("fill", d => d.emp ? d.emp.color : hashColor(d.name)).classed("emp", d => !!d.emp);
     }
-    gPoly.selectAll("path").classed("hi", isHi);
+    gPoly.selectAll("path").each(function (d) { const h = isHi(d); if (this.classList.contains("hi") !== h) this.classList.toggle("hi", h); });
     const best = new Map();
     (s == null ? [] : featuresFor(s)).forEach(d => { if (d.emp && state.hi.has("polity:" + d.emp.id) && (!best.has(d.emp.id) || best.get(d.emp.id).area < d.area)) best.set(d.emp.id, d); });
-    gPolyLab.selectAll("text").data([...best.values()], d => d.emp.id).join("text").attr("class", "polylab").text(d => d.emp.name);
+    // Text and class only when they differ: rewriting the same name each step relaid the SVG text.
+    gPolyLab.selectAll("text").data([...best.values()], d => d.emp.id).join("text").each(function (d) { if (this.getAttribute("class") !== "polylab") this.setAttribute("class", "polylab"); if (this.textContent !== d.emp.name) this.textContent = d.emp.name; });
   }
   // Terrain basemap: painted relief, rivers and named ranges, deserts, seas, straits and passes.
   let terrainT = null, realmsT = null, realmSnap;
@@ -871,9 +881,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       this.__pk = k; this.__pd = d; this.__pv = projV;
       const v = fn(d); if (v == null) this.removeAttribute("transform"); else this.setAttribute("transform", v);
     });
-    at(root.selectAll(".pt").filter(d => d && d.lon != null), d => { const p = projection([d.lon, d.lat]); return p ? `translate(${p[0]},${p[1]}) scale(${1 / k})` : null; });
+    // Live collections (svgPts, svgLineLabs) instead of selectAll: the SVG holds thousands of hidden terrain nodes.
+    at(d3.selectAll([...svgPts]).filter(d => d && d.lon != null), d => { const p = projection([d.lon, d.lat]); return p ? `translate(${p[0]},${p[1]}) scale(${1 / k})` : null; });
     at(gPolyLab.selectAll("text"), d => `translate(${d.c[0]},${d.c[1]}) scale(${1 / k})`);
-    at(root.selectAll(".linelab, .routelab"), d => `translate(${d.lx},${d.ly}) scale(${1 / k})`);
+    at(d3.selectAll([...svgLineLabs, ...svgRouteLabs]), d => `translate(${d.lx},${d.ly}) scale(${1 / k})`);
     if (mapEl.classList.contains("zoomed") !== k >= 4) mapEl.classList.toggle("zoomed", k >= 4);
     if (mapEl.classList.contains("close") !== k >= 14) mapEl.classList.toggle("close", k >= 14);
   }
@@ -2010,7 +2021,13 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // Play through time: about 40 seconds from 300,000 years ago to today (8 of them in deep time), slower where history is denser.
   const playBtn = document.getElementById("playyear");
   let timeRaf = 0, lastT = 0;
-  function stopTime() { cancelAnimationFrame(timeRaf); timeRaf = 0; playBtn.textContent = "▶"; playBtn.setAttribute("aria-label", "Play through time"); }
+  // Every year step calls this; when time was not playing the button is left alone (rewriting it each step made the
+  // interface re-dress its icon, two DOM rebuilds per step).
+  function stopTime() {
+    cancelAnimationFrame(timeRaf);
+    if (!timeRaf && playBtn.getAttribute("aria-label") === "Play through time") return;
+    timeRaf = 0; playBtn.textContent = "▶"; playBtn.setAttribute("aria-label", "Play through time");
+  }
   // Speed: "x<m>" keeps the history-paced curve (about 40 s for all of history at 1x, slower where it is dense),
   // "y<n>" plays a steady n years per second, so a decade or a century can be watched closely.
   const speedEl = document.getElementById("speed");
@@ -2706,7 +2723,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   const erasEl = document.getElementById("eras");
   erasEl.innerHTML = ERAS.map(([a, b, n], i) => `<button type="button" data-i="${i}" style="left:${(yearToT(a) * 100).toFixed(2)}%;width:${((yearToT(b) - yearToT(a)) * 100).toFixed(2)}%" title="${esc(n)}, ${esc(fmtYear(a))} to ${esc(fmtYear(b))}">${esc(n)}</button>`).join("");
   erasEl.addEventListener("click", ev => { const b = ev.target.closest("button"); if (!b) return; const [a, z] = ERAS[+b.dataset.i]; stopTime(); animateYear(Math.round(a + (z - a) / 2), 900); });
-  const syncEra = y => erasEl.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-current", y >= ERAS[i][0] && (y < ERAS[i][1] || i === ERAS.length - 1)));
+  const syncEra = y => erasEl.querySelectorAll("button").forEach((b, i) => { const v = String(y >= ERAS[i][0] && (y < ERAS[i][1] || i === ERAS.length - 1)); if (b.getAttribute("aria-current") !== v) b.setAttribute("aria-current", v); });
   yearWatch.push(syncEra);
 
   // ---------- the key: exactly what is drawn right now ----------

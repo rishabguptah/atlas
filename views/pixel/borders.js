@@ -19,7 +19,8 @@
   const lastAtOrBefore = (arr, y) => { let lo = 0, hi = arr.length - 1, r = -1; while (lo <= hi) { const m = (lo + hi) >> 1; if (arr[m] <= y) { r = m; lo = m + 1; } else hi = m - 1; } return r; };
   // Features decode their geometry on first use: a chunk holds hundreds of realms across many frames, and decoding them
   // all at once when it arrives (about 100 ms for an l1 chunk) would land on a year step.
-  const lazyFeature = (t, g) => { let geo; return { type: "Feature", id: g.id, properties: g.properties || {}, get geometry() { return geo || (geo = topojson.feature(t, g).geometry); } }; };
+  // hasGeom says whether there is a shape without building it (asking for .geometry decodes it).
+  const lazyFeature = (t, g) => { let geo; return { type: "Feature", id: g.id, properties: g.properties || {}, hasGeom: g.type != null, get geometry() { return geo || (geo = topojson.feature(t, g).geometry); } }; };
   const readTopo = t => { const out = []; for (const o of Object.values(t.objects)) for (const g of o.type === "GeometryCollection" ? o.geometries : [o]) out.push(lazyFeature(t, g)); return out; };
 
   // Chunks are fetched, parsed and decoded in a worker, which also projects every outline (Natural Earth, before scale
@@ -78,7 +79,7 @@
   // A worker feature as GeoJSON-shaped: geometry is rebuilt from the decoded rings only when something asks for it.
   function workerFeature(d) {
     let geo;
-    return { type: "Feature", id: d.id, properties: d.properties, raw: d, get geometry() {
+    return { type: "Feature", id: d.id, properties: d.properties, raw: d, hasGeom: d.lens.length > 0, get geometry() {
       if (geo) return geo;
       const polys = []; let o = 0;
       for (let r = 0; r < d.lens.length; r++) { const ring = []; for (let i = 0; i < d.lens[r]; i++, o += 2) ring.push([d.ll[o], d.ll[o + 1]]); if (d.news[r] || !polys.length) polys.push([]); polys[polys.length - 1].push(ring); }
