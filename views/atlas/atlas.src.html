@@ -1579,10 +1579,21 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     setTab("here");
     renderHere();
   }
+  // At city zoom, the drawn gate, palace or church under a point (PixelCity, while the pixel map shows it), hit-tested
+  // against its stamp in screen space since stamps stand above their anchor point.
+  function cityFeatureAt(mx, my) {
+    const C = ATLAS.city, sc = state.k;
+    if (!C || !C.pick || sc < 100) return null;
+    const f = C.pick((lon, lat) => { const p = projection([lon, lat]); return p && [p[0] * sc, p[1] * sc]; }, mx * sc, my * sc, 3, sc);
+    return f ? { lon: f.at[0], lat: f.at[1], name: C.nameAt(f, state.year) || f.name } : null;
+  }
   svg.on("click", ev => {
     const [sx, sy] = d3.pointer(ev, svg.node()), hit = markAt(sx, sy);
-    if (hit) { const c = hit.card(); if (c) return select(c); }
     const [mx, my] = d3.pointer(ev, root.node());
+    const inCity = cityFeatureAt(mx, my);
+    // A building beats the city's own dot it stands beside; any other lens mark keeps its priority.
+    if (hit && !(inCity && (MK.places ? MK.places.points : []).includes(hit))) { const c = hit.card(); if (c) return select(c); }
+    if (inCity) return select(inCity);
     const ll = projection.invert([mx, my]);
     if (!ll || !isFinite(ll[0])) return;
     // Snap to the nearest named place within a few pixels.

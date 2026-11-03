@@ -407,6 +407,7 @@
       if (hud) hud.remove(); hud = null;
       pm = null; if (geo) geo.remove(); geo = null;
       if (provSvg) provSvg.remove(); provSvg = null;
+      if (city) city.clear();
       realmItems = []; if (LBL) LBL.refresh();
     },
     setMood(m) { if (pm) pm.setMood(m); if (geo) geo.setMood(m); if (LBL && LBL.engine) LBL.engine.setMood(m); },
