@@ -1,7 +1,8 @@
-// Compare two years (views/atlas/VIZ.md): the map's year against another one.
+// Compare two years (views/atlas/VIZ.md): the map's year against another one. It is a part of This year, not a tab of
+// its own: "Compare with ..." under the year's title switches it on, and This year then reads as then against now.
 //   - On the map (pixel basemap): land that changed hands since the other year is hatched in Gules, and the other year's
 //     borders are a dotted ink line (PixelGrammar.compare, painted over the sprites).
-//   - In the tab: world numbers then and now, the biggest gains and losses of territory (measured on the drawn borders),
+//   - In This year: world numbers then and now, the biggest gains and losses of territory (measured on the drawn borders),
 //     states that appeared or vanished, the great cities, and a filmstrip of small maps between the two years.
 (function () {
   if (typeof AtlasCharts === "undefined") return;
@@ -9,12 +10,17 @@
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const fmtY = ATLAS.fmtYear;
   const NOW = 2025, MIN = -3400;
-  let api = null, pane = null, other = null, open = false, showMap = true, timer = 0, mapTimer = 0, film = null;
+  let api = null, pane = null, other = null, on = false, vis = false, showMap = true, timer = 0, mapTimer = 0, film = null;
   try { const v = JSON.parse(localStorage.getItem("atlas.compare.v1") || "null"); if (v && isFinite(v.other)) { other = v.other; showMap = v.map !== false; } } catch (err) { /* private mode */ }
   const save = () => { try { localStorage.setItem("atlas.compare.v1", JSON.stringify({ other, map: showMap })); } catch (err) { /* fine */ } };
   const clamp = y => Math.max(MIN, Math.min(NOW, Math.round(y)));
+  // Live while switched on and This year is the open tab.
+  const live = () => on && vis;
 
   const STYLE = `
+.cmp-toggle { margin: 4px 0 8px; }
+.cmp-toggle .ico { margin-right: 6px; }
+#now-body.comparing > .vz-tiles { display: none; }
 .cmp-head { display: flex; align-items: stretch; gap: 8px; margin: 6px 0 10px; }
 .cmp-plate { flex: 1; border: 3px solid #221f1a; box-shadow: 3px 3px 0 #221f1a; padding: 4px 8px 6px; background: var(--card, #fbf8ef); min-width: 0; }
 .cmp-plate b { display: block; font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace; font-size: 24px; line-height: 28px; font-weight: 600; }
@@ -92,19 +98,22 @@
     cancelAnimationFrame(filmRaf);
     const next = () => {
       filmRaf = 0;
-      if (gen !== filmGen || !open || !el.isConnected) return;
+      if (gen !== filmGen || !live() || !el.isConnected) return;
       if (!drawThumb(cvs[i], ys[i])) missing++;
       if (++i < cvs.length) { filmRaf = requestAnimationFrame(next); return; }
-      clearTimeout(film); if (missing) film = setTimeout(() => open && renderFilm(a, b), 700);
+      clearTimeout(film); if (missing) film = setTimeout(() => live() && renderFilm(a, b), 700);
     };
     if (cvs.length) filmRaf = requestAnimationFrame(next);
   }
   let filmGen = 0, filmRaf = 0;
 
   // ---------- the tab ----------
+  const ico = n => typeof PIXEL_ICONS !== "undefined" ? PIXEL_ICONS.svg(n) : "";
   function render() {
     if (!pane || !api) return;
     const a = api.year, b = other ?? clamp(a - 100), X = ATLAS.vizCtx ? ATLAS.vizCtx() : null;
+    const host = pane.parentNode; if (host && host.classList) host.classList.toggle("comparing", on);
+    if (!on) { pane.innerHTML = `<button type="button" class="btn cmp-toggle" data-cmp aria-pressed="false">${ico("compare")}Compare with ${esc(fmtY(b))}</button>`; applyMap(); return; }
     if (!X) { pane.innerHTML = "<p>Compare needs the page's records.</p>"; return; }
     const W1 = worldAt(X, b), W2 = worldAt(X, a), diff = realmDiff(b, a);
     const fmtK = v => C.compact(v) + " km²";
@@ -119,9 +128,8 @@
     }
     const cities = X.ENTRIES.map(e => ({ e, a: X.alive(e, b) ? X.popAt(e, b) : null, b: X.alive(e, a) ? X.popAt(e, a) : null })).filter(o => o.a || o.b)
       .sort((p, q) => Math.max(q.a || 0, q.b || 0) - Math.max(p.a || 0, p.b || 0)).slice(0, 8).map(o => ({ n: X.nameAt(o.e, a), a: o.a, b: o.b }));
-    pane.innerHTML = `<p class="vz-k">Compare two years</p>
-<div class="cmp-head"><label class="cmp-plate"><span class="vz-k">Then</span><input type="number" class="cmp-other" value="${b}" step="1" min="${MIN}" max="${NOW}" aria-label="The other year (negative for BCE)"></label><span class="cmp-vs">vs</span><div class="cmp-plate"><span class="vz-k">The map's year</span><b>${fmtY(a)}</b></div></div>
-<div class="cmp-row">${[-500, -100, -50, -25].map(d => `<button data-d="${d}">${d}</button>`).join("")}<button data-d="+100">+100</button><button data-swap>Swap</button><button data-map aria-pressed="${showMap}">Show on map</button></div>
+    pane.innerHTML = `<div class="cmp-head"><label class="cmp-plate"><span class="vz-k">Compared with</span><input type="number" class="cmp-other" value="${b}" step="1" min="${MIN}" max="${NOW}" aria-label="The other year (negative for BCE)"></label></div>
+<div class="cmp-row"><button data-cmp aria-pressed="true">Stop comparing</button>${[-500, -100, -50, -25].map(d => `<button data-d="${d}">${d}</button>`).join("")}<button data-d="+100">+100</button><button data-swap>Swap</button><button data-map aria-pressed="${showMap}">Show on map</button></div>
 <div class="cmp-key"><span><i class="hatch"></i>changed hands since ${fmtY(b)}</span><span><i class="dots"></i>borders in ${fmtY(b)}</span></div>
 ${C.dumbbell([
       { n: "States", a: W1.states, b: W2.states },
@@ -133,39 +141,41 @@ ${C.dumbbell([
 <div class="cmp-sec">${C.dumbbell(cities, { title: "Great cities", log: true, yearA: b, yearB: a, color: "var(--fam-land)" })}</div>
 <div class="cmp-sec"><h3>Filmstrip: ${fmtY(Math.min(a, b))} to ${fmtY(Math.max(a, b))} (tap a frame to go there)</h3><div class="cmp-film"></div></div>`;
     renderFilm(a, b);
-    if (!diff) { clearTimeout(timer); timer = setTimeout(() => open && render(), 800); }
+    if (!diff) { clearTimeout(timer); timer = setTimeout(() => live() && render(), 800); }
     applyMap();
   }
   function applyMap() {
     if (!GR) return;
     const b = other ?? clamp(api.year - 100);
-    const on = open && showMap && ATLAS.pixel;
-    if (!on) { if (GR.compare) { GR.compare = null; if (ATLAS.pixel) ATLAS.pixel.repaint(); } return; }
+    const show = live() && showMap && ATLAS.pixel;
+    if (!show) { if (GR.compare) { GR.compare = null; if (ATLAS.pixel) ATLAS.pixel.repaint(); } return; }
     const pm = ATLAS.pixel, t = pm.transform(), rs = ATLAS.borders && ATLAS.borders.realms(b, t ? t.k : 1);
-    if (!rs) { clearTimeout(mapTimer); mapTimer = setTimeout(() => open && applyMap(), 600); return; }
-    if (!GR.compare || GR.compare.realms !== rs) GR.compare = { year: b, realms: rs, projection: pm.projection(), active: () => open && showMap };
+    if (!rs) { clearTimeout(mapTimer); mapTimer = setTimeout(() => live() && applyMap(), 600); return; }
+    if (!GR.compare || GR.compare.realms !== rs) GR.compare = { year: b, realms: rs, projection: pm.projection(), active: () => live() && showMap };
     pm.repaint();
   }
 
   ATLAS.tab({
-    id: "compare", name: "Compare", icon: "compare", mode: true,
+    id: "compare", name: "Compare", icon: "compare", within: "now",
     mount(el, a) {
       api = a; pane = el;
       const st = document.createElement("style"); st.textContent = STYLE; document.head.appendChild(st);
       el.addEventListener("click", ev => {
-        const d = ev.target.closest("[data-d]"), sw = ev.target.closest("[data-swap]"), mp = ev.target.closest("[data-map]"), fy = ev.target.closest("[data-y]");
-        if (d) { other = clamp(api.year + +d.dataset.d); save(); render(); }
+        const t = ev.target.closest("[data-cmp]"), d = ev.target.closest("[data-d]"), sw = ev.target.closest("[data-swap]"), mp = ev.target.closest("[data-map]"), fy = ev.target.closest("[data-y]");
+        if (t) { on = !on; render(); }
+        else if (d) { other = clamp(api.year + +d.dataset.d); save(); render(); }
         else if (sw) { const b = other ?? clamp(api.year - 100); other = api.year; save(); api.setYear(b); }
         else if (mp) { showMap = !showMap; save(); render(); }
         else if (fy) api.setYear(+fy.dataset.y);
       });
       el.addEventListener("change", ev => { if (ev.target.matches(".cmp-other")) { other = clamp(+ev.target.value); save(); render(); } });
       let t2 = 0;
-      api.onYear(() => { if (!open) return; clearTimeout(t2); t2 = setTimeout(render, 160); });
-      api.onView(() => { if (open) { applyMap(); const a2 = api.year, b2 = other ?? clamp(a2 - 100); renderFilm(a2, b2); } });
-      // Leaving the tab (its pane is hidden) takes the overlay off the map.
-      new MutationObserver(() => { if (el.hidden && open) { open = false; applyMap(); } }).observe(el, { attributes: true, attributeFilter: ["hidden"] });
+      api.onYear(() => { if (!vis) return; clearTimeout(t2); t2 = setTimeout(render, 160); });
+      api.onView(() => { if (live()) { applyMap(); const a2 = api.year, b2 = other ?? clamp(a2 - 100); renderFilm(a2, b2); } });
+      render();
     },
-    show() { open = true; render(); },
+    open() { on = true; },       // asked for by name (setTab("compare")): This year opens, comparing
+    show() { vis = true; render(); },
+    hide() { if (!vis) return; vis = false; applyMap(); },
   });
 })();

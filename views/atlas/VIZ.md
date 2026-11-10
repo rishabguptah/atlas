@@ -2,7 +2,7 @@
 
 The data grammar for the map and the side panel. It sits under `tools/art/ART.md` (art direction wins where
 the two differ) and is implemented by `views/pixel/grammar.js` (map), `views/pixel/charts.js` (panel charts),
-`views/atlas/lenses/viz.js` (choropleth lens, card charts), `views/atlas/lenses/compare.js` (Compare tab) and
+`views/atlas/lenses/viz.js` (choropleth lens, card charts), `views/atlas/lenses/compare.js` (Compare, in This year) and
 `views/atlas/lenses/flows.py` (flow data).
 
 ## Colour
@@ -65,7 +65,7 @@ gridlines, one shared tooltip.
   "now" marker and event ticks.
 - `tenure`: who held a chokepoint, as a strip.
 - `rangebar`: low to high estimates against comparable records.
-- `dumbbell`: then vs now (Compare tab).
+- `dumbbell`: then vs now (Compare, in This year).
 - `tiles`: small stat tiles in "This year".
 - `multiples`: small multiples of one chart.
 
@@ -74,7 +74,7 @@ functions that return chart HTML or nothing.
 
 ## Compare two years
 
-The Compare tab pairs the map's year with another one. It shows the world in both years as dumbbells, the states
+Compare is a part of This year ("Compare with ..." under the year's title), not a tab of its own: it pairs the map's year with another one, and its dumbbells take the place of This year's tiles while it is on. It shows the world in both years as dumbbells, the states
 that grew and shrank most, which states appeared and which were gone, the great cities, and a filmstrip. "Show on map" draws the
 other year's borders as dotted ink and stripes land that changed hands. A state that only changed name (each is the
 other's largest overlap and they share at least half) is not counted as changed.
