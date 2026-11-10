@@ -2,7 +2,8 @@
 // size, a continent's people, a share of world GDP, an empire at its peak, kilometres of railway, days for news to
 // travel). You answer with a range you are 80% sure of; the reveal plays as a short Director scene (the answer, a
 // comparison, your calibration) with "Why?" and "How do we know" one tap away. The tab keeps score: hits, points
-// for tight ranges, and calibration ("you said 80%, you were right 64%"). A daily five, streaks, an endless mode,
+// for tight ranges, and calibration ("you said 80%, you were right 64%"). A daily five (it also shows in the Codex's Today and keeps the
+// Atlas's one streak, ATLAS.today), an endless mode,
 // questions about wherever the map is, and finds. Reveals also visit the spot for the Codex.
 // Data: views/atlas/lenses/guess.py (sourced measures read at a year they give). Progress: localStorage atlas.guess.v1.
 (function () {
@@ -19,7 +20,6 @@
   P.h = P.h || []; P.day = P.day || {}; P.st = P.st || { last: null, n: 0, best: 0 }; P.f = P.f || {};
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) { /* private window: progress lasts this visit */ } };
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
-  const dayBefore = s => { const d = new Date(s + "T12:00:00"); d.setDate(d.getDate() - 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
   const answered = id => P.h.find(h => h.id === id);
 
   // ---------- numbers ----------
@@ -99,7 +99,7 @@
     ["bull", "Bullseye", "A hit with a range no wider than ×1.5."],
     ["five", "Five in a row", "Five hits running."],
     ["daily", "Daily five", "Finished a daily five."],
-    ["week", "Seven-day streak", "A daily five seven days running."],
+    ["week", "Seven-day streak", "Seven days running on the daily five or the Codex riddle."],
     ["cal", "Calibrated", "Twenty answers, right between 72% and 88% of the time."],
     ["all", "All the lenses", "Answered every kind of question."],
     ["deep", "Deep time", "Answered a question set before 1 CE."],
@@ -111,7 +111,7 @@
     if (res.hit && hi / lo <= 1.5) give("bull");
     let run = 0; for (let i = P.h.length - 1; i >= 0 && P.h[i].hit; i--) run++;
     if (run >= 5) give("five");
-    if (P.st.n >= 7) give("week");
+    if (ATLAS.today.streak() >= 7) give("week");
     const c = calib(); if (c.n >= 20 && c.r >= 0.72 && c.r <= 0.88) give("cal");
     const kinds = new Set(P.h.map(h => (byId(h.id) || {}).k)); if (Object.keys(KIND).every(k => kinds.has(k))) give("all");
     if (q.y < 1) give("deep");
@@ -201,8 +201,7 @@
       if (ds.ids.includes(q.id) && !ds.done.includes(q.id)) {
         P.day[ds.d] = [...ds.done, q.id];
         if (P.day[ds.d].length === DAILY_N) {
-          P.st.n = P.st.last === dayBefore(ds.d) ? P.st.n + 1 : P.st.last === ds.d ? P.st.n : 1;
-          P.st.last = ds.d; P.st.best = Math.max(P.st.best || 0, P.st.n);
+          ATLAS.today.mark();   // the Atlas's one streak, shared with the Codex riddle
           if (!P.f.daily) P.f.daily = ds.d;
         }
       }
@@ -296,7 +295,7 @@
     return `<div class="seg" role="group" aria-label="Mode">${MODES.map(([m, n]) => `<button data-a="mode" data-m="${m}" aria-pressed="${S.mode === m}">${n}</button>`).join("")}</div>
       <div class="gp-top">
         <div class="stat"><b>${c.n >= 1 ? Math.round(c.r * 100) + "%" : "–"}</b><span>inside your 80% ranges${c.n ? ` (${c.hit}/${c.n})` : ""}</span></div>
-        <div class="stat"><b>${P.st.last === today() || P.st.last === dayBefore(today()) ? P.st.n : 0}</b><span>day streak${P.st.best ? ` · best ${P.st.best}` : ""}</span></div>
+        <div class="stat"><b>${ATLAS.today.streak()}</b><span>day streak${ATLAS.today.best() ? ` · best ${ATLAS.today.best()}` : ""}</span></div>
         <div class="stat"><b>${pts.toLocaleString("en")}</b><span>points</span></div>
       </div>`;
   }
@@ -359,7 +358,7 @@
     const hits = list.filter(x => x[1] && x[1].hit).length;
     return `${dots()}<div class="card"><div class="k"><span>Today's five, done</span><span>${esc(ds.d)}</span></div>
       <p class="big">${hits} of ${DAILY_N} inside your ranges</p>
-      <p class="hint">${hits === 4 ? "Four of five is exactly what a calibrated 80% looks like." : hits === 5 ? "Five of five: perfect, or your ranges were wide. Check the points." : "Over many days, a calibrated player lands four in five."} Streak: ${P.st.n} day${P.st.n === 1 ? "" : "s"}. A new five arrives tomorrow.</p>
+      <p class="hint">${hits === 4 ? "Four of five is exactly what a calibrated 80% looks like." : hits === 5 ? "Five of five: perfect, or your ranges were wide. Check the points." : "Over many days, a calibrated player lands four in five."} Streak: ${ATLAS.today.streak()} day${ATLAS.today.streak() === 1 ? "" : "s"}. A new five arrives tomorrow.</p>
       <ul class="hist">${list.map(([q, h]) => q && h ? `<li><span>${h.hit ? "✓" : "✗"}</span><button data-a="look" data-id="${esc(q.id)}">${esc(q.p)}</button><span class="m">${esc(U[q.u].f(q.v))} · you said ${esc(U[q.u].f(h.lo))}–${esc(U[q.u].f(h.hi))}</span></li>` : "").join("")}</ul>
       <div class="row"><button class="btn pri" data-a="mode" data-m="endless">Keep playing</button><button class="btn" data-a="mode" data-m="here">About here</button><button class="lnk" data-a="share">Copy result</button></div>
     </div>`;
@@ -453,5 +452,8 @@
       else { render(); if (S.stage === "ask") stage(); }
     },
   });
-  A.guess = { list: Q, daily: () => daily(today()), calibration: () => calib(), play: id => { const q = byId(id); if (!q) return false; S.q = q; S.stage = "ask"; S.mode = "endless"; startRange(q); api.setTab("guess"); return true; } };
+  // For the Codex's Today: how many of today's five are left, and a way to play them.
+  const todayLeft = () => { try { const ds = dailyState(); return ds.ids.length - ds.done.filter(id => ds.ids.includes(id)).length; } catch (e) { return 0; } };
+  const playDaily = () => { if (!api) return; S.mode = "daily"; S.q = null; S.stage = "ask"; api.setTab("guess"); };
+  A.guess = { list: Q, daily: () => daily(today()), todayLeft, playDaily, calibration: () => calib(), play: id => { const q = byId(id); if (!q) return false; S.q = q; S.stage = "ask"; S.mode = "endless"; startRange(q); api.setTab("guess"); return true; } };
 })();

@@ -204,9 +204,12 @@ income per head (Maddison Project 2020), an empire's land at its height (Cliopat
 days news took to travel. Every answer is read from a sourced measure or record at a year it actually gives, never
 interpolated. You give a range you are 80% sure of; the reveal plays as a Director story (the answer, a comparison or
 the motion model's own estimate for the same trip, then your calibration) with Why? and How do we know. The tab keeps
-calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five with streaks and a copyable
+calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five and a copyable
 result, Endless and About here modes, and finds; each reveal also visits the spot for the Codex. Progress stays in
-localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `calibration` and `play(id)`.
+localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `todayLeft`, `playDaily`, `calibration` and `play(id)`.
+The Codex's Today view shows the daily riddle and the daily five together, and the Next card offers whichever is
+undone. Either one keeps the Atlas's one day streak, `ATLAS.today` (localStorage `atlas.today.v1`, which starts from the
+better of the two streaks the Codex and Guess used to keep apart).
 
 ## Travel time: watch the world shrink
 
