@@ -52,11 +52,13 @@ def tokens():
         'shade': 'rgba(34, 31, 26, .55)', 'wash': 'rgba(34, 31, 26, .07)',
         'sea': '#264658', 'hud': '#1d1a16', 'hud-ink': vel,
     }
-    # Night chronicle: candlelit umber vellum, the same frames, the same tinctures one step brighter.
+    # Night: the chronicle read by lamplight. Warm vellum type on ink-blue ground, the same frames and tinctures,
+    # and the map's sky goes to night with it (views/pixel/motion.js, followTheme). Every text pair reads at 4.5:1 or better.
     dark = dict(light, **{
-        'ink': '#f1e7cc', 'ink-2': '#d9cba6', 'ink-soft': '#b5a785',
-        'vellum': '#2b251d', 'vellum-2': '#342d23', 'vellum-3': '#4a3f30', 'vellum-hi': '#3d3427',
-        'gold-2': '#a77a22', 'lapis': '#8fb4e0', 'rubric': '#e0705e', 'line': '#0e0c09', 'wash': 'rgba(241, 231, 204, .08)', 'shade': 'rgba(0, 0, 0, .6)',
+        'ink': '#efe6cc', 'ink-2': '#d6ccb0', 'ink-soft': '#a8a594',
+        'vellum': '#18202e', 'vellum-2': '#1f2838', 'vellum-3': '#33405a', 'vellum-hi': '#243046',
+        'gold-2': '#c49733', 'lapis': '#9cc0ec', 'rubric': '#ec7a66', 'line': '#070b14', 'wash': 'rgba(239, 230, 204, .07)', 'shade': 'rgba(2, 6, 16, .65)',
+        'sea': '#0f1a2a', 'hud': '#0e1320',
     })
     tint = {}
     for fam, base in p['tincture'].items():

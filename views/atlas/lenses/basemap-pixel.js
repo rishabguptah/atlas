@@ -362,8 +362,10 @@
       if (typeof PixelHUD === "function") hud = PixelHUD(mapOf(el), projection, { px: 2, framed: true, tile: PIXEL.tile0, fly: (v, ms) => ATLAS.api && ATLAS.api.fly(v, ms ?? 600) });
       if (typeof PixelMotion === "function") {
         const L = PIXEL.lights;
-        motion = ATLAS.motion = PixelMotion(pm, el, projection, { px: 3, mapEl: mapOf(el), lightsUrl: typeof L === "string" ? L : null, lightsData: L && L.c ? L.c : null,
+        motion = ATLAS.motion = PixelMotion(pm, el, projection, { px: 3, mapEl: mapOf(el), followTheme: true, lightsUrl: typeof L === "string" ? L : null, lightsData: L && L.c ? L.c : null,
           source: { movers: () => movers, campaigns, plague: plagueFronts, emitters, lights, isOn, moverSprite: (lon, lat, sea) => ERA ? ERA.mover(year, lon, lat, sea) : sea ? "ship" : "caravan" } });
+        // Under a night sky the map's names switch to lamplit type; the terrain itself is darkened by the sky, not twice.
+        if (motion.onSky) motion.onSky(s => { const m = s === "night" ? "night" : "day"; if (geo) geo.setMood(m); if (LBL && LBL.engine) LBL.engine.setMood(m); });
       }
     },
     render(t, y) {
