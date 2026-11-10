@@ -995,7 +995,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // zoom.transform skips the zoom's limits; fitT applies them (no empty sky past the world's edge on a phone).
   let kMin = 1;
   const fitT = t => zoom.constrain()(t, [[0, 0], [W, H]], zoom.translateExtent());
-  // The free part of the map, in map pixels: what the docked panel, the lens rows and the time bar leave uncovered.
+  // The free part of the map, in map pixels: what the docked panel, the lens rail, the question well and the time bar
+  // leave uncovered.
   // The whole world fits it, a flight lands in its middle and "the view" means it, so nothing starts under the panel.
   // It is read when the map is laid out (a resize), not when the panel folds, so folding never rescales the world.
   let FREE = [0, 0, 0, 0];
@@ -1003,10 +1004,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const m = mapEl.getBoundingClientRect();
     const box = q => { const el = document.querySelector(q); if (!el || el.hidden) return null; const r = el.getBoundingClientRect(); return r.width > 1 && r.height > 1 ? [r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top] : null; };
     let x0 = 0, y0 = 0, x1 = W, y1 = H;
-    const p = box(".app .panel"), t = box(".app .time"), l = box("#layers");
+    const p = box(".app .panel"), t = box(".app .time"), q = box(".app .askbar"), l = box("#layers");
     if (p && p[3] - p[1] > H * 0.5 && p[0] > W * 0.45) x1 = Math.min(x1, p[0]);   // docked at the side, not a bottom sheet
     if (t && t[1] > H * 0.6) y1 = Math.min(y1, t[1]);
-    if (l && l[3] < H * 0.3) y0 = Math.max(y0, l[3]);
+    if (q && q[3] < H * 0.2) y0 = Math.max(y0, q[3]);
+    if (l && l[3] - l[1] > 2 * (l[2] - l[0])) { if (l[2] < W * 0.15) x0 = Math.max(x0, l[2]); }   // a rail down the left
+    else if (l && l[3] < H * 0.3) y0 = Math.max(y0, l[3]);                                      // a row along the top
     return x1 - x0 > W * 0.45 && y1 - y0 > H * 0.45 ? [x0, y0, x1, y1] : [0, 0, W, H];
   }
   const freeMid = () => [(FREE[0] + FREE[2]) / 2, (FREE[1] + FREE[3]) / 2];
