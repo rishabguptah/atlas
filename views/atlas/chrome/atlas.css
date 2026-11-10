@@ -260,13 +260,6 @@ body { background: var(--sea); font-family: var(--f-prose); }
 
 }
 
-/* ---- focus mode: the map, the year and time only ---- */
-.app.focus .panel, .app.focus #layers, .app.focus #sublayers, .app.focus .askbar, .app.focus .nextcard { display: none; }
-.app.focus .time { right: max(var(--g), env(safe-area-inset-right, 0px)); }
-.app.focus .mapctl, .app.focus .keycard, .app.focus .cx-toasts { right: max(var(--g), env(safe-area-inset-right, 0px)); }
-.app.focus .pxhud-br { right: max(var(--g), env(safe-area-inset-right, 0px)) !important; }
-.app.focus .caption, .app.focus .maphint { left: max(var(--g), env(safe-area-inset-left, 0px)); }
-
 /* ---- narrower desktops: map buttons lose their words, the panel narrows ---- */
 @media (max-width: 1280px) and (min-width: 701px) {
   .app .mapctl .btn > span:not(.ico) { display: none; }
@@ -343,9 +336,6 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app:not(.panel-tall) .time { right: calc(var(--pw) + 2 * var(--g)); }
 }
 
-/* Focus (and a story playing) gives the map the whole screen, the phone included. */
-.app.focus .map { height: auto; }
-@media (max-width: 700px) { .app.focus { padding-bottom: env(safe-area-inset-bottom, 0px); } }
 .app .tabs.many { flex-wrap: wrap; row-gap: 4px; }
 .app .tabs.many .tab { flex: 1 0 34px; }
 .app .tabs.many .tab .nm { display: none; }
@@ -357,13 +347,11 @@ body { background: var(--sea); font-family: var(--f-prose); }
    and a story's dialog box docks bottom left where the ribbon was. */
 @media (min-width: 701px) {
   .app .keycard { top: var(--g); right: max(var(--g), env(safe-area-inset-right, 0px)); width: var(--pw); max-height: calc(100% - 2 * var(--g)); overflow: auto; z-index: 12; }
-  .app.focus .keycard { top: 66px; }
   .app .dr { justify-items: start; padding-left: max(var(--g), env(safe-area-inset-left, 0px)); }
   .app .dr-strip { width: min(680px, 100%); }
 }
 
-/* ---- show or hide the interface (the eye, H): chrome slides off its nearest edge in three steps (D8) ---- */
-.app #focusbtn { display: none; }
+/* ---- show or hide the interface (the eye, H or F): chrome slides off its nearest edge in three steps (D8) ---- */
 .app .yearplate, .app #nextcard, .app .modeplate, .app #layers, .app #sublayers, .app .askbar, .app .mapctl, .app .panel, .app .time, .app .pxhud-br, .app .caption, .app .keycard, .app .cx-toasts {
   transition: transform 150ms steps(3, end), opacity 150ms steps(3, end); }
 .app.ui-hidden #layers, .app.ui-hidden #sublayers { transform: translateX(calc(-100% - 2 * var(--g))); pointer-events: none; }
