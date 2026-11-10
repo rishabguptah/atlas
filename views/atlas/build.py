@@ -36,9 +36,15 @@ def _pack(o):
         return [_pack(v) for v in o]
     if isinstance(o, dict): return {k: _pack(v) for k, v in o.items()}
     return o
+# A big value goes into the page as JSON.parse('...') rather than as an object literal: browsers parse JSON text
+# much faster than the same data as JavaScript, and about 2 MB of the page is data. Small values stay literals.
+def JS(t):
+    if len(t) < 20000: return t
+    return "JSON.parse('" + t.replace('\\', '\\\\').replace("'", "\\'").replace('\u2028', '\\u2028').replace('\u2029', '\\u2029') + "')"
+JE = lambda o: JS(J(o))
 def JP(o):
     t = J(_pack(o))
-    return '__unpack(' + t + ')' if '{"_p":' in t else t
+    return '__unpack(' + JS(t) + ')' if '{"_p":' in t else JS(t)
 UNPACK_JS = ('function __unpack(o) { if (Array.isArray(o)) { for (let i = 0; i < o.length; i++) { const v = o[i]; if (v && typeof v === "object") o[i] = __unpack(v); } return o; }'
   ' if (o && typeof o === "object") { const p = o._p; if (p) { const s = p[0], out = new Array((p.length - 1) / 2); let x = 0, y = 0;'
   ' for (let i = 1, j = 0; i < p.length; i += 2, j++) { x += p[i]; y += p[i + 1]; out[j] = [x / s, y / s]; } return out; }'
@@ -59,7 +65,7 @@ for f in sorted(glob.glob(atlas + 'borders/world_*.json')):
     y = os.path.basename(f)[6:-5]
     y = -int(y[2:]) if y.startswith('bc') else int(y)
     if y >= -4000: pol[y] = json.load(open(f)) if inline else None
-ent += '\nconst POLITIES = ' + J(pol) + ';\n'
+ent += '\nconst POLITIES = ' + JE(pol) + ';\n'
 
 lab = json.load(open(os.path.join(repo, 'data/order-chaos/lab.json')))
 bt = lab['backtest']
@@ -121,7 +127,7 @@ if not inline and L['war'].get('wd'):
 if not inline and order.get('polities'):
     series = {p['id']: [p.pop('a', None), p.pop('f', None)] for p in order['polities'] if 'id' in p}
     late['order:series'] = side('order-series.json', series)
-data = UNPACK_JS + '\n'.join(f'const {k.upper()} = {JP(v)};' for k, v in L.items()) + f'\nconst ORDER = {JP(order)};\nconst RELIEF = {J(relief)};\nconst RELIEF_POL = {J(relief_pol)};\n'
+data = UNPACK_JS + '\n'.join(f'const {k.upper()} = {JP(v)};' for k, v in L.items()) + f'\nconst ORDER = {JP(order)};\nconst RELIEF = {JE(relief)};\nconst RELIEF_POL = {JE(relief_pol)};\n'
 if 'terrain' not in L: data += 'const TERRAIN = null;\n'
 
 # Plugin lenses: views/atlas/lenses/<id>.py gives the data (build(repo) -> dict), <id>.js draws it.
@@ -145,7 +151,7 @@ for f in sorted(glob.glob(os.path.join(lens_dir, '*.py'))):
 if not inline:
     for lid in list(lens_data):
         if len(J(lens_data[lid])) > 40000: late['lens:' + lid] = side(f'lens-{lid}.json', lens_data.pop(lid))
-data += f'const LENS_DATA = {J(lens_data)};\n'
+data += f'const LENS_DATA = {JE(lens_data)};\n'
 # Pixel map basemap (views/pixel/): renderer and sprites, plus terrain L0 and rivers when the terrain rasters exist.
 pixel_dir = os.path.join(repo, 'views/pixel')
 pixel_src = atlas + 'pixel/'
