@@ -150,7 +150,7 @@
 
   // ---------- the map layer ----------
   ATLAS.lens({
-    id: "whatif", name: "What if", family: "power", color: "#8a4fc0", on: false, guide: [],
+    id: "whatif", name: "What if", family: "power", color: "#8a4fc0", on: false, guide: [], tab: "whatif",
     draw(ctx) {
       if (W.mode === "sim" && W.sc && W.sc.steps[W.i] && W.sc.steps[W.i].branch) {
         const s = W.sc.steps[W.i];

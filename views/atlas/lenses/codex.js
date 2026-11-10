@@ -434,7 +434,7 @@
 
   // ---------- map layers: your finds, and the fog ----------
   ATLAS.lens({
-    id: "codex", name: "Codex", family: "land", color: "#c08a1e", on: false, guide: [],
+    id: "codex", name: "Codex", family: "land", color: "#c08a1e", on: false, guide: [], tab: "codex",
     draw(ctx) {
       for (const k of ["c", "w", "b"]) {
         const list = sites().filter(s => s.k === k && found(s.id) && (k !== "b" || Math.abs(ctx.year - s.s) <= 25));
@@ -451,7 +451,7 @@
     },
   });
   ATLAS.lens({
-    id: "fog", name: "Fog of war", family: "land", color: "#7d7a70", on: false, guide: [],
+    id: "fog", name: "Fog of war", family: "land", color: "#7d7a70", on: false, guide: [], tab: "codex",
     draw(ctx) {
       const d = fogPath(ctx.projection, era(ctx.year));
       ctx.g.selectAll("path.cx-fog").data([d]).join("path").attr("class", "cx-fog").attr("d", x => x);
@@ -492,7 +492,8 @@
       a.onYear(() => { look(); clearTimeout(yearT); yearT = setTimeout(() => { if (el && !el.hidden && mode === "next") render(); }, 300); });
       badge();
     },
-    show() { render(); },
+    // Your finds are on the map while the Codex is open; Back to map puts the lenses as they were.
+    show() { api.setOn("codex", true); render(); },
   });
   let yearT = 0;
 })();

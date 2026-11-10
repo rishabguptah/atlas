@@ -379,7 +379,7 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
 
   // ---------- drawing on the map ----------
   ATLAS.lens({
-    id: "life", name: "Live a life", family: "peoples", color: "#d0602a", on: false, guide: [],
+    id: "life", name: "Live a life", family: "peoples", color: "#d0602a", on: false, guide: [], tab: "life",
     key: [["line", "Your road so far"], ["sprite", "You, and how you travel"], ["dot", "Where your next chapter happens"]],
     draw(ctx) {
       lensProj = ctx.projection; lensG = ctx.g; lensPath = ctx.path;
@@ -593,7 +593,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
   }
   function show(fresh) {
     const g = G0();
-    if (g && !api.isOnLife) { api.setOn("life", true); }
+    if (g) api.setOn("life", true);
     render();
     if (fresh && g) { api.setYear(g.y, true, 700); api.fly({ lon: g.at.lon, lat: g.at.lat, span: 24 }, 1100); }
     api.redraw();
@@ -679,8 +679,8 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
         if (!D() || !ATLAS.world.motionReady()) { el.innerHTML = tries > 150 ? '<p class="sub">The life data did not load.</p>' : '<p class="sub">Loading lives…</p>'; if (tries++ <= 150) setTimeout(ready, 200); return; }
         // A game left mid-trip resumes at the planning step.
         const g = G0(); if (g && g.phase === "moving") { g.phase = g.plan ? "travel" : g.kind === "real" ? "choose" : "year"; save(); }
-        if (g) { api.setOn("life", true); api.redraw(); }
-        if (!el.hidden) render();
+        // Your road shows while the tab is open (show() switches the lens on), not on the map at large.
+        if (!el.hidden) { if (g) api.setOn("life", true); render(); }
       };
       ready();
       a.onYear(() => { if (el && !el.hidden && !G0()) { clearTimeout(homeT); homeT = setTimeout(render, 250); } });
