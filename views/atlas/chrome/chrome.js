@@ -106,7 +106,9 @@
   let current = null, nextT = 0;
   A.nextThing = d => { if (d && typeof d.get === "function") { nexts.push(d); nexts.sort((a, b) => (b.pri || 0) - (a.pri || 0)); scheduleNext(); } };
   for (const d of A.nexts || []) A.nextThing(d);
+  // One welcome: someone who has seen the cold open (lenses/stories.js) is not then offered a first tour as well.
   let toured = false; try { toured = !!localStorage.getItem("atlas.toured.v1"); } catch (e) {}
+  const welcomed = () => { try { return !!localStorage.getItem("atlas.coldopen.v1"); } catch (e) { return false; } };
   A.nextThing({ id: "tour-step", pri: 100, get() {
     const nb = document.getElementById("next"), steps = $$("#answer .step");
     if (!nb || !nb.isConnected || !steps.length) return null;
@@ -116,7 +118,7 @@
     return { kick: `Next step · ${on + 2} of ${steps.length}`, title: t ? t.textContent : "The next step", go: () => nb.click() };
   } });
   A.nextThing({ id: "first-tour", pri: 30, get() {
-    if (toured) return null;
+    if (toured || welcomed() || (A.world && A.world.director && A.world.director.active)) return null;
     const ex = $$("#examples .ex").find(b => b.querySelector(".tg.cur"));
     if (!ex) return null;
     return { kick: "Start here · a guided tour", title: ex.firstChild.textContent.trim(), go: () => { toured = true; try { localStorage.setItem("atlas.toured.v1", "1"); } catch (e) {} api.setTab("guide"); ex.click(); } };
