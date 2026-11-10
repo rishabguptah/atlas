@@ -1256,7 +1256,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   };
   const markWatch = [];
   ATLAS.onMarks = fn => { if (typeof fn === "function") markWatch.push(fn); };
-  const marksChanged = () => { for (const fn of markWatch) try { fn(ATLAS.marks()); } catch (err) { console.error(err); } };
+  // One record for every watcher, and none built when nothing watches (the pixel map is off).
+  const marksChanged = () => { if (!markWatch.length) return; const r = ATLAS.marks(); for (const fn of markWatch) try { fn(r); } catch (err) { console.error(err); } };
   // Hover: a tip with the record's title, and a pointer cursor over anything clickable.
   let hoverRaf = 0, hoverEv = null;
   svg.on("mousemove.marks", ev => {
