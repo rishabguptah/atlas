@@ -147,9 +147,9 @@
   A.shrink = { get rings() { return S.res; }, origin, compute, S };
 
   // ---------- centres of the world ----------
-  const TRACKS = [["cities", "Centre of the cities", "#b0462c", "Where the world's big cities balance on the globe (Reba, Reitsma and Seto 2016 city sizes, weighted by population)."],
-    ["trade", "Centre of trade", "#c28a1a", "Midpoint on the globe of the richest trade crossroads of the day, east and west (the trade-hub relays)."],
-    ["ideas", "Centre of ideas", "#3a6fb8", "Where thinkers were born and great works were made, within 150 years (Ideas & faith records)."]];
+  const TRACKS = [["cities", "Centre of the cities", "var(--fam-peoples)", "Where the world's big cities balance on the globe (Reba, Reitsma and Seto 2016 city sizes, weighted by population)."],
+    ["trade", "Centre of trade", "var(--fam-wealth)", "Midpoint on the globe of the richest trade crossroads of the day, east and west (the trade-hub relays)."],
+    ["ideas", "Centre of ideas", "var(--fam-mind)", "Where thinkers were born and great works were made, within 150 years (Ideas & faith records)."]];
   function trackAt(rows, y) {
     if (!rows.length || y < rows[0][0] - 50) return null;
     let a = rows[0]; for (const r of rows) { if (r[0] <= y) a = r; else { const f = (y - a[0]) / (r[0] - a[0]); if (f > 0 && Math.abs(r[1] - a[1]) < 180) return { r: a, lon: a[1] + (r[1] - a[1]) * f, lat: a[2] + (r[2] - a[2]) * f }; break; } }
@@ -190,19 +190,19 @@
       const D = ctx.data; if (!D || !D.hubs) return;
       schedule();
       const o = origin(), y = ctx.year;
-      if (S.mode === "rings") ctx.pins([{ ...o, lon: o.lon, lat: o.lat }], { key: () => "shrink:o", shape: "diamond", size: 6, always: true, pri: 40, color: "#b2462c",
+      if (S.mode === "rings") ctx.pins([{ ...o, lon: o.lon, lat: o.lat }], { key: () => "shrink:o", shape: "diamond", size: 6, always: true, pri: 40,
         label: () => `From ${o.n}${S.busy ? " · measuring…" : ""}`, title: () => `Travel-time rings from ${o.n}`,
         card: () => ({ kick: "Travel time", title: `From ${o.n}, ${ctx.fmtYear(snap(y))}`, lon: o.lon, lat: o.lat, year: y, body: summary(), why: "Worked out by the Atlas's shared router: the fastest way that year by foot, horse, camel, river boat, ship, steamer, rail, road and air, with ports, canals, seasons, empire roads and rest days. Rings are estimates; open the Travel tab to see how the router does against real journeys.", sources: [{ cite: "Francis Galton, On the construction of isochronic passage-charts (1881)" }, { cite: "J. G. Bartholomew, Atlas of the World's Commerce / Isochronic distances (1907, 1914)" }, { cite: "Scheidel and Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World", url: "https://orbis.stanford.edu/" }] }) });
       // News within a dozen years of the slider, fading with distance in time.
       const near = D.news.filter(n => Math.abs(n.y - y) <= NEWS_WIN);
       for (const conf of ["sure", "likely", "legend"]) {
         const legs = []; for (const n of near) for (const a of n.a) if (confLine(a[7]) === conf) legs.push({ n, a, id: n.id + ":" + a[2], pts: [[n.o[0], n.o[1]], [a[0], a[1]]] });
-        if (legs.length) ctx.paths(legs, { key: l => l.id, coords: l => l.pts, conf, arrow: true, color: "#7b3f8f", width: 1.8, alpha: .85, title: l => `${l.n.n}: ${l.a[2]}, ${lagTxt(l.a)}`, card: l => newsCard(l.n, l.a, ctx) });
+        if (legs.length) ctx.paths(legs, { key: l => l.id, coords: l => l.pts, conf, arrow: true, color: "var(--fam-mind)", width: 1.8, alpha: .85, title: l => `${l.n.n}: ${l.a[2]}, ${lagTxt(l.a)}`, card: l => newsCard(l.n, l.a, ctx) });
       }
       const arr = near.flatMap(n => n.a.map(a => ({ n, a, lon: a[0], lat: a[1] })));
-      ctx.pins(arr, { key: x => "nw:" + x.n.id + ":" + x.a[2], shape: "circle", size: 3.5, color: "#7b3f8f", pri: 12, fade: x => 1 - Math.abs(x.n.y - y) / (NEWS_WIN + 4),
+      ctx.pins(arr, { key: x => "nw:" + x.n.id + ":" + x.a[2], shape: "circle", size: 3.5, color: "var(--fam-mind)", pri: 12, fade: x => 1 - Math.abs(x.n.y - y) / (NEWS_WIN + 4),
         label: x => `${x.a[2]} · ${x.a[3] < 0 ? "same month" : x.a[3] === 0 ? "same day" : (x.a[4] ? "~" : "") + x.a[3] + " d"}`, title: x => `${x.n.n} reaches ${x.a[2]}`, card: x => newsCard(x.n, x.a, ctx) });
-      ctx.pins(near.filter((n, i, l) => l.findIndex(m => m.o[2] === n.o[2] && m.y === n.y) === i).map(n => ({ n, lon: n.o[0], lat: n.o[1] })), { key: x => "ns:" + x.n.id, shape: "square", size: 4.5, color: "#7b3f8f", pri: 14,
+      ctx.pins(near.filter((n, i, l) => l.findIndex(m => m.o[2] === n.o[2] && m.y === n.y) === i).map(n => ({ n, lon: n.o[0], lat: n.o[1] })), { key: x => "ns:" + x.n.id, shape: "square", size: 4.5, color: "var(--fam-mind)", pri: 14,
         label: x => x.n.n, title: x => `${x.n.n}, ${ctx.fmtYear(x.n.y)}`, card: x => ({ kick: "News breaks", title: x.n.n, year: x.n.y, lon: x.n.o[0], lat: x.n.o[1], meta: `${x.n.o[2]} · ${x.n.date}`, body: x.n.a.map(a => `${a[2]}: ${lagTxt(a)}`).join(" · ") + (x.n.note ? " " + x.n.note : "") }) });
       // Centres of the world: the trail so far, and where each stands now.
       for (const t of TRACKS) {
@@ -304,7 +304,7 @@
       <p class="big">${res ? esc(summary()) : S.busy ? "Measuring the roads…" : "Turn the slider: the rings show how far you could get from one city in that year."}</p>
       <div class="lg">${BANDS.map(b => `<span><i style="background:rgb(${b[2].join(",")})"></i>${b[1]}</span>`).join("")}<span><i style="background:#342c28"></i>out of reach</span></div>
       <div class="row"><button class="c" data-mode="rings" aria-pressed="${S.mode === "rings"}">Travel-time rings</button><button class="c" data-mode="centres" aria-pressed="${S.mode === "centres"}">Centres of the world</button></div>
-      ${S.mode === "centres" ? `<p>Three balance points on the globe, one a century since 3000 BCE: <b style="color:#b0462c">the world's big cities</b> by size, <b style="color:#c28a1a">the richest trade crossroads</b>, and <b style="color:#3a6fb8">where thinkers were born and great works were made</b>. Press Play to watch them wander.</p>` : ""}
+      ${S.mode === "centres" ? `<p>Three balance points on the globe, one a century since 3000 BCE: <b style="color:var(--fam-peoples)">the world's big cities</b> by size, <b style="color:var(--fam-wealth)">the richest trade crossroads</b>, and <b style="color:var(--fam-mind)">where thinkers were born and great works were made</b>. Press Play to watch them wander.</p>` : ""}
       <h3>Start from</h3>
       <div class="row">${hubs().map(h => `<button class="c" data-from="${h.id}" aria-pressed="${!S.custom && S.from === h.id}">${esc(h.n)}</button>`).join("")}<button class="c" data-from="centre" aria-pressed="${!!S.custom}">Map centre</button></div>
       ${o.from > y ? `<p>${esc(o.n)} does not exist yet in ${esc(fy(y))}. ${esc(o.note || "")}</p>` : ""}

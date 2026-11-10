@@ -698,7 +698,8 @@
       for (let k = 0; k < w * h; k++) if (ids[k] === -1) ids[k] = ids[k - 1] > 0 ? ids[k - 1] : ids[k - w] > 0 ? ids[k - w] : 0;
       // An era style draws realms its own way from the id buffer (eras.js), so the default tint is skipped.
       if (era) return;
-      const tint = realmsNow.map(r => rgb(r.color)), edgeTint = tint.map(tc => mix(tc, [30, 22, 18], 0.45));
+      const Q = global.PIXEL_PALETTE && global.PIXEL_PALETTE.quiet || (c => c);
+      const tint = realmsNow.map(r => rgb(Q(r.color))), edgeTint = tint.map(tc => mix(tc, [30, 22, 18], 0.45));
       const view = new Uint8Array(base.buffer);
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, n = ids[k]; if (!n || cls[k] <= 2 || cls[k] === 255) continue;

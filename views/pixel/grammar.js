@@ -10,10 +10,8 @@
 //   PixelGrammar.tier(pop)                 -> city tier 0..5 (no number, hamlet, town, city, great city, metropolis)
 (function (global) {
   const PAL = global.PIXEL_PALETTE || (global.PIXEL_PALETTE = {});
-  // D4: one heraldic tincture per lens family. Purpure re-stepped from #8a4fa0 so it parts from Azure under deuteranopia.
-  const LENS = { land: "#3f8f5e", power: "#c0392b", wealth: "#d8a32c", peoples: "#d2742c", mind: "#3a6fb8", shocks: "#903f85" };
-  // The same six, one step lighter for the dark chronicle (panel text and swatches on #121a1b).
-  const LENS_DARK = { land: "#6cbf8a", power: "#e86a5a", wealth: "#e8bf5a", peoples: "#ee9a58", mind: "#7aa6e8", shocks: "#c47ab8" };
+  // D4: one heraldic tincture per lens family, and its lighter step for the dark chronicle, both from palette.js.
+  const LENS = PAL.LENS, LENS_DARK = PAL.LENS_DARK;
   // Which family each lens (layer key) and each guide lens belongs to.
   const FAMILY = { places: "land", borders: "land", terrain: "land", war: "power", order: "power", law: "power", changes: "power", thematic: "power",
     money: "wealth", tech: "wealth", people: "peoples", peoples: "peoples", ideas: "mind", art: "mind", disease: "shocks",
@@ -25,7 +23,7 @@
     change: ["#4f2f7f", "#8f7bbd", "#d6cfbf", "#d99045", "#9a4a08"],   // shrinking <- steady -> growing (diverging, purple-orange: clear of the sea)
     mono: ["#4c4436", "#6e6450", "#938770", "#b9ad92", "#e2d8bc"],     // the relief a choropleth sits on
   };
-  Object.assign(PAL, { LENS, LENS_DARK, LENS_OF: FAMILY, RAMP });
+  Object.assign(PAL, { LENS_OF: FAMILY, RAMP });
 
   // ---------- page tokens: every lens colour on the page comes from the six tinctures ----------
   const VARS = { "--y-places": "land", "--y-people": "peoples", "--y-money": "wealth", "--y-disease": "shocks", "--y-ideas": "mind", "--y-order": "power",
@@ -75,7 +73,7 @@
     if (Array.isArray(c)) return c;
     let v = cssCache.get(c); if (v) return v;
     v = hex(c);
-    if (!v && probe && document.body) { probe.style.color = c; document.body.appendChild(probe); const m = getComputedStyle(probe).color.match(/[\d.]+/g); probe.remove(); v = m ? [+m[0], +m[1], +m[2]] : null; }
+    if (!v && probe && document.body) { probe.style.color = PAL.day ? PAL.day(c) : c; document.body.appendChild(probe); const m = getComputedStyle(probe).color.match(/[\d.]+/g); probe.remove(); v = m ? [+m[0], +m[1], +m[2]] : null; }
     v = v || [128, 128, 128]; cssCache.set(c, v); return v;
   }
   const pack = c => (255 << 24 | c[2] << 16 | c[1] << 8 | c[0]) >>> 0;

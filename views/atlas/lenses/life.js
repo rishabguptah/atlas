@@ -385,15 +385,15 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
       lensProj = ctx.projection; lensG = ctx.g; lensPath = ctx.path;
       const g = G0(); if (!g) { ctx.g.selectAll(".lf-me").remove(); return; }
       // Lines go to the page's canvas mark layer: your road solid, the record dashed green, route options dashed.
-      if (g.real && g.kind === "real" && (g.showReal || g.phase === "over")) ctx.paths([{ id: "real", pts: g.real }], { cls: "ghost", color: "#2f7a5a", title: () => "The real route, from the record" });
+      if (g.real && g.kind === "real" && (g.showReal || g.phase === "over")) ctx.paths([{ id: "real", pts: g.real }], { cls: "ghost", color: "var(--fam-land)", title: () => "The real route, from the record" });
       if (g.plan && g.phase === "travel") ctx.paths(g.plan.map((r, i) => ({ id: "p" + i, pts: r.pts, sel: i === (g.sel || 0) })), { key: r => r.id, title: () => "A possible route" })
-        .classed("ghost", r => !(r.x || r).sel).style("--c", r => (r.x || r).sel ? "#d0602a" : "#8a7a6a");
-      ctx.paths([{ id: "road", pts: g.path }], { color: "#d0602a", title: () => "Your road so far" }).style("stroke-width", 3);
+        .classed("ghost", r => !(r.x || r).sel).style("--c", r => (r.x || r).sel ? "var(--y-life)" : "var(--ink-soft)");
+      ctx.paths([{ id: "road", pts: g.path }], { title: () => "Your road so far" }).style("stroke-width", 3);
       const life = lifeOf(g), next = life && life.chapters[g.i + 1];
       const pins = [];
       if (next && g.phase !== "over") pins.push({ id: "next", lon: next.at.lon, lat: next.at.lat, n: next.at.n });
       if (g.dest && g.kind === "ordinary" && g.phase === "travel") pins.push({ id: "next", lon: g.dest.lon, lat: g.dest.lat, n: g.dest.n });
-      ctx.pins(pins, { key: p => p.id, shape: "diamond", color: "#d0602a", label: p => p.n, title: p => `Next: ${p.n}`, always: true });
+      ctx.pins(pins, { key: p => p.id, shape: "diamond", label: p => p.n, title: p => `Next: ${p.n}`, always: true });
       let me = ctx.g.select("g.lf-me");
       if (me.empty()) { me = ctx.g.append("g").attr("class", "pt lf-me always"); me.append("image").style("image-rendering", "pixelated"); }
       spriteG = me;
