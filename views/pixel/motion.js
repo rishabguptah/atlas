@@ -52,7 +52,7 @@
 .pxmo { position: absolute; left: 0; top: 0; image-rendering: pixelated; pointer-events: none; transform-origin: 0 0; }
 .pxsky-btn { image-rendering: pixelated; display: block; cursor: pointer; pointer-events: auto; }
 .pxsky-pop { position: absolute; right: 10px; bottom: 96px; z-index: 6; pointer-events: auto; background: #f6f0dc; color: #221f1a;
-  border: 3px solid #221f1a; box-shadow: 3px 3px 0 #221f1a; padding: 9px 12px 10px; display: grid; gap: 8px; min-width: 214px;
+  border: 3px solid #221f1a; box-shadow: var(--sh-float, 3px 3px 0 #221f1a); padding: 9px 12px 10px; display: grid; gap: 8px; min-width: 214px;
   font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace; font-size: 16px; }
 .pxsky-pop[hidden] { display: none; }
 .pxsky-pop h4 { margin: 0; font: 400 16px/1 "Silkscreen", "Pixelify Sans", monospace; letter-spacing: .04em; color: #8a6418; text-transform: uppercase; }

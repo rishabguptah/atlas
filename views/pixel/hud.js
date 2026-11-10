@@ -1,10 +1,11 @@
 // Pixel HUD for the map: a minimap (where you are in the world), a compass and a scale bar, drawn in the same
 // art-pixel style as the map (1 art px = PX CSS px). Sits in the map's right-hand corners, above the SVG, below the caption.
 //
-//   const hud = PixelHUD(mapEl, projection, { px: 3, tile: dataURI, palette, fly(view) })
+//   const hud = PixelHUD(mapEl, projection, { px: 3, tile: dataURI, palette, fly(view), framed })
 //   hud.update(transform)     on zoom end and on zoom frames (cheap: the minimap terrain is drawn once per size)
 //   hud.remove()
 // tile: the terrain L0 raster (R = terrain class, equirectangular, row 0 = 90N). fly({lon, lat, zoom}) moves the map.
+// framed: the page draws one window around the instruments (.pxhud-br), so the compass and the minimap skip their own rims.
 (function (global) {
   const rgb = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
   const STYLE = `
@@ -28,7 +29,7 @@
   const N = ["k...k", "kk..k", "k.k.k", "k..kk", "k...k"];
 
   function PixelHUD(mapEl, projection, opts = {}) {
-    const PX = opts.px || 3, PAL = opts.palette || global.PIXEL_PALETTE;
+    const PX = opts.px || 3, PAL = opts.palette || global.PIXEL_PALETTE, FR = !!opts.framed;
     if (!document.getElementById("pxhud-style")) { const st = document.createElement("style"); st.id = "pxhud-style"; st.textContent = STYLE; document.head.appendChild(st); }
     // Bottom right, out of the way of the year plate (top left), the map controls (top right) and the caption (bottom left).
     const br = document.createElement("div"), row = document.createElement("div");
@@ -38,17 +39,19 @@
     if (svg) svg.after(br); else mapEl.append(br);
 
     // ---------- compass: click for the whole world ----------
-    const cc = document.createElement("canvas"), cw = 19, ch = 25;
+    const cc = document.createElement("canvas"), cw = FR ? 15 : 19, ch = FR ? 21 : 25, ox = FR ? 0 : 2, oy = FR ? -3 : 0;
     cc.width = cw; cc.height = ch; cc.className = "hit compass"; Object.assign(cc.style, { width: cw * PX + "px", height: ch * PX + "px" });
     cc.title = "North is up. Click for the whole world"; cc.setAttribute("role", "button"); cc.setAttribute("aria-label", "Compass: show the whole world"); cc.tabIndex = 0;
     {
       const x = cc.getContext("2d");
-      // A small dark plate with a light rim, like an RPG window.
-      x.fillStyle = "#221f1a"; x.fillRect(1, 0, cw - 2, ch); x.fillRect(0, 1, cw, ch - 2);
-      x.fillStyle = "#3a3430"; x.fillRect(2, 2, cw - 4, ch - 4);
-      x.fillStyle = "#c8a46a"; x.fillRect(2, 1, cw - 4, 1); x.fillRect(2, ch - 2, cw - 4, 1); x.fillRect(1, 2, 1, ch - 4); x.fillRect(cw - 2, 2, 1, ch - 4);
-      N.forEach((r, j) => [...r].forEach((c, i) => { if (c === "k") { x.fillStyle = "#f6f0dc"; x.fillRect(7 + i, 3 + j, 1, 1); } }));
-      ROSE.forEach((r, j) => [...r].forEach((c, i) => { if (c !== ".") { x.fillStyle = ROSE_C[c]; x.fillRect(2 + i, 9 + j, 1, 1); } }));
+      if (!FR) {
+        // A small dark plate with a light rim, like an RPG window.
+        x.fillStyle = "#221f1a"; x.fillRect(1, 0, cw - 2, ch); x.fillRect(0, 1, cw, ch - 2);
+        x.fillStyle = "#3a3430"; x.fillRect(2, 2, cw - 4, ch - 4);
+        x.fillStyle = "#c8a46a"; x.fillRect(2, 1, cw - 4, 1); x.fillRect(2, ch - 2, cw - 4, 1); x.fillRect(1, 2, 1, ch - 4); x.fillRect(cw - 2, 2, 1, ch - 4);
+      }
+      N.forEach((r, j) => [...r].forEach((c, i) => { if (c === "k") { x.fillStyle = "#f6f0dc"; x.fillRect(ox + 5 + i, oy + 3 + j, 1, 1); } }));
+      ROSE.forEach((r, j) => [...r].forEach((c, i) => { if (c !== ".") { x.fillStyle = ROSE_C[c]; x.fillRect(ox + i, oy + 9 + j, 1, 1); } }));
     }
     const world = () => opts.fly && opts.fly({ lon: 10, lat: 20, zoom: 1 });
     cc.addEventListener("click", world);
@@ -87,8 +90,10 @@
         // Frame: ink with a gold rim.
         for (let i = 0; i < MW; i++) for (const j of [0, MH - 1]) { const o = (j * MW + i) * 4; d[o] = 34; d[o + 1] = 31; d[o + 2] = 26; }
         for (let j = 0; j < MH; j++) for (const i of [0, MW - 1]) { const o = (j * MW + i) * 4; d[o] = 34; d[o + 1] = 31; d[o + 2] = 26; }
-        for (let i = 1; i < MW - 1; i++) for (const j of [1, MH - 2]) { const o = (j * MW + i) * 4; d[o] = 200; d[o + 1] = 164; d[o + 2] = 106; }
-        for (let j = 1; j < MH - 1; j++) for (const i of [1, MW - 2]) { const o = (j * MW + i) * 4; d[o] = 200; d[o + 1] = 164; d[o + 2] = 106; }
+        if (!FR) {
+          for (let i = 1; i < MW - 1; i++) for (const j of [1, MH - 2]) { const o = (j * MW + i) * 4; d[o] = 200; d[o + 1] = 164; d[o + 2] = 106; }
+          for (let j = 1; j < MH - 1; j++) for (const i of [1, MW - 2]) { const o = (j * MW + i) * 4; d[o] = 200; d[o + 1] = 164; d[o + 2] = 106; }
+        }
         drawMini();
       };
       img.src = opts.tile;

@@ -250,7 +250,7 @@ ${o.yearA != null ? `<div class="vz-db-key"><span><i class="ring"></i>${esc(fmtY
 .vz-db-key i.dot { background: var(--vz-c); }
 .vz-db-key i.ring { background: #f6f0dc; }
 .vz-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 10px 3px 12px 0; }
-.vz-tile { border: 3px solid var(--ink, #221f1a); background: var(--card, #fbf8ef); box-shadow: 3px 3px 0 var(--ink, #221f1a); padding: 4px 6px 2px; min-width: 0; }
+.vz-tile { border: 3px solid var(--ink, #221f1a); background: var(--card, #fbf8ef); box-shadow: var(--sh-float, 3px 3px 0 #221f1a); padding: 4px 6px 2px; min-width: 0; }
 .vz-tile .vz { margin: 2px 0 0; } .vz-tile .vz-axis, .vz-tile .vz-v { display: none; } .vz-tile .vz-note { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .vz-big { display: block; font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace; font-size: var(--fs-h3); line-height: 26px; font-weight: 600; color: var(--ink, #221f1a); }
 .vz-multi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 8px; }

@@ -22,7 +22,7 @@
 .cmp-toggle .ico { margin-right: 6px; }
 #now-body.comparing > .vz-tiles { display: none; }
 .cmp-head { display: flex; align-items: stretch; gap: 8px; margin: 6px 0 10px; }
-.cmp-plate { flex: 1; border: 3px solid #221f1a; box-shadow: 3px 3px 0 #221f1a; padding: 4px 8px 6px; background: var(--card, #fbf8ef); min-width: 0; }
+.cmp-plate { flex: 1; border: 3px solid #221f1a; box-shadow: var(--sh-float); padding: 4px 8px 6px; background: var(--card, #fbf8ef); min-width: 0; }
 .cmp-plate b { display: block; font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace; font-size: var(--fs-h3); line-height: 28px; font-weight: 600; }
 .cmp-plate input { width: 100%; box-sizing: border-box; font-family: "Pixelify Sans", ui-monospace, monospace; font-size: 22px; line-height: 26px; border: 0; border-bottom: 2px dotted #221f1a; background: transparent; padding: 0; }
 .cmp-vs { align-self: center; font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); }

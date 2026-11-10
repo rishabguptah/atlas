@@ -235,7 +235,7 @@
 .gp .stat { border: 1px solid var(--rule); background: var(--card); padding: 7px 10px; display: grid; gap: 1px; }
 .gp .stat b { font-family: var(--mono); font-size: var(--fs-tiny-2); font-weight: 500; font-variant-numeric: tabular-nums; }
 .gp .stat span { font-size: var(--fs-note); color: var(--ink-soft); line-height: 1.3; }
-.gp .card { border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); background: var(--card); padding: 12px 14px; display: grid;  grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.gp .card { border: 2px solid var(--ink); box-shadow: var(--sh-float); background: var(--card); padding: 12px 14px; display: grid;  grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .gp .k { font-family: var(--mono); font-size: var(--fs-tiny); letter-spacing: .1em; text-transform: uppercase; color: var(--gp); display: flex; gap: 10px; }
 .gp .k span:last-child { margin-left: auto; color: var(--ink-soft); }
 .gp .qq { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h3); line-height: 1.25; margin: 0; }
@@ -245,7 +245,7 @@
 .gp .dual .rg { position: absolute; top: 17px; height: 10px; background: var(--gp); opacity: .85; }
 .gp .dual .tk { position: absolute; top: 31px; font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); transform: translateX(-50%); white-space: nowrap; }
 .gp .dual .tk::before { content: ""; position: absolute; left: 50%; top: -6px; height: 4px; border-left: 1px solid var(--rule); }
-.gp .dual .h { position: absolute; top: 10px; width: 18px; height: 24px; margin-left: -9px; background: var(--card); border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); cursor: grab; display: grid; place-items: center; font-size: var(--fs-tiny); font-family: var(--mono); }
+.gp .dual .h { position: absolute; top: 10px; width: 18px; height: 24px; margin-left: -9px; background: var(--card); border: 2px solid var(--ink); box-shadow: var(--sh-raise); cursor: grab; display: grid; place-items: center; font-size: var(--fs-tiny); font-family: var(--mono); }
 .gp .dual .h:focus-visible { outline: 3px solid var(--gp); outline-offset: 1px; }
 .gp .dual .truth { position: absolute; top: 4px; height: 36px; border-left: 3px solid var(--ink); }
 .gp .dual .truth::after { content: "▼"; position: absolute; top: -12px; left: -7px; font-size: var(--fs-note); color: var(--ink); }
@@ -256,7 +256,7 @@
 .gp .ins .to { padding-bottom: 8px; color: var(--ink-soft); font-size: var(--fs-note); }
 .gp .wide { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); }
 .gp .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.gp .btn { border: 2px solid var(--ink); background: var(--card); color: var(--ink); padding: 7px 14px; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; box-shadow: 2px 2px 0 var(--ink); }
+.gp .btn { border: 2px solid var(--ink); background: var(--card); color: var(--ink); padding: 7px 14px; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; box-shadow: var(--sh-raise); }
 .gp .btn.pri { background: var(--ink); color: var(--paper); }
 .gp .btn:active { transform: translate(2px, 2px); box-shadow: none; }
 .gp .lnk { all: unset; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
