@@ -23,7 +23,7 @@ Pick the one your lens belongs to:
 | `power`   | Rule & law, War & chokepoints, Order & chaos                 |
 | `wealth`  | Trade & migration, Technology, food & energy, Object journeys, VOC ships |
 | `peoples` | People, Peoples & languages, Journeys, Middle Passage        |
-| `mind`    | Ideas & faith, Art & architecture                            |
+| `mind`    | Ideas, faith & art (with Art & architecture), Sources and debates |
 | `shocks`  | Plague & climate (chips: Epidemics, Famine & climate), Epidemics, Eruptions, famine & cold |
 
 A lens is precise (one question, one kind of record); a family is a group you switch on together.

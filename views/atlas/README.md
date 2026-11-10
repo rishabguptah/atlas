@@ -1,7 +1,7 @@
 # Atlas (one page)
 
 Every workstream on one map with one year. Lenses (Cities, People, Trade & migration, Plague & climate,
-Ideas & faith, Order & chaos, War & chokepoints, Borders, Terrain) toggle layers on the same map; the slider and Play move them all.
+Ideas, faith & art, Order & chaos, War & chokepoints, Borders, Terrain) toggle layers on the same map; the slider and Play move them all.
 Click anywhere and the "Here" column gathers every lens for that spot and year. "This year" is the
 world digest. The guide's question box sits on top and switches on the lenses its steps use.
 
@@ -162,7 +162,7 @@ Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
 in a second row. Land's row starts with the map style (Pixel, Relief or Plain). A lens that only makes sense inside a
 tab (What if, Live a life, Codex, Why) has no chip and comes on with its tab; a lens that belongs to another chip has
-none either (Provinces draws with Borders, Growing cities with Cities). Shocks has two chips by subject, Epidemics and
+none either (Provinces draws with Borders, Growing cities with Cities, Art & architecture with Ideas, faith & art). Shocks has two chips by subject, Epidemics and
 Famine & climate: each draws the curated records of the built-in Plague & climate layer together with the catalogue that
 goes with it (plague returns and Wikidata epidemics; eruptions, famines and temperature). At world zoom the catalogues
 keep to their largest records, and a catalogue row that repeats a curated one is left out. New lenses plug in from `views/atlas/lenses/<id>.py` (data) and `<id>.js` (drawing,
