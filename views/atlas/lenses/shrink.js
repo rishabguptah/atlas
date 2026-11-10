@@ -273,22 +273,22 @@
   const css = document.createElement("style");
   css.textContent = `
 .shk { display: grid; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
-.shk p { margin: 0; font-size: 14px; color: var(--ink-soft); line-height: 1.45; }
-.shk .big { font-family: var(--fell); font-size: 17px; color: var(--ink); line-height: 1.35; }
-.shk h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 4px 0 0; }
+.shk p { margin: 0; font-size: var(--fs-read); color: var(--ink-soft); line-height: 1.45; }
+.shk .big { font-family: var(--fell); font-size: var(--fs-h4); color: var(--ink); line-height: 1.35; }
+.shk h3 { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 4px 0 0; }
 .shk .row { display: flex; flex-wrap: wrap; gap: 6px; }
-.shk button.c { all: unset; cursor: pointer; font-size: 13px; padding: 4px 9px; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
+.shk button.c { all: unset; cursor: pointer; font-size: var(--fs-note); padding: 4px 9px; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
 .shk button.c[aria-pressed="true"] { background: #221f1a; color: #f6f0dc; border-color: #221f1a; }
 .shk button.c:focus-visible { outline: 2px solid var(--ink); }
-.shk .lg { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 4px 10px; font-size: 12.5px; color: var(--ink-soft); }
+.shk .lg { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 4px 10px; font-size: var(--fs-note); color: var(--ink-soft); }
 .shk .lg i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -2px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.25); }
 .shk .bars { display: grid; gap: 4px; }
-.shk .bar { all: unset; cursor: pointer; display: grid; grid-template-columns: 48px minmax(0, 1fr) 92px; gap: 8px; align-items: center; font-size: 12.5px; }
+.shk .bar { all: unset; cursor: pointer; display: grid; grid-template-columns: 48px minmax(0, 1fr) 92px; gap: 8px; align-items: center; font-size: var(--fs-note); }
 .shk .bar .t { font-family: var(--mono); color: var(--ink-soft); }
 .shk .bar .b { height: 12px; background: #e2ba54; box-shadow: inset -2px -2px 0 rgba(0,0,0,.2); min-width: 2px; }
 .shk .bar.now .t { color: var(--ink); font-weight: 600; }
 .shk .bar .v { text-align: right; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
-.shk table { border-collapse: collapse; font-size: 12.5px; width: 100%; }
+.shk table { border-collapse: collapse; font-size: var(--fs-note); width: 100%; }
 .shk td { padding: 3px 4px; border-top: 1px solid var(--rule); vertical-align: top; }
 .shk td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }`;
   document.head.appendChild(css);

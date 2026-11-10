@@ -474,11 +474,11 @@
 .trv .grp { font: 600 11px/1.2 var(--mono, ui-monospace, monospace); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); margin: 6px 0 0; }
 .trv .row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 6px 4px; border-top: 1px solid var(--rule, #ddd); cursor: pointer; background: none; border-left: 0; border-right: 0; border-bottom: 0; text-align: left; color: inherit; font: inherit; width: 100%; }
 .trv .row:hover, .trv .row:focus-visible { background: color-mix(in srgb, ${COLOR} 10%, transparent); }
-.trv .row b { display: block; } .trv .row span { color: var(--ink-soft); font-size: 12.5px; }
-.trv .row .c { font-size: 11.5px; white-space: nowrap; color: var(--ink-soft); }
+.trv .row b { display: block; } .trv .row span { color: var(--ink-soft); font-size: var(--fs-note); }
+.trv .row .c { font-size: var(--fs-note); white-space: nowrap; color: var(--ink-soft); }
 .trv .row .c.c0 { color: ${COLOR}; }
 .trv input { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--rule, #ccc); border-radius: 6px; font: inherit; background: var(--paper, #fff); color: inherit; }
-.trv .note { font-size: 12.5px; color: var(--ink-soft); margin: 0; }
+.trv .note { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; }
 .trv .go { font: 600 13px/1 inherit; padding: 8px 12px; border-radius: 6px; border: 1px solid ${COLOR}; background: ${COLOR}; color: #fff; cursor: pointer; }
 .trv .go.ghost { background: none; color: ${COLOR}; }
 .trv-road { margin-top: 12px; }

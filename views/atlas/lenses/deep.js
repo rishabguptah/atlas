@@ -50,14 +50,14 @@
   const css = document.createElement("style");
   css.textContent = `
 .uc { display: grid; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
-.uc h2 { font-family: var(--fell); font-weight: 400; font-size: 21px; line-height: 1.2; margin: 0; }
-.uc h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; gap: 8px; align-items: baseline; }
+.uc h2 { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h3); line-height: 1.2; margin: 0; }
+.uc h3 { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; gap: 8px; align-items: baseline; }
 .uc h3 .n { margin-left: auto; letter-spacing: 0; }
-.uc .lede { font-size: 14px; margin: 0; color: var(--ink-soft); }
-.uc .when { font-family: "Pixelify Sans", "Silkscreen", var(--mono); font-size: 26px; line-height: 1.1; letter-spacing: .02em; }
-.uc .when small { display: block; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); letter-spacing: .08em; text-transform: uppercase; }
+.uc .lede { font-size: var(--fs-read); margin: 0; color: var(--ink-soft); }
+.uc .when { font-family: "Pixelify Sans", "Silkscreen", var(--mono); font-size: var(--fs-h3); line-height: 1.1; letter-spacing: .02em; }
+.uc .when small { display: block; font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); letter-spacing: .08em; text-transform: uppercase; }
 .uc .ctl { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
-.uc .ctl button, .uc .seg button { border: 1px solid var(--rule); background: var(--card); color: var(--ink); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-family: var(--mono); font-size: 12px; min-width: 32px; }
+.uc .ctl button, .uc .seg button { border: 1px solid var(--rule); background: var(--card); color: var(--ink); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); min-width: 32px; }
 .uc .ctl button.play { background: var(--ink); color: var(--paper); border-color: var(--ink); min-width: 44px; }
 .uc .seg { display: inline-flex; flex-wrap: wrap; }
 .uc .ctl .seg { margin-left: auto; }
@@ -66,41 +66,41 @@
 .uc .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 .uc input[type=range] { width: 100%; accent-color: var(--y-deep); }
 .uc .chips { display: flex; flex-wrap: wrap; gap: 5px; }
-.uc .chips button { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 3px 10px; cursor: pointer; font-size: 13px; color: var(--ink); text-align: left; }
-.uc .chips button small { color: var(--ink-soft); font-size: 11.5px; margin-left: 4px; }
+.uc .chips button { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 3px 10px; cursor: pointer; font-size: var(--fs-note); color: var(--ink); text-align: left; }
+.uc .chips button small { color: var(--ink-soft); font-size: var(--fs-note); margin-left: 4px; }
 .uc .chips button[aria-pressed="true"] { border-color: var(--y-deep); background: color-mix(in srgb, var(--y-deep) 14%, transparent); }
 .uc .next { all: unset; box-sizing: border-box; cursor: pointer; display: grid; gap: 2px; border: 1.5px solid var(--y-deep); border-radius: 6px; padding: 9px 12px; background: var(--card); }
-.uc .next b { font-family: var(--fell); font-weight: 400; font-size: 17px; line-height: 1.25; }
-.uc .next span { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; }
-.uc .next small { font-size: 13px; color: var(--ink-soft); }
+.uc .next b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); line-height: 1.25; }
+.uc .next span { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; }
+.uc .next small { font-size: var(--fs-note); color: var(--ink-soft); }
 .uc .next:hover, .uc .next:focus-visible { background: color-mix(in srgb, var(--y-deep) 10%, var(--card)); }
 .uc .steps { display: grid; gap: 1px; max-height: 280px; overflow: auto; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-.uc .row { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 7.4em 1fr; gap: 0 10px; padding: 4px 6px; border-radius: 3px; font-size: 14px; line-height: 1.35; }
+.uc .row { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 7.4em 1fr; gap: 0 10px; padding: 4px 6px; border-radius: 3px; font-size: var(--fs-read); line-height: 1.35; }
 .uc .row:hover, .uc .row:focus-visible { background: var(--wash); }
 .uc .row.on { background: color-mix(in srgb, var(--y-deep) 14%, transparent); }
 .uc .row.past { color: var(--ink-soft); }
 .uc .row.draft { font-style: italic; }
-.uc .row .d { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); padding-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.uc .row .d { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); padding-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .uc .row i { display: inline-block; width: 8px; height: 8px; margin-right: 6px; background: var(--fc); vertical-align: 1px; }
 .uc .row i.triangle { clip-path: polygon(50% 0, 100% 100%, 0 100%); } .uc .row i.diamond { transform: rotate(45deg) scale(.85); } .uc .row i.circle { border-radius: 50%; }
-.uc .row i.cross { background: none; position: relative; } .uc .row i.cross::before { content: "\\00d7"; position: absolute; left: -1px; top: -6px; color: var(--fc); font-size: 13px; font-weight: 700; }
-.uc .row small { display: block; color: var(--ink-soft); font-size: 12.5px; }
-.uc .tagd { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; border: 1px dashed var(--ink-soft); border-radius: 3px; padding: 0 3px; margin-left: 4px; color: var(--ink-soft); font-style: normal; }
-.uc .quiet { all: unset; cursor: pointer; font-size: 12.5px; color: var(--accent); text-decoration: underline; }
+.uc .row i.cross { background: none; position: relative; } .uc .row i.cross::before { content: "\\00d7"; position: absolute; left: -1px; top: -6px; color: var(--fc); font-size: var(--fs-note); font-weight: 700; }
+.uc .row small { display: block; color: var(--ink-soft); font-size: var(--fs-note); }
+.uc .tagd { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; border: 1px dashed var(--ink-soft); border-radius: 3px; padding: 0 3px; margin-left: 4px; color: var(--ink-soft); font-style: normal; }
+.uc .quiet { all: unset; cursor: pointer; font-size: var(--fs-note); color: var(--accent); text-decoration: underline; }
 .uc .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
 .uc .stat { border: 1px solid var(--rule); border-radius: 3px; padding: 6px 8px; background: var(--card); display: grid; gap: 2px; }
-.uc .stat b { font-family: var(--fell); font-weight: 400; font-size: 20px; line-height: 1.1; overflow-wrap: anywhere; }
-.uc .stat span { font-size: 11.5px; color: var(--ink-soft); line-height: 1.3; }
+.uc .stat b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h3); line-height: 1.1; overflow-wrap: anywhere; }
+.uc .stat span { font-size: var(--fs-note); color: var(--ink-soft); line-height: 1.3; }
 .uc .depth { display: grid; gap: 4px; border: 1px solid var(--rule); border-radius: 4px; padding: 8px 10px; background: var(--card); }
 .uc .depth .bar { height: 6px; border-radius: 3px; background: var(--wash); overflow: hidden; }
 .uc .depth .bar i { display: block; height: 100%; background: var(--y-deep); }
-.uc .depth p { margin: 0; font-size: 13px; color: var(--ink-soft); }
+.uc .depth p { margin: 0; font-size: var(--fs-note); color: var(--ink-soft); }
 .uc .depth .acts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
-.uc .depth .acts button { border: 1px solid var(--y-deep); background: transparent; color: var(--ink); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-size: 13px; }
-.uc .note { font-size: 12px; color: var(--ink-soft); margin: 0; }
-.uc .empty { font-size: 13.5px; color: var(--ink-soft); margin: 0; font-style: italic; }
-.uc details summary { cursor: pointer; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); }
-.uc .era { margin: 8px 0 3px; font-size: 12px; color: var(--ink-soft); }
+.uc .depth .acts button { border: 1px solid var(--y-deep); background: transparent; color: var(--ink); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-size: var(--fs-note); }
+.uc .note { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; }
+.uc .empty { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; font-style: italic; }
+.uc details summary { cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); }
+.uc .era { margin: 8px 0 3px; font-size: var(--fs-note); color: var(--ink-soft); }
 `;
   document.head.appendChild(css);
 

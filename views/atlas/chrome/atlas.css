@@ -23,8 +23,8 @@ body { background: var(--sea); font-family: var(--f-prose); }
 /* ---- year cartouche: the hero ---- */
 .app .yearplate { left: max(var(--g), env(safe-area-inset-left, 0px)); top: var(--g); z-index: 6; display: grid; gap: 2px; padding: 2px 12px 6px; min-width: 150px; text-shadow: none; pointer-events: auto;
   border: 10px solid transparent; border-image: var(--f-plate) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); color: var(--ink); }
-.app .yearplate .yp { font-family: var(--f-head); font-size: 48px; line-height: 46px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.app .yearplate .yp-era { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--era); display: flex; gap: 6px; align-items: center; white-space: nowrap; }
+.app .yearplate .yp { font-family: var(--f-head); font-size: var(--fs-h1); line-height: 46px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.app .yearplate .yp-era { font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--era); display: flex; gap: 6px; align-items: center; white-space: nowrap; }
 .app .yearplate .yp-era::before { content: ""; width: 8px; height: 8px; flex: none; background: var(--era-2); box-shadow: 2px 2px 0 var(--ink-fixed); }
 
 /* ---- the one next thing ---- */
@@ -34,7 +34,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .nextcard[hidden] { display: none; }
 .app .nextcard .ico { --t: var(--gold); grid-row: 1 / 3; }
 .app .nextcard .kick { color: var(--gold-2); }
-.app .nextcard b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 18px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.app .nextcard b { font-family: var(--f-head); font-weight: 500; font-size: var(--fs-h4); line-height: 18px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 .app .nextcard:hover { transform: translateX(2px); }
 .app .nextcard:focus-visible { outline: 2px dashed var(--gold); outline-offset: 4px; }
 @media (prefers-reduced-motion: no-preference) { .app .nextcard .ico { animation: nudge 1.2s steps(2) infinite; } }
@@ -52,7 +52,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .askbar:not(.open) #go { display: none; }
 
 /* ---- buttons (old .btn markup gets the pixel button) ---- */
-.app .btn { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+.app .btn { font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
   color: var(--ink); background: none; border-radius: 0; padding: 3px 6px; box-shadow: none;
   border: 6px solid transparent; border-image: var(--f-button-q) 3 fill / 6px stretch; image-rendering: pixelated; filter: drop-shadow(0 2px 0 var(--shade)); transition: transform 120ms var(--ease); }
 .app .btn.primary, .app .btn[aria-pressed="true"] { color: var(--vellum-fixed); border-image-source: var(--f-button); background: none; }
@@ -69,27 +69,27 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .mapctl kbd { display: none; }
 .app .keycard { top: 66px; right: calc(var(--pw) + 2 * var(--g)); width: min(320px, calc(100% - 24px)); border-radius: 0; box-shadow: none; background: none; padding: 6px 8px 8px;
   border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
-.app .keycard h4 { font-family: var(--f-tiny); font-size: 8px; letter-spacing: .08em; }
-.app .keycard .kg b { font-family: var(--f-head); font-weight: 500; font-size: 16px; }
+.app .keycard h4 { font-family: var(--f-tiny); font-size: var(--fs-tiny); letter-spacing: .08em; }
+.app .keycard .kg b { font-family: var(--f-head); font-weight: 500; font-size: var(--fs-h4); }
 .app .keycard .klook { display: grid; gap: 4px; }
-.app .keycard .lookpick { all: unset; box-sizing: border-box; cursor: pointer; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase;
+.app .keycard .lookpick { all: unset; box-sizing: border-box; cursor: pointer; font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; text-transform: uppercase;
   color: var(--ink); padding: 4px 22px 4px 8px; border: 6px solid transparent; border-image: var(--f-inset) 3 fill / 6px stretch;
   background: linear-gradient(135deg, transparent 50%, currentColor 0) right 8px center / 6px 6px no-repeat; }
 .app .keycard .lookpick:focus-visible { outline: 2px dashed var(--gold); outline-offset: 2px; }
 .app .keycard .lookpick option { font-family: var(--f-prose); text-transform: none; color: var(--ink-fixed); background: var(--vellum-fixed); }
-.app .keycard kbd { font-family: var(--f-tiny); font-size: 8px; border: 0; box-shadow: 0 0 0 2px var(--ink); border-radius: 0; padding: 0 4px; background: var(--vellum-hi); opacity: 1; }
+.app .keycard kbd { font-family: var(--f-tiny); font-size: var(--fs-tiny); border: 0; box-shadow: 0 0 0 2px var(--ink); border-radius: 0; padding: 0 4px; background: var(--vellum-hi); opacity: 1; }
 .app .caption { left: calc(var(--rail) + 2 * var(--g) + 10px); right: auto; bottom: calc(var(--timeh) + 2 * var(--g)); max-width: 380px; border-radius: 0; background: none; box-shadow: none; padding: 4px 10px 6px;
   border: 6px solid transparent; border-image: var(--f-card) 3 fill / 6px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
 .app .caption::before { content: ""; position: absolute; left: -6px; top: -6px; bottom: -6px; width: 6px; background: var(--lc, var(--ink)); }
-.app .caption b { font-family: var(--f-head); font-weight: 500; font-size: 20px; line-height: 1.1; }
-.app .caption .lens { font-family: var(--f-tiny); font-size: 8px; letter-spacing: .08em; }
-.app .maphint { left: calc(var(--rail) + 2 * var(--g) + 10px); top: auto; bottom: calc(var(--timeh) + 2 * var(--g)); font-family: var(--f-tiny); font-style: normal; font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase;
+.app .caption b { font-family: var(--f-head); font-weight: 500; font-size: var(--fs-h3); line-height: 1.1; }
+.app .caption .lens { font-family: var(--f-tiny); font-size: var(--fs-tiny); letter-spacing: .08em; }
+.app .maphint { left: calc(var(--rail) + 2 * var(--g) + 10px); top: auto; bottom: calc(var(--timeh) + 2 * var(--g)); font-family: var(--f-tiny); font-style: normal; font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; text-transform: uppercase;
   color: var(--vellum-fixed); background: var(--hud); border: 0; border-radius: 0; padding: 4px 8px; box-shadow: 0 0 0 2px var(--gold-2), 4px 4px 0 2px var(--shade); }
-.app .maptip { border-radius: 0; border: 0; box-shadow: 0 0 0 2px var(--ink-fixed), 4px 4px 0 2px var(--shade); background: var(--vellum); font-size: 13px; }
+.app .maptip { border-radius: 0; border: 0; box-shadow: 0 0 0 2px var(--ink-fixed), 4px 4px 0 2px var(--shade); background: var(--vellum); font-size: var(--fs-note); }
 .app .cx-toasts { right: calc(var(--pw) + 2 * var(--g)); top: 66px; }
 .app .cx-toast { border: 0; box-shadow: none; border-radius: 0; background: none; padding: 4px 10px 6px;
   border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); }
-.app .cx-toast .k { color: var(--gold-2); font-size: 8px; }
+.app .cx-toast .k { color: var(--gold-2); font-size: var(--fs-tiny); }
 .app .cx-toast b { font-size: 16px; font-weight: 500; }
 .app .pxhud-br { right: calc(var(--pw) + 2 * var(--g)) !important; bottom: calc(var(--timeh) + 2 * var(--g)) !important; }
 
@@ -102,7 +102,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app #layers:hover .chip.fam .nm, .app #layers:focus-within .chip.fam .nm { opacity: 1; }
 .app #layers .lab { display: none; }
 .app .chip { --t: var(--ink-2); border-radius: 0; box-sizing: border-box; display: flex; align-items: center; gap: 6px; padding: 2px 8px 2px 4px; cursor: pointer;
-  font-family: var(--f-tiny); font-size: 16px; line-height: 16px; letter-spacing: 0; text-transform: uppercase; color: var(--ink);
+  font-family: var(--f-tiny); font-size: var(--fs-tiny-2); line-height: 16px; letter-spacing: 0; text-transform: uppercase; color: var(--ink);
   border: 6px solid transparent; border-image: var(--f-chip) 3 / 6px stretch; image-rendering: pixelated; background: var(--vellum); background-clip: padding-box;
   filter: drop-shadow(2px 2px 0 var(--shade)); transition: transform 120ms var(--ease); }
 .app .chip:hover { transform: translateX(2px); }
@@ -121,8 +121,8 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app #sublayers { position: absolute; z-index: 8; left: calc(var(--rail-open) + var(--g) + 10px); top: 176px; width: 236px; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: stretch;
   border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); padding: 2px 4px 6px; }
 .app #sublayers:empty, .app.sub-shut #sublayers { display: none; }
-.app #sublayers .lab { font-family: var(--f-tiny); font-size: 8px; line-height: 16px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding: 0 4px; }
-.app #sublayers .chip { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 8px; align-items: center; padding: 3px 6px; font-family: var(--f-prose); font-size: 14.5px; line-height: 1.25; color: var(--ink); }
+.app #sublayers .lab { font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 16px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); padding: 0 4px; }
+.app #sublayers .chip { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 8px; align-items: center; padding: 3px 6px; font-family: var(--f-prose); font-size: var(--fs-read); line-height: 1.25; color: var(--ink); }
 .app #sublayers .chip:hover { background: var(--wash); }
 .app #sublayers .chip:focus-visible { outline: 2px dashed var(--gold); }
 .app #sublayers .chip i { width: 10px; height: 10px; border-radius: 0; border: 0; box-shadow: 0 0 0 2px var(--ink); background: var(--vellum-hi); margin: 1px; }
@@ -130,7 +130,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app #sublayers .chip[aria-pressed="false"] { color: var(--ink-soft); }
 /* Land's map style: one three-way switch above its lenses, in the sub-panel's own type. */
 .app #sublayers .mstyle { all: unset; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 2px; margin: 0 2px 6px; padding: 2px; background: var(--wash); }
-.app #sublayers .mstyle button { all: unset; box-sizing: border-box; cursor: pointer; text-align: center; padding: 3px 4px; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.app #sublayers .mstyle button { all: unset; box-sizing: border-box; cursor: pointer; text-align: center; padding: 3px 4px; font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
 .app #sublayers .mstyle button:hover { color: var(--ink); }
 .app #sublayers .mstyle button[aria-checked="true"] { color: var(--ink); background: var(--vellum-hi); box-shadow: inset 0 -2px 0 var(--t-land); }
 .app #sublayers .mstyle button:focus-visible { outline: 2px dashed var(--gold); }
@@ -158,7 +158,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .time input[type=range]:focus-visible { outline: 2px dashed var(--gold); outline-offset: 4px; }
 /* The year is on the cartouche alone; the slider tells a screen reader the year itself (aria-valuetext). */
 .app .time output { display: none; }
-.app .time .speed { font-family: var(--f-tiny); font-size: 8px; text-transform: uppercase; border: 0; border-radius: 0; box-shadow: 0 0 0 2px var(--ink); background: var(--vellum-hi); padding: 2px 4px; max-width: 76px; }
+.app .time .speed { font-family: var(--f-tiny); font-size: var(--fs-tiny); text-transform: uppercase; border: 0; border-radius: 0; box-shadow: 0 0 0 2px var(--ink); background: var(--vellum-hi); padding: 2px 4px; max-width: 76px; }
 /* Eras: a 2-px tick where each begins and the current one filled; the cartouche names it. */
 .app .eras { height: 8px; }
 .app .eras button { height: 8px; padding: 0; border-left: 2px solid var(--ink-soft); }
@@ -172,7 +172,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .tabs { position: sticky; top: 0; z-index: 4; display: flex; gap: 2px; padding: 0 2px 6px; background: var(--vellum); border-bottom: 0;
   box-shadow: 0 2px 0 var(--vellum-3); margin-bottom: 2px; }
 .app .tab { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 2px 10px; border: 0; border-radius: 0;
-  font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); background: var(--vellum-3);
+  font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); background: var(--vellum-3);
   clip-path: polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 6px), 0 100%); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .app .tab .ico { --t: var(--ink-soft); }
 .app .tab[aria-selected="true"] { background: var(--ink); color: var(--vellum); padding-bottom: 16px; margin-bottom: -4px; position: relative; }
@@ -184,23 +184,23 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .tab:hover:not([aria-selected="true"]) { background: var(--vellum-2); }
 .app .tab:focus-visible { outline: 2px dashed var(--gold); outline-offset: -4px; }
 .app .pane { padding: 8px 6px 20px 4px; gap: 12px; }
-.app .kick, .app .sec > h3, .app .tag, .app .band { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; font-weight: 400; }
-.app .ttl { font-family: var(--f-head); font-size: 32px; line-height: 1; font-weight: 500; text-wrap: balance; }
-.app .sub { font-size: 14.5px; }
+.app .kick, .app .sec > h3, .app .tag, .app .band { font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; font-weight: 400; }
+.app .ttl { font-family: var(--f-head); font-size: var(--fs-h2); line-height: 1; font-weight: 500; text-wrap: balance; }
+.app .sub { font-size: var(--fs-read); }
 .app .sec > h3 { border-top: 0; padding-top: 10px; background: linear-gradient(90deg, var(--ink-soft) 50%, transparent 0) top left / 4px 2px repeat-x; }
 .app .sec > h3 i { width: 8px; height: 8px; border-radius: 0; box-shadow: 2px 2px 0 var(--ink-fixed); }
 .app .it { border-radius: 0; padding: 4px 6px 4px 18px; position: relative; }
 .app .it::before { content: ""; position: absolute; left: 2px; top: 7px; width: 12px; height: 12px; background: var(--hand) center / 12px 12px no-repeat; image-rendering: pixelated; opacity: 0; }
 .app .it:hover::before, .app .it:focus-visible::before { opacity: 1; }
-.app .it .y { font-family: var(--f-tiny); font-size: 8px; align-self: center; }
+.app .it .y { font-family: var(--f-tiny); font-size: var(--fs-tiny); align-self: center; }
 .app .tag { border-radius: 0; padding: 0 4px; }
 .app .band { border-radius: 0; color: #fffaea; box-shadow: 2px 2px 0 var(--ink-fixed); }
 .app .focus { border-radius: 0; background: none; border: 6px solid transparent; border-image: var(--f-card) 3 fill / 6px stretch; image-rendering: pixelated; padding: 4px 8px 6px 12px; position: relative; }
 .app .focus::before { content: ""; position: absolute; left: -2px; top: 0; bottom: 0; width: 6px; background: var(--c, var(--ink)); }
-.app .focus .fk { font-family: var(--f-tiny); font-size: 8px; }
-.app .focus .ft { font-family: var(--f-head); font-size: 24px; line-height: 1.05; font-weight: 500; }
+.app .focus .fk { font-family: var(--f-tiny); font-size: var(--fs-tiny); }
+.app .focus .ft { font-family: var(--f-head); font-size: var(--fs-h3); line-height: 1.05; font-weight: 500; }
 .app .srcs li::before { content: "§ "; color: var(--rubric); }
-.app .foot, .app .note { font-size: 12.5px; }
+.app .foot, .app .note { font-size: var(--fs-note); }
 .app .foot { border-top: 0; padding-top: 10px; background: linear-gradient(90deg, var(--ink-soft) 50%, transparent 0) top left / 4px 2px repeat-x; }
 .app .sec details.deep summary::before { font-family: var(--f-tiny); }
 
@@ -211,18 +211,18 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .ex { border: 0; border-radius: 0; padding: 6px 6px 6px 20px; font-family: var(--f-prose); position: relative; background: none; box-shadow: 0 2px 0 var(--vellum-3); }
 .app .ex::before { content: ""; position: absolute; left: 2px; top: 10px; width: 12px; height: 12px; background: var(--hand) center / 12px 12px no-repeat; image-rendering: pixelated; opacity: 0; }
 .app .ex:hover::before, .app .ex:focus-visible::before { opacity: 1; }
-.app .ex .tg { font-family: var(--f-tiny); font-size: 8px; }
-.app .q { font-family: var(--f-head); font-size: 24px; font-weight: 500; }
-.app .badge { font-family: var(--f-tiny); font-size: 8px; border-radius: 0; border: 0; box-shadow: inset 0 0 0 2px var(--rubric); padding: 2px 6px; }
+.app .ex .tg { font-family: var(--f-tiny); font-size: var(--fs-tiny); }
+.app .q { font-family: var(--f-head); font-size: var(--fs-h3); font-weight: 500; }
+.app .badge { font-family: var(--f-tiny); font-size: var(--fs-tiny); border-radius: 0; border: 0; box-shadow: inset 0 0 0 2px var(--rubric); padding: 2px 6px; }
 .app .step, .app .link, .app .whatif, .app .wf .sc, .app .wf .wst, .app .cx .quest, .app .cx .stat, .app .wf .stat, .app .cx .switch, .app .cx .ok-msg {
   border: 6px solid transparent; border-radius: 0; background: none; border-image: var(--f-card) 3 fill / 6px stretch; image-rendering: pixelated; box-shadow: none; position: relative; }
 .app .step::before, .app .wf .sc::before, .app .cx .quest::before { content: ""; position: absolute; left: -2px; top: 0; bottom: 0; width: 6px; background: var(--c, var(--y-whatif, var(--gold))); }
 .app .cx .quest::before { background: var(--gold); }
 .app .wf .wst.alt { border-image-source: var(--f-card); outline: 2px dashed var(--y-whatif); outline-offset: -8px; }
 .app .step.on, .app .wf .wst.on { border-image-source: var(--f-card-gold); }
-.app .step .t, .app .wf .wst .t, .app .wf .sc b, .app .cx .quest b, .app .view .nm, .app .link .ends, .app .whatif b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 1.2; }
-.app .step .i, .app .step .y, .app .step .ln, .app .conf, .app .pnl .stt, .app .spk .role, .app .chair .by, .app .lrow .n, .app .view .st, .app .wf .sc .meta, .app .wf .wst .y, .app .cx ul.ent li .y, .app .player .count { font-family: var(--f-tiny); font-size: 8px; }
-.app .view .st, .app .wf .tagr, .app .wf .tagb, .app .wf .badge2 { border-radius: 0; font-size: 8px; }
+.app .step .t, .app .wf .wst .t, .app .wf .sc b, .app .cx .quest b, .app .view .nm, .app .link .ends, .app .whatif b { font-family: var(--f-head); font-weight: 500; font-size: var(--fs-h4); line-height: 1.2; }
+.app .step .i, .app .step .y, .app .step .ln, .app .conf, .app .pnl .stt, .app .spk .role, .app .chair .by, .app .lrow .n, .app .view .st, .app .wf .sc .meta, .app .wf .wst .y, .app .cx ul.ent li .y, .app .player .count { font-family: var(--f-tiny); font-size: var(--fs-tiny); }
+.app .view .st, .app .wf .tagr, .app .wf .tagb, .app .wf .badge2 { border-radius: 0; font-size: var(--fs-tiny); }
 .app .player { background: var(--vellum); border-bottom: 0; box-shadow: 0 2px 0 var(--vellum-3); top: var(--tabs-h, 64px); }
 .app .wf .pl .bar, .app .cx .bar { border-radius: 0; height: 8px; background: repeating-linear-gradient(90deg, var(--wash) 0 6px, transparent 6px 8px); outline: 0; }
 .app .wf .pl .bar i, .app .cx .bar i { border-radius: 0; background: repeating-linear-gradient(90deg, var(--c, var(--y-whatif, var(--gold))) 0 6px, transparent 6px 8px); }
@@ -231,17 +231,17 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .cx .meter i.on { background: var(--gold); box-shadow: inset 0 0 0 2px var(--gold-2); }
 .app .cx .next { border: 6px solid transparent; border-radius: 0; background: none; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; box-shadow: none; filter: drop-shadow(4px 4px 0 var(--shade)); }
 .app .cx .next .k, .app .cx-toast .k { color: var(--gold-2); }
-.app .cx .stat b { font-family: var(--f-head); font-size: 24px; font-weight: 500; }
-.app .cx .stat span, .app .wf .stat span { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; text-transform: uppercase; letter-spacing: .06em; }
+.app .cx .stat b { font-family: var(--f-head); font-size: var(--fs-h3); font-weight: 500; }
+.app .cx .stat span, .app .wf .stat span { font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; text-transform: uppercase; letter-spacing: .06em; }
 .app .cx .seg, .app .wf .seg { border: 0; border-radius: 0; gap: 2px; box-shadow: none; overflow: visible; }
-.app .cx .seg button, .app .wf .seg button { font-family: var(--f-tiny); font-size: 8px; padding: 6px 10px; background: var(--vellum-3); color: var(--ink-2); }
+.app .cx .seg button, .app .wf .seg button { font-family: var(--f-tiny); font-size: var(--fs-tiny); padding: 6px 10px; background: var(--vellum-3); color: var(--ink-2); }
 .app .cx .seg button[aria-pressed="true"], .app .wf .seg button[aria-pressed="true"] { background: var(--ink); color: var(--vellum); box-shadow: 2px 2px 0 var(--gold-2); }
 .app .cx ul.ent li { border-bottom: 0; background: linear-gradient(90deg, var(--vellum-3) 50%, transparent 0) bottom left / 4px 2px repeat-x; }
-.app .cx .lnk { font-size: 8px; color: var(--lapis); text-decoration: underline; text-underline-offset: 3px; }
+.app .cx .lnk { font-size: var(--fs-tiny); color: var(--lapis); text-decoration: underline; text-underline-offset: 3px; }
 .app .error, .app .wf .err { border-radius: 0; border: 0; box-shadow: inset 0 0 0 2px var(--rubric); }
 .app .pnl .dot, .app .invite .dot, .app .status .dot { border-radius: 0; box-shadow: 2px 2px 0 var(--ink-fixed); }
 .app .wf .picks button, .app .examples .ex { border-radius: 0; }
-.app .wf .picks button { border: 0; box-shadow: 0 0 0 2px var(--vellum-3); font-size: 13px; }
+.app .wf .picks button { border: 0; box-shadow: 0 0 0 2px var(--vellum-3); font-size: var(--fs-note); }
 
 /* ---- the panel opens to about 60% of the height so the map stays the interface; the grip makes it tall ---- */
 @media (min-width: 701px) {
@@ -249,7 +249,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app.panel-tall .panel { height: auto; bottom: var(--g); }
 }
 .app .grip { position: sticky; bottom: -2px; z-index: 3; margin-top: auto; align-self: stretch; display: flex; justify-content: center; align-items: center; gap: 6px; padding: 4px 0 2px; cursor: pointer;
-  border: 0; background: linear-gradient(transparent, var(--vellum) 40%); font-family: var(--f-tiny); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  border: 0; background: linear-gradient(transparent, var(--vellum) 40%); font-family: var(--f-tiny); font-size: var(--fs-tiny); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
 .app .grip::before { content: ""; width: 24px; height: 6px; background: repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 0 / 24px 2px no-repeat, repeating-linear-gradient(90deg, var(--ink-soft) 0 2px, transparent 2px 4px) 0 4px / 24px 2px no-repeat; }
 .app .grip:hover { color: var(--ink); }
 .app .grip:focus-visible { outline: 2px dashed var(--gold); outline-offset: -2px; }
@@ -282,19 +282,19 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app input:not([type=range]):not([type=checkbox]):not([type=radio]), .app select, .app textarea { font-size: 16px; }
   .app .map { position: absolute; inset: 0; height: auto; border: 0; }
   .app .yearplate { left: max(8px, env(safe-area-inset-left, 0px)); top: 8px; min-width: 0; padding: 0 8px 4px; }
-  .app .yearplate .yp { font-size: 32px; line-height: 32px; }
+  .app .yearplate .yp { font-size: var(--fs-h2); line-height: 32px; }
   .app .askbar { display: none; }
   .app .mapctl { right: max(8px, env(safe-area-inset-right, 0px)); top: 12px; }
   .app .mapctl .btn > span:not(.ico) { display: none; }
   .app .keycard, .app .cx-toasts { right: max(8px, env(safe-area-inset-right, 0px)); top: 64px; }
   .app #layers { left: 0; right: 0; top: 80px; width: auto; flex-direction: row; overflow-x: auto; padding: 2px max(8px, env(safe-area-inset-left, 0px)) 8px; scrollbar-width: none; }
   .app #layers .chip.fam { flex: none; width: auto; }
-  .app #layers .chip.fam .nm { opacity: 1; font-size: 8px; line-height: 12px; letter-spacing: .06em; }
+  .app #layers .chip.fam .nm { opacity: 1; font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .06em; }
   .app #sublayers { left: 8px; right: 8px; top: 132px; width: auto; }
   .app .nextcard { left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); width: auto; top: 130px; padding: 0 8px 2px 4px; }
   .app .nextcard .kick { display: none; }
   .app .nextcard .ico { grid-row: 1; }
-  .app .nextcard b { font-size: 12px; line-height: 16px; -webkit-line-clamp: 1; }
+  .app .nextcard b { font-size: var(--fs-note); line-height: 16px; -webkit-line-clamp: 1; }
   .app:not(.sub-shut) #sublayers:not(:empty) ~ .nextcard { display: none; }
   .app .time { left: 0; right: 0; bottom: calc(var(--peek, 92px) - 8px + env(safe-area-inset-bottom, 0px)); grid-template-columns: auto minmax(0, 1fr) auto; }
   /* The page's sheet keeps its mechanics (transform, data-sheet); it gets the chronicle frame. */
@@ -313,9 +313,9 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .dr-box { --dr-ink: var(--hud); --dr-gold: var(--gold-hi); box-shadow: none; padding: 6px 12px 8px;
   border: 10px solid transparent; border-image: var(--f-hud) 4 fill / 10px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); background: none; }
 .app .dr-box.alt { box-shadow: none; outline: 2px dashed var(--t-shocks-lt); outline-offset: -6px; }
-.app .dr-title { font-family: var(--f-head); font-size: 24px; line-height: 1.05; }
-.app .dr-kick, .app .dr-link, .app .dr-cont, .app .dr-strip .nm { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; }
-.app .dr-btn { font-family: var(--f-tiny) !important; font-size: 8px !important; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink);
+.app .dr-title { font-family: var(--f-head); font-size: var(--fs-h3); line-height: 1.05; }
+.app .dr-kick, .app .dr-link, .app .dr-cont, .app .dr-strip .nm { font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; }
+.app .dr-btn { font-family: var(--f-tiny) !important; font-size: var(--fs-tiny) !important; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink);
   padding: 2px 6px; background: none; box-shadow: none; border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; }
 .app .dr-btn:hover, .app .dr-btn:focus-visible { background: none; transform: translateY(-2px); }
 .app .dr-strip { background: none; box-shadow: none; border: 8px solid transparent; border-image: var(--f-hud) 4 fill / 8px stretch; image-rendering: pixelated; padding: 0 2px; }
@@ -379,12 +379,12 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .modeplate { position: absolute; z-index: 7; left: max(var(--g), env(safe-area-inset-left, 0px)); top: 104px; display: flex; align-items: center; gap: 8px; padding: 2px 4px;
   border: 10px solid transparent; border-image: var(--f-plate) 5 fill / 10px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); }
 .app .modeplate[hidden], .app.in-mode #nextcard { display: none; }
-.app .modeplate button { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.app .modeplate button { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; text-transform: uppercase; }
 .app .mp-back { color: var(--vellum-fixed); padding: 2px 6px; border: 6px solid transparent; border-image: var(--f-button) 3 fill / 6px stretch; }
 .app .mp-back .ico { --t: var(--gold-hi); width: 12px; height: 12px; }
-.app .mp-back kbd { font-family: var(--f-tiny); font-size: 8px; opacity: .7; }
+.app .mp-back kbd { font-family: var(--f-tiny); font-size: var(--fs-tiny); opacity: .7; }
 .app .mp-back:hover, .app .mp-back:focus-visible { transform: translateY(-2px); }
-.app .mp-nm { font-family: var(--f-head); font-size: 16px; color: var(--ink); white-space: nowrap; }
+.app .mp-nm { font-family: var(--f-head); font-size: var(--fs-h4); color: var(--ink); white-space: nowrap; }
 .app .mp-peek { color: var(--ink-soft); border-bottom: 2px dotted var(--ink-soft); }
 .app .mp-peek:hover, .app .mp-peek:focus-visible { color: var(--ink); }
 .app.directing .modeplate { display: none; }
@@ -412,7 +412,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 @media (max-width: 700px) { .app.ui-hidden { padding-bottom: env(safe-area-inset-bottom, 0px); } .app.ui-hidden .panel { transform: translateY(100%); } }
 /* The eye stays findable when everything else has gone: vellum, ink line. A one-time hint says how to come back. */
 .app.ui-hidden .eyebtn { opacity: .85; color: var(--ink-fixed); border-image-source: var(--f-button-q); }
-.app .uihint { position: absolute; z-index: 30; top: 64px; right: max(var(--g), env(safe-area-inset-right, 0px)); padding: 4px 8px; font-family: var(--f-tiny); font-size: 8px; line-height: 12px;
+.app .uihint { position: absolute; z-index: 30; top: 64px; right: max(var(--g), env(safe-area-inset-right, 0px)); padding: 4px 8px; font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px;
   letter-spacing: .08em; text-transform: uppercase; color: var(--ink); border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; pointer-events: none; }
 @media (max-width: 700px) { .app .uihint { top: auto; bottom: 64px; } .app.ui-hidden .time { transform: translateY(calc(100% + var(--peek, 92px) + 60px)); } }
 /* In a game the panel holds the question; the map's caption card would say it twice. */
@@ -435,13 +435,13 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .kbcross.on { opacity: .8; }
 .app .cheat { position: absolute; z-index: 40; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(760px, calc(100% - 32px)); max-height: calc(100% - 40px); overflow-y: auto; box-sizing: border-box;
   padding: 8px 14px 10px; color: var(--ink); border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); image-rendering: pixelated; cursor: pointer; }
-.app .cheat h3 { margin: 0 0 6px; font-family: var(--f-head); font-weight: 500; font-size: 22px; }
+.app .cheat h3 { margin: 0 0 6px; font-family: var(--f-head); font-weight: 500; font-size: var(--fs-h3); }
 .app .cheat .ch-g { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 12px 22px; }
-.app .cheat h4 { margin: 0 0 4px; font-family: var(--f-tiny); font-size: 8px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); font-weight: 400; }
-.app .cheat .ch-r { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 8px; align-items: center; font-size: 13px; line-height: 1.3; margin: 3px 0; }
+.app .cheat h4 { margin: 0 0 4px; font-family: var(--f-tiny); font-size: var(--fs-tiny); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); font-weight: 400; }
+.app .cheat .ch-r { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 8px; align-items: center; font-size: var(--fs-note); line-height: 1.3; margin: 3px 0; }
 .app .cheat .ch-k { display: flex; flex-wrap: wrap; gap: 6px 5px; padding: 2px; }
-.app .cheat kbd { font-family: var(--f-tiny); font-size: 8px; line-height: 16px; min-width: 10px; text-align: center; padding: 0 4px; background: var(--vellum-hi); box-shadow: 0 0 0 2px var(--ink), 2px 2px 0 2px var(--shade); }
-.app .cheat .ch-f { margin: 8px 0 0; font-size: 12px; color: var(--ink-soft); }
+.app .cheat kbd { font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 16px; min-width: 10px; text-align: center; padding: 0 4px; background: var(--vellum-hi); box-shadow: 0 0 0 2px var(--ink), 2px 2px 0 2px var(--shade); }
+.app .cheat .ch-f { margin: 8px 0 0; font-size: var(--fs-note); color: var(--ink-soft); }
 .app .cheat .ch-f kbd { margin: 0 4px; }
 
 /* AI-only controls ([data-ai]) when this page has no Claude (ATLAS.ai): still there, plainly marked, and a press says why. */
@@ -460,19 +460,19 @@ html[data-ai="off"] .app [data-ai]::after { content: " · needs Claude"; font-st
 
 /* Section heads: the dotted rule and the 8px kicker, as on the page's own .sec heads. */
 .app :is(.uc h3, .gp h3, .sty h3, .shk h3, .obj .grp, .trv .grp, .sch-sub, .uc details summary) {
-  font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; font-weight: 400; text-transform: uppercase; color: var(--ink-soft);
+  font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; font-weight: 400; text-transform: uppercase; color: var(--ink-soft);
   padding-top: 10px; background: linear-gradient(90deg, var(--ink-soft) 50%, transparent 0) top left / 4px 2px repeat-x; }
-.app :is(.uc h2, .lf h2) { font-family: var(--f-head); font-size: 24px; line-height: 1.05; font-weight: 500; text-wrap: balance; }
+.app :is(.uc h2, .lf h2) { font-family: var(--f-head); font-size: var(--fs-h3); line-height: 1.05; font-weight: 500; text-wrap: balance; }
 .app :is(.uc .next b, .lf .life b, .lf .hud b, .lf .ch h3, .obj .hd h3, .sty .st b, .gp .qq, .uc .stat b, .gp .big, .shk .big, .sch-fun, .lw-when) {
   font-family: var(--f-head); font-weight: 500; }
-.app :is(.lf .life b, .lf .hud b, .sty .st b, .uc .next b, .obj .hd h3) { font-size: 16px; line-height: 1.2; }
-.app :is(.lf .ch h3, .gp .qq) { font-size: 20px; line-height: 1.15; }
+.app :is(.lf .life b, .lf .hud b, .sty .st b, .uc .next b, .obj .hd h3) { font-size: var(--fs-h4); line-height: 1.2; }
+.app :is(.lf .ch h3, .gp .qq) { font-size: var(--fs-h3); line-height: 1.15; }
 .app :is(.uc .when, .lw-when) { font-family: var(--f-head); }
 /* Kickers, tags and small numbers. */
 .app :is(.uc .when small, .uc .next span, .uc .row .d, .uc .tagd, .gp .k, .gp .ins label, .gp .find, .gp .lnk, .gp .seg button, .gp .stat b,
   .lf .life .tg, .lf .ch .k, .lf .stat, .lf .badge2, .lf .cmp b, .lf .log li span, .sty .st .m, .sty kbd, .sch-st, .sch-fa b, .sch-ok, .sch-arrow,
   .lw h3 .n, .lw .tag, .lw .cf, .lw-sc .d, .shk .bar .t, .obj .row .yr, .trv .row .c) {
-  font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .06em; font-weight: 400; text-transform: uppercase; }
+  font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .06em; font-weight: 400; text-transform: uppercase; }
 .app .gp .stat b { font-size: 16px; line-height: 18px; }
 .app :is(.lf .ch .k, .gp .k) { color: var(--pc); }
 
@@ -496,7 +496,7 @@ html[data-ai="off"] .app [data-ai]::after { content: " · needs Claude"; font-st
 /* Buttons: the main act is the ink button, everything else the quiet vellum one; a press drops one art pixel. */
 .app :is(.lf .go, .obj .go, .trv .go, .gp .btn, .uc .ctl button, .uc .depth .acts button, .lw-ctl button, .lw-moments button, .lw-row button, .shk button.c) {
   all: unset; box-sizing: border-box; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 0;
-  font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); padding: 2px 6px;
+  font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); padding: 2px 6px;
   border: 6px solid transparent; border-image: var(--f-button-q) 3 fill / 6px stretch; image-rendering: pixelated;
   filter: drop-shadow(0 2px 0 var(--shade)); transition: transform 120ms var(--ease); }
 .app :is(.lf .go, .obj .go:not(.ghost), .trv .go:not(.ghost), .gp .btn.pri, .uc .ctl button.play, .lw-ctl button[data-a="play"]) { color: var(--vellum-fixed); border-image-source: var(--f-button); }
@@ -510,13 +510,13 @@ html[data-ai="off"] .app [data-ai]::after { content: " · needs Claude"; font-st
 
 /* Segmented switches and mode tabs: the page's .seg. */
 .app :is(.uc .seg, .gp .seg, .trv .tabs) { border: 0; gap: 2px; box-shadow: none; overflow: visible; }
-.app :is(.uc .seg button, .gp .seg button, .trv .tabs button) { border: 0; margin: 0; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .06em; text-transform: uppercase;
+.app :is(.uc .seg button, .gp .seg button, .trv .tabs button) { border: 0; margin: 0; font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .06em; text-transform: uppercase;
   padding: 6px 10px; background: var(--vellum-3); color: var(--ink-2); }
 .app :is(.uc .seg button, .gp .seg button, .trv .tabs button)[aria-pressed="true"] { background: var(--ink); color: var(--vellum); box-shadow: 2px 2px 0 var(--gold-2); }
 
 /* Chips: the lens chip frame; on = washed with the pane's tincture (or the link's own, --c). */
 .app :is(.uc .chips button, .trv .chip, .sch-tab) { border: 6px solid transparent; border-image: var(--f-chip) 3 / 6px stretch; image-rendering: pixelated;
-  background: var(--vellum) padding-box; padding: 0 6px; font-size: 13px; color: var(--ink); }
+  background: var(--vellum) padding-box; padding: 0 6px; font-size: var(--fs-note); color: var(--ink); }
 .app :is(.uc .chips button[aria-pressed="true"], .trv .chip[aria-pressed="true"], .sch-tab.on) { background: color-mix(in srgb, var(--c, var(--pc)) 22%, var(--vellum)) padding-box; }
 .app .sch-node { border: 0; box-shadow: inset 0 0 0 2px var(--c); background: color-mix(in srgb, var(--c) 14%, var(--vellum)); }
 

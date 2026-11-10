@@ -108,15 +108,15 @@
 .vz-legend[hidden] { display: none; }
 .vz-legend .vz-k { margin-bottom: 2px; }
 .vz-legend .tabs { display: flex; gap: 4px; margin-bottom: 6px; flex-wrap: wrap; }
-.vz-legend .tabs button { font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; line-height: 14px; padding: 1px 5px; border: 2px solid #221f1a; background: transparent; cursor: pointer; text-transform: uppercase; }
+.vz-legend .tabs button { font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); line-height: 14px; padding: 1px 5px; border: 2px solid #221f1a; background: transparent; cursor: pointer; text-transform: uppercase; }
 .vz-legend .tabs button[aria-pressed="true"] { background: #221f1a; color: #f6f0dc; }
 .vz-legend .ramp { display: grid; grid-template-columns: repeat(5, 1fr) 12px 1fr; gap: 2px; align-items: end; }
 .vz-legend .sw { height: 15px; border: 2px solid #221f1a; cursor: pointer; image-rendering: pixelated; }
 .vz-legend .sw.fog { background: repeating-conic-gradient(#b9ad92 0 25%, #f6f0dc 0 50%) 0 0 / 6px 6px; }
 .vz-legend .sw:hover, .vz-legend .sw.on { outline: 2px solid var(--accent, #1d4f6e); outline-offset: 1px; }
 .vz-legend .lab { font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; line-height: 9px; color: var(--ink-soft); text-align: center; overflow-wrap: anywhere; }
-.vz-legend .ends { display: flex; justify-content: space-between; font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; color: var(--ink); margin-top: 3px; grid-column: 1 / 6; }
-.vz-legend p { margin: 5px 0 0; font-size: 12.5px; line-height: 1.35; color: var(--ink-soft); }
+.vz-legend .ends { display: flex; justify-content: space-between; font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); color: var(--ink); margin-top: 3px; grid-column: 1 / 6; }
+.vz-legend p { margin: 5px 0 0; font-size: var(--fs-note); line-height: 1.35; color: var(--ink-soft); }
 `;
   function buildLegend() {
     if (legend) return legend;

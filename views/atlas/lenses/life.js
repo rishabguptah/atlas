@@ -410,43 +410,43 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
   const css = document.createElement("style");
   css.textContent = `
 .lf { display: grid; gap: 12px; }
-.lf h2 { font-family: var(--fell); font-size: 22px; margin: 0; }
-.lf .sub { color: var(--ink-soft); font-size: 13.5px; margin: 0; }
+.lf h2 { font-family: var(--fell); font-size: var(--fs-h3); margin: 0; }
+.lf .sub { color: var(--ink-soft); font-size: var(--fs-note); margin: 0; }
 .lf .cards { display: grid; gap: 8px; }
 .lf .life { text-align: left; border: 1px solid var(--rule); background: var(--card); border-radius: 6px; padding: 9px 11px; cursor: pointer; display: grid; grid-template-columns: 40px 1fr auto; gap: 2px 10px; align-items: center; }
 .lf .life:hover { border-color: var(--ink-soft); }
 .lf .life img { grid-row: span 2; width: 36px; height: 36px; image-rendering: pixelated; object-fit: contain; }
-.lf .life b { font-family: var(--fell); font-size: 16px; } .lf .life span { font-size: 12.5px; color: var(--ink-soft); }
-.lf .life .tg { grid-row: span 2; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.lf .life b { font-family: var(--fell); font-size: var(--fs-h4); } .lf .life span { font-size: var(--fs-note); color: var(--ink-soft); }
+.lf .life .tg { grid-row: span 2; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
 .lf .hud { position: sticky; top: 36px; z-index: 2; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 8px 0; display: grid; grid-template-columns: 44px 1fr auto; gap: 2px 10px; align-items: center; }
 .lf .hud img { grid-row: span 2; width: 42px; height: 42px; image-rendering: pixelated; object-fit: contain; }
-.lf .hud b { font-family: var(--fell); font-size: 17px; } .lf .hud .meta { font-size: 12.5px; color: var(--ink-soft); }
+.lf .hud b { font-family: var(--fell); font-size: var(--fs-h4); } .lf .hud .meta { font-size: var(--fs-note); color: var(--ink-soft); }
 .lf .stats { display: flex; gap: 4px; flex-wrap: wrap; grid-column: 2 / 4; }
-.lf .stat { font-family: var(--mono); font-size: 10.5px; border: 1px solid var(--rule); border-radius: 3px; padding: 1px 6px; }
+.lf .stat { font-family: var(--mono); font-size: var(--fs-tiny); border: 1px solid var(--rule); border-radius: 3px; padding: 1px 6px; }
 .lf .ch { border: 1px solid var(--rule); border-left: 4px solid #d0602a; background: var(--card); border-radius: 4px; padding: 11px 13px; display: grid; gap: 8px; }
-.lf .ch .k { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: #d0602a; }
-.lf .ch h3 { font-family: var(--fell); font-size: 19px; margin: 0; }
-.lf .ch p { margin: 0; font-size: 14.5px; line-height: 1.45; }
-.lf .opt { all: unset; box-sizing: border-box; cursor: pointer; border: 1.5px solid var(--rule); border-radius: 5px; padding: 8px 11px; font-size: 14.5px; line-height: 1.35; display: grid; gap: 2px; background: var(--paper); }
+.lf .ch .k { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: #d0602a; }
+.lf .ch h3 { font-family: var(--fell); font-size: var(--fs-h4); margin: 0; }
+.lf .ch p { margin: 0; font-size: var(--fs-read); line-height: 1.45; }
+.lf .opt { all: unset; box-sizing: border-box; cursor: pointer; border: 1.5px solid var(--rule); border-radius: 5px; padding: 8px 11px; font-size: var(--fs-read); line-height: 1.35; display: grid; gap: 2px; background: var(--paper); }
 .lf .opt:hover, .lf .opt:focus-visible { border-color: #d0602a; }
-.lf .opt small { color: var(--ink-soft); font-size: 12.5px; }
+.lf .opt small { color: var(--ink-soft); font-size: var(--fs-note); }
 .lf .opt.sel { border-color: #d0602a; background: color-mix(in srgb, #d0602a 8%, var(--paper)); }
-.lf .go { all: unset; cursor: pointer; background: #d0602a; color: #fff; border-radius: 5px; padding: 9px 14px; font-size: 15px; text-align: center; font-weight: 600; }
+.lf .go { all: unset; cursor: pointer; background: #d0602a; color: #fff; border-radius: 5px; padding: 9px 14px; font-size: var(--fs-read); text-align: center; font-weight: 600; }
 .lf .go:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-.lf .ghost { all: unset; cursor: pointer; color: var(--ink-soft); font-size: 13px; text-decoration: underline; }
-.lf .badge2 { display: inline-block; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 1px 6px; color: #fff; background: #2f7a5a; }
+.lf .ghost { all: unset; cursor: pointer; color: var(--ink-soft); font-size: var(--fs-note); text-decoration: underline; }
+.lf .badge2 { display: inline-block; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 1px 6px; color: #fff; background: #2f7a5a; }
 .lf .badge2.alt { background: #7a4a8a; } .lf .badge2.ai { background: #8a6418; }
-.lf .news { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 13.5px; }
+.lf .news { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: var(--fs-note); }
 .lf .news li { border-left: 3px solid var(--rule); padding-left: 8px; } .lf .news li b { font-weight: 600; }
 .lf .news li.plague, .lf .news li.epidemic { border-color: #8a2a2a; } .lf .news li.famine { border-color: #a8742a; } .lf .news li.battle, .lf .news li.fall { border-color: #444; }
 .lf .news li.person { border-color: #3a5aa8; } .lf .news li.trade { border-color: #2f7a5a; } .lf .news li.ruler { border-color: #7a4a8a; }
-.lf .src { font-size: 11.5px; color: var(--ink-soft); }
-.lf .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13.5px; }
-.lf .cmp > div { border: 1px solid var(--rule); border-radius: 4px; padding: 7px 9px; } .lf .cmp b { display: block; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); font-weight: 500; }
+.lf .src { font-size: var(--fs-note); color: var(--ink-soft); }
+.lf .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: var(--fs-note); }
+.lf .cmp > div { border: 1px solid var(--rule); border-radius: 4px; padding: 7px 9px; } .lf .cmp b { display: block; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); font-weight: 500; }
 .lf input[type=text], .lf input[type=number], .lf select { border: 1px solid var(--rule); background: var(--card); padding: 6px 9px; border-radius: 4px; font-size: 14px; font-family: inherit; }
 .lf .row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.lf .log { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; max-height: 320px; overflow: auto; }
-.lf .log li span { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-right: 6px; }
+.lf .log { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: var(--fs-note); max-height: 320px; overflow: auto; }
+.lf .log li span { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); margin-right: 6px; }
 path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .9; }
 `;
   document.head.appendChild(css);

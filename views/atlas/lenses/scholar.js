@@ -348,35 +348,35 @@
   // ---------- styles ----------
   const css = document.createElement("style");
   css.textContent = `
-  .sch { display: grid; gap: 6px; font-size: 14px; }
+  .sch { display: grid; gap: 6px; font-size: var(--fs-read); }
   .sch-more { border-top: 1px dashed var(--rule); padding-top: 6px; margin-top: 2px; }
-  .sch-fun { font-family: var(--fell); font-size: 16px; margin: 0; }
+  .sch-fun { font-family: var(--fell); font-size: var(--fs-h4); margin: 0; }
   .sch-tabs { display: flex; flex-wrap: wrap; gap: 4px; }
-  .sch-tab { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 2px 10px; font-size: 12.5px; cursor: pointer; color: var(--ink-soft); }
+  .sch-tab { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 2px 10px; font-size: var(--fs-note); cursor: pointer; color: var(--ink-soft); }
   .sch-tab.on { border-color: var(--c); color: var(--ink); background: color-mix(in srgb, var(--c) 16%, transparent); }
   .sch-pane { display: grid; gap: 5px; border-left: 3px solid var(--rule); padding-left: 8px; }
   .sch-pane p, .sch p { margin: 0; }
-  .sch-claim { font-size: 15px; }
-  .sch-who { font-size: 12.5px; color: var(--ink-soft); }
-  .sch-st { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; padding: 1px 5px; border-radius: 3px; border: 1px solid currentColor; }
+  .sch-claim { font-size: var(--fs-read); }
+  .sch-who { font-size: var(--fs-note); color: var(--ink-soft); }
+  .sch-st { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; padding: 1px 5px; border-radius: 3px; border: 1px solid currentColor; }
   .sch-leading { color: var(--b-calm); } .sch-strong { color: var(--accent); } .sch-contested { color: var(--b-watch); } .sch-minority { color: var(--ink-soft); } .sch-discredited { color: var(--warn); text-decoration: line-through; }
-  .sch-fa { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; }
-  .sch-fa ul { margin: 2px 0 0; padding-left: 16px; } .sch-fa b { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; }
-  .sch-state { font-size: 13.5px; color: var(--ink-soft); }
-  .sch-meta { font-size: 12px; color: var(--ink-soft); }
-  .sch-sub { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-top: 2px; }
+  .sch-fa { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: var(--fs-note); }
+  .sch-fa ul { margin: 2px 0 0; padding-left: 16px; } .sch-fa b { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; }
+  .sch-state { font-size: var(--fs-note); color: var(--ink-soft); }
+  .sch-meta { font-size: var(--fs-note); color: var(--ink-soft); }
+  .sch-sub { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-top: 2px; }
   .sch-links { display: flex; flex-wrap: wrap; gap: 4px; }
-  .sch-mini { font-size: 12.5px; padding: 3px 8px; display: inline-flex; gap: 5px; align-items: center; text-align: left; }
+  .sch-mini { font-size: var(--fs-note); padding: 3px 8px; display: inline-flex; gap: 5px; align-items: center; text-align: left; }
   .sch-mini i { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--ink)); flex: none; }
-  .sch-mini em { color: var(--ink-soft); font-style: normal; font-size: 11.5px; }
+  .sch-mini em { color: var(--ink-soft); font-style: normal; font-size: var(--fs-note); }
   .sch-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-  .sch-node { border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); border-radius: 4px; padding: 3px 8px; cursor: pointer; font-size: 13.5px; }
-  .sch-arrow { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+  .sch-node { border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); border-radius: 4px; padding: 3px 8px; cursor: pointer; font-size: var(--fs-note); }
+  .sch-arrow { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); }
   .sch-arrow::after { content: " →"; }
-  .sch-q { margin: 0; font-family: var(--fell); font-size: 16px; line-height: 1.4; border-left: 3px solid var(--c, var(--rule)); padding-left: 10px; }
-  .sch-ok { color: var(--b-calm); font-family: var(--mono); font-size: 10.5px; margin-left: 5px; }
+  .sch-q { margin: 0; font-family: var(--fell); font-size: var(--fs-h4); line-height: 1.4; border-left: 3px solid var(--c, var(--rule)); padding-left: 10px; }
+  .sch-ok { color: var(--b-calm); font-family: var(--mono); font-size: var(--fs-tiny); margin-left: 5px; }
   .sch-pg { color: var(--ink-soft); }
-  .sch-on { display: flex; gap: 8px; align-items: center; font-size: 13.5px; color: var(--ink-soft); margin: 2px 0 6px; cursor: pointer; }
+  .sch-on { display: flex; gap: 8px; align-items: center; font-size: var(--fs-note); color: var(--ink-soft); margin: 2px 0 6px; cursor: pointer; }
   .sch-on input { width: 16px; height: 16px; margin: 0; accent-color: var(--y-why, #b5562b); }
   .sch-deb { border-color: color-mix(in srgb, var(--y-debates, #9b4d2e) 60%, var(--rule)); }
   .sch-play { border-color: color-mix(in srgb, var(--y-why, #b5562b) 60%, var(--rule)); }
