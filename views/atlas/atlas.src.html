@@ -330,6 +330,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .layers.sub:empty { display: none; }
 .layers.sub .chip { font-size: 12px; padding: 2px 9px 2px 7px; }
 .layers.sub .lab { color: var(--c); }
+.mstyle { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; margin-right: 4px; }
+.mstyle button { border: 0; background: transparent; font: inherit; font-size: 12px; padding: 2px 10px; cursor: pointer; color: var(--ink-soft); }
+.mstyle button + button { border-left: 1px solid var(--rule); }
+.mstyle button[aria-checked="true"] { color: var(--ink); background: color-mix(in srgb, var(--l-geography) 16%, transparent); }
+.mstyle button:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
 .chip.fam.some { border-style: dashed; }
 .chip.fam.open { box-shadow: 0 0 0 1.5px var(--c, var(--ink)) inset; }
 .basemap { position: absolute; inset: 0; pointer-events: none; }
@@ -553,6 +558,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const famIcon = k => { const f = FAMILIES.some(x => x.id === k) ? k : FAM_OF[k] || (ATLAS.lenses.find(d => d && d.id === k) || {}).family; return f && window.PIXEL_ICONS ? `<span class="fi" style="--t:var(--t-${f})">${PIXEL_ICONS.svg(f, "s")}</span>` : "<i></i>"; };
   const FAM_OF = { places: "land", war: "power", order: "power", money: "wealth", people: "peoples", ideas: "mind", disease: "shocks" };
   const PLUG = ATLAS.lenses.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !(d.id in FAM_OF) && FAMILIES.some(f => f.id === d.family) && a.findIndex(x => x && x.id === d.id) === i);
+  // A lens with with: "<chip>" has no chip of its own: it is part of that one, on whenever it is (Provinces with Borders).
+  const WITH = Object.fromEntries(PLUG.filter(d => d.with && !d.tab).map(d => [d.id, d.with]));
+  const lensOn = id => { const w = WITH[id]; return w ? !!(w in state.on ? state.on[w] : state[w]) : !!state.on[id]; };
   for (const d of PLUG) {
     document.documentElement.style.setProperty("--y-" + d.id, d.color || "#999");
     LAYERS.push({ k: d.id, n: d.name || d.id });
@@ -1432,7 +1440,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function drawLenses() {
     for (const d of PLUG) {
       const L = MK["lens:" + d.id]; L.points = []; L.lines = [];
-      if (!state.on[d.id] || typeof d.draw !== "function" || !lensReady(d)) { G["lens:" + d.id].selectAll("*").remove(); continue; }
+      if (!lensOn(d.id) || typeof d.draw !== "function" || !lensReady(d)) { G["lens:" + d.id].selectAll("*").remove(); continue; }
       try { const c = lensCtx(d); d.draw(c); c._end(); } catch (err) { console.error("lens " + d.id, err); }
     }
   }
@@ -1958,17 +1966,28 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const layersEl = document.getElementById("layers"), subEl = document.getElementById("sublayers");
   // Switches that are not data lenses live in state directly; the rest in state.on.
   const FLAG = { basemap: 1, terrain: 1, borders: 1, political: 1 };
-  const isOn = k => k in FLAG ? !!state[k] : !!state.on[k];
+  const isOn = k => k in FLAG ? !!state[k] : k in WITH ? lensOn(k) : !!state.on[k];
   const setOn = (k, v) => { if (k in FLAG) state[k] = v; else state.on[k] = v; };
   const NAME = { basemap: BASEMAP0 ? BASEMAP0.name || "Pixel map" : "", terrain: "Terrain", borders: "Borders", political: "Political colours", ...Object.fromEntries(LAYERS.map(l => [l.k, l.n])) };
   const COLOR = k => k === "borders" ? "var(--land-edge)" : k === "terrain" || k === "basemap" ? "var(--l-geography)" : k === "political" ? "var(--y-order)" : `var(--y-${k})`;
   // Every lens of a family (the key card lists them all) and the ones with a chip. A lens that belongs to a tab
-  // (tab: "codex") has no chip: its tab switches it on, and leaving the mode puts the lenses back.
+  // (tab: "codex") has no chip: its tab switches it on, and leaving the mode puts the lenses back. A lens that goes
+  // with another chip (WITH) has none either. The map style (pixel, relief, plain) is a choice, not a lens: its
+  // switch sits at the top of Land.
   const TAB_LENS = new Set(PLUG.filter(d => d.tab).map(d => d.id));
+  const NO_CHIP = new Set([...TAB_LENS, ...Object.keys(WITH), "basemap", "terrain"]);
   const ALL_MEMBERS = Object.fromEntries(FAMILIES.map(f => [f.id, [
     ...(f.id === "land" ? [...(BASEMAP0 ? ["basemap"] : []), ...(TERRAIN ? ["terrain"] : []), "places", "borders", ...(TERRAIN && RELIEF_POL && window.drawRealms ? ["political"] : [])] : []),
     ...LAYERS.filter(l => FAM_OF[l.k] === f.id).map(l => l.k), ...PLUG.filter(d => d.family === f.id).map(d => d.id)].filter((k, i, a) => a.indexOf(k) === i)]));
-  const MEMBERS = Object.fromEntries(Object.entries(ALL_MEMBERS).map(([f, m]) => [f, m.filter(k => !TAB_LENS.has(k))]));
+  const MEMBERS = Object.fromEntries(Object.entries(ALL_MEMBERS).map(([f, m]) => [f, m.filter(k => !NO_CHIP.has(k))]));
+  // Pixel: the pixel basemap, with its own terrain names. Relief: the painted relief. Plain: neither. Political
+  // colours paint over the relief, so they keep the terrain layer on in any style.
+  const STYLES = [...(BASEMAP0 ? [["pixel", "Pixel"]] : []), ...(TERRAIN ? [["relief", "Relief"]] : []), ["plain", "Plain"]];
+  const mapStyle = () => state.style || (state.style = state.basemap && BASEMAP0 ? "pixel" : state.terrain && TERRAIN ? "relief" : "plain");
+  function setMapStyle(st) {
+    state.style = st; state.basemap = st === "pixel" && !!BASEMAP0;
+    state.terrain = !!TERRAIN && (st !== "plain" || !!state.political);
+  }
   const chip = (el, k, n, c, cls) => { const b = document.createElement("button"); b.className = "chip" + (cls ? " " + cls : ""); b.dataset.k = k; b.style.setProperty("--c", c); b.innerHTML = `<i></i>${esc(n)}`; el.appendChild(b); return b; };
   const famChips = {};
   for (const f of FAMILIES) famChips[f.id] = chip(layersEl, f.id, f.n, f.c, "fam");
@@ -1983,6 +2002,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       const f = FAMILIES.find(x => x.id === state.fam);
       subEl.style.setProperty("--c", f.c);
       subEl.insertAdjacentHTML("beforeend", `<span class="lab">${esc(f.n)}</span>`);
+      if (f.id === "land" && STYLES.length > 1) {
+        const cur = mapStyle();
+        subEl.insertAdjacentHTML("beforeend", `<div class="mstyle" role="radiogroup" aria-label="Map style">${STYLES.map(([id, n]) => `<button type="button" role="radio" data-style="${id}" aria-checked="${id === cur}">${esc(n)}</button>`).join("")}</div>`);
+      }
       for (const k of MEMBERS[f.id]) chip(subEl, k, NAME[k], COLOR(k)).setAttribute("aria-pressed", isOn(k));
     }
     mapEl.classList.toggle("war-on", state.on.war);
@@ -2010,12 +2033,15 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const b = ev.target.closest(".chip"); if (!b) return;
     const f = b.dataset.k, m = MEMBERS[f];
     if (state.fam !== f && m.some(isOn)) state.fam = f;
-    else { const on = !m.some(isOn); m.forEach(k => setOn(k, on && !(k === "political" || (k === "terrain" && BASEMAP0) || OPT_IN.has(k)))); state.fam = f; redrawToggles(); }
+    else { const on = !m.some(isOn); m.forEach(k => setOn(k, on && !(k === "political" || OPT_IN.has(k)))); state.fam = f; redrawToggles(); }
     syncChips(); refreshPanel();
   });
   subEl.addEventListener("click", ev => {
+    const st = ev.target.closest("[data-style]");
+    if (st) { setMapStyle(st.dataset.style); redrawToggles(); syncChips(); subEl.querySelector(`[data-style="${st.dataset.style}"]`)?.focus(); return; }
     const b = ev.target.closest(".chip"); if (!b) return;
     const k = b.dataset.k; setOn(k, !isOn(k));
+    if (k === "political") setMapStyle(mapStyle());
     redrawToggles(); syncChips(); refreshPanel();
   });
   function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); drawStrip(); } }
@@ -2965,6 +2991,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k] && !OPT_IN.has(k) && !TAB_LENS.has(k);
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
+  state.style = null; mapStyle();
   syncChips(); drawStrip();
   // ---------- phone: the panel is a bottom sheet over a full-screen map ----------
   // Three heights: peek (tabs only), half, full. Drag the handle or the tabs; tap the handle to step up; picking

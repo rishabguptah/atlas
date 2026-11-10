@@ -1,6 +1,6 @@
 // Europe 1789-1914: what this region adds on top of the world index. Its chronicle, lives and storylines now come
 // through views/atlas/world/ like any other place and period (the Up close tab in deep.js); this file keeps the
-// region's own lenses, Provinces and Growing cities, and gives Up close its railway and city numbers.
+// region's own lenses, Provinces (drawn with Borders) and Growing cities (drawn with Cities), and gives Up close its railway and city numbers.
 // Data: views/atlas/lenses/e19.py (LENS_DATA.e19, which the page may load after the first paint).
 (function () {
   const R = { id: "europe-1789-1914", name: "Europe 1789–1914", start: 1789, end: 1914, box: [-25, 34, 50, 72] };
@@ -16,11 +16,11 @@
   const ok = () => !!D || prep();
   const wd = q => q ? { cite: `Wikidata Q${q} (CC0)`, url: `https://www.wikidata.org/wiki/Q${q}` } : null;
 
-  // ---------- lens: Provinces ----------
+  // ---------- lens: Provinces (part of Borders: no chip of its own) ----------
   const provName = p => p._n || (p._n = p.n.replace(/ (Governorate|Province|County|Vilayet|Department|Sanjak|Canton|District)$/i, "").replace(/^(Province|Governorate|County|Canton|Department|Vilayet|Sanjak) of /, "").replace(/ \(.*\)$/, ""));
   const provAlive = (p, y) => (p.s == null || p.s <= y) && (p.e == null || p.e >= y);
   ATLAS.lens({
-    id: "e19prov", name: "Provinces 1789–1914", family: "land", color: "#6b5b3e", on: false,
+    id: "e19prov", name: "Provinces 1789–1914", family: "land", color: "#6b5b3e", on: false, with: "borders",
     draw(ctx) {
       const y = ctx.year;
       if (!ok() || y < R.start || y > R.end || ctx.k < 2.4) { ctx.pins([], {}); return; }
@@ -48,7 +48,7 @@
     },
   });
 
-  // ---------- lens: Growing cities ----------
+  // ---------- lens: Growing cities (part of Cities: no chip of its own) ----------
   // Population at year y, growing geometrically between known points; null outside the series.
   const popAt = (c, y) => {
     const p = c.pts; if (y < p[0][0] || y > p[p.length - 1][0] + 5) return null;
@@ -65,7 +65,7 @@
       sources: [{ cite: c.src === "w" ? D.src.wd + ": dated population statements" : D.src.reba }] };
   }
   ATLAS.lens({
-    id: "e19cities", name: "Growing cities", family: "wealth", color: "#8a4b14", on: false,
+    id: "e19cities", name: "Growing cities", family: "land", color: "#8a4b14", on: false, with: "places",
     guide: ["population", "economy"],
     draw(ctx) {
       const y = ctx.year;
