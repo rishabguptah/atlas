@@ -272,7 +272,10 @@
     mapOf(el).classList.add("pxmarks");
     if (typeof ATLAS.marks === "function") {
       marks.set(ATLAS.marks());
-      if (typeof ATLAS.onMarks === "function") ATLAS.onMarks(r => { if (marks) { marks.set(r); marksChanged(); } });
+      // Marks for a year this map has not drawn yet come with its next render (the page asks for one with every year
+      // step, and render reads ATLAS.marks() itself), so they wait for it: a repaint now would set the marks twice and
+      // paint the new year's marks over the old year's borders.
+      if (typeof ATLAS.onMarks === "function") ATLAS.onMarks(r => { if (marks && (year == null || r.year === year)) { marks.set(r); marksChanged(); } });
       return;
     }
     // Any change to what the SVG layers drew (not the per-frame zoom transforms) marks the list stale.
