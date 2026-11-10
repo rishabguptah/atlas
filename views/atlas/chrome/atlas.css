@@ -435,3 +435,7 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .cheat kbd { font-family: var(--f-tiny); font-size: 8px; line-height: 16px; min-width: 10px; text-align: center; padding: 0 4px; background: var(--vellum-hi); box-shadow: 0 0 0 2px var(--ink), 2px 2px 0 2px var(--shade); }
 .app .cheat .ch-f { margin: 8px 0 0; font-size: 12px; color: var(--ink-soft); }
 .app .cheat .ch-f kbd { margin: 0 4px; }
+
+/* AI-only controls ([data-ai]) when this page has no Claude (ATLAS.ai): still there, plainly marked, and a press says why. */
+html[data-ai="off"] .app [data-ai] { opacity: .6; }
+html[data-ai="off"] .app [data-ai]::after { content: " · needs Claude"; font-style: italic; }

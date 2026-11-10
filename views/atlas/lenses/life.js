@@ -338,7 +338,7 @@
 
   // ---------- anyone: Claude drafts a life from the record ----------
   let sample = null, sampleReady = null, drafting = null;
-  function connect() { if (!sampleReady) sampleReady = (async () => { try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; } })(); return sampleReady; }
+  function connect() { if (!sampleReady) sampleReady = ATLAS.ai.sample().then(s => { sample = s; }); return sampleReady; }
   async function draft(name) {
     const p = PPL().find(x => x.name.toLowerCase() === name.toLowerCase()) || null;
     const id = "ai_" + name.toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 40);

@@ -304,7 +304,7 @@
   let sample = null, sampleTried = false;
   async function tell() {
     if (!S.story) return;
-    if (!sampleTried) { sampleTried = true; try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; } }
+    if (!sampleTried) { sampleTried = true; sample = await ATLAS.ai.sample(); }
     if (!sample) { S.tell = { err: "Telling a story needs this page open in Claude. The scenes above are the facts it would tell." }; return renderSoon(true); }
     const a = W.agent(S.follow), facts = S.story.scenes.map(s => `- ${s.date}: ${s.caption}${s.text ? ". " + s.text : ""} [${s.conf}]`).join("\n").slice(0, 9000);
     const prompt = `You narrate a short story of one traveller's road for an interactive history map. Facts (dated, with confidence in brackets):\n${facts}\n\n` +
@@ -346,7 +346,7 @@
       ${A ? `<div class="lw-follow"><h3>Following ${esc(A.name)}${A.gen ? ' <span class="tag">generated</span>' : ""}</h3>
         <p class="note">${esc(A.gen ? W.describe({ a: A, to: A.legs[0].to }) : A.summary)}</p>
         <div class="lw-scenes">${S.story.scenes.map((s, i) => `<button class="lw-sc${i === S.scene ? " on" : i < S.scene ? " past" : ""}" data-scene="${i}"><span class="d">${esc(s.date)}</span><span>${esc(s.caption)}${s.conf && s.conf !== "attested" ? ` <i class="cf">${esc(s.conf)}</i>` : ""}</span></button>`).join("")}</div>
-        <div class="lw-ctl">${W.director && W.director.play ? `<button data-a="scenes">Play as scenes</button>` : ""}<button data-a="next">Next scene</button><button data-a="tell">Tell this story</button><button data-a="unfollow">Stop following</button></div>
+        <div class="lw-ctl">${W.director && W.director.play ? `<button data-a="scenes">Play as scenes</button>` : ""}<button data-a="next">Next scene</button><button data-a="tell" data-ai>Tell this story</button><button data-a="unfollow">Stop following</button></div>
         ${S.tell ? `<div class="lw-tell">${S.tell.err ? `<p class="note">${esc(S.tell.err)}</p>` : esc(S.tell.text || "…").split(/\n\n+/).map(p => `<p>${p}</p>`).join("")}</div>` : ""}
         ${A.sources && A.sources.length ? `<p class="note">Sources: ${A.sources.map(s => s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite)}</a>` : esc(s.cite)).join("; ")}${A.status === "draft" ? " · draft, awaiting check" : ""}</p>` : ""}
       </div>` : ""}

@@ -306,7 +306,7 @@
 
   // ---------- AI what-ifs ----------
   let sample = null, live = null;
-  const ready = (async () => { try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; } })();
+  const ready = ATLAS.ai.sample().then(s => { sample = s; });
   const RULES = `You are the Atlas simulator. Rishi asks a counterfactual ("what if...") about history. Play it out on a world map: real history up to the turning point, then the branch.
 Mix: 55% rigorous, 45% fun. Branch steps must follow what the real actors wanted and could do, with their constraints (geography, money, disease, logistics, rivals). Say plainly when a branch is a long shot. Never present the branch as fact.
 
@@ -356,7 +356,7 @@ SOURCE RULES: real steps cite works you are confident exist, or en.wikipedia.org
     } catch (e) {
       if (e && e.text) consume(e.text + "\n");
       if (e?.code !== "cancelled") S.error = ERR[e?.code] || "The connection dropped. Try again.";
-      if (e?.code === "not_granted" || e?.code === "sampling_disabled") sample = null;
+      if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; ATLAS.ai.lost(); }
     } finally {
       if (live === my) live = null;
       S.loading = ""; if (S.divergence.year == null) S.divergence.year = (S.steps.find(x => x.branch) || {}).year ?? api.year;

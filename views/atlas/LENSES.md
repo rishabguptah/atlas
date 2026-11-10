@@ -152,6 +152,11 @@ The Live tab (`lenses/life.js`) is the life RPG: play a real life from `data/lif
 drafted by AI and marked so) or an ordinary one from base rates in `data/life/rules.json`. It travels with
 `ATLAS.world.route` and exposes `ATLAS.life.story()`, the life so far as a Story of Scenes (WORLD.md L4), registered with `ATLAS.world.stories` (kind `life`) and played by the Director.
 
+A tab or lens that asks Claude gets the page's one AI connection from `await ATLAS.ai.sample()`: the `sample`
+function, or null where the page isn't open in Claude. The first call asks once for everyone; later calls share it. After a
+`not_granted` or `sampling_disabled` error, call `ATLAS.ai.lost()` so every tab knows. The state is on
+`<html data-ai="on|off">`; put `data-ai` on a control that only works with Claude and it is marked "needs Claude" when off.
+
 ## Pixel sprites from a lens
 
 A lens can put its marks into the pixel grid (house rule: one world, one grid). Push a function onto
