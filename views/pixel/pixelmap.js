@@ -31,7 +31,8 @@
   const NIGHT_RGB = ([r, g, b]) => [r * 0.3 + 4, g * 0.36 + 8, b * 0.5 + 26].map(Math.round);
   const MOODS = {
     dusk: (v, o) => { v[o] = Math.min(255, v[o] * 1.04 + 18); v[o + 1] = v[o + 1] * 0.86 + 6; v[o + 2] = v[o + 2] * 0.72 + 10; },
-    night: (v, o) => { const [r, g, b] = NIGHT_RGB([v[o], v[o + 1], v[o + 2]]); v[o] = r; v[o + 1] = g; v[o + 2] = b; },
+    // The same sums as NIGHT_RGB, without an array per pixel (this runs over every pixel of every night paint).
+    night: (v, o) => { v[o] = Math.round(v[o] * 0.3 + 4); v[o + 1] = Math.round(v[o + 1] * 0.36 + 8); v[o + 2] = Math.round(v[o + 2] * 0.5 + 26); },
     chronicle: (v, o) => { const l = (v[o] * 0.3 + v[o + 1] * 0.55 + v[o + 2] * 0.15) / 255; v[o] = 58 + l * 186; v[o + 1] = 42 + l * 178; v[o + 2] = 28 + l * 150; },
   };
   const GLOW = { city_metropolis: 22, city_city: 16, city_town: 11, city_village: 7 };
@@ -706,6 +707,7 @@
     // up to max; sprites sharing a grp (a battle's two armies and clash) are kept or dropped together.
     let spriteOpts = {}, spriteMask = null, overlay = null, underlay = null, shown = [], lastOut = null, kept = [], outNow = null, water = true;
     const GLINT = pack(rgb("#8ab8c4"));
+    let img = null, imgOut = null, preBuf = null;
     function declutter(src, t) {
       if (!src.some(s => s.pri != null)) return src;
       const pad = spriteOpts.pad == null ? 2 : spriteOpts.pad, max = spriteOpts.max || Infinity, groups = new Map();
@@ -731,14 +733,16 @@
       if (!base) return;
       const list = declutter(allSprites, last);
       shown = kept = list;
-      const img = ctx.createImageData(w, h), out = new Uint32Array(img.data.buffer);
+      // One image buffer per frame size, reused paint after paint (a new one was about 1 MB of garbage each time).
+      if (!img || img.width !== w || img.height !== h) { img = ctx.createImageData(w, h); imgOut = new Uint32Array(img.data.buffer); }
+      const out = imgOut;
       out.set(base);
-      // Water shimmer: a few world-anchored wave glints that move with the frame.
+      // Water shimmer: a few world-anchored wave glints that move with the frame, on every fifth art row.
       const glint = era && era.glint !== undefined ? era.glint : GLINT;
-      if (water && glint !== null) for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+      if (water && glint !== null) for (let j = ((-V0 % 5) + 5) % 5; j < h; j += 5) for (let i = 0; i < w; i++) {
         const k = j * w + i, c = cls[k]; if (c > 1) continue;
         const u = U0 + i, v = V0 + j;
-        if (v % 5 === 0 && hash(u >> 2, v) < 0.035 && ((u + frame) & 3) < 2) out[k] = glint;
+        if (hash(u >> 2, v) < 0.035 && ((u + frame) & 3) < 2) out[k] = glint;
       }
       const t = last, view = new Uint8Array(out.buffer);
       const M = MOODS[mood];
@@ -776,7 +780,8 @@
         }
       }
       // The frame before lens marks, so era ornaments can keep clear of marks.
-      const pre = era && era.over ? out.slice() : null;
+      if (era && era.over) { if (!preBuf || preBuf.length !== out.length) preBuf = new Uint32Array(out.length); preBuf.set(out); }
+      const pre = era && era.over ? preBuf : null;
       if (overlay) try { overlay(frameInfo()); } catch (err) { console.error("pixel overlay", err); }
       const vis = [Math.ceil(-parseFloat(canvas.style.left) / PX), Math.ceil(-parseFloat(canvas.style.top) / PX), Math.floor((lastW - parseFloat(canvas.style.left)) / PX) - 1, Math.floor((lastH - parseFloat(canvas.style.top)) / PX) - 1];
       if (era && era.over) try { era.over({ out, pre, w, h, px: PX, frame, vis, cls, sprite: spriteMask, U0, V0, k: t.k, projection, at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] }); } catch (err) { console.error("pixel era", err); }
