@@ -77,7 +77,8 @@ Roadmap and critique: https://claude.ai/artifact/6saKUD2YsaVezRGC9M3z6o
 
 The Up close tab studies whatever the map shows, by the month: pan or zoom anywhere, pick a span (a dense pack's
 window, a decade, a lifetime, a century, five centuries, or a storyline's), and scrub or play (1 month, a year or ten
-years per second; `[` and `]` step a month). It reads the world index (`views/atlas/world/`, see WORLD.md L1):
+years per second; `[` and `]` step a month). Here's "Study it up close" opens it on the spot you marked, under
+that place's name, and a click on empty map while it is open moves the study there. It reads the world index (`views/atlas/world/`, see WORLD.md L1):
 what happened here this month (widening to the year, five years, a generation when that is thin), wars under way,
 who was born, died, lived or worked here, a "how deep" meter with the dense pack that covers the view, and the
 study storylines that pass through (75 of them, from Sumer to 1991, each with a Next button and the journeys of the

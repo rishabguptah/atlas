@@ -4,11 +4,13 @@
 // draft for windows the data leaves thin. Lenses: Chronicle (dated events, things founded and ended, works made)
 // and Lives (births, deaths, people living or working here). The month cursor is shared on ATLAS.deep.m
 // (year * 12 + month - 1): lenses, the pixel map's zoom detail and the travellers layer read it while the page's
-// year is that month's year, and fall back to the whole year when the main slider moves.
+// year is that month's year, and fall back to the whole year when the main slider moves. Here's "Study it up close"
+// opens the tab on its spot (ATLAS.deep.place names the study while the view stays around it), and a click on empty
+// map while the tab is open moves the study there instead of leaving for Here.
 (function () {
   const W = window.ATLAS.world;
   if (!W || !W.at) { console.warn("Up close needs views/atlas/world/world.js"); return; }
-  const DS = window.ATLAS.deep = Object.assign(window.ATLAS.deep || {}, { m: null, story: null, focus: null });
+  const DS = window.ATLAS.deep = Object.assign(window.ATLAS.deep || {}, { m: null, story: null, focus: null, place: null });
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const { mOf, fmtDate, fmtM, fmtYear } = W;
   const FAM = { w: ["War", "cross", "#a3321f"], d: ["Diplomacy & law", "square", "#1d4f6e"], u: ["Revolt & unrest", "triangle", "#b8641c"],
@@ -266,7 +268,8 @@
     if (!W.state.index) { el.innerHTML = `<div class="uc"><h2>Up close</h2><p class="empty">${W.state.err ? "The world index is not beside this page (atlas-files/world/). " + esc(W.state.err) : "Loading the world index…"}</p></div>`; return; }
     const sp = spanNow(), m = DS.m != null && DS.m >= sp.m0 && DS.m <= sp.m1 ? DS.m : (T.api.year * 12 >= sp.m0 && T.api.year * 12 <= sp.m1 ? T.api.year * 12 : sp.m0), y = Math.floor(m / 12);
     const rb = v ? W.ruler(v.lon, v.lat, y) : null, pk = packHere(y), s = story();
-    const place = pk ? pk.name : rb ? rb.name : "This part of the world";
+    const named = DS.place && DS.place.name && v && Math.abs(DS.place.lon - v.lon) < v.w / 4 && Math.abs(DS.place.lat - v.lat) < v.h / 4;
+    const place = named ? DS.place.name : pk ? pk.name : rb ? rb.name : "This part of the world";
     const hn = hereNow(m, bbox), ong = W.at({ m0: m, m1: m }, bbox, { kinds: "e", long: 60 }).filter(r => r.me != null && r.m < m && r.me >= m).slice(0, 6);
     const lives = W.at({ m0: m - 2, m1: m }, bbox, { kinds: "bd" }).slice(0, 8);
     const livedHere = W.at({ m0: m - 12 * 30, m1: m }, bbox, { kinds: "r" }).filter(r => r.me == null ? m - r.m < 12 * 25 : r.me >= m).slice(0, 6);
@@ -407,6 +410,15 @@ Answer with JSON only, one object: {"title":"...","blurb":"one sentence question
         DS.m = T.api.year * 12;
         setMonth(DS.m, { now: true });
       } else renderSoon(true);
+    },
+    // An empty spot on the map (not a mark, whose card still opens in Here) becomes the centre of the study.
+    pick(at) {
+      if (at.title || at.kick) return false;
+      const v = T.api.view();
+      DS.place = { name: at.name || null, lon: at.lon, lat: at.lat };
+      T.api.fly({ lon: at.lon, lat: at.lat, span: v && isFinite(v.w) ? v.w : 8 }, 700);
+      renderSoon(true);
+      return true;
     },
   });
   // Keyboard: [ and ] step a month while the Up close tab is open (the page keeps arrows for years).
