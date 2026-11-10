@@ -328,7 +328,8 @@
       why: w.leg.note || j.w, card: legCard(C, j, w.leg) }));
   }
   ATLAS.lens({
-    id: ID, name: "Journeys", family: "peoples", color: COLOR, on: false, guide: ["people", "geography"],
+    // The On the move chip: famous journeys, and the Middle Passage with it (the Living world runs in its own tab).
+    id: ID, name: "On the move", family: "peoples", color: COLOR, on: false, guide: ["people", "geography"],
     desc: "Famous journeys and their trails, with who was really where",
     key: [["sprite", "A traveller where they were this year: walking, riding, with a caravan or aboard ship"],
       ["line", "Their trail: solid = dated by the source, dashed = estimated, dots = route or date uncertain"],
@@ -421,7 +422,10 @@
         sources: [{ cite: Dd.sv_src.cite, url: `https://www.slavevoyages.org/voyage/${SV.id[s.i]}/variables` }] }) });
   }
   ATLAS.lens({
+    // No chip of its own: it comes with On the move. It draws the Atlantic slave trade decade by decade, so the page's
+    // migration line for the same trade steps aside while it is on (covers).
     id: MP, name: "Middle Passage", family: "peoples", color: MP_COLOR, on: false, guide: ["economy", "population"], by: "demographer",
+    with: ID, covers: ["route:migration_atlantic_slave_trade"],
     desc: "The forced crossing of 12.5 million Africans, by decade, with the ships of each year and the human toll",
     key: [["arrow", "People forced aboard ships from an African region to an American one in this decade (width = how many)"],
       ["sprite", "A slave ship that crossed this year; open it for the people aboard and how many died"]],

@@ -100,7 +100,7 @@ drafts. See `data/cities/README.md` to add a city.
 
 ## Travellers in motion
 
-Lenses Journeys and Middle Passage (Peoples) and VOC ships (Wealth), and the Who was there tab: famous journeys move
+Lenses On the move (Peoples: journeys, with the Middle Passage) and VOC ships (Wealth), and the Who was there tab: famous journeys move
 along dated legs, every Dutch East India Company ship at sea, the forced crossing of enslaved Africans with the human
 toll, and real co-presence (who was in Vienna in 1913). Data: `data/travels/`. Presences and the slave voyages load
 only when needed, from a sidecar to publish beside the page:
@@ -161,7 +161,7 @@ Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead 
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
 in a second row. Land's row starts with the map style (Pixel, Relief or Plain). A lens that only makes sense inside a
-tab (What if, Live a life, Codex, Why) has no chip and comes on with its tab; a lens that belongs to another chip has
+tab (What if, Live a life, Codex, Why, Living world) has no chip and comes on with its tab; a lens that belongs to another chip has
 none either (Provinces draws with Borders, Growing cities with Cities, Art & architecture with Ideas, faith & art). Shocks has two chips by subject, Epidemics and
 Famine & climate: each draws the curated records of the built-in Plague & climate layer together with the catalogue that
 goes with it (plague returns and Wikidata epidemics; eruptions, famines and temperature). At world zoom the catalogues
