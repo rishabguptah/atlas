@@ -995,13 +995,29 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // zoom.transform skips the zoom's limits; fitT applies them (no empty sky past the world's edge on a phone).
   let kMin = 1;
   const fitT = t => zoom.constrain()(t, [[0, 0], [W, H]], zoom.translateExtent());
+  // The free part of the map, in map pixels: what the docked panel, the lens rows and the time bar leave uncovered.
+  // The whole world fits it, a flight lands in its middle and "the view" means it, so nothing starts under the panel.
+  // It is read when the map is laid out (a resize), not when the panel folds, so folding never rescales the world.
+  let FREE = [0, 0, 0, 0];
+  function freeRect() {
+    const m = mapEl.getBoundingClientRect();
+    const box = q => { const el = document.querySelector(q); if (!el || el.hidden) return null; const r = el.getBoundingClientRect(); return r.width > 1 && r.height > 1 ? [r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top] : null; };
+    let x0 = 0, y0 = 0, x1 = W, y1 = H;
+    const p = box(".app .panel"), t = box(".app .time"), l = box("#layers");
+    if (p && p[3] - p[1] > H * 0.5 && p[0] > W * 0.45) x1 = Math.min(x1, p[0]);   // docked at the side, not a bottom sheet
+    if (t && t[1] > H * 0.6) y1 = Math.min(y1, t[1]);
+    if (l && l[3] < H * 0.3) y0 = Math.max(y0, l[3]);
+    return x1 - x0 > W * 0.45 && y1 - y0 > H * 0.45 ? [x0, y0, x1, y1] : [0, 0, W, H];
+  }
+  const freeMid = () => [(FREE[0] + FREE[2]) / 2, (FREE[1] + FREE[3]) / 2];
   function layout() {
     const r = mapEl.getBoundingClientRect();
     // Keep the same place in the middle when the map changes size.
-    const t0 = d3.zoomTransform(svg.node()), had = W && projection.invert ? projection.invert(t0.invert([W / 2, H / 2])) : null;
+    const t0 = d3.zoomTransform(svg.node()), had = W && projection.invert ? projection.invert(t0.invert(freeMid())) : null;
     W = Math.max(200, r.width); H = Math.max(200, r.height);
+    FREE = freeRect();
     svg.attr("viewBox", `0 0 ${W} ${H}`);
-    projection.fitExtent([[6, 6], [W - 6, H - 6]], { type: "Sphere" });
+    projection.fitExtent([[FREE[0] + 6, FREE[1] + 6], [FREE[2] - 6, FREE[3] - 6]], { type: "Sphere" });
     gSphere.attr("d", path({ type: "Sphere" }));
     gGrat.attr("d", path(d3.geoGraticule10()));
     gLand.attr("d", path(land));
@@ -1013,16 +1029,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     kMin = worldH < H * 0.75 ? Math.min(6, H / worldH) : 1;
     zoom.scaleExtent([kMin, K_MAX]).translateExtent(kMin > 1 ? sb : [[-W, -H], [W * 2, H * 2]]);
     drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(true); drawOverlay(); drawSel(); renderBasemap();
-    if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had), k = Math.max(kMin, t0.k); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k))); }
-    else if (kMin > 1) { const [x, y] = projection([30, 25]); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - kMin * x, H / 2 - kMin * y).scale(kMin))); }
+    const [cx, cy] = freeMid();
+    if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had), k = Math.max(kMin, t0.k); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(cx - k * x, cy - k * y).scale(k))); }
+    else if (kMin > 1) { const [x, y] = projection([30, 25]); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(cx - kMin * x, cy - kMin * y).scale(kMin))); }
     else if (t0.k > 1 || t0.x || t0.y) svg.call(zoom.transform, d3.zoomIdentity);
   }
   function flyTo(v, ms = 1400) {
     if (!v || !isFinite(v.lon) || !isFinite(v.lat)) return;
     const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]);
-    const k = Math.max(kMin, Math.min(K_MAX, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
-    const [x, y] = projection([v.lon, v.lat]);
-    const t = fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
+    const k = Math.max(kMin, Math.min(K_MAX, v.span ? (FREE[2] - FREE[0]) / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
+    const [x, y] = projection([v.lon, v.lat]), [cx, cy] = freeMid();
+    const t = fitT(d3.zoomIdentity.translate(cx - k * x, cy - k * y).scale(k));
     // No time to fly: jump now, in this call (a zero-length transition would still wait a frame and render twice).
     if (!ms || reduceMotion()) svg.interrupt().call(zoom.transform, t);
     else svg.interrupt().transition().duration(ms).call(zoom.transform, t);
@@ -1032,7 +1049,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function reveal(lon, lat) {
     const t = d3.zoomTransform(svg.node()), p = projection([lon, lat]); if (!p) return;
     const [sx, sy] = t.apply(p);
-    if (sx < 30 || sy < 30 || sx > W - 30 || sy > H - 30) flyTo({ lon, lat, zoom: Math.max(t.k, 2) }, 900);
+    if (sx < FREE[0] + 30 || sy < FREE[1] + 30 || sx > FREE[2] - 30 || sy > FREE[3] - 30) flyTo({ lon, lat, zoom: Math.max(t.k, 2) }, 900);
   }
 
   // ---------- layers: every lens mark is a record on one canvas ----------
@@ -2855,11 +2872,12 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     lenses: () => Object.keys(NAME).filter(isOn),
     fly: (v, ms) => flyTo(v, ms), setOn: (k, v = true) => { if (isOn(k) !== v) { setOn(k, v); redrawToggles(); syncChips(); } },
     redraw: () => drawAll(), setTab: t => setTab(t), fmtYear, onYear: fn => yearWatch.push(fn),
-    // What the map shows now: the centre, the zoom and roughly how many degrees fit across and down.
+    // What the map shows now, in its free part (beside the panel): the centre, the zoom and roughly how many degrees
+    // fit across and down.
     view: () => {
-      const t = d3.zoomTransform(svg.node()), c = projection.invert(t.invert([W / 2, H / 2]));
+      const t = d3.zoomTransform(svg.node()), c = projection.invert(t.invert(freeMid()));
       const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]) * t.k;
-      return c && isFinite(c[0]) ? { lon: c[0], lat: c[1], k: t.k, w: W / pxPerDeg, h: H / pxPerDeg } : null;
+      return c && isFinite(c[0]) ? { lon: c[0], lat: c[1], k: t.k, w: (FREE[2] - FREE[0]) / pxPerDeg, h: (FREE[3] - FREE[1]) / pxPerDeg } : null;
     },
     onView: fn => viewWatch.push(fn),  // called when a pan or zoom settles
     select: card => select(card, { fly: true }),
@@ -3008,7 +3026,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     const ids = [...document.querySelectorAll(".tab")].map(b => b.dataset.tab);
     if (ids.length) setTab(ids[(ids.indexOf(state.tab) + dir + ids.length) % ids.length]);
   }
-  function wholeWorld() { const c = projection.invert([W / 2, H / 2]); flyTo({ lon: c[0], lat: c[1], zoom: kMin }, 900); }
+  function wholeWorld() { const c = projection.invert(freeMid()); flyTo({ lon: c[0], lat: c[1], zoom: kMin }, 900); }
 
   // ? : every key on one pixel card.
   const cheatEl = document.createElement("div");
@@ -3070,7 +3088,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   const SAVE_KEY = "atlas.resume.v1";
   function saveView() {
     try {
-      const tr = d3.zoomTransform(svg.node()), c = projection.invert(tr.invert([W / 2, H / 2]));
+      const tr = d3.zoomTransform(svg.node()), c = projection.invert(tr.invert(freeMid()));
       localStorage.setItem(SAVE_KEY, JSON.stringify({ year: state.year, lon: c[0], lat: c[1], k: tr.k, on: state.on, basemap: state.basemap, terrain: state.terrain, borders: state.borders, political: state.political }));
     } catch (err) { /* storage may be blocked; resuming is a convenience */ }
   }
