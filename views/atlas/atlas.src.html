@@ -518,6 +518,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); },
   // The one next thing (the chrome's gold card): { id, pri, get() -> { kick, title, go } | null }. See chrome/chrome.js.
   nexts: [], nextThing(d) { this.nexts.push(d); },
+  // One AI connection for every tab (the page's `sample` capability): asked for once, the first time anything needs it,
+  // and shared. Its state sits on <html data-ai="on|off">, so AI-only controls ([data-ai]) can say they need Claude.
+  ai: { state: "unknown", _p: null,
+    sample() { return this._p || (this._p = (async () => { let s = null; try { s = window.claude ? await window.claude.use("sample") : null; } catch { s = null; } this.set(!!s); return s; })()); },
+    set(on) { this.state = on ? "on" : "off"; document.documentElement.dataset.ai = this.state; },
+    lost() { this._p = Promise.resolve(null); this.set(false); } },
   // One way to write a year, for the page and every plugin: "45,000 years ago", "300 BCE", "1 CE", "300 CE", "1453".
   NOW: 2025,
   fmtYear(y) {
@@ -2591,7 +2597,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
 
   // use() resolves after the viewer answers; ask() waits for it so an early question is not turned away.
   sampleReady = (async () => {
-    try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; }
+    sample = await ATLAS.ai.sample();
     if (!sample) hint.textContent = "AI answers need this page open in Claude. Curated tours work anywhere.";
   })();
   function abortLive() { if (ctl) { ctl.abort(); ctl = null; } }
@@ -2739,7 +2745,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     } catch (e) {
       if (e?.code !== "cancelled" && e?.name !== "AbortError") A.error = ERR[e?.code] || ERR.upstream_error;
       my.abort();  // one specialist hit a wall the others will hit too: stop them all
-      if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; hint.textContent = ERR[e.code]; }
+      if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; ATLAS.ai.lost(); hint.textContent = ERR[e.code]; }
     } finally {
       if (ctl === my) { ctl = null; goBtn.disabled = false; stopBtn.hidden = true; }
       A.loading = ""; A.speaking = null;

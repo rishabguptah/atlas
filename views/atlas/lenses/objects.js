@@ -497,7 +497,7 @@
   // For things nobody has curated yet: Claude writes the journey as JSON lines, stop by stop, in the same compact rows
   // objects.py emits, and it plays like any other. Marked as an unchecked AI draft. Kept in this browser only.
   let sample = null, tracing = null;
-  const sampleReady = (async () => { try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; } })();
+  const sampleReady = ATLAS.ai.sample().then(s => { sample = s; });
   const TRACED = "atlas.objects.traced.v1";
   const TRACE_RULES = () => `You are the Atlas object historian. Trace one object, or one kind of thing, through space and time for a world map: where it was made or first found, every place it went, who held it, how it moved, and how sure we are.
 Mix: 55% vivid, 45% rigorous. Prefer concrete people, dates and numbers. Never present legend as fact: mark it.
@@ -582,7 +582,7 @@ SOURCE RULES: cite works you are confident exist, or en.wikipedia.org URLs you a
     } catch (e) {
       if (e && e.text) feed(e.text + "\n");
       if (e?.code !== "cancelled") say(ERR[e?.code] || "The connection dropped. Try again.");
-      if (e?.code === "not_granted" || e?.code === "sampling_disabled") sample = null;
+      if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; ATLAS.ai.lost(); }
       if (tracing === my) tracing = null;
       return;
     }

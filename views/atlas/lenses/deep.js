@@ -295,7 +295,7 @@
       <div class="depth"><div class="bar"><i style="width:${depthPct}%"></i></div>
         <p><b>How deep:</b> ${dens.level === "rich" ? "rich" : dens.level === "some" ? "some" : dens.level === "thin" ? "thin" : "almost nothing"} for ${esc(fmtYear(y))} in this view: ${dens.n.toLocaleString()} dated records (${Object.entries(dens.by).map(([k, n]) => `${n} ${W.KIND[k]}`).join(", ") || "none loaded"}).
         ${dens.packs.length ? "Dense pack: " + dens.packs.map(p => esc(p.name)).join(", ") + "." : "No dense pack covers this window yet."}${dens.grid ? ` The coverage grid counts ${dens.grid.n.toLocaleString()} kernel records here for ${esc(fmtYear(dens.grid.bin[0]))}–${esc(fmtYear(dens.grid.bin[1]))}.` : ""}</p>
-        <div class="acts"><button data-a="fill">${T.busy === "fill" ? "Asking Claude…" : "Fill in with Claude"}</button><button data-a="tell">${T.busy === "tell" ? "Writing…" : "Write a storyline for here and now"}</button></div>
+        <div class="acts"><button data-a="fill" data-ai>${T.busy === "fill" ? "Asking Claude…" : "Fill in with Claude"}</button><button data-a="tell" data-ai>${T.busy === "tell" ? "Writing…" : "Write a storyline for here and now"}</button></div>
         ${T.msg ? `<p>${esc(T.msg)}</p>` : ""}</div>
       ${stats.length ? `<div class="stats">${stats.map(o => `<div class="stat"><b>${esc(o.v)}</b><span>${esc(o.t)}</span></div>`).join("")}</div>` : ""}
       <h3>Storylines${s ? "" : " here"}</h3>
@@ -318,7 +318,7 @@
   // ---------- live AI: fill a thin window, or write a storyline for it ----------
   async function getSample() {
     if (T.sample !== undefined) return T.sample;
-    try { T.sample = window.claude ? await window.claude.use("sample") : null; } catch { T.sample = null; }
+    T.sample = await ATLAS.ai.sample();
     return T.sample;
   }
   const parse = line => { const s = line.trim().replace(/^```\w*|```$/g, ""); if (!s.startsWith("{") && !s.startsWith("[")) return null; try { return JSON.parse(s); } catch { return null; } };
@@ -365,6 +365,7 @@ Answer with JSON only, one object: {"title":"...","blurb":"one sentence question
         goStep(STORIES[STORIES.length - 1], STORIES[STORIES.length - 1].steps[0]);
       }
     } catch (e) {
+      if (e && (e.code === "not_granted" || e.code === "sampling_disabled")) { T.sample = null; ATLAS.ai.lost(); }
       T.msg = e && (e.code === "not_granted" || e.code === "sampling_disabled") ? "AI drafts are switched off for this page." : "That did not work: " + (e && e.message || e);
     } finally { T.busy = false; redraw(); renderSoon(true); }
   }
