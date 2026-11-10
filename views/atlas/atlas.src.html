@@ -997,9 +997,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const fitT = t => zoom.constrain()(t, [[0, 0], [W, H]], zoom.translateExtent());
   // The free part of the map, in map pixels: what the docked panel, the lens rail, the question well and the time bar
   // leave uncovered.
-  // The whole world fits it, a flight lands in its middle and "the view" means it, so nothing starts under the panel.
-  // It is read when the map is laid out (a resize), not when the panel folds, so folding never rescales the world.
-  let FREE = [0, 0, 0, 0];
+  // The whole world starts fitted to it (the "home" view), a flight lands in its middle and "the view" means it, so
+  // nothing starts under the panel. It is read when the map is laid out (a resize), not when the panel folds.
+  // The projection itself still fits the whole window, so a zoom level means what it always did: the same detail,
+  // the same label and city thresholds, the same work per frame. Home is a zoom a little below 1.
+  let FREE = [0, 0, 0, 0], SB = [[0, 0], [0, 0]], tall = false;
   function freeRect() {
     const m = mapEl.getBoundingClientRect();
     const box = q => { const el = document.querySelector(q); if (!el || el.hidden) return null; const r = el.getBoundingClientRect(); return r.width > 1 && r.height > 1 ? [r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top] : null; };
@@ -1016,11 +1018,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function layout() {
     const r = mapEl.getBoundingClientRect();
     // Keep the same place in the middle when the map changes size.
-    const t0 = d3.zoomTransform(svg.node()), had = W && projection.invert ? projection.invert(t0.invert(freeMid())) : null;
+    const t0 = d3.zoomTransform(svg.node()), had = W && projection.invert ? projection.invert(t0.invert(freeMid())) : null, k0 = kMin;
     W = Math.max(200, r.width); H = Math.max(200, r.height);
     FREE = freeRect();
     svg.attr("viewBox", `0 0 ${W} ${H}`);
-    projection.fitExtent([[FREE[0] + 6, FREE[1] + 6], [FREE[2] - 6, FREE[3] - 6]], { type: "Sphere" });
+    projection.fitExtent([[6, 6], [W - 6, H - 6]], { type: "Sphere" });
     gSphere.attr("d", path({ type: "Sphere" }));
     gGrat.attr("d", path(d3.geoGraticule10()));
     gLand.attr("d", path(land));
@@ -1028,14 +1030,21 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     projV++;
     // A tall map (a phone held upright) would show the whole world as a thin band with empty sky above and below it,
     // so there the smallest zoom fills the height and the view stops at the world's edges.
-    const sb = path.bounds({ type: "Sphere" }), worldH = sb[1][1] - sb[0][1];
-    kMin = worldH < H * 0.75 ? Math.min(6, H / worldH) : 1;
-    zoom.scaleExtent([kMin, K_MAX]).translateExtent(kMin > 1 ? sb : [[-W, -H], [W * 2, H * 2]]);
+    // Anywhere else the smallest zoom is the one that fits the whole world in the free space.
+    const sb = SB = path.bounds({ type: "Sphere" }), worldW = sb[1][0] - sb[0][0], worldH = sb[1][1] - sb[0][1];
+    tall = worldH < H * 0.75;
+    kMin = tall ? Math.min(6, H / worldH) : Math.min(1, (FREE[2] - FREE[0] - 12) / worldW, (FREE[3] - FREE[1] - 12) / worldH);
+    zoom.scaleExtent([kMin, K_MAX]).translateExtent(tall ? sb : [[-W, -H], [W * 2, H * 2]]);
     drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(true); drawOverlay(); drawSel(); renderBasemap();
     const [cx, cy] = freeMid();
-    if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had), k = Math.max(kMin, t0.k); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(cx - k * x, cy - k * y).scale(k))); }
-    else if (kMin > 1) { const [x, y] = projection([30, 25]); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(cx - kMin * x, cy - kMin * y).scale(kMin))); }
-    else if (t0.k > 1 || t0.x || t0.y) svg.call(zoom.transform, d3.zoomIdentity);
+    if (had && isFinite(had[0]) && t0.k > k0 * 1.001) { const [x, y] = projection(had), k = Math.max(kMin, t0.k); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(cx - k * x, cy - k * y).scale(k))); }
+    else if (tall) { const [x, y] = projection([30, 25]); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(cx - kMin * x, cy - kMin * y).scale(kMin))); }
+    else { const h = home(); if (h.k !== t0.k || h.x !== t0.x || h.y !== t0.y) svg.call(zoom.transform, h); }
+  }
+  // The whole world, centred in the free space at the smallest zoom.
+  function home() {
+    const [cx, cy] = freeMid(), x = (SB[0][0] + SB[1][0]) / 2, y = (SB[0][1] + SB[1][1]) / 2;
+    return fitT(d3.zoomIdentity.translate(cx - kMin * x, cy - kMin * y).scale(kMin));
   }
   function flyTo(v, ms = 1400) {
     if (!v || !isFinite(v.lon) || !isFinite(v.lat)) return;
@@ -3029,7 +3038,11 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     const ids = [...document.querySelectorAll(".tab")].map(b => b.dataset.tab);
     if (ids.length) setTab(ids[(ids.indexOf(state.tab) + dir + ids.length) % ids.length]);
   }
-  function wholeWorld() { const c = projection.invert(freeMid()); flyTo({ lon: c[0], lat: c[1], zoom: kMin }, 900); }
+  function wholeWorld() {
+    if (tall) { const c = projection.invert([(SB[0][0] + SB[1][0]) / 2, (SB[0][1] + SB[1][1]) / 2]); flyTo({ lon: c[0], lat: c[1], zoom: kMin }, 900); return; }
+    if (reduceMotion()) svg.interrupt().call(zoom.transform, home()); else svg.interrupt().transition().duration(900).call(zoom.transform, home());
+    if (BASEMAP && BASEMAP.fly) try { BASEMAP.fly({ lon: 0, lat: 0, zoom: kMin }, reduceMotion() ? 0 : 900); } catch (err) { console.error(err); }
+  }
 
   // ? : every key on one pixel card.
   const cheatEl = document.createElement("div");
@@ -3195,7 +3208,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   const hintEl = document.getElementById("maphint");
   if (ATLAS.click !== "Click") { mapEl.setAttribute("aria-label", `World map. ${ATLAS.click} anywhere to see everything there.`); hintEl.textContent = `${ATLAS.click} anywhere to see every lens there`; }
   if (RESUME) {
-    flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(1, Math.min(K_MAX, +RESUME.k || 1)) }, 0);
+    flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(kMin, Math.min(K_MAX, +RESUME.k || kMin)) }, 0);
     hintEl.textContent = `Picked up where you left off, in ${fmtYear(state.year)}. ${ATLAS.click === "Click" ? "Press R" : "Tap Surprise me"} for a surprise.`;
   } else flyTo({ lon: 45, lat: 35, span: 140 }, 0);
   setBasemap();
