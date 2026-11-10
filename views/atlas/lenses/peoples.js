@@ -96,23 +96,37 @@
       // Dense dots: one path per colour, so 8,000 languages cost about twenty DOM nodes.
       let dots = ctx.g.select("g.pl-dots");
       if (dots.empty()) dots = ctx.g.insert("g", ":first-child").attr("class", "pl-dots").style("pointer-events", "none");
-      const r = 1.6 / Math.pow(k, 0.75), byColor = new Map();
+      const r = 1.6 / Math.pow(k, 0.75);
       const circle = (p, rr) => `M${(p[0] - rr).toFixed(2)},${p[1].toFixed(2)}a${rr},${rr} 0 1,0 ${2 * rr},0a${rr},${rr} 0 1,0 ${-2 * rr},0`;
-      for (const l of P.langs) {
-        if (!langOn(l, y)) continue;
-        const p = proj([l.lon, l.lat]); if (!p) continue;
-        const c = l.aes === 5 ? "dead" : (P.fams[l.f] || {}).color || OTHER;
-        (byColor.get(c) || byColor.set(c, []).get(c)).push(circle(p, (l.s != null ? 2 : 1.15) * r));
+      // Each dot's path is projected once per view (projection and zoom), not on every year step: a step only asks
+      // which dots are on. When that set is the one already drawn, the paths stay as they are.
+      const pk = proj.scale() + "," + proj.translate().join(",") + "," + r;
+      if (pk !== P.pk) { P.pk = pk; P.sig = null; for (const l of P.langs) l._c = undefined; for (const s of P.dna) s._c = undefined; }
+      const dotOf = (o, rr) => { if (o._c === undefined) { const p = proj([o.lon, o.lat]); o._c = p ? circle(p, rr) : ""; } return o._c; };
+      let sig = 0, nOn = 0;
+      for (let i = 0; i < P.langs.length; i++) if (langOn(P.langs[i], y)) { sig = (sig * 31 + i) | 0; nOn++; }
+      sig = nOn + ":" + sig;
+      const opacity = y >= 1500 ? Math.min(0.85, 0.35 + (y - 1500) / 600) : 0.9;
+      if (sig !== P.sig || dots.select("path.pl-lang").empty() !== !nOn) {
+        P.sig = sig;
+        const byColor = new Map();
+        for (const l of P.langs) {
+          if (!langOn(l, y)) continue;
+          const d = dotOf(l, (l.s != null ? 2 : 1.15) * r); if (!d) continue;
+          const c = l.aes === 5 ? "dead" : (P.fams[l.f] || {}).color || OTHER;
+          (byColor.get(c) || byColor.set(c, []).get(c)).push(d);
+        }
+        const dd = [...byColor].map(([c, ds]) => ({ c, d: ds.join("") }));
+        dots.selectAll("path.pl-lang").data(dd, d => d.c).join("path").attr("class", "pl-lang").attr("d", d => d.d)
+          .attr("fill", d => d.c === "dead" ? "none" : d.c).attr("stroke", d => d.c === "dead" ? "#7a6f63" : "none")
+          .attr("stroke-width", r * 0.6);
       }
-      const dd = [...byColor].map(([c, ds]) => ({ c, d: ds.join("") }));
-      dots.selectAll("path.pl-lang").data(dd, d => d.c).join("path").attr("class", "pl-lang").attr("d", d => d.d)
-        .attr("fill", d => d.c === "dead" ? "none" : d.c).attr("stroke", d => d.c === "dead" ? "#7a6f63" : "none")
-        .attr("stroke-width", r * 0.6).attr("opacity", y >= 1500 ? Math.min(0.85, 0.35 + (y - 1500) / 600) : 0.9);
+      dots.selectAll("path.pl-lang").attr("opacity", opacity);
       // Ancient genomes near this year: small dark rings, brighter the closer in time.
       const dn = dnaNear(P, y), w = dnaWindow(y), rd = r * 1.4;
       const near = dn.filter(s => Math.abs(s.y - y) <= w / 2), far = dn.filter(s => Math.abs(s.y - y) > w / 2);
       dots.selectAll("path.pl-dna").data([{ id: "far", s: far, o: 0.35 }, { id: "near", s: near, o: 0.9 }], d => d.id).join("path").attr("class", "pl-dna")
-        .attr("d", d => d.s.map(s => { const p = proj([s.lon, s.lat]); return p ? circle(p, rd) : ""; }).join(""))
+        .attr("d", d => d.s.map(s => dotOf(s, rd)).join(""))
         .attr("fill", "none").attr("stroke", "#1f5f73").attr("stroke-width", rd * 0.7).attr("opacity", d => d.o);
 
       // Family spreads: homeland, then each stage reached by this year.
