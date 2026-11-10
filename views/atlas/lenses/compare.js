@@ -70,7 +70,7 @@
       [v.lon - lonSpan / 2, v.lat - latSpan / 2], [v.lon + lonSpan / 2, v.lat - latSpan / 2], [v.lon + lonSpan / 2, v.lat + latSpan / 2], [v.lon - lonSpan / 2, v.lat + latSpan / 2], [v.lon - lonSpan / 2, v.lat - latSpan / 2]]] } });
     const path = d3.geoPath(proj, c);
     c.fillStyle = "#2f5a6e"; c.fillRect(0, 0, W, H);
-    if (typeof LAND !== "undefined") { c.fillStyle = "#a49c7e"; c.beginPath(); path(landF || (landF = topojson.feature(LAND, LAND.objects.land))); c.fill(); }
+    if (typeof LAND !== "undefined") { c.fillStyle = "#a49c7e"; c.beginPath(); path(landF || (landF = ATLAS.landFeature || topojson.feature(LAND, LAND.objects.land))); c.fill(); }
     for (const r of rs) { c.fillStyle = r.color || "#b0a080"; c.beginPath(); path(r.feature); c.fill(); }
     // Crisp it up: snap to a 4-colour-per-pixel read and draw 1-px ink borders where realms meet.
     const img = c.getImageData(0, 0, W, H), d = img.data, key = new Int32Array(W * H);

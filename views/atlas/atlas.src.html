@@ -744,6 +744,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const projection = d3.geoNaturalEarth1();
   const path = d3.geoPath(projection);
   const land = topojson.feature(LAND, LAND.objects.land);
+  ATLAS.landFeature = land;  // decoded once; the pixel map and compare use the same shapes
   const gSphere = root.append("path").attr("class", "sphere");
   const gGrat = root.append("path").attr("class", "grat");
   const gRelief = root.append("g").attr("class", "g-relief");

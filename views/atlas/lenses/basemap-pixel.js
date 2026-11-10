@@ -335,7 +335,7 @@
       proj = projection; el0 = el;
       if (!document.getElementById("pixel-basemap-style")) { const st = document.createElement("style"); st.id = "pixel-basemap-style"; st.textContent = STYLE; document.head.appendChild(st); }
       const levels = [{ cell: 1 / 6, tdeg: 360, url: () => PIXEL.tile0 }, { cell: 1 / 15, tdeg: 30, url: (c, r) => `tiles/l1_${c}_${r}.png` }, { cell: 1 / 30, tdeg: 30, url: (c, r) => `tiles/l2_${c}_${r}.png` }];
-      pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers, busy: () => mapOf(el).classList.contains("moving") });
+      pm = PixelMap(el, projection, { px: 3, levels, land: ATLAS.landFeature || topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers, busy: () => mapOf(el).classList.contains("moving") });
       // A new zoom (or a tile batch) built over a few frames has landed: sprites, labels and motion follow it now.
       pm.on(kind => { if (kind === "landed" && ATLAS.pixelRerender) ATLAS.pixelRerender(); });
       // City-scale terrain (about 45 m a pixel) around the story cities: tiles/l3.json lists one patch per city, all packed into tiles/l3.png.
