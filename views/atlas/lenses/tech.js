@@ -1,11 +1,10 @@
-// Technology, food & energy: how inventions, crops and energy sources spread, and how fast news travelled.
+// Technology, food & energy: how inventions, crops and energy sources spread. How fast news travelled is in Travel time.
 // Data from views/atlas/lenses/tech.py (records in data/tech-food-energy/). One pin per diffusion step.
 (() => {
   const CAT = { tech: ["Technology", "diamond"], war: ["War technology", "cross"], comms: ["Communication", "square"], energy: ["Energy", "triangle"], food: ["Food & farming", "circle"] };
   const ENAME = { traditional_biomass: "wood and other biomass", coal: "coal", oil: "oil", gas: "gas", hydro: "hydro", nuclear: "nuclear", wind: "wind", solar: "solar", biofuels: "biofuels", other_renewables: "other renewables" };
   const FRESH = 40;   // a step counts as news on the map for this many years
   const pct = x => Math.round(x * 100) + "%";
-  const days = d => d === 0 ? "same day" : d === 1 ? "1 day" : `${d} days`;
   const valAt = (series, y) => { let v = null; for (const p of series || []) { if (p[0] <= y) v = p[1]; else break; } return v; };
 
   let cache = null;
@@ -30,11 +29,6 @@
       line: s.prev && C.km([s.prev.lon, s.prev.lat], [s.lon, s.lat]) < 2500 ? [[s.prev.lon, s.prev.lat], [s.lon, s.lat]] : undefined,
       sources: (s.s || it.s).map(C.src) };
   }
-  function newsCard(n, C) {
-    return { kick: "How fast news travelled", title: n.n, year: n.y, lon: n.t[0], lat: n.t[1], line: [[n.o[0], n.o[1]], [n.t[0], n.t[1]]],
-      meta: `${n.o[2]} to ${n.t[2]} · about ${n.km.toLocaleString()} km · ${days(n.d)}${n.dr ? ` (${n.dr[0]}-${n.dr[1]})` : ""} · ${C.fmtYear(n.y)}`,
-      body: n.w, sources: n.s.map(C.src) };
-  }
   function energyMix(D, y) {
     const rows = D.energy.rows; if (!rows.length || y < rows[0][0]) return null;
     let r = rows[0]; for (const x of rows) if (x[0] <= y) r = x;
@@ -53,7 +47,7 @@
     index: D => D.items.map((it, i) => {
       const s = D.steps.filter(x => x[0] === i);
       return `${it.n} (${(CAT[it.c] || CAT.tech)[0]}): ${s.map(x => `${x[4]} ${x[1]}`).join(", ")}`;
-    }).join("\n") + "\nNews journeys: " + D.news.map(n => `${n.n} ${n.y}: ${n.d} days`).join("; "),
+    }).join("\n"),
 
     draw(ctx) {
       const C = { ...ctx, ...prep(ctx.data) }, y = ctx.year;
@@ -70,22 +64,12 @@
         ctx.pins(fresh.filter(s => s.it.c === c), { key: s => s.k, shape: CAT[c][1], always: true, label: s => `${s.it.n} · ${s.place}`,
           title: s => `${s.it.n} → ${s.place}, ${ctx.fmtYear(s.y)}: ${s.note}`, card: s => stepCard(s, C) });
       }
-      // News journeys near their year, labelled with how long the news took.
-      const nw = ctx.data.news.filter(n => Math.abs(n.y - y) <= 20);
-      ctx.paths(nw, { key: n => n.n, coords: n => [[n.o[0], n.o[1]], [n.t[0], n.t[1]]], cls: "news", title: n => `${n.n}: ${days(n.d)}`, card: n => newsCard(n, C) })
-        .style("stroke-dasharray", "4 3").attr("marker-end", "url(#arrow)");
-      ctx.pins(nw.map(n => ({ ...n, lon: n.t[0], lat: n.t[1] })), { key: n => "n" + n.n, shape: "square", always: true, label: n => `${days(n.d)} from ${n.o[2]}`,
-        title: n => n.n, card: n => newsCard(n, C) });
     },
 
     here(ctx, at) {
       const C = { ...ctx, ...prep(ctx.data) }, y = ctx.year, out = [];
       const near = ctx.near(C.steps, { ...at, r: Math.max(at.r || 300, 400) }).sort((a, b) => (a.y > y) - (b.y > y) || Math.abs(a.y - y) - Math.abs(b.y - y)).slice(0, 6);
       for (const s of near) out.push({ title: `${s.it.n} → ${s.place}`, year: s.y, why: s.note, dim: s.y > y, tag: s.y > y ? "not yet" : null, card: stepCard(s, C) });
-      for (const n of ctx.data.news) {
-        if (ctx.km([at.lon, at.lat], [n.t[0], n.t[1]]) < 400 || ctx.km([at.lon, at.lat], [n.o[0], n.o[1]]) < 400)
-          out.push({ title: n.n, year: n.y, why: `${days(n.d)}, about ${n.km.toLocaleString()} km`, dim: Math.abs(n.y - y) > 60, card: newsCard(n, C) });
-      }
       // Railways, phones and cars in the nearest HCCTA country.
       const c = ctx.data.countries.map(c => ({ c, d: ctx.km([at.lon, at.lat], c.at) })).sort((a, b) => a.d - b.d)[0];
       if (c && c.d < 600) {
@@ -110,11 +94,9 @@
       if (w != null) out.push({ title: `English wheat harvest: ${w.toFixed(2)} tonnes per hectare`, year: D.wheat.filter(p => p[0] <= y).pop()[0],
         why: "Broadberry et al. (2015) before 1850, then FAO; a measure of how much food one field gave",
         card: { kick: "Harvests", title: "Wheat yield in England and the UK", year: y, meta: `${w.toFixed(2)} t/ha`, body: `From ${D.wheat[0][1].toFixed(2)} t/ha in ${D.wheat[0][0]} to ${D.wheat[D.wheat.length - 1][1].toFixed(2)} t/ha in ${D.wheat[D.wheat.length - 1][0]}.`, sources: D.wheat_s.map(C.src) } });
-      const n = D.news.filter(n => n.y <= y).sort((a, b) => b.y - a.y)[0];
-      if (n) out.push({ title: `Latest news journey on record: ${n.n}`, year: n.y, why: `${days(n.d)} for about ${n.km.toLocaleString()} km`, dim: y - n.y > 150, card: newsCard(n, C) });
       return out;
     },
 
-    strip: D => D.steps.map(s => s[1]).concat(D.news.map(n => n.y)),
+    strip: D => D.steps.map(s => s[1]),
   });
 })();

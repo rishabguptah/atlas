@@ -1975,7 +1975,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // with another chip (WITH) has none either. The map style (pixel, relief, plain) is a choice, not a lens: its
   // switch sits at the top of Land.
   const TAB_LENS = new Set(PLUG.filter(d => d.tab).map(d => d.id));
-  const NO_CHIP = new Set([...TAB_LENS, ...Object.keys(WITH), "basemap", "terrain"]);
+  // chip: false is a lens that switches itself by era (Deep time draws only before the first cities), so it needs no chip
+  // and keeps its default whatever was saved.
+  const FIXED = new Set(PLUG.filter(d => d.chip === false && !d.tab && !d.with).map(d => d.id));
+  const NO_CHIP = new Set([...TAB_LENS, ...Object.keys(WITH), ...FIXED, "basemap", "terrain"]);
   const ALL_MEMBERS = Object.fromEntries(FAMILIES.map(f => [f.id, [
     ...(f.id === "land" ? [...(BASEMAP0 ? ["basemap"] : []), ...(TERRAIN ? ["terrain"] : []), "places", "borders", ...(TERRAIN && RELIEF_POL && window.drawRealms ? ["political"] : [])] : []),
     ...LAYERS.filter(l => FAM_OF[l.k] === f.id).map(l => l.k), ...PLUG.filter(d => d.family === f.id).map(d => d.id)].filter((k, i, a) => a.indexOf(k) === i)]));
@@ -2988,7 +2991,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     // Opt-in modes (Travel time) and a tab's own lens (Codex, Why) do not come back on by themselves after a reload.
     // Eyewitnesses joined Historians argue as one lens, Sources and debates.
     if (RESUME.on && RESUME.on.witness) RESUME.on.debates = true;
-    for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k] && !OPT_IN.has(k) && !TAB_LENS.has(k);
+    for (const k in RESUME.on || {}) if (k in state.on && !FIXED.has(k)) state.on[k] = !!RESUME.on[k] && !OPT_IN.has(k) && !TAB_LENS.has(k);
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
   state.style = null; mapStyle();
