@@ -55,16 +55,20 @@
   const ORDER = { city: 1, person: 2, school: 3, work: 3, stop: 3, hub: 4, reached: 4, lens: 5, broke: 6, choke: 6, battle: 6, pin: 9, sel: 10 };
 
   const GR = typeof PixelGrammar !== "undefined" ? PixelGrammar : null;
+  // The pixel world keeps its day inks whatever the page theme (palette.js day()).
+  const inDay = c => typeof PIXEL_PALETTE !== "undefined" && PIXEL_PALETTE.day ? PIXEL_PALETTE.day(c) : c;
   function PixelMarks(svg, projection) {
     let points = [], lines = [], dirty = true;
-    const colorCache = new Map(), polyCache = new WeakMap();
+    let colorCache = new Map(), cacheSheets = -1;
+    const polyCache = new WeakMap();
     const probe = document.createElement("i");
-    const tone = c => { // any CSS colour to [r, g, b] (var() and color-mix included), cached
+    const tone = c => { // any CSS colour to [r, g, b] (var() and color-mix included, var() in day values), cached
       let v = colorCache.get(c);
       if (!v) {
+        const key = c; if (typeof c === "string" && c.includes("var(")) c = inDay(c);
         if (/^#[0-9a-f]{6}$/i.test(c)) v = [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)];
         else { probe.style.color = c; document.body.appendChild(probe); v = rgbOf(getComputedStyle(probe).color); probe.remove(); }
-        colorCache.set(c, v);
+        colorCache.set(key, v);
       }
       return v;
     };
@@ -278,6 +282,8 @@
     }
 
     function paint(g) {
+      // A stylesheet added since the last paint (a lens's own) may define tokens the colours read.
+      if (typeof document !== "undefined" && document.styleSheets.length !== cacheSheets) { colorCache = new Map(); cacheSheets = document.styleSheets.length; }
       if (dirty && svg) fromSvg();
       G = g;
       for (const L of lines) {

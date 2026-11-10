@@ -14,8 +14,9 @@
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const { mOf, fmtDate, fmtM, fmtYear } = W;
   const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
-  const FAM = { w: ["War", "cross", "#a3321f"], d: ["Diplomacy & law", "square", "#1d4f6e"], u: ["Revolt & unrest", "triangle", "#b8641c"],
-    x: ["Disaster", "diamond", "#5f6b2a"], c: ["Culture, trade & faith", "circle", "#6a4c93"], p: ["People", "circle", "#a24b6e"] };
+  // Every mark takes a family tincture (palette.js LENS); the shape says which kind of event it is.
+  const FAM = { w: ["War", "cross", "var(--fam-power)"], d: ["Diplomacy & law", "square", "var(--fam-power)"], u: ["Revolt & unrest", "triangle", "var(--fam-shocks)"],
+    x: ["Disaster", "diamond", "var(--fam-shocks)"], c: ["Culture, trade & faith", "circle", "var(--fam-mind)"], p: ["People", "circle", "var(--fam-peoples)"] };
   const VERB = { e: "", b: "born", d: "died", r: "lived or worked here", f: "founded or built", z: "ended", w: "made", s: "" };
   const nice = s => String(s || "").replace(/_/g, " ");
 
@@ -143,8 +144,8 @@
       const s = story();
       if (s) {
         const y = ctx.year;
-        ctx.paths([{ id: s.id, pts: s.steps.map(st => [st.lon, st.lat]) }], { color: "#6a4c93", conf: "likely", width: 1.4, alpha: 0.55, title: () => s.title });
-        ctx.paths(journeys(s), { color: "#a24b6e", width: 2.2, alpha: 0.8, arrow: true, title: j => `${j.who}: ${j.steps.length} stops in this storyline`,
+        ctx.paths([{ id: s.id, pts: s.steps.map(st => [st.lon, st.lat]) }], { color: "var(--y-deep)", conf: "likely", width: 1.4, alpha: 0.55, title: () => s.title });
+        ctx.paths(journeys(s), { color: "var(--fam-peoples)", width: 2.2, alpha: 0.8, arrow: true, title: j => `${j.who}: ${j.steps.length} stops in this storyline`,
           card: j => ({ kick: "Journey in " + s.title, title: j.who, body: j.steps.map(st => `${fmtDate(st.date)} ${st.place_name || st.name}`).join(" → "), sources: [] }) });
         ctx.pins(s.steps, { key: st => s.id + st.j, shape: st => FAM[(st.family || "c")[0]] ? FAM[st.family[0]][1] : "circle", color: st => FAM[(st.family || "c")[0]] ? FAM[st.family[0]][2] : FAM.c[2],
           label: st => Math.abs(Math.floor(st.m / 12) - y) <= 3 || ctx.k >= 4 ? st.name : null, always: st => st.j === DS.step,
@@ -185,7 +186,7 @@
       const list = W.at({ m0: c.m0, m1: c.m1 }, bbox, { kinds: "bd" }).slice(0, cap);
       // People living or working here: anyone whose stay overlaps this year, fewer of them.
       const live = W.at({ m0: c.m - 12 * 40, m1: c.m1 }, bbox, { kinds: "r" }).filter(r => r.me == null ? c.m - r.m < 12 * 25 : r.me >= c.m0).slice(0, Math.round(cap / 2));
-      ctx.pins([...list, ...live], { key: r => r.id + r.d, shape: shapeOf, color: "#a24b6e", ghost: r => r.conf >= 2 || r.src === "ai", fill: r => r.k === "r" ? 0.2 : 0.85,
+      ctx.pins([...list, ...live], { key: r => r.id + r.d, shape: shapeOf, color: "var(--fam-peoples)", ghost: r => r.conf >= 2 || r.src === "ai", fill: r => r.k === "r" ? 0.2 : 0.85,
         label: r => r.k === "d" ? `† ${r.name}` : r.name, title: r => `${r.name} ${VERB[r.k]} · ${fmtDate(r.d)}${r.x.place ? " · " + r.x.place : ""}`, card,
         fade: r => r.k === "r" ? 0.7 : fade(r, c), pri: r => 2 + r.rank / 30, size: r => 3 + Math.min(2.5, Math.sqrt(r.rank) / 4) });
     },
