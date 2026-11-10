@@ -524,6 +524,27 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     sample() { return this._p || (this._p = (async () => { let s = null; try { s = window.claude ? await window.claude.use("sample") : null; } catch { s = null; } this.set(!!s); return s; })()); },
     set(on) { this.state = on ? "on" : "off"; document.documentElement.dataset.ai = this.state; },
     lost() { this._p = Promise.resolve(null); this.set(false); } },
+  // One daily streak (atlas.today.v1): a day counts once you solve the Codex riddle or finish the Guess daily five.
+  // The first read folds in the two streaks the Codex and Guess kept apart before.
+  today: { KEY: "atlas.today.v1", _p: null,
+    date(off = 0) { const d = new Date(); d.setDate(d.getDate() + off); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; },
+    get() {
+      if (this._p) return this._p;
+      let p = null; try { p = JSON.parse(localStorage.getItem(this.KEY) || "null"); } catch { p = null; }
+      if (!p || typeof p !== "object") {
+        const old = [["atlas.codex.v1", "sk"], ["atlas.guess.v1", "st"]].map(([k, f]) => { try { return (JSON.parse(localStorage.getItem(k) || "null") || {})[f] || null; } catch { return null; } }).filter(o => o && o.last);
+        old.sort((a, b) => (b.last > a.last) - (b.last < a.last) || (b.n || 0) - (a.n || 0));
+        p = old.length ? { last: old[0].last, n: old[0].n || 0, best: Math.max(...old.map(o => Math.max(o.best || 0, o.n || 0))) } : { last: null, n: 0, best: 0 };
+      }
+      return (this._p = p);
+    },
+    mark() {
+      const p = this.get(), d = this.date();
+      if (p.last !== d) { p.n = p.last === this.date(-1) ? (p.n || 0) + 1 : 1; p.last = d; p.best = Math.max(p.best || 0, p.n); try { localStorage.setItem(this.KEY, JSON.stringify(p)); } catch { /* lasts this visit */ } }
+      return p.n;
+    },
+    streak() { const p = this.get(); return p.last === this.date() || p.last === this.date(-1) ? p.n || 0 : 0; },
+    best() { return this.get().best || 0; } },
   // One way to write a year, for the page and every plugin: "45,000 years ago", "300 BCE", "1 CE", "300 CE", "1453".
   NOW: 2025,
   fmtYear(y) {

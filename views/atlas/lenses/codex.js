@@ -1,7 +1,7 @@
 // Codex and quests: the game layer. Lost cities and sites, wonders and battles fill a codex as you visit them on
 // the map (click near one, or zoom in on it; battles only count in the year they were fought). Quests are built
-// from the codex, the guide's tours and the what-if turning points. A daily riddle points at one discovery, and
-// an optional fog of war covers each era until you have looked around in it. Progress stays in this browser
+// from the codex, the guide's tours and the what-if turning points. Today puts the daily riddle (one discovery) beside
+// Guess's daily five, with one streak for both (ATLAS.today), and an optional fog of war covers each era until you have looked around in it. Progress stays in this browser
 // (localStorage). Data: views/atlas/lenses/codex.py.
 (function () {
   const D = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.codex) || { sites: [], quests: [], trails: [] };
@@ -261,7 +261,6 @@
 
   // ---------- the daily riddle ----------
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
-  const yesterday = () => { const d = new Date(); d.setDate(d.getDate() - 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
   const hash = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
   const R = { target: null, st: null };
   const norm = s => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/^(the |battle of |siege of |sack of )/, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
@@ -295,9 +294,9 @@
     if (!R.st || R.st.ok) return;
     R.st.ok = 1; R.st.map = onMap ? 1 : 0;
     const d = R.st.d;
-    if (P.sk.last !== d) { P.sk.n = P.sk.last === yesterday() ? P.sk.n + 1 : 1; P.sk.last = d; }
+    const n = ATLAS.today.mark();
     save();
-    toast("Riddle solved", R.target.n, `${R.st.c} clue${R.st.c > 1 ? "s" : ""}${onMap ? ", found on the map" : ""} · streak ${P.sk.n} day${P.sk.n > 1 ? "s" : ""}`, () => openCodex("riddle"));
+    toast("Riddle solved", R.target.n, `${R.st.c} clue${R.st.c > 1 ? "s" : ""}${onMap ? ", found on the map" : ""} · streak ${n} day${n > 1 ? "s" : ""}`, () => openCodex("riddle"));
   }
 
   // ---------- pointing the way, without giving it away ----------
@@ -336,7 +335,8 @@
     : `<div class="bar" role="img" aria-label="${got} of ${need}"><i style="width:${Math.round(100 * got / need)}%"></i></div>`;
 
   function nextThing() {
-    if (R.target && !R.st.ok) return `<div class="next"><span class="k">Today's riddle</span><b>${clues(R.target)[0]}</b><div class="row"><button class="btn primary" data-a="mode" data-m="riddle">Solve it</button><span class="note">${P.sk.n ? `Streak: ${P.sk.n} day${P.sk.n > 1 ? "s" : ""}` : "Start a streak"}</span></div></div>`;
+    if (R.target && !R.st.ok) return `<div class="next"><span class="k">Today's riddle</span><b>${clues(R.target)[0]}</b><div class="row"><button class="btn primary" data-a="mode" data-m="riddle">Solve it</button><span class="note">${streakNote()}</span></div></div>`;
+    const five = fiveLeft(); if (five) return fiveHTML(five);
     for (const t of D().trails) { const i = trailNext(t); if (i >= 0 && trailDone(t) > 0) return trailNextHTML(t, i, "Continue your trail"); }
     const v = api && api.view ? api.view() : null, from = v ? v : { lon: 30, lat: 35 };
     const q = D().quests.find(q => !P.qd[q.id] && qGot(q) > 0) || D().quests.find(q => !P.qd[q.id]);
@@ -354,13 +354,13 @@
     if (!R.st || R.st.d !== today()) setupRiddle();
     const S = sites(), got = S.filter(s => found(s.id)).length;
     const qs = D().quests.length + D().trails.length, qdone = [...D().quests, ...D().trails].filter(q => P.qd[q.id]).length;
-    const head = `<div class="seg" role="group" aria-label="Codex view">${[["next", "Next"], ["codex", "Codex"], ["quests", "Quests"], ["riddle", "Riddle"]].map(([m, n]) => `<button data-a="mode" data-m="${m}" aria-pressed="${mode === m}">${n}</button>`).join("")}</div>`;
-    const stats = `<div class="stats"><div class="stat"><b>${got}<small style="font-size:12px;color:var(--ink-soft)"> / ${S.length}</small></b><span>discoveries</span></div><div class="stat"><b>${qdone}<small style="font-size:12px;color:var(--ink-soft)"> / ${qs}</small></b><span>quests & trails</span></div><div class="stat"><b>${P.sk.n || 0}</b><span>riddle streak</span></div></div>`;
+    const head = `<div class="seg" role="group" aria-label="Codex view">${[["next", "Next"], ["riddle", "Today"], ["codex", "Codex"], ["quests", "Quests"]].map(([m, n]) => `<button data-a="mode" data-m="${m}" aria-pressed="${mode === m}">${n}</button>`).join("")}</div>`;
+    const stats = `<div class="stats"><div class="stat"><b>${got}<small style="font-size:12px;color:var(--ink-soft)"> / ${S.length}</small></b><span>discoveries</span></div><div class="stat"><b>${qdone}<small style="font-size:12px;color:var(--ink-soft)"> / ${qs}</small></b><span>quests & trails</span></div><div class="stat"><b>${ATLAS.today.streak()}</b><span>day streak</span></div></div>`;
     let body = "";
     if (mode === "next") body = `${stats}${nextThing()}${fogSwitch()}<p class="note">Lost cities and wonders count in any year; being there while they stood, or in their last ${FALL_YEARS} years, earns a star. Battles only count in the year they were fought. Your progress stays in this browser.</p>`;
     else if (mode === "codex") body = renderCodex();
     else if (mode === "quests") body = renderQuests();
-    else body = renderRiddle();
+    else body = renderToday();
     el.innerHTML = `<div class="cx">${head}${body}</div>`;
   }
   function fogSwitch() {
@@ -399,12 +399,22 @@
     return `<p class="lede">Quests fill from your codex. Trails are the guide's tours and the what-if turning points: be roughly where and when each stop is, and it ticks off.</p>
       <h3>Trails</h3>${D().trails.map(tHTML).join("")}<h3>Quests</h3>${D().quests.map(qHTML).join("")}`;
   }
+  // ---------- today: the riddle and the Guess daily five, one streak for both (ATLAS.today) ----------
+  const streakNote = () => { const n = ATLAS.today.streak(); return n ? `Streak: ${n} day${n > 1 ? "s" : ""}` : "Start a streak"; };
+  // The daily five's questions still to answer today (0 when done or when Guess is not on the page).
+  const fiveLeft = () => { const g = ATLAS.guess; return g && g.todayLeft ? g.todayLeft() : 0; };
+  const fiveHTML = n => `<div class="next"><span class="k">Today's five · Guess</span><b>${n === 5 ? "Five questions, one for each kind" : `${n} of 5 still to answer`}</b><div class="row"><button class="btn primary" data-a="five">Play today's five</button><span class="note">${streakNote()}</span></div></div>`;
+  function renderToday() {
+    const n = fiveLeft(), g = ATLAS.guess;
+    const five = !g ? "" : n ? fiveHTML(n) : `<div class="next"><span class="k">Today's five · Guess</span><b>Done for today</b><div class="row"><button class="btn" data-a="five">See your five</button></div></div>`;
+    return renderRiddle() + `<h3>Also today</h3>` + five;
+  }
   function renderRiddle() {
     const s = R.target, st = R.st; if (!s) return `<p class="note">No riddle today.</p>`;
     const cl = clues(s), shown = st.ok ? cl.length : Math.min(st.c, cl.length);
     return `<p class="kick">Daily riddle · ${esc(st.d)}</p><h2>Where, and what, am I?</h2>
       <ol class="clues">${cl.slice(0, shown).map(c => `<li>${c}</li>`).join("")}</ol>
-      ${st.ok ? `<div class="ok-msg"><b>${esc(s.n)}</b> · ${esc(when(s))}<br><span class="note">${st.ok === -1 ? "Revealed. A new riddle comes tomorrow." : `Solved with ${st.c} clue${st.c > 1 ? "s" : ""}${st.map ? ", by finding it on the map" : ""}. Streak: ${P.sk.n} day${P.sk.n > 1 ? "s" : ""}.`}</span></div>
+      ${st.ok ? `<div class="ok-msg"><b>${esc(s.n)}</b> · ${esc(when(s))}<br><span class="note">${st.ok === -1 ? "Revealed. A new riddle comes tomorrow." : `Solved with ${st.c} clue${st.c > 1 ? "s" : ""}${st.map ? ", by finding it on the map" : ""}. ${streakNote()}.`}</span></div>
         <div class="row"><button class="btn primary" data-a="go" data-id="${esc(s.id)}">Show it on the map</button></div>`
       : `<form class="guess" id="cx-guess"><input id="cx-g" autocomplete="off" placeholder="Name it…" aria-label="Your guess"><button class="btn primary" type="submit">Guess</button></form>
         ${st.bad ? `<p class="bad">${esc(st.bad)}</p>` : ""}
@@ -422,6 +432,7 @@
     else if (a === "qsite") { const q = D().quests.find(q => q.id === b.dataset.q), s = site(b.dataset.id); if (q && s) found(s.id) ? hintStar(q, s) : pointMe(s, qYear(q, s) ?? undefined); }
     else if (a === "stop") { const t = D().trails.find(t => t.id === b.dataset.t), st = t && t.steps[+b.dataset.i]; if (st) api.scene({ year: st.year, view: { lon: st.lon, lat: st.lat, span: st.span }, title: st.n }); }
     else if (a === "all") { showAll[b.dataset.k] = !showAll[b.dataset.k]; render(); }
+    else if (a === "five") { if (ATLAS.guess && ATLAS.guess.playDaily) ATLAS.guess.playDaily(); }
     else if (a === "clue") { R.st.c++; R.st.bad = ""; save(); render(); }
     else if (a === "giveup") { R.st.ok = -1; R.st.c = clues(R.target).length; save(); render(); }
   }
@@ -465,6 +476,7 @@
       if (!api) return null;
       if (!R.st || R.st.d !== today()) setupRiddle();
       if (R.target && !R.st.ok) return { kick: "Today's riddle", title: clues(R.target)[0], go: () => { mode = "riddle"; api.setTab("codex"); } };
+      const five = fiveLeft(); if (five) return { kick: "Today's five · Guess", title: five === 5 ? "Five questions, one for each kind" : `${five} of 5 still to answer`, go: () => ATLAS.guess.playDaily() };
       for (const t of D().trails) { const i = trailNext(t); if (i >= 0 && trailDone(t) > 0) { const st = t.steps[i]; return { kick: `Your trail · stop ${i + 1} of ${t.steps.length}`, title: st.n, go: () => api.scene({ year: st.year, view: { lon: st.lon, lat: st.lat, span: st.span }, title: st.n }) }; } }
       const v = api.view ? api.view() : null, from = v || { lon: 30, lat: 35 };
       const q = D().quests.find(q => !P.qd[q.id] && qGot(q) > 0);
