@@ -1,11 +1,11 @@
 // Stories tab: every Story the Atlas can tell, in one list, each one a tap from playing on the map. It also
-// starts the Director (views/atlas/world/director.js) and plays the cold open: the first time you come (or after
-// half a day away) the Atlas opens on Constantinople in 1453 instead of an empty map.
+// starts the Director (views/atlas/world/director.js) and plays the cold open: the first time you come, and only
+// then, the Atlas opens on Constantinople in 1453 instead of an empty map. It is the Atlas's one welcome.
 // Deep link: #story=<story id> plays that story on load; #nostory skips the cold open.
 (function () {
   const A = window.ATLAS;
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const COLD = "story:constantinople_1453", COLD_KEY = "atlas.coldopen.v1", COLD_GAP = 12 * 3600e3;
+  const COLD = "story:constantinople_1453", COLD_KEY = "atlas.coldopen.v1";
   const GROUPS = [["tour", "Guided tours"], ["answer", "Your answers"], ["whatif", "What ifs"], ["storyline", "Up close: Europe 1789–1914"], ["quest", "Trails"],
     ["object", "Object journeys"], ["life", "Lives"], ["simulation", "Living world"]];
   let api = null, el = null;
@@ -63,14 +63,14 @@
     if (s) A.world.director.play(s);
   }
 
-  // The cold open: a scene before anything else, unless you were here in the last twelve hours.
+  // The cold open: a scene before anything else, on your first visit only. Later visits pick up where you left off.
   function coldOpen() {
     const h = location.hash || "";
     const m = h.match(/story=([^&]+)/);
     if (m) { const id = decodeURIComponent(m[1]); return waitFor(id, s => A.world.director.play(s)); }
     if (/nostory/.test(h)) return;
-    let last = 0; try { last = +localStorage.getItem(COLD_KEY) || 0; } catch { /* no storage: play it */ }
-    if (Date.now() - last < COLD_GAP) return;
+    let seen = false; try { seen = !!localStorage.getItem(COLD_KEY); } catch { /* no storage: play it */ }
+    if (seen) return;
     waitFor(COLD, s => {
       if (document.activeElement && document.activeElement.closest && document.activeElement.closest("input, textarea")) return;  // someone is already typing
       try { localStorage.setItem(COLD_KEY, String(Date.now())); } catch { /* fine */ }

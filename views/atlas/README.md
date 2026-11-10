@@ -177,8 +177,8 @@ one-line caption types into a pixel dialog box, Space or → is the next scene, 
 leaves the story. The panel, with Ask, stays open beside the story; the cold open waits until the map has painted. `world/story.js` holds the Scene/Story format, the registry (`ATLAS.world.stories.add/list/get/check`)
 and converters for guide tours, panel answers (live ones keep streaming in), What-ifs (a fork scene, then dashed branch
 scenes), Up close storylines (by the month) and Codex trails. Authored Stories live in `data/stories/*.json`; the Stories
-tab (`lenses/stories.*`) lists them all. The Atlas opens on a cold open (Constantinople 1453) on a first visit or after
-twelve hours away; `#story=<id>` plays any story on load and `#nostory` skips it. Other threads emit Stories and register
+tab (`lenses/stories.*`) lists them all. The Atlas opens on a cold open (Constantinople 1453) on a first visit only, and
+never offers a first tour after it; `#story=<id>` plays any story on load and `#nostory` skips it. Other threads emit Stories and register
 them with `ATLAS.world.stories.add(story)` or a provider `{kind, list()}`; `ATLAS.world.director.play(story, {at, auto})`
 plays one.
 
