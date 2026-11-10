@@ -103,7 +103,7 @@
     return b[0] < -180 || b[2] > 180 ? null : b;
   }
   ATLAS.lens({
-    id: "living", name: "Living world", family: "peoples", color: COLOR, on: false,
+    id: "living", name: "Living world", family: "peoples", color: COLOR, on: false, tab: "living",
     guide: ["people", "travel", "journeys"],
     key: [["sprite", "A real traveller on a documented journey (named)"], ["small", "A generated group on a real recurring route (merchants, pilgrims, sailors)"], ["line", "The road of the traveller you follow"]],
     index: d => (d.journeys || []).map(j => `${j.name} (${j.kind}, ${(j.stops[0] || {}).date || ""})`).join("; ").slice(0, 3000),

@@ -569,6 +569,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const partOn = p => !!state.on[PARTS[p]] && state.on[p] !== false;
   // Which part a built-in shock belongs to: epidemics, or everything nature and hunger do (famine, eruption, cold, collapse).
   const shockPart = e => e.subtype === "epidemic" ? "epidemics" : "famine";
+  // covers: page records a lens draws in more detail; the page skips them while that lens is on (the Middle Passage
+  // draws the Atlantic slave trade, so the migration line for it steps aside).
+  const COVERS = PLUG.filter(d => Array.isArray(d.covers)).map(d => [d, new Set(d.covers)]);
+  // Its data has to be in (the Middle Passage reads the data of On the move, the lens it goes with).
+  const covered = id => COVERS.some(([d, s]) => s.has(id) && lensOn(d.id) && lensReady(d) && PLUG.every(h => h.id !== WITH[d.id] || lensReady(h)));
   const lensOn = id => { const w = WITH[id]; return w ? (w in PARTS ? partOn(w) : !!(w in state.on ? state.on[w] : state[w])) : !!state.on[id]; };
   for (const d of PLUG) {
     document.documentElement.style.setProperty("--y-" + d.id, d.color || "#999");
@@ -1294,7 +1299,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const y = state.year, on = state.on.money, L = MK.money;
     const tr = on ? TRADE.filter(t => y >= t.start && y <= t.end) : [];
     // A migration pours along its line while it happens (Minard: width = people, one art pixel per tenfold) and leaves a fading trace for 40 years.
-    const mg = on ? MIGS.filter(m => y >= m.start && y <= m.end + (m.start > -3000 ? 40 : 0)) : [];
+    const mg = on ? MIGS.filter(m => y >= m.start && y <= m.end + (m.start > -3000 ? 40 : 0) && !(COVERS.length && covered(m.id))) : [];
     const hb = on ? HUBS.filter(h => y >= h.start && y <= h.end) : [];
     const flowConf = d => d.people == null ? (d.start < -3000 ? 3 : 2) : d.low && d.high / d.low > 1.5 ? 1 : 0;
     L.lines = [

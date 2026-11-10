@@ -22,7 +22,7 @@ Pick the one your lens belongs to:
 | `land`    | Terrain, Cities, Borders                                     |
 | `power`   | Rule & law, War & chokepoints, Order & chaos                 |
 | `wealth`  | Trade & migration, Technology, food & energy, Object journeys, VOC ships |
-| `peoples` | People (with Lives), Peoples & languages, Journeys, Middle Passage, Living world |
+| `peoples` | People (with Lives), Peoples & languages, On the move (journeys, with Middle Passage) |
 | `mind`    | Ideas, faith & art (with Art & architecture), Sources and debates |
 | `shocks`  | Plague & climate (chips: Epidemics, Famine & climate), Epidemics, Eruptions, famine & cold |
 
@@ -42,6 +42,7 @@ ATLAS.lens({
                                    //   (and a mode tab puts the lenses back on Back to map)
   with: "borders",                 // optional: no chip; the lens is part of that chip (a FLAG or a layer) and is on with it;
                                    //   a part of a layer works too (with: "epidemics", one of Plague & climate's PARTS)
+  covers: ["route:…"],             // optional: ids of page records this lens draws in more detail; the page skips them while it is on
   chip: false,                     // optional: no chip; the lens keeps its `on` default and gates itself (Deep time, by era)
   guide: ["law", "government"],    // kernel lens names the AI guide may use to switch this lens on
   by: "political",                 // optional: the panel specialist who speaks for it; otherwise the first `guide`
