@@ -169,11 +169,15 @@
   }
 
   // ---------- lens: Lives ----------
+  // No chip of its own: it comes with People, which already shows who was alive at world zoom. From 2x it adds who was
+  // born or died here that month or year and who lived or worked here, from the same people.
+  const LIVES_K = 2;
   ATLAS.lens({
-    id: "deeplives", name: "Lives", family: "peoples", color: "#a24b6e", on: false,
+    id: "deeplives", name: "Lives", family: "peoples", color: "#a24b6e", on: false, with: "people",
     guide: ["people"],
     key: [["triangle", "Born here this month or year"], ["cross", "Died here"], ["ring", "Lived, worked or held office here"]],
     draw(ctx) {
+      if ((ctx.k || 1) < LIVES_K) { ctx.pins([], {}); return; }
       const c = cursor(ctx.year), bbox = viewBox(1.3), cap = Math.round(18 * Math.pow(Math.max(1, ctx.k), 1.2));
       const list = W.at({ m0: c.m0, m1: c.m1 }, bbox, { kinds: "bd" }).slice(0, cap);
       // People living or working here: anyone whose stay overlaps this year, fewer of them.
