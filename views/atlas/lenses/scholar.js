@@ -1,10 +1,11 @@
 // Scholarship: what historians argue, what they cite, what eyewitnesses wrote, and why things happened.
-// Three lenses and a tab, all from LENS_DATA.scholar (views/atlas/lenses/scholar.py), which may arrive after the
+// Two lenses and a tab, all from LENS_DATA.scholar (views/atlas/lenses/scholar.py), which may arrive after the
 // first paint, so everything here copes with it not being there yet:
-//   Historians argue (Mind)   a two-sided card per debate: schools, scholars, evidence for and against, the works
-//   Why chains (Shocks)       causal links drawn cause → effect across lenses, dashed by confidence class
-//   Eyewitnesses (Mind)       primary-source excerpts where and when they were written about, with source criticism
-//   Why tab                   chains to play as map scenes, any record's causes and effects, the bibliography
+//   Sources and debates (Mind)  a two-sided card per debate (schools, scholars, evidence for and against, the works),
+//                               and primary-source excerpts where and when they were written about, with source criticism
+//   Why (Shocks, no chip)       causal links drawn cause → effect across lenses, dashed by confidence class; the Why
+//                               tab switches it on and off
+//   Why tab                     chains to play as map scenes, any record's causes and effects, the bibliography
 // Hooks for the rest of the page: ATLAS.cite (every source row), ATLAS.cardMore (every card gets its why links,
 // debates and eyewitnesses), ATLAS.world.why(id) (the why graph, WORLD.md L3), ATLAS.world.chainStory(id) (a chain
 // as a Story of Scenes, WORLD.md L4) and ATLAS.scholar (citations and briefs for the AI panel).
@@ -120,7 +121,7 @@
   function quoteCard(q) {
     const html = `<div class="sch"><blockquote class="sch-q">${esc(q.text)}</blockquote><p class="sch-meta">${esc(q.author)}${q.work ? ", " + esc(q.work) : ""}${q.written ? `, written ${fy(q.written)}` : ""}${q.ok ? ` <span class="sch-ok" title="Found word for word in the public-domain text">✓ verbatim</span>` : ""}${q.url ? ` · <a href="${esc(q.url)}" target="_blank" rel="noopener">full text</a>` : ""}</p>
       ${q.witness ? `<p class="sch-state"><b>How far to trust it:</b> ${esc(q.witness)}</p>` : ""}${q.about.length ? `<div class="sch-links">${q.about.filter(a => D.N[a]).map(a => `<button type="button" class="btn sch-mini" data-sch="n:${esc(a)}">${esc(nm(a))}</button>`).join("")}</div>` : ""}</div>`;
-    return { kind: "lens:witness", c: "var(--y-witness)", kick: "Eyewitness · primary source", title: q.n || q.author, meta: fy(q.y), year: q.y,
+    return { kind: "lens:debates", c: "var(--y-debates)", kick: "Eyewitness · primary source", title: q.n || q.author, meta: fy(q.y), year: q.y,
       lon: q.lon ?? 0, lat: q.lat ?? 0, html, sch: "quote", sources: q.src ? [{ src: q.src, cite: q.src }] : [] };
   }
   function nodeCard(id) {
@@ -221,8 +222,10 @@
 
   // ---------- the lenses ----------
   ATLAS.lens({
-    id: "debates", name: "Historians argue", family: "mind", color: "#9b4d2e", on: false, guide: [],
-    key: [["diamond", "a question historians argue about, at its centre; tap for the two sides"]],
+    // What the record says and how historians read it, as one lens: the arguments (diamonds) and the eyewitnesses
+    // whose words they argue over (squares).
+    id: "debates", name: "Sources and debates", family: "mind", color: "#9b4d2e", on: false, guide: [],
+    key: [["diamond", "a question historians argue about, at its centre; tap for the two sides"], ["square", "a primary source: what someone wrote at the time, word for word"]],
     specialist: {
       id: "historiographer", name: "Historiographer", lenses: ["ideas", "order"],
       voice: "how historians have argued about this: the schools, the evidence each side leans on, what changed their minds, and where the field stands now",
@@ -233,19 +236,24 @@
       if (!ok()) return; const y = ctx.year;
       const live = D.D.filter(d => d.lon != null && y >= (d.s ?? -1e9) - 30 && y <= (d.e ?? 1e9) + 30);
       ctx.pins(live, { key: d => d.id, shape: "diamond", size: 7, always: true, pri: 6, label: d => d.n.length > 46 ? d.n.slice(0, 44) + "…" : d.n, title: d => `${d.n} · ${d.pos.length} positions`, card: debateCard });
+      ctx.pins(D.Q.filter(q => q.lon != null && Math.abs((q.y ?? 1e9) - y) <= 25), { key: q => "q" + q.id, shape: "square", size: 5, label: q => q.author, pri: 5, title: q => `${q.author}: “${q.text.slice(0, 90)}…”`, card: quoteCard });
     },
+    // Here lists the arguments first, then the eyewitnesses (the panel shows eight rows a lens).
     here(ctx, at) {
       if (!ok()) return []; const y = ctx.year;
-      return D.D.filter(d => inBox(d.bbox, at.lon, at.lat) || (d.lon != null && km([at.lon, at.lat], [d.lon, d.lat]) < 900))
-        .sort((a, b) => Math.abs((a.s + a.e) / 2 - y) - Math.abs((b.s + b.e) / 2 - y)).slice(0, 6)
+      const debs = D.D.filter(d => inBox(d.bbox, at.lon, at.lat) || (d.lon != null && km([at.lon, at.lat], [d.lon, d.lat]) < 900))
+        .sort((a, b) => Math.abs((a.s + a.e) / 2 - y) - Math.abs((b.s + b.e) / 2 - y)).slice(0, 4)
         .map(d => ({ title: d.n, year: d.s, why: d.pos.map(p => p.school).join(" vs "), dim: y < d.s - 100 || y > d.e + 100, card: debateCard(d) }));
+      const qs = D.Q.filter(q => q.lon != null && km([at.lon, at.lat], [q.lon, q.lat]) < 600).sort((a, b) => Math.abs(a.y - y) - Math.abs(b.y - y)).slice(0, 8 - debs.length)
+        .map(q => ({ title: `“${q.text.slice(0, 70)}…”`, year: q.y, why: q.author, dim: Math.abs(q.y - y) > 80, card: quoteCard(q) }));
+      return [...debs, ...qs];
     },
     now(ctx) { return ok() ? D.D.filter(d => ctx.year >= d.s && ctx.year <= d.e).slice(0, 4).map(d => ({ title: d.n, year: d.s, why: d.pos.map(p => p.school).join(" vs "), card: debateCard(d) })) : []; },
-    strip: () => ok() ? D.D.map(d => d.s) : [],
+    strip: () => ok() ? [...D.D.map(d => d.s), ...D.Q.map(q => q.y).filter(Number.isFinite)] : [],
   });
 
   ATLAS.lens({
-    id: "why", name: "Why", family: "shocks", color: "#b5562b", on: false, guide: [],
+    id: "why", name: "Why", family: "shocks", color: "#b5562b", on: false, guide: [], tab: "why",
     key: [["arrow", "a cause and what it led to; the colour is the cause's lens"], ["line", "solid: contemporaries record it · dashed: estimated · dotted: argued"]],
     index: () => ok() ? "Why chains: " + D.C.map(c => `${c.n} (${fy(c.s)}-${fy(c.e)})`).join("; ") : "",
     draw(ctx) {
@@ -283,21 +291,6 @@
     return Math.hypot(dx, dy) < 0.05 ? [a, [a[0] + 0.3, a[1] + 0.3]] : out;
   }
 
-  ATLAS.lens({
-    id: "witness", name: "Eyewitnesses", family: "mind", color: "#6b5b3e", on: false, guide: [],
-    key: [["square", "a primary source: what someone wrote at the time, word for word"]],
-    draw(ctx) {
-      if (!ok()) return; const y = ctx.year;
-      ctx.pins(D.Q.filter(q => q.lon != null && Math.abs((q.y ?? 1e9) - y) <= 25), { key: q => q.id, shape: "square", size: 5, label: q => q.author, pri: 5, title: q => `${q.author}: “${q.text.slice(0, 90)}…”`, card: quoteCard });
-    },
-    here(ctx, at) {
-      if (!ok()) return []; const y = ctx.year;
-      return D.Q.filter(q => q.lon != null && km([at.lon, at.lat], [q.lon, q.lat]) < 600).sort((a, b) => Math.abs(a.y - y) - Math.abs(b.y - y)).slice(0, 5)
-        .map(q => ({ title: `“${q.text.slice(0, 70)}…”`, year: q.y, why: q.author, dim: Math.abs(q.y - y) > 80, card: quoteCard(q) }));
-    },
-    strip: () => ok() ? D.Q.map(q => q.y).filter(Number.isFinite) : [],
-  });
-
   // ---------- the Why tab ----------
   let pane = null, filt = "";
   function renderTab() {
@@ -315,6 +308,7 @@
     const nodes = q.length > 2 ? Object.keys(D.N).filter(id => (D.inn[id] || D.out[id]) && norm(D.N[id][0]).includes(q)).slice(0, 12) : [];
     const n = D.n;
     pane.innerHTML = `${player}
+      <label class="sch-on"><input type="checkbox" id="sch-on"${ATLAS.isOn && ATLAS.isOn("why") ? " checked" : ""}> Show causes and effects on the map</label>
       <form class="sch-find"><input type="search" placeholder="Why did… (an event, a scholar, a school)" value="${esc(filt)}" aria-label="Find a chain, debate or event"></form>
       ${nodes.length ? `<div class="sec"><h3>Why did it happen?</h3><div class="sch-links">${nodes.map(id => `<button type="button" class="btn sch-mini" data-sch="n:${esc(id)}" style="--c:${lc(D.N[id][4])}"><i></i>${esc(D.N[id][0])} <em>${fy(D.N[id][1])}</em></button>`).join("")}</div></div>` : ""}
       <div class="sec"><h3>Why chains <span class="n">${chains.length}</span></h3><p class="sub">Each one crosses lenses: tap to play it link by link on the map.</p><div class="sch-links">${chains.slice(0, 24).map(c => chainBtn(c)).join("")}</div></div>
@@ -326,7 +320,10 @@
   }
   if (ATLAS.tab) ATLAS.tab({ id: "why", name: "Why", icon: "mind",
     // A new year re-sorts the lists, but only while the tab is open; show() catches up when it opens.
-    mount(el, api) { pane = el; renderTab(); api.onYear(() => { clearTimeout(pane._t); if (!pane.hidden) pane._t = setTimeout(renderTab, 400); }); }, show() { renderTab(); } });
+    mount(el, api) {
+      pane = el; renderTab();
+      el.addEventListener("change", ev => { if (ev.target.id === "sch-on") api.setOn("why", ev.target.checked); });
+      api.onYear(() => { clearTimeout(pane._t); if (!pane.hidden) pane._t = setTimeout(renderTab, 400); }); }, show() { renderTab(); } });
 
   // ---------- styles ----------
   const css = document.createElement("style");
@@ -359,6 +356,8 @@
   .sch-q { margin: 0; font-family: var(--fell); font-size: 16px; line-height: 1.4; border-left: 3px solid var(--c, var(--rule)); padding-left: 10px; }
   .sch-ok { color: var(--b-calm); font-family: var(--mono); font-size: 10.5px; margin-left: 5px; }
   .sch-pg { color: var(--ink-soft); }
+  .sch-on { display: flex; gap: 8px; align-items: center; font-size: 13.5px; color: var(--ink-soft); margin: 2px 0 6px; cursor: pointer; }
+  .sch-on input { width: 16px; height: 16px; margin: 0; accent-color: var(--y-why, #b5562b); }
   .sch-find input { width: 100%; box-sizing: border-box; border: 1px solid var(--rule); background: var(--card); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 14px; margin: 4px 0 8px; }
   .sch-deb { border-color: color-mix(in srgb, var(--y-debates, #9b4d2e) 60%, var(--rule)); }
   .sch-play { border-color: color-mix(in srgb, var(--y-why, #b5562b) 60%, var(--rule)); }

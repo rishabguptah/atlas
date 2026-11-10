@@ -1962,9 +1962,13 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const setOn = (k, v) => { if (k in FLAG) state[k] = v; else state.on[k] = v; };
   const NAME = { basemap: BASEMAP0 ? BASEMAP0.name || "Pixel map" : "", terrain: "Terrain", borders: "Borders", political: "Political colours", ...Object.fromEntries(LAYERS.map(l => [l.k, l.n])) };
   const COLOR = k => k === "borders" ? "var(--land-edge)" : k === "terrain" || k === "basemap" ? "var(--l-geography)" : k === "political" ? "var(--y-order)" : `var(--y-${k})`;
-  const MEMBERS = Object.fromEntries(FAMILIES.map(f => [f.id, [
+  // Every lens of a family (the key card lists them all) and the ones with a chip. A lens that belongs to a tab
+  // (tab: "codex") has no chip: its tab switches it on, and leaving the mode puts the lenses back.
+  const TAB_LENS = new Set(PLUG.filter(d => d.tab).map(d => d.id));
+  const ALL_MEMBERS = Object.fromEntries(FAMILIES.map(f => [f.id, [
     ...(f.id === "land" ? [...(BASEMAP0 ? ["basemap"] : []), ...(TERRAIN ? ["terrain"] : []), "places", "borders", ...(TERRAIN && RELIEF_POL && window.drawRealms ? ["political"] : [])] : []),
     ...LAYERS.filter(l => FAM_OF[l.k] === f.id).map(l => l.k), ...PLUG.filter(d => d.family === f.id).map(d => d.id)].filter((k, i, a) => a.indexOf(k) === i)]));
+  const MEMBERS = Object.fromEntries(Object.entries(ALL_MEMBERS).map(([f, m]) => [f, m.filter(k => !TAB_LENS.has(k))]));
   const chip = (el, k, n, c, cls) => { const b = document.createElement("button"); b.className = "chip" + (cls ? " " + cls : ""); b.dataset.k = k; b.style.setProperty("--c", c); b.innerHTML = `<i></i>${esc(n)}`; el.appendChild(b); return b; };
   const famChips = {};
   for (const f of FAMILIES) famChips[f.id] = chip(layersEl, f.id, f.n, f.c, "fam");
@@ -2774,7 +2778,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   function renderKey() {
     if (keyEl.hidden) return;
     const groups = FAMILIES.map(f => {
-      const rows = MEMBERS[f.id].filter(k => isOn(k) && k !== "terrain" && k !== "political").flatMap(k => {
+      const rows = ALL_MEMBERS[f.id].filter(k => isOn(k) && k !== "terrain" && k !== "political").flatMap(k => {
         const d = PLUG.find(x => x.id === k);
         const rs = KEY[k] || (d ? (Array.isArray(d.key) ? d.key : [["dot", d.desc || d.name || k]]) : []);
         // A basemap that paints marks itself (the pixel map) can draw the key's glyphs in the same style.
@@ -2955,8 +2959,10 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   // ---------- start: where you left off, or 1348, the Black Death year, where five lenses overlap ----------
   const RESUME = loadView();
   if (RESUME) {
-    // Opt-in modes (Travel time) do not come back on by themselves after a reload.
-    for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k] && !OPT_IN.has(k);
+    // Opt-in modes (Travel time) and a tab's own lens (Codex, Why) do not come back on by themselves after a reload.
+    // Eyewitnesses joined Historians argue as one lens, Sources and debates.
+    if (RESUME.on && RESUME.on.witness) RESUME.on.debates = true;
+    for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k] && !OPT_IN.has(k) && !TAB_LENS.has(k);
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
   syncChips(); drawStrip();
