@@ -131,7 +131,7 @@ also drawn on canvas with `PIXEL_ICONS.draw`); the six family emblems live there
 - Map first: the panel starts folded to a row of emblem ribbons and opens when a ribbon is tapped, a place clicked or a
   question asked. The eye button (or **H**) hides the whole interface but a faint year plate and the eye; dragging the map
   turns the interface into a ghost until you let go.
-- Games and modes (Codex, Guess, Live, What if, Stories, Who was there, Objects, Up close, Travel, Living world) share one way out: a
+- Games and modes (Codex, Guess, Live, What if, Stories, Who was there, Objects, Up close, Travel) share one way out: a
   "Back to map" plate top left (or **Esc**) puts back the year, view, lenses and tab you came from and folds the panel.
   `ATLAS.exitMode()` does the same; `ATLAS.api.lenses()` lists the lenses that are on. A tab joins them with
   `mode` in its `ATLAS.tab` call, and names its ribbon icon with `icon` (LENSES.md).
@@ -161,7 +161,7 @@ Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead 
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
 in a second row. Land's row starts with the map style (Pixel, Relief or Plain). A lens that only makes sense inside a
-tab (What if, Live a life, Codex, Why, Living world) has no chip and comes on with its tab; a lens that belongs to another chip has
+tab (What if, Live a life, Codex, Why, Living world in Who was there) has no chip and comes on with its tab; a lens that belongs to another chip has
 none either (Provinces draws with Borders, Growing cities with Cities, Art & architecture with Ideas, faith & art). Shocks has two chips by subject, Epidemics and
 Famine & climate: each draws the curated records of the built-in Plague & climate layer together with the catalogue that
 goes with it (plague returns and Wikidata epidemics; eruptions, famines and temperature). At world zoom the catalogues
@@ -184,7 +184,7 @@ plays one.
 
 ## Living world (travellers, meetings, stories of the road)
 
-The Travellers lens (Peoples) and the Living world tab show who was on the road, day by day. Engine:
+The Travellers lens (Peoples) and the On the road view of the Who was there tab show who was on the road, day by day. Engine:
 `views/atlas/world/agents.js` (L3 in WORLD.md: `ATLAS.world.agents / meetings / step / story / passing / add`), data
 from `views/atlas/lenses/living.py` (late file `atlas-files/lens-living.json`). Named travellers follow documented
 journeys (the travels kernel via `lenses/travels.py:journeys_as_stops`, and the life RPG's `data/life/lives/`); dates between known stops are spread by
@@ -193,7 +193,8 @@ distance, legs take road time and the rest is a stay. The crowd is generated fro
 `data/world/names.json` by culture and era, and is always labelled generated. On slave-trade routes the generated
 people are the enslaved, named, never cargo. Meetings: `data/world/meetings.json` (documented, disputed, legend)
 plus co-presence at the moment. Follow a traveller to get a story of scenes; "Play as scenes" hands it to the
-Director; "Tell this story" asks Claude (needs `sample`). Keys in the tab: `,` and `.` step a day.
+Director; "Tell this story" asks Claude (needs `sample`). Keys in the view: `,` and `.` step a day. The view is `ATLAS.living` (`name`, `mount(el, api)`, `show()`, `hide()`), which
+`lenses/travels.js` mounts in its own pane; the travellers come on with the view and go when you leave it.
 `data/world/news.json` and `speeds.json` are ground truth for backtesting the motion model.
 
 ## Guess the past

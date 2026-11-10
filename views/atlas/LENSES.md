@@ -143,7 +143,8 @@ The Objects tab (`lenses/objects.js`) is the example of a tab that plays a seque
 animate along a leg with `api.redraw()` each frame, caption with `api.scene`). It also exposes `ATLAS.objects` (`list`,
 `journey`, `at(year)`, `near(lon, lat, year, km)`, `follow(id)`) for other plugins.
 
-The Who was there tab (`lenses/travels.js`) is the Contemporaries finder and exposes `ATLAS.travel` (`journeys`,
+The Who was there tab (`lenses/travels.js`) is the Contemporaries finder; its On the road view is the living world's
+(`ATLAS.living`, see README). It exposes `ATLAS.travel` (`journeys`,
 `journey(id)` in the shared itinerary format, `positionAt(id, t)`, `travellers(t)`, `ships(t)`, and the promises
 `presentAt(lon, lat, km, y0, y1)`, `contemporaries(personId)`, `lifeline(personId)`). Times are fractional years.
 

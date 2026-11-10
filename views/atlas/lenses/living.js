@@ -1,7 +1,8 @@
 // Living world: travellers on the road, who could have met whom, and stories of the road. The engine is
 // views/atlas/world/agents.js (ATLAS.world.agents / meetings / step / story); this file is its lens (Travellers, in
-// Peoples) and its tab (Living world): a day-by-day clock, moments to jump to, who is on the road in view, meetings,
-// and Follow, which turns one traveller's road into a story of scenes on the map. Data: LENS_DATA.living
+// Peoples) and the On the road view of the Who was there tab (lenses/travels.js hosts it, from ATLAS.living): a
+// day-by-day clock, moments to jump to, who is on the road in view, meetings, and Follow, which turns one traveller's
+// road into a story of scenes on the map. Data: LENS_DATA.living
 // (views/atlas/lenses/living.py), which arrives after the first paint.
 (function () {
   const W = ATLAS.world;
@@ -103,7 +104,7 @@
     return b[0] < -180 || b[2] > 180 ? null : b;
   }
   ATLAS.lens({
-    id: "living", name: "Living world", family: "peoples", color: COLOR, on: false, tab: "living",
+    id: "living", name: "Living world", family: "peoples", color: COLOR, on: false, tab: "travels",
     guide: ["people", "travel", "journeys"],
     key: [["sprite", "A real traveller on a documented journey (named)"], ["small", "A generated group on a real recurring route (merchants, pilgrims, sailors)"], ["line", "The road of the traveller you follow"]],
     index: d => (d.journeys || []).map(j => `${j.name} (${j.kind}, ${(j.stops[0] || {}).date || ""})`).join("; ").slice(0, 3000),
@@ -326,9 +327,11 @@
     const out = W.journeys().map(a => ({ t: a.t0 + DAY, label: `${T.year(a.t0) < 0 ? -T.year(a.t0) + " BCE" : T.year(a.t0)}: ${a.name}`, id: a.id }));
     return out.sort((a, b) => a.t - b.t);
   }
+  // The view sits inside the Who was there pane, so it is out of sight when it or any parent is hidden.
+  const hidden = () => !S.el || !!S.el.closest("[hidden]");
   function render() {
-    const el = S.el; if (!el || el.hidden) return;
-    if (!ok()) { el.innerHTML = `<div class="lw"><h2>Living world</h2><p class="empty">Loading travellers…</p></div>`; clearTimeout(S.wait); S.wait = setTimeout(() => renderSoon(), 400); return; }
+    const el = S.el; if (hidden()) return;
+    if (!ok()) { el.innerHTML = `<div class="lw"><p class="empty">Loading travellers…</p></div>`; clearTimeout(S.wait); S.wait = setTimeout(() => renderSoon(), 400); return; }
     const t = S.t ?? now(S.api.year), v = S.api.view();
     const bbox = v ? [v.lon - v.w / 2, v.lat - v.h / 2, v.lon + v.w / 2, v.lat + v.h / 2] : null;
     const list = W.agents(t, bbox), real = list.filter(r => r.real), gen = list.filter(r => !r.real);
@@ -337,7 +340,7 @@
     const A = S.follow ? W.agent(S.follow) : null;
     const row = (r, extra = "") => `<div class="lw-row${extra}"><span class="lw-who"><b>${esc(r.name)}</b><small>${esc(r.moving ? `${r.from ? r.from + " → " : ""}${r.to}` : "at " + (r.at || ""))}${r.real ? "" : " · " + esc(r.a && r.a.flow ? r.a.flow.name : r.role)}</small></span><button data-follow="${esc(r.id)}" aria-pressed="${S.follow === r.id}">${S.follow === r.id ? "Following" : "Follow"}</button></div>`;
     el.innerHTML = `<div class="lw">
-      <div><h2>Living world</h2><p class="lede">Who was on the road, day by day. Named travellers follow their sources; the crowd is generated from real routes, seasons and trip times.</p></div>
+      <p class="lede">Who was on the road, day by day. Named travellers follow their sources; the crowd is generated from real routes, seasons and trip times.</p>
       <div class="lw-when">${esc(T.fmt(t))}</div>
       <div class="lw-ctl"><button data-a="-30" title="Back a month">«</button><button data-a="-1" title="Back a day">‹</button>
         <button class="play" data-a="play" aria-label="${S.playing ? "Pause" : "Play"}">${S.playing ? "❚❚" : "▶"}</button>
@@ -369,8 +372,8 @@
     .lw-moments{display:flex;flex-wrap:wrap;gap:4px}.lw-scenes{max-height:240px;overflow:auto;display:grid}.lw-sc{display:grid;grid-template-columns:110px 1fr;gap:6px;text-align:left;border:0;background:none;padding:3px 2px;cursor:pointer;color:inherit;font:inherit}
     .lw-sc .d{font:11px var(--mono);opacity:.65}.lw-sc.on{background:rgba(196,122,44,.16)}.lw-sc.past{opacity:.6}.lw .cf{font:10px var(--mono);opacity:.7;font-style:normal}
     .lw-tell p{margin:.4em 0;line-height:1.45}.lw .tag{font:10px var(--mono);padding:1px 5px;border-radius:3px;background:rgba(196,122,44,.18)}`;
-  ATLAS.tab({
-    id: "living", name: "Living world", icon: "peoples", short: "Living", mode: true,
+  ATLAS.living = {
+    name: "On the road",
     mount(el, api) {
       S.el = el; S.api = api;
       const st = document.createElement("style"); st.textContent = STYLE; document.head.appendChild(st);
@@ -388,19 +391,21 @@
         if (b.dataset.scene) return goScene(+b.dataset.scene);
         if (b.dataset.moment) { stop(); S.tell = null; return startFollow(b.dataset.moment, true); }
       });
-      api.onYear(y => { if (S.t != null && T.year(S.t) !== y) S.t = null; lists.clear(); if (!el.hidden) renderSoon(); });
-      if (api.onView) api.onView(() => { if (!el.hidden) renderSoon(); });
+      api.onYear(y => { if (S.t != null && T.year(S.t) !== y) S.t = null; lists.clear(); if (!hidden()) renderSoon(); });
+      if (api.onView) api.onView(() => { if (!hidden()) renderSoon(); });
       render();
     },
+    // The travellers come on with the view, and go when you leave it (unless they were on already).
     show() {
-      if (!ATLAS.isOn("living")) S.api.setOn("living", true);
+      if (!ATLAS.isOn("living")) { S.api.setOn("living", true); S.mine = true; }
       loadWater();
       renderSoon(true);
     },
-  });
-  // Keyboard while the tab is open: , and . step a day (the page keeps arrows for years).
+    hide() { stop(); if (S.mine) { S.mine = false; S.api.setOn("living", false); } },
+  };
+  // Keyboard while the view is open: , and . step a day (the page keeps arrows for years).
   document.addEventListener("keydown", ev => {
-    if (!S.el || S.el.hidden || ev.target.closest("input, textarea, select") || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    if (hidden() || ev.target.closest("input, textarea, select") || ev.metaKey || ev.ctrlKey || ev.altKey) return;
     if (ev.key === "," || ev.key === ".") { ev.preventDefault(); stop(); setT((S.t ?? now(S.api.year)) + (ev.key === "." ? 1 : -1) * DAY); }
   });
 })();

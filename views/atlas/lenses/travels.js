@@ -460,7 +460,8 @@
     { n: "Nalanda, 638", lon: 85.44, lat: 25.14, y: 638, why: "Xuanzang studies at the great monastery" },
   ];
   const TAB = { mode: "place", where: null, who: null, q: "" };
-  let pane = null, api = null;
+  // The On the road view is the living world's (lenses/living.js, ATLAS.living): it keeps its own element, after ours.
+  let pane = null, body = null, roadEl = null, roadOn = false, api = null;
   const STYLE = `
 .trv { display: grid; gap: 10px; }
 .trv .lede { margin: 0; color: var(--ink-soft); }
@@ -479,6 +480,7 @@
 .trv .note { font-size: 12.5px; color: var(--ink-soft); margin: 0; }
 .trv .go { font: 600 13px/1 inherit; padding: 8px 12px; border-radius: 6px; border: 1px solid ${COLOR}; background: ${COLOR}; color: #fff; cursor: pointer; }
 .trv .go.ghost { background: none; color: ${COLOR}; }
+.trv-road { margin-top: 12px; }
 `;
   const confTag = c => `<span class="c c${c}">${CONF[c]}</span>`;
   function placeView() {
@@ -516,13 +518,21 @@
       + `<p class="note">Hand-entered from the cited accounts; drafts awaiting check. Paths between stops are worked out by the shared router once it has loaded (roads, rivers and sea lanes as they ran that year); until then they are straight.</p>`;
   }
   function renderTab() {
-    if (!pane) return;
+    if (!body) return;
     const b = (m, n) => `<button type="button" data-mode="${m}" aria-pressed="${TAB.mode === m}">${n}</button>`;
-    pane.innerHTML = `<div class="trv"><p class="lede">Who was really in the same place at the same time, and the great journeys that crossed the world.</p>
-      <div class="tabs">${b("place", "Here and now")}${b("person", "A person")}${b("journeys", "Follow a journey")}</div>
+    body.innerHTML = `<div class="trv"><p class="lede">Who was really in the same place at the same time, who was on the road, and the great journeys that crossed the world.</p>
+      <div class="tabs">${b("place", "Here and now")}${b("person", "A person")}${ATLAS.living ? b("road", ATLAS.living.name) : ""}${b("journeys", "Follow a journey")}</div>
       ${followId ? `<div class="chips"><button type="button" class="go" data-act="stop">✕ Stop following</button></div>` : ""}
       ${TAB.mode === "place" ? `<div class="chips">${PRESETS.map((p, i) => `<button type="button" class="chip" data-preset="${i}" title="${esc(p.why)}">${esc(p.n)}</button>`).join("")}</div>${placeView()}`
-        : TAB.mode === "person" ? personView() : journeysView()}</div>`;
+        : TAB.mode === "person" ? personView() : TAB.mode === "road" ? "" : journeysView()}</div>`;
+  }
+  function setMode(m) {
+    TAB.mode = m; if (m === "place" || m === "person") deep();
+    const R = ATLAS.living, on = m === "road" && !!R;
+    roadEl.hidden = !on;
+    if (on) { if (!roadEl.dataset.up) { roadEl.dataset.up = "1"; R.mount(roadEl, api); } R.show(); }
+    else if (roadOn && R) R.hide();
+    roadOn = on; renderTab();
   }
 
   // Follow a journey: time runs by the month along each leg; the camera frames the leg; stops get a caption.
@@ -566,10 +576,11 @@
     id: ID, name: "Who was there", icon: "travels", short: "Who", mode: true,
     mount(el, a) {
       pane = el; api = a;
+      el.innerHTML = `<div></div><div class="trv-road" hidden></div>`; body = el.firstChild; roadEl = el.lastChild;
       if (!document.getElementById("travels-style")) { const st = document.createElement("style"); st.id = "travels-style"; st.textContent = STYLE; document.head.appendChild(st); }
       el.addEventListener("click", ev => {
-        const t = ev.target;
-        const m = t.closest("[data-mode]"); if (m) { TAB.mode = m.dataset.mode; if (TAB.mode !== "journeys") deep(); return renderTab(); }
+        const t = ev.target; if (roadEl.contains(t)) return;  // the On the road view handles its own buttons
+        const m = t.closest("[data-mode]"); if (m) return setMode(m.dataset.mode);
         if (t.closest("[data-act=stop]")) return stopFollow();
         const p = t.closest("[data-preset]");
         if (p) { const s = PRESETS[+p.dataset.preset]; TAB.where = s; api.setYear(s.y, true, 900); api.fly({ lon: s.lon, lat: s.lat, span: 6 }, 1200); deep().then(renderTab, renderTab); return renderTab(); }
@@ -584,7 +595,7 @@
       DEEP.waiting.push(renderTab);
       renderTab();
     },
-    show() { if (!TAB.where && lastAt) TAB.where = { n: "Here", ...lastAt }; deep().then(renderTab, renderTab); renderTab(); },
+    show() { if (!TAB.where && lastAt) TAB.where = { n: "Here", ...lastAt }; deep().then(renderTab, renderTab); renderTab(); if (roadOn) ATLAS.living.show(); },
     // In "Here and now", a click on the map asks who was there, in this tab; the other views leave it to Here.
     pick(at) {
       if (TAB.mode !== "place") return false;
