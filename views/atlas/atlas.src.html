@@ -1968,7 +1968,14 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ${sec("disease", "Plague & climate", dItems)}${P("shocks")}
       ${sec("ideas", "Ideas & faith", iItems)}${P("mind")}
       <p class="note">Within about ${R_KM} km of the marked spot (people: born within 60 km). Rows from other centuries fold under "from other times"; tap one to jump there.</p>
-      <div class="row"><button class="btn primary" data-a="${act(() => askAbout({ title: name, year: y, here: true }))}">Ask the guide about ${esc(name)} in ${esc(fmtYear(y))}</button></div>`;
+      <div class="row"><button class="btn primary" data-a="${act(() => askAbout({ title: name, year: y, here: true }))}">Ask the guide about ${esc(name)} in ${esc(fmtYear(y))}</button>${TABS.some(d => d.id === "upclose") ? `<button class="btn" data-a="${act(() => studyUpClose(name, lon, lat))}">Study it up close</button>` : ""}</div>`;
+  }
+  // Here hands its spot to Up close: the map frames the region around it, and the tab studies it by the month under its name.
+  function studyUpClose(name, lon, lat) {
+    if (ATLAS.deep) ATLAS.deep.place = { name, lon, lat };
+    const v = ATLAS.api.view();
+    flyTo({ lon, lat, span: Math.min(8, v && isFinite(v.w) ? v.w : 8) }, 900);
+    setTab("upclose");
   }
 
   // ---------- tabs ----------
