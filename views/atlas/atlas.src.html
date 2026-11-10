@@ -2006,7 +2006,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // The tabs don't fit one row, so they sit in three labelled groups that wrap: no sideways scrolling.
   // Tabs not named here join Explore.
-  const TAB_GROUPS = [["Learn", ["guide", "now", "here", "why", "stories", "travels"]], ["Explore", ["upclose", "life", "objects", "shrink", "living"]], ["Play", ["whatif", "guess", "codex"]]];
+  const TAB_GROUPS = [["Learn", ["guide", "now", "here", "why", "stories", "travels"]], ["Explore", ["upclose", "life", "objects", "shrink"]], ["Play", ["whatif", "guess", "codex"]]];
   (function groupTabs() {
     const bar = document.querySelector(".tabs"), all = [...bar.querySelectorAll(".tab")], used = new Set();
     const groups = TAB_GROUPS.map(([n, ids]) => [n, ids.map(id => all.find(b => b.dataset.tab === id)).filter(Boolean)]);
