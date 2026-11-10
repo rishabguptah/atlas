@@ -69,6 +69,13 @@
     const cctx = chromeC.getContext("2d");
     let chromeKey = "";
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
+    // The container's size, read once and kept: a read after the page has changed the DOM forces a layout, and a year
+    // step read it several times, after the lenses had redrawn. It is read again when the container is resized, or when
+    // the projection was refitted (the page refits it on every resize, which can come before this observer's call).
+    let cW = 0, cH = 0, cKey = null;
+    const sizeKey = () => projection.scale() + "," + projection.translate().join(",");
+    const size = () => { const key = sizeKey(); if (key !== cKey) { cW = container.clientWidth; cH = container.clientHeight; cKey = key; } return [cW, cH]; };
+    if (typeof ResizeObserver === "function") new ResizeObserver(() => { cKey = null; }).observe(container);
     let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, elevA = null, riv = null, anim = null, art = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [], paleo = null, paleoKey = "";
 
     // Terrain tiles: levels coarse to fine, each {cell (degrees), tdeg (tile size in degrees), url(col, row)}.
@@ -428,7 +435,7 @@
 
     // Where the art-pixel grid sits for transform t with `pd` art px of pad past each screen edge.
     function geom(t, pd) {
-      const W = container.clientWidth, H = container.clientHeight;
+      const [W, H] = size();
       const ox = ((t.x % PX) + PX) % PX - PX - pd * PX, oy = ((t.y % PX) + PX) % PX - PX - pd * PX;
       const sw = Math.abs(projection([180, 0])[0] - projection([-180, 0])[0]);
       return { ox, oy, U0: Math.round((ox - t.x) / PX), V0: Math.round((oy - t.y) / PX), w: Math.ceil((W - ox) / PX) + 1 + pd, h: Math.ceil((H - oy) / PX) + 1 + pd, need: 360 / (sw * t.k / PX) };
@@ -471,7 +478,7 @@
     }
 
     function render(t, o = {}) {
-      const W = container.clientWidth, H = container.clientHeight; lastW = W; lastH = H;
+      const [W, H] = size(); lastW = W; lastH = H;
       last = t; realmsNow = o.realms || realmsNow; if (o.mood) mood = o.mood; rv++; fade = null;
       // Art pixel (i, j) covers screen x in [ox + i*PX, ox + (i+1)*PX); U0 + i is its column in the zoomed world grid.
       // pad: art pixels drawn past every edge of the screen (sticky until a render asks for another), so a pan
@@ -824,7 +831,9 @@
       // o.paint false: the caller sets sprites next, which paints (one paint per year step, not two).
       setRealms(r, o) { realmsNow = r || NONE; if (!terrain) return; applyRealms(); realmsDone(o); },
       // Is the last render for this transform (so a year change can use setRealms)?
-      same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === container.clientWidth && lastH === container.clientHeight; },
+      same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === size()[0] && lastH === size()[1]; },
+      // The container's size in CSS px, as the map last read it (pm.size is the art grid's).
+      cssSize: size,
       // Switch era style (null = today's look): regrade, then dissolve from the old frame over about 400 ms.
       setEra(st, o = {}) {
         if ((st && st.id) === (era && era.id)) return;

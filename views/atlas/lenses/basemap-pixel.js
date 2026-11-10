@@ -302,7 +302,8 @@
   try { eraChoice = localStorage.getItem("atlas.era.v1") || "auto"; } catch (e) { /* storage blocked */ }
   function eraFor(t, y, quiet) {
     if (!ERAS || !pm || !proj || y == null) return;
-    const c = proj.invert(t.invert([el0.clientWidth / 2, el0.clientHeight / 2])) || [0, 0];
+    const [cw, ch] = pm.cssSize ? pm.cssSize() : [el0.clientWidth, el0.clientHeight];
+    const c = proj.invert(t.invert([cw / 2, ch / 2])) || [0, 0];
     // Before writing the ice-age world shows in its own colours (ice, exposed shelves, steppe), not on a clay tablet.
     const id = eraChoice === "auto" ? (y < DEEP_ERA ? "now" : ERAS.pick(y, { lon: c[0], lat: c[1], k: t.k })) : eraChoice;
     ERAS.setYear(y);
@@ -405,8 +406,9 @@
       }
       nameRealms();
       if (geo) {
-        const on = isOn("terrain"), key = on ? [t.k, t.x, t.y, el0.clientWidth, el0.clientHeight].join() : "off";
-        if (key !== geoKey) { geoKey = key; if (on) geo.render(t, el0.clientWidth, el0.clientHeight); else geo.clear(); }
+        const [cw, ch] = pm.cssSize ? pm.cssSize() : [el0.clientWidth, el0.clientHeight];
+        const on = isOn("terrain"), key = on ? [t.k, t.x, t.y, cw, ch].join() : "off";
+        if (key !== geoKey) { geoKey = key; if (on) geo.render(t, cw, ch); else geo.clear(); }
       }
       // This paint carries the marks too: a marks repaint still waiting would paint the same picture again.
       clearTimeout(markTimer); markTimer = 0;
