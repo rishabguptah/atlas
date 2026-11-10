@@ -494,6 +494,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
         <div class="row"><button class="btn primary" type="submit">Ask, and let the map answer</button></div>
       </form>
       <span class="hint" id="askhint"></span>
+      <div class="sec known" id="known" hidden></div>
       <div class="examples" id="examples"></div>
       <div class="answer" id="answer" hidden></div>
       <p class="foot">Rule of the house: AI drafts, sources decide. Every answer here is a draft until the judge checks it. AI answers name sources the model believes exist; they are marked unchecked.</p>
@@ -2406,7 +2407,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (ev.target.id === "prev") { stopPlay(); step(-1); }
     if (ev.target.id === "next") { stopPlay(); step(1); }
     if (ev.target.id === "play") { state.playing ? stopPlay() : startPlay(); }
-    if (ev.target.id === "newq") { abortLive(); stopPlay(); state.answer = null; state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); drawAll(); showCaption(null); answerEl.hidden = true; document.getElementById("examples").hidden = false; const q2b = document.getElementById("qbox2"); q2b.value = ""; q2b.focus(); }
+    if (ev.target.id === "newq") { abortLive(); stopPlay(); state.answer = null; state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); drawAll(); showCaption(null); answerEl.hidden = true; showKnown(null); document.getElementById("examples").hidden = false; const q2b = document.getElementById("qbox2"); q2b.value = ""; q2b.focus(); }
   });
   answerEl.addEventListener("submit", ev => {
     if (ev.target.id !== "follow") return;
@@ -2474,8 +2475,17 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     document.getElementById("qbox").value = e.q;
     if (e.tour != null) openTour(TOURS[e.tour]); else ask(e.q, false);
   });
+  // Before the panel speaks (and when Claude isn't there at all): the why chains and debates the historians
+  // already mapped for this question, from the Why lens. A curated tour or a new question clears it.
+  const knownEl = document.getElementById("known");
+  function showKnown(q) {
+    const hits = q && ATLAS.scholar && ATLAS.scholar.find ? ATLAS.scholar.find(q) : [];
+    knownEl.hidden = !hits.length;
+    knownEl.innerHTML = hits.length ? `<h3 style="border:0;padding:0">The historians have mapped this</h3><p class="sub">Play a why chain on the map, or open a debate.</p><div class="sch-links">${hits.join("")}</div>` : "";
+    return hits.length > 0;
+  }
   function openTour(t) {
-    abortLive(); convo = []; state.muted.clear();
+    abortLive(); convo = []; state.muted.clear(); showKnown(null);
     state.answer = JSON.parse(JSON.stringify(t)); state.active = -1;
     setTab("guide"); renderAnswer(); activate(0);
   }
@@ -2751,11 +2761,12 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   async function ask(q, followUp) {
     setTab("guide");
     document.getElementById("qbox2").value = q;
+    const has = showKnown(q);
     if (!sample) { hint.textContent = "Connecting to Claude…"; await sampleReady; hint.textContent = ""; }
     if (!sample) {
       const t = TOURS.find(t => t.question.toLowerCase() === q.toLowerCase());
       if (t) return openTour(t);
-      hint.textContent = "AI answers need this page open in Claude. Try a curated tour below."; document.getElementById("examples").hidden = false; return;
+      hint.textContent = has ? "AI answers need this page open in Claude. The historians' own work on it is here, and curated tours below." : "AI answers need this page open in Claude. Try a curated tour below."; document.getElementById("examples").hidden = false; return;
     }
     abortLive(); stopPlay();
     const prev = followUp && state.answer;

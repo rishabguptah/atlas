@@ -5,7 +5,8 @@
 //                               and primary-source excerpts where and when they were written about, with source criticism
 //   Why (Shocks, no chip)       causal links drawn cause → effect across lenses, dashed by confidence class; the Why
 //                               tab switches it on and off
-//   Why tab                     chains to play as map scenes, any record's causes and effects, the bibliography
+//   Why tab                     chains to play as map scenes and the debates, nearest the year first; a question
+//                               in the Ask bar searches them (ATLAS.scholar.find), with any record's causes and effects
 // Hooks for the rest of the page: ATLAS.cite (every source row), ATLAS.cardMore (every card gets its why links,
 // debates and eyewitnesses), ATLAS.world.why(id) (the why graph, WORLD.md L3), ATLAS.world.chainStory(id) (a chain
 // as a Story of Scenes, WORLD.md L4) and ATLAS.scholar (citations and briefs for the AI panel).
@@ -211,8 +212,38 @@
       + (links.length ? `\nWHY LINKS (cause -> effect, whose view, confidence, sources):\n${links.map(l => `${nm(l.from)} ${TYPE[l.t]} ${nm(l.to)} (${fy(l.s)}; ${l.view || "?"}; ${Math.round(l.c * 100)}%; ${l.src.join(", ")}): ${l.mech}`).join("\n")}` : "")
       + (cited.size ? `\nBIBLIOGRAPHY (src id = work):\n${[...cited].map(x => `${x} = ${D.S[x][1]}`).join("\n")}` : "");
   }
+  // ---------- a question, against what the historians already mapped (the Ask bar checks this first) ----------
+  // Words, not the whole phrase: "why did Rome fall" should find the debate on the fall of Rome. A long word
+  // matches by its start, so "industrial" finds "industry". Rare words count for more than common ones, and a
+  // hit has to cover at least half the question's weight (and two of its words, when it has three or more), with
+  // at least one of them in its title.
+  const STOP = new Set("about actually after also and are became become begin began but can did does during end for from had happen happened has have how into its just like made make more most much not really start started than that the their them then there they this was were what when where which while who why will with would".split(" "));
+  const stem = w => w.length > 5 ? w.slice(0, Math.max(4, w.length - 3)) : w;
+  let INDEX = null;
+  function find(q, max = 6) {
+    if (!ok()) return [];
+    const words = [...new Set(norm(q).split(" ").filter(w => w.length > 2 && !STOP.has(w)).map(stem))];
+    if (!words.length) return [];
+    if (!INDEX) {
+      const t = s => " " + norm(s) + " ";
+      INDEX = [...D.C.map(c => ({ head: t(c.n), body: t(c.blurb + " " + c.question), html: chainBtn(c) })),
+        ...D.D.map(d => ({ head: t(d.n), body: t(d.pos.map(p => p.school + " " + (p.scholars || []).join(" ") + " " + (p.claim || "")).join(" ")), html: debateBtn(d) })),
+        // Any record with causes or effects, by its name alone: "why did it happen?" opens its why card.
+        ...Object.keys(D.N).filter(id => D.inn[id] || D.out[id]).map(id => ({ head: t(D.N[id][0]), body: "", html: `<button type="button" class="btn sch-mini" data-sch="n:${esc(id)}" style="--c:${lc(D.N[id][4])}"><i></i>${esc(D.N[id][0])} <em>${fy(D.N[id][1])}</em></button>` }))];
+    }
+    const hit = words.map(w => INDEX.map(x => x.head.includes(" " + w) ? 2 : x.body.includes(" " + w) ? 1 : 0));
+    const idf = hit.map(h => Math.log((INDEX.length + 1) / (1 + h.reduce((n, v) => n + (v > 0), 0))));
+    const total = idf.reduce((a, b) => a + b, 0), need = words.length >= 3 ? 2 : 1, seen = new Set(), out = [];
+    INDEX.map((x, i) => {
+      let m = 0, cov = 0, sc = 0, top = false;
+      words.forEach((w, k) => { const v = hit[k][i]; if (v) { m++; cov += idf[k]; sc += idf[k] * v; top = top || v === 2; } });
+      return { x, m, cov, sc, top };
+    }).filter(r => r.top && r.m >= need && r.cov >= total / 2).sort((a, b) => b.cov - a.cov || b.sc - a.sc)
+      .forEach(r => { if (out.length < max && !seen.has(r.x.head)) { seen.add(r.x.head); out.push(r.x.html); } });
+    return out;
+  }
   ATLAS.scholar = {
-    ready: ok, why, chainStory, play, brief, debatesIn,
+    ready: ok, why, chainStory, play, brief, debatesIn, find,
     has: x => ok() && !!D.S[x], cite: citeRow,
     debateButton: id => ok() && D.dix[id] ? debateBtn(D.dix[id]) : "",
     // For other plugins (Up close storylines, deep packs): the scholarship touching one record or card, as HTML.
@@ -292,26 +323,19 @@
   }
 
   // ---------- the Why tab ----------
-  let pane = null, filt = "";
+  let pane = null;
   function renderTab() {
     if (!pane) return;
     if (!ok()) { pane.innerHTML = `<p class="sub">The historians are still arriving (their data loads after the map). One moment.</p>`; return; }
-    const y = Y();
-    const q = norm(filt);
-    const chains = D.C.filter(c => !q || norm(c.n + " " + c.blurb + " " + c.question).includes(q)).sort((a, b) => Math.abs(a.s - y) - Math.abs(b.s - y));
-    const debs = D.D.filter(d => !q || norm(d.n + " " + d.pos.map(p => p.school + " " + (p.scholars || []).join(" ")).join(" ")).includes(q)).sort((a, b) => Math.abs(a.s - y) - Math.abs(b.s - y));
-    const nodes = q.length > 2 ? Object.keys(D.N).filter(id => (D.inn[id] || D.out[id]) && norm(D.N[id][0]).includes(q)).slice(0, 12) : [];
+    const y = Y(), near = (a, b) => Math.abs(a.s - y) - Math.abs(b.s - y);
+    const chains = D.C.slice().sort(near), debs = D.D.slice().sort(near);
     const n = D.n;
     pane.innerHTML = `
       <label class="sch-on"><input type="checkbox" id="sch-on"${ATLAS.isOn && ATLAS.isOn("why") ? " checked" : ""}> Show causes and effects on the map</label>
-      <form class="sch-find"><input type="search" placeholder="Why did… (an event, a scholar, a school)" value="${esc(filt)}" aria-label="Find a chain, debate or event"></form>
-      ${nodes.length ? `<div class="sec"><h3>Why did it happen?</h3><div class="sch-links">${nodes.map(id => `<button type="button" class="btn sch-mini" data-sch="n:${esc(id)}" style="--c:${lc(D.N[id][4])}"><i></i>${esc(D.N[id][0])} <em>${fy(D.N[id][1])}</em></button>`).join("")}</div></div>` : ""}
+      <p class="sub">Nearest to ${esc(fy(y))} first. To look for one, ask in the bar at the top.</p>
       <div class="sec"><h3>Why chains <span class="n">${chains.length}</span></h3><p class="sub">Each one crosses lenses: tap to play it link by link on the map.</p><div class="sch-links">${chains.slice(0, 24).map(c => chainBtn(c)).join("")}</div></div>
       <div class="sec"><h3>Historians argue <span class="n">${debs.length}</span></h3><div class="sch-links">${debs.slice(0, 30).map(debateBtn).join("")}</div></div>
       <p class="foot">${n.links} causal links, ${n.debates} debates, ${n.quotes} eyewitness excerpts, ${n.sources} works in the bibliography (${n.verified} checked against Crossref or OpenLibrary). Quotes are matched word for word against public-domain texts.</p>`;
-    const f = pane.querySelector(".sch-find");
-    f.addEventListener("submit", ev => { ev.preventDefault(); filt = f.querySelector("input").value; renderTab(); });
-    f.querySelector("input").addEventListener("input", ev => { filt = ev.target.value; clearTimeout(f._t); f._t = setTimeout(() => { renderTab(); const i = pane.querySelector(".sch-find input"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 250); });
   }
   if (ATLAS.tab) ATLAS.tab({ id: "why", name: "Why", icon: "mind",
     // A new year re-sorts the lists, but only while the tab is open; show() catches up when it opens.
@@ -353,7 +377,6 @@
   .sch-pg { color: var(--ink-soft); }
   .sch-on { display: flex; gap: 8px; align-items: center; font-size: 13.5px; color: var(--ink-soft); margin: 2px 0 6px; cursor: pointer; }
   .sch-on input { width: 16px; height: 16px; margin: 0; accent-color: var(--y-why, #b5562b); }
-  .sch-find input { width: 100%; box-sizing: border-box; border: 1px solid var(--rule); background: var(--card); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 14px; margin: 4px 0 8px; }
   .sch-deb { border-color: color-mix(in srgb, var(--y-debates, #9b4d2e) 60%, var(--rule)); }
   .sch-play { border-color: color-mix(in srgb, var(--y-why, #b5562b) 60%, var(--rule)); }
   @media (max-width: 520px) { .sch-fa { grid-template-columns: 1fr; } }`;
