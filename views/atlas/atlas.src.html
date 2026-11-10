@@ -1484,11 +1484,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // Year changes (slider, play) re-render the basemap in the same frame while that is cheap (a cached border frame,
   // same view); when renders turn heavy (a new frame or view), at most every 120 ms.
-  // A deferred render that comes due while the year's marks are still waiting for their frame (drawAll) renders right
-  // after them instead: rendering first painted the last year's marks, and then a marks repaint painted it all again.
+  // A deferred render that comes due while the year's marks are still waiting for their frame (drawAll) waits for that
+  // frame, then runs in a task of its own just after it: rendering first painted the last year's marks, and then a marks
+  // repaint painted it all again. (Inside the frame it would make that frame late.)
   let bmTimer = 0, bmLast = 0, bmCost = 0, bmDue = false;
   function renderBasemapSoon() {
-    if (bmDue) { bmDue = false; bmLast = performance.now(); return renderBasemap(); }
+    if (bmDue) { bmDue = false; if (!bmTimer) bmTimer = setTimeout(() => { bmTimer = 0; bmLast = performance.now(); if (bmYear !== state.year) renderBasemap(); }, 0); return; }
     if (bmCost < 6 && !bmTimer) return renderBasemap();
     if (bmTimer) return;
     const wait = Math.max(0, 120 - (performance.now() - bmLast));
