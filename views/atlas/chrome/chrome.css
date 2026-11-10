@@ -12,6 +12,8 @@
   --fs-tiny: 8px; --fs-tiny-2: 16px;
   /* Two shadows, both hard and lit from the top left: a raise for chips, buttons and swatches, a float for windows. */
   --sh-raise: 2px 2px 0 var(--shade); --sh-float: 4px 4px 0 var(--shade);
+  /* One fade, in three hard steps like a sprite's frames: map layers, labels and the key cross all change this way. */
+  --fade: 240ms steps(3, end);
   --fs-h4: 16px; --fs-h3: 24px; --fs-h2: 32px; --fs-h1: 48px;
   --fs-note: 13px; --fs-read: 15px; --fs-lead: 17px;
   /* A pressed family chip is filled with its tincture's darker step, so vellum type reads on it (4.8:1 or better). */

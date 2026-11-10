@@ -54,7 +54,7 @@ svg.map-labels.m-night .lb-realm, svg.map-labels.m-night .lb-province, svg.map-l
 svg.map-labels.m-night .lb-peak { fill: #efe2c0; stroke: rgba(16, 20, 36, .8); }
 svg.map-labels.m-chronicle .lb-sea, svg.map-labels.m-chronicle .lb-ocean { fill: #f4e8cc; stroke: rgba(70, 44, 20, .7); }
 svg.map-labels.quiet .base { opacity: .5; }
-svg.map-labels g { transition: opacity .3s; }
+svg.map-labels g { transition: opacity var(--fade, 240ms steps(3, end)); }
 `;
   const measureCtx = (typeof document !== "undefined" ? document.createElement("canvas") : null)?.getContext("2d");
   const widths = new Map();
@@ -194,8 +194,9 @@ svg.map-labels g { transition: opacity .3s; }
       // marks' labels (P) keep off both, except the ones that must show (pinned, highlighted).
       const CELL = 64, grids = { R: new Map(), G: new Map(), P: new Map() }, pad = t.k < 2 ? 6 : 4;
       const AGAINST = { R: ["R", "G"], G: ["R", "G", "P"], P: ["R", "G", "P"] }, MUST = ["G", "P"];
-      // One budget per zoom for everything but realm names, which are limited only by room.
-      const max = Math.round(20 + 14 * Math.pow(t.k, 0.85));
+      // One budget per zoom. At world zoom (below 2x) the map stays calm: 26 names at most, and 10 realm names;
+      // closer in, realm names are limited only by room. Names that must show (priority 100 or more) always do.
+      const max = t.k < 2 ? 26 : Math.round(20 + 14 * Math.pow(t.k, 0.85)), maxR = t.k < 2 ? 10 : Infinity;
       // Cells are numbers (cx * 4096 + cy, offset so negatives stay apart), walked in place: no strings or arrays per test.
       const cellRange = b => [Math.floor((b[0] - pad) / CELL), Math.floor((b[1] - pad) / CELL), Math.floor((b[2] + pad) / CELL), Math.floor((b[3] + pad) / CELL)];
       const cellsOf = b => { const [x0, y0, x1, y1] = cellRange(b), out = []; for (let cy = y0; cy <= y1; cy++) for (let cx = x0; cx <= x1; cx++) out.push((cx + 1024) * 4096 + cy + 1024); return out; };
@@ -208,15 +209,15 @@ svg.map-labels g { transition: opacity .3s; }
         return false;
       };
       const blocked = b => blocks.some(o => b[0] <= o[2] && b[2] >= o[0] && b[1] <= o[3] && b[3] >= o[1]);
-      let n = 0; const notes = new Set(), won = [];
+      let n = 0, nR = 0; const notes = new Set(), won = [];
       debug = api.debug ? [] : null;
       for (const c of cands) {
         const plane = c.st === STYLES.realm ? "R" : c.ext || !(c.base || c.st === STYLES.province) ? "P" : "G";
         // Lens annotations (not settlements): at most one per 120 px cell, so marks never turn into a wall of words.
         const cell = c.ext && c.ext.note && c.pri < 100 ? Math.floor((c.boxes[0][0] + c.boxes[0][2]) / 240) + "," + Math.floor((c.boxes[0][1] + c.boxes[0][3]) / 240) : null;
-        const ok = (plane === "R" || n < max || c.pri >= 100) && !(cell && notes.has(cell)) && !c.boxes.some(b => hit(b, plane === "P" && c.pri >= 100 ? MUST : AGAINST[plane]) || under(b)) && !(plane === "G" && c.base && c.boxes.some(blocked));
+        const ok = ((plane === "R" ? nR < maxR : n < max) || c.pri >= 100) && !(cell && notes.has(cell)) && !c.boxes.some(b => hit(b, plane === "P" && c.pri >= 100 ? MUST : AGAINST[plane]) || under(b)) && !(plane === "G" && c.base && c.boxes.some(blocked));
         if (ok && cell) notes.add(cell);
-        if (ok) { if (plane !== "R") n++; const g2 = grids[plane]; for (const b of c.boxes) for (const key of cellsOf(b)) { const l = g2.get(key); if (l) l.push(b); else g2.set(key, [b]); } }
+        if (ok) { if (plane !== "R") n++; else nR++; const g2 = grids[plane]; for (const b of c.boxes) for (const key of cellsOf(b)) { const l = g2.get(key); if (l) l.push(b); else g2.set(key, [b]); } }
         if (debug) debug.push({ text: c.text || (c.ext && c.ext.text), pri: c.pri, ok, plane, boxes: c.boxes });
         if (c.ext) { try { c.ext.show(ok); } catch (err) { console.error(err); } }
         else if (ok) won.push(c);
