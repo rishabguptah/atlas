@@ -145,8 +145,8 @@ grows with age (1,000 years before 100,000 years ago) and read as "45,000 years 
 or chokepoints. The pixel map redraws the ice-age world from sea level: exposed shelves and land bridges, ice sheets,
 glacial tundra and steppe, the Green Sahara (`views/pixel/paleo.js`, `ATLAS.paleo`; rasters `atlas-files/paleo-*.png`
 from `data/deep-time/`, about 0.7 MB, fetched only when the year goes before 5500 BCE). A new sea level or ice extent
-redraws all the terrain, so while the year moves it swaps at most every 400 ms. The Deep time lens (Peoples) adds the
-other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
+redraws all the terrain, so while the year moves it swaps at most every 400 ms. The Deep time lens (Peoples; no chip, it is on
+by itself and draws only before 1 CE) adds the other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
 hearths, land-bridge and ice-sheet names, and climate shocks. Sources and rebuild: `ingest/deep-time/README.md`.
 
 ## The whole world (People lens)

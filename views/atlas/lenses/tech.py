@@ -1,6 +1,7 @@
 # Technology, food & energy: data for the one-page Atlas, read straight from data/tech-food-energy/.
-# Diffusion steps (one per place and year), news journeys, the world energy mix, English wheat yields
-# and railway, car and phone counts for the 23 HCCTA countries.
+# Diffusion steps (one per place and year), the world energy mix, English wheat yields and railway, car and phone
+# counts for the 23 HCCTA countries. How fast news travelled lives in the Travel time lens (shrink.py), which has every
+# journey this folder records and more.
 import glob, json, os, re
 
 CAPITALS = {"australia": (149.13, -35.28), "austria": (16.37, 48.21), "belgium": (4.35, 50.85), "canada": (-75.70, 45.42), "denmark": (12.57, 55.68),
@@ -56,14 +57,6 @@ def build(repo):
                     items[idx[r[end]]]['l'].append({"dir": end, "type": r['type'].replace('_', ' '), "other": names.get(r[other], r[other].split(':', 1)[1].replace('_', ' ')),
                                                     "note": r.get('note'), "conf": r.get('confidence'), "view": r.get('view'), "s": S(r['sources'])})
     steps.sort(key=lambda s: (s[0], s[1]))
-    news = []
-    for r in rows('news.jsonl'):
-        if r['kind'] == 'event':
-            o, t = places[r['origin']], places[r['place']]
-            news.append({"n": r['name'], "y": r['start'], "d": r['days'], "dr": r.get('days_range'), "o": [o['lon'], o['lat'], o['name']], "t": [t['lon'], t['lat'], t['name']],
-                         "km": r.get('km'), "w": r['what'], "s": S(r['sources'])})
-        elif r['metric'] == 'message_relay_speed':
-            relay = {"p": r['points'], "notes": r.get('notes', {}), "s": S(r['sources'])}
     en = {r['metric'].replace('primary_energy_', ''): dict(r['points']) for r in rows('energy.jsonl')}
     years = sorted({y for v in en.values() for y in v})
     energy = {"keys": ENERGY, "rows": [[y] + [round(en.get(k, {}).get(y, 0)) for k in ENERGY] for y in years],
@@ -78,5 +71,5 @@ def build(repo):
             pts = r['points']
             cc[r['metric']] = [p[:2] for p in pts[::5]] + ([pts[-1][:2]] if (len(pts) - 1) % 5 else [])  # every 5th year keeps it small
             cc['s'] = S(r['sources'])
-    return {"items": items, "steps": steps, "news": news, "relay": relay if news else None, "energy": energy, "wheat": wheat, "wheat_s": wheat_s,
+    return {"items": items, "steps": steps, "energy": energy, "wheat": wheat, "wheat_s": wheat_s,
             "countries": list(countries.values()), "src": src}

@@ -41,6 +41,7 @@ ATLAS.lens({
   tab: "codex",                    // optional: the lens belongs to that tab and has no chip; the tab switches it on
                                    //   (and a mode tab puts the lenses back on Back to map)
   with: "borders",                 // optional: no chip; the lens is part of that chip (a FLAG or a layer) and is on with it
+  chip: false,                     // optional: no chip; the lens keeps its `on` default and gates itself (Deep time, by era)
   guide: ["law", "government"],    // kernel lens names the AI guide may use to switch this lens on
   by: "political",                 // optional: the panel specialist who speaks for it; otherwise the first `guide`
                                    //   name a specialist reads decides (roster: SPECS in atlas.src.html)
