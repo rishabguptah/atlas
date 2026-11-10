@@ -11,7 +11,7 @@
   const LD = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.shrink) || null;
   const R = Math.PI / 180;
   const gc = (a, b) => { const dl = (b[1] - a[1]) * R, dn = (b[0] - a[0]) * R, x = Math.sin(dl / 2) ** 2 + Math.cos(a[1] * R) * Math.cos(b[1] * R) * Math.sin(dn / 2) ** 2; return 12742 * Math.asin(Math.min(1, Math.sqrt(x))); };
-  const fy = y => (A.api && A.api.fmtYear ? A.api.fmtYear(y) : y < 0 ? -y + " BCE" : String(y));
+  const fy = A.fmtYear;
   // News lag as written: -1 means the same month with no day recorded; rough ones get a tilde; "by" is a latest date.
   const lagTxt = a => a[3] < 0 ? "within the month" : a[3] === 0 ? "same day" : `${a[5] ? "by day " : a[4] ? "about " : ""}${a[3]} days`;
   const dd = d => !isFinite(d) ? "out of reach" : d < 1.5 ? (d < 0.75 ? "under a day" : "a day") : d < 60 ? Math.round(d) + " days" : d < 400 ? Math.round(d / 30.4) + " months" : "over a year";
@@ -342,7 +342,7 @@
   }
 
   A.tab({
-    id: "shrink", name: "Travel", icon: "compass", mode: "Travel time",
+    id: "shrink", name: "Travel time", short: "Travel", icon: "compass", mode: true,
     mount(pane, api) {
       el = pane; S.api = api;
       pane.addEventListener("click", ev => {

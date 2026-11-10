@@ -494,7 +494,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
       <span class="hint" id="askhint"></span>
       <div class="examples" id="examples"></div>
       <div class="answer" id="answer" hidden></div>
-      <p class="foot">Rule of the house: AI drafts, sources decide. Every answer here is a draft until the judge checks it. Live answers name sources the model believes exist; they are marked unchecked.</p>
+      <p class="foot">Rule of the house: AI drafts, sources decide. Every answer here is a draft until the judge checks it. AI answers name sources the model believes exist; they are marked unchecked.</p>
     </div>
   </aside>
 </div>
@@ -516,6 +516,16 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); },
   // The one next thing (the chrome's gold card): { id, pri, get() -> { kick, title, go } | null }. See chrome/chrome.js.
   nexts: [], nextThing(d) { this.nexts.push(d); },
+  // One way to write a year, for the page and every plugin: "45,000 years ago", "300 BCE", "1 CE", "300 CE", "1453".
+  NOW: 2025,
+  fmtYear(y) {
+    if (y <= -10000) { const a = ATLAS.NOW - y, r = a >= 100000 ? 1000 : 100; return `${(Math.round(a / r) * r).toLocaleString("en-US")} years ago`; }
+    return y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
+  },
+  // One provenance badge for every pane, in the map's confidence words (VIZ.md D10): "ai" (an AI draft: Claude wrote
+  // it, its sources are unchecked), "draft" (curated but not yet past the judge), or attested, estimated, approximate, unknown.
+  PROV: { ai: "AI draft · sources unchecked", draft: "Draft · awaiting check", attested: "Attested", estimated: "Estimated", approximate: "Approximate", unknown: "Unknown" },
+  prov(k) { const t = this.PROV[k] || this.PROV.unknown; return `<span class="badge prov prov-${this.PROV[k] ? k : "unknown"}">${t}</span>`; },
   // Copy that asks you to press the map says "Tap" on a touch screen and "Click" with a mouse.
   click: window.matchMedia && matchMedia("(hover: none)").matches ? "Tap" : "Click" };
 </script>
@@ -525,7 +535,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // ---------- basics ----------
   // Time runs from 300,000 years ago. The slider is in two parts: deep time (before 4000 BCE) on a log scale of years
   // ago in its first DEEP_T, then history on the old curve (denser toward today) in the rest.
-  const NOW = 2025, MIN = -298000, HIST = -4000, SPAN = NOW - HIST, CURVE = 1.6, DEEP_T = 0.2;
+  const NOW = ATLAS.NOW, MIN = -298000, HIST = -4000, SPAN = NOW - HIST, CURVE = 1.6, DEEP_T = 0.2;
   const LBP0 = Math.log(NOW - MIN), LBP1 = Math.log(NOW - HIST);
   const LENSES = ["geography", "military", "economy", "population", "disease", "religion", "ideas", "literature", "people", "order"];
   const LENS_NAME = { geography: "Geography", military: "Military", economy: "Economy & trade", population: "Population & migration", disease: "Disease & climate", religion: "Religion", ideas: "Ideas", literature: "Literature", people: "People", order: "Order & chaos" };
@@ -554,8 +564,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // A plugin lens whose data loads after the first paint (LATE_FILES) is skipped until it has arrived.
   const lensReady = d => typeof LATE_FILES === "undefined" || !LATE_FILES["lens:" + d.id] || (typeof LENS_DATA !== "undefined" && !!LENS_DATA[d.id]);
   const BASEMAP0 = ATLAS.basemaps.find(b => b && typeof b.mount === "function") || null;
-  const fmtAgo = y => { const a = NOW - y, r = a >= 100000 ? 1000 : 100; return `${(Math.round(a / r) * r).toLocaleString("en-US")} years ago`; };
-  const fmtYear = y => y <= -10000 ? fmtAgo(y) : y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
+  const fmtYear = ATLAS.fmtYear;
   const fmtSpan = (s, e) => `${s == null ? "?" : fmtYear(s)}–${e == null ? "today" : fmtYear(e)}`;
   const tToYearF = t => t >= DEEP_T ? NOW - SPAN * Math.pow(Math.max(0, 1 - (t - DEEP_T) / (1 - DEEP_T)), CURVE)
     : NOW - Math.exp(LBP0 + (LBP1 - LBP0) * Math.max(0, t) / DEEP_T);
@@ -2240,7 +2249,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     answerEl.innerHTML = `
       <div class="sec">
         <h2 class="q">${esc(A.question)}</h2>
-        <div><span class="badge">${live ? "Live AI draft · sources unchecked" : "Curated draft · sources listed, judge pending"}</span> <button class="btn" id="newq" style="float:right">New question</button></div>
+        <div>${ATLAS.prov(live ? "ai" : "draft")} <button class="btn" id="newq" style="float:right">New question</button></div>
         ${A.short || A.frame ? `<div class="${live ? "chair" : ""}" style="--c:#b8892a">${live ? `${portrait("chair", 2)}<b class="by">The chair${A.short ? "" : " frames it"}</b>` : ""}${A.short ? `<p class="short">${esc(A.short)}</p>` : `<p class="short frame">${esc(A.frame)}</p>`}</div>` : ""}
         <div class="status" ${A.loading ? "" : "hidden"}><span class="dot"></span><span>${esc(A.loading || "")}</span></div>
         ${A.error ? `<div class="error">${esc(A.error)}</div>` : ""}
@@ -2345,7 +2354,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     { q: "When did Western Europe actually start to become rich?" },
   ];
   const exEl = document.getElementById("examples");
-  exEl.innerHTML = `<h3 class="kick">Try one</h3>` + EXAMPLES.map((e, i) => `<button class="ex" data-x="${i}">${esc(e.q)}<span class="tg${e.tour != null ? " cur" : ""}">${e.tour != null ? "curated tour" : "live"}</span></button>`).join("");
+  exEl.innerHTML = `<h3 class="kick">Try one</h3>` + EXAMPLES.map((e, i) => `<button class="ex" data-x="${i}">${esc(e.q)}<span class="tg${e.tour != null ? " cur" : ""}">${e.tour != null ? "curated tour" : "AI answer"}</span></button>`).join("");
   exEl.addEventListener("click", ev => {
     const b = ev.target.closest(".ex"); if (!b) return;
     const e = EXAMPLES[+b.dataset.x];
@@ -2519,11 +2528,11 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   // use() resolves after the viewer answers; ask() waits for it so an early question is not turned away.
   sampleReady = (async () => {
     try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; }
-    if (!sample) hint.textContent = "Live answers need this page open in Claude. Curated tours work anywhere.";
+    if (!sample) hint.textContent = "AI answers need this page open in Claude. Curated tours work anywhere.";
   })();
   function abortLive() { if (ctl) { ctl.abort(); ctl = null; } }
   const ERR = {
-    not_granted: "Live answers are off because Claude access was not allowed for this page. The curated tour still works.",
+    not_granted: "AI answers are off because Claude access was not allowed for this page. The curated tour still works.",
     sampling_disabled: "Claude isn't available for this account here.",
     rate_limited: "Too many questions at once. Wait a minute and ask again.",
     session_expired: "Your Claude session expired. Sign in again and retry.",
@@ -2633,7 +2642,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     if (!sample) {
       const t = TOURS.find(t => t.question.toLowerCase() === q.toLowerCase());
       if (t) return openTour(t);
-      hint.textContent = "Live answers need this page open in Claude. Try a curated tour below."; document.getElementById("examples").hidden = false; return;
+      hint.textContent = "AI answers need this page open in Claude. Try a curated tour below."; document.getElementById("examples").hidden = false; return;
     }
     abortLive(); stopPlay();
     const prev = followUp && state.answer;

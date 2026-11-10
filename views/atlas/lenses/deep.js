@@ -28,7 +28,7 @@
   const cursor = y => DS.m != null && Math.floor(DS.m / 12) === y ? { m: DS.m, m0: DS.m - 2, m1: DS.m, month: true } : { m: y * 12, m0: y * 12, m1: y * 12 + 11, month: false };
   const fade = (r, c) => !c.month ? 1 : r.prec === "y" ? 0.45 : Math.max(0.3, 1 - 0.25 * (c.m - r.m));
   const wdSrc = r => typeof r.ref === "number" && r.ref ? { cite: `Wikidata Q${r.ref} (CC0)`, url: `https://www.wikidata.org/wiki/Q${r.ref}` } : null;
-  const SRC = { base: "the world index (Wikidata, Pantheon, the kernel)", ai: "a live AI draft (not checked)" };
+  const SRC = { base: "the world index (Wikidata, Pantheon, the kernel)", ai: "an AI draft (sources unchecked)" };
   function card(r) {
     const when = fmtDate(r.d) + (r.e && r.e !== r.d ? ` to ${fmtDate(r.e)}` : "");
     const what = r.k === "e" ? nice(r.sub) : `${r.k === "b" || r.k === "d" || r.k === "r" ? nice(r.sub) || "Person" : nice(r.sub)} · ${VERB[r.k]}`;
@@ -162,7 +162,7 @@
   });
   function stepCard(s, st) {
     return { kick: `Storyline · ${s.title}`, title: st.name, year: Math.floor(st.m / 12), lon: st.lon, lat: st.lat,
-      meta: [fmtDate(st.date) + (st.end_date ? ` to ${fmtDate(st.end_date)}` : ""), st.place_name, st.date_note, (st.who || []).join(", "), "study text: draft, waiting for the judge"].filter(Boolean).join(" · "),
+      meta: [fmtDate(st.date) + (st.end_date ? ` to ${fmtDate(st.end_date)}` : ""), st.place_name, st.date_note, (st.who || []).join(", "), "study text: draft, awaiting check"].filter(Boolean).join(" · "),
       body: st.what || "", why: st.why || "",
       sources: [st.wikipedia ? { cite: "Wikipedia: " + st.wikipedia, url: "https://en.wikipedia.org/wiki/" + encodeURIComponent(st.wikipedia.replace(/ /g, "_")) } : null,
         st.wikidata ? { cite: `Wikidata ${st.wikidata}`, url: `https://www.wikidata.org/wiki/${st.wikidata}` } : null, ...(st.sources || [])].filter(Boolean) };
@@ -320,7 +320,7 @@
   const parse = line => { const s = line.trim().replace(/^```\w*|```$/g, ""); if (!s.startsWith("{") && !s.startsWith("[")) return null; try { return JSON.parse(s); } catch { return null; } };
   async function aiFill(kind) {
     const sample = await getSample();
-    if (!sample) { T.msg = "Live drafts need this page open in Claude."; return renderSoon(true); }
+    if (!sample) { T.msg = "AI drafts need this page open in Claude."; return renderSoon(true); }
     const bbox = viewBox(1), v = ATLAS.api.view(), sp = spanNow(), m = DS.m ?? sp.m0, y = Math.floor(m / 12);
     const rb = W.ruler(v.lon, v.lat, y), have = W.at({ m0: m - 120, m1: m + 120 }, bbox, { kinds: "efzwbd", limit: 40 });
     const where = `the box lon ${bbox[0].toFixed(1)} to ${bbox[2].toFixed(1)}, lat ${bbox[1].toFixed(1)} to ${bbox[3].toFixed(1)} (centre ${v.lon.toFixed(2)}, ${v.lat.toFixed(2)}${rb ? ", ruled by " + rb.name : ""})`;
@@ -361,7 +361,7 @@ Answer with JSON only, one object: {"title":"...","blurb":"one sentence question
         goStep(STORIES[STORIES.length - 1], STORIES[STORIES.length - 1].steps[0]);
       }
     } catch (e) {
-      T.msg = e && (e.code === "not_granted" || e.code === "sampling_disabled") ? "Live drafts are switched off for this page." : "That did not work: " + (e && e.message || e);
+      T.msg = e && (e.code === "not_granted" || e.code === "sampling_disabled") ? "AI drafts are switched off for this page." : "That did not work: " + (e && e.message || e);
     } finally { T.busy = false; redraw(); renderSoon(true); }
   }
   // AI storylines written in this browser come back on the next visit.

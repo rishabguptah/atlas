@@ -1,6 +1,6 @@
-// Simulate & predict: the "What if" tab and its map layer.
+// What if: the tab and its map layer (simulations and predictions).
 // Simulate plays a curated what-if (data/whatif/scenarios/*.json): real history up to the turning point,
-// then the branch, each branch step marked speculative with a plausibility score. Live what-ifs use the
+// then the branch, each branch step marked speculative with a plausibility score. AI what-ifs use the
 // viewer's Claude. Predict stands in a year, shows which states the Order and Chaos model flags as likely
 // to break within 50 years, then fast-forwards to score it. Data: views/atlas/lenses/whatif.py + ORDER.
 (function () {
@@ -9,7 +9,7 @@
   const D = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.whatif) || { scenarios: [], bt: null };
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const pct = x => Math.round(x * 100) + "%";
-  const fy = y => api ? api.fmtYear(y) : String(y);
+  const fy = ATLAS.fmtYear;
   const LAST = 2024;  // Cliopatria's last year: breaks after this are not in the data yet
 
   const css = document.createElement("style");
@@ -150,7 +150,7 @@
 
   // ---------- the map layer ----------
   ATLAS.lens({
-    id: "whatif", name: "Simulate & predict", family: "power", color: "#8a4fc0", on: false, guide: [],
+    id: "whatif", name: "What if", family: "power", color: "#8a4fc0", on: false, guide: [],
     draw(ctx) {
       if (W.mode === "sim" && W.sc && W.sc.steps[W.i] && W.sc.steps[W.i].branch) {
         const s = W.sc.steps[W.i];
@@ -193,13 +193,13 @@
       <h3>Your own what-if</h3>
       <form class="wf-live" id="wf-live"><textarea id="wf-q" rows="2" placeholder="What if the Library of Alexandria never burned?"></textarea>
         <div class="row"><button class="btn primary" type="submit">Simulate it</button><span class="note" id="wf-hint"></span></div></form>
-      <p class="note">Live what-ifs are drafted by Claude in the same shape: real history first, then the branch, each step scored. Sources are unchecked.</p>`;
+      <p class="note">AI what-ifs are drafted by Claude in the same shape: real history first, then the branch, each step scored. Sources are unchecked.</p>`;
   }
   function renderScenario() {
     const s = W.sc, n = s.steps.length, fork = s.steps.findIndex(x => x.branch);
     return `<div class="row"><button class="btn" data-a="back">◀ All what-ifs</button></div>
       <h2>${esc(s.question)}</h2>
-      <div class="row"><span class="badge2">${s.live ? "Live AI draft · sources unchecked" : "Simulation · speculative after " + esc(fy(s.divergence.year))}</span>${s.plausibility != null ? `<span class="note">premise plausibility ${plBar(s.plausibility)}</span>` : ""}</div>
+      <div class="row">${s.live ? ATLAS.prov("ai") : `<span class="badge2">Simulation · speculative after ${esc(fy(s.divergence.year))}</span>`}${s.plausibility != null ? `<span class="note">premise plausibility ${plBar(s.plausibility)}</span>` : ""}</div>
       ${s.short ? `<p class="short">${esc(s.short)}</p>` : ""}
       ${s.plausibility_note ? `<p class="note">${esc(s.plausibility_note)}</p>` : ""}
       ${s.loading ? `<p class="note">${esc(s.loading)}</p>` : ""}${s.error ? `<div class="err">${esc(s.error)}</div>` : ""}
@@ -304,7 +304,7 @@
     clearTimeout(yt); yt = setTimeout(render, 160);
   }
 
-  // ---------- live what-ifs ----------
+  // ---------- AI what-ifs ----------
   let sample = null, live = null;
   const ready = (async () => { try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; } })();
   const RULES = `You are the Atlas simulator. Rishi asks a counterfactual ("what if...") about history. Play it out on a world map: real history up to the turning point, then the branch.
@@ -320,7 +320,7 @@ OUTPUT: JSON Lines only, one object per line, no prose, no markdown, no code fen
 MAP RULES: span 300 = whole world, 50 = Mediterranean, 15 = a country, 4 = a city. Points are [lon,lat], longitude first. Use real coordinates.
 SOURCE RULES: real steps cite works you are confident exist, or en.wikipedia.org URLs you are confident exist. Branch steps may have no sources. Never invent a URL.`;
   const LENS_OK = ["geography", "military", "economy", "population", "disease", "religion", "ideas", "literature", "people", "order"];
-  const ERR = { not_granted: "Live what-ifs are off because Claude access was not allowed for this page.", sampling_disabled: "Claude isn't available for this account here.", rate_limited: "Too many requests at once. Wait a minute and try again.", refused: "Claude declined this one. Try rephrasing it." };
+  const ERR = { not_granted: "AI what-ifs are off because Claude access was not allowed for this page.", sampling_disabled: "Claude isn't available for this account here.", rate_limited: "Too many requests at once. Wait a minute and try again.", refused: "Claude declined this one. Try rephrasing it." };
   function normStep(o) {
     const fin = Number.isFinite;
     return { branch: !!o.branch, lens: LENS_OK.includes(o.lens) ? o.lens : "order", title: String(o.title || ""), text: String(o.text || ""),
@@ -334,7 +334,7 @@ SOURCE RULES: real steps cite works you are confident exist, or en.wikipedia.org
   async function liveWhatIf(q) {
     const hint = el.querySelector("#wf-hint");
     if (!sample) { if (hint) hint.textContent = "Connecting to Claude…"; await ready; }
-    if (!sample) { if (hint) hint.textContent = "Live what-ifs need this page open in Claude. The curated ones work anywhere."; return; }
+    if (!sample) { if (hint) hint.textContent = "AI what-ifs need this page open in Claude. The curated ones work anywhere."; return; }
     stop(); if (live) live.abort();
     const S = { id: "live", live: true, question: q, short: "", divergence: { year: null, text: "" }, plausibility: null, steps: [], views: [], unknowns: [], loading: "Simulating…" };
     W.sc = S; W.i = -1; render();

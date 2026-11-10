@@ -7,7 +7,7 @@
   if (typeof AtlasCharts === "undefined") return;
   const C = AtlasCharts, GR = typeof PixelGrammar !== "undefined" ? PixelGrammar : null;
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const fmtY = y => y < 0 ? `${-y} BCE` : `${y}`;
+  const fmtY = ATLAS.fmtYear;
   const NOW = 2025, MIN = -3400;
   let api = null, pane = null, other = null, open = false, showMap = true, timer = 0, mapTimer = 0, film = null;
   try { const v = JSON.parse(localStorage.getItem("atlas.compare.v1") || "null"); if (v && isFinite(v.other)) { other = v.other; showMap = v.map !== false; } } catch (err) { /* private mode */ }

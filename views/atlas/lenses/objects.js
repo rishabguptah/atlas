@@ -10,7 +10,7 @@
   const FRESH = 60;  // a kind's newest stops are labelled and its legs drawn strong for this many years
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const first = s => { const m = String(s || "").match(/^.*?[.!?](\s|$)/); return (m ? m[0] : String(s || "")).trim(); };
-  const fmtY = y => (window.ATLAS.api && ATLAS.api.fmtYear) ? ATLAS.api.fmtYear(y) : y < 0 ? -y + " BCE" : String(y);
+  const fmtY = ATLAS.fmtYear;
 
   // ---------- pixel sprites for the objects (fills only; the dark outline is baked on, as in views/pixel) ----------
   const GRIDS = {
@@ -312,17 +312,17 @@
       <div class="ctl"><button type="button" class="go" data-act="surprise">Follow something</button></div>
       <form id="obj-trace" class="trace"><input id="obj-q" type="text" placeholder="Trace any object: the Holy Lance, tea, the Crown of Saint Stephen…" aria-label="Object to trace" autocomplete="off"><button type="submit" class="go">Trace</button></form>
       <p class="note" id="obj-hint" aria-live="polite"></p>
-      ${C.objs.some(o => o.ai) ? `<p class="grp">Traced by AI (unchecked drafts)</p>${C.objs.filter(o => o.ai).map(row).join("")}` : ""}
+      ${C.objs.some(o => o.ai) ? `<p class="grp">AI drafts</p>${C.objs.filter(o => o.ai).map(row).join("")}` : ""}
       <p class="grp">Famous objects</p>${C.objs.filter(o => o.t === "single" && !o.ai).map(row).join("")}
       <p class="grp">Kinds of things</p>${C.objs.filter(o => o.t === "kind" && !o.ai).map(row).join("")}
-      <p class="note">Drafts written from the cited works, waiting for the judge. Routes between stops are drawn as likely paths, not tracks.</p></div>`;
+      <p class="note">Drafts written from the cited works, awaiting check. Routes between stops are drawn as likely paths, not tracks.</p></div>`;
   }
   function renderObj() {
     const C = C0(), o = C.byId[openId]; if (!o) return renderList();
     const on = follow.id === o.id;
     pane.innerHTML = `<div class="obj">
       <div class="ctl"><button type="button" class="go ghost" data-act="back">← All objects</button></div>
-      <div class="hd">${thumb(o.sp)}<div><h3>${esc(o.n)}</h3><p class="note">${esc(fmtY(o.y0))} – ${esc(fmtY(o.y1))} · ${o.stops.length} stops${o.ai ? ` · <b class="ai">AI draft, unchecked</b>` : ""}</p></div></div>
+      <div class="hd">${thumb(o.sp)}<div><h3>${esc(o.n)}</h3><p class="note">${esc(fmtY(o.y0))} – ${esc(fmtY(o.y1))} · ${o.stops.length} stops${o.ai ? " · " + ATLAS.prov("ai") : ""}</p></div></div>
       <p>${esc(o.w)}</p>${o.why ? `<p class="note">${esc(o.why)}</p>` : ""}
       <div class="ctl">${on ? `<button type="button" class="go ghost" data-act="prev" aria-label="Previous stop">◀</button>
         <button type="button" class="go" data-act="pause">${follow.playing ? "❚❚ Pause" : "▶ Play"}</button>

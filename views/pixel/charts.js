@@ -12,7 +12,8 @@
 (function (global) {
   const PX = 3, INK = "#221f1a";
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : `${y}`;
+  // The Atlas's year format when it is on the page ("300 CE", "45,000 years ago"); a bare page keeps the short one.
+  const fmtYear = y => global.ATLAS && global.ATLAS.fmtYear ? global.ATLAS.fmtYear(y) : y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : `${y}`;
   const fmtShortYear = y => y < 0 ? `${-y}BC` : `${y}`;
   const compact = n => n == null || !isFinite(n) ? "–" : Math.abs(n) >= 1e9 ? +(n / 1e9).toFixed(1) + "B" : Math.abs(n) >= 1e6 ? +(n / 1e6).toFixed(1) + "M" : Math.abs(n) >= 1e4 ? Math.round(n / 1e3) + "K" : Math.abs(n) >= 1e3 ? +(n / 1e3).toFixed(1) + "K" : Math.abs(n) >= 10 ? String(Math.round(n)) : String(+n.toFixed(2));
   let uid = 0;

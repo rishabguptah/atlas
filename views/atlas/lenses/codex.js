@@ -22,7 +22,7 @@
   const save = () => { clearTimeout(saveT); saveT = setTimeout(() => { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) { /* private window: progress lasts this visit */ } }, 250); };
 
   // ---------- helpers ----------
-  const fy = y => api ? api.fmtYear(y) : String(y);
+  const fy = ATLAS.fmtYear;
   const km = (a, b) => { const r = Math.PI / 180, x = Math.sin((b.lat - a.lat) * r / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin((b.lon - a.lon) * r / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
   const century = y => {
     if (y <= -3000) { const m = Math.ceil(-y / 1000); return `${m}${m === 1 ? "st" : m === 2 ? "nd" : m === 3 ? "rd" : "th"} millennium BCE`; } const n = y < 0 ? Math.ceil(-y / 100) : Math.floor(y / 100) + 1; const sfx = n % 10 === 1 && n !== 11 ? "st" : n % 10 === 2 && n !== 12 ? "nd" : n % 10 === 3 && n !== 13 ? "rd" : "th"; return `${n}${sfx} century${y < 0 ? " BCE" : ""}`; };
@@ -169,7 +169,7 @@
     badge();
     return news;
   }
-  // Other plugins (the Live tab's journeys) can visit places too: what you pass on the road joins the codex.
+  // Other plugins (Live a life's journeys) can visit places too: what you pass on the road joins the codex.
   window.ATLAS.codex = { visit: (lon, lat, y, r) => visit({ lon, lat }, y, r ?? R_CLICK) };
   function checkQuests() {
     for (const q of D().quests) if (!P.qd[q.id] && qGot(q) >= qNeed(q)) { P.qd[q.id] = Date.now(); toast("Quest complete", q.n, q.d, () => openCodex("quests")); }
@@ -434,7 +434,7 @@
 
   // ---------- map layers: your finds, and the fog ----------
   ATLAS.lens({
-    id: "codex", name: "Your finds", family: "land", color: "#c08a1e", on: false, guide: [],
+    id: "codex", name: "Codex", family: "land", color: "#c08a1e", on: false, guide: [],
     draw(ctx) {
       for (const k of ["c", "w", "b"]) {
         const list = sites().filter(s => s.k === k && found(s.id) && (k !== "b" || Math.abs(ctx.year - s.s) <= 25));

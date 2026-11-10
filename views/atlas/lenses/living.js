@@ -103,7 +103,7 @@
     return b[0] < -180 || b[2] > 180 ? null : b;
   }
   ATLAS.lens({
-    id: "living", name: "Travellers", family: "peoples", color: COLOR, on: false,
+    id: "living", name: "Living world", family: "peoples", color: COLOR, on: false,
     guide: ["people", "travel", "journeys"],
     key: [["sprite", "A real traveller on a documented journey (named)"], ["small", "A generated group on a real recurring route (merchants, pilgrims, sailors)"], ["line", "The road of the traveller you follow"]],
     index: d => (d.journeys || []).map(j => `${j.name} (${j.kind}, ${(j.stops[0] || {}).date || ""})`).join("; ").slice(0, 3000),
@@ -348,7 +348,7 @@
         <div class="lw-scenes">${S.story.scenes.map((s, i) => `<button class="lw-sc${i === S.scene ? " on" : i < S.scene ? " past" : ""}" data-scene="${i}"><span class="d">${esc(s.date)}</span><span>${esc(s.caption)}${s.conf && s.conf !== "attested" ? ` <i class="cf">${esc(s.conf)}</i>` : ""}</span></button>`).join("")}</div>
         <div class="lw-ctl">${W.director && W.director.play ? `<button data-a="scenes">Play as scenes</button>` : ""}<button data-a="next">Next scene</button><button data-a="tell">Tell this story</button><button data-a="unfollow">Stop following</button></div>
         ${S.tell ? `<div class="lw-tell">${S.tell.err ? `<p class="note">${esc(S.tell.err)}</p>` : esc(S.tell.text || "…").split(/\n\n+/).map(p => `<p>${p}</p>`).join("")}</div>` : ""}
-        ${A.sources && A.sources.length ? `<p class="note">Sources: ${A.sources.map(s => s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite)}</a>` : esc(s.cite)).join("; ")}${A.status === "draft" ? " · draft, waiting for the judge" : ""}</p>` : ""}
+        ${A.sources && A.sources.length ? `<p class="note">Sources: ${A.sources.map(s => s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite)}</a>` : esc(s.cite)).join("; ")}${A.status === "draft" ? " · draft, awaiting check" : ""}</p>` : ""}
       </div>` : ""}
       <h3>Named travellers in view<span class="n">${real.length}</span></h3>
       ${real.length ? real.map(r => row(r)).join("") : `<p class="empty">No documented traveller is on the road here now. Jump to a moment below.</p>`}
@@ -359,7 +359,7 @@
       ${S.feed.length ? `<h3>Just now</h3>${S.feed.slice(0, 8).map(f => `<div class="lw-row"><span class="lw-who"><small>${esc(T.fmt(f.t))}</small><b>${esc(f.text)}</b></span></div>`).join("")}` : ""}
       <h3>Jump to a moment</h3>
       <div class="lw-moments">${moments().map(m => `<button data-moment="${esc(m.id)}">${esc(m.label)}</button>`).join("")}</div>
-      <p class="note">Named journeys: ${W.journeys().length}, each with sources (draft, waiting for the judge). Recurring routes: ${W.flows().length}. Meeting claims: ${W.documentedMeetings().length}. Recurring routes follow road and sea paths from the shared router; lines between a journey's stops are straight, and dates between known stops are spread by distance.</p>
+      <p class="note">Named journeys: ${W.journeys().length}, each with sources (drafts awaiting check). Recurring routes: ${W.flows().length}. Meeting claims: ${W.documentedMeetings().length}. Recurring routes follow road and sea paths from the shared router; lines between a journey's stops are straight, and dates between known stops are spread by distance.</p>
     </div>`;
   }
   const STYLE = `.lw{display:grid;gap:10px}.lw h3{display:flex;gap:6px;align-items:baseline;margin:6px 0 0}.lw h3 .n{font:11px var(--mono);opacity:.6}
