@@ -76,7 +76,7 @@
     const scenes = c.links.map(x => D.lid[x]).filter(Boolean).map((l, i, all) => {
       const a = pt(l.from), b = pt(l.to), mid = a && b ? [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2] : a || b;
       const span = a && b ? Math.min(120, Math.max(10, Math.abs(a[0] - b[0]) * 1.8, Math.abs(a[1] - b[1]) * 2.6)) : 30;
-      return { id: `${cid}#${i}`, t: l.s ?? D.N[l.to][1], view: mid ? { lon: mid[0], lat: mid[1], span } : null, lenses: [l.lf, l.lt],
+      return { id: `${cid}#${i}`, t: l.s ?? D.N[l.to][1], view: mid ? { lon: mid[0], lat: mid[1], span } : null, lenses: ["why", l.lf, l.lt],
         pins: [a && { name: nm(l.from), lon: a[0], lat: a[1] }, b && { name: nm(l.to), lon: b[0], lat: b[1] }].filter(Boolean),
         routes: a && b ? [{ label: "", points: [a, b] }] : [],
         caption: `${nm(l.from)} ${TYPE[l.t]} ${nm(l.to)}`, text: l.mech, by: "historiographer", conf: CONF[l.cf], confidence: l.c, explainer: l.view,
@@ -87,6 +87,8 @@
   ATLAS.world = ATLAS.world || {};
   ATLAS.world.why = why;
   ATLAS.world.chainStory = chainStory;
+  // Every chain is a Story (kind "chain"), so it shows in the Stories tab with the tours and lives.
+  if (ATLAS.world.stories && ATLAS.world.stories.add) ATLAS.world.stories.add({ kind: "chain", list: () => ok() ? D.C.map(c => chainStory(c.id)).filter(s => s && s.scenes.length) : [] });
 
   // ---------- cards ----------
   const Y = () => (ATLAS.api ? ATLAS.api.year : 0);
@@ -180,19 +182,17 @@
     else if (k === "q" && D.Q[+v]) open(quoteCard(D.Q[+v]));
     else if (k === "n" && D.N[v]) open(nodeCard(v));
     else if (k === "c") play(v, 0);
-    else if (k === "step") play(PLAY.id, +v);
   });
 
-  // ---------- playing a chain on the map ----------
-  const PLAY = { id: null, i: 0 };
-  function play(cid, i) {
-    const st = chainStory(cid); if (!st || !st.scenes.length) return;
-    PLAY.id = cid; PLAY.i = Math.max(0, Math.min(i, st.scenes.length - 1));
-    const s = st.scenes[PLAY.i];
-    ATLAS.api.setOn("why", true);
-    ATLAS.api.scene({ year: s.t, view: s.view, pins: s.pins, routes: s.routes, title: s.caption, layers: [] });
-    ATLAS.api.setTab("why");
-    renderTab();
+  // ---------- playing a chain on the map: the Director, like every other Story ----------
+  // While a chain plays, its links stay on top in the why layer (PLAY.id).
+  const PLAY = { id: null };
+  let watching = false;
+  function play(cid, i = 0) {
+    const st = chainStory(cid), dir = ATLAS.world.director; if (!st || !st.scenes.length || !dir) return;
+    if (!watching) { watching = true; const off = () => { PLAY.id = null; }; dir.onEnd(off); dir.onLeave(off); }
+    dir.play(st, { at: Math.max(0, Math.min(i, st.scenes.length - 1)) });
+    PLAY.id = cid;
   }
 
   // ---------- AI panel: what the specialists may cite, and a Historiographer of their own ----------
@@ -296,18 +296,13 @@
   function renderTab() {
     if (!pane) return;
     if (!ok()) { pane.innerHTML = `<p class="sub">The historians are still arriving (their data loads after the map). One moment.</p>`; return; }
-    const y = Y(), st = PLAY.id ? chainStory(PLAY.id) : null;
-    const player = st ? (() => { const s = st.scenes[PLAY.i];
-      return `<div class="focus sch-player" style="--c:var(--y-why)"><span class="fk">Playing a why chain · ${PLAY.i + 1} of ${st.scenes.length}</span><span class="ft">${esc(st.title)}</span>
-        <p><b>${esc(s.caption)}</b></p>${s.text ? `<p>${esc(s.text)}</p>` : ""}<p class="sch-meta">${s.explainer ? esc(s.explainer) + " · " : ""}confidence ${Math.round(s.confidence * 100)}% · ${esc(s.conf)}</p>
-        <ul class="srcs">${s.sources.map(x => citeRow(x) || `<li>${esc(x.cite)}</li>`).join("")}</ul>
-        <div class="row">${PLAY.i > 0 ? `<button class="btn" data-sch="step:${PLAY.i - 1}">◀ Back</button>` : ""}${PLAY.i < st.scenes.length - 1 ? `<button class="btn primary" data-sch="step:${PLAY.i + 1}">Next link ▶</button>` : `<span class="sch-meta">End of the chain.${st.question ? " It answers: " + esc(st.question) : ""}</span>`}</div></div>`; })() : "";
+    const y = Y();
     const q = norm(filt);
     const chains = D.C.filter(c => !q || norm(c.n + " " + c.blurb + " " + c.question).includes(q)).sort((a, b) => Math.abs(a.s - y) - Math.abs(b.s - y));
     const debs = D.D.filter(d => !q || norm(d.n + " " + d.pos.map(p => p.school + " " + (p.scholars || []).join(" ")).join(" ")).includes(q)).sort((a, b) => Math.abs(a.s - y) - Math.abs(b.s - y));
     const nodes = q.length > 2 ? Object.keys(D.N).filter(id => (D.inn[id] || D.out[id]) && norm(D.N[id][0]).includes(q)).slice(0, 12) : [];
     const n = D.n;
-    pane.innerHTML = `${player}
+    pane.innerHTML = `
       <label class="sch-on"><input type="checkbox" id="sch-on"${ATLAS.isOn && ATLAS.isOn("why") ? " checked" : ""}> Show causes and effects on the map</label>
       <form class="sch-find"><input type="search" placeholder="Why did… (an event, a scholar, a school)" value="${esc(filt)}" aria-label="Find a chain, debate or event"></form>
       ${nodes.length ? `<div class="sec"><h3>Why did it happen?</h3><div class="sch-links">${nodes.map(id => `<button type="button" class="btn sch-mini" data-sch="n:${esc(id)}" style="--c:${lc(D.N[id][4])}"><i></i>${esc(D.N[id][0])} <em>${fy(D.N[id][1])}</em></button>`).join("")}</div></div>` : ""}
@@ -361,7 +356,6 @@
   .sch-find input { width: 100%; box-sizing: border-box; border: 1px solid var(--rule); background: var(--card); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 14px; margin: 4px 0 8px; }
   .sch-deb { border-color: color-mix(in srgb, var(--y-debates, #9b4d2e) 60%, var(--rule)); }
   .sch-play { border-color: color-mix(in srgb, var(--y-why, #b5562b) 60%, var(--rule)); }
-  .sch-player { margin-bottom: 8px; }
   @media (max-width: 520px) { .sch-fa { grid-template-columns: 1fr; } }`;
   document.head.appendChild(css);
 })();
