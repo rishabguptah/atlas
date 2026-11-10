@@ -123,9 +123,17 @@
 
     // ---------- settings ----------
     const reduceQ = matchMedia("(prefers-reduced-motion: reduce)");
-    let settings = { sky: "day", month: "auto", weather: true, motion: null };
+    // followTheme: a dark page gets a night sky. "theme" is that default; picking Day keeps a day map on a dark page.
+    const FOLLOW = !!opts.followTheme, darkQ = matchMedia("(prefers-color-scheme: dark)");
+    const darkPage = () => { const t = document.documentElement.dataset.theme; return t === "dark" || (t !== "light" && darkQ.matches); };
+    let settings = { sky: FOLLOW ? "theme" : "day", month: "auto", weather: true, motion: null };
     try { Object.assign(settings, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) { /* storage blocked: defaults */ }
+    if (!FOLLOW && settings.sky === "theme") settings.sky = "day";
     const moving = () => settings.motion != null ? settings.motion : !reduceQ.matches;
+    // The sky actually shown: "theme" resolves to night on a dark page and day on a light one.
+    const skyMode = () => settings.sky === "theme" ? (darkPage() ? "night" : "day") : settings.sky;
+    const skyFns = [];
+    const emitSky = () => { for (const f of skyFns) try { f(skyMode()); } catch (err) { console.error("pixel sky", err); } };
 
     // ---------- state ----------
     let V = null, w = 0, h = 0, fxImg = null, fxb = null, skyImg = null, skyb = null, seasonB = null, seaImg = null, animRects = [];
@@ -161,7 +169,7 @@
     // "night": all night, lights on; "now": the real sun for this moment.
     let vt0 = performance.now(), vClock = 0;
     function sunNow() {
-      const mode = settings.sky;
+      const mode = skyMode();
       let doy, utc;
       if (mode === "now") { const d = new Date(); doy = (Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - Date.UTC(d.getUTCFullYear(), 0, 0)) / 864e5; utc = d.getUTCHours() + d.getUTCMinutes() / 60; }
       else { utc = (13 + vClock / 90 * 24) % 24; doy = (172 + vClock / 720 * 365) % 365; }
@@ -170,7 +178,7 @@
       return { doy, utc, dec, lon: (12 - utc) * 15 * RAD, night: mode === "cycle" || mode === "now" ? "sun" : mode === "night" ? "all" : null };
     }
     // Which day of the year the season layer shows: Auto in day mode keeps the map's own (summer-like) look.
-    const seasonDoy = () => settings.month !== "auto" ? MONTH_DOY[settings.month] : settings.sky === "cycle" || settings.sky === "now" ? sunNow().doy : null;
+    const seasonDoy = () => settings.month !== "auto" ? MONTH_DOY[settings.month] : skyMode() === "cycle" || skyMode() === "now" ? sunNow().doy : null;
 
     // ---------- layout: per view, after the map renders ----------
     function layout() {
@@ -766,7 +774,7 @@
     btn.tabIndex = 0; btn.setAttribute("role", "button"); btn.setAttribute("aria-haspopup", "true"); btn.title = "Sky, seasons and motion (N for night)";
     const pop = document.createElement("div"); pop.className = "pxsky-pop"; pop.hidden = true; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "Sky and motion");
     function drawBtn() {
-      const x = btn.getContext("2d"), mode = settings.sky;
+      const x = btn.getContext("2d"), mode = skyMode();
       x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, btn.width, btn.height);
       if (framed) x.setTransform(1, 0, 0, 1, -2, -2);
       else { x.fillStyle = "#221f1a"; x.fillRect(1, 0, BW - 2, BH); x.fillRect(0, 1, BW, BH - 2); }
@@ -782,14 +790,14 @@
       if (settings.weather) { P("#f7f7f2", [[3, 16], [4, 15], [5, 15], [6, 16], [4, 16], [5, 16]]); }
       if (mode !== "day") P("#ffd060", [[13, 19], [15, 20]]);
       if (!moving()) { P("#e8e4dc", [[15, 15], [16, 15], [15, 16], [16, 16]]); x.fillStyle = "#221f1a"; x.fillRect(15, 15, 1, 2); }
-      btn.setAttribute("aria-label", "Sky: " + SKY_MODES.find(m => m[0] === mode)[1] + (moving() ? "" : ", motion off"));
+      btn.setAttribute("aria-label", "Sky: " + SKY_MODES.find(m => m[0] === mode)[1] + (settings.sky === "theme" ? ", matching the page" : "") + (moving() ? "" : ", motion off"));
     }
     function renderPop() {
       const row = (title, key, opts2) => `<h4>${title}</h4><div class="opts">${opts2.map(([v, l]) => `<button data-k="${key}" data-v="${v}" aria-pressed="${String(settings[key]) === String(v)}">${l}</button>`).join("")}</div>`;
-      pop.innerHTML = row("Sky", "sky", SKY_MODES) + row("Month", "month", MONTHS) +
+      pop.innerHTML = row("Sky", "sky", FOLLOW ? [["theme", "Match page"], ...SKY_MODES] : SKY_MODES) + row("Month", "month", MONTHS) +
         row("Weather", "weather", [["true", "On"], ["false", "Off"]]) +
         `<h4>Motion</h4><div class="opts">${[["on", "On"], ["off", "Off"]].map(([v, l]) => `<button data-k="motion" data-v="${v}" aria-pressed="${(moving() ? "on" : "off") === v}">${l}</button>`).join("")}</div>` +
-        `<p class="note">${settings.sky === "night" ? "City lights from Reba et al. (2016): fire light before 1800, gas to 1900, then electric." : settings.sky === "now" ? "The real sun right now, over the world of the year on the slider." : settings.sky === "cycle" ? "A day every 90 seconds, a year of seasons every 12 minutes." : "Snow, sea ice and autumn follow the month in each hemisphere."}</p>`;
+        `<p class="note">${settings.sky === "theme" ? "Night when the page is dark, day when it is light. Pick Day to keep a day map." : skyMode() === "night" ? "City lights from Reba et al. (2016): fire light before 1800, gas to 1900, then electric." : settings.sky === "now" ? "The real sun right now, over the world of the year on the slider." : settings.sky === "cycle" ? "A day every 90 seconds, a year of seasons every 12 minutes." : "Snow, sea ice and autumn follow the month in each hemisphere."}</p>`;
     }
     pop.addEventListener("click", ev => {
       const b = ev.target.closest("button[data-k]"); if (!b) return;
@@ -803,12 +811,14 @@
     document.addEventListener("pointerdown", onDoc);
     // N toggles night lights (and back to the last sky).
     let lastSky = settings.sky === "night" ? "day" : settings.sky;
+    // Back from night goes to the last sky, unless that sky is night too (matching a dark page): then to day.
+    const backFromNight = () => lastSky === "theme" && darkPage() ? "day" : lastSky;
     const onKey = ev => {
       if (ev.metaKey || ev.ctrlKey || ev.altKey || ev.defaultPrevented) return;
       const t = ev.target; if (t.closest && t.closest("input, textarea, select, [contenteditable]")) return;
       if (ev.key === "Escape" && !pop.hidden) { toggle(false); return; }
       if (ev.key.toLowerCase() !== "n") return;
-      if (settings.sky === "night") set({ sky: lastSky }); else { lastSky = settings.sky; set({ sky: "night" }); }
+      if (skyMode() === "night") set({ sky: backFromNight() }); else { lastSky = settings.sky; set({ sky: "night" }); }
       ev.preventDefault();
     };
     document.addEventListener("keydown", onKey);
@@ -831,7 +841,20 @@
       drawBtn(); if (!pop.hidden) renderPop();
       if (V && settled) draw(true);
       if (running()) start(); else stop();
+      emitSky();
     }
+    // The page's theme changed: only a sky that follows it has anything to redo.
+    const onTheme = () => {
+      if (settings.sky !== "theme") return;
+      vClock = 0; nightKey = ""; if (V && sunNow().night) placeLights();
+      drawBtn(); if (!pop.hidden) renderPop();
+      if (V && settled) draw(true);
+      if (running()) start(); else stop();
+      emitSky();
+    };
+    const themeObs = FOLLOW && typeof MutationObserver === "function" ? new MutationObserver(onTheme) : null;
+    if (themeObs) themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    if (FOLLOW && darkQ.addEventListener) darkQ.addEventListener("change", onTheme);
 
     // ---------- lifecycle ----------
     pm.on(kind => {
@@ -864,6 +887,9 @@
       },
       layer(id, fn) { if (fn) layers.set(id, fn); else layers.delete(id); },
       onStep(fn) { stepFns.push(fn); },
+      // fn(sky) now and whenever the shown sky changes: "day" | "cycle" | "night" | "now".
+      onSky(fn) { skyFns.push(fn); fn(skyMode()); },
+      get sky() { return skyMode(); },
       get frame() { return frame; },
       get settings() { return { ...settings, motion: moving() }; },
       get cost() { return cost; },
@@ -873,6 +899,7 @@
         if (io) io.disconnect();
         document.removeEventListener("visibilitychange", onVis); document.removeEventListener("pointerdown", onDoc); document.removeEventListener("keydown", onKey);
         if (reduceQ.removeEventListener) reduceQ.removeEventListener("change", onReduce);
+        if (themeObs) themeObs.disconnect(); if (FOLLOW && darkQ.removeEventListener) darkQ.removeEventListener("change", onTheme);
         for (const c of [seas, fx, sky, dis, btn, pop]) c.remove();
       },
     };
