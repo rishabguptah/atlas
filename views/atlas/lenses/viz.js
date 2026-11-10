@@ -3,7 +3,7 @@
 //   - ATLAS.cardViz: a city's population lifeline and rank, a state's size and fragility lifelines, who held a chokepoint,
 //     a migration's size against the others, a shock's toll against the others
 //   - ATLAS.nowViz: four stat tiles with lifelines through all of history, the current year marked
-// The Compare tab lives in compare.js. Charts come from views/pixel/charts.js (AtlasCharts).
+// Compare (a part of This year) lives in compare.js. Charts come from views/pixel/charts.js (AtlasCharts).
 (function () {
   if (typeof AtlasCharts === "undefined") return;
   const C = AtlasCharts, GR = typeof PixelGrammar !== "undefined" ? PixelGrammar : null;

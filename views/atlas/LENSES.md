@@ -123,6 +123,7 @@ ATLAS.tab({
   mount(el, api) { /* el is the empty pane; runs once when the page is up */ },
   show() { /* the tab was opened */ },
   pick(at) { /* optional: a click on the map while this tab is open; {lon, lat, name}. Return true to keep it, else Here opens */ },
+  within: "now",                   // optional: a part of This year instead of a tab (Compare); open() runs when asked for by id, hide() on leaving
 });
 ```
 

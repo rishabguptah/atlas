@@ -485,7 +485,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
       <button class="tab" role="tab" data-tab="now" aria-selected="false">This year</button>
       <button class="tab" role="tab" data-tab="here" aria-selected="false">Here</button>
     </div>
-    <div class="pane" id="pane-now"></div>
+    <div class="pane" id="pane-now"><div class="pane-body" id="now-body"></div></div>
     <div class="pane" id="pane-here" hidden></div>
     <div class="pane" id="pane-guide" hidden>
       <form class="askbig" id="ask2">
@@ -1808,7 +1808,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // ---------- This year ----------
   function renderNow() {
     const y = state.year; ACTS = ACTS.slice(0, 0);
-    const el = document.getElementById("pane-now");
+    const el = document.getElementById("now-body");
     const evs = [];
     for (const e of ENTRIES) for (const [yy, t, bad] of (EVENTS[e.id] || [])) if (Math.abs(yy - y) <= 25) evs.push({ e, yy, t, bad });
     evs.sort((a, b) => Math.abs(a.yy - y) - Math.abs(b.yy - y));
@@ -1830,9 +1830,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     flips.sort((a, b) => Math.abs(a.h.s - y) - Math.abs(b.h.s - y));
     const total = { pol: pols.length, shaky: pols.filter(o => o.f != null && o.f >= ORDER.thr).length };
     const ind = MONEY.econ.india, uk = MONEY.econ.uk, gi = interp(ind.gdp_per_capita, y), gu = interp(uk.gdp_per_capita, y);
-    el.innerHTML = `
+    fillHost(el, `
       <div><p class="kick">The world in</p><h2 class="ttl">${esc(fmtYear(y))}</h2>
       <p class="sub">${pols.length} states on the map${total.shaky ? `, ${total.shaky} of them fragile` : ""} · ${ppl.length ? adultsAt(y).length + " famous people alive" : "no famous people recorded yet"} · ${tr.length} trade routes running</p></div>
+      <div class="part-slot"></div>
       ${vizOf(ATLAS.nowViz)}
       ${sec("places", "Happening now", evs.slice(0, 6).map(o => item(`<b>${esc(nameAt(o.e, o.yy))}</b>: ${esc(o.t)}`, fmtYear(o.yy), "", goCard(cityCard(o.e)))))}
       ${lensRows("land", "now")}${sec("places", "Biggest cities", cities.map(o => item(`<b>${esc(nameAt(o.e, y))}</b>`, "~" + fmtN(o.p), "", goCard(cityCard(o.e)))))}
@@ -1855,7 +1856,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
         ...broke.map(p => item(`<b>${esc(p.n)}</b> broke apart`, fmtYear(p.e), "", goCard(polityCard(p)))),
       ])}${lensRows("power", "now")}
       <div class="row"><button class="btn" data-a="${act(() => { document.getElementById("qbox").value = `What was the world like in ${fmtYear(y)}, and what was about to change?`; document.getElementById("ask").requestSubmit(); })}">Ask the guide about ${esc(fmtYear(y))}</button></div>
-      ${footHTML()}`;
+      ${footHTML()}`);
   }
   function footHTML() {
     return `<p class="foot">One map, seven workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); a border for every year one changed, about 500 frames from 3400 BCE to 2024, from Seshat Cliopatria (CC BY 4.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Borders and Battles (curated battles plus about 11,000 from Wikidata, chokepoints and their holders from Cliopatria borders); terrain basemap (relief, rivers, named ranges, deserts and seas); Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
@@ -1950,17 +1951,32 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
 
   // ---------- tabs ----------
   function setTab(t) {
+    // A part of another tab (ATLAS.tab({ within })) opens its host, switched on.
+    const part = NESTED.find(d => d.id === t); if (part) { t = part.within; try { if (part.open) part.open(); } catch (err) { console.error("tab " + part.id, err); } }
     state.tab = t;
     document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === t));
-    for (const k of ["now", "here", "guide", ...TABS.map(d => d.id)]) document.getElementById("pane-" + k).hidden = k !== t;
+    for (const k of ["now", "here", "guide", ...TABS.filter(d => !NESTED.includes(d)).map(d => d.id)]) document.getElementById("pane-" + k).hidden = k !== t;
     if (t === "now") renderNow(); else if (t === "here") renderHere();
+    for (const d of NESTED) try { if (d.within === t) { if (d.show) d.show(); } else if (d.hide) d.hide(); } catch (err) { console.error("tab " + d.id, err); }
     // One question box at a time: the header box steps aside (keeping its space, so the map does not jump) while the Ask tab, with its big box, is open.
     document.querySelector(".app").classList.toggle("asking", t === "guide");
     const pt = TABS.find(d => d.id === t); if (pt && pt.show) try { pt.show(); } catch (err) { console.error("tab " + t, err); }
   }
   // Plugin tabs (ATLAS.tab) sit after Here, each with its own pane; mount() runs once the page is up.
   const TABS = ATLAS.tabs.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !["now", "here", "guide"].includes(d.id) && a.findIndex(x => x && x.id === d.id) === i);
+  // A plugin tab can instead be a part of a built-in one (within: "now"): no ribbon button; its element (.part) sits in
+  // the host's .part-slot, kept whole across the host's re-renders; show() runs when the host opens, hide() when it closes.
+  const NEST_HOST = { now: "now-body" };
+  const NESTED = TABS.filter(d => NEST_HOST[d.within]);
+  for (const d of NESTED) { const el = document.createElement("div"); el.className = "part"; el.id = "pane-" + d.id; document.getElementById(NEST_HOST[d.within]).appendChild(el); }
+  // Write a host's HTML without losing its parts: they step out, the HTML goes in, and they step back into its slot.
+  function fillHost(el, html) {
+    const keep = [...el.querySelectorAll(":scope .part")]; for (const p of keep) p.remove();
+    el.innerHTML = html;
+    const slot = el.querySelector(".part-slot"); if (slot) slot.replaceWith(...keep); else el.prepend(...keep);
+  }
   for (const d of TABS) {
+    if (NESTED.includes(d)) continue;
     const b = document.createElement("button"); b.className = "tab"; b.setAttribute("role", "tab"); b.dataset.tab = d.id; b.setAttribute("aria-selected", "false"); b.textContent = d.name || d.id;
     document.querySelector(".tabs").appendChild(b);
     const el = document.createElement("div"); el.className = "pane"; el.id = "pane-" + d.id; el.hidden = true;
@@ -1968,7 +1984,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   // The tabs don't fit one row, so they sit in three labelled groups that wrap: no sideways scrolling.
   // Tabs not named here join Explore.
-  const TAB_GROUPS = [["Learn", ["guide", "now", "here", "why", "stories", "travels"]], ["Explore", ["upclose", "life", "objects", "shrink", "living", "compare"]], ["Play", ["whatif", "guess", "codex"]]];
+  const TAB_GROUPS = [["Learn", ["guide", "now", "here", "why", "stories", "travels"]], ["Explore", ["upclose", "life", "objects", "shrink", "living"]], ["Play", ["whatif", "guess", "codex"]]];
   (function groupTabs() {
     const bar = document.querySelector(".tabs"), all = [...bar.querySelectorAll(".tab")], used = new Set();
     const groups = TAB_GROUPS.map(([n, ids]) => [n, ids.map(id => all.find(b => b.dataset.tab === id)).filter(Boolean)]);
