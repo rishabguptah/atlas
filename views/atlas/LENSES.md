@@ -24,7 +24,7 @@ Pick the one your lens belongs to:
 | `wealth`  | Trade & migration, Technology, food & energy, Object journeys, VOC ships |
 | `peoples` | People, Peoples & languages, Journeys, Middle Passage        |
 | `mind`    | Ideas & faith, Art & architecture                            |
-| `shocks`  | Plague & climate, Epidemics, Eruptions, famine & cold          |
+| `shocks`  | Plague & climate (chips: Epidemics, Famine & climate), Epidemics, Eruptions, famine & cold |
 
 A lens is precise (one question, one kind of record); a family is a group you switch on together.
 
@@ -40,7 +40,8 @@ ATLAS.lens({
   optIn: true,                     // optional: never switched on by tapping its family (a mode of its own)
   tab: "codex",                    // optional: the lens belongs to that tab and has no chip; the tab switches it on
                                    //   (and a mode tab puts the lenses back on Back to map)
-  with: "borders",                 // optional: no chip; the lens is part of that chip (a FLAG or a layer) and is on with it
+  with: "borders",                 // optional: no chip; the lens is part of that chip (a FLAG or a layer) and is on with it;
+                                   //   a part of a layer works too (with: "epidemics", one of Plague & climate's PARTS)
   chip: false,                     // optional: no chip; the lens keeps its `on` default and gates itself (Deep time, by era)
   guide: ["law", "government"],    // kernel lens names the AI guide may use to switch this lens on
   by: "political",                 // optional: the panel specialist who speaks for it; otherwise the first `guide`

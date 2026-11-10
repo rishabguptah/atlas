@@ -1,16 +1,19 @@
 // Epidemics: plague coming back again and again after the Black Death (every place with a recorded outbreak, 1347-1900),
 // cholera and smallpox moving city by city, and the Wikidata epidemics. On the map: this year's outbreaks bright and the
 // last few years fading, each spread's legs up to this year (dashed: the from-where is a reading, not a record), and the
-// epidemics running this year sized by deaths.
+// epidemics running this year sized by deaths. It has no chip of its own: it comes with Epidemics, the part of the
+// Plague & climate chip that also draws the curated epidemics and the Black Death month by month. At world zoom it keeps
+// to the places plague came back to most and the deadliest epidemics; the rest arrive as you zoom in.
 (() => {
-  const ERA = [1347, 1900], FADE = 4, MON = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const ERA = [1347, 1900], FADE = 4, WORLD_K = 2, OFTEN = 25, BIG = 1e5, MON = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const MODE = { sea: "by sea", river: "by river", land: "overland" };
   let D = null, SRC, OB, BY_Y, AT, SP, EPI, PEAK, OB_SRC;
   const prep = d => {
     if (D === d) return; D = d;
     SRC = (d.src || []).map(([cite, url]) => (url ? { cite, url } : { cite }));
     OB_SRC = (d.obsrc || []).map(([cite, url]) => ({ cite, url }));
-    OB = (d.ob || []).map(([lon, lat, y, n, s]) => ({ lon, lat, y, name: d.names[n], s }));
+    // bd: the Black Death layer already marks this town in this wave, so the map skips the dot (its card and Here row stay).
+    OB = (d.ob || []).map(([lon, lat, y, n, s, bd]) => ({ lon, lat, y, name: d.names[n], s, bd: !!bd }));
     BY_Y = new Map(); AT = new Map();
     for (const o of OB) {
       (BY_Y.get(o.y) || BY_Y.set(o.y, []).get(o.y)).push(o);
@@ -62,7 +65,7 @@
   }
 
   ATLAS.lens({
-    id: "plague", name: "Epidemics", family: "shocks", color: "#9b3b3b", on: false,
+    id: "plague", name: "Epidemics", family: "shocks", color: "#9b3b3b", on: false, with: "epidemics",
     guide: ["disease"],
     key: [["small", "Plague outbreak: bright this year, fading over four years (1347-1900)"], ["dot", "City cholera (1826-32) or smallpox (1518-28) reached, labelled with the month"],
       ["arrow", "How it got there; dashed because the from-where is a reading of the routes"], ["cross", "Epidemic on Wikidata, bigger with more deaths"]],
@@ -75,11 +78,11 @@
 
     draw(ctx) {
       prep(ctx.data);
-      const y = ctx.year, k = ctx.k || 1;
+      const y = ctx.year, k = ctx.k || 1, world = k < WORLD_K;
       // Plague: this year's outbreaks bright, the last few years fading.
       if (y >= ERA[0] - 1 && y <= ERA[1] + FADE) {
         const list = [];
-        for (let a = 0; a <= FADE; a++) for (const o of BY_Y.get(y - a) || []) list.push(o);
+        for (let a = 0; a <= FADE; a++) for (const o of BY_Y.get(y - a) || []) if (!o.bd && (!world || AT.get(o.name).length >= OFTEN)) list.push(o);
         ctx.pins(list, { key: o => o.name + ":" + o.y, shape: "circle", cls: "plague-ob",
           size: o => o.y === y ? 3 : 2.2, fade: o => 1 - (y - o.y) / (FADE + 1), fill: o => o.y === y ? 0.9 : 0.5, stroke: false,
           label: o => o.y === y && (k >= 3 || (AT.get(o.name) || []).length >= 15) ? o.name : null, pri: o => o.y === y ? 2 : 0,
@@ -99,7 +102,7 @@
           title: s => `${sp.n}: ${s.name}, ${when(ctx, s)}`, card: s => stopCard(ctx, s) });
       }
       // Wikidata epidemics running this year (or ended in the last two), sized by deaths.
-      const epi = EPI.filter(e => y >= e.s && y <= e.e + 2);
+      const epi = EPI.filter(e => y >= e.s && y <= e.e + 2 && (!world || e.dl >= BIG));
       ctx.pins(epi, { key: e => e.id, shape: "cross", size: e => e.dl ? Math.min(9, 3 + Math.log10(e.dl) - 2) : 3.5, fade: e => y > e.e ? .5 : 1,
         label: e => e.name, pri: e => e.dl ? Math.min(7, Math.log10(e.dl)) : 3, always: e => e.dl >= 1e6 && y <= e.e,
         title: e => `${e.name} · ${ctx.fmtSpan(e.s, e.e)}`, card: e => epiCard(ctx, e) });

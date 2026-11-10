@@ -162,7 +162,10 @@ Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
 in a second row. Land's row starts with the map style (Pixel, Relief or Plain). A lens that only makes sense inside a
 tab (What if, Live a life, Codex, Why) has no chip and comes on with its tab; a lens that belongs to another chip has
-none either (Provinces draws with Borders, Growing cities with Cities). New lenses plug in from `views/atlas/lenses/<id>.py` (data) and `<id>.js` (drawing,
+none either (Provinces draws with Borders, Growing cities with Cities). Shocks has two chips by subject, Epidemics and
+Famine & climate: each draws the curated records of the built-in Plague & climate layer together with the catalogue that
+goes with it (plague returns and Wikidata epidemics; eruptions, famines and temperature). At world zoom the catalogues
+keep to their largest records, and a catalogue row that repeats a curated one is left out. New lenses plug in from `views/atlas/lenses/<id>.py` (data) and `<id>.js` (drawing,
 Here and This year rows), a basemap and sprites register the same way; see [LENSES.md](LENSES.md).
 Zoom frames only move the map: labels hide while the scale changes and thinning runs when it settles.
 
