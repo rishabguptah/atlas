@@ -15,7 +15,7 @@
   const CONF = ["attested", "estimated", "approximate", "unknown"];
   const CONF_LINE = ["sure", "likely", "legend", "legend"];
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const fmtY = y => (window.ATLAS.api && ATLAS.api.fmtYear) ? ATLAS.api.fmtYear(y) : y < 0 ? -y + " BCE" : String(y);
+  const fmtY = ATLAS.fmtYear;
   const num = n => Math.round(n).toLocaleString("en");
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const fmtT = t => { if (t == null) return "date unknown"; const y = Math.floor(t), m = Math.floor((t - y) * 12); return `${MONTHS[Math.max(0, Math.min(11, m))]} ${fmtY(y)}`; };
@@ -251,7 +251,7 @@
   // ---------- cards ----------
   function legCard(C, j, g) {
     return { kick: "Journeys · " + j.wn, title: `${g.pa[0]} → ${g.pb[0]}`, year: Math.floor(g.t1), lon: g.pb[1], lat: g.pb[2], line: g.L.pts,
-      meta: `${fmtT(g.t0)} to ${fmtT(g.t1)} · by ${g.mode} · ${CONF[g.conf]}${j.st === "draft" ? " · draft for the judge" : ""} · ${g.routed ? `path estimated by the motion model${g.days ? ` (about ${Math.round(g.days)} days)` : ""}` : "path drawn straight (route unknown)"}`,
+      meta: `${fmtT(g.t0)} to ${fmtT(g.t1)} · by ${g.mode} · ${CONF[g.conf]}${j.st === "draft" ? " · draft, awaiting check" : ""} · ${g.routed ? `path estimated by the motion model${g.days ? ` (about ${Math.round(g.days)} days)` : ""}` : "path drawn straight (route unknown)"}`,
       body: g.note || j.w, why: j.n + ": " + j.w, sources: j.sources };
   }
   function voyCard(C, v) {
@@ -510,7 +510,7 @@
   function journeysView() {
     const C = prep(); if (!C) return `<p class="note">Loading journeys…</p>`;
     return C.J.map(j => `<button type="button" class="row" data-follow="${esc(j.id)}"><div><b>${esc(j.n)}</b><span>${esc(j.w)}</span></div><span class="c">${esc(fmtY(Math.floor(j.t0)))}–${esc(fmtY(Math.floor(j.t1)))}</span></button>`).join("")
-      + `<p class="note">Hand-entered from the cited accounts; drafts waiting for the judge. Paths between stops are worked out by the shared router once it has loaded (roads, rivers and sea lanes as they ran that year); until then they are straight.</p>`;
+      + `<p class="note">Hand-entered from the cited accounts; drafts awaiting check. Paths between stops are worked out by the shared router once it has loaded (roads, rivers and sea lanes as they ran that year); until then they are straight.</p>`;
   }
   function renderTab() {
     if (!pane) return;

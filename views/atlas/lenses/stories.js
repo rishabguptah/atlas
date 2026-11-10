@@ -38,7 +38,7 @@
     const sn = seen()[s.id], b = lazy(s) ? s.brief : null;
     const meta = b ? `${b.legs} ${b.legs === 1 ? "leg" : "legs"} · ${esc(Math.round(b.y0) === Math.round(b.y1) ? api.fmtYear(Math.round(b.y0)) : `${api.fmtYear(Math.round(b.y0))} to ${api.fmtYear(Math.round(b.y1))}`)}` : `${s.scenes.length} scenes · ${esc(span(s))}`;
     return `<button class="st${hero ? " hero" : ""}${sn ? " seen" : ""}" data-id="${esc(s.id)}"><span class="pl" aria-hidden="true">${sn ? "↺" : "▶"}</span><b>${esc(s.title)}</b>
-      <small>${s.blurb ? esc(s.blurb) + " " : ""}<span class="m">${meta}${s.live ? " · live draft" : ""}</span></small></button>`;
+      <small>${s.blurb ? esc(s.blurb) + " " : ""}<span class="m">${meta}${s.live ? " · AI draft" : ""}</span></small></button>`;
   }
   function liveAnswer() {
     const ans = api.answer;

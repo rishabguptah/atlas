@@ -51,7 +51,7 @@
   // ---------- questions ----------
   const Q = () => (D() || {}).q || [];
   const byId = id => Q().find(q => q.id === id);
-  const fy = y => api ? api.fmtYear(y) : String(y);
+  const fy = ATLAS.fmtYear;
   function rng(seed) { let a = 0; for (const c of seed) a = (Math.imul(a ^ c.charCodeAt(0), 2654435761) >>> 0); return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
   // The daily five: the same five for a given date, five different kinds of question.
   function daily(date) {

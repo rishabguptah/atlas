@@ -286,7 +286,7 @@
   }
   function srcHtml(sc) {
     const st = S.story, srcs = (sc.sources || []).filter(s => s && (s.cite || s.url));
-    const status = st.live ? "A live AI draft: the sources below are the ones the model believes exist, unchecked." : st.status === "draft" || !st.status ? "A curated draft: sources listed, waiting for the judge." : "";
+    const status = st.live ? "An AI draft: the sources below are the ones the model believes exist, unchecked." : st.status === "draft" || !st.status ? "A curated draft: sources listed, awaiting check." : "";
     return `<div class="cf">${["attested", "estimated", "approximate", "unknown"].map(c => `<i class="dr-cf ${c}${c === sc.conf ? " on" : ""}" aria-hidden="true"></i><span${c === sc.conf ? ' class="on"' : ""}><b>${esc(CONF_TEXT[c][0])}</b> ${esc(CONF_TEXT[c][1])}</span>`).join("")}</div>
       ${sc.conf ? "" : "<p>This scene does not say how sure it is.</p>"}
       ${srcs.length ? `<ul>${srcs.map(s => `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite || s.url)}</a>` : esc(s.cite)}</li>`).join("")}</ul>` : "<p>No source is named for this scene.</p>"}

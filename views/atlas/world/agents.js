@@ -42,7 +42,7 @@
     let m = 0; while (m < 11 && CUM[m + 1] <= doy) m++;
     return [m, doy - CUM[m] + 1];
   }
-  const fmtY = y => (y < 0 ? `${-y} BCE` : y < 1000 ? `${y} CE` : String(y));
+  const fmtY = ATLAS.fmtYear;
   function fmt(t, prec = "d") {
     const y = yearOf(t), [m, d] = monthDay(t);
     return prec === "y" ? fmtY(y) : prec === "m" ? `${MONTHS[m]} ${fmtY(y)}` : `${d} ${MONTHS[m]} ${fmtY(y)}`;

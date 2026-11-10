@@ -126,6 +126,11 @@ caption), `clearScene()`, `fly(view, ms)`, `setOn(lensId, on = true)`, `redraw()
 centre, zoom and about how many degrees fit across and down), `onView(fn)` (called when a pan or zoom settles) and
 `select(card)` (opens a card in Here, panning to it if it is off screen).
 
+Two helpers on `ATLAS` keep every pane saying things the same way: `ATLAS.fmtYear(y)` writes a year ("45,000 years
+ago", "300 BCE", "300 CE", "1453"), and `ATLAS.prov(k)` is the one provenance badge, with `k` one of `ai` (an AI draft,
+sources unchecked), `draft` (curated, awaiting check) or a confidence word (`attested`, `estimated`, `approximate`,
+`unknown`; see VIZ.md). Call the life game Live a life and anything Claude wrote an AI draft.
+
 The Objects tab (`lenses/objects.js`) is the example of a tab that plays a sequence on the map (fly, step the year,
 animate along a leg with `api.redraw()` each frame, caption with `api.scene`). It also exposes `ATLAS.objects` (`list`,
 `journey`, `at(year)`, `near(lon, lat, year, km)`, `follow(id)`) for other plugins.

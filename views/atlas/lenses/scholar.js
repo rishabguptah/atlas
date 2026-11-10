@@ -10,7 +10,7 @@
 // as a Story of Scenes, WORLD.md L4) and ATLAS.scholar (citations and briefs for the AI panel).
 (function () {
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const fy = y => y == null ? "" : y < 0 ? `${-y} BCE` : `${y}`;
+  const fy = y => y == null ? "" : ATLAS.fmtYear(y);
   const TYPE = ["caused", "contributed to", "prevented"];
   const CONF = ["attested", "estimated", "approximate", "unknown"];
   const CONF_DASH = [null, [6, 4], [2, 4], [1, 6]];
@@ -110,7 +110,7 @@
     const rivals = (D.inn[l.to] || []).filter(x => x !== l);
     const html = `<div class="sch"><div class="sch-chain"><button type="button" class="sch-node" data-sch="n:${esc(l.from)}" style="--c:${lc(l.lf)}">${esc(nm(l.from))}</button>
       <span class="sch-arrow">${esc(TYPE[l.t])}${l.lag ? ` · ${l.lag} yr` : ""}</span><button type="button" class="sch-node" data-sch="n:${esc(l.to)}" style="--c:${lc(l.lt)}">${esc(nm(l.to))}</button></div>
-      ${l.mech ? `<p>${esc(l.mech)}</p>` : ""}<p class="sch-meta">${esc(l.view ? "Explanation: " + l.view : "")}${l.view ? " · " : ""}confidence ${Math.round(l.c * 100)}% · ${CONF[l.cf]}${l.ok ? "" : " · draft, waiting for the judge"}</p>
+      ${l.mech ? `<p>${esc(l.mech)}</p>` : ""}<p class="sch-meta">${esc(l.view ? "Explanation: " + l.view : "")}${l.view ? " · " : ""}confidence ${Math.round(l.c * 100)}% · ${CONF[l.cf]}${l.ok ? "" : " · draft, awaiting check"}</p>
       ${l.debate && D.dix[l.debate] ? `<div class="sch-links">${debateBtn(D.dix[l.debate])}</div>` : ""}
       ${rivals.length ? `<div class="sch-sub">Other explanations of ${esc(nm(l.to))}</div><div class="sch-links">${rivals.slice(0, 6).map(linkBtn).join("")}</div>` : ""}</div>`;
     return { kind: "lens:why", c: lc(l.lf), kick: `Why · ${l.lf} → ${l.lt}`, title: `${nm(l.from)} → ${nm(l.to)}`, meta: fy(l.s) + (l.e != null && l.e !== l.s ? ` to ${fy(l.e)}` : ""),
@@ -245,7 +245,7 @@
   });
 
   ATLAS.lens({
-    id: "why", name: "Why chains", family: "shocks", color: "#b5562b", on: false, guide: [],
+    id: "why", name: "Why", family: "shocks", color: "#b5562b", on: false, guide: [],
     key: [["arrow", "a cause and what it led to; the colour is the cause's lens"], ["line", "solid: contemporaries record it · dashed: estimated · dotted: argued"]],
     index: () => ok() ? "Why chains: " + D.C.map(c => `${c.n} (${fy(c.s)}-${fy(c.e)})`).join("; ") : "",
     draw(ctx) {

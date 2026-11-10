@@ -18,7 +18,7 @@
   // ---------- dates: month index = year * 12 + month - 1 (BCE years negative, "-0480-09") ----------
   const mOf = s => { if (!s) return null; const neg = s[0] === "-", p = (neg ? s.slice(1) : s).split("-"), y = neg ? -+p[0] : +p[0]; return y * 12 + (p.length > 1 ? +p[1] - 1 : 0); };
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const fy = y => y < 0 ? `${-y} BCE` : String(y);
+  const fy = ATLAS.fmtYear;
   const fmtDate = s => { if (!s) return ""; const neg = s[0] === "-", p = (neg ? s.slice(1) : s).split("-"), y = fy(neg ? -+p[0] : +p[0]);
     return p.length > 2 ? `${+p[2]} ${MONTHS[+p[1] - 1]} ${y}` : p.length > 1 ? `${MONTHS[+p[1] - 1]} ${y}` : y; };
   const fmtM = m => `${MONTHS[((m % 12) + 12) % 12]} ${fy(Math.floor(m / 12))}`;

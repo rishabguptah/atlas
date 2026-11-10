@@ -9,7 +9,7 @@
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const KEY = "atlas.life.v1";
   let api = null, el = null;
-  const fy = y => api ? api.fmtYear(y) : y < 0 ? `${-y} BCE` : `${y}`;
+  const fy = ATLAS.fmtYear;
   const R = Math.PI / 180;
   const km = (a, b) => { const dl = (b.lat - a.lat) * R, dn = (b.lon - a.lon) * R, x = Math.sin(dl / 2) ** 2 + Math.cos(a.lat * R) * Math.cos(b.lat * R) * Math.sin(dn / 2) ** 2; return 12742 * Math.asin(Math.min(1, Math.sqrt(x))); };
   const interp = (rows, y, col = 1) => { if (y <= rows[0][0]) return rows[0][col]; for (let i = 1; i < rows.length; i++) if (y <= rows[i][0]) { const a = rows[i - 1], b = rows[i]; return a[col] + (b[col] - a[col]) * (y - a[0]) / (b[0] - a[0]); } return rows[rows.length - 1][col]; };
@@ -379,7 +379,7 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
 
   // ---------- drawing on the map ----------
   ATLAS.lens({
-    id: "life", name: "Your life", family: "peoples", color: "#d0602a", on: false, guide: [],
+    id: "life", name: "Live a life", family: "peoples", color: "#d0602a", on: false, guide: [],
     key: [["line", "Your road so far"], ["sprite", "You, and how you travel"], ["dot", "Where your next chapter happens"]],
     draw(ctx) {
       lensProj = ctx.projection; lensG = ctx.g; lensPath = ctx.path;
@@ -407,8 +407,8 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
     },
     here(ctx, at) {
       const g = G0();
-      if (pickWait) { const f = pickWait; pickWait = null; setTimeout(() => { api.setTab("life"); f(at); }, 0); return [{ title: "Chosen for your life", why: "Back to the Live tab" }]; }
-      if (g && g.phase === "pick") { setTimeout(() => { api.setTab("life"); chooseDest({ n: (nearestTown(at.lon, at.lat, g.y) || {}).n || "this spot", lon: at.lon, lat: at.lat }); }, 0); return [{ title: "Your destination", why: "Back to the Live tab to plan the trip" }]; }
+      if (pickWait) { const f = pickWait; pickWait = null; setTimeout(() => { api.setTab("life"); f(at); }, 0); return [{ title: "Chosen for your life", why: "Back to Live a life" }]; }
+      if (g && g.phase === "pick") { setTimeout(() => { api.setTab("life"); chooseDest({ n: (nearestTown(at.lon, at.lat, g.y) || {}).n || "this spot", lon: at.lon, lat: at.lat }); }, 0); return [{ title: "Your destination", why: "Back to Live a life to plan the trip" }]; }
       return [];
     },
   });
@@ -488,7 +488,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
     const nm = g.kind === "real" ? life.name : g.name;
     const role = g.kind === "real" ? life.role : (D().rules.roles.find(r => r.id === g.role) || {}).n;
     const sp = g.kind === "real" ? life.sprite : (D().rules.roles.find(r => r.id === g.role) || {}).sprite;
-    return `<div class="hud">${img(sp || "person_pilgrim", g.team)}<b>${esc(nm)}${life && life.ai ? ' <span class="badge2 ai">Claude draft</span>' : ""}</b><button class="ghost" data-a="quit">Leave</button>
+    return `<div class="hud">${img(sp || "person_pilgrim", g.team)}<b>${esc(nm)}${life && life.ai ? " " + ATLAS.prov("ai") : ""}</b><button class="ghost" data-a="quit">Leave</button>
       <span class="meta">${esc(role || "")} · age ${age} · ${MONTHS[(g.m || 1) - 1]} ${fy(g.y)} · ${esc(g.at.n)}${g.kind === "real" ? ` · ${g.div ? `${g.div} choices your own` : "true to the record"}` : ""}</span>
       <div class="stats">${statLine(g.st)}<span class="stat" title="Distance travelled">↝ ${Math.round(g.km).toLocaleString()} km</span></div></div>`;
   }
@@ -569,7 +569,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
       const real = g.picks.filter(p => p.real).length;
       rows = `<div class="cmp"><div><b>Your life</b>${esc(o.t)}<br>${Math.round(g.km).toLocaleString()} km travelled · ${real} of ${g.picks.length} choices as in the record</div>
         <div><b>The real ${esc(life.name)}</b>${fy(life.born)}–${fy(life.died)}. ${esc(life.epilogue || "")}</div></div>
-        ${life.ai ? `<p class="sub"><span class="badge2 ai">Claude draft</span> This life was drafted by Claude and has not been checked against the sources.</p>` : ""}
+        ${life.ai ? `<p class="sub">${ATLAS.prov("ai")} This life was drafted by Claude and has not been checked against the sources.</p>` : ""}
         <div class="sec"><h3>Sources</h3><ul class="src">${(life.sources || []).map(s => `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite)}</a>` : esc(s.cite)}</li>`).join("")}</ul></div>`;
     } else {
       const e15 = interp(rules.life_table.rows, g.born + 15, 4), alive = g.kids.filter(k => k.d == null).length;
@@ -668,7 +668,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
     else if (a === "settle") { g.phase = "year"; g.news = yearNews(g); g.lastYears = null; save(); show(); }
   }
   ATLAS.tab({
-    id: "life", name: "Live", icon: "life", mode: "Live a life",
+    id: "life", name: "Live a life", short: "Live", icon: "life", mode: true,
     mount(pane, a) {
       el = pane; api = a;
       el.addEventListener("click", onClick);
