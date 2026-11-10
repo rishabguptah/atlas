@@ -10,6 +10,8 @@
      Spectral prose at 13 (notes), 15 (reading) and 17 (a lead or a question). Every font-size in the chrome, the page
      and the lens panes is one of these. */
   --fs-tiny: 8px; --fs-tiny-2: 16px;
+  /* Two shadows, both hard and lit from the top left: a raise for chips, buttons and swatches, a float for windows. */
+  --sh-raise: 2px 2px 0 var(--shade); --sh-float: 4px 4px 0 var(--shade);
   --fs-h4: 16px; --fs-h3: 24px; --fs-h2: 32px; --fs-h1: 48px;
   --fs-note: 13px; --fs-read: 15px; --fs-lead: 17px;
   /* A pressed family chip is filled with its tincture's darker step, so vellum type reads on it (4.8:1 or better). */
@@ -21,11 +23,11 @@
 
 /* Frames: a 9-slice pixel border. The slice and width come from the kit; 2 CSS px per art px. */
 .fr { border-style: solid; border-color: transparent; image-rendering: pixelated; }
-.fr-panel { border-width: 10px; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
+.fr-panel { border-width: 10px; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(var(--sh-float)); }
 .fr-card { border-width: 6px; border-image: var(--f-card) 3 fill / 6px stretch; }
 .fr-card-gold { border-width: 6px; border-image: var(--f-card-gold) 3 fill / 6px stretch; }
-.fr-plate { border-width: 10px; border-image: var(--f-plate) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
-.fr-hud { border-width: 8px; border-image: var(--f-hud) 4 fill / 8px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
+.fr-plate { border-width: 10px; border-image: var(--f-plate) 5 fill / 10px stretch; filter: drop-shadow(var(--sh-float)); }
+.fr-hud { border-width: 8px; border-image: var(--f-hud) 4 fill / 8px stretch; filter: drop-shadow(var(--sh-float)); }
 .fr-inset { border-width: 6px; border-image: var(--f-inset) 3 fill / 6px stretch; }
 
 .ico { width: 24px; height: 24px; display: block; flex: none; image-rendering: pixelated; }
@@ -46,15 +48,15 @@
 .prose { font-family: var(--f-prose); font-size: var(--fs-read); line-height: 1.5; }
 .num { font-family: var(--f-tiny); font-variant-numeric: tabular-nums; }
 
-/* Buttons: ink face with a gold rule (primary) or vellum (quiet). Press = 1 art px down, no shadow. */
+/* Buttons: ink face with a gold rule (primary) or vellum (quiet). Hover lifts onto the float, press lands on the shadow. */
 .pbtn { font-family: var(--f-tiny); font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
   display: inline-flex; align-items: center; gap: 6px; color: var(--vellum-fixed, #f6f0dc); background: none; padding: 2px 6px;
   border-style: solid; border-color: transparent; border-width: 6px; border-image: var(--f-button) 3 fill / 6px stretch; image-rendering: pixelated;
-  filter: drop-shadow(0 2px 0 var(--shade)); transition: transform 120ms var(--ease); }
+  filter: drop-shadow(var(--sh-raise)); transition: transform 120ms var(--ease); }
 .pbtn.q { color: var(--ink); border-image-source: var(--f-button-q); }
 .pbtn.big { font-size: 16px; line-height: 18px; padding: 4px 10px; }
-.pbtn:hover { transform: translateY(-2px); filter: drop-shadow(0 4px 0 var(--shade)); }
-.pbtn:active { transform: translateY(2px); filter: none; }
+.pbtn:hover { transform: translate(-2px, -2px); filter: drop-shadow(var(--sh-float)); }
+.pbtn:active { transform: translate(2px, 2px); filter: none; }
 .pbtn:focus-visible, .lens:focus-visible, .tabk:focus-visible, .row-it:focus-visible { outline: 2px dashed var(--gold); outline-offset: 2px; }
 .pbtn.sq { padding: 2px; }
 

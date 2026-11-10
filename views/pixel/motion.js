@@ -52,7 +52,7 @@
 .pxmo { position: absolute; left: 0; top: 0; image-rendering: pixelated; pointer-events: none; transform-origin: 0 0; }
 .pxsky-btn { image-rendering: pixelated; display: block; cursor: pointer; pointer-events: auto; }
 .pxsky-pop { position: absolute; right: 10px; bottom: 96px; z-index: 6; pointer-events: auto; background: #f6f0dc; color: #221f1a;
-  border: 3px solid #221f1a; box-shadow: 3px 3px 0 #221f1a; padding: 9px 12px 10px; display: grid; gap: 8px; min-width: 214px;
+  border: 3px solid #221f1a; box-shadow: var(--sh-float, 3px 3px 0 #221f1a); padding: 9px 12px 10px; display: grid; gap: 8px; min-width: 214px;
   font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace; font-size: 16px; }
 .pxsky-pop[hidden] { display: none; }
 .pxsky-pop h4 { margin: 0; font: 400 16px/1 "Silkscreen", "Pixelify Sans", monospace; letter-spacing: .04em; color: #8a6418; text-transform: uppercase; }
@@ -758,16 +758,20 @@
     }
 
     // ---------- sky control: a pixel plate beside the compass, and a small chronicle popover ----------
+    // Drawn on a 19 x 25 plate; inside a framed HUD the plate and its rim belong to the frame, so it trims to 15 x 21.
     const btn = document.createElement("canvas"), BW = 19, BH = 25;
-    btn.width = BW; btn.height = BH; btn.className = "pxsky-btn"; Object.assign(btn.style, { width: BW * PX + "px", height: BH * PX + "px" });
+    let framed = false;
+    const sizeBtn = px => { const w = framed ? BW - 4 : BW, h = framed ? BH - 4 : BH; btn.width = w; btn.height = h; Object.assign(btn.style, { width: w * px + "px", height: h * px + "px" }); };
+    btn.className = "pxsky-btn"; sizeBtn(PX);
     btn.tabIndex = 0; btn.setAttribute("role", "button"); btn.setAttribute("aria-haspopup", "true"); btn.title = "Sky, seasons and motion (N for night)";
     const pop = document.createElement("div"); pop.className = "pxsky-pop"; pop.hidden = true; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "Sky and motion");
     function drawBtn() {
       const x = btn.getContext("2d"), mode = settings.sky;
-      x.clearRect(0, 0, BW, BH);
-      x.fillStyle = "#221f1a"; x.fillRect(1, 0, BW - 2, BH); x.fillRect(0, 1, BW, BH - 2);
+      x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, btn.width, btn.height);
+      if (framed) x.setTransform(1, 0, 0, 1, -2, -2);
+      else { x.fillStyle = "#221f1a"; x.fillRect(1, 0, BW - 2, BH); x.fillRect(0, 1, BW, BH - 2); }
       x.fillStyle = mode === "day" ? "#3c6c80" : mode === "night" ? "#141a34" : "#2a3050"; x.fillRect(2, 2, BW - 4, BH - 4);
-      x.fillStyle = "#c8a46a"; x.fillRect(2, 1, BW - 4, 1); x.fillRect(2, BH - 2, BW - 4, 1); x.fillRect(1, 2, 1, BH - 4); x.fillRect(BW - 2, 2, 1, BH - 4);
+      if (!framed) { x.fillStyle = "#c8a46a"; x.fillRect(2, 1, BW - 4, 1); x.fillRect(2, BH - 2, BW - 4, 1); x.fillRect(1, 2, 1, BH - 4); x.fillRect(BW - 2, 2, 1, BH - 4); }
       const P = (c, pts) => { x.fillStyle = c; for (const [i, j] of pts) x.fillRect(i, j, 1, 1); };
       const disc = (cx, cy, r, c) => { x.fillStyle = c; for (let j = -r; j <= r; j++) for (let i = -r; i <= r; i++) if (i * i + j * j <= r * r + 1) x.fillRect(cx + i, cy + j, 1, 1); };
       if (mode === "night") { disc(9, 9, 4, "#f2ecd0"); disc(11, 8, 3, "#141a34"); P("#fff6d0", [[4, 4], [14, 13], [5, 14], [15, 4]]); }
@@ -809,7 +813,8 @@
     };
     document.addEventListener("keydown", onKey);
     function mountBtn() {
-      const row = mapEl.querySelector(".pxhud-br .row");
+      const row = mapEl.querySelector(".pxhud-br .row"), hud = row && row.closest(".pxhud-br.framed");
+      if (hud) { framed = true; sizeBtn(+hud.dataset.px || PX); }
       if (row) row.prepend(btn); else { const box = document.createElement("div"); Object.assign(box.style, { position: "absolute", right: "10px", bottom: "10px", zIndex: 5 }); box.append(btn); mapEl.append(box); }
       mapEl.append(pop);
     }

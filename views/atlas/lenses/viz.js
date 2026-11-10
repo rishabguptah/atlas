@@ -104,7 +104,7 @@
 
   // ---------- the legend card on the map ----------
   const STYLE = `
-.vz-legend { position: absolute; left: 12px; bottom: 12px; z-index: 6; background: var(--card, #fbf8ef); border: 3px solid #221f1a; box-shadow: 3px 3px 0 #221f1a; padding: 6px 8px 7px; max-width: 300px; }
+.vz-legend { position: absolute; left: 12px; bottom: 12px; z-index: 6; background: var(--card, #fbf8ef); border: 3px solid #221f1a; box-shadow: var(--sh-float); padding: 6px 8px 7px; max-width: 300px; }
 .vz-legend[hidden] { display: none; }
 .vz-legend .vz-k { margin-bottom: 2px; }
 .vz-legend .tabs { display: flex; gap: 4px; margin-bottom: 6px; flex-wrap: wrap; }

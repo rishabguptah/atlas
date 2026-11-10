@@ -150,7 +150,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .maphint { position: absolute; left: 14px; top: 52px; font-size: var(--fs-note); color: var(--ink-soft); font-style: italic; pointer-events: none; text-shadow: 0 0 4px var(--sea); }
 .caption {
   position: absolute; left: 14px; right: 14px; bottom: 12px; max-width: 520px; background: var(--card); border: 1px solid var(--rule);
-  border-left: 4px solid var(--lc, var(--ink)); padding: 8px 12px; font-size: var(--fs-read); box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  border-left: 4px solid var(--lc, var(--ink)); padding: 8px 12px; font-size: var(--fs-read); box-shadow: var(--sh-float);
 }
 .caption b { font-family: var(--display); font-weight: 400; font-size: var(--fs-h4); display: block; line-height: 1.15; }
 .caption .ck { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--lc); }
@@ -162,7 +162,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .strip rect { shape-rendering: crispEdges; opacity: .85; }
 .strip:hover rect { opacity: 1; }
 .stripwrap { position: relative; grid-column: 2; min-width: 0; }
-.striptip { position: absolute; bottom: calc(100% + 4px); width: 260px; z-index: 6; background: var(--card); border: 1px solid var(--rule); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,.15);
+.striptip { position: absolute; bottom: calc(100% + 4px); width: 260px; z-index: 6; background: var(--card); border: 1px solid var(--rule); border-radius: 4px; box-shadow: var(--sh-float);
   padding: 5px 8px; font-size: var(--fs-note); line-height: 1.35; pointer-events: none; }
 .striptip .h { display: block; color: var(--ink-soft); font-size: var(--fs-note); }
 .time input { width: 100%; min-width: 0; accent-color: var(--ink); margin: 0; }
@@ -257,7 +257,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .step .y { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); white-space: nowrap; }
 .step .ln { grid-column: 2 / 4; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--c); }
 .step .body { display: none; padding: 0 11px 10px; font-size: var(--fs-read); }
-.step.on { box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+.step.on { box-shadow: var(--sh-raise); }
 .step.on .body { display: block; }
 .step.muted { opacity: .4; }
 .step p { margin: 0 0 6px; }
@@ -282,7 +282,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .pnl .waiting, .pnl .skipped, .pnl .missed { opacity: .55; }
 .pnl .speaking .stt { color: var(--c); }
 /* Who is talking: a pixel portrait on a vellum plate (stays light in dark mode), and a header that sticks under the player. */
-.pt { flex: none; display: block; background: #f6f0dc; box-shadow: 0 0 0 2px var(--ink), 3px 3px 0 1px rgba(34, 31, 26, .45); }
+.pt { flex: none; display: block; background: #f6f0dc; box-shadow: 0 0 0 2px var(--ink); filter: drop-shadow(var(--sh-raise)); }
 .steps { gap: 16px; }
 .spg { display: grid; gap: 8px; }
 .spk { position: sticky; top: var(--spk-top, 0px); z-index: 1; background: var(--paper); display: flex; gap: 12px; align-items: center; padding: 8px 2px 7px 4px; border-bottom: 2px solid var(--c); }
@@ -351,11 +351,11 @@ a { color: var(--accent); text-underline-offset: 2px; }
 /* Flow: map controls, the key, eras under the slider, deep time folded away. */
 .maphint { background: var(--card); color: var(--ink-soft); text-shadow: none; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--rule); }
 .mapctl { position: absolute; top: 10px; right: calc(10px + env(safe-area-inset-right, 0px)); display: flex; gap: 6px; z-index: 5; }
-.mapctl .btn { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; padding: 4px 9px; box-shadow: 0 2px 6px rgba(0,0,0,.18); }
+.mapctl .btn { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; padding: 4px 9px; box-shadow: var(--sh-raise); }
 .mapctl .btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .mapctl kbd, .keycard kbd { font-family: var(--mono); font-size: var(--fs-tiny); border: 1px solid var(--rule); border-radius: 3px; padding: 0 4px; margin-left: 5px; opacity: .75; }
 .keycard { position: absolute; top: 44px; right: calc(10px + env(safe-area-inset-right, 0px)); z-index: 5; width: min(300px, calc(100% - 20px)); max-height: calc(100% - 60px); overflow-y: auto;
-  background: var(--card); border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 8px 22px rgba(0,0,0,.18); padding: 10px 12px; display: grid; gap: 8px; font-size: var(--fs-note); }
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--sh-float); padding: 10px 12px; display: grid; gap: 8px; font-size: var(--fs-note); }
 .keycard h4 { margin: 0; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); font-weight: 400; }
 .keycard .kg { display: grid; gap: 3px; }
 .keycard .kg b { font-weight: 600; color: var(--c); font-size: var(--fs-note); }
@@ -412,7 +412,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .maphint { display: none; }
   .mapctl { top: 8px; }
   .panel { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: 88dvh; border: 1px solid var(--rule); border-bottom: 0; border-radius: 14px 14px 0 0;
-    background: var(--paper); box-shadow: 0 -8px 24px rgba(0, 0, 0, .18); overflow: hidden; display: flex; flex-direction: column;
+    background: var(--paper); box-shadow: none; overflow: hidden; display: flex; flex-direction: column;
     transform: translateY(calc(88dvh - var(--peek) - env(safe-area-inset-bottom, 0px))); transition: transform .28s cubic-bezier(.2, .8, .2, 1); touch-action: none; }
   .panel[data-sheet="half"] { transform: translateY(calc(88dvh - 50dvh)); }
   .panel[data-sheet="full"] { transform: translateY(0); }
@@ -1694,7 +1694,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const m = mapEl.getBoundingClientRect(), rel = r => [r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top];
     if (typeof ATLAS.chromeRects === "function") try { return ATLAS.chromeRects().map(r => Array.isArray(r) ? r : rel(r)); } catch (err) { console.error(err); }
     const out = [];
-    for (const el of mapEl.querySelectorAll(".mapctl, .maphint, .keycard, .pxhud .hit, .pxhud .scale")) if (el.offsetParent) out.push(rel(el.getBoundingClientRect()));
+    for (const el of mapEl.querySelectorAll(".mapctl, .maphint, .keycard, .pxhud-br")) if (el.offsetParent) out.push(rel(el.getBoundingClientRect()));
     return out;
   }
   // Every label change (a source refreshes, a pin, the focus) repaints the mark layer, which runs the queue.

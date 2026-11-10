@@ -359,7 +359,7 @@
       // Names of seas, rivers, ranges and deserts in the pixel font, under the Land lens's terrain toggle.
       if (!LBL && typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
       if (typeof PixelMarks === "function" && svgEl()) mountMarks(el, projection);
-      if (typeof PixelHUD === "function") hud = PixelHUD(mapOf(el), projection, { px: 3, tile: PIXEL.tile0, fly: (v, ms) => ATLAS.api && ATLAS.api.fly(v, ms ?? 600) });
+      if (typeof PixelHUD === "function") hud = PixelHUD(mapOf(el), projection, { px: 2, framed: true, tile: PIXEL.tile0, fly: (v, ms) => ATLAS.api && ATLAS.api.fly(v, ms ?? 600) });
       if (typeof PixelMotion === "function") {
         const L = PIXEL.lights;
         motion = ATLAS.motion = PixelMotion(pm, el, projection, { px: 3, mapEl: mapOf(el), lightsUrl: typeof L === "string" ? L : null, lightsData: L && L.c ? L.c : null,

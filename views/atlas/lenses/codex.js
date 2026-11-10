@@ -60,7 +60,7 @@
   const css = document.createElement("style");
   css.textContent = `
 .cx-toasts { position: absolute; right: 12px; top: 12px; justify-items: end; display: grid; gap: 8px; z-index: 30; pointer-events: none; max-width: min(340px, calc(100% - 24px)); }
-.cx-toast { pointer-events: auto; cursor: pointer; background: var(--card); color: var(--ink); border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); padding: 7px 11px 8px; display: grid; gap: 2px; animation: cx-in .25s steps(4) both; }
+.cx-toast { pointer-events: auto; cursor: pointer; background: var(--card); color: var(--ink); border: 2px solid var(--ink); box-shadow: var(--sh-float); padding: 7px 11px 8px; display: grid; gap: 2px; animation: cx-in .25s steps(4) both; }
 .cx-toast .k { font-family: var(--mono); font-size: var(--fs-tiny); letter-spacing: .1em; text-transform: uppercase; color: var(--y-codex); }
 .cx-toast b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); line-height: 1.2; }
 .cx-toast span { font-size: var(--fs-note); color: var(--ink-soft); }
@@ -83,7 +83,7 @@
 .cx .stat { border: 1px solid var(--rule); background: var(--card); padding: 8px 10px; display: grid; gap: 2px; }
 .cx .stat b { font-family: var(--mono); font-size: var(--fs-tiny-2); font-weight: 500; font-variant-numeric: tabular-nums; }
 .cx .stat span { font-size: var(--fs-note); color: var(--ink-soft); }
-.cx .next { border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); background: var(--card); padding: 11px 13px; display: grid; gap: 6px; }
+.cx .next { border: 2px solid var(--ink); box-shadow: var(--sh-float); background: var(--card); padding: 11px 13px; display: grid; gap: 6px; }
 .cx .next .k { font-family: var(--mono); font-size: var(--fs-tiny); letter-spacing: .1em; text-transform: uppercase; color: var(--y-codex); }
 .cx .next b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); line-height: 1.25; }
 .cx .meter { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 2px; height: 8px; }
