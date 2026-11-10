@@ -166,6 +166,13 @@
       return { id: s + ":" + i, name: emp ? emp.name : name, color: hashC(emp ? emp.id : name || String(i)), feature: f };
     }).filter(r => r.name && d3.geoArea(r.feature) < 2 * Math.PI);
   }
+  // A trade route's leg lengths, measured once per route (every year step walked every point of every route on the map).
+  const routeLens = new WeakMap();
+  function routeLen(line) {
+    let r = routeLens.get(line);
+    if (!r) { const segs = []; let tot = 0; for (let i = 1; i < line.length; i++) { const d = d3.geoDistance(line[i - 1], line[i]); segs.push(d); tot += d; } routeLens.set(line, r = { segs, tot }); }
+    return r;
+  }
   function collect(y, k) {
     statics = []; movers = [];
     if (typeof ENTRIES !== "undefined" && isOn("places")) for (const e of ENTRIES) {
@@ -196,8 +203,7 @@
     for (const f of ATLAS.pixelSprites || []) try { statics.push(...(f(y, k) || [])); } catch (err) { console.error("pixel sprites", err); }
     if (typeof MONEY !== "undefined" && isOn("money")) for (const t of MONEY.trade) {
       if (y < t.start || y > t.end || !t.line || t.line.length < 2) continue;
-      const segs = []; let tot = 0;
-      for (let i = 1; i < t.line.length; i++) { const d = d3.geoDistance(t.line[i - 1], t.line[i]); segs.push(d); tot += d; }
+      const { segs, tot } = routeLen(t.line);
       // One traveller per route zoomed out, up to four along it as you come in.
       const n = k < 2 ? 1 : Math.max(1, Math.min(4, Math.round(tot / 0.6)));
       for (let q = 0; q < n; q++) movers.push({ line: t.line, segs, tot, phase: q / n });
