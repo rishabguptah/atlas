@@ -348,7 +348,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .pt.lp.lbl text { fill: var(--c); font-weight: 600; }
 .line.lpath { stroke: var(--c); stroke-width: 2px; vector-effect: non-scaling-stroke; stroke-opacity: .75; }
 
-/* Flow: map controls, the key, focus mode, eras under the slider, deep time folded away. */
+/* Flow: map controls, the key, eras under the slider, deep time folded away. */
 .maphint { background: var(--card); color: var(--ink-soft); text-shadow: none; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--rule); }
 .mapctl { position: absolute; top: 10px; right: calc(10px + env(safe-area-inset-right, 0px)); display: flex; gap: 6px; z-index: 5; }
 .mapctl .btn { font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; padding: 4px 9px; box-shadow: 0 2px 6px rgba(0,0,0,.18); }
@@ -363,8 +363,6 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .keycard .kr svg { position: static; width: 22px; height: 16px; overflow: visible; cursor: default; }
 .keycard .keys { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 10px; font-size: 12.5px; color: var(--ink-soft); }
 .keycard .keys kbd { margin: 0; justify-self: start; }
-.app.focus { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; grid-template-areas: "map" "time"; }
-.app.focus .top, .app.focus .panel { display: none; }
 .eras { grid-column: 2; position: relative; height: 16px; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
 .eras button { all: unset; box-sizing: border-box; position: absolute; top: 0; height: 16px; padding: 1px 3px 0; overflow: hidden; white-space: nowrap; text-overflow: clip; cursor: pointer;
   color: var(--ink-soft); border-left: 1px solid var(--rule); }
@@ -377,7 +375,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .sec details.deep[open] summary::before { content: "− "; }
 .sec .items.only-deep { display: none; }
 .app.asking #qbox, .app.asking #go { visibility: hidden; }
-@media (max-width: 860px) { .mapctl kbd { display: none; } .app.focus .map { height: 80vh; } .app.asking #qbox, .app.asking #go { display: none; } }
+@media (max-width: 860px) { .mapctl kbd { display: none; } .app.asking #qbox, .app.asking #go { display: none; } }
 @media (max-width: 600px) { .eras button:not([aria-current="true"]) { color: transparent; } .eras button[aria-current="true"] { overflow: visible; z-index: 1; } }
 .map canvas.marks { position: absolute; left: 0; top: 0; pointer-events: none; }
 .maptip { position: absolute; z-index: 5; max-width: 280px; pointer-events: none; background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 8px; font-size: 12.5px; line-height: 1.35; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
@@ -460,7 +458,6 @@ a { color: var(--accent); text-underline-offset: 2px; }
     <div class="mapctl" role="toolbar" aria-label="Map controls">
       <button class="btn" id="surprise" type="button" title="Jump to a random moment worth seeing (R)">Surprise me<kbd>R</kbd></button>
       <button class="btn" id="keybtn" type="button" aria-pressed="false" aria-controls="keycard" title="What's on the map (K); every key: ?">Key<kbd>K</kbd></button>
-      <button class="btn" id="focusbtn" type="button" aria-pressed="false" title="Map only (F)">Focus<kbd>F</kbd></button>
     </div>
     <div class="keycard" id="keycard" hidden></div>
   </section>
@@ -2861,10 +2858,9 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   yearWatch.push(() => { if (!keyEl.hidden) renderKey(); });
   layersEl.addEventListener("click", () => setTimeout(renderKey)); subEl.addEventListener("click", () => setTimeout(renderKey));
 
-  // ---------- focus: the map alone ----------
-  const appEl = document.querySelector(".app"), focusBtn = document.getElementById("focusbtn");
-  function toggleFocus(v = !appEl.classList.contains("focus")) { appEl.classList.toggle("focus", v); focusBtn.setAttribute("aria-pressed", v); }
-  focusBtn.onclick = () => toggleFocus();
+  // The map alone is the eye in the map controls (chrome.js): H or F hides the interface, Esc or / brings it back.
+  const appEl = document.querySelector(".app");
+  const showUI = () => { if (appEl.classList.contains("ui-hidden") && ATLAS.hideUI) ATLAS.hideUI(false); };
 
   // ---------- surprise me: a random moment worth seeing, framed and explained ----------
   const SURPRISES = [
@@ -2956,7 +2952,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     ["Move", [["W A S D", "Pan (or the arrow keys)"], ["Q E", "Zoom out, in (or − +)"], ["Shift", "Hold to go faster"], ["0", "The whole world"], ["Enter", "What's here, under the cross"]]],
     ["Time", [[", .", "A step back, forward"], ["< >", "Ten steps (Shift+, .)"], ["Space", "Play or pause"], ["[ ]", "A month, in Up close"]]],
     ["Look", [["1 – 6", "Lens families on or off"], ["T", "Next tab (Shift+T back)"], ["/", "Ask a question"], ["R", "Surprise me"], ["N", "Night and day"]]],
-    ["Screen", [["H", "Hide the interface"], ["P", "Fold the panel"], ["F", "Focus: map only"], ["K", "Map key"], ["Esc", "Back, close"]]],
+    ["Screen", [["H F", "Hide or show the interface"], ["P", "Fold the panel"], ["K", "Map key"], ["Esc", "Back, close"]]],
     ["In a story", [["Space →", "Next scene"], ["←", "Back a scene"], ["W Enter", "Why?"], ["H", "How do we know"], ["Home End", "First, last scene"], ["P", "Autoplay"], ["Esc", "Leave the story"]]],
     ["Living world", [[", .", "A day back, forward"]]],
   ];
@@ -2985,9 +2981,8 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     if (ev.repeat && !",.<>".includes(k)) { if (k.length === 1 || k === "Enter") ev.preventDefault(); return; }
     if (k === "," || k === "." || k === "<" || k === ">") stepYear(k === "," || k === "<" ? -1 : 1, ev.shiftKey || k === "<" || k === ">");
     else if (k === " ") playBtn.click();
-    else if (k === "/") { if (appEl.classList.contains("focus")) toggleFocus(false); const q = state.tab === "guide" ? q2 : document.getElementById("qbox"); q.focus(); }
+    else if (k === "/") { showUI(); const q = state.tab === "guide" ? q2 : document.getElementById("qbox"); q.focus(); }
     else if (k === "r") surprise();
-    else if (k === "f") toggleFocus();
     else if (k === "k") toggleKey();
     else if (k === "?") toggleCheat();
     else if (k === "t") cycleTab(ev.shiftKey ? -1 : 1);
@@ -2997,7 +2992,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
       // The key closes first; a game or mode (chrome.js) gets Esc next.
       if (!keyEl.hidden) { toggleKey(false); ev.stopImmediatePropagation(); }
       else if (appEl.classList.contains("in-mode")) return;
-      else if (appEl.classList.contains("focus")) toggleFocus(false); else showCaption(null);
+      else if (appEl.classList.contains("ui-hidden")) showUI(); else showCaption(null);
     }
     else if (/^[1-6]$/.test(k) && FAMILIES[+k - 1]) famChips[FAMILIES[+k - 1].id].click();
     else return;

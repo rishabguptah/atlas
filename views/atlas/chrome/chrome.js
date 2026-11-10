@@ -40,7 +40,7 @@
     });
   }
   dressFamilies();
-  const ctlIcon = { surprise: "die", keybtn: "key", focusbtn: "focus" };
+  const ctlIcon = { surprise: "die", keybtn: "key" };
   for (const [id, n] of Object.entries(ctlIcon)) {
     const b = document.getElementById(id); if (!b || b.querySelector(".ico")) continue;
     for (const t of [...b.childNodes]) if (t.nodeType === 3 && t.textContent.trim()) { const s = document.createElement("span"); s.className = "lb"; s.textContent = t.textContent.trim(); t.replaceWith(s); }
@@ -183,9 +183,10 @@
   // Plugin panes added later still sit above the grip.
   new MutationObserver(() => { if (panel.lastElementChild !== grip) panel.appendChild(grip); }).observe(panel, { childList: true });
 
-  // ---------- show or hide the interface: the eye (H). Panning fades it; hovering brings it back ----------
+  // ---------- show or hide the interface: the eye (H, or F). Panning fades it; hovering brings it back ----------
+  // The one way to clear the screen: the eye is open while the interface shows and shut while it is hidden.
   const eye = document.createElement("button");
-  eye.type = "button"; eye.className = "btn eyebtn"; eye.innerHTML = ico("focus") + `<span class="nm">Hide</span>`;
+  eye.type = "button"; eye.className = "btn eyebtn"; eye.innerHTML = ico("eye") + `<span class="nm">Hide</span>`;
   const mapctl = $(".mapctl"); if (mapctl) mapctl.appendChild(eye);
   function setHidden(v) {
     const was = app.classList.contains("ui-hidden");
@@ -195,13 +196,15 @@
       if (!seen) { const t = document.createElement("div"); t.className = "uihint"; t.textContent = "Press H or the eye to bring it back"; map.appendChild(t); setTimeout(() => t.remove(), 2200); } }
     eye.setAttribute("aria-pressed", v); eye.title = v ? "Show the interface (H)" : "Hide the interface: just the map (H)";
     eye.querySelector(".nm").textContent = v ? "Show" : "Hide";
+    if (was !== v || !eye.dataset.ico) { eye.querySelector(".ico").outerHTML = ico(v ? "eyeshut" : "eye"); eye.dataset.ico = "1"; }
     try { localStorage.setItem("atlas.uihidden.v1", v ? "1" : ""); } catch (e) {}
     emitRects();
   }
+  A.hideUI = setHidden;
   eye.addEventListener("click", () => setHidden(!app.classList.contains("ui-hidden")));
   document.addEventListener("keydown", ev => {
     if (ev.target.closest("input, textarea, select, [contenteditable]") || ev.metaKey || ev.ctrlKey || ev.altKey) return;
-    if (ev.key === "h" || ev.key === "H") { ev.preventDefault(); setHidden(!app.classList.contains("ui-hidden")); }
+    if ("hHfF".includes(ev.key) && ev.key.length === 1) { ev.preventDefault(); setHidden(!app.classList.contains("ui-hidden")); }
   });
   let hid = false; try { hid = !!localStorage.getItem("atlas.uihidden.v1"); } catch (e) {}
   setHidden(hid);
