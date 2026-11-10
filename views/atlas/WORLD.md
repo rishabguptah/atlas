@@ -134,7 +134,8 @@ short label over the caption), `debate` (one line on what is argued over, shown 
 `deeper` (`{story, label}`, `{tab}` or `{q}`: where "Go deeper" goes; otherwise it asks the panel `ask`). A Story may
 name `next` (the story offered at its end), `status` (`draft`, `live`) and a `sync()` that refreshes `scenes` while
 it streams. Register with `ATLAS.world.stories.add(story)` or `add({kind, list})`; play with
-`ATLAS.world.director.play(story, {at, auto})`. Authored stories: `data/stories/*.json`.
+`ATLAS.world.director.play(story, {at, auto})`. Authored stories: `data/stories/*.json`. Why chains (`lenses/scholar.js`,
+kind `chain`) are Stories too: the Why tab's Play hands them to the Director, and they list in the Stories tab.
 
 ## Rules for every owner
 

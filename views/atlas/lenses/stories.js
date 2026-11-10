@@ -6,7 +6,7 @@
   const A = window.ATLAS;
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const COLD = "story:constantinople_1453", COLD_KEY = "atlas.coldopen.v1";
-  const GROUPS = [["tour", "Guided tours"], ["answer", "Your answers"], ["whatif", "What ifs"], ["storyline", "Up close: Europe 1789–1914"], ["quest", "Trails"],
+  const GROUPS = [["tour", "Guided tours"], ["chain", "Why chains"], ["answer", "Your answers"], ["whatif", "What ifs"], ["storyline", "Up close: Europe 1789–1914"], ["quest", "Trails"],
     ["object", "Object journeys"], ["life", "Lives"], ["simulation", "Living world"]];
   let api = null, el = null;
 
