@@ -849,8 +849,8 @@
       setRealms(r, o) { realmsNow = r || NONE; if (!terrain) return; applyRealms(); realmsDone(o); },
       // Is the last render for this transform (so a year change can use setRealms)?
       same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === size()[0] && lastH === size()[1]; },
-      // The container's size in CSS px, as the map last read it.
-      size,
+      // The container's size in CSS px, as the map last read it (pm.size is the art grid's).
+      cssSize: size,
       // Switch era style (null = today's look): regrade, then dissolve from the old frame over about 400 ms.
       setEra(st, o = {}) {
         if ((st && st.id) === (era && era.id)) return;
