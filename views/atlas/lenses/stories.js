@@ -13,21 +13,21 @@
   const css = document.createElement("style");
   css.textContent = `
 .sty { display: grid; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
-.sty .lede { margin: 0; font-size: 14.5px; color: var(--ink-soft); }
-.sty h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; justify-content: space-between; }
+.sty .lede { margin: 0; font-size: var(--fs-read); color: var(--ink-soft); }
+.sty h3 { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; justify-content: space-between; }
 .sty .st { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 12px; align-items: start; border: 1px solid var(--rule); background: var(--card); padding: 9px 12px; border-radius: 3px; }
 .sty .st:hover, .sty .st:focus-visible { border-color: var(--ink); }
-.sty .st .pl { grid-row: 1 / 3; width: 30px; height: 30px; display: grid; place-items: center; background: #221f1a; color: #d8a32c; font-family: "Pixelify Sans", ui-monospace, monospace; font-size: 14px; box-shadow: inset -2px -2px 0 rgba(0,0,0,.3); }
-.sty .st b { font-family: var(--fell); font-weight: 400; font-size: 16px; line-height: 1.25; }
-.sty .st small { font-size: 13px; color: var(--ink-soft); line-height: 1.35; }
-.sty .st .m { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.sty .st .pl { grid-row: 1 / 3; width: 30px; height: 30px; display: grid; place-items: center; background: #221f1a; color: #d8a32c; font-family: "Pixelify Sans", ui-monospace, monospace; font-size: var(--fs-h4); box-shadow: inset -2px -2px 0 rgba(0,0,0,.3); }
+.sty .st b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); line-height: 1.25; }
+.sty .st small { font-size: var(--fs-note); color: var(--ink-soft); line-height: 1.35; }
+.sty .st .m { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
 .sty .st.seen .pl { color: #8d7a4c; }
 .sty .hero { border: 0; background: #221f1a; color: #f6f0dc; box-shadow: 0 0 0 3px #f6f0dc inset, 0 0 0 5px #221f1a inset; padding: 14px 16px; }
-.sty .hero b { color: #f6f0dc; font-family: "Pixelify Sans", ui-monospace, monospace; font-size: 16px; }
+.sty .hero b { color: #f6f0dc; font-family: "Pixelify Sans", ui-monospace, monospace; font-size: var(--fs-h4); }
 .sty .hero small, .sty .hero .m { color: #b9b09a; }
 .sty .hero .pl { background: #d8a32c; color: #221f1a; }
-.sty .keys { font-size: 12.5px; color: var(--ink-soft); margin: 0; }
-.sty kbd { font-family: var(--mono); font-size: 11px; border: 1px solid var(--rule); border-radius: 3px; padding: 0 4px; }`;
+.sty .keys { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; }
+.sty kbd { font-family: var(--mono); font-size: var(--fs-tiny); border: 1px solid var(--rule); border-radius: 3px; padding: 0 4px; }`;
   document.head.appendChild(css);
 
   const seen = () => { try { return JSON.parse(localStorage.getItem("atlas.stories.v1") || "{}"); } catch { return {}; } };

@@ -23,17 +23,17 @@
 #now-body.comparing > .vz-tiles { display: none; }
 .cmp-head { display: flex; align-items: stretch; gap: 8px; margin: 6px 0 10px; }
 .cmp-plate { flex: 1; border: 3px solid #221f1a; box-shadow: 3px 3px 0 #221f1a; padding: 4px 8px 6px; background: var(--card, #fbf8ef); min-width: 0; }
-.cmp-plate b { display: block; font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace; font-size: 24px; line-height: 28px; font-weight: 600; }
+.cmp-plate b { display: block; font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace; font-size: var(--fs-h3); line-height: 28px; font-weight: 600; }
 .cmp-plate input { width: 100%; box-sizing: border-box; font-family: "Pixelify Sans", ui-monospace, monospace; font-size: 22px; line-height: 26px; border: 0; border-bottom: 2px dotted #221f1a; background: transparent; padding: 0; }
-.cmp-vs { align-self: center; font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; }
+.cmp-vs { align-self: center; font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); }
 .cmp-row { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 8px; }
-.cmp-row button { font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; line-height: 14px; padding: 1px 6px; border: 2px solid #221f1a; background: transparent; cursor: pointer; text-transform: uppercase; }
+.cmp-row button { font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); line-height: 14px; padding: 1px 6px; border: 2px solid #221f1a; background: transparent; cursor: pointer; text-transform: uppercase; }
 .cmp-row button[aria-pressed="true"] { background: #221f1a; color: #f6f0dc; }
 .cmp-sec { margin: 14px 0 0; border-top: 1px solid var(--rule); padding-top: 6px; }
-.cmp-sec h3 { font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; line-height: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 2px; font-weight: 400; }
-.cmp-names { font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); margin: 2px 0 0; }
+.cmp-sec h3 { font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); line-height: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 2px; font-weight: 400; }
+.cmp-names { font-size: var(--fs-note); line-height: 1.45; color: var(--ink-soft); margin: 2px 0 0; }
 .cmp-names b { color: var(--ink); font-weight: 500; }
-.cmp-key { display: flex; gap: 12px; flex-wrap: wrap; font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; color: var(--ink-soft); margin: 2px 0 0; }
+.cmp-key { display: flex; gap: 12px; flex-wrap: wrap; font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); color: var(--ink-soft); margin: 2px 0 0; }
 .cmp-key i { display: inline-block; width: 12px; height: 9px; margin-right: 4px; vertical-align: -1px; border: 2px solid #221f1a; box-sizing: border-box; }
 .cmp-key i.hatch { background: repeating-linear-gradient(135deg, #c0392b 0 3px, transparent 3px 6px); }
 .cmp-key i.dots { border-style: dotted; background: transparent; }
@@ -41,7 +41,7 @@
 .cmp-film button { all: unset; cursor: pointer; display: block; min-width: 0; }
 .cmp-film canvas { display: block; width: 100%; image-rendering: pixelated; border: 2px solid #221f1a; background: #2f5a6e; }
 .cmp-film button.on canvas { outline: 3px solid var(--accent, #1d4f6e); outline-offset: 1px; }
-.cmp-film span { display: block; font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; line-height: 14px; text-align: center; }
+.cmp-film span { display: block; font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); line-height: 14px; text-align: center; }
 `;
 
   // ---------- world numbers ----------

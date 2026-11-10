@@ -171,7 +171,7 @@
       st.textContent = `.lw-cap{position:absolute;left:50%;bottom:64px;transform:translateX(-50%);max-width:min(560px,86%);padding:8px 12px 9px;background:rgba(32,24,18,.88);color:#f6eed6;
         font:500 13px/1.35 "Pixelify Sans","Silkscreen",ui-monospace,monospace;letter-spacing:.02em;border:2px solid #f6eed6;box-shadow:0 0 0 2px rgba(32,24,18,.88),4px 4px 0 rgba(0,0,0,.35);
         pointer-events:none;opacity:0;transition:opacity .25s;z-index:5;text-align:center}
-        .lw-cap.on{opacity:1}.lw-cap i{display:block;font-style:normal;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#e7b45a;margin-bottom:2px}
+        .lw-cap.on{opacity:1}.lw-cap i{display:block;font-style:normal;font-size: var(--fs-note);letter-spacing:.14em;text-transform:uppercase;color:#e7b45a;margin-bottom:2px}
         @media (prefers-reduced-motion: reduce){.lw-cap{transition:none}}`;
       document.head.appendChild(st);
     }
