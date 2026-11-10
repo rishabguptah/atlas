@@ -69,6 +69,7 @@
 
   // ---------- the lens ----------
   const COLOR = "#c47a2c";
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const card = r => {
     const a = r.a || W.agent(r.id) || {};
     if (r.gen || a.gen) {
@@ -342,9 +343,9 @@
     el.innerHTML = `<div class="lw">
       <p class="lede">Who was on the road, day by day. Named travellers follow their sources; the crowd is generated from real routes, seasons and trip times.</p>
       <div class="lw-when">${esc(T.fmt(t))}</div>
-      <div class="lw-ctl"><button data-a="-30" title="Back a month">«</button><button data-a="-1" title="Back a day">‹</button>
-        <button class="play" data-a="play" aria-label="${S.playing ? "Pause" : "Play"}">${S.playing ? "❚❚" : "▶"}</button>
-        <button data-a="1" title="Forward a day">›</button><button data-a="30" title="Forward a month">»</button>
+      <div class="lw-ctl"><button data-a="-30" title="Back a month" aria-label="Back a month">${ICO("back", "«")}</button><button data-a="-1" title="Back a day">‹</button>
+        <button class="play" data-a="play" aria-label="${S.playing ? "Pause" : "Play"}">${S.playing ? ICO("pause", "❚❚") : ICO("play", "▶")}</button>
+        <button data-a="1" title="Forward a day">›</button><button data-a="30" title="Forward a month" aria-label="Forward a month">${ICO("back", "»", "s flip")}</button>
         <span class="seg" role="group" aria-label="Speed">${SPEEDS.map(([s, l]) => `<button data-speed="${s}" aria-pressed="${S.speed === s}">${l}</button>`).join("")}</span></div>
       ${A ? `<div class="lw-follow"><h3>Following ${esc(A.name)}${A.gen ? ' <span class="tag">generated</span>' : ""}</h3>
         <p class="note">${esc(A.gen ? W.describe({ a: A, to: A.legs[0].to }) : A.summary)}</p>

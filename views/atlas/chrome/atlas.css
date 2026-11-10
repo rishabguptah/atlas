@@ -439,3 +439,116 @@ body { background: var(--sea); font-family: var(--f-prose); }
 /* AI-only controls ([data-ai]) when this page has no Claude (ATLAS.ai): still there, plainly marked, and a press says why. */
 html[data-ai="off"] .app [data-ai] { opacity: .6; }
 html[data-ai="off"] .app [data-ai]::after { content: " · needs Claude"; font-style: italic; }
+
+/* ---- the plugin panes in the chronicle: Up close, Guess, Live a life, On the road, Objects, Why, Who was there,
+   Stories and Travel time. One block of rules gives them the same parts as the page's own panes: pixel frames for
+   cards, inputs and buttons, square corners, the kit's type (Silkscreen kickers, Pixelify heads) and the kit's colours
+   in place of their own hard-coded ones. Each pane's accent (--pc) is its lens family's tincture. ---- */
+.app :is(.uc, .gp, .lf, .lw, .obj, .sch, .trv, .sty, .shk) { --pc: var(--gold-2); }
+.app .uc { --pc: var(--t-power); } .app .gp { --pc: var(--t-power); --gp: var(--t-power-dk); } .app .lf { --pc: var(--t-peoples); }
+.app :is(.lw, .trv) { --pc: var(--t-peoples); } .app .obj { --pc: var(--t-wealth); } .app .shk { --pc: var(--t-land); } .app .sch { --pc: var(--t-shocks); }
+.app :is(.uc, .gp, .lf, .lw, .obj, .sch, .trv, .sty, .shk) *:not(.circle), .app :is(.uc, .gp, .lf, .lw, .obj, .sch, .trv, .sty, .shk) :is(*::before, *::after) {
+  border-radius: 0 !important; }   /* the panes' own rules are more specific; no rounded corners in the chronicle (a circle legend mark stays round) */
+
+/* Section heads: the dotted rule and the 8px kicker, as on the page's own .sec heads. */
+.app :is(.uc h3, .gp h3, .sty h3, .shk h3, .obj .grp, .trv .grp, .sch-sub, .uc details summary) {
+  font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; font-weight: 400; text-transform: uppercase; color: var(--ink-soft);
+  padding-top: 10px; background: linear-gradient(90deg, var(--ink-soft) 50%, transparent 0) top left / 4px 2px repeat-x; }
+.app :is(.uc h2, .lf h2) { font-family: var(--f-head); font-size: 24px; line-height: 1.05; font-weight: 500; text-wrap: balance; }
+.app :is(.uc .next b, .lf .life b, .lf .hud b, .lf .ch h3, .obj .hd h3, .sty .st b, .gp .qq, .uc .stat b, .gp .big, .shk .big, .sch-fun, .lw-when) {
+  font-family: var(--f-head); font-weight: 500; }
+.app :is(.lf .life b, .lf .hud b, .sty .st b, .uc .next b, .obj .hd h3) { font-size: 16px; line-height: 1.2; }
+.app :is(.lf .ch h3, .gp .qq) { font-size: 20px; line-height: 1.15; }
+.app :is(.uc .when, .lw-when) { font-family: var(--f-head); }
+/* Kickers, tags and small numbers. */
+.app :is(.uc .when small, .uc .next span, .uc .row .d, .uc .tagd, .gp .k, .gp .ins label, .gp .find, .gp .lnk, .gp .seg button, .gp .stat b,
+  .lf .life .tg, .lf .ch .k, .lf .stat, .lf .badge2, .lf .cmp b, .lf .log li span, .sty .st .m, .sty kbd, .sch-st, .sch-fa b, .sch-ok, .sch-arrow,
+  .lw h3 .n, .lw .tag, .lw .cf, .lw-sc .d, .shk .bar .t, .obj .row .yr, .trv .row .c) {
+  font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .06em; font-weight: 400; text-transform: uppercase; }
+.app .gp .stat b { font-size: 16px; line-height: 18px; }
+.app :is(.lf .ch .k, .gp .k) { color: var(--pc); }
+
+/* Cards: the card frame; the chosen one gets the gold frame. Hover lifts by one art pixel, like a button. */
+.app :is(.uc .next, .uc .stat, .uc .depth, .lf .life, .lf .ch, .lf .cmp > div, .lf .opt, .gp .card, .gp .stat, .sty .st, .obj .quiz) {
+  border: 6px solid transparent; border-image: var(--f-card) 3 fill / 6px stretch; image-rendering: pixelated; background: none; box-shadow: none; }
+.app :is(.lf .opt.sel, .uc .next) { border-image-source: var(--f-card-gold); }
+.app :is(.uc .next, .lf .life, .lf .opt, .sty .st) { transition: transform 120ms var(--ease); }
+.app :is(.uc .next, .lf .life, .lf .opt, .sty .st):is(:hover, :focus-visible) { transform: translateY(-2px); background: none; filter: drop-shadow(0 2px 0 var(--shade)); }
+.app :is(.uc .next, .lf .life, .lf .opt, .sty .st):focus-visible { outline: 2px dashed var(--gold); outline-offset: 2px; }
+.app .lf .opt.sel { background: none; }
+.app .gp .card { filter: drop-shadow(4px 4px 0 var(--shade)); }
+/* A story's own plate stays dark, in the HUD's colours, so the one to start next reads as a game cartridge. */
+.app .sty .st .pl { background: var(--hud); color: var(--gold); font-family: var(--f-head); box-shadow: inset -2px -2px 0 var(--shade); }
+.app .sty .st.seen .pl { color: var(--gold-2); }
+.app .sty .hero { border: 8px solid transparent; border-image: var(--f-hud) 4 fill / 8px stretch; background: none; box-shadow: none; color: var(--hud-ink); }
+.app .sty .hero b { color: var(--hud-ink); }
+.app .sty .hero :is(small, .m) { color: color-mix(in srgb, var(--hud-ink) 70%, transparent); }
+.app .sty .hero .pl { background: var(--gold); color: var(--ink-fixed); }
+
+/* Buttons: the main act is the ink button, everything else the quiet vellum one; a press drops one art pixel. */
+.app :is(.lf .go, .obj .go, .trv .go, .gp .btn, .uc .ctl button, .uc .depth .acts button, .lw-ctl button, .lw-moments button, .lw-row button, .shk button.c) {
+  all: unset; box-sizing: border-box; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 0;
+  font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); padding: 2px 6px;
+  border: 6px solid transparent; border-image: var(--f-button-q) 3 fill / 6px stretch; image-rendering: pixelated;
+  filter: drop-shadow(0 2px 0 var(--shade)); transition: transform 120ms var(--ease); }
+.app :is(.lf .go, .obj .go:not(.ghost), .trv .go:not(.ghost), .gp .btn.pri, .uc .ctl button.play, .lw-ctl button[data-a="play"]) { color: var(--vellum-fixed); border-image-source: var(--f-button); }
+.app :is(.lf .go, .obj .go, .trv .go, .gp .btn, .uc .ctl button, .uc .depth .acts button, .lw-ctl button, .lw-moments button, .lw-row button, .shk button.c):hover { transform: translateY(-2px); filter: drop-shadow(0 4px 0 var(--shade)); }
+.app :is(.lf .go, .obj .go, .trv .go, .gp .btn, .uc .ctl button, .uc .depth .acts button, .lw-ctl button, .lw-moments button, .lw-row button, .shk button.c):active { transform: translateY(2px); filter: none; }
+.app :is(.lf .go, .obj .go, .trv .go, .gp .btn, .uc .ctl button, .uc .depth .acts button, .lw-ctl button, .lw-moments button, .lw-row button, .shk button.c):focus-visible { outline: 2px dashed var(--gold); outline-offset: 2px; }
+.app .lf .go { padding: 4px 10px; font-size: 16px; line-height: 18px; }
+.app :is(.lf .ghost, .uc .quiet, .gp .lnk) { color: var(--lapis); text-underline-offset: 3px; }
+/* Pressed toggles in a quiet button read as ink, as in the page's own segmented switches. */
+.app :is(.shk button.c, .lw button)[aria-pressed="true"] { color: var(--vellum-fixed); border-image-source: var(--f-button); background: none; }
+
+/* Segmented switches and mode tabs: the page's .seg. */
+.app :is(.uc .seg, .gp .seg, .trv .tabs) { border: 0; gap: 2px; box-shadow: none; overflow: visible; }
+.app :is(.uc .seg button, .gp .seg button, .trv .tabs button) { border: 0; margin: 0; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .06em; text-transform: uppercase;
+  padding: 6px 10px; background: var(--vellum-3); color: var(--ink-2); }
+.app :is(.uc .seg button, .gp .seg button, .trv .tabs button)[aria-pressed="true"] { background: var(--ink); color: var(--vellum); box-shadow: 2px 2px 0 var(--gold-2); }
+
+/* Chips: the lens chip frame; on = washed with the pane's tincture (or the link's own, --c). */
+.app :is(.uc .chips button, .trv .chip, .sch-tab) { border: 6px solid transparent; border-image: var(--f-chip) 3 / 6px stretch; image-rendering: pixelated;
+  background: var(--vellum) padding-box; padding: 0 6px; font-size: 13px; color: var(--ink); }
+.app :is(.uc .chips button[aria-pressed="true"], .trv .chip[aria-pressed="true"], .sch-tab.on) { background: color-mix(in srgb, var(--c, var(--pc)) 22%, var(--vellum)) padding-box; }
+.app .sch-node { border: 0; box-shadow: inset 0 0 0 2px var(--c); background: color-mix(in srgb, var(--c) 14%, var(--vellum)); }
+
+/* Inputs: the inset frame. */
+.app :is(.lf input[type=text], .lf input[type=number], .lf select, .gp .ins input, .obj .trace input, .trv input:not([type=checkbox]):not([type=radio])) {
+  border: 6px solid transparent; border-image: var(--f-inset) 3 fill / 6px stretch; image-rendering: pixelated; background: none; padding: 2px 6px; color: var(--ink); outline: none; }
+.app :is(.lf input, .lf select, .gp .ins input, .obj .trace input, .trv input):focus-visible { outline: 2px dashed var(--gold); outline-offset: 2px; }
+.app :is(.uc, .sch) input[type=range], .app .sch-on input { accent-color: var(--pc); }
+
+/* Rows and lists: a dashed vellum rule between rows, the pane's tincture for the chosen one. */
+.app :is(.obj .row, .trv .row, .obj .stops li) { border-top: 2px dashed var(--vellum-3); }
+.app :is(.lw-row) { border-bottom: 2px dashed var(--vellum-3); }
+.app :is(.uc .steps) { border-top: 2px dashed var(--vellum-3); border-bottom: 2px dashed var(--vellum-3); }
+.app :is(.obj .row, .trv .row, .uc .row, .lw-sc):is(:hover, :focus-visible) { background: var(--wash); }
+.app :is(.uc .row.on, .obj .stops li.on, .lw-sc.on) { background: color-mix(in srgb, var(--pc) 16%, transparent); }
+.app .obj .stops li i { border-color: var(--pc); }
+.app .obj .stops li:is(.on, .done) i { background: var(--pc); }
+.app :is(.trv .row .c.c0) { color: var(--pc); }
+.app .lw .tag { background: color-mix(in srgb, var(--pc) 18%, transparent); }
+
+/* Status colours from the kit: right is the land's green, wrong and AI warnings the rubric. */
+.app :is(.obj .quiz .yes, .gp .res.hit .k) { color: var(--t-land-dk); }
+.app :is(.obj .quiz .no, .obj .ai) { color: var(--rubric); }
+.app .gp .dots i { border-color: var(--ink); }
+.app .gp .dots i.hit { background: var(--t-land); color: var(--vellum-fixed); border-color: var(--t-land-dkk); }
+.app .gp .dots i.miss { background: var(--gp); color: var(--vellum-fixed); }
+.app :is(.lf .badge2) { color: var(--vellum-fixed); background: var(--t-land-dk); }
+.app .lf .badge2.alt { background: var(--t-shocks-dk); } .app .lf .badge2.ai { background: var(--gold-2); }
+.app .lf .news li { border-left-width: 4px; }
+.app .lf .news li:is(.plague, .epidemic) { border-color: var(--rubric); } .app .lf .news li.famine { border-color: var(--gold-2); }
+.app .lf .news li:is(.battle, .fall) { border-color: var(--ink-2); } .app .lf .news li.person { border-color: var(--t-mind); }
+.app .lf .news li.trade { border-color: var(--t-land); } .app .lf .news li.ruler { border-color: var(--t-shocks); }
+.app .shk .bar .b { background: var(--gold); box-shadow: inset -2px -2px 0 var(--shade); }
+.app .shk .lg i { box-shadow: inset 0 0 0 2px var(--shade); }
+.app .gp .dual .h { background: var(--vellum-hi); border-color: var(--ink); box-shadow: 2px 2px 0 var(--ink); }
+.app .gp .dual .truth { border-color: var(--ink); }
+.app :is(.gp .dual .tr, .gp .cal) { outline: 0; box-shadow: inset 0 0 0 2px var(--vellum-3); }
+/* Pixel glyphs inside the panes' buttons and chains (PIXEL_ICONS, 12px), tinted like the page's own. */
+.app :is(.uc, .gp, .lf, .lw, .obj, .sch, .trv, .sty, .shk) .ico.s { width: 12px; height: 12px; display: inline-block; vertical-align: -2px; --t: currentColor; }
+.app :is(.uc, .gp, .lf, .lw, .obj, .sch, .trv, .sty, .shk) .ico.s .k { fill: currentColor; }
+.app .sch-arrow::after { content: none; }
+.app .ico.s.flip { transform: scaleX(-1); }
+.app .sch-arrow .ico.s { --t: var(--ink-soft); }

@@ -18,6 +18,7 @@
   const CONF_DASH = [null, [6, 4], [2, 4], [1, 6]];
   const STAND = { leading: "Leading view", strong: "Strong", contested: "Contested", minority: "Minority view", discredited: "Discredited" };
   const lc = l => `var(--l-${l}, #8a6a4a)`;
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const norm = s => String(s || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/^(the |battle of |siege of |sack of )/, "").replace(/[^a-z0-9]+/g, " ").trim();
   const R = 6371, rad = Math.PI / 180;
   const km = (a, b) => { const dl = (b[1] - a[1]) * rad, dn = (b[0] - a[0]) * rad; const h = Math.sin(dl / 2) ** 2 + Math.cos(a[1] * rad) * Math.cos(b[1] * rad) * Math.sin(dn / 2) ** 2; return 2 * R * Math.asin(Math.min(1, Math.sqrt(h))); };
@@ -113,7 +114,7 @@
     const a = pt(l.from), b = pt(l.to), at = b || a || [0, 0];
     const rivals = (D.inn[l.to] || []).filter(x => x !== l);
     const html = `<div class="sch"><div class="sch-chain"><button type="button" class="sch-node" data-sch="n:${esc(l.from)}" style="--c:${lc(l.lf)}">${esc(nm(l.from))}</button>
-      <span class="sch-arrow">${esc(TYPE[l.t])}${l.lag ? ` · ${l.lag} yr` : ""}</span><button type="button" class="sch-node" data-sch="n:${esc(l.to)}" style="--c:${lc(l.lt)}">${esc(nm(l.to))}</button></div>
+      <span class="sch-arrow">${esc(TYPE[l.t])}${l.lag ? ` · ${l.lag} yr` : ""} ${ICO("next", "")}</span><button type="button" class="sch-node" data-sch="n:${esc(l.to)}" style="--c:${lc(l.lt)}">${esc(nm(l.to))}</button></div>
       ${l.mech ? `<p>${esc(l.mech)}</p>` : ""}<p class="sch-meta">${esc(l.view ? "Explanation: " + l.view : "")}${l.view ? " · " : ""}confidence ${Math.round(l.c * 100)}% · ${CONF[l.cf]}${l.ok ? "" : " · draft, awaiting check"}</p>
       ${l.debate && D.dix[l.debate] ? `<div class="sch-links">${debateBtn(D.dix[l.debate])}</div>` : ""}
       ${rivals.length ? `<div class="sch-sub">Other explanations of ${esc(nm(l.to))}</div><div class="sch-links">${rivals.slice(0, 6).map(linkBtn).join("")}</div>` : ""}</div>`;
@@ -135,7 +136,7 @@
   const linkBtn = l => `<button type="button" class="btn sch-mini" data-sch="l:${l.i}" style="--c:${lc(l.lf)}" title="${esc(l.mech)}"><i></i>${esc(nm(l.from))} → ${esc(nm(l.to))}${l.view ? ` <em>${esc(l.view)}</em>` : ""}</button>`;
   const debateBtn = d => `<button type="button" class="btn sch-mini sch-deb" data-sch="d:${esc(d.id)}">⚖ ${esc(d.n)}</button>`;
   const quoteBtn = q => `<button type="button" class="btn sch-mini" data-sch="q:${q.i}">❝ ${esc(q.author)}${q.y != null ? ", " + fy(q.y) : ""}</button>`;
-  const chainBtn = c => `<button type="button" class="btn sch-mini sch-play" data-sch="c:${esc(c.id)}">▶ ${esc(c.n)}</button>`;
+  const chainBtn = c => `<button type="button" class="btn sch-mini sch-play" data-sch="c:${esc(c.id)}">${ICO("play", "▶")} ${esc(c.n)}</button>`;
   function whyHTML(w) {
     if (!w || (!w.causes.length && !w.effects.length)) return "";
     const row = x => `<button type="button" class="btn sch-mini" data-sch="l:${D.lid[x.link].i}" style="--c:${lc(x.lenses[0])}" title="${esc(x.mech)}"><i></i>${esc(x.name)} <em>${esc(x.type)}${x.view ? ", " + esc(x.view) : ""} · ${Math.round(x.confidence * 100)}%</em></button>`;
