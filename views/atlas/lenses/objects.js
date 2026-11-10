@@ -469,7 +469,7 @@
   }
 
   ATLAS.tab({
-    id: ID, name: "Objects",
+    id: ID, name: "Objects", icon: "objects", mode: true,
     mount(el, a) {
       pane = el; api = a;
       if (!document.getElementById("objects-style")) { const st = document.createElement("style"); st.id = "objects-style"; st.textContent = STYLE; document.head.appendChild(st); }

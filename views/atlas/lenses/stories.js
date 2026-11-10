@@ -85,7 +85,7 @@
   }
 
   ATLAS.tab({
-    id: "stories", name: "Stories",
+    id: "stories", name: "Stories", icon: "stories", mode: true,
     mount(pane, a) {
       el = pane; api = a;
       A.world.director.init(a);

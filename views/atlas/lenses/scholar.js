@@ -52,7 +52,6 @@
   }
   ATLAS.cite = citeRow;
   const srcHTML = ids => ids && ids.length ? `<ul class="srcs">${ids.map(x => citeRow({ src: x }) || `<li>${esc(x)}</li>`).join("")}</ul>` : "";
-  const shortCite = x => (D.S[x] || [x])[0];
 
   // ---------- the why graph ----------
   function why(id, o = {}) {
@@ -325,7 +324,9 @@
     f.addEventListener("submit", ev => { ev.preventDefault(); filt = f.querySelector("input").value; renderTab(); });
     f.querySelector("input").addEventListener("input", ev => { filt = ev.target.value; clearTimeout(f._t); f._t = setTimeout(() => { renderTab(); const i = pane.querySelector(".sch-find input"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 250); });
   }
-  if (ATLAS.tab) ATLAS.tab({ id: "why", name: "Why", mount(el, api) { pane = el; renderTab(); api.onYear(() => { clearTimeout(pane._t); pane._t = setTimeout(renderTab, 400); }); }, show() { renderTab(); } });
+  if (ATLAS.tab) ATLAS.tab({ id: "why", name: "Why", icon: "mind",
+    // A new year re-sorts the lists, but only while the tab is open; show() catches up when it opens.
+    mount(el, api) { pane = el; renderTab(); api.onYear(() => { clearTimeout(pane._t); if (!pane.hidden) pane._t = setTimeout(renderTab, 400); }); }, show() { renderTab(); } });
 
   // ---------- styles ----------
   const css = document.createElement("style");

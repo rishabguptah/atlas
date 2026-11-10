@@ -12,13 +12,14 @@
   let rectT = 0;
 
   // ---------- icons on the existing controls ----------
-  const TAB_ICON = { now: "year", here: "here", guide: "ask", codex: "codex", whatif: "whatif", stories: "stories", objects: "objects", upclose: "lens", compare: "compare", life: "life", travels: "travels", guess: "guess" };
-  const TAB_SHORT = { now: "Year", upclose: "Close", travels: "Who" };
+  // Each plugin tab says how it looks here (ATLAS.tab({ icon, short, mode })); the page's own three tabs are listed here.
+  const OWN_TABS = { now: { icon: "year", short: "Year" }, here: { icon: "here" }, guide: { icon: "ask" } };
+  const tabDef = id => OWN_TABS[id] || (A.tabs || []).find(d => d && d.id === id) || {};
   function dressTab(b) {
     if (b.querySelector(".ico")) return;
-    const name = b.textContent.replace(/\s+\d+$/, "").trim();
-    b.innerHTML = ico(TAB_ICON[b.dataset.tab] || "seal") + `<span class="nm"></span>`;
-    b.querySelector(".nm").textContent = TAB_SHORT[b.dataset.tab] || TAB_SHORT[name] || name;
+    const name = b.textContent.replace(/\s+\d+$/, "").trim(), d = tabDef(b.dataset.tab);
+    b.innerHTML = ico(d.icon || "seal") + `<span class="nm"></span>`;
+    b.querySelector(".nm").textContent = d.short || name;
     b.title = name;
   }
   $$(".tab").forEach(dressTab);
@@ -216,7 +217,8 @@
   // ---------- games and modes: one way in, one way out ----------
   // Opening a game or mode remembers the year, view, lenses and tab you came from; "Back to map" (or Esc) puts them back
   // and folds the panel, so the map is where you left it.
-  const MODES = { codex: "Codex", guess: "Guess the past", life: "Live a life", whatif: "What if", stories: "Stories", travels: "Who was there", objects: "Objects", compare: "Compare", upclose: "Up close" };
+  // A tab is a mode when it says so (ATLAS.tab({ mode: "Its name on the plate" }), or mode: true for its own name).
+  const modeName = id => { const d = tabDef(id); return d.mode ? (typeof d.mode === "string" ? d.mode : d.name || id) : null; };
   let home = null;
   const plate = document.createElement("div");
   plate.className = "modeplate"; plate.hidden = true;
@@ -229,16 +231,16 @@
   function syncMode() {
     const t = curTab();
     if (t === lastTab) return;
-    if (MODES[t] && !home) {
+    if (modeName(t) && !home) {
       const v = api.view();
-      home = { tab: MODES[lastTab] ? "here" : lastTab || "guide", year: api.year, view: v, lenses: api.lenses ? api.lenses() : null };
+      home = { tab: modeName(lastTab) ? "here" : lastTab || "guide", year: api.year, view: v, lenses: api.lenses ? api.lenses() : null };
     }
-    if (!MODES[t]) home = null;
+    if (!modeName(t)) home = null;
     if (lastTab !== null && app.classList.contains("panel-min") && !phone.matches) setFold(false);
     lastTab = t;
     plate.hidden = !home;
     app.classList.toggle("in-mode", !!home);
-    if (home) plate.querySelector(".mp-nm").textContent = MODES[t];
+    if (home) plate.querySelector(".mp-nm").textContent = modeName(t);
     syncPeek(); emitRects();
   }
   function exitMode() {

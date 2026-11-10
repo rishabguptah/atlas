@@ -515,7 +515,9 @@ const TOURS = /*__TOURS__*/;
 window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null,
   lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); },
   // The one next thing (the chrome's gold card): { id, pri, get() -> { kick, title, go } | null }. See chrome/chrome.js.
-  nexts: [], nextThing(d) { this.nexts.push(d); } };
+  nexts: [], nextThing(d) { this.nexts.push(d); },
+  // Copy that asks you to press the map says "Tap" on a touch screen and "Click" with a mouse.
+  click: window.matchMedia && matchMedia("(hover: none)").matches ? "Tap" : "Click" };
 </script>
 <!--__LENS_SCRIPTS__-->
 <script>
@@ -789,12 +791,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (fk[0] === "t") fc = (TL.realms(y, 1) || []).map(r => r.feature);
     else { const t = POLITIES[y]; fc = precise("l0", y, onPrecise(y)) || (t ? topojson.feature(t, Object.values(t.objects)[0]).features : []); }
     const list = fc.map(f => {
-      // A timeline row is shared by every frame of its years, so its shape is projected once.
-      if (FEAT.has(f)) return FEAT.get(f);
+      // A timeline row is shared by every frame of its years, so its shape is projected once per projection (projV).
+      const hit = FEAT.get(f); if (hit && hit.v === projV) return hit;
       const p = f.properties || {}, name = (p.name || p.NAME || "").trim(), subj = (p.subject_of || p.SUBJECTO || "").trim(), at = p.s ?? y;
       const emp = (p.la && EMPIRES.find(e => e.id === p.la)) || EMPIRES.find(e => at >= e.start && at <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj))) || null;
       // The SVG outline is only built when a frame is drawn as SVG (no basemap, or a highlighted state).
-      const d = { f, id: p.id, name: name || subj, emp, wiki: p.wiki, s: p.s, e: p.e,
+      const d = { f, v: projV, id: p.id, name: name || subj, emp, wiki: p.wiki, s: p.s, e: p.e,
         get d() { return this._d ?? (this._d = path(f) || ""); },
         get area() { return this._a ?? (this._a = path.area(f)); }, get c() { return this._c ?? (this._c = path.centroid(f)); } };
       if (fk[0] === "t") FEAT.set(f, d);
@@ -945,7 +947,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     gSphere.attr("d", path({ type: "Sphere" }));
     gGrat.attr("d", path(d3.geoGraticule10()));
     gLand.attr("d", path(land));
-    for (const k in featCache) delete featCache[k];
+    featCache.clear();  // shapes are cached in screen space, so a new size needs new ones
     projV++;
     // A tall map (a phone held upright) would show the whole world as a thin band with empty sky above and below it,
     // so there the smallest zoom fills the height and the view stops at the world's edges.
@@ -1821,7 +1823,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const el = document.getElementById("pane-here");
     const s = state.sel, y = state.year;
     ACTS = [];
-    if (!s) { el.innerHTML = `<p class="sub">Click anywhere on the map, or on anything in the other tabs, and this column gathers every lens for that spot and year.</p>`; return; }
+    if (!s) { el.innerHTML = `<p class="sub">${ATLAS.click} anywhere on the map, or on anything in the other tabs, and this column gathers every lens for that spot and year.</p>`; return; }
     const { lon, lat } = s;
     const rb = ruledBy(lon, lat, y);
     const city = ENTRIES.map(e => ({ e, d: km([lon, lat], [e.lon, e.lat]) })).sort((a, b) => a.d - b.d)[0];
@@ -1921,9 +1923,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const el = document.createElement("div"); el.className = "pane"; el.id = "pane-" + d.id; el.hidden = true;
     document.getElementById("panel").appendChild(el);
   }
-  // Fourteen tabs don't fit one row, so they sit in three labelled groups that wrap: no sideways scrolling.
+  // The tabs don't fit one row, so they sit in three labelled groups that wrap: no sideways scrolling.
   // Tabs not named here join Explore.
-  const TAB_GROUPS = [["Learn", ["guide", "now", "here", "why", "stories", "travels"]], ["Explore", ["upclose", "life", "objects", "shrink", "compare"]], ["Play", ["whatif", "guess", "codex"]]];
+  const TAB_GROUPS = [["Learn", ["guide", "now", "here", "why", "stories", "travels"]], ["Explore", ["upclose", "life", "objects", "shrink", "living", "compare"]], ["Play", ["whatif", "guess", "codex"]]];
   (function groupTabs() {
     const bar = document.querySelector(".tabs"), all = [...bar.querySelectorAll(".tab")], used = new Set();
     const groups = TAB_GROUPS.map(([n, ids]) => [n, ids.map(id => all.find(b => b.dataset.tab === id)).filter(Boolean)]);
@@ -2015,6 +2017,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     yearIn.value = Math.round(yearToT(y) * 1000);
     yout.textContent = fmtYear(y);
     yp.textContent = fmtYear(y);
+    yearIn.setAttribute("aria-valuetext", fmtYear(y));  // a screen reader says the year, not the slider's 0 to 1000
     drawAll(); refreshPanel();
     for (const fn of yearWatch) try { fn(y); } catch (err) { console.error(err); }
   }
@@ -2436,7 +2439,8 @@ JOURNEYS OF IDEAS:\n${cap(JOURNEYS.filter(j => overlaps(j.y0, j.y1, w)).map(j =>
   // Plugin lenses join the specialist whose lenses they share; a lens nobody owns gets its own specialist.
   for (const d of PLUG) {
     if (d.specialist && d.specialist.id && !SPECS.some(s => s.id === d.specialist.id)) { SPECS.push({ lenses: ["order"], layers: [d.id], plugs: [], ...d.specialist }); continue; }
-    const sp = SPECS.find(s => (d.guide || []).some(l => s.lenses.includes(l)));
+    // The lens names who speaks for it (by), or the first of its guide names that a specialist reads decides.
+    const sp = (d.by && SPECS.find(s => s.id === d.by)) || (d.guide || []).map(l => SPECS.find(s => s.lenses.includes(l))).find(Boolean);
     if (sp) { if (!sp.layers.includes(d.id)) sp.layers.push(d.id); (sp.plugs = sp.plugs || []).push(d); }
     else if ((d.guide || []).length) SPECS.push({ id: d.id, name: `${d.name} specialist`, lenses: d.guide.slice(), layers: [d.id], voice: (d.name || d.id).toLowerCase(), plugs: [d], digest: () => "" });
   }
@@ -2869,19 +2873,28 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
 
   // ? : every key on one pixel card.
   const cheatEl = document.createElement("div");
-  cheatEl.className = "cheat"; cheatEl.hidden = true; cheatEl.setAttribute("role", "dialog"); cheatEl.setAttribute("aria-label", "Keyboard controls");
+  cheatEl.className = "cheat"; cheatEl.hidden = true; cheatEl.tabIndex = -1;
+  cheatEl.setAttribute("role", "dialog"); cheatEl.setAttribute("aria-modal", "true"); cheatEl.setAttribute("aria-label", "Keyboard controls");
   const KB = s => s.split(" ").map(k => `<kbd>${k}</kbd>`).join("");
   const CHEAT = [
     ["Move", [["W A S D", "Pan (or the arrow keys)"], ["Q E", "Zoom out, in (or − +)"], ["Shift", "Hold to go faster"], ["0", "The whole world"], ["Enter", "What's here, under the cross"]]],
     ["Time", [[", .", "A step back, forward"], ["< >", "Ten steps (Shift+, .)"], ["Space", "Play or pause"], ["[ ]", "A month, in Up close"]]],
     ["Look", [["1 – 6", "Lens families on or off"], ["T", "Next tab (Shift+T back)"], ["/", "Ask a question"], ["R", "Surprise me"], ["N", "Night and day"]]],
     ["Screen", [["H", "Hide the interface"], ["P", "Fold the panel"], ["F", "Focus: map only"], ["K", "Map key"], ["Esc", "Back, close"]]],
-    ["In a story", [["Space →", "Next scene"], ["←", "Back a scene"], ["W", "Why?"], ["P", "Autoplay"]]],
+    ["In a story", [["Space →", "Next scene"], ["←", "Back a scene"], ["W Enter", "Why?"], ["H", "How do we know"], ["Home End", "First, last scene"], ["P", "Autoplay"], ["Esc", "Leave the story"]]],
+    ["Living world", [[", .", "A day back, forward"]]],
   ];
   cheatEl.innerHTML = `<h3>Controls</h3><div class="ch-g">${CHEAT.map(([n, rows]) => `<section><h4>${n}</h4>${rows.map(([k, t]) => `<div class="ch-r"><span class="ch-k">${KB(k)}</span><span>${t}</span></div>`).join("")}</section>`).join("")}</div><p class="ch-f">${KB("?")} or ${KB("Esc")} to close</p>`;
   cheatEl.addEventListener("click", () => toggleCheat(false));
   mapEl.appendChild(cheatEl);
-  function toggleCheat(v = cheatEl.hidden) { cheatEl.hidden = !v; }
+  // Focus moves into the card while it is open and goes back where it was when it closes.
+  let cheatBack = null;
+  function toggleCheat(v = cheatEl.hidden) {
+    if (v === !cheatEl.hidden) return;
+    cheatEl.hidden = !v;
+    if (v) { cheatBack = document.activeElement; cheatEl.focus({ preventScroll: true }); }
+    else if (cheatBack && cheatBack.focus && document.contains(cheatBack)) { cheatBack.focus({ preventScroll: true }); cheatBack = null; }
+  }
   // Esc closes the card before anything else hears it (a story's Esc would leave the story).
   addEventListener("keydown", ev => { if (ev.key === "Escape" && !cheatEl.hidden) { toggleCheat(false); ev.preventDefault(); ev.stopImmediatePropagation(); } }, true);
 
@@ -3017,9 +3030,11 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   setYear(RESUME ? RESUME.year : 1348);
   syncEra(state.year);
   setTab("guide");
+  const hintEl = document.getElementById("maphint");
+  if (ATLAS.click !== "Click") { mapEl.setAttribute("aria-label", `World map. ${ATLAS.click} anywhere to see everything there.`); hintEl.textContent = `${ATLAS.click} anywhere to see every lens there`; }
   if (RESUME) {
     flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(1, Math.min(K_MAX, +RESUME.k || 1)) }, 0);
-    document.getElementById("maphint").textContent = `Picked up where you left off, in ${fmtYear(state.year)}. Press S for a surprise.`;
+    hintEl.textContent = `Picked up where you left off, in ${fmtYear(state.year)}. ${ATLAS.click === "Click" ? "Press R" : "Tap Surprise me"} for a surprise.`;
   } else flyTo({ lon: 45, lat: 35, span: 140 }, 0);
   setBasemap();
 })();

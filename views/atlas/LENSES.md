@@ -39,6 +39,8 @@ ATLAS.lens({
   on: false,                       // on by default?
   optIn: true,                     // optional: never switched on by tapping its family (a mode of its own)
   guide: ["law", "government"],    // kernel lens names the AI guide may use to switch this lens on
+  by: "political",                 // optional: the panel specialist who speaks for it; otherwise the first `guide`
+                                   //   name a specialist reads decides (roster: SPECS in atlas.src.html)
   index: d => "...",               // optional: a few-KB text index of your records for the guide prompt
 
   // Draw what is true in ctx.year. Called on year change and when a zoom settles.
@@ -109,6 +111,9 @@ A plugin can add its own tab to the right column (after Here) with `ATLAS.tab`. 
 ```js
 ATLAS.tab({
   id: "whatif", name: "What if",
+  icon: "whatif",                  // a PIXEL_ICONS name for its ribbon (views/pixel/icons.js)
+  short: "What if",                // optional: a shorter ribbon label
+  mode: true,                      // optional: a game or mode with "Back to map"; a string names it on the plate
   mount(el, api) { /* el is the empty pane; runs once when the page is up */ },
   show() { /* the tab was opened */ },
 });

@@ -270,6 +270,8 @@ body { background: var(--sea); font-family: var(--f-prose); }
 /* ---- phone: full map, the year and lenses on top, the time ribbon above the page's bottom sheet (peek, half, full) ---- */
 @media (max-width: 700px) {
   .app { display: block; padding-bottom: 0; height: 100dvh; }
+  /* iOS zooms the page into any field set under 16px when it takes focus. */
+  .app input:not([type=range]):not([type=checkbox]):not([type=radio]), .app select, .app textarea { font-size: 16px; }
   .app .map { position: absolute; inset: 0; height: auto; border: 0; }
   .app .yearplate { left: max(8px, env(safe-area-inset-left, 0px)); top: 8px; min-width: 0; padding: 0 8px 4px; }
   .app .yearplate .yp { font-size: 32px; line-height: 32px; }

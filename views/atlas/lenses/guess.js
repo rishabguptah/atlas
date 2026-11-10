@@ -439,7 +439,7 @@
   }
 
   ATLAS.tab({
-    id: "guess", name: "Guess",
+    id: "guess", name: "Guess", icon: "guess", mode: "Guess the past",
     mount(pane, a) {
       el = pane; api = a;
       el.addEventListener("click", onClick);

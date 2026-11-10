@@ -313,7 +313,7 @@
       ${dests.length ? `<h3>To the other cities, ${esc(fy(res.y))}</h3><table>${dests.map(([n, d]) => `<tr><td>${esc(n)}</td><td class="n">${esc(dd(d))}</td></tr>`).join("")}</table>` : ""}
       ${D.trips.length ? `<h3>How good is the router?</h3><p>Real journeys with their recorded days, against the Atlas's router for the same trip and year (time under way; its days waiting for a ship are left out, as the records leave them out).</p>
         ${S.checks ? `<table>${S.checks.map(c => `<tr><td>${esc(c.t[0])} → ${esc(c.t[3])}, ${esc(fy(c.t[6]))}<br><small>${esc(c.t[9] || c.t[8])}</small></td><td class="n">${c.t[7]} d recorded<br>${c.m == null ? "…" : isFinite(c.m) ? Math.round(c.m) + " d model" : "no route"}</td></tr>`).join("")}</table><p>${esc(checkLine())}</p>` : `<div class="row"><button class="c" data-a="check">Check ${D.trips.length} journeys</button></div>`}` : ""}
-      <p>Rings come from the Atlas's shared router (the same one Live a life uses), worked out for each decade. Click anywhere on the map: Here says how long it took to get there.</p>
+      <p>Rings come from the Atlas's shared router (the same one Live a life uses), worked out for each decade. ${A.click} anywhere on the map: Here says how long it took to get there.</p>
     </div>`;
   }
   function checkLine() {
@@ -342,7 +342,7 @@
   }
 
   A.tab({
-    id: "shrink", name: "Travel",
+    id: "shrink", name: "Travel", icon: "compass", mode: "Travel time",
     mount(pane, api) {
       el = pane; S.api = api;
       pane.addEventListener("click", ev => {

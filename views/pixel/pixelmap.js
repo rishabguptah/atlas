@@ -587,7 +587,6 @@
       return false;
     }
 
-    function setPx(i, j, col) { if (i >= 0 && j >= 0 && i < w && j < h) base[j * w + i] = col; }
     function line(x0, y0, x1, y1, col) {
       x0 |= 0; y0 |= 0; x1 |= 0; y1 |= 0;
       const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;

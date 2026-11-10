@@ -148,7 +148,7 @@ ${C.dumbbell([
   }
 
   ATLAS.tab({
-    id: "compare", name: "Compare",
+    id: "compare", name: "Compare", icon: "compare", mode: true,
     mount(el, a) {
       api = a; pane = el;
       const st = document.createElement("style"); st.textContent = STYLE; document.head.appendChild(st);

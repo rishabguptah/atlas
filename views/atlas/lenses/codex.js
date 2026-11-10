@@ -474,7 +474,7 @@
   });
 
   ATLAS.tab({
-    id: "codex", name: "Codex",
+    id: "codex", name: "Codex", icon: "codex", mode: true,
     mount(pane, a) {
       el = pane; api = a;
       setupRiddle();

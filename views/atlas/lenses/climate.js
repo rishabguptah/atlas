@@ -55,7 +55,7 @@
 
   ATLAS.lens({
     id: "climate", name: "Eruptions, famine & cold", family: "shocks", color: "#4f7aa8", on: false,
-    guide: ["climate", "geography", "disease"],
+    guide: ["climate", "geography", "disease"], by: "epidemiologist",
     key: [["diamond", "Eruption of VEI 4 or more; bigger is larger, a VEI 6 or 7 stays a decade"], ["square", "Famine under way, bigger with more deaths"]],
     index: d => {
       prep(d);

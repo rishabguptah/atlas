@@ -40,7 +40,6 @@
     ready.add(name);
     return name;
   }
-  const lib = () => window.PIXEL_SPRITE_LIBRARY;
   function moverSprite(mode, y, lon, lat, own) {
     const E = window.PixelEra;
     if (mode === "sea" || mode === "river") return sprite(E ? E.mover(y, lon, lat, true) : "ship_galleon") || sprite("ship_galleon");
@@ -422,7 +421,7 @@
         sources: [{ cite: Dd.sv_src.cite, url: `https://www.slavevoyages.org/voyage/${SV.id[s.i]}/variables` }] }) });
   }
   ATLAS.lens({
-    id: MP, name: "Middle Passage", family: "peoples", color: MP_COLOR, on: false, guide: ["economy", "population"],
+    id: MP, name: "Middle Passage", family: "peoples", color: MP_COLOR, on: false, guide: ["economy", "population"], by: "demographer",
     desc: "The forced crossing of 12.5 million Africans, by decade, with the ships of each year and the human toll",
     key: [["arrow", "People forced aboard ships from an African region to an American one in this decade (width = how many)"],
       ["sprite", "A slave ship that crossed this year; open it for the people aboard and how many died"]],
@@ -481,7 +480,7 @@
   const confTag = c => `<span class="c c${c}">${CONF[c]}</span>`;
   function placeView() {
     const w = TAB.where;
-    if (!w) return `<p class="note">Click anywhere on the map (or pick one of these) to see who was really there in the year on the slider.</p>`;
+    if (!w) return `<p class="note">${ATLAS.click} anywhere on the map (or pick one of these) to see who was really there in the year on the slider.</p>`;
     if (!DEEP.data) return `<p class="note">${DEEP.err ? "Presences could not load (atlas-files/travels-deep.json is not beside this page)." : "Loading presences…"}</p>`;
     const y = api ? api.year : w.y, now = presentAt(w.lon, w.lat, 30, y), near = presentAt(w.lon, w.lat, 30, y - 5, y + 5).filter(o => !now.some(n => n.pid === o.pid));
     const rows = l => l.slice(0, 40).map(o => `<button type="button" class="row" data-pres="${o.i}"><div><b>${esc(o.name)}</b><span>${esc(o.place)} · ${esc(o.role)} · ${esc(fmtY(o.y0))}${o.y1 !== o.y0 ? "–" + esc(fmtY(o.y1)) : ""}</span></div>${confTag(o.conf)}</button>`).join("");
@@ -511,7 +510,7 @@
   function journeysView() {
     const C = prep(); if (!C) return `<p class="note">Loading journeys…</p>`;
     return C.J.map(j => `<button type="button" class="row" data-follow="${esc(j.id)}"><div><b>${esc(j.n)}</b><span>${esc(j.w)}</span></div><span class="c">${esc(fmtY(Math.floor(j.t0)))}–${esc(fmtY(Math.floor(j.t1)))}</span></button>`).join("")
-      + `<p class="note">Hand-entered from the cited accounts; drafts waiting for the judge. Paths between stops are straight great circles until the shared router lands.</p>`;
+      + `<p class="note">Hand-entered from the cited accounts; drafts waiting for the judge. Paths between stops are worked out by the shared router once it has loaded (roads, rivers and sea lanes as they ran that year); until then they are straight.</p>`;
   }
   function renderTab() {
     if (!pane) return;
@@ -561,7 +560,7 @@
   function stopFollow(clear = true) { run++; followId = null; cursor = null; if (api) { if (clear) api.clearScene(); api.redraw(); } renderTab(); }
 
   ATLAS.tab({
-    id: ID, name: "Who was there",
+    id: ID, name: "Who was there", icon: "travels", short: "Who", mode: true,
     mount(el, a) {
       pane = el; api = a;
       if (!document.getElementById("travels-style")) { const st = document.createElement("style"); st.id = "travels-style"; st.textContent = STYLE; document.head.appendChild(st); }

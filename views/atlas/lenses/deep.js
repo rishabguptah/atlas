@@ -368,7 +368,7 @@ Answer with JSON only, one object: {"title":"...","blurb":"one sentence question
   W.storylines().then(() => { try { for (const st of JSON.parse(localStorage.getItem("atlas.deep.aistories.v1") || "[]")) if (!STORIES.some(s => s.id === st.id)) STORIES.push({ ...st, i: STORIES.length, steps: st.steps.map((p, k) => ({ ...p, j: k, m: mOf(p.date) })) }); } catch { /* none */ } });
 
   ATLAS.tab({
-    id: "upclose", name: "Up close",
+    id: "upclose", name: "Up close", icon: "lens", mode: true,
     mount(el, api) {
       T.el = el; T.api = api;
       el.addEventListener("input", ev => { if (ev.target.type === "range") { stop(); setMonth(+ev.target.value); } });

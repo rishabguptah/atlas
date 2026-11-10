@@ -359,7 +359,7 @@
       ${S.feed.length ? `<h3>Just now</h3>${S.feed.slice(0, 8).map(f => `<div class="lw-row"><span class="lw-who"><small>${esc(T.fmt(f.t))}</small><b>${esc(f.text)}</b></span></div>`).join("")}` : ""}
       <h3>Jump to a moment</h3>
       <div class="lw-moments">${moments().map(m => `<button data-moment="${esc(m.id)}">${esc(m.label)}</button>`).join("")}</div>
-      <p class="note">Named journeys: ${W.journeys().length}, each with sources (draft, waiting for the judge). Recurring routes: ${W.flows().length}. Meeting claims: ${W.documentedMeetings().length}. Lines between stops are straight until the shared router is on the page; dates between known stops are spread by distance.</p>
+      <p class="note">Named journeys: ${W.journeys().length}, each with sources (draft, waiting for the judge). Recurring routes: ${W.flows().length}. Meeting claims: ${W.documentedMeetings().length}. Recurring routes follow road and sea paths from the shared router; lines between a journey's stops are straight, and dates between known stops are spread by distance.</p>
     </div>`;
   }
   const STYLE = `.lw{display:grid;gap:10px}.lw h3{display:flex;gap:6px;align-items:baseline;margin:6px 0 0}.lw h3 .n{font:11px var(--mono);opacity:.6}
@@ -370,7 +370,7 @@
     .lw-sc .d{font:11px var(--mono);opacity:.65}.lw-sc.on{background:rgba(196,122,44,.16)}.lw-sc.past{opacity:.6}.lw .cf{font:10px var(--mono);opacity:.7;font-style:normal}
     .lw-tell p{margin:.4em 0;line-height:1.45}.lw .tag{font:10px var(--mono);padding:1px 5px;border-radius:3px;background:rgba(196,122,44,.18)}`;
   ATLAS.tab({
-    id: "living", name: "Living world",
+    id: "living", name: "Living world", icon: "peoples", short: "Living", mode: true,
     mount(el, api) {
       S.el = el; S.api = api;
       const st = document.createElement("style"); st.textContent = STYLE; document.head.appendChild(st);

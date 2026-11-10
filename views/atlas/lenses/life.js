@@ -7,7 +7,6 @@
   const D = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.life) || null;
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const SEASON = m => ["winter", "winter", "spring", "spring", "spring", "summer", "summer", "summer", "autumn", "autumn", "autumn", "winter"][m - 1];
   const KEY = "atlas.life.v1";
   let api = null, el = null;
   const fy = y => api ? api.fmtYear(y) : y < 0 ? `${-y} BCE` : `${y}`;
@@ -91,7 +90,8 @@
   }
   function story(g = G0()) {
     if (!g) return null;
-    const life = lifeOf(g), who = life ? `person:${life.id}` : null, gen = g.kind !== "real";
+    // An ordinary life, or a real one Claude drafted (life.ai), is never shown as attested: at most estimated.
+    const life = lifeOf(g), who = life ? `person:${life.id}` : null, gen = g.kind !== "real" || !!(life && life.ai);
     const conf = e => gen ? "estimated" : e.k === "real" ? "attested" : e.k === "travel" ? "estimated" : "approximate";
     const scenes = g.log.map((e, i) => {
       const at = e.at || g.at, cap = e.t.split(/(?<=\.)\s/)[0];
@@ -554,7 +554,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
         ${choicesFor(g).map(c => `<button class="opt" data-a="act" data-id="${c.id}">${esc(c.t)}<small>${esc(c.why || "")}</small></button>`).join("")}</div>`;
     } else if (g.phase === "pick") {
       const y = g.y, towns = typeof ENTRIES !== "undefined" ? ENTRIES.filter(e => e.layer !== "wonders" && e.start <= y && (e.end == null || y < e.end)).map(e => ({ n: e.name, lon: e.lon, lat: e.lat, d: km(g.at, e) })).filter(e => e.d > 40 && e.d < 4000).sort((a, b) => a.d - b.d) : [];
-      body = `<div class="ch"><h3>Where to?</h3><p class="sub">Click anywhere on the map, or pick a city that stands in ${esc(fy(y))}.</p>
+      body = `<div class="ch"><h3>Where to?</h3><p class="sub">${ATLAS.click} anywhere on the map, or pick a city that stands in ${esc(fy(y))}.</p>
         ${towns.slice(0, 10).map(t => `<button class="opt" data-a="dest" data-n="${esc(t.n)}" data-lon="${t.lon}" data-lat="${t.lat}">${esc(t.n)} <small>${Math.round(t.d).toLocaleString()} km as the crow flies</small></button>`).join("")}
         <button class="ghost" data-a="nogo">Stay home after all</button></div>`;
     } else if (g.phase === "travel") body = travelView(g, g.dest, false);
@@ -668,7 +668,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
     else if (a === "settle") { g.phase = "year"; g.news = yearNews(g); g.lastYears = null; save(); show(); }
   }
   ATLAS.tab({
-    id: "life", name: "Live",
+    id: "life", name: "Live", icon: "life", mode: "Live a life",
     mount(pane, a) {
       el = pane; api = a;
       el.addEventListener("click", onClick);

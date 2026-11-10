@@ -365,7 +365,7 @@ SOURCE RULES: real steps cite works you are confident exist, or en.wikipedia.org
   }
 
   ATLAS.tab({
-    id: "whatif", name: "What if",
+    id: "whatif", name: "What if", icon: "whatif", mode: true,
     mount(pane, a) {
       el = pane; api = a;
       el.addEventListener("click", onClick);
