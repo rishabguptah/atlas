@@ -83,7 +83,7 @@ who was born, died, lived or worked here, a "how deep" meter with the dense pack
 study storylines that pass through (75 of them, from Sumer to 1991, each with a Next button and the journeys of the
 people it names drawn on the map). Where the data is thin, "Fill in with Claude" adds draft rows (dashed on the map,
 marked draft, kept in this browser) and "Write a storyline for here and now" drafts a storyline. Its lenses:
-Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces (with Borders), Growing cities (with Cities) and railway numbers
+Chronicle (Power) and Lives (with People, from 2x zoom); Europe 1789-1914 adds Provinces (with Borders), Growing cities (with Cities) and railway numbers
 (`lenses/e19.*`). Everything loads after the first paint from `atlas-files/world/` and `atlas-files/packs/`, which
 `build.py` writes beside the page: publish them with it (about 20 MB, fetched a slice or pack at a time).
 
