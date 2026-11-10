@@ -122,6 +122,7 @@ ATLAS.tab({
   mode: true,                      // optional: a game or mode with "Back to map"; a string names it on the plate
   mount(el, api) { /* el is the empty pane; runs once when the page is up */ },
   show() { /* the tab was opened */ },
+  pick(at) { /* optional: a click on the map while this tab is open; {lon, lat, name}. Return true to keep it, else Here opens */ },
 });
 ```
 

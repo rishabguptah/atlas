@@ -307,7 +307,6 @@
   let lastAt = null;
   function hereTravellers(ctx, at) {
     lastAt = { lon: at.lon, lat: at.lat, year: ctx.year };
-    if (pane && pane.offsetParent && TAB.mode === "place") { TAB.where = { n: "Here", ...lastAt }; deep().then(renderTab, renderTab); }
     const C = prep(), y = ctx.year, out = [], r = Math.max(at.r || 300, 200);
     if (C) for (const j of C.J) for (const g of j.legs) {
       if (ctx.km([at.lon, at.lat], [g.pb[1], g.pb[2]]) > r) continue;
@@ -586,6 +585,14 @@
       renderTab();
     },
     show() { if (!TAB.where && lastAt) TAB.where = { n: "Here", ...lastAt }; deep().then(renderTab, renderTab); renderTab(); },
+    // In "Here and now", a click on the map asks who was there, in this tab; the other views leave it to Here.
+    pick(at) {
+      if (TAB.mode !== "place") return false;
+      lastAt = { lon: at.lon, lat: at.lat, year: api.year };
+      TAB.where = { n: at.name || "Here", lon: at.lon, lat: at.lat, year: api.year };
+      deep().then(renderTab, renderTab); renderTab();
+      return true;
+    },
   });
 
   // ---------- for other plugins: the living world, the life RPG, objects ----------

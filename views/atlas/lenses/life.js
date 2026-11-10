@@ -405,12 +405,6 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
       const xy = ctx.projection([at.lon, at.lat]); if (xy) me.attr("transform", `translate(${xy[0]},${xy[1]}) scale(${1 / ctx.k})`);
       ctx.g.selectAll("path.lf-done").data(anim ? [anim.done || []] : []).join("path").attr("class", "lf-done").attr("d", d => d.length > 1 ? ctx.path({ type: "LineString", coordinates: d }) : null);
     },
-    here(ctx, at) {
-      const g = G0();
-      if (pickWait) { const f = pickWait; pickWait = null; setTimeout(() => { api.setTab("life"); f(at); }, 0); return [{ title: "Chosen for your life", why: "Back to Live a life" }]; }
-      if (g && g.phase === "pick") { setTimeout(() => { api.setTab("life"); chooseDest({ n: (nearestTown(at.lon, at.lat, g.y) || {}).n || "this spot", lon: at.lon, lat: at.lat }); }, 0); return [{ title: "Your destination", why: "Back to Live a life to plan the trip" }]; }
-      return [];
-    },
   });
   let pickWait = null;
   const css = document.createElement("style");
@@ -687,6 +681,13 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
       if (a.onView) a.onView(() => { if (el && !el.hidden && !G0()) render(); });
     },
     show() { render(); },
+    // A click on the map while the game waits for a place: where to be born, or where to go next. Otherwise Here.
+    pick(at) {
+      if (pickWait) { const f = pickWait; pickWait = null; f(at); return true; }
+      const g = G0();
+      if (g && g.phase === "pick") { chooseDest({ n: (nearestTown(at.lon, at.lat, g.y) || {}).n || "this spot", lon: at.lon, lat: at.lat }); return true; }
+      return false;
+    },
   });
   let homeT = 0;
   // For tests and other plugins: the router and the world reader.
