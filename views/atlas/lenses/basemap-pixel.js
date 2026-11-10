@@ -308,7 +308,7 @@
   try { eraChoice = localStorage.getItem("atlas.era.v1") || "auto"; } catch (e) { /* storage blocked */ }
   function eraFor(t, y, quiet) {
     if (!ERAS || !pm || !proj || y == null) return;
-    const [cw, ch] = pm.size ? pm.size() : [el0.clientWidth, el0.clientHeight];
+    const [cw, ch] = pm.cssSize ? pm.cssSize() : [el0.clientWidth, el0.clientHeight];
     const c = proj.invert(t.invert([cw / 2, ch / 2])) || [0, 0];
     // Before writing the ice-age world shows in its own colours (ice, exposed shelves, steppe), not on a clay tablet.
     const id = eraChoice === "auto" ? (y < DEEP_ERA ? "now" : ERAS.pick(y, { lon: c[0], lat: c[1], k: t.k })) : eraChoice;
@@ -412,7 +412,7 @@
       }
       nameRealms();
       if (geo) {
-        const [cw, ch] = pm.size ? pm.size() : [el0.clientWidth, el0.clientHeight];
+        const [cw, ch] = pm.cssSize ? pm.cssSize() : [el0.clientWidth, el0.clientHeight];
         const on = isOn("terrain"), key = on ? [t.k, t.x, t.y, cw, ch].join() : "off";
         if (key !== geoKey) { geoKey = key; if (on) geo.render(t, cw, ch); else geo.clear(); }
       }
