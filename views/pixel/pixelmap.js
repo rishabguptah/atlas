@@ -89,14 +89,29 @@
       // Neighbouring pixels nearly always hit the same tile as the last call on this level.
       if (L._key === key) return L._tile;
       const t = tiles[key];
-      if (t) { if (t.data) { L._key = key; L._tile = t; } return t.data ? t : null; }
+      if (t) { if (t.data) { L._key = key; L._tile = t; t.used = tilePass; } return t.data ? t : null; }
       const P = col < 0 ? L.patches[row] : null;
       const rec = tiles[key] = P ? { x0: P.box[0], y0: P.box[3], cell: L.cell, patch: true, crop: P.crop } : { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
       const img = new Image(); pending++;
-      img.onload = () => { rec.img = img; decode(rec); pending--; tileVer++; tileSoon(); };
+      img.onload = () => { rec.img = img; decode(rec); rec.used = tilePass; pending--; tileVer++; evictTiles(); tileSoon(); };
       img.onerror = () => { pending--; rec.data = null; rec.failed = true; tileSoon(); };
       img.src = P ? P.url : L.url(col, row);
       return null;
+    }
+    // Decoded finer tiles (an l2 tile is about 3 MB of pixels) are kept up to a budget, then the ones the last terrain
+    // pass did not touch go, least recently used first; the coarse world tile always stays. Panning back loads them again.
+    let tilePass = 0;
+    const TILE_BYTES = 96e6;
+    function evictTiles() {
+      let bytes = 0; const held = [];
+      for (const key in tiles) { const r = tiles[key]; if (+key >= 100000 && r.data) { bytes += r.data.length; held.push([key, r]); } }
+      if (bytes <= TILE_BYTES) return;
+      held.sort((a, b) => a[1].used - b[1].used);
+      for (const [key, r] of held) {
+        if (bytes <= TILE_BYTES || r.used >= tilePass) break;
+        bytes -= r.data.length; delete tiles[key];
+        for (const L of levels) if (L._tile === r) { L._key = null; L._tile = null; }
+      }
     }
     // A finer tile redraws all the terrain (100-500 ms), so a view that asked for several waits for the batch: one
     // redraw when the last arrives (60 ms after it), or every 600 ms while a slow batch is still coming in.
@@ -332,6 +347,8 @@
     function terrainPass(t, need) { const g = terrainSteps(t, need); while (!g.next().done); }
     // The same pass as a generator that yields every few dozen rows and between the terrain art's stages (renderSoon).
     function* terrainSteps(t, need) {
+      // A new pass: tiles mark themselves used again (the one-tile shortcut per level is reset so each is seen).
+      tilePass++; for (const L of levels) { L._key = null; L._tile = null; }
       const landM = maskFor([opts.land], () => "#fff");
       yield;
       base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255);
