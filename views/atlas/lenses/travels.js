@@ -12,6 +12,7 @@
 // ATLAS.travel lets the living-world simulation, the life RPG and the objects lens ask who was where.
 (() => {
   const ID = "travels", COLOR = "#a0522d", VOC = "voc", VOC_COLOR = "#c07a1e", MP = "passage", MP_COLOR = "#6e2b2b";
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const CONF = ["attested", "estimated", "approximate", "unknown"];
   const CONF_LINE = ["sure", "likely", "legend", "legend"];
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -522,7 +523,7 @@
     const b = (m, n) => `<button type="button" data-mode="${m}" aria-pressed="${TAB.mode === m}">${n}</button>`;
     body.innerHTML = `<div class="trv"><p class="lede">Who was really in the same place at the same time, who was on the road, and the great journeys that crossed the world.</p>
       <div class="tabs">${b("place", "Here and now")}${b("person", "A person")}${ATLAS.living ? b("road", ATLAS.living.name) : ""}${b("journeys", "Follow a journey")}</div>
-      ${followId ? `<div class="chips"><button type="button" class="go" data-act="stop">✕ Stop following</button></div>` : ""}
+      ${followId ? `<div class="chips"><button type="button" class="go" data-act="stop">${ICO("close", "✕")} Stop following</button></div>` : ""}
       ${TAB.mode === "place" ? `<div class="chips">${PRESETS.map((p, i) => `<button type="button" class="chip" data-preset="${i}" title="${esc(p.why)}">${esc(p.n)}</button>`).join("")}</div>${placeView()}`
         : TAB.mode === "person" ? personView() : TAB.mode === "road" ? "" : journeysView()}</div>`;
   }

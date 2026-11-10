@@ -13,6 +13,7 @@
   const DS = window.ATLAS.deep = Object.assign(window.ATLAS.deep || {}, { m: null, story: null, focus: null, place: null });
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const { mOf, fmtDate, fmtM, fmtYear } = W;
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const FAM = { w: ["War", "cross", "#a3321f"], d: ["Diplomacy & law", "square", "#1d4f6e"], u: ["Revolt & unrest", "triangle", "#b8641c"],
     x: ["Disaster", "diamond", "#5f6b2a"], c: ["Culture, trade & faith", "circle", "#6a4c93"], p: ["People", "circle", "#a24b6e"] };
   const VERB = { e: "", b: "born", d: "died", r: "lived or worked here", f: "founded or built", z: "ended", w: "made", s: "" };
@@ -288,9 +289,9 @@
       <div><h2>${esc(place)}, up close</h2><p class="lede">The map view is the region: pan or zoom anywhere. Time runs by the month; pick a span, a storyline, or play.</p></div>
       <div class="when">${esc(fmtM(m))}<small>${esc(sp.name)}${pk && sp.pack ? " · dense pack" : ""}</small></div>
       <input type="range" min="${sp.m0}" max="${sp.m1}" value="${m}" aria-label="Month">
-      <div class="ctl"><button data-a="-12" title="Back a year">«</button><button data-a="-1" title="Back a month">‹</button>
-        <button class="play" data-a="play" aria-label="${T.playing ? "Pause" : "Play"}">${T.playing ? "❚❚" : "▶"}</button>
-        <button data-a="1" title="Forward a month">›</button><button data-a="12" title="Forward a year">»</button>
+      <div class="ctl"><button data-a="-12" title="Back a year" aria-label="Back a year">${ICO("back", "«")}</button><button data-a="-1" title="Back a month">‹</button>
+        <button class="play" data-a="play" aria-label="${T.playing ? "Pause" : "Play"}">${T.playing ? ICO("pause", "❚❚") : ICO("play", "▶")}</button>
+        <button data-a="1" title="Forward a month">›</button><button data-a="12" title="Forward a year" aria-label="Forward a year">${ICO("back", "»", "s flip")}</button>
         <span class="seg" role="group" aria-label="Speed">${[[1, "1 mo/s"], [12, "1 yr/s"], [120, "10 yr/s"]].map(([v, l]) => `<button data-speed="${v}" aria-pressed="${T.speed === v}">${l}</button>`).join("")}</span></div>
       <div class="seg" role="group" aria-label="Span">${[...(pk ? [["pack", "This pack"]] : []), ...(s ? [["story", "Storyline"]] : []), ...SPANS.map(a => a.slice(0, 2))].map(([k, n]) => `<button data-span="${k}" aria-pressed="${T.span === k || (T.span === "auto" && (k === "pack" && pk || !pk && k === "century"))}">${n}</button>`).join("")}</div>
       <div class="chips">${lens("deep", "Chronicle")}${lens("deeplives", "Lives")}${(ATLAS.lenses || []).length ? "" : ""}</div>
@@ -302,7 +303,7 @@
         ${T.msg ? `<p>${esc(T.msg)}</p>` : ""}</div>
       ${stats.length ? `<div class="stats">${stats.map(o => `<div class="stat"><b>${esc(o.v)}</b><span>${esc(o.t)}</span></div>`).join("")}</div>` : ""}
       <h3>Storylines${s ? "" : " here"}</h3>
-      ${s ? `<div class="chips"><button aria-pressed="true" data-story="${esc(s.id)}">${esc(s.title)}<small>${esc(s.region || "")}</small></button>${W.director ? `<button data-a="direct" title="Play this storyline scene by scene on the map">▶ Play on the map</button>` : ""}<button data-a="unstory">Close</button></div>
+      ${s ? `<div class="chips"><button aria-pressed="true" data-story="${esc(s.id)}">${esc(s.title)}<small>${esc(s.region || "")}</small></button>${W.director ? `<button data-a="direct" title="Play this storyline scene by scene on the map">${ICO("play", "▶")} Play on the map</button>` : ""}<button data-a="unstory">Close</button></div>
         <p class="lede">${esc(s.blurb)} <span class="note">(${esc(fmtYear(s.start))}–${esc(fmtYear(s.end))}, ${s.steps.length} steps${journeys(s).length ? ", journeys of " + journeys(s).map(j => esc(j.who)).join(", ") : ""})</span></p>
         ${(() => { const st = next || s.steps[0]; return `<button class="next" data-step="${st.j}"><span>${next ? "Next" : "Start"} · ${esc(fmtDate(st.date))}${st.place_name ? " · " + esc(st.place_name) : ""}</span><b>${esc(st.name)}</b>${st.what ? `<small>${esc(st.what)}</small>` : ""}</button>`; })()}
         <div class="steps">${s.steps.map(st => `<button class="row${st.j === DS.step ? " on" : st.m < m ? " past" : ""}" data-step="${st.j}"><span class="d">${esc(fmtDate(st.date))}</span><span><i class="${FAM[(st.family || "c")[0]] ? FAM[st.family[0]][1] : "circle"}" style="--fc:${FAM[(st.family || "c")[0]] ? FAM[st.family[0]][2] : FAM.c[2]}"></i>${esc(st.name)}${st.why ? `<small>${esc(st.why)}</small>` : ""}</span></button>`).join("")}</div>`

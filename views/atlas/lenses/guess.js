@@ -8,6 +8,7 @@
 // Data: views/atlas/lenses/guess.py (sourced measures read at a year they give). Progress: localStorage atlas.guess.v1.
 (function () {
   const A = window.ATLAS;
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const D = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.guess) || null;
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const KIND = { city: "Cities", region: "Continents", gdpshare: "Share of world GDP", gdppc: "Income per person", area: "Empires at their height", rail: "Railways", news: "News travels" };
@@ -345,7 +346,7 @@
       ${(q.ctx || []).filter(Boolean).length ? `<ul class="ctx">${q.ctx.filter(Boolean).map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : ""}
       ${S.finds.length ? `<div class="finds">${S.finds.map(id => { const f = FINDS.find(x => x[0] === id); return f ? `<span class="find" title="${esc(f[2])}">★ ${esc(f[1])}</span>` : ""; }).join("")}</div>` : ""}
       <p class="src">${srcs.map(s => s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite)}</a>` : esc(s.cite)).join(" · ")} · ${esc(q.conf || "")}</p>
-      <div class="row"><button class="btn pri" data-a="next">${more}</button><button class="btn" data-a="replay">▶ Replay</button><button class="lnk" data-a="why">Ask the panel why</button></div>
+      <div class="row"><button class="btn pri" data-a="next">${more}</button><button class="btn" data-a="replay">${ICO("play", "▶")} Replay</button><button class="lnk" data-a="why">Ask the panel why</button></div>
     </div>`;
   }
   function shareText(ds) {

@@ -6,6 +6,7 @@
 // which object is where in a given year.
 (() => {
   const ID = "objects", COLOR = "#9a5b2e";
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const CONF = { sure: "documented", likely: "likely", legend: "legend or tradition" };
   const FRESH = 60;  // a kind's newest stops are labelled and its legs drawn strong for this many years
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -321,13 +322,13 @@
     const C = C0(), o = C.byId[openId]; if (!o) return renderList();
     const on = follow.id === o.id;
     pane.innerHTML = `<div class="obj">
-      <div class="ctl"><button type="button" class="go ghost" data-act="back">← All objects</button></div>
+      <div class="ctl"><button type="button" class="go ghost" data-act="back">${ICO("back", "←")} All objects</button></div>
       <div class="hd">${thumb(o.sp)}<div><h3>${esc(o.n)}</h3><p class="note">${esc(fmtY(o.y0))} – ${esc(fmtY(o.y1))} · ${o.stops.length} stops${o.ai ? " · " + ATLAS.prov("ai") : ""}</p></div></div>
       <p>${esc(o.w)}</p>${o.why ? `<p class="note">${esc(o.why)}</p>` : ""}
-      <div class="ctl">${on ? `<button type="button" class="go ghost" data-act="prev" aria-label="Previous stop">◀</button>
-        <button type="button" class="go" data-act="pause">${follow.playing ? "❚❚ Pause" : "▶ Play"}</button>
-        <button type="button" class="go ghost" data-act="next" aria-label="Next stop">▶</button><button type="button" class="go ghost" data-act="stop">✕ Stop</button>`
-        : `<button type="button" class="go" data-act="follow">▶ Follow its journey</button><button type="button" class="go ghost" data-act="play">🎲 Play: guess where it goes</button>${W().director ? `<button type="button" class="go ghost" data-act="story">🎬 Play as a story</button>` : ""}`}</div>
+      <div class="ctl">${on ? `<button type="button" class="go ghost" data-act="prev" aria-label="Previous stop">${ICO("back", "◀")}</button>
+        <button type="button" class="go" data-act="pause">${follow.playing ? ICO("pause", "❚❚") + " Pause" : ICO("play", "▶") + " Play"}</button>
+        <button type="button" class="go ghost" data-act="next" aria-label="Next stop">${ICO("next", "▶")}</button><button type="button" class="go ghost" data-act="stop">${ICO("close", "✕")} Stop</button>`
+        : `<button type="button" class="go" data-act="follow">${ICO("play", "▶")} Follow its journey</button><button type="button" class="go ghost" data-act="play">${ICO("die", "🎲")} Play: guess where it goes</button>${W().director ? `<button type="button" class="go ghost" data-act="story">${ICO("stories", "🎬")} Play as a story</button>` : ""}`}</div>
       ${on ? quizHtml(o) : best(o.id) != null ? `<p class="note">Your best guessing game: ${best(o.id)} of ${rounds(o)}.</p>` : ""}
       <div class="conf"><span>documented</span><span class="likely">likely</span><span class="legend">legend or unknown route</span></div>
       <ol class="stops">${o.stops.map(s => `<li data-i="${s.i}" class="${s.c}${on && s.i === follow.i ? " on" : ""}${on && s.i < follow.i ? " done" : ""}"><i></i><div>
