@@ -63,39 +63,34 @@
     dress();
   }
 
-  // ---------- the year cartouche's era line, and era names under the slider ----------
-  // Year steps must stay inside one frame, so this only touches the DOM when the era changes, and measures
-  // the era buttons once per resize. The era-styles thread owns data-era and the --era-* accents on the root.
+  // ---------- the year cartouche's era line, and the era ribbon under the slider ----------
+  // The era is named once, on the cartouche. The ribbon under the slider fills the current era's band and marks the
+  // others with a 2-px tick; each band keeps its name for a tooltip and a screen reader. Year steps stay inside one
+  // frame, so the DOM is touched only when the era changes. The era-styles thread owns data-era and the --era-* accents.
   const ypEra = $("#ypera");
-  let eraIdx = -2, eraW = null;
-  function syncEraNames(force) {
+  let eraIdx = -2;
+  function syncEraNames() {
     const bs = $$("#eras button"), i = bs.findIndex(b => b.getAttribute("aria-current") === "true");
-    if (i === eraIdx && !force) return;
+    if (i === eraIdx) return;
     eraIdx = i;
-    if (!eraW || force) eraW = bs.map(b => b.getBoundingClientRect().width);
-    bs.forEach((b, j) => {
-      if (!b.dataset.full) b.dataset.full = b.textContent;
-      const full = b.dataset.full, w = eraW[j] || 0;
-      const short = full.split(/[\s-]+/).filter(Boolean).map(s => /^\d/.test(s) ? s : s[0]).join("").toUpperCase();
-      // Full names near you where they fit, initials elsewhere; the name is always in the tooltip.
-      const t = Math.abs(j - i) <= 1 && w >= full.length * 6.4 ? full : w >= short.length * 7 + 6 ? short : "";
-      if (b.textContent !== t) b.textContent = t;
-    });
+    for (const b of bs) if (!b.dataset.full) { b.dataset.full = b.textContent; b.setAttribute("aria-label", b.textContent); b.textContent = ""; }
     if (ypEra) ypEra.textContent = i >= 0 ? bs[i].dataset.full : "";
   }
   api.onYear(() => syncEraNames());
-  syncEraNames(true);
+  syncEraNames();
   let rsT = 0;
-  addEventListener("resize", () => { clearTimeout(rsT); rsT = setTimeout(() => { syncEraNames(true); emitRects(); }, 150); });
+  addEventListener("resize", () => { clearTimeout(rsT); rsT = setTimeout(() => emitRects(), 150); });
 
-  // The map's era style (views/pixel/eras.js), picked on the cartouche: "By year" follows the year, the rest pin one look.
-  if (A.eraStyles && A.setEraStyle && ypEra) {
+  // The pixel map's look (views/pixel/eras.js): "By year" follows the year, the rest pin one look. It lives in the Key,
+  // next to what the map is showing; the page moves it in each time it draws the key.
+  if (A.eraStyles && A.setEraStyle) {
     const sel = document.createElement("select");
-    sel.className = "yp-style"; sel.title = "Map style"; sel.setAttribute("aria-label", "Map style");
+    sel.className = "lookpick"; sel.title = "How the pixel map is drawn"; sel.setAttribute("aria-label", "Map look");
     sel.innerHTML = A.eraStyles.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
     sel.value = (A.eraStyle && A.eraStyle().choice) || "auto";
     sel.addEventListener("change", () => A.setEraStyle(sel.value));
-    ypEra.parentNode.appendChild(sel);
+    A.lookPicker = sel;
+    if (A.renderKey) A.renderKey();
   }
 
   // ---------- the one next thing ----------

@@ -8,9 +8,12 @@
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const KIND = { c: ["Lost city or site", "Lost cities & sites", "square"], w: ["Wonder", "Wonders", "diamond"], b: ["Battle", "Battles", "cross"] };
   const R_CLICK = 150, R_BATTLE = 120, BATTLE_YEARS = 10, FALL_YEARS = 30;
-  const ERAS = [[-4000, "Bronze Age"], [-1200, "Iron Age"], [-500, "Classical age"], [500, "Early Middle Ages"], [1000, "High and late Middle Ages"],
-    [1450, "Early modern age"], [1750, "Long nineteenth century"], [1914, "Modern age"]];
-  const era = y => { let i = 0; for (let j = 0; j < ERAS.length; j++) if (y >= ERAS[j][0]) i = j; return i; };
+  // Eras come from the page's one list (ATLAS.eras), so the fog's eras are the ribbon's. Each era's fog is kept under
+  // the year it begins ("y-1200"); era(y) gives that key, eraName(y) its name.
+  const eraList = () => (window.ATLAS && ATLAS.eras) || [{ from: -Infinity, to: Infinity, name: "All of time" }];
+  const eraIdx = y => (window.ATLAS && ATLAS.eraAt) ? ATLAS.eraAt(y) : 0;
+  const era = y => "y" + eraList()[eraIdx(y)].from;
+  const eraName = y => eraList()[eraIdx(y)].name;
   const CELL = 3, COLS = 360 / CELL, ROWS = 180 / CELL;
   let api = null, el = null, mode = "next", showAll = {};
 
@@ -196,7 +199,26 @@
   // ---------- fog of war ----------
   // One bit per 3° cell per era: lifted where you have zoomed in or clicked.
   const fogBits = {};
+  // Fog saved before the shared list was kept by the Codex's own eight eras (keys 0 to 7, starting at these years):
+  // each one's lifted cells carry over to every shared era it overlaps, once.
+  const OLD_FOG = [-Infinity, -1200, -500, 500, 1000, 1450, 1750, 1914, Infinity];
+  function moveOldFog() {
+    if (P.fogv === 2 || !(window.ATLAS && ATLAS.eras)) return;
+    const n = Math.ceil(COLS * ROWS / 8), out = {};
+    const dec = v => { const b = new Uint8Array(n); try { const t = atob(v || ""); for (let i = 0; i < t.length && i < n; i++) b[i] = t.charCodeAt(i); } catch (err) { /* unreadable: nothing lifted */ } return b; };
+    for (const [k, v] of Object.entries(P.fog)) {
+      if (!/^[0-7]$/.test(k)) { out[k] = v; continue; }
+      const a = OLD_FOG[+k], z = OLD_FOG[+k + 1], src = dec(v);
+      for (const E of ATLAS.eras) if (E.from < z && E.to > a) {
+        const key = "y" + E.from, dst = out[key] ? dec(out[key]) : new Uint8Array(n);
+        for (let i = 0; i < n; i++) dst[i] |= src[i];
+        let t = ""; for (const x of dst) t += String.fromCharCode(x); out[key] = btoa(t);
+      }
+    }
+    P.fog = out; P.fogv = 2; save();
+  }
   function bits(e) {
+    moveOldFog();
     if (fogBits[e]) return fogBits[e];
     const b = new Uint8Array(Math.ceil(COLS * ROWS / 8));
     try { const s = atob(P.fog[e] || ""); for (let i = 0; i < s.length && i < b.length; i++) b[i] = s.charCodeAt(i); } catch (err) { /* start fresh */ }
@@ -365,7 +387,7 @@
   }
   function fogSwitch() {
     const y = api ? api.year : 0, e = era(y);
-    return `<div class="switch"><input type="checkbox" id="cx-fog" ${fogOn() ? "checked" : ""}><label for="cx-fog"><b>Fog of war</b><span>${esc(ERAS[e][1])}: ${(p => p > 0 && p < 1 ? p.toFixed(1) : Math.round(p))(litShare(e) * 100)}% of the map explored. Each era has its own fog; zoom in to lift it.</span></label></div>`;
+    return `<div class="switch"><input type="checkbox" id="cx-fog" ${fogOn() ? "checked" : ""}><label for="cx-fog"><b>Fog of war</b><span>${esc(eraName(y))}: ${(p => p > 0 && p < 1 ? p.toFixed(1) : Math.round(p))(litShare(e) * 100)}% of the map explored. Each era has its own fog; zoom in to lift it.</span></label></div>`;
   }
   function renderCodex() {
     const from = api && api.view ? api.view() || { lon: 30, lat: 35 } : { lon: 30, lat: 35 };
