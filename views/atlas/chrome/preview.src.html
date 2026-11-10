@@ -306,7 +306,7 @@ button, input, select { font: inherit; color: inherit; }
   let open = null;
   for (const f of FAM) {
     const b = document.createElement("button");
-    b.className = "lens"; b.type = "button"; b.dataset.f = f.id; b.style.setProperty("--t", `var(--t-${f.id})`);
+    b.className = "lens"; b.type = "button"; b.dataset.f = f.id; b.style.setProperty("--t", `var(--t-${f.id})`); b.style.setProperty("--td", `var(--td-${f.id})`);
     b.innerHTML = ico(f.id) + `<span>${f.n}</span><span class="cnt">${f.lenses.filter(l => l[1]).length}/${f.lenses.length}</span>`;
     b.setAttribute("aria-pressed", f.lenses.some(l => l[1]));
     lensesEl.appendChild(b);

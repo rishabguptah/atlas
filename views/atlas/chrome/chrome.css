@@ -12,6 +12,9 @@
   --fs-tiny: 8px; --fs-tiny-2: 16px;
   --fs-h4: 16px; --fs-h3: 24px; --fs-h2: 32px; --fs-h1: 48px;
   --fs-note: 13px; --fs-read: 15px; --fs-lead: 17px;
+  /* A pressed family chip is filled with its tincture's darker step, so vellum type reads on it (4.8:1 or better). */
+  --td-land: var(--t-land-dk); --td-power: var(--t-power-dk); --td-wealth: color-mix(in srgb, var(--t-wealth-dk) 80%, var(--t-wealth-dkk));
+  --td-peoples: var(--t-peoples-dk); --td-mind: var(--t-mind-dk); --td-shocks: var(--t-shocks-dk);
   --ease: cubic-bezier(.2, .7, .2, 1);
   --era: var(--era-accent, var(--lapis)); --era-2: var(--era-frame-b, var(--rubric));
 }
@@ -62,7 +65,7 @@
   position: relative; transition: transform 120ms var(--ease); }
 .lens[aria-pressed="false"] { color: var(--ink-soft); }
 .lens[aria-pressed="false"] .ico { opacity: .45; filter: grayscale(1); }
-.lens[aria-pressed="true"] { background: color-mix(in srgb, var(--t) 18%, var(--vellum)) padding-box; box-shadow: inset 4px 0 0 var(--t); }
+.lens[aria-pressed="true"] { background: var(--td, var(--t)) padding-box; color: var(--vellum-fixed); }
 .lens:hover { transform: translateY(-2px); }
 .lens.open::after { content: ""; position: absolute; inset: -10px; border: 2px solid var(--gold); border-image: none; pointer-events: none; }
 

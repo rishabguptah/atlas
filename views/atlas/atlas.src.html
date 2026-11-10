@@ -153,7 +153,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   border-left: 4px solid var(--lc, var(--ink)); padding: 8px 12px; font-size: var(--fs-read); box-shadow: 0 6px 18px rgba(0,0,0,.12);
 }
 .caption b { font-family: var(--display); font-weight: 400; font-size: var(--fs-h4); display: block; line-height: 1.15; }
-.caption .lens { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--lc); }
+.caption .ck { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--lc); }
 
 .time { grid-area: time; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; border-top: 1px solid var(--rule);
   padding-block: 6px 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; }
@@ -586,8 +586,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const FAMILIES = [{ id: "land", n: "Land", c: "var(--t-land, var(--l-geography))" }, { id: "power", n: "Power", c: "var(--t-power, var(--y-war))" }, { id: "wealth", n: "Wealth", c: "var(--t-wealth, var(--y-money))" },
     { id: "peoples", n: "Peoples", c: "var(--t-peoples, var(--y-people))" }, { id: "mind", n: "Mind", c: "var(--t-mind, var(--y-ideas))" }, { id: "shocks", n: "Shocks", c: "var(--t-shocks, var(--y-disease))" }];
   // The family emblem (views/pixel/icons.js) for a layer or lens, tinted with its family's tincture.
+  // A family's emblem for a kicker; nothing when the key belongs to no family.
+  const emblem = k => { const h = famIcon(k); return h === "<i></i>" ? "" : h; };
   const famIcon = k => { const f = FAMILIES.some(x => x.id === k) ? k : FAM_OF[k] || (ATLAS.lenses.find(d => d && d.id === k) || {}).family; return f && window.PIXEL_ICONS ? `<span class="fi" style="--t:var(--t-${f})">${PIXEL_ICONS.svg(f, "s")}</span>` : "<i></i>"; };
-  const FAM_OF = { places: "land", war: "power", order: "power", money: "wealth", people: "peoples", ideas: "mind", disease: "shocks" };
+  const FAM_OF = { places: "land", war: "power", order: "power", money: "wealth", people: "peoples", ideas: "mind", disease: "shocks",
+    geography: "land", military: "power", economy: "wealth", population: "peoples", religion: "mind", literature: "mind" };
   const PLUG = ATLAS.lenses.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !(d.id in FAM_OF) && FAMILIES.some(f => f.id === d.family) && a.findIndex(x => x && x.id === d.id) === i);
   // A lens with with: "<chip>" has no chip of its own: it is part of that one, on whenever it is (Provinces with Borders).
   const WITH = Object.fromEntries(PLUG.filter(d => d.with && !d.tab).map(d => [d.id, d.with]));
@@ -1812,7 +1815,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   function cardHTML(c) {
     if (!c || !c.title) return "";
-    return `<div class="focus" style="--c:${c.c}"><span class="fk">${esc(c.kick)}</span><span class="ft">${esc(c.title)}</span>
+    return `<div class="focus" style="--c:${c.c}"><span class="fk">${emblem(c.fam || (/--y-([\w-]+)/.exec(c.c || "") || [])[1])}${esc(c.kick)}</span><span class="ft">${esc(c.title)}</span>
       ${c.meta ? `<span class="sub">${esc(c.meta)}</span>` : ""}${c.body ? `<p>${esc(c.body)}</p>` : ""}${c.why ? `<p class="why">${esc(c.why)}</p>` : ""}
       ${c.html || ""}${c.polity && !(ATLAS.cardViz || []).length ? sparkHTML(c.polity) : ""}${cardViz(c)}${(() => { try { return ATLAS.cardMore ? ATLAS.cardMore(c) : ""; } catch (err) { console.error("cardMore", err); return ""; } })()}
       ${c.holders && c.holders.length ? `<div class="items">${c.holders.map(r => item(`${esc(r.n)}`, fmtSpan(r.s, r.e), "", () => animateYear(r.s), !(state.year >= r.s && state.year <= r.e))).join("")}</div>` : ""}
@@ -1994,7 +1997,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       <div><p class="kick">Here, in ${esc(fmtYear(y))}</p><h2 class="ttl">${esc(name)}</h2>
       ${y < HIST ? `<p class="sub">Before the first states</p>` : rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(frameYear(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(frameYear(y)))} border map</p>`}</div>
       ${cardHTML(s)}
-      ${rb && rb.emp ? `<div class="focus" style="--c:${rb.emp.color}"><span class="fk">Empire</span><span class="ft">${esc(rb.emp.name)}</span><span class="sub">${esc(fmtSpan(rb.emp.start, rb.emp.end))}${rb.emp.peak ? ` · peak ${rb.emp.peak[1]} million km² in ${esc(fmtYear(rb.emp.peak[0]))}` : ""}</span><p>${esc(rb.emp.what || "")}</p>${rb.emp.why ? `<p class="why">${esc(rb.emp.why)}</p>` : ""}</div>` : ""}
+      ${rb && rb.emp ? `<div class="focus" style="--c:${rb.emp.color}"><span class="fk">${emblem("power")}Empire</span><span class="ft">${esc(rb.emp.name)}</span><span class="sub">${esc(fmtSpan(rb.emp.start, rb.emp.end))}${rb.emp.peak ? ` · peak ${rb.emp.peak[1]} million km² in ${esc(fmtYear(rb.emp.peak[0]))}` : ""}</span><p>${esc(rb.emp.what || "")}</p>${rb.emp.why ? `<p class="why">${esc(rb.emp.why)}</p>` : ""}</div>` : ""}
       ${sec("places", "The place", cityItems)}${P("land")}
       ${sec("order", "Order & chaos", orderItems)}
       ${sec("people", "People", pItems, meet ? "" : null)}${meet ? `<p class="note">${esc(meet)}</p>` : ""}${P("peoples")}
@@ -2311,7 +2314,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const sp = state.answer && (state.answer.steps || []).includes(s) ? specOf(s) : s.by && SPEC[s.by];
     caption.style.setProperty("--lc", sp ? specColor(sp) : lensColor(s.lens));
     caption.style.setProperty("--c", sp ? specColor(sp) : lensColor(s.lens));
-    caption.innerHTML = `${sp ? portrait(sp.id, 2) : ""}<span class="lens">${esc(sp ? sp.name : LENS_NAME[s.lens] || s.lens || "")}${s.year != null ? " · " + esc(fmtYear(clampYear(s.year))) : ""}</span><b>${esc(s.title || s.q || "")}</b>`;
+    caption.innerHTML = `${sp ? portrait(sp.id, 2) : ""}<span class="ck">${sp ? "" : emblem(s.lens)}${esc(sp ? sp.name : LENS_NAME[s.lens] || s.lens || "")}${s.year != null ? " · " + esc(fmtYear(clampYear(s.year))) : ""}</span><b>${esc(s.title || s.q || "")}</b>`;
   }
   // The guide's one tool: set the year, the view, the lenses and the highlights together.
   function applyScene(s) {
@@ -2379,7 +2382,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     steps.forEach((s, i) => { const sp = specOf(s); if (!groups.length || groups[groups.length - 1].sp !== sp) groups.push({ sp, items: [] }); groups[groups.length - 1].items.push([s, i]); });
     return groups.map(({ sp, items }) => `<div class="spg" style="--c:${specColor(sp)}" data-by="${esc(sp.id)}">${speakerHtml(A, sp, items.length)}${items.map(([s, i]) => `
           <div class="step${i === state.active ? " on" : ""}${state.muted.has(s.lens) ? " muted" : ""}" style="--c:${lensColor(s.lens)}" data-i="${i}">
-            <button aria-expanded="${i === state.active}" aria-label="${esc(sp.name)}: ${esc(s.title)}"><span class="i">${String(i + 1).padStart(2, "0")}</span><span class="t">${esc(s.title)}</span><span class="y">${s.year != null ? esc(fmtYear(clampYear(s.year))) : ""}</span><span class="ln">${esc(LENS_NAME[s.lens] || s.lens || "")}</span></button>
+            <button aria-expanded="${i === state.active}" aria-label="${esc(sp.name)}: ${esc(s.title)}"><span class="i">${String(i + 1).padStart(2, "0")}</span><span class="t">${esc(s.title)}</span><span class="y">${s.year != null ? esc(fmtYear(clampYear(s.year))) : ""}</span><span class="ln">${emblem(s.lens)}${esc(LENS_NAME[s.lens] || s.lens || "")}</span></button>
             <div class="body"><p>${esc(s.text)}</p>${s.confidence != null ? `<span class="conf">confidence ${Math.round(Number(s.confidence) * 100)}%</span>` : ""}${srcList(s.sources, A.live)}</div>
           </div>`).join("")}${A.passes && A.passes[sp.id] ? `<p class="pass"><b>${esc(sp.name)} asks the panel:</b> ${esc(A.passes[sp.id])}</p>` : ""}</div>`).join("");
   }

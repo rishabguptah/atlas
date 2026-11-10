@@ -80,9 +80,8 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .keycard kbd { font-family: var(--f-tiny); font-size: var(--fs-tiny); border: 0; box-shadow: 0 0 0 2px var(--ink); border-radius: 0; padding: 0 4px; background: var(--vellum-hi); opacity: 1; }
 .app .caption { left: calc(var(--rail) + 2 * var(--g) + 10px); right: auto; bottom: calc(var(--timeh) + 2 * var(--g)); max-width: 380px; border-radius: 0; background: none; box-shadow: none; padding: 4px 10px 6px;
   border: 6px solid transparent; border-image: var(--f-card) 3 fill / 6px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); }
-.app .caption::before { content: ""; position: absolute; left: -6px; top: -6px; bottom: -6px; width: 6px; background: var(--lc, var(--ink)); }
 .app .caption b { font-family: var(--f-head); font-weight: 500; font-size: var(--fs-h3); line-height: 1.1; }
-.app .caption .lens { font-family: var(--f-tiny); font-size: var(--fs-tiny); letter-spacing: .08em; }
+.app .caption .ck { font-family: var(--f-tiny); font-size: var(--fs-tiny); letter-spacing: .08em; }
 .app .maphint { left: calc(var(--rail) + 2 * var(--g) + 10px); top: auto; bottom: calc(var(--timeh) + 2 * var(--g)); font-family: var(--f-tiny); font-style: normal; font-size: var(--fs-tiny); line-height: 12px; letter-spacing: .08em; text-transform: uppercase;
   color: var(--vellum-fixed); background: var(--hud); border: 0; border-radius: 0; padding: 4px 8px; box-shadow: 0 0 0 2px var(--gold-2), 4px 4px 0 2px var(--shade); }
 .app .maptip { border-radius: 0; border: 0; box-shadow: 0 0 0 2px var(--ink-fixed), 4px 4px 0 2px var(--shade); background: var(--vellum); font-size: var(--fs-note); }
@@ -108,15 +107,15 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .chip:hover { transform: translateX(2px); }
 .app .chip:focus-visible { outline: 2px dashed var(--gold); outline-offset: 2px; }
 .app .chip[aria-pressed="false"] { color: var(--ink-soft); }
-.app .chip[aria-pressed="true"] { background: color-mix(in srgb, var(--t) 18%, var(--vellum)); box-shadow: inset 4px 0 0 var(--t); border-color: transparent; }
+.app .chip[aria-pressed="true"] { background: var(--td, var(--t)); color: var(--vellum-fixed); border-color: transparent; }
 .app .chip.fam[aria-pressed="false"] .ico { opacity: .45; filter: grayscale(1); }
-.app .chip.fam.some { border-style: solid; }
-.app .chip.fam.some { box-shadow: inset 4px 0 0 var(--t), inset 0 -4px 0 -2px var(--t); }
+.app .chip.fam.some { background: color-mix(in srgb, var(--t) 30%, var(--vellum)); }
 .app .chip.fam.open { outline: 2px solid var(--gold); outline-offset: 2px; }
 .app .chip.fam.open::after { content: ""; position: absolute; right: -10px; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: var(--gold); box-shadow: 0 0 0 2px var(--ink-fixed); }
 .app .chip.fam { position: relative; overflow: visible; }
-.app .chip.fam[data-k="land"] { --t: var(--t-land); } .app .chip.fam[data-k="power"] { --t: var(--t-power); } .app .chip.fam[data-k="wealth"] { --t: var(--t-wealth); }
-.app .chip.fam[data-k="peoples"] { --t: var(--t-peoples); } .app .chip.fam[data-k="mind"] { --t: var(--t-mind); } .app .chip.fam[data-k="shocks"] { --t: var(--t-shocks); }
+.app .chip.fam[data-k="land"] { --t: var(--t-land); --td: var(--td-land); } .app .chip.fam[data-k="power"] { --t: var(--t-power); --td: var(--td-power); }
+.app .chip.fam[data-k="wealth"] { --t: var(--t-wealth); --td: var(--td-wealth); } .app .chip.fam[data-k="peoples"] { --t: var(--t-peoples); --td: var(--td-peoples); }
+.app .chip.fam[data-k="mind"] { --t: var(--t-mind); --td: var(--td-mind); } .app .chip.fam[data-k="shocks"] { --t: var(--t-shocks); --td: var(--td-shocks); }
 .app .chip.fam > i { display: none; }
 .app #sublayers { position: absolute; z-index: 8; left: calc(var(--rail-open) + var(--g) + 10px); top: 176px; width: 236px; margin: 0; display: flex; flex-direction: column; gap: 2px; align-items: stretch;
   border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); padding: 2px 4px 6px; }
@@ -195,9 +194,11 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .it .y { font-family: var(--f-tiny); font-size: var(--fs-tiny); align-self: center; }
 .app .tag { border-radius: 0; padding: 0 4px; }
 .app .band { border-radius: 0; color: #fffaea; box-shadow: 2px 2px 0 var(--ink-fixed); }
-.app .focus { border-radius: 0; background: none; border: 6px solid transparent; border-image: var(--f-card) 3 fill / 6px stretch; image-rendering: pixelated; padding: 4px 8px 6px 12px; position: relative; }
-.app .focus::before { content: ""; position: absolute; left: -2px; top: 0; bottom: 0; width: 6px; background: var(--c, var(--ink)); }
+.app .focus { border-radius: 0; background: none; border: 6px solid transparent; border-image: var(--f-card) 3 fill / 6px stretch; image-rendering: pixelated; padding: 4px 8px 6px; position: relative; }
 .app .focus .fk { font-family: var(--f-tiny); font-size: var(--fs-tiny); }
+/* A kicker's family emblem: the one place a card shows its family's colour. */
+.app :is(.focus .fk, .step .ln, .caption .ck) { display: flex; align-items: center; gap: 6px; color: var(--ink-soft); }
+.app .caption .ck { display: inline-flex; }
 .app .focus .ft { font-family: var(--f-head); font-size: var(--fs-h3); line-height: 1.05; font-weight: 500; }
 .app .srcs li::before { content: "§ "; color: var(--rubric); }
 .app .foot, .app .note { font-size: var(--fs-note); }
@@ -216,8 +217,6 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .badge { font-family: var(--f-tiny); font-size: var(--fs-tiny); border-radius: 0; border: 0; box-shadow: inset 0 0 0 2px var(--rubric); padding: 2px 6px; }
 .app .step, .app .link, .app .whatif, .app .wf .sc, .app .wf .wst, .app .cx .quest, .app .cx .stat, .app .wf .stat, .app .cx .switch, .app .cx .ok-msg {
   border: 6px solid transparent; border-radius: 0; background: none; border-image: var(--f-card) 3 fill / 6px stretch; image-rendering: pixelated; box-shadow: none; position: relative; }
-.app .step::before, .app .wf .sc::before, .app .cx .quest::before { content: ""; position: absolute; left: -2px; top: 0; bottom: 0; width: 6px; background: var(--c, var(--y-whatif, var(--gold))); }
-.app .cx .quest::before { background: var(--gold); }
 .app .wf .wst.alt { border-image-source: var(--f-card); outline: 2px dashed var(--y-whatif); outline-offset: -8px; }
 .app .step.on, .app .wf .wst.on { border-image-source: var(--f-card-gold); }
 .app .step .t, .app .wf .wst .t, .app .wf .sc b, .app .cx .quest b, .app .view .nm, .app .link .ends, .app .whatif b { font-family: var(--f-head); font-weight: 500; font-size: var(--fs-h4); line-height: 1.2; }
