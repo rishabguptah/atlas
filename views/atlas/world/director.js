@@ -57,7 +57,7 @@
 .dr-link { all: unset; cursor: pointer; font-family: "Pixelify Sans", ui-monospace, monospace; font-size: var(--fs-h4); text-transform: uppercase; letter-spacing: .1em; color: var(--dr-soft); border-bottom: 2px dotted #5a5344; padding-bottom: 1px; }
 .dr-link:hover, .dr-link:focus-visible { color: var(--dr-gold); border-color: var(--dr-gold); }
 .dr-cont { font-family: "Pixelify Sans", ui-monospace, monospace; font-size: var(--fs-h4); color: var(--dr-gold); letter-spacing: .1em; white-space: nowrap; }
-.dr-cont i { font-style: normal; display: inline-block; animation: dr-blink 1s steps(2, jump-none) infinite; }
+.dr-cont i { font-style: normal; display: inline-block; animation: dr-blink 1s steps(2, jump-none) 3; }
 @keyframes dr-blink { 50% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .dr-cont i { animation: none; } .dr-box { transition: none; } }
 .dr-cf { display: inline-block; width: 16px; height: 9px; vertical-align: -1px; border: 2px solid currentColor; }
