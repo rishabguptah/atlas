@@ -567,6 +567,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // ago in its first DEEP_T, then history on the old curve (denser toward today) in the rest.
   const NOW = ATLAS.NOW, MIN = -298000, HIST = -4000, SPAN = NOW - HIST, CURVE = 1.6, DEEP_T = 0.2;
   const LBP0 = Math.log(NOW - MIN), LBP1 = Math.log(NOW - HIST);
+  // The one list of eras: the ribbon under the slider, the year plate and the Codex's fog all name time with it.
+  // ATLAS.eras [{from, to, name}] and ATLAS.eraAt(year) -> index (the last era runs on past NOW).
+  const ERAS = [[MIN, -70000, "First modern humans"], [-70000, -40000, "Out of Africa"], [-40000, -9700, "Ice Age"], [-9700, HIST, "First farmers"], [HIST, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
+    [1450, 1800, "Early modern"], [1800, 1914, "Industrial"], [1914, 1945, "World wars"], [1945, NOW, "Since 1945"]];
+  ATLAS.eras = ERAS.map(([from, to, name]) => ({ from, to, name }));
+  ATLAS.eraAt = y => { let i = 0; for (let j = 0; j < ERAS.length; j++) if (y >= ERAS[j][0]) i = j; return i; };
   const LENSES = ["geography", "military", "economy", "population", "disease", "religion", "ideas", "literature", "people", "order"];
   const LENS_NAME = { geography: "Geography", military: "Military", economy: "Economy & trade", population: "Population & migration", disease: "Disease & climate", religion: "Religion", ideas: "Ideas", literature: "Literature", people: "People", order: "Order & chaos" };
   const lensColor = l => `var(--l-${LENSES.includes(l) ? l : "order"})`;
@@ -2902,8 +2908,6 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 
   // ---------- eras under the slider: where you are in time, one tap to jump ----------
-  const ERAS = [[MIN, -70000, "First modern humans"], [-70000, -40000, "Out of Africa"], [-40000, -9700, "Ice Age"], [-9700, HIST, "First farmers"], [HIST, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
-    [1450, 1800, "Early modern"], [1800, 1914, "Industrial"], [1914, 1945, "World wars"], [1945, NOW, "Since 1945"]];
   const erasEl = document.getElementById("eras");
   erasEl.innerHTML = ERAS.map(([a, b, n], i) => `<button type="button" data-i="${i}" style="left:${(yearToT(a) * 100).toFixed(2)}%;width:${((yearToT(b) - yearToT(a)) * 100).toFixed(2)}%" title="${esc(n)}, ${esc(fmtYear(a))} to ${esc(fmtYear(b))}">${esc(n)}</button>`).join("");
   erasEl.addEventListener("click", ev => { const b = ev.target.closest("button"); if (!b) return; const [a, z] = ERAS[+b.dataset.i]; stopTime(); animateYear(Math.round(a + (z - a) / 2), 900); });
@@ -2943,13 +2947,17 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
       });
       return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${famIcon(f.id)}${esc(f.n)}</b>${rows.join("")}</div>` : "";
     }).join("");
-    // Year steps only change the heading: keep the rows (and their pixel glyphs) when they are the same.
-    const head = `On the map in ${fmtYear(state.year)}`;
-    if (groups === keyGroups && keyEl.firstElementChild) { keyEl.firstElementChild.textContent = head; return; }
+    // Keep the rows (and their pixel glyphs) when they are the same. The year is on the plate, not repeated here.
+    if (groups === keyGroups && keyEl.firstElementChild) return;
     keyGroups = groups;
-    keyEl.innerHTML = `<h4>${esc(head)}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
+    keyEl.innerHTML = `<h4>On the map</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
+      <div class="klook" hidden><h4>Map look</h4></div>
       <h4>Keys</h4><div class="keys"><kbd>WASD</kbd><span>Pan; Q E zoom</span><kbd>, .</kbd><span>Step through time (Shift for bigger steps)</span><kbd>Space</kbd><span>Play or pause time</span><kbd>?</kbd><span>Every key</span></div>`;
+    // The pixel map's look (chrome.js makes the picker once; it moves in here each time the key is drawn).
+    const look = keyEl.querySelector(".klook");
+    if (look && ATLAS.lookPicker) { look.appendChild(ATLAS.lookPicker); look.hidden = false; }
   }
+  ATLAS.renderKey = () => { keyGroups = null; renderKey(); };
   function toggleKey(v = keyEl.hidden) { keyEl.hidden = !v; keyBtn.setAttribute("aria-pressed", v); renderKey(); }
   keyBtn.onclick = () => toggleKey();
   yearWatch.push(() => { if (!keyEl.hidden) renderKey(); });
