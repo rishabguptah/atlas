@@ -83,7 +83,7 @@ who was born, died, lived or worked here, a "how deep" meter with the dense pack
 study storylines that pass through (75 of them, from Sumer to 1991, each with a Next button and the journeys of the
 people it names drawn on the map). Where the data is thin, "Fill in with Claude" adds draft rows (dashed on the map,
 marked draft, kept in this browser) and "Write a storyline for here and now" drafts a storyline. Its lenses:
-Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces, Growing cities and railway numbers
+Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces (with Borders), Growing cities (with Cities) and railway numbers
 (`lenses/e19.*`). Everything loads after the first paint from `atlas-files/world/` and `atlas-files/packs/`, which
 `build.py` writes beside the page: publish them with it (about 20 MB, fetched a slice or pack at a time).
 
@@ -160,7 +160,9 @@ Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead 
 ## Lens families and plugins
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
-in a second row. New lenses plug in from `views/atlas/lenses/<id>.py` (data) and `<id>.js` (drawing,
+in a second row. Land's row starts with the map style (Pixel, Relief or Plain). A lens that only makes sense inside a
+tab (What if, Live a life, Codex, Why) has no chip and comes on with its tab; a lens that belongs to another chip has
+none either (Provinces draws with Borders, Growing cities with Cities). New lenses plug in from `views/atlas/lenses/<id>.py` (data) and `<id>.js` (drawing,
 Here and This year rows), a basemap and sprites register the same way; see [LENSES.md](LENSES.md).
 Zoom frames only move the map: labels hide while the scale changes and thinning runs when it settles.
 

@@ -126,6 +126,12 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app #sublayers .chip i { width: 10px; height: 10px; border-radius: 0; border: 0; box-shadow: 0 0 0 2px var(--ink); background: var(--vellum-hi); margin: 1px; }
 .app #sublayers .chip[aria-pressed="true"] i { background: var(--c); }
 .app #sublayers .chip[aria-pressed="false"] { color: var(--ink-soft); }
+/* Land's map style: one three-way switch above its lenses, in the sub-panel's own type. */
+.app #sublayers .mstyle { all: unset; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 2px; margin: 0 2px 6px; padding: 2px; background: var(--wash); }
+.app #sublayers .mstyle button { all: unset; box-sizing: border-box; cursor: pointer; text-align: center; padding: 3px 4px; font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.app #sublayers .mstyle button:hover { color: var(--ink); }
+.app #sublayers .mstyle button[aria-checked="true"] { color: var(--ink); background: var(--vellum-hi); box-shadow: inset 0 -2px 0 var(--t-land); }
+.app #sublayers .mstyle button:focus-visible { outline: 2px dashed var(--gold); }
 
 /* ---- time ribbon ---- */
 .app .time { position: absolute; z-index: 5; left: max(var(--g), env(safe-area-inset-left, 0px)); right: calc(var(--pw) + 2 * var(--g)); bottom: var(--g); border-top: 0;
