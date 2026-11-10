@@ -33,7 +33,7 @@
     if (!document.getElementById("pxhud-style")) { const st = document.createElement("style"); st.id = "pxhud-style"; st.textContent = STYLE; document.head.appendChild(st); }
     // Bottom right, out of the way of the year plate (top left), the map controls (top right) and the caption (bottom left).
     const br = document.createElement("div"), row = document.createElement("div");
-    br.className = "pxhud pxhud-br"; row.className = "row";
+    br.className = "pxhud pxhud-br" + (FR ? " framed" : ""); row.className = "row"; br.dataset.px = PX;
     // Right after the SVG, so the guide's caption and other map chrome stay on top of the HUD.
     const svg = mapEl.querySelector(":scope > svg");
     if (svg) svg.after(br); else mapEl.append(br);
