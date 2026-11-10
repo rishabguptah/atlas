@@ -1636,6 +1636,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (card.year != null && opts.setYear) animateYear(card.year);
     drawSel();
     if (opts.fly) reveal(card.lon, card.lat);
+    // A click on the map goes to the open tab first, when it has a use for one (Who was there, Live a life); otherwise Here.
+    if (opts.click) {
+      const t = ATLAS.tabs.find(d => d && d.id === state.tab && typeof d.pick === "function");
+      let took = false; if (t) try { took = t.pick({ ...card }) === true; } catch (err) { console.error(err); }
+      if (took) return;
+    }
     setTab("here");
     renderHere();
   }
@@ -1652,8 +1658,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const [mx, my] = d3.pointer(ev, root.node());
     const inCity = cityFeatureAt(mx, my);
     // A building beats the city's own dot it stands beside; any other lens mark keeps its priority.
-    if (hit && !(inCity && (MK.places ? MK.places.points : []).includes(hit))) { const c = hit.card(); if (c) return select(c); }
-    if (inCity) return select(inCity);
+    if (hit && !(inCity && (MK.places ? MK.places.points : []).includes(hit))) { const c = hit.card(); if (c) return select(c, { click: true }); }
+    if (inCity) return select(inCity, { click: true });
     const ll = projection.invert([mx, my]);
     if (!ll || !isFinite(ll[0])) return;
     // Snap to the nearest named place within a few pixels.
@@ -1661,7 +1667,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     let best = null, bd = tol;
     for (const e of ENTRIES) { const d = near(e.lon, e.lat); if (d < bd) { bd = d; best = { lon: e.lon, lat: e.lat, name: nameAt(e, state.year) }; } }
     for (const p of NAMED) { const d = near(p.lon, p.lat); if (d < bd) { bd = d; best = { ...p }; } }
-    select(best || { lon: ll[0], lat: ll[1], name: null });
+    select(best || { lon: ll[0], lat: ll[1], name: null }, { click: true });
   });
 
   // Every named place any workstream knows, for snapping clicks and naming spots.
