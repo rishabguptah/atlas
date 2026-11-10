@@ -577,10 +577,14 @@
       // thin: below that zoom, borders are a single pixel in the era ink (one side of the line only), with no band.
       const one = zk < (R.thin || 0), gid = low ? groupsOf(g.realms) : null, bw = low || one ? 0 : R.bandW || 0, dash = low ? 0 : R.dash;
       const land = m => cls[m] > 3 && cls[m] !== 255;
+      // The neighbour tests are made once per frame, not once per pixel (two closures a land pixel were the garbage of
+      // every new border frame); n is the current pixel's realm or group.
+      const idOf = low ? m => { const x = ids[m]; return x > 0 ? gid[x] : x; } : m => ids[m];
+      let n = 0;
+      const other = m => idOf(m) !== n && land(m);
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, n0 = ids[k]; if (n0 <= 0 || !land(k)) continue;
-        const n = low ? gid[n0] : n0, idOf = m => { const x = ids[m]; return low && x > 0 ? gid[x] : x; };
-        const other = m => idOf(m) !== n && land(m);
+        n = low ? gid[n0] : n0;
         const edge = (i + 1 < w && other(k + 1)) || (j + 1 < h && other(k + w)) || (!one && ((i > 0 && other(k - 1)) || (j > 0 && other(k - w))));
         // Off-register fill: the tint is taken from one pixel up and left, as if the colour plate slipped.
         const tn = R.shift && i > 0 && j > 0 && ids[k - w - 1] > 0 ? idOf(k - w - 1) : n, tc = tints[tn - 1]; if (!tc) continue;

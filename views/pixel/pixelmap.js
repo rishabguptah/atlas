@@ -663,23 +663,25 @@
       const enc = i => { const n = i + 1; return `rgb(${n & 255},${(n >> 8) & 255},${(n * 97 + 31) & 255})`; };
       const d = maskFor(realmsNow.map(r => r.feature), (f, i) => enc(i));
       ids = new Int32Array(w * h);
+      // One 32-bit read a pixel (RGBA in memory order, as pack() assumes): id in red and green, its check in blue.
+      const d32 = new Uint32Array(d.buffer, d.byteOffset, w * h), nR = realmsNow.length;
       for (let k = 0; k < w * h; k++) {
-        const a = d[k * 4 + 3]; if (a < 250) { ids[k] = a > 0 ? -1 : 0; continue; }
-        const n = d[k * 4] | d[k * 4 + 1] << 8;
-        ids[k] = n && ((n * 97 + 31) & 255) === d[k * 4 + 2] && n <= realmsNow.length ? n : -1;
+        const v = d32[k], a = v >>> 24; if (a < 250) { ids[k] = a > 0 ? -1 : 0; continue; }
+        const n = v & 0xffff;
+        ids[k] = n && ((n * 97 + 31) & 255) === ((v >>> 16) & 255) && n <= nR ? n : -1;
       }
       // Anti-aliased edge pixels take the id of a clean neighbour.
       for (let k = 0; k < w * h; k++) if (ids[k] === -1) ids[k] = ids[k - 1] > 0 ? ids[k - 1] : ids[k - w] > 0 ? ids[k - w] : 0;
       // An era style draws realms its own way from the id buffer (eras.js), so the default tint is skipped.
       if (era) return;
-      const tint = realmsNow.map(r => rgb(r.color));
+      const tint = realmsNow.map(r => rgb(r.color)), edgeTint = tint.map(tc => mix(tc, [30, 22, 18], 0.45));
       const view = new Uint8Array(base.buffer);
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, n = ids[k]; if (!n || cls[k] <= 2 || cls[k] === 255) continue;
         const o = k * 4, tc = tint[n - 1];
         const edge = (i + 1 < w && ids[k + 1] !== n && !(cls[k + 1] <= 2)) || (j + 1 < h && ids[k + w] !== n && !(cls[k + w] <= 2)) ||
           (i > 0 && ids[k - 1] !== n && !(cls[k - 1] <= 2)) || (j > 0 && ids[k - w] !== n && !(cls[k - w] <= 2));
-        if (edge) { const e = mix(tc, [30, 22, 18], 0.45); view[o] = e[0]; view[o + 1] = e[1]; view[o + 2] = e[2]; continue; }
+        if (edge) { const e = edgeTint[n - 1]; view[o] = e[0]; view[o + 1] = e[1]; view[o + 2] = e[2]; continue; }
         const inner = (i + 2 < w && ids[k + 2] !== n) || (j + 2 < h && ids[k + 2 * w] !== n) || (i > 1 && ids[k - 2] !== n) || (j > 1 && ids[k - 2 * w] !== n);
         const a = inner ? 0.5 : 0.17;
         view[o] = view[o] + (tc[0] - view[o]) * a; view[o + 1] = view[o + 1] + (tc[1] - view[o + 1]) * a; view[o + 2] = view[o + 2] + (tc[2] - view[o + 2]) * a;
