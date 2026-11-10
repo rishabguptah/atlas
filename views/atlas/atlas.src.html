@@ -560,13 +560,22 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const PLUG = ATLAS.lenses.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !(d.id in FAM_OF) && FAMILIES.some(f => f.id === d.family) && a.findIndex(x => x && x.id === d.id) === i);
   // A lens with with: "<chip>" has no chip of its own: it is part of that one, on whenever it is (Provinces with Borders).
   const WITH = Object.fromEntries(PLUG.filter(d => d.with && !d.tab).map(d => [d.id, d.with]));
-  const lensOn = id => { const w = WITH[id]; return w ? !!(w in state.on ? state.on[w] : state[w]) : !!state.on[id]; };
+  // A part splits a built-in layer's chip by subject: Plague & climate shows as Epidemics and Famine & climate. The layer
+  // stays one switch underneath (stories and modes turn on "disease"); a part is on while its layer is on and the part
+  // has not been switched off. A lens can go with a part (Epidemics goes with "epidemics").
+  const PARTS = { epidemics: "disease", famine: "disease" };
+  const PARTS_OF = {};
+  for (const [p, l] of Object.entries(PARTS)) (PARTS_OF[l] = PARTS_OF[l] || []).push(p);
+  const partOn = p => !!state.on[PARTS[p]] && state.on[p] !== false;
+  // Which part a built-in shock belongs to: epidemics, or everything nature and hunger do (famine, eruption, cold, collapse).
+  const shockPart = e => e.subtype === "epidemic" ? "epidemics" : "famine";
+  const lensOn = id => { const w = WITH[id]; return w ? (w in PARTS ? partOn(w) : !!(w in state.on ? state.on[w] : state[w])) : !!state.on[id]; };
   for (const d of PLUG) {
     document.documentElement.style.setProperty("--y-" + d.id, d.color || "#999");
     LAYERS.push({ k: d.id, n: d.name || d.id });
     for (const l of d.guide || []) {
       if (!LENSES.includes(l)) { LENSES.push(l); LENS_NAME[l] = d.name || l; document.documentElement.style.setProperty("--l-" + l, d.color || "#999"); }
-      if (!LENS_LAYER[l]) LENS_LAYER[l] = d.id;
+      if (!LENS_LAYER[l]) LENS_LAYER[l] = d.with || d.id;
     }
   }
   // A plugin lens whose data loads after the first paint (LATE_FILES) is skipped until it has arrived.
@@ -719,6 +728,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     sel: null, tab: "now", basemap: !!BASEMAP0, fam: null,
   };
   for (const d of PLUG) state.on[d.id] = !!d.on;
+  for (const p in PARTS) state.on[p] = true;
 
   // ---------- map ----------
   const mapEl = document.getElementById("map");
@@ -1302,11 +1312,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   function drawDisease() {
     const y = state.year, on = state.on.disease, L = MK.disease;
-    const ev = on ? SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 2 && y <= (e.end ?? NOW) + 8) : [];
+    const ev = on ? SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 2 && y <= (e.end ?? NOW) + 8 && partOn(shockPart(e))) : [];
     L.points = ev.map(d => P(d, { kind: "shock", color: SHOCK_C[d.subtype] || "var(--y-disease)", size: d.deaths ? 5 + Math.max(0, Math.log10(d.deaths[1]) - 3) * 2.6 : 7,
       dash: d.subtype === "famine" ? [3, 2] : null, famine: d.subtype === "famine", label: d.name, always: true, pri: 9, title: () => `${d.name} · ${SHOCK_N[d.subtype] || d.subtype} · ${fmtSpan(d.start, d.end)}`, card: cardFn(shockCard, d) }));
     // The Black Death month by month, from the Plague & Climate workstream.
-    const bdOn = on && y >= 1338 && y <= 1365;
+    const bdOn = partOn("epidemics") && y >= 1338 && y <= 1365;
     const bd = () => shockCard(SHOCKS.find(e => e.id === "event:black_death"));
     L.lines = (bdOn ? BD.filter(r => r.year <= y) : []).map(d => ({ src: d, pts: d.pts, kind: "bd", color: "var(--y-disease)", width: 1.6, alpha: .7, card: bd }));
     const reached = bdOn ? Object.entries(ARRIVE).filter(([id, a]) => a.y <= y && PL[id]) : [];
@@ -1966,10 +1976,21 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const layersEl = document.getElementById("layers"), subEl = document.getElementById("sublayers");
   // Switches that are not data lenses live in state directly; the rest in state.on.
   const FLAG = { basemap: 1, terrain: 1, borders: 1, political: 1 };
-  const isOn = k => k in FLAG ? !!state[k] : k in WITH ? lensOn(k) : !!state.on[k];
-  const setOn = (k, v) => { if (k in FLAG) state[k] = v; else state.on[k] = v; };
-  const NAME = { basemap: BASEMAP0 ? BASEMAP0.name || "Pixel map" : "", terrain: "Terrain", borders: "Borders", political: "Political colours", ...Object.fromEntries(LAYERS.map(l => [l.k, l.n])) };
-  const COLOR = k => k === "borders" ? "var(--land-edge)" : k === "terrain" || k === "basemap" ? "var(--l-geography)" : k === "political" ? "var(--y-order)" : `var(--y-${k})`;
+  const isOn = k => k in FLAG ? !!state[k] : k in PARTS ? partOn(k) : k in WITH ? lensOn(k) : !!state.on[k];
+  // Switching a part keeps its layer in step: on with any part, off with the last one. A layer switched off that way
+  // keeps its parts on, so the next story or tap that turns the layer on shows all of it again.
+  const setOn = (k, v) => {
+    if (k in FLAG) { state[k] = v; return; }
+    if (!(k in PARTS)) { state.on[k] = v; return; }
+    const l = PARTS[k], ps = PARTS_OF[l];
+    if (v && !state.on[l]) for (const p of ps) state.on[p] = false;
+    state.on[k] = v; state.on[l] = ps.some(p => state.on[p]);
+    if (!state.on[l]) for (const p of ps) state.on[p] = true;
+  };
+  const NAME = { basemap: BASEMAP0 ? BASEMAP0.name || "Pixel map" : "", terrain: "Terrain", borders: "Borders", political: "Political colours", ...Object.fromEntries(LAYERS.map(l => [l.k, l.n])),
+    epidemics: "Epidemics", famine: "Famine & climate" };
+  const PART_C = { epidemics: "var(--y-disease)", famine: "var(--b-watch)" };
+  const COLOR = k => k === "borders" ? "var(--land-edge)" : k === "terrain" || k === "basemap" ? "var(--l-geography)" : k === "political" ? "var(--y-order)" : PART_C[k] || `var(--y-${k})`;
   // Every lens of a family (the key card lists them all) and the ones with a chip. A lens that belongs to a tab
   // (tab: "codex") has no chip: its tab switches it on, and leaving the mode puts the lenses back. A lens that goes
   // with another chip (WITH) has none either. The map style (pixel, relief, plain) is a choice, not a lens: its
@@ -1982,7 +2003,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const ALL_MEMBERS = Object.fromEntries(FAMILIES.map(f => [f.id, [
     ...(f.id === "land" ? [...(BASEMAP0 ? ["basemap"] : []), ...(TERRAIN ? ["terrain"] : []), "places", "borders", ...(TERRAIN && RELIEF_POL && window.drawRealms ? ["political"] : [])] : []),
     ...LAYERS.filter(l => FAM_OF[l.k] === f.id).map(l => l.k), ...PLUG.filter(d => d.family === f.id).map(d => d.id)].filter((k, i, a) => a.indexOf(k) === i)]));
-  const MEMBERS = Object.fromEntries(Object.entries(ALL_MEMBERS).map(([f, m]) => [f, m.filter(k => !NO_CHIP.has(k))]));
+  // A layer with parts shows its parts as chips instead of itself.
+  const MEMBERS = Object.fromEntries(Object.entries(ALL_MEMBERS).map(([f, m]) => [f, m.filter(k => !NO_CHIP.has(k)).flatMap(k => PARTS_OF[k] || [k])]));
   // Pixel: the pixel basemap, with its own terrain names. Relief: the painted relief. Plain: neither. Political
   // colours paint over the relief, so they keep the terrain layer on in any style.
   const STYLES = [...(BASEMAP0 ? [["pixel", "Pixel"]] : []), ...(TERRAIN ? [["relief", "Relief"]] : []), ["plain", "Plain"]];
@@ -2047,7 +2069,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (k === "political") setMapStyle(mapStyle());
     redrawToggles(); syncChips(); refreshPanel();
   });
-  function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); drawStrip(); } }
+  // A story or the guide asks for layers by key; a lens that goes with a chip or a part switches that one on.
+  function ensureLayers(list) {
+    let ch = false;
+    for (let k of list) { k = WITH[k] || k; if (k && (k in PARTS ? !partOn(k) : state.on[k] === false)) { setOn(k, true); ch = true; } }
+    if (ch) { syncChips(); drawAll(); drawStrip(); }
+  }
 
   // ---------- year ----------
   const yearIn = document.getElementById("year"), yout = document.getElementById("yout"), yp = document.getElementById("yp");
@@ -2112,7 +2139,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     st.selectAll("*").remove();
     const rows = [
       ["places", ENTRIES.flatMap(e => (EVENTS[e.id] || []).map(v => v[0]))],
-      ["disease", SHOCKS.map(e => e.start)],
+      ["disease", SHOCKS.filter(e => partOn(shockPart(e))).map(e => e.start)],
       ["ideas", JOURNEYS.flatMap(j => j.steps.map(s => s.y))],
       ["war", BATTLES.map(b => b.start)],
     ];

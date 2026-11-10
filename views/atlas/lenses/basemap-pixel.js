@@ -186,8 +186,9 @@
       const grp = "b:" + b.name + b.start;
       statics.push({ lon: b.lon, lat: b.lat, sprite: ar, team: a, dx: -5, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: ERA ? ar : "army_flip", flip: !!ERA, team: c, dx: 5, frame: 1, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -7, pri: 5, grp });
     }
+    // The Plague & climate chip is split by subject: an epidemic shows with Epidemics, the rest with Famine & climate.
     if (typeof PLAGUE !== "undefined" && isOn("disease")) for (const s of PLAGUE.events) {
-      if (s.lat == null || y < s.start - 1 || y > (s.end ?? s.start) + 3) continue;
+      if (s.lat == null || y < s.start - 1 || y > (s.end ?? s.start) + 3 || !isOn(s.subtype === "epidemic" ? "epidemics" : "famine")) continue;
       const sp = ERA ? ERA.shock(s.subtype) : /epidemic|pandemic|plague/.test(s.subtype) ? "plague" : s.subtype === "famine" ? "skull" : s.subtype === "eruption" ? "volcano" : "fire";
       statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2, pri: 3.8 });
     }
@@ -248,7 +249,7 @@
   function emitters(y) {
     const out = [];
     if (typeof WAR !== "undefined" && isOn("war")) for (const b of WAR.battles) if (b.start === y && b.lat != null) out.push({ lon: b.lon, lat: b.lat, kind: "battle" });
-    if (typeof PLAGUE !== "undefined" && isOn("disease")) for (const s of PLAGUE.events) if (s.lat != null && s.subtype === "eruption" && y >= s.start && y <= (s.end ?? s.start) + 1) out.push({ lon: s.lon, lat: s.lat, kind: "ash" });
+    if (typeof PLAGUE !== "undefined" && isOn("famine")) for (const s of PLAGUE.events) if (s.lat != null && s.subtype === "eruption" && y >= s.start && y <= (s.end ?? s.start) + 1) out.push({ lon: s.lon, lat: s.lat, kind: "ash" });
     if (typeof ENTRIES !== "undefined" && isOn("places")) for (const e of ENTRIES) if (e.end === y && (e.causes || []).some(c => /war|fire|volcano/.test(c))) out.push({ lon: e.lon, lat: e.lat, kind: "fire" });
     return out.slice(0, 12);
   }

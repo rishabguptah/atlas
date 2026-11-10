@@ -1,7 +1,21 @@
 # Eruptions, famine & cold: data for the one-page Atlas, read straight from data/disease-climate/.
 # Smithsonian GVP eruptions of VEI 4 and up, Wikidata and World Peace Foundation famines, and the PAGES 2k global
 # temperature (yearly median and 31-year smoothed). Curated shocks stay in the page's built-in disease layer.
-import json, os
+import json, os, re
+
+# Words that say what kind of thing a record is, not which one (as in plague.py).
+KIND_WORDS = {'the', 'of', 'and', 'in', 'great', 'famine', 'famines', 'plague', 'epidemic', 'pandemic', 'outbreak', 'eruption', 'drought', 'first', 'second', 'third',
+              'cholera', 'smallpox', 'typhus', 'influenza', 'flu', 'measles', 'malaria', 'yellow', 'fever', 'sweating', 'sickness'}
+words = lambda name: {w for w in re.findall(r'[a-z]+', name.lower()) if len(w) > 2 and w not in KIND_WORDS}
+
+
+def curated_twin(curated, subtype, name, start, end):
+    """The curated record a bulk row repeats: same kind, years that overlap, and a name word in common (Bengal, Soviet)."""
+    w = words(name)
+    for e in curated:
+        if e.get('subtype') == subtype and e.get('start') is not None and e['start'] <= end and start <= (e.get('end') or e['start']) and w & words(e['name']):
+            return e['id']
+    return None
 
 
 def build(repo):
@@ -27,11 +41,15 @@ def build(repo):
         esrc = S(r['sources'])[0]
     er.sort(key=lambda r: r[1])
 
-    # Famines: [name, start, end, lat, lon, deaths low, deaths high, wikidata id, source, country centre?].
+    # Famines: [name, start, end, lat, lon, deaths low, deaths high, wikidata id, source, country centre?]. One that repeats a
+    # curated famine (the Bengal famine of 1770, the Soviet famine of 1932-33) is left to the page's built-in layer.
+    curated = [e for e in rows('events.jsonl') if not e.get('stub') and e.get('lat') is not None]
     fam = []
     for f in ('bulk_wikidata.jsonl', 'bulk_famines.jsonl'):
         for r in rows(f):
             if r['subtype'] != 'famine' or r.get('lat') is None:
+                continue
+            if curated_twin(curated, 'famine', r['name'], r['start'], r.get('end') or r['start']):
                 continue
             dl, dh = (r.get('deaths') or [None, None])
             fam.append([r['name'], r['start'], r.get('end') or r['start'], r2(r['lat']), r2(r['lon']), dl, dh, r.get('wikidata') or '',
