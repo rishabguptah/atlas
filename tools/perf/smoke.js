@@ -71,7 +71,17 @@ const KEYS = ["k", "k", "?", "Escape", "t", "t", "t", "0", ".", ",", "r", "n", "
     const tabs = await p.evaluate(() => [...new Set(["guide", "now", "here", ...(ATLAS.tabs || []).filter(Boolean).map(d => d.id)])]);
     for (const t of tabs) await go("tab " + t, async () => {
       const btn = p.locator(`.tab[data-tab="${t}"]:visible`).first();
-      if (await btn.count()) await btn.click({ timeout: 3000 }); else await p.evaluate(id => ATLAS.api.setTab(id), t);
+      if (!(await btn.count())) return p.evaluate(id => ATLAS.api.setTab(id), t);
+      try { await btn.click({ timeout: 3000 }); } catch (e) {
+        // Say where the tab is and what sits on top of it, so a failure here can be fixed without a device.
+        const at = await p.evaluate(id => {
+          const b = document.querySelector(`.tab[data-tab="${id}"]`), r = b.getBoundingClientRect(), bar = b.closest(".tabs");
+          const top = document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2), q = top && top.getBoundingClientRect();
+          const box = n => n ? `${Math.round(n.x)},${Math.round(n.y)} ${Math.round(n.width)}x${Math.round(n.height)}` : "none";
+          return `tab at ${box(r)}; on top: ${top ? top.tagName.toLowerCase() + "." + [...top.classList].join(".") + (top.dataset.tab ? "[" + top.dataset.tab + "]" : "") : "none"} at ${box(q)}; bar ${bar.className} scroll ${bar.scrollLeft}/${bar.scrollWidth - bar.clientWidth}; sheet ${(document.getElementById("panel") || {}).dataset?.sheet}`;
+        }, t);
+        throw new Error(e.message.split("\n")[0] + " | " + at);
+      }
       await p.waitForTimeout(300);
     });
     await go("tab guide again", () => p.evaluate(() => ATLAS.api.setTab("guide")));
