@@ -321,7 +321,15 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .dr-segs button { background: #4a4035; }
 .app .dr-segs button.done { background: var(--gold-2); }
 .app .dr-segs button.on { background: var(--gold-hi); }
-@media (max-width: 700px) { .app .dr { bottom: calc(var(--peek, 92px) - 8px); } }
+@media (max-width: 700px) {
+  /* On a phone a story keeps to the strip above the sheet, where the year bar was, so the sheet's tabs stay tappable. */
+  .app .dr, .app.directing .dr { bottom: calc(var(--peek, 92px) - 8px + env(safe-area-inset-bottom, 0px)); }
+  /* and sits under the sheet, so a sheet pulled up over a playing story is all readable and tappable. */
+  .app .dr { z-index: 19; }
+  /* The group labels are hidden here, so the tabs flow as one row set: a group sized without its open tab's extra width
+     let that tab push the group's last tab under the next group's first. */
+  .app .tabs .tg { display: contents; }
+}
 
 /* Icons inside the map's own layer are not the map's SVG. */
 .app .map svg.ico { position: static; inset: auto; width: 24px; height: 24px; cursor: inherit; display: block; }
