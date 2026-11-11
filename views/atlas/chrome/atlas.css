@@ -321,7 +321,12 @@ body { background: var(--sea); font-family: var(--f-prose); }
 .app .dr-segs button { background: #4a4035; }
 .app .dr-segs button.done { background: var(--gold-2); }
 .app .dr-segs button.on { background: var(--gold-hi); }
-@media (max-width: 700px) { .app .dr { bottom: calc(var(--peek, 92px) - 8px); } }
+@media (max-width: 700px) {
+  /* On a phone a story keeps to the strip above the sheet, where the year bar was, so the sheet's tabs stay tappable. */
+  .app .dr, .app.directing .dr { bottom: calc(var(--peek, 92px) - 8px + env(safe-area-inset-bottom, 0px)); }
+  /* Each tab group keeps its own width in the sideways scroller, so one group's tabs never slide under the next. */
+  .app .tabs .tg { flex: none; }
+}
 
 /* Icons inside the map's own layer are not the map's SVG. */
 .app .map svg.ico { position: static; inset: auto; width: 24px; height: 24px; cursor: inherit; display: block; }
