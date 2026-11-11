@@ -166,6 +166,13 @@
       return { id: s + ":" + i, name: emp ? emp.name : name, color: hashC(emp ? emp.id : name || String(i)), feature: f };
     }).filter(r => r.name && d3.geoArea(r.feature) < 2 * Math.PI);
   }
+  // A trade route's leg lengths, measured once per route (every year step walked every point of every route on the map).
+  const routeLens = new WeakMap();
+  function routeLen(line) {
+    let r = routeLens.get(line);
+    if (!r) { const segs = []; let tot = 0; for (let i = 1; i < line.length; i++) { const d = d3.geoDistance(line[i - 1], line[i]); segs.push(d); tot += d; } routeLens.set(line, r = { segs, tot }); }
+    return r;
+  }
   function collect(y, k) {
     statics = []; movers = [];
     if (typeof ENTRIES !== "undefined" && isOn("places")) for (const e of ENTRIES) {
@@ -186,8 +193,9 @@
       const grp = "b:" + b.name + b.start;
       statics.push({ lon: b.lon, lat: b.lat, sprite: ar, team: a, dx: -5, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: ERA ? ar : "army_flip", flip: !!ERA, team: c, dx: 5, frame: 1, pri: 5, grp }, { lon: b.lon, lat: b.lat, sprite: "clash", dy: -7, pri: 5, grp });
     }
+    // The Plague & climate chip is split by subject: an epidemic shows with Epidemics, the rest with Famine & climate.
     if (typeof PLAGUE !== "undefined" && isOn("disease")) for (const s of PLAGUE.events) {
-      if (s.lat == null || y < s.start - 1 || y > (s.end ?? s.start) + 3) continue;
+      if (s.lat == null || y < s.start - 1 || y > (s.end ?? s.start) + 3 || !isOn(s.subtype === "epidemic" ? "epidemics" : "famine")) continue;
       const sp = ERA ? ERA.shock(s.subtype) : /epidemic|pandemic|plague/.test(s.subtype) ? "plague" : s.subtype === "famine" ? "skull" : s.subtype === "eruption" ? "volcano" : "fire";
       statics.push({ lon: s.lon, lat: s.lat, sprite: sp, dy: -2, pri: 3.8 });
     }
@@ -195,8 +203,7 @@
     for (const f of ATLAS.pixelSprites || []) try { statics.push(...(f(y, k) || [])); } catch (err) { console.error("pixel sprites", err); }
     if (typeof MONEY !== "undefined" && isOn("money")) for (const t of MONEY.trade) {
       if (y < t.start || y > t.end || !t.line || t.line.length < 2) continue;
-      const segs = []; let tot = 0;
-      for (let i = 1; i < t.line.length; i++) { const d = d3.geoDistance(t.line[i - 1], t.line[i]); segs.push(d); tot += d; }
+      const { segs, tot } = routeLen(t.line);
       // One traveller per route zoomed out, up to four along it as you come in.
       const n = k < 2 ? 1 : Math.max(1, Math.min(4, Math.round(tot / 0.6)));
       for (let q = 0; q < n; q++) movers.push({ line: t.line, segs, tot, phase: q / n });
@@ -248,7 +255,7 @@
   function emitters(y) {
     const out = [];
     if (typeof WAR !== "undefined" && isOn("war")) for (const b of WAR.battles) if (b.start === y && b.lat != null) out.push({ lon: b.lon, lat: b.lat, kind: "battle" });
-    if (typeof PLAGUE !== "undefined" && isOn("disease")) for (const s of PLAGUE.events) if (s.lat != null && s.subtype === "eruption" && y >= s.start && y <= (s.end ?? s.start) + 1) out.push({ lon: s.lon, lat: s.lat, kind: "ash" });
+    if (typeof PLAGUE !== "undefined" && isOn("famine")) for (const s of PLAGUE.events) if (s.lat != null && s.subtype === "eruption" && y >= s.start && y <= (s.end ?? s.start) + 1) out.push({ lon: s.lon, lat: s.lat, kind: "ash" });
     if (typeof ENTRIES !== "undefined" && isOn("places")) for (const e of ENTRIES) if (e.end === y && (e.causes || []).some(c => /war|fire|volcano/.test(c))) out.push({ lon: e.lon, lat: e.lat, kind: "fire" });
     return out.slice(0, 12);
   }
@@ -271,7 +278,10 @@
     mapOf(el).classList.add("pxmarks");
     if (typeof ATLAS.marks === "function") {
       marks.set(ATLAS.marks());
-      if (typeof ATLAS.onMarks === "function") ATLAS.onMarks(r => { if (marks) { marks.set(r); marksChanged(); } });
+      // Marks for a year this map has not drawn yet come with its next render (the page asks for one with every year
+      // step, and render reads ATLAS.marks() itself), so they wait for it: a repaint now would set the marks twice and
+      // paint the new year's marks over the old year's borders.
+      if (typeof ATLAS.onMarks === "function") ATLAS.onMarks(r => { if (marks && (year == null || r.year === year)) { marks.set(r); marksChanged(); } });
       return;
     }
     // Any change to what the SVG layers drew (not the per-frame zoom transforms) marks the list stale.
@@ -298,7 +308,8 @@
   try { eraChoice = localStorage.getItem("atlas.era.v1") || "auto"; } catch (e) { /* storage blocked */ }
   function eraFor(t, y, quiet) {
     if (!ERAS || !pm || !proj || y == null) return;
-    const c = proj.invert(t.invert([el0.clientWidth / 2, el0.clientHeight / 2])) || [0, 0];
+    const [cw, ch] = pm.cssSize ? pm.cssSize() : [el0.clientWidth, el0.clientHeight];
+    const c = proj.invert(t.invert([cw / 2, ch / 2])) || [0, 0];
     // Before writing the ice-age world shows in its own colours (ice, exposed shelves, steppe), not on a clay tablet.
     const id = eraChoice === "auto" ? (y < DEEP_ERA ? "now" : ERAS.pick(y, { lon: c[0], lat: c[1], k: t.k })) : eraChoice;
     ERAS.setYear(y);
@@ -324,7 +335,7 @@
       proj = projection; el0 = el;
       if (!document.getElementById("pixel-basemap-style")) { const st = document.createElement("style"); st.id = "pixel-basemap-style"; st.textContent = STYLE; document.head.appendChild(st); }
       const levels = [{ cell: 1 / 6, tdeg: 360, url: () => PIXEL.tile0 }, { cell: 1 / 15, tdeg: 30, url: (c, r) => `tiles/l1_${c}_${r}.png` }, { cell: 1 / 30, tdeg: 30, url: (c, r) => `tiles/l2_${c}_${r}.png` }];
-      pm = PixelMap(el, projection, { px: 3, levels, land: topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers, busy: () => mapOf(el).classList.contains("moving") });
+      pm = PixelMap(el, projection, { px: 3, levels, land: ATLAS.landFeature || topojson.feature(LAND, LAND.objects.land), rivers: PIXEL.rivers, busy: () => mapOf(el).classList.contains("moving") });
       // A new zoom (or a tile batch) built over a few frames has landed: sprites, labels and motion follow it now.
       pm.on(kind => { if (kind === "landed" && ATLAS.pixelRerender) ATLAS.pixelRerender(); });
       // City-scale terrain (about 45 m a pixel) around the story cities: tiles/l3.json lists one patch per city, all packed into tiles/l3.png.
@@ -348,11 +359,13 @@
       // Names of seas, rivers, ranges and deserts in the pixel font, under the Land lens's terrain toggle.
       if (!LBL && typeof PixelGeoLabels === "function" && typeof TERRAIN !== "undefined" && TERRAIN) { geo = PixelGeoLabels(el, projection, TERRAIN); geoKey = ""; }
       if (typeof PixelMarks === "function" && svgEl()) mountMarks(el, projection);
-      if (typeof PixelHUD === "function") hud = PixelHUD(mapOf(el), projection, { px: 3, tile: PIXEL.tile0, fly: (v, ms) => ATLAS.api && ATLAS.api.fly(v, ms ?? 600) });
+      if (typeof PixelHUD === "function") hud = PixelHUD(mapOf(el), projection, { px: 2, framed: true, tile: PIXEL.tile0, fly: (v, ms) => ATLAS.api && ATLAS.api.fly(v, ms ?? 600) });
       if (typeof PixelMotion === "function") {
         const L = PIXEL.lights;
-        motion = ATLAS.motion = PixelMotion(pm, el, projection, { px: 3, mapEl: mapOf(el), lightsUrl: typeof L === "string" ? L : null, lightsData: L && L.c ? L.c : null,
+        motion = ATLAS.motion = PixelMotion(pm, el, projection, { px: 3, mapEl: mapOf(el), followTheme: true, lightsUrl: typeof L === "string" ? L : null, lightsData: L && L.c ? L.c : null,
           source: { movers: () => movers, campaigns, plague: plagueFronts, emitters, lights, isOn, moverSprite: (lon, lat, sea) => ERA ? ERA.mover(year, lon, lat, sea) : sea ? "ship" : "caravan" } });
+        // Under a night sky the map's names switch to lamplit type; the terrain itself is darkened by the sky, not twice.
+        if (motion.onSky) motion.onSky(s => { const m = s === "night" ? "night" : "day"; if (geo) geo.setMood(m); if (LBL && LBL.engine) LBL.engine.setMood(m); });
       }
     },
     render(t, y) {
@@ -401,8 +414,9 @@
       }
       nameRealms();
       if (geo) {
-        const on = isOn("terrain"), key = on ? [t.k, t.x, t.y, el0.clientWidth, el0.clientHeight].join() : "off";
-        if (key !== geoKey) { geoKey = key; if (on) geo.render(t, el0.clientWidth, el0.clientHeight); else geo.clear(); }
+        const [cw, ch] = pm.cssSize ? pm.cssSize() : [el0.clientWidth, el0.clientHeight];
+        const on = isOn("terrain"), key = on ? [t.k, t.x, t.y, cw, ch].join() : "off";
+        if (key !== geoKey) { geoKey = key; if (on) geo.render(t, cw, ch); else geo.clear(); }
       }
       // This paint carries the marks too: a marks repaint still waiting would paint the same picture again.
       clearTimeout(markTimer); markTimer = 0;

@@ -1,21 +1,24 @@
 // Scholarship: what historians argue, what they cite, what eyewitnesses wrote, and why things happened.
-// Three lenses and a tab, all from LENS_DATA.scholar (views/atlas/lenses/scholar.py), which may arrive after the
+// Two lenses and a tab, all from LENS_DATA.scholar (views/atlas/lenses/scholar.py), which may arrive after the
 // first paint, so everything here copes with it not being there yet:
-//   Historians argue (Mind)   a two-sided card per debate: schools, scholars, evidence for and against, the works
-//   Why chains (Shocks)       causal links drawn cause → effect across lenses, dashed by confidence class
-//   Eyewitnesses (Mind)       primary-source excerpts where and when they were written about, with source criticism
-//   Why tab                   chains to play as map scenes, any record's causes and effects, the bibliography
+//   Sources and debates (Mind)  a two-sided card per debate (schools, scholars, evidence for and against, the works),
+//                               and primary-source excerpts where and when they were written about, with source criticism
+//   Why (Shocks, no chip)       causal links drawn cause → effect across lenses, dashed by confidence class; the Why
+//                               tab switches it on and off
+//   Why tab                     chains to play as map scenes and the debates, nearest the year first; a question
+//                               in the Ask bar searches them (ATLAS.scholar.find), with any record's causes and effects
 // Hooks for the rest of the page: ATLAS.cite (every source row), ATLAS.cardMore (every card gets its why links,
 // debates and eyewitnesses), ATLAS.world.why(id) (the why graph, WORLD.md L3), ATLAS.world.chainStory(id) (a chain
 // as a Story of Scenes, WORLD.md L4) and ATLAS.scholar (citations and briefs for the AI panel).
 (function () {
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-  const fy = y => y == null ? "" : y < 0 ? `${-y} BCE` : `${y}`;
+  const fy = y => y == null ? "" : ATLAS.fmtYear(y);
   const TYPE = ["caused", "contributed to", "prevented"];
   const CONF = ["attested", "estimated", "approximate", "unknown"];
   const CONF_DASH = [null, [6, 4], [2, 4], [1, 6]];
   const STAND = { leading: "Leading view", strong: "Strong", contested: "Contested", minority: "Minority view", discredited: "Discredited" };
   const lc = l => `var(--l-${l}, #8a6a4a)`;
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const norm = s => String(s || "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/^(the |battle of |siege of |sack of )/, "").replace(/[^a-z0-9]+/g, " ").trim();
   const R = 6371, rad = Math.PI / 180;
   const km = (a, b) => { const dl = (b[1] - a[1]) * rad, dn = (b[0] - a[0]) * rad; const h = Math.sin(dl / 2) ** 2 + Math.cos(a[1] * rad) * Math.cos(b[1] * rad) * Math.sin(dn / 2) ** 2; return 2 * R * Math.asin(Math.min(1, Math.sqrt(h))); };
@@ -52,7 +55,6 @@
   }
   ATLAS.cite = citeRow;
   const srcHTML = ids => ids && ids.length ? `<ul class="srcs">${ids.map(x => citeRow({ src: x }) || `<li>${esc(x)}</li>`).join("")}</ul>` : "";
-  const shortCite = x => (D.S[x] || [x])[0];
 
   // ---------- the why graph ----------
   function why(id, o = {}) {
@@ -76,7 +78,7 @@
     const scenes = c.links.map(x => D.lid[x]).filter(Boolean).map((l, i, all) => {
       const a = pt(l.from), b = pt(l.to), mid = a && b ? [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2] : a || b;
       const span = a && b ? Math.min(120, Math.max(10, Math.abs(a[0] - b[0]) * 1.8, Math.abs(a[1] - b[1]) * 2.6)) : 30;
-      return { id: `${cid}#${i}`, t: l.s ?? D.N[l.to][1], view: mid ? { lon: mid[0], lat: mid[1], span } : null, lenses: [l.lf, l.lt],
+      return { id: `${cid}#${i}`, t: l.s ?? D.N[l.to][1], view: mid ? { lon: mid[0], lat: mid[1], span } : null, lenses: ["why", l.lf, l.lt],
         pins: [a && { name: nm(l.from), lon: a[0], lat: a[1] }, b && { name: nm(l.to), lon: b[0], lat: b[1] }].filter(Boolean),
         routes: a && b ? [{ label: "", points: [a, b] }] : [],
         caption: `${nm(l.from)} ${TYPE[l.t]} ${nm(l.to)}`, text: l.mech, by: "historiographer", conf: CONF[l.cf], confidence: l.c, explainer: l.view,
@@ -87,6 +89,8 @@
   ATLAS.world = ATLAS.world || {};
   ATLAS.world.why = why;
   ATLAS.world.chainStory = chainStory;
+  // Every chain is a Story (kind "chain"), so it shows in the Stories tab with the tours and lives.
+  if (ATLAS.world.stories && ATLAS.world.stories.add) ATLAS.world.stories.add({ kind: "chain", list: () => ok() ? D.C.map(c => chainStory(c.id)).filter(s => s && s.scenes.length) : [] });
 
   // ---------- cards ----------
   const Y = () => (ATLAS.api ? ATLAS.api.year : 0);
@@ -110,8 +114,8 @@
     const a = pt(l.from), b = pt(l.to), at = b || a || [0, 0];
     const rivals = (D.inn[l.to] || []).filter(x => x !== l);
     const html = `<div class="sch"><div class="sch-chain"><button type="button" class="sch-node" data-sch="n:${esc(l.from)}" style="--c:${lc(l.lf)}">${esc(nm(l.from))}</button>
-      <span class="sch-arrow">${esc(TYPE[l.t])}${l.lag ? ` · ${l.lag} yr` : ""}</span><button type="button" class="sch-node" data-sch="n:${esc(l.to)}" style="--c:${lc(l.lt)}">${esc(nm(l.to))}</button></div>
-      ${l.mech ? `<p>${esc(l.mech)}</p>` : ""}<p class="sch-meta">${esc(l.view ? "Explanation: " + l.view : "")}${l.view ? " · " : ""}confidence ${Math.round(l.c * 100)}% · ${CONF[l.cf]}${l.ok ? "" : " · draft, waiting for the judge"}</p>
+      <span class="sch-arrow">${esc(TYPE[l.t])}${l.lag ? ` · ${l.lag} yr` : ""} ${ICO("next", "")}</span><button type="button" class="sch-node" data-sch="n:${esc(l.to)}" style="--c:${lc(l.lt)}">${esc(nm(l.to))}</button></div>
+      ${l.mech ? `<p>${esc(l.mech)}</p>` : ""}<p class="sch-meta">${esc(l.view ? "Explanation: " + l.view : "")}${l.view ? " · " : ""}confidence ${Math.round(l.c * 100)}% · ${CONF[l.cf]}${l.ok ? "" : " · draft, awaiting check"}</p>
       ${l.debate && D.dix[l.debate] ? `<div class="sch-links">${debateBtn(D.dix[l.debate])}</div>` : ""}
       ${rivals.length ? `<div class="sch-sub">Other explanations of ${esc(nm(l.to))}</div><div class="sch-links">${rivals.slice(0, 6).map(linkBtn).join("")}</div>` : ""}</div>`;
     return { kind: "lens:why", c: lc(l.lf), kick: `Why · ${l.lf} → ${l.lt}`, title: `${nm(l.from)} → ${nm(l.to)}`, meta: fy(l.s) + (l.e != null && l.e !== l.s ? ` to ${fy(l.e)}` : ""),
@@ -121,7 +125,7 @@
   function quoteCard(q) {
     const html = `<div class="sch"><blockquote class="sch-q">${esc(q.text)}</blockquote><p class="sch-meta">${esc(q.author)}${q.work ? ", " + esc(q.work) : ""}${q.written ? `, written ${fy(q.written)}` : ""}${q.ok ? ` <span class="sch-ok" title="Found word for word in the public-domain text">✓ verbatim</span>` : ""}${q.url ? ` · <a href="${esc(q.url)}" target="_blank" rel="noopener">full text</a>` : ""}</p>
       ${q.witness ? `<p class="sch-state"><b>How far to trust it:</b> ${esc(q.witness)}</p>` : ""}${q.about.length ? `<div class="sch-links">${q.about.filter(a => D.N[a]).map(a => `<button type="button" class="btn sch-mini" data-sch="n:${esc(a)}">${esc(nm(a))}</button>`).join("")}</div>` : ""}</div>`;
-    return { kind: "lens:witness", c: "var(--y-witness)", kick: "Eyewitness · primary source", title: q.n || q.author, meta: fy(q.y), year: q.y,
+    return { kind: "lens:debates", c: "var(--y-debates)", kick: "Eyewitness · primary source", title: q.n || q.author, meta: fy(q.y), year: q.y,
       lon: q.lon ?? 0, lat: q.lat ?? 0, html, sch: "quote", sources: q.src ? [{ src: q.src, cite: q.src }] : [] };
   }
   function nodeCard(id) {
@@ -132,7 +136,7 @@
   const linkBtn = l => `<button type="button" class="btn sch-mini" data-sch="l:${l.i}" style="--c:${lc(l.lf)}" title="${esc(l.mech)}"><i></i>${esc(nm(l.from))} → ${esc(nm(l.to))}${l.view ? ` <em>${esc(l.view)}</em>` : ""}</button>`;
   const debateBtn = d => `<button type="button" class="btn sch-mini sch-deb" data-sch="d:${esc(d.id)}">⚖ ${esc(d.n)}</button>`;
   const quoteBtn = q => `<button type="button" class="btn sch-mini" data-sch="q:${q.i}">❝ ${esc(q.author)}${q.y != null ? ", " + fy(q.y) : ""}</button>`;
-  const chainBtn = c => `<button type="button" class="btn sch-mini sch-play" data-sch="c:${esc(c.id)}">▶ ${esc(c.n)}</button>`;
+  const chainBtn = c => `<button type="button" class="btn sch-mini sch-play" data-sch="c:${esc(c.id)}">${ICO("play", "▶")} ${esc(c.n)}</button>`;
   function whyHTML(w) {
     if (!w || (!w.causes.length && !w.effects.length)) return "";
     const row = x => `<button type="button" class="btn sch-mini" data-sch="l:${D.lid[x.link].i}" style="--c:${lc(x.lenses[0])}" title="${esc(x.mech)}"><i></i>${esc(x.name)} <em>${esc(x.type)}${x.view ? ", " + esc(x.view) : ""} · ${Math.round(x.confidence * 100)}%</em></button>`;
@@ -180,19 +184,17 @@
     else if (k === "q" && D.Q[+v]) open(quoteCard(D.Q[+v]));
     else if (k === "n" && D.N[v]) open(nodeCard(v));
     else if (k === "c") play(v, 0);
-    else if (k === "step") play(PLAY.id, +v);
   });
 
-  // ---------- playing a chain on the map ----------
-  const PLAY = { id: null, i: 0 };
-  function play(cid, i) {
-    const st = chainStory(cid); if (!st || !st.scenes.length) return;
-    PLAY.id = cid; PLAY.i = Math.max(0, Math.min(i, st.scenes.length - 1));
-    const s = st.scenes[PLAY.i];
-    ATLAS.api.setOn("why", true);
-    ATLAS.api.scene({ year: s.t, view: s.view, pins: s.pins, routes: s.routes, title: s.caption, layers: [] });
-    ATLAS.api.setTab("why");
-    renderTab();
+  // ---------- playing a chain on the map: the Director, like every other Story ----------
+  // While a chain plays, its links stay on top in the why layer (PLAY.id).
+  const PLAY = { id: null };
+  let watching = false;
+  function play(cid, i = 0) {
+    const st = chainStory(cid), dir = ATLAS.world.director; if (!st || !st.scenes.length || !dir) return;
+    if (!watching) { watching = true; const off = () => { PLAY.id = null; }; dir.onEnd(off); dir.onLeave(off); }
+    dir.play(st, { at: Math.max(0, Math.min(i, st.scenes.length - 1)) });
+    PLAY.id = cid;
   }
 
   // ---------- AI panel: what the specialists may cite, and a Historiographer of their own ----------
@@ -211,8 +213,38 @@
       + (links.length ? `\nWHY LINKS (cause -> effect, whose view, confidence, sources):\n${links.map(l => `${nm(l.from)} ${TYPE[l.t]} ${nm(l.to)} (${fy(l.s)}; ${l.view || "?"}; ${Math.round(l.c * 100)}%; ${l.src.join(", ")}): ${l.mech}`).join("\n")}` : "")
       + (cited.size ? `\nBIBLIOGRAPHY (src id = work):\n${[...cited].map(x => `${x} = ${D.S[x][1]}`).join("\n")}` : "");
   }
+  // ---------- a question, against what the historians already mapped (the Ask bar checks this first) ----------
+  // Words, not the whole phrase: "why did Rome fall" should find the debate on the fall of Rome. A long word
+  // matches by its start, so "industrial" finds "industry". Rare words count for more than common ones, and a
+  // hit has to cover at least half the question's weight (and two of its words, when it has three or more), with
+  // at least one of them in its title.
+  const STOP = new Set("about actually after also and are became become begin began but can did does during end for from had happen happened has have how into its just like made make more most much not really start started than that the their them then there they this was were what when where which while who why will with would".split(" "));
+  const stem = w => w.length > 5 ? w.slice(0, Math.max(4, w.length - 3)) : w;
+  let INDEX = null;
+  function find(q, max = 6) {
+    if (!ok()) return [];
+    const words = [...new Set(norm(q).split(" ").filter(w => w.length > 2 && !STOP.has(w)).map(stem))];
+    if (!words.length) return [];
+    if (!INDEX) {
+      const t = s => " " + norm(s) + " ";
+      INDEX = [...D.C.map(c => ({ head: t(c.n), body: t(c.blurb + " " + c.question), html: chainBtn(c) })),
+        ...D.D.map(d => ({ head: t(d.n), body: t(d.pos.map(p => p.school + " " + (p.scholars || []).join(" ") + " " + (p.claim || "")).join(" ")), html: debateBtn(d) })),
+        // Any record with causes or effects, by its name alone: "why did it happen?" opens its why card.
+        ...Object.keys(D.N).filter(id => D.inn[id] || D.out[id]).map(id => ({ head: t(D.N[id][0]), body: "", html: `<button type="button" class="btn sch-mini" data-sch="n:${esc(id)}" style="--c:${lc(D.N[id][4])}"><i></i>${esc(D.N[id][0])} <em>${fy(D.N[id][1])}</em></button>` }))];
+    }
+    const hit = words.map(w => INDEX.map(x => x.head.includes(" " + w) ? 2 : x.body.includes(" " + w) ? 1 : 0));
+    const idf = hit.map(h => Math.log((INDEX.length + 1) / (1 + h.reduce((n, v) => n + (v > 0), 0))));
+    const total = idf.reduce((a, b) => a + b, 0), need = words.length >= 3 ? 2 : 1, seen = new Set(), out = [];
+    INDEX.map((x, i) => {
+      let m = 0, cov = 0, sc = 0, top = false;
+      words.forEach((w, k) => { const v = hit[k][i]; if (v) { m++; cov += idf[k]; sc += idf[k] * v; top = top || v === 2; } });
+      return { x, m, cov, sc, top };
+    }).filter(r => r.top && r.m >= need && r.cov >= total / 2).sort((a, b) => b.cov - a.cov || b.sc - a.sc)
+      .forEach(r => { if (out.length < max && !seen.has(r.x.head)) { seen.add(r.x.head); out.push(r.x.html); } });
+    return out;
+  }
   ATLAS.scholar = {
-    ready: ok, why, chainStory, play, brief, debatesIn,
+    ready: ok, why, chainStory, play, brief, debatesIn, find,
     has: x => ok() && !!D.S[x], cite: citeRow,
     debateButton: id => ok() && D.dix[id] ? debateBtn(D.dix[id]) : "",
     // For other plugins (Up close storylines, deep packs): the scholarship touching one record or card, as HTML.
@@ -222,8 +254,10 @@
 
   // ---------- the lenses ----------
   ATLAS.lens({
-    id: "debates", name: "Historians argue", family: "mind", color: "#9b4d2e", on: false, guide: [],
-    key: [["diamond", "a question historians argue about, at its centre; tap for the two sides"]],
+    // What the record says and how historians read it, as one lens: the arguments (diamonds) and the eyewitnesses
+    // whose words they argue over (squares).
+    id: "debates", name: "Sources and debates", family: "mind", color: "#9b4d2e", on: false, guide: [],
+    key: [["diamond", "a question historians argue about, at its centre; tap for the two sides"], ["square", "a primary source: what someone wrote at the time, word for word"]],
     specialist: {
       id: "historiographer", name: "Historiographer", lenses: ["ideas", "order"],
       voice: "how historians have argued about this: the schools, the evidence each side leans on, what changed their minds, and where the field stands now",
@@ -234,19 +268,24 @@
       if (!ok()) return; const y = ctx.year;
       const live = D.D.filter(d => d.lon != null && y >= (d.s ?? -1e9) - 30 && y <= (d.e ?? 1e9) + 30);
       ctx.pins(live, { key: d => d.id, shape: "diamond", size: 7, always: true, pri: 6, label: d => d.n.length > 46 ? d.n.slice(0, 44) + "…" : d.n, title: d => `${d.n} · ${d.pos.length} positions`, card: debateCard });
+      ctx.pins(D.Q.filter(q => q.lon != null && Math.abs((q.y ?? 1e9) - y) <= 25), { key: q => "q" + q.id, shape: "square", size: 5, label: q => q.author, pri: 5, title: q => `${q.author}: “${q.text.slice(0, 90)}…”`, card: quoteCard });
     },
+    // Here lists the arguments first, then the eyewitnesses (the panel shows eight rows a lens).
     here(ctx, at) {
       if (!ok()) return []; const y = ctx.year;
-      return D.D.filter(d => inBox(d.bbox, at.lon, at.lat) || (d.lon != null && km([at.lon, at.lat], [d.lon, d.lat]) < 900))
-        .sort((a, b) => Math.abs((a.s + a.e) / 2 - y) - Math.abs((b.s + b.e) / 2 - y)).slice(0, 6)
+      const debs = D.D.filter(d => inBox(d.bbox, at.lon, at.lat) || (d.lon != null && km([at.lon, at.lat], [d.lon, d.lat]) < 900))
+        .sort((a, b) => Math.abs((a.s + a.e) / 2 - y) - Math.abs((b.s + b.e) / 2 - y)).slice(0, 4)
         .map(d => ({ title: d.n, year: d.s, why: d.pos.map(p => p.school).join(" vs "), dim: y < d.s - 100 || y > d.e + 100, card: debateCard(d) }));
+      const qs = D.Q.filter(q => q.lon != null && km([at.lon, at.lat], [q.lon, q.lat]) < 600).sort((a, b) => Math.abs(a.y - y) - Math.abs(b.y - y)).slice(0, 8 - debs.length)
+        .map(q => ({ title: `“${q.text.slice(0, 70)}…”`, year: q.y, why: q.author, dim: Math.abs(q.y - y) > 80, card: quoteCard(q) }));
+      return [...debs, ...qs];
     },
     now(ctx) { return ok() ? D.D.filter(d => ctx.year >= d.s && ctx.year <= d.e).slice(0, 4).map(d => ({ title: d.n, year: d.s, why: d.pos.map(p => p.school).join(" vs "), card: debateCard(d) })) : []; },
-    strip: () => ok() ? D.D.map(d => d.s) : [],
+    strip: () => ok() ? [...D.D.map(d => d.s), ...D.Q.map(q => q.y).filter(Number.isFinite)] : [],
   });
 
   ATLAS.lens({
-    id: "why", name: "Why chains", family: "shocks", color: "#b5562b", on: false, guide: [],
+    id: "why", name: "Why", family: "shocks", color: "#b5562b", on: false, guide: [], tab: "why",
     key: [["arrow", "a cause and what it led to; the colour is the cause's lens"], ["line", "solid: contemporaries record it · dashed: estimated · dotted: argued"]],
     index: () => ok() ? "Why chains: " + D.C.map(c => `${c.n} (${fy(c.s)}-${fy(c.e)})`).join("; ") : "",
     draw(ctx) {
@@ -284,84 +323,63 @@
     return Math.hypot(dx, dy) < 0.05 ? [a, [a[0] + 0.3, a[1] + 0.3]] : out;
   }
 
-  ATLAS.lens({
-    id: "witness", name: "Eyewitnesses", family: "mind", color: "#6b5b3e", on: false, guide: [],
-    key: [["square", "a primary source: what someone wrote at the time, word for word"]],
-    draw(ctx) {
-      if (!ok()) return; const y = ctx.year;
-      ctx.pins(D.Q.filter(q => q.lon != null && Math.abs((q.y ?? 1e9) - y) <= 25), { key: q => q.id, shape: "square", size: 5, label: q => q.author, pri: 5, title: q => `${q.author}: “${q.text.slice(0, 90)}…”`, card: quoteCard });
-    },
-    here(ctx, at) {
-      if (!ok()) return []; const y = ctx.year;
-      return D.Q.filter(q => q.lon != null && km([at.lon, at.lat], [q.lon, q.lat]) < 600).sort((a, b) => Math.abs(a.y - y) - Math.abs(b.y - y)).slice(0, 5)
-        .map(q => ({ title: `“${q.text.slice(0, 70)}…”`, year: q.y, why: q.author, dim: Math.abs(q.y - y) > 80, card: quoteCard(q) }));
-    },
-    strip: () => ok() ? D.Q.map(q => q.y).filter(Number.isFinite) : [],
-  });
-
   // ---------- the Why tab ----------
-  let pane = null, filt = "";
+  let pane = null;
   function renderTab() {
     if (!pane) return;
     if (!ok()) { pane.innerHTML = `<p class="sub">The historians are still arriving (their data loads after the map). One moment.</p>`; return; }
-    const y = Y(), st = PLAY.id ? chainStory(PLAY.id) : null;
-    const player = st ? (() => { const s = st.scenes[PLAY.i];
-      return `<div class="focus sch-player" style="--c:var(--y-why)"><span class="fk">Playing a why chain · ${PLAY.i + 1} of ${st.scenes.length}</span><span class="ft">${esc(st.title)}</span>
-        <p><b>${esc(s.caption)}</b></p>${s.text ? `<p>${esc(s.text)}</p>` : ""}<p class="sch-meta">${s.explainer ? esc(s.explainer) + " · " : ""}confidence ${Math.round(s.confidence * 100)}% · ${esc(s.conf)}</p>
-        <ul class="srcs">${s.sources.map(x => citeRow(x) || `<li>${esc(x.cite)}</li>`).join("")}</ul>
-        <div class="row">${PLAY.i > 0 ? `<button class="btn" data-sch="step:${PLAY.i - 1}">◀ Back</button>` : ""}${PLAY.i < st.scenes.length - 1 ? `<button class="btn primary" data-sch="step:${PLAY.i + 1}">Next link ▶</button>` : `<span class="sch-meta">End of the chain.${st.question ? " It answers: " + esc(st.question) : ""}</span>`}</div></div>`; })() : "";
-    const q = norm(filt);
-    const chains = D.C.filter(c => !q || norm(c.n + " " + c.blurb + " " + c.question).includes(q)).sort((a, b) => Math.abs(a.s - y) - Math.abs(b.s - y));
-    const debs = D.D.filter(d => !q || norm(d.n + " " + d.pos.map(p => p.school + " " + (p.scholars || []).join(" ")).join(" ")).includes(q)).sort((a, b) => Math.abs(a.s - y) - Math.abs(b.s - y));
-    const nodes = q.length > 2 ? Object.keys(D.N).filter(id => (D.inn[id] || D.out[id]) && norm(D.N[id][0]).includes(q)).slice(0, 12) : [];
+    const y = Y(), near = (a, b) => Math.abs(a.s - y) - Math.abs(b.s - y);
+    const chains = D.C.slice().sort(near), debs = D.D.slice().sort(near);
     const n = D.n;
-    pane.innerHTML = `${player}
-      <form class="sch-find"><input type="search" placeholder="Why did… (an event, a scholar, a school)" value="${esc(filt)}" aria-label="Find a chain, debate or event"></form>
-      ${nodes.length ? `<div class="sec"><h3>Why did it happen?</h3><div class="sch-links">${nodes.map(id => `<button type="button" class="btn sch-mini" data-sch="n:${esc(id)}" style="--c:${lc(D.N[id][4])}"><i></i>${esc(D.N[id][0])} <em>${fy(D.N[id][1])}</em></button>`).join("")}</div></div>` : ""}
+    pane.innerHTML = `
+      <label class="sch-on"><input type="checkbox" id="sch-on"${ATLAS.isOn && ATLAS.isOn("why") ? " checked" : ""}> Show causes and effects on the map</label>
+      <p class="sub">Nearest to ${esc(fy(y))} first. To look for one, ask in the bar at the top.</p>
       <div class="sec"><h3>Why chains <span class="n">${chains.length}</span></h3><p class="sub">Each one crosses lenses: tap to play it link by link on the map.</p><div class="sch-links">${chains.slice(0, 24).map(c => chainBtn(c)).join("")}</div></div>
       <div class="sec"><h3>Historians argue <span class="n">${debs.length}</span></h3><div class="sch-links">${debs.slice(0, 30).map(debateBtn).join("")}</div></div>
       <p class="foot">${n.links} causal links, ${n.debates} debates, ${n.quotes} eyewitness excerpts, ${n.sources} works in the bibliography (${n.verified} checked against Crossref or OpenLibrary). Quotes are matched word for word against public-domain texts.</p>`;
-    const f = pane.querySelector(".sch-find");
-    f.addEventListener("submit", ev => { ev.preventDefault(); filt = f.querySelector("input").value; renderTab(); });
-    f.querySelector("input").addEventListener("input", ev => { filt = ev.target.value; clearTimeout(f._t); f._t = setTimeout(() => { renderTab(); const i = pane.querySelector(".sch-find input"); i.focus(); i.setSelectionRange(i.value.length, i.value.length); }, 250); });
   }
-  if (ATLAS.tab) ATLAS.tab({ id: "why", name: "Why", mount(el, api) { pane = el; renderTab(); api.onYear(() => { clearTimeout(pane._t); pane._t = setTimeout(renderTab, 400); }); }, show() { renderTab(); } });
+  if (ATLAS.tab) ATLAS.tab({ id: "why", name: "Why", icon: "mind",
+    // A new year re-sorts the lists, but only while the tab is open; show() catches up when it opens.
+    mount(el, api) {
+      pane = el; renderTab();
+      el.addEventListener("change", ev => { if (ev.target.id === "sch-on") api.setOn("why", ev.target.checked); });
+      api.onYear(() => { clearTimeout(pane._t); if (!pane.hidden) pane._t = setTimeout(renderTab, 400); }); }, show() { renderTab(); } });
 
   // ---------- styles ----------
   const css = document.createElement("style");
   css.textContent = `
-  .sch { display: grid; gap: 6px; font-size: 14px; }
+  .sch { display: grid; gap: 6px; font-size: var(--fs-read); }
   .sch-more { border-top: 1px dashed var(--rule); padding-top: 6px; margin-top: 2px; }
-  .sch-fun { font-family: var(--fell); font-size: 16px; margin: 0; }
+  .sch-fun { font-family: var(--fell); font-size: var(--fs-h4); margin: 0; }
   .sch-tabs { display: flex; flex-wrap: wrap; gap: 4px; }
-  .sch-tab { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 2px 10px; font-size: 12.5px; cursor: pointer; color: var(--ink-soft); }
+  .sch-tab { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 2px 10px; font-size: var(--fs-note); cursor: pointer; color: var(--ink-soft); }
   .sch-tab.on { border-color: var(--c); color: var(--ink); background: color-mix(in srgb, var(--c) 16%, transparent); }
   .sch-pane { display: grid; gap: 5px; border-left: 3px solid var(--rule); padding-left: 8px; }
   .sch-pane p, .sch p { margin: 0; }
-  .sch-claim { font-size: 15px; }
-  .sch-who { font-size: 12.5px; color: var(--ink-soft); }
-  .sch-st { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; padding: 1px 5px; border-radius: 3px; border: 1px solid currentColor; }
+  .sch-claim { font-size: var(--fs-read); }
+  .sch-who { font-size: var(--fs-note); color: var(--ink-soft); }
+  .sch-st { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; padding: 1px 5px; border-radius: 3px; border: 1px solid currentColor; }
   .sch-leading { color: var(--b-calm); } .sch-strong { color: var(--accent); } .sch-contested { color: var(--b-watch); } .sch-minority { color: var(--ink-soft); } .sch-discredited { color: var(--warn); text-decoration: line-through; }
-  .sch-fa { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; }
-  .sch-fa ul { margin: 2px 0 0; padding-left: 16px; } .sch-fa b { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; }
-  .sch-state { font-size: 13.5px; color: var(--ink-soft); }
-  .sch-meta { font-size: 12px; color: var(--ink-soft); }
-  .sch-sub { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-top: 2px; }
+  .sch-fa { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: var(--fs-note); }
+  .sch-fa ul { margin: 2px 0 0; padding-left: 16px; } .sch-fa b { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; }
+  .sch-state { font-size: var(--fs-note); color: var(--ink-soft); }
+  .sch-meta { font-size: var(--fs-note); color: var(--ink-soft); }
+  .sch-sub { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-top: 2px; }
   .sch-links { display: flex; flex-wrap: wrap; gap: 4px; }
-  .sch-mini { font-size: 12.5px; padding: 3px 8px; display: inline-flex; gap: 5px; align-items: center; text-align: left; }
+  .sch-mini { font-size: var(--fs-note); padding: 3px 8px; display: inline-flex; gap: 5px; align-items: center; text-align: left; }
   .sch-mini i { width: 8px; height: 8px; border-radius: 50%; background: var(--c, var(--ink)); flex: none; }
-  .sch-mini em { color: var(--ink-soft); font-style: normal; font-size: 11.5px; }
+  .sch-mini em { color: var(--ink-soft); font-style: normal; font-size: var(--fs-note); }
   .sch-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-  .sch-node { border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); border-radius: 4px; padding: 3px 8px; cursor: pointer; font-size: 13.5px; }
-  .sch-arrow { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+  .sch-node { border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); border-radius: 4px; padding: 3px 8px; cursor: pointer; font-size: var(--fs-note); }
+  .sch-arrow { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); }
   .sch-arrow::after { content: " →"; }
-  .sch-q { margin: 0; font-family: var(--fell); font-size: 16px; line-height: 1.4; border-left: 3px solid var(--c, var(--rule)); padding-left: 10px; }
-  .sch-ok { color: var(--b-calm); font-family: var(--mono); font-size: 10.5px; margin-left: 5px; }
+  .sch-q { margin: 0; font-family: var(--fell); font-size: var(--fs-h4); line-height: 1.4; border-left: 3px solid var(--c, var(--rule)); padding-left: 10px; }
+  .sch-ok { color: var(--b-calm); font-family: var(--mono); font-size: var(--fs-tiny); margin-left: 5px; }
   .sch-pg { color: var(--ink-soft); }
-  .sch-find input { width: 100%; box-sizing: border-box; border: 1px solid var(--rule); background: var(--card); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 14px; margin: 4px 0 8px; }
+  .sch-on { display: flex; gap: 8px; align-items: center; font-size: var(--fs-note); color: var(--ink-soft); margin: 2px 0 6px; cursor: pointer; }
+  .sch-on input { width: 16px; height: 16px; margin: 0; accent-color: var(--y-why, #b5562b); }
   .sch-deb { border-color: color-mix(in srgb, var(--y-debates, #9b4d2e) 60%, var(--rule)); }
   .sch-play { border-color: color-mix(in srgb, var(--y-why, #b5562b) 60%, var(--rule)); }
-  .sch-player { margin-bottom: 8px; }
   @media (max-width: 520px) { .sch-fa { grid-template-columns: 1fr; } }`;
   document.head.appendChild(css);
 })();

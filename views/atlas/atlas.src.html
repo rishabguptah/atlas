@@ -42,7 +42,7 @@
   color-scheme: dark;
 }
 html, body { height: 100%; }
-body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 15px; line-height: 1.5; }
+body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: var(--fs-read); line-height: 1.5; }
 button, input, textarea { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 a { color: var(--accent); text-underline-offset: 2px; }
@@ -59,14 +59,14 @@ a { color: var(--accent); text-underline-offset: 2px; }
   padding-block: 10px 9px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
   border-bottom: 1px solid var(--rule);
 }
-.brand { font-family: var(--display); font-size: 30px; line-height: 1; margin: 0; font-weight: 400; }
+.brand { font-family: var(--display); font-size: var(--fs-h2); line-height: 1; margin: 0; font-weight: 400; }
 .askbar { display: flex; gap: 8px; min-width: 0; }
 .askbig { display: grid; gap: 6px; }
 .askbig textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 64px; border: 1.5px solid var(--accent); background: var(--card); padding: 10px 12px; border-radius: 6px; font-size: 17px; font-family: var(--fell); }
 .askbar input { flex: 1; min-width: 0; border: 1px solid var(--rule); background: var(--card); padding: 7px 12px; border-radius: 999px; font-size: 15.5px; font-family: var(--fell); }
 .layers { grid-column: 1 / -1; display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.layers .lab { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-right: 2px; }
-.chip { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 3px 11px 3px 9px; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.layers .lab { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-right: 2px; }
+.chip { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 3px 11px 3px 9px; font-size: var(--fs-note); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 .chip i { width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--ink)); display: inline-block; }
 .chip[aria-pressed="true"] { border-color: var(--c, var(--ink)); background: color-mix(in srgb, var(--c, var(--ink)) 14%, transparent); }
 .chip[aria-pressed="false"] { color: var(--ink-soft); }
@@ -88,7 +88,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .terrain-on .poly.emp { fill-opacity: calc(var(--emp-op) * .75); }
 .war-on .terrain .pt-strait, .war-on .terrain .pt-pass { display: none; }
 .map { --terrain-halo: color-mix(in srgb, var(--paper) 75%, transparent); }
-.poly { stroke: var(--paper); stroke-width: calc(0.5px / var(--k, 1)); fill-opacity: var(--oth-op); transition: fill-opacity .4s; }
+.poly { stroke: var(--paper); stroke-width: calc(0.5px / var(--k, 1)); fill-opacity: var(--oth-op); transition: fill-opacity var(--fade); }
 .poly.emp { fill-opacity: var(--emp-op); }
 .close .poly, .close .polylab { display: none; }
 .poly.hi { fill-opacity: 0.7; stroke: var(--ink); stroke-width: calc(1.4px / var(--k, 1)); }
@@ -102,7 +102,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .city.hi text { display: block; font-size: 13.5px; font-weight: 600; fill: var(--ink); }
 .city .ring { fill: none; stroke: var(--warn); stroke-width: 1.6; display: none; }
 .city.hi .ring { display: block; }
-@media (prefers-reduced-motion: no-preference) { .city.hi .ring, .sel .pulse { animation: pulse 2.2s ease-out infinite; transform-origin: 0 0; } }
+@media (prefers-reduced-motion: no-preference) { .city.hi .ring, .sel .pulse { animation: pulse 720ms steps(4, end) 2; transform-origin: 0 0; } }
 @keyframes pulse { from { transform: scale(.6); opacity: 1; } to { transform: scale(2.2); opacity: 0; } }
 .person circle { fill: var(--y-people); fill-opacity: .8; stroke: var(--paper); stroke-width: .7; }
 .person.top text { display: block; }
@@ -146,99 +146,97 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .selring { fill: var(--ink); fill-opacity: .05; stroke: var(--ink); stroke-width: calc(1.2px / var(--k, 1)); stroke-dasharray: calc(4px / var(--k, 1)) calc(3px / var(--k, 1)); pointer-events: none; }
 .sel circle { fill: none; stroke: var(--ink); stroke-width: 2; pointer-events: none; }
 .sel .pulse { stroke: var(--warn); }
-.yearplate { position: absolute; left: 14px; top: 10px; font-family: var(--display); font-size: 36px; line-height: 1; pointer-events: none; text-shadow: 0 0 6px var(--sea), 0 0 2px var(--sea); }
-.maphint { position: absolute; left: 14px; top: 52px; font-size: 12.5px; color: var(--ink-soft); font-style: italic; pointer-events: none; text-shadow: 0 0 4px var(--sea); }
+.yearplate { position: absolute; left: 14px; top: 10px; font-family: var(--display); font-size: var(--fs-h2); line-height: 1; pointer-events: none; text-shadow: 0 0 6px var(--sea), 0 0 2px var(--sea); }
+.maphint { position: absolute; left: 14px; top: 52px; font-size: var(--fs-note); color: var(--ink-soft); font-style: italic; pointer-events: none; text-shadow: 0 0 4px var(--sea); }
 .caption {
   position: absolute; left: 14px; right: 14px; bottom: 12px; max-width: 520px; background: var(--card); border: 1px solid var(--rule);
-  border-left: 4px solid var(--lc, var(--ink)); padding: 8px 12px; font-size: 14px; box-shadow: 0 6px 18px rgba(0,0,0,.12);
+  border-left: 4px solid var(--lc, var(--ink)); padding: 8px 12px; font-size: var(--fs-read); box-shadow: var(--sh-float);
 }
-.caption b { font-family: var(--display); font-weight: 400; font-size: 18px; display: block; line-height: 1.15; }
-.caption .lens { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--lc); }
+.caption b { font-family: var(--display); font-weight: 400; font-size: var(--fs-h4); display: block; line-height: 1.15; }
+.caption .ck { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--lc); }
 
 .time { grid-area: time; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; border-top: 1px solid var(--rule);
   padding-block: 6px 8px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; }
-.time .playbtn { grid-row: 1 / 3; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; font-size: 13px; }
+.time .playbtn { grid-row: 1 / 3; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--ink); background: var(--ink); color: var(--paper); cursor: pointer; font-size: var(--fs-note); }
 .strip { height: 22px; display: block; width: 100%; cursor: pointer; will-change: transform; } /* own layer: the slider thumb moving must not repaint thousands of ticks */
 .strip rect { shape-rendering: crispEdges; opacity: .85; }
 .strip:hover rect { opacity: 1; }
 .stripwrap { position: relative; grid-column: 2; min-width: 0; }
-.striptip { position: absolute; bottom: calc(100% + 4px); width: 260px; z-index: 6; background: var(--card); border: 1px solid var(--rule); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,.15);
-  padding: 5px 8px; font-size: 12px; line-height: 1.35; pointer-events: none; }
-.striptip .h { display: block; color: var(--ink-soft); font-size: 11px; }
+.striptip { position: absolute; bottom: calc(100% + 4px); width: 260px; z-index: 6; background: var(--card); border: 1px solid var(--rule); border-radius: 4px; box-shadow: var(--sh-float);
+  padding: 5px 8px; font-size: var(--fs-note); line-height: 1.35; pointer-events: none; }
+.striptip .h { display: block; color: var(--ink-soft); font-size: var(--fs-note); }
 .time input { width: 100%; min-width: 0; accent-color: var(--ink); margin: 0; }
-.time output { grid-row: 1; grid-column: 3; font-family: var(--mono); font-size: 13px; min-width: 76px; text-align: right; }
-.time .speed { grid-row: 2; grid-column: 3; justify-self: end; max-width: 84px; font-family: var(--mono); font-size: 11.5px; border: 1px solid var(--rule); background: var(--card); border-radius: 4px; padding: 1px 4px; cursor: pointer; }
+.time output { grid-row: 1; grid-column: 3; font-family: var(--mono); font-size: var(--fs-tiny-2); min-width: 76px; text-align: right; }
+.time .speed { grid-row: 2; grid-column: 3; justify-self: end; max-width: 84px; font-family: var(--mono); font-size: var(--fs-tiny); border: 1px solid var(--rule); background: var(--card); border-radius: 4px; padding: 1px 4px; cursor: pointer; }
 
 .panel { grid-area: panel; border-left: 1px solid var(--rule); overflow-y: auto; min-height: 0; display: flex; flex-direction: column; }
 .tabs { position: sticky; top: 0; z-index: 3; background: var(--paper); display: flex; flex-wrap: wrap; gap: 0 2px; border-bottom: 1px solid var(--rule); padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 12px; }
-.tab { border: 0; background: none; padding: 9px 10px 8px; cursor: pointer; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); border-bottom: 2px solid transparent; }
+.tab { border: 0; background: none; padding: 9px 10px 8px; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); border-bottom: 2px solid transparent; }
 .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
 .tabs { flex-direction: column; gap: 0; padding-top: 4px; }
 .tabs .tg { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 2px; }
 .tabs .tg + .tg { border-top: 1px dashed var(--rule); }
-.tabs .tgl { flex: none; width: 74px; font-family: var(--mono); font-size: 9.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); opacity: .75; }
-.tabs .tab { padding: 6px 7px 5px; font-size: 11.5px; white-space: nowrap; }
+.tabs .tgl { flex: none; width: 74px; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); opacity: .75; }
+.tabs .tab { padding: 6px 7px 5px; font-size: var(--fs-note); white-space: nowrap; }
 .pane { padding: 14px max(16px, env(safe-area-inset-right, 0px)) 40px 16px; display: flex; flex-direction: column; gap: 14px; }
-.kick { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 0; }
-.ttl { font-family: var(--display); font-size: 26px; line-height: 1.1; margin: 2px 0 0; font-weight: 400; }
-.sub { font-size: 14px; color: var(--ink-soft); margin: 2px 0 0; }
+.kick { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 0; }
+.ttl { font-family: var(--display); font-size: var(--fs-h3); line-height: 1.1; margin: 2px 0 0; font-weight: 400; }
+.sub { font-size: var(--fs-read); color: var(--ink-soft); margin: 2px 0 0; }
 .sec { display: grid; gap: 6px; }
-.sec > h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 0; display: flex; align-items: center; gap: 7px; border-top: 1px solid var(--rule); padding-top: 10px; }
+.sec > h3 { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 0; display: flex; align-items: center; gap: 7px; border-top: 1px solid var(--rule); padding-top: 10px; }
 .sec > h3 i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); display: inline-block; }
 .sec > h3 .n { margin-left: auto; letter-spacing: 0; text-transform: none; }
 .sec.off > h3 { opacity: .55; }
 .items { display: grid; gap: 1px; }
-.it { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 10px; padding: 4px 6px; border-radius: 3px; font-size: 14px; line-height: 1.35; }
+.it { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 10px; padding: 4px 6px; border-radius: 3px; font-size: var(--fs-read); line-height: 1.35; }
 .it:hover, .it:focus-visible { background: var(--wash); }
 .it b { font-weight: 600; }
-.it .y { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); white-space: nowrap; align-self: baseline; }
-.it .w { grid-column: 1 / -1; font-size: 13px; color: var(--ink-soft); }
+.it .y { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); white-space: nowrap; align-self: baseline; }
+.it .w { grid-column: 1 / -1; font-size: var(--fs-note); color: var(--ink-soft); }
 .it.dim { opacity: .6; }
-.tag { display: inline-block; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 0 5px; margin-left: 4px; vertical-align: 1px; background: var(--wash); }
+.tag { display: inline-block; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 0 5px; margin-left: 4px; vertical-align: 1px; background: var(--wash); }
 .tag.now { background: var(--ink); color: var(--paper); }
-.band { display: inline-block; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 0 6px; color: #fff; background: var(--bc); }
-.focus { border: 1px solid var(--rule); border-left: 4px solid var(--c, var(--ink)); background: var(--card); border-radius: 3px; padding: 10px 12px; display: grid; gap: 4px; font-size: 14.5px; }
-.focus .fk { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--c); }
-.focus .ft { font-family: var(--fell); font-size: 20px; line-height: 1.15; }
+.band { display: inline-block; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 0 6px; color: #fff; background: var(--bc); }
+.focus { border: 1px solid var(--rule); border-left: 4px solid var(--c, var(--ink)); background: var(--card); border-radius: 3px; padding: 10px 12px; display: grid; gap: 4px; font-size: var(--fs-read); }
+.focus .fk { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--c); }
+.focus .ft { font-family: var(--fell); font-size: var(--fs-h3); line-height: 1.15; }
 .focus p { margin: 0; }
 .focus .why { font-style: italic; color: var(--ink-soft); }
-.srcs { list-style: none; margin: 2px 0 0; padding: 0; font-size: 12px; color: var(--ink-soft); display: grid; gap: 2px; }
+.srcs { list-style: none; margin: 2px 0 0; padding: 0; font-size: var(--fs-note); color: var(--ink-soft); display: grid; gap: 2px; }
 .srcs li::before { content: "§ "; }
-.srcs .unchecked { color: var(--warn); font-family: var(--mono); font-size: 10.5px; margin-left: 4px; }
+.srcs .unchecked { color: var(--warn); font-family: var(--mono); font-size: var(--fs-tiny); margin-left: 4px; }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.btn { border: 1px solid var(--rule); background: var(--card); border-radius: 4px; padding: 5px 11px; cursor: pointer; font-size: 13.5px; }
+.btn { border: 1px solid var(--rule); background: var(--card); border-radius: 4px; padding: 5px 11px; cursor: pointer; font-size: var(--fs-note); }
 .btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .btn:disabled { opacity: .5; cursor: default; }
 .spark { width: 100%; height: 46px; display: block; }
 .spark .ln { fill: none; stroke: var(--y-order); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
 .spark .thr { stroke: var(--b-fragile); stroke-dasharray: 3 3; vector-effect: non-scaling-stroke; }
 .spark .now { stroke: var(--ink); vector-effect: non-scaling-stroke; }
-.note { font-size: 12.5px; color: var(--ink-soft); margin: 0; }
-.foot { font-size: 12px; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 10px; }
+.note { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; }
+.foot { font-size: var(--fs-note); color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 10px; }
 
 /* guide */
-.hint { font-size: 12.5px; color: var(--ink-soft); }
+.hint { font-size: var(--fs-note); color: var(--ink-soft); }
 .examples { display: grid; gap: 6px; }
-.ex { text-align: left; border: 1px solid var(--rule); background: transparent; border-radius: 4px; padding: 7px 10px; cursor: pointer; font-family: var(--fell); font-size: 15px; line-height: 1.3; display: flex; gap: 8px; align-items: baseline; }
+.ex { text-align: left; border: 1px solid var(--rule); background: transparent; border-radius: 4px; padding: 7px 10px; cursor: pointer; font-family: var(--fell); font-size: var(--fs-h4); line-height: 1.3; display: flex; gap: 8px; align-items: baseline; }
 .ex:hover { background: var(--wash); }
-.ex .tg { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); white-space: nowrap; margin-left: auto; }
+.ex .tg { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); white-space: nowrap; margin-left: auto; }
 .ex .tg.cur { color: var(--l-geography); }
 .answer { display: grid; gap: 16px; }
-.q { font-family: var(--display); font-size: 23px; line-height: 1.15; margin: 0; font-weight: 400; }
-.badge { display: inline-block; font-family: var(--mono); font-size: 11px; border: 1px solid var(--warn); color: var(--warn); border-radius: 3px; padding: 1px 7px; }
-.short { margin: 0; font-size: 15.5px; }
-.status { font-size: 13px; color: var(--ink-soft); display: flex; gap: 8px; align-items: center; }
+.q { font-family: var(--display); font-size: var(--fs-h3); line-height: 1.15; margin: 0; font-weight: 400; }
+.badge { display: inline-block; font-family: var(--mono); font-size: var(--fs-tiny); border: 1px solid var(--warn); color: var(--warn); border-radius: 3px; padding: 1px 7px; }
+.short { margin: 0; font-size: var(--fs-read); }
+.status { font-size: var(--fs-note); color: var(--ink-soft); display: flex; gap: 8px; align-items: center; }
 .status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--l-economy); }
-@media (prefers-reduced-motion: no-preference) { .status .dot { animation: blink 1s infinite alternate; } }
-@keyframes blink { to { opacity: .2; } }
 /* Lens gauge: ten pixel cells per lens (not a smooth web bar), the speaking specialist's portrait beside it. */
 .lmeter { display: grid; gap: 4px; }
 .lrow { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "pt name n" "pt cells cells"; gap: 3px 10px; align-items: center; padding: 4px 4px 5px 2px; }
 .lrow:hover { background: var(--wash); }
 .lrow:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
 .lrow .pt { grid-area: pt; }
-.lrow .name { grid-area: name; font-size: 14.5px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.lrow .n { grid-area: n; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.lrow .name { grid-area: name; font-size: var(--fs-read); line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lrow .n { grid-area: n; font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); font-variant-numeric: tabular-nums; }
 .lrow .cells { grid-area: cells; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 2px; height: 8px; }
 .lrow .cells i { background: var(--wash); box-shadow: inset 0 0 0 1px var(--rule); }
 .lrow .cells i.f { background: var(--c); box-shadow: inset 0 -2px 0 rgba(34, 31, 26, .3); }
@@ -246,70 +244,69 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .lrow.off .cells i.f { background: var(--rule); box-shadow: none; }
 .lrow.off .pt { opacity: .5; }
 .player { position: sticky; top: var(--tabs-h, 36px); z-index: 2; background: var(--paper); display: flex; gap: 6px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--rule); }
-.player .count { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin-left: auto; }
+.player .count { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); margin-left: auto; }
 .player .prog { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--ink); width: 0; }
 .steps { display: grid; gap: 8px; }
 .step { border: 1px solid var(--rule); border-left: 4px solid var(--c); background: var(--card); border-radius: 3px; }
 .step > button { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; padding: 8px 11px; display: grid; grid-template-columns: auto 1fr auto; gap: 4px 10px; align-items: baseline; }
 .step > button:focus-visible { outline: 2px solid var(--accent); }
-.step .i { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
-.step .t { font-family: var(--fell); font-size: 16.5px; line-height: 1.2; }
-.step .y { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); white-space: nowrap; }
-.step .ln { grid-column: 2 / 4; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: var(--c); }
-.step .body { display: none; padding: 0 11px 10px; font-size: 14.5px; }
-.step.on { box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+.step .i { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); }
+.step .t { font-family: var(--fell); font-size: var(--fs-h4); line-height: 1.2; }
+.step .y { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); white-space: nowrap; }
+.step .ln { grid-column: 2 / 4; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--c); }
+.step .body { display: none; padding: 0 11px 10px; font-size: var(--fs-read); }
+.step.on { box-shadow: var(--sh-raise); }
 .step.on .body { display: block; }
 .step.muted { opacity: .4; }
 .step p { margin: 0 0 6px; }
-.conf { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
-.view { border-top: 1px solid var(--rule); padding-top: 8px; display: grid; gap: 3px; font-size: 14px; }
+.conf { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); }
+.view { border-top: 1px solid var(--rule); padding-top: 8px; display: grid; gap: 3px; font-size: var(--fs-read); }
 .view .hd { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
-.view .nm { font-family: var(--fell); font-size: 16px; }
+.view .nm { font-family: var(--fell); font-size: var(--fs-h4); }
 .view .sch { font-style: italic; color: var(--ink-soft); }
-.view .st { margin-left: auto; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; padding: 1px 6px; border-radius: 3px; background: var(--wash); }
+.view .st { margin-left: auto; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; padding: 1px 6px; border-radius: 3px; background: var(--wash); }
 .view .st.strong { background: var(--l-geography); color: var(--paper); }
-.view .fa { font-size: 13px; color: var(--ink-soft); }
+.view .fa { font-size: var(--fs-note); color: var(--ink-soft); }
 .view .fa b { color: var(--ink); font-weight: 600; }
-.whatif { border: 1px dashed var(--rule); border-radius: 3px; padding: 8px 11px; font-size: 14px; cursor: pointer; text-align: left; background: transparent; display: grid; gap: 4px; }
-.whatif b { font-family: var(--fell); font-weight: 400; font-size: 16px; }
-.unk { margin: 0; padding-left: 18px; font-size: 14px; }
+.whatif { border: 1px dashed var(--rule); border-radius: 3px; padding: 8px 11px; font-size: var(--fs-read); cursor: pointer; text-align: left; background: transparent; display: grid; gap: 4px; }
+.whatif b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); }
+.unk { margin: 0; padding-left: 18px; font-size: var(--fs-read); }
 .short.frame { color: var(--ink-soft); font-style: italic; }
 .pnl { display: grid; gap: 4px; }
-.pnl .who { display: grid; grid-template-columns: auto 1fr auto; gap: 0 10px; align-items: baseline; font-size: 14px; padding: 3px 0; }
-.pnl .nm { font-family: var(--fell); font-size: 15.5px; }
-.pnl .stt { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
-.pnl .ang { grid-column: 2 / 4; font-size: 13px; color: var(--ink-soft); }
+.pnl .who { display: grid; grid-template-columns: auto 1fr auto; gap: 0 10px; align-items: baseline; font-size: var(--fs-read); padding: 3px 0; }
+.pnl .nm { font-family: var(--fell); font-size: var(--fs-h4); }
+.pnl .stt { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.pnl .ang { grid-column: 2 / 4; font-size: var(--fs-note); color: var(--ink-soft); }
 .pnl .waiting, .pnl .skipped, .pnl .missed { opacity: .55; }
 .pnl .speaking .stt { color: var(--c); }
 /* Who is talking: a pixel portrait on a vellum plate (stays light in dark mode), and a header that sticks under the player. */
-.pt { flex: none; display: block; background: #f6f0dc; box-shadow: 0 0 0 2px var(--ink), 3px 3px 0 1px rgba(34, 31, 26, .45); }
+.pt { flex: none; display: block; background: #f6f0dc; box-shadow: 0 0 0 2px var(--ink); filter: drop-shadow(var(--sh-raise)); }
 .steps { gap: 16px; }
 .spg { display: grid; gap: 8px; }
 .spk { position: sticky; top: var(--spk-top, 0px); z-index: 1; background: var(--paper); display: flex; gap: 12px; align-items: center; padding: 8px 2px 7px 4px; border-bottom: 2px solid var(--c); }
 .spk .who { display: grid; min-width: 0; line-height: 1.2; }
-.spk .nm { font-family: var(--fell); font-size: 16px; color: var(--ink); }
-.spk .role { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--c); }
-.spk .ang { font-size: 13px; font-style: italic; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-@media (prefers-reduced-motion: no-preference) { .spk.speaking .role { animation: blink .8s infinite alternate; } }
-.pass { margin: 0; font-size: 13.5px; font-style: italic; color: var(--ink-soft); border-left: 3px solid var(--c); padding: 1px 0 1px 9px; }
+.spk .nm { font-family: var(--fell); font-size: var(--fs-h4); color: var(--ink); }
+.spk .role { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--c); }
+.spk .ang { font-size: var(--fs-note); font-style: italic; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pass { margin: 0; font-size: var(--fs-note); font-style: italic; color: var(--ink-soft); border-left: 3px solid var(--c); padding: 1px 0 1px 9px; }
 .pass b { font-style: normal; font-weight: 600; color: var(--ink); }
 .chair { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; align-items: center; }
 .chair .pt { grid-row: 1 / 3; align-self: start; margin-top: 3px; }
-.chair .by { font-family: var(--mono); font-size: 10.5px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.chair .by { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
 .pnl .who .pt { grid-row: 1 / 3; align-self: center; margin: 2px 2px 2px 2px; }
-@media (prefers-reduced-motion: no-preference) { .pnl .speaking .pt { animation: blink .8s infinite alternate; } }
+.pnl .speaking .pt { box-shadow: 0 0 0 2px var(--gold-2); }
 .invite .btn .pt { margin: -3px 2px -3px 0; }
 .caption .pt { float: left; margin: 3px 10px 2px 2px; }
 .links { display: grid; gap: 6px; }
 .link { text-align: left; border: 1px solid var(--rule); border-left: 4px solid var(--ca); border-right: 4px solid var(--cb); background: var(--card); border-radius: 3px; padding: 7px 10px; cursor: pointer; display: grid; gap: 3px; font: inherit; color: inherit; }
 .link:hover { background: var(--wash); }
-.link .ends { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: baseline; font-family: var(--fell); font-size: 15px; }
+.link .ends { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: baseline; font-family: var(--fell); font-size: var(--fs-h4); }
 .link .e.a { color: var(--ca); } .link .e.b { color: var(--cb); }
 .link .arr { color: var(--ink-soft); }
-.link .why { font-size: 13.5px; }
+.link .why { font-size: var(--fs-note); }
 .invite { display: flex; flex-wrap: wrap; gap: 6px; }
 .invite .btn { display: inline-flex; gap: 6px; align-items: center; }
-.error { border: 1px solid var(--warn); color: var(--warn); padding: 8px 11px; border-radius: 3px; font-size: 14px; }
+.error { border: 1px solid var(--warn); color: var(--warn); padding: 8px 11px; border-radius: 3px; font-size: var(--fs-read); }
 .follow textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 56px; border: 1px solid var(--rule); background: var(--card); padding: 8px 10px; border-radius: 4px; font-size: 15px; }
 
 @media (max-width: 860px) {
@@ -323,13 +320,18 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .pane { padding-left: max(16px, env(safe-area-inset-left, 0px)); }
   .yearplate { font-size: 26px; }
   .maphint { top: 40px; }
-  .caption { font-size: 13px; }
+  .caption { font-size: var(--fs-note); }
 }
 .moving text { display: none; }
 .layers.sub { margin-top: -3px; min-height: 0; }
 .layers.sub:empty { display: none; }
-.layers.sub .chip { font-size: 12px; padding: 2px 9px 2px 7px; }
+.layers.sub .chip { font-size: var(--fs-note); padding: 2px 9px 2px 7px; }
 .layers.sub .lab { color: var(--c); }
+.mstyle { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; margin-right: 4px; }
+.mstyle button { border: 0; background: transparent; font: inherit; font-size: var(--fs-note); padding: 2px 10px; cursor: pointer; color: var(--ink-soft); }
+.mstyle button + button { border-left: 1px solid var(--rule); }
+.mstyle button[aria-checked="true"] { color: var(--ink); background: color-mix(in srgb, var(--l-geography) 16%, transparent); }
+.mstyle button:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
 .chip.fam.some { border-style: dashed; }
 .chip.fam.open { box-shadow: 0 0 0 1.5px var(--c, var(--ink)) inset; }
 .basemap { position: absolute; inset: 0; pointer-events: none; }
@@ -343,39 +345,37 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .pt.lp.lbl text { fill: var(--c); font-weight: 600; }
 .line.lpath { stroke: var(--c); stroke-width: 2px; vector-effect: non-scaling-stroke; stroke-opacity: .75; }
 
-/* Flow: map controls, the key, focus mode, eras under the slider, deep time folded away. */
+/* Flow: map controls, the key, eras under the slider, deep time folded away. */
 .maphint { background: var(--card); color: var(--ink-soft); text-shadow: none; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--rule); }
 .mapctl { position: absolute; top: 10px; right: calc(10px + env(safe-area-inset-right, 0px)); display: flex; gap: 6px; z-index: 5; }
-.mapctl .btn { font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; padding: 4px 9px; box-shadow: 0 2px 6px rgba(0,0,0,.18); }
+.mapctl .btn { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; padding: 4px 9px; box-shadow: var(--sh-raise); }
 .mapctl .btn[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.mapctl kbd, .keycard kbd { font-family: var(--mono); font-size: 10px; border: 1px solid var(--rule); border-radius: 3px; padding: 0 4px; margin-left: 5px; opacity: .75; }
+.mapctl kbd, .keycard kbd { font-family: var(--mono); font-size: var(--fs-tiny); border: 1px solid var(--rule); border-radius: 3px; padding: 0 4px; margin-left: 5px; opacity: .75; }
 .keycard { position: absolute; top: 44px; right: calc(10px + env(safe-area-inset-right, 0px)); z-index: 5; width: min(300px, calc(100% - 20px)); max-height: calc(100% - 60px); overflow-y: auto;
-  background: var(--card); border: 1px solid var(--rule); border-radius: 6px; box-shadow: 0 8px 22px rgba(0,0,0,.18); padding: 10px 12px; display: grid; gap: 8px; font-size: 13.5px; }
-.keycard h4 { margin: 0; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); font-weight: 400; }
+  background: var(--card); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--sh-float); padding: 10px 12px; display: grid; gap: 8px; font-size: var(--fs-note); }
+.keycard h4 { margin: 0; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); font-weight: 400; }
 .keycard .kg { display: grid; gap: 3px; }
-.keycard .kg b { font-weight: 600; color: var(--c); font-size: 13px; }
+.keycard .kg b { font-weight: 600; color: var(--c); font-size: var(--fs-note); }
 .keycard .kr { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: center; line-height: 1.3; }
 .keycard .kr svg { position: static; width: 22px; height: 16px; overflow: visible; cursor: default; }
-.keycard .keys { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 10px; font-size: 12.5px; color: var(--ink-soft); }
+.keycard .keys { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 10px; font-size: var(--fs-note); color: var(--ink-soft); }
 .keycard .keys kbd { margin: 0; justify-self: start; }
-.app.focus { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; grid-template-areas: "map" "time"; }
-.app.focus .top, .app.focus .panel { display: none; }
-.eras { grid-column: 2; position: relative; height: 16px; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+.eras { grid-column: 2; position: relative; height: 16px; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .05em; }
 .eras button { all: unset; box-sizing: border-box; position: absolute; top: 0; height: 16px; padding: 1px 3px 0; overflow: hidden; white-space: nowrap; text-overflow: clip; cursor: pointer;
   color: var(--ink-soft); border-left: 1px solid var(--rule); }
 .eras button:hover, .eras button:focus-visible { color: var(--ink); background: var(--wash); }
 .eras button[aria-current="true"] { color: var(--ink); background: var(--wash); font-weight: 500; }
 .sec details.deep { margin-top: 2px; }
-.sec details.deep summary { cursor: pointer; font-size: 12.5px; color: var(--ink-soft); padding: 3px 6px; list-style: none; }
+.sec details.deep summary { cursor: pointer; font-size: var(--fs-note); color: var(--ink-soft); padding: 3px 6px; list-style: none; }
 .sec details.deep summary::-webkit-details-marker { display: none; }
 .sec details.deep summary::before { content: "+ "; font-family: var(--mono); }
 .sec details.deep[open] summary::before { content: "− "; }
 .sec .items.only-deep { display: none; }
 .app.asking #qbox, .app.asking #go { visibility: hidden; }
-@media (max-width: 860px) { .mapctl kbd { display: none; } .app.focus .map { height: 80vh; } .app.asking #qbox, .app.asking #go { display: none; } }
+@media (max-width: 860px) { .mapctl kbd { display: none; } .app.asking #qbox, .app.asking #go { display: none; } }
 @media (max-width: 600px) { .eras button:not([aria-current="true"]) { color: transparent; } .eras button[aria-current="true"] { overflow: visible; z-index: 1; } }
 .map canvas.marks { position: absolute; left: 0; top: 0; pointer-events: none; }
-.maptip { position: absolute; z-index: 5; max-width: 280px; pointer-events: none; background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 8px; font-size: 12.5px; line-height: 1.35; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
+.maptip { position: absolute; z-index: 5; max-width: 280px; pointer-events: none; background: var(--card); border: 1px solid var(--rule); border-radius: 3px; padding: 3px 8px; font-size: var(--fs-note); line-height: 1.35; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
 /* One label engine (views/pixel/labels.js): every label is a candidate at every zoom; the queue hides losers with .lx.
    Art direction D5: colour lives on the glyph, never on the text; settlements are vellum on ink, notes ink on vellum. */
 .map.lq .pt text { display: block; }
@@ -385,10 +385,10 @@ a { color: var(--accent); text-underline-offset: 2px; }
 .map.lq text.linelab { fill: #221f1a !important; }
 .map.lq .pt text.lx, .map.lq text.linelab.lx, .map.lq text.routelab.lx, .map.lq.moving text { display: none; }
 /* A lens with focus: the basemap goes quiet and layers outside the focused family fade (g[data-layer].dim). */
-.basemap canvas { transition: filter .35s; }
+.basemap canvas { transition: filter var(--fade); }
 .map.lens-focus .basemap canvas { filter: saturate(.35) brightness(1.06) contrast(.86); }
 .map.lens-focus .g-relief { filter: saturate(.4); }
-.map g[data-layer] { transition: opacity .3s; }
+.map g[data-layer] { transition: opacity var(--fade); }
 .map g[data-layer].dim { opacity: .28; }
 
 /* Phone: the map fills the screen; the panel is a bottom sheet (peek, half, full) you drag or tap the handle of. */
@@ -409,7 +409,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   .maphint { display: none; }
   .mapctl { top: 8px; }
   .panel { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; height: 88dvh; border: 1px solid var(--rule); border-bottom: 0; border-radius: 14px 14px 0 0;
-    background: var(--paper); box-shadow: 0 -8px 24px rgba(0, 0, 0, .18); overflow: hidden; display: flex; flex-direction: column;
+    background: var(--paper); box-shadow: none; overflow: hidden; display: flex; flex-direction: column;
     transform: translateY(calc(88dvh - var(--peek) - env(safe-area-inset-bottom, 0px))); transition: transform .28s cubic-bezier(.2, .8, .2, 1); touch-action: none; }
   .panel[data-sheet="half"] { transform: translateY(calc(88dvh - 50dvh)); }
   .panel[data-sheet="full"] { transform: translateY(0); }
@@ -455,7 +455,6 @@ a { color: var(--accent); text-underline-offset: 2px; }
     <div class="mapctl" role="toolbar" aria-label="Map controls">
       <button class="btn" id="surprise" type="button" title="Jump to a random moment worth seeing (R)">Surprise me<kbd>R</kbd></button>
       <button class="btn" id="keybtn" type="button" aria-pressed="false" aria-controls="keycard" title="What's on the map (K); every key: ?">Key<kbd>K</kbd></button>
-      <button class="btn" id="focusbtn" type="button" aria-pressed="false" title="Map only (F)">Focus<kbd>F</kbd></button>
     </div>
     <div class="keycard" id="keycard" hidden></div>
   </section>
@@ -483,7 +482,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
       <button class="tab" role="tab" data-tab="now" aria-selected="false">This year</button>
       <button class="tab" role="tab" data-tab="here" aria-selected="false">Here</button>
     </div>
-    <div class="pane" id="pane-now"></div>
+    <div class="pane" id="pane-now"><div class="pane-body" id="now-body"></div></div>
     <div class="pane" id="pane-here" hidden></div>
     <div class="pane" id="pane-guide" hidden>
       <form class="askbig" id="ask2">
@@ -492,9 +491,10 @@ a { color: var(--accent); text-underline-offset: 2px; }
         <div class="row"><button class="btn primary" type="submit">Ask, and let the map answer</button></div>
       </form>
       <span class="hint" id="askhint"></span>
+      <div class="sec known" id="known" hidden></div>
       <div class="examples" id="examples"></div>
       <div class="answer" id="answer" hidden></div>
-      <p class="foot">Rule of the house: AI drafts, sources decide. Every answer here is a draft until the judge checks it. Live answers name sources the model believes exist; they are marked unchecked.</p>
+      <p class="foot">Rule of the house: AI drafts, sources decide. Every answer here is a draft until the judge checks it. AI answers name sources the model believes exist; they are marked unchecked.</p>
     </div>
   </aside>
 </div>
@@ -515,7 +515,46 @@ const TOURS = /*__TOURS__*/;
 window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null,
   lens(d) { this.lenses.push(d); }, basemap(d) { this.basemaps.push(d); }, sprite(name, d) { this.sprites[name] = d; }, tab(d) { this.tabs.push(d); },
   // The one next thing (the chrome's gold card): { id, pri, get() -> { kick, title, go } | null }. See chrome/chrome.js.
-  nexts: [], nextThing(d) { this.nexts.push(d); } };
+  nexts: [], nextThing(d) { this.nexts.push(d); },
+  // One AI connection for every tab (the page's `sample` capability): asked for once, the first time anything needs it,
+  // and shared. Its state sits on <html data-ai="on|off">, so AI-only controls ([data-ai]) can say they need Claude.
+  ai: { state: "unknown", _p: null,
+    sample() { return this._p || (this._p = (async () => { let s = null; try { s = window.claude ? await window.claude.use("sample") : null; } catch { s = null; } this.set(!!s); return s; })()); },
+    set(on) { this.state = on ? "on" : "off"; document.documentElement.dataset.ai = this.state; },
+    lost() { this._p = Promise.resolve(null); this.set(false); } },
+  // One daily streak (atlas.today.v1): a day counts once you solve the Codex riddle or finish the Guess daily five.
+  // The first read folds in the two streaks the Codex and Guess kept apart before.
+  today: { KEY: "atlas.today.v1", _p: null,
+    date(off = 0) { const d = new Date(); d.setDate(d.getDate() + off); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; },
+    get() {
+      if (this._p) return this._p;
+      let p = null; try { p = JSON.parse(localStorage.getItem(this.KEY) || "null"); } catch { p = null; }
+      if (!p || typeof p !== "object") {
+        const old = [["atlas.codex.v1", "sk"], ["atlas.guess.v1", "st"]].map(([k, f]) => { try { return (JSON.parse(localStorage.getItem(k) || "null") || {})[f] || null; } catch { return null; } }).filter(o => o && o.last);
+        old.sort((a, b) => (b.last > a.last) - (b.last < a.last) || (b.n || 0) - (a.n || 0));
+        p = old.length ? { last: old[0].last, n: old[0].n || 0, best: Math.max(...old.map(o => Math.max(o.best || 0, o.n || 0))) } : { last: null, n: 0, best: 0 };
+      }
+      return (this._p = p);
+    },
+    mark() {
+      const p = this.get(), d = this.date();
+      if (p.last !== d) { p.n = p.last === this.date(-1) ? (p.n || 0) + 1 : 1; p.last = d; p.best = Math.max(p.best || 0, p.n); try { localStorage.setItem(this.KEY, JSON.stringify(p)); } catch { /* lasts this visit */ } }
+      return p.n;
+    },
+    streak() { const p = this.get(); return p.last === this.date() || p.last === this.date(-1) ? p.n || 0 : 0; },
+    best() { return this.get().best || 0; } },
+  // One way to write a year, for the page and every plugin: "45,000 years ago", "300 BCE", "1 CE", "300 CE", "1453".
+  NOW: 2025,
+  fmtYear(y) {
+    if (y <= -10000) { const a = ATLAS.NOW - y, r = a >= 100000 ? 1000 : 100; return `${(Math.round(a / r) * r).toLocaleString("en-US")} years ago`; }
+    return y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
+  },
+  // One provenance badge for every pane, in the map's confidence words (VIZ.md D10): "ai" (an AI draft: Claude wrote
+  // it, its sources are unchecked), "draft" (curated but not yet past the judge), or attested, estimated, approximate, unknown.
+  PROV: { ai: "AI draft · sources unchecked", draft: "Draft · awaiting check", attested: "Attested", estimated: "Estimated", approximate: "Approximate", unknown: "Unknown" },
+  prov(k) { const t = this.PROV[k] || this.PROV.unknown; return `<span class="badge prov prov-${this.PROV[k] ? k : "unknown"}">${t}</span>`; },
+  // Copy that asks you to press the map says "Tap" on a touch screen and "Click" with a mouse.
+  click: window.matchMedia && matchMedia("(hover: none)").matches ? "Tap" : "Click" };
 </script>
 <!--__LENS_SCRIPTS__-->
 <script>
@@ -523,14 +562,20 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // ---------- basics ----------
   // Time runs from 300,000 years ago. The slider is in two parts: deep time (before 4000 BCE) on a log scale of years
   // ago in its first DEEP_T, then history on the old curve (denser toward today) in the rest.
-  const NOW = 2025, MIN = -298000, HIST = -4000, SPAN = NOW - HIST, CURVE = 1.6, DEEP_T = 0.2;
+  const NOW = ATLAS.NOW, MIN = -298000, HIST = -4000, SPAN = NOW - HIST, CURVE = 1.6, DEEP_T = 0.2;
   const LBP0 = Math.log(NOW - MIN), LBP1 = Math.log(NOW - HIST);
+  // The one list of eras: the ribbon under the slider, the year plate and the Codex's fog all name time with it.
+  // ATLAS.eras [{from, to, name}] and ATLAS.eraAt(year) -> index (the last era runs on past NOW).
+  const ERAS = [[MIN, -70000, "First modern humans"], [-70000, -40000, "Out of Africa"], [-40000, -9700, "Ice Age"], [-9700, HIST, "First farmers"], [HIST, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
+    [1450, 1800, "Early modern"], [1800, 1914, "Industrial"], [1914, 1945, "World wars"], [1945, NOW, "Since 1945"]];
+  ATLAS.eras = ERAS.map(([from, to, name]) => ({ from, to, name }));
+  ATLAS.eraAt = y => { let i = 0; for (let j = 0; j < ERAS.length; j++) if (y >= ERAS[j][0]) i = j; return i; };
   const LENSES = ["geography", "military", "economy", "population", "disease", "religion", "ideas", "literature", "people", "order"];
   const LENS_NAME = { geography: "Geography", military: "Military", economy: "Economy & trade", population: "Population & migration", disease: "Disease & climate", religion: "Religion", ideas: "Ideas", literature: "Literature", people: "People", order: "Order & chaos" };
   const lensColor = l => `var(--l-${LENSES.includes(l) ? l : "order"})`;
   const LAYERS = [
     { k: "places", n: "Cities" }, { k: "people", n: "People" }, { k: "money", n: "Trade & migration" },
-    { k: "disease", n: "Plague & climate" }, { k: "ideas", n: "Ideas & faith" }, { k: "order", n: "Order & chaos" }, { k: "war", n: "War & chokepoints" },
+    { k: "disease", n: "Plague & climate" }, { k: "ideas", n: "Ideas, faith & art" }, { k: "order", n: "Order & chaos" }, { k: "war", n: "War & chokepoints" },
   ];
   const LENS_LAYER = { geography: "places", military: "war", economy: "money", population: "money", disease: "disease", religion: "ideas", ideas: "ideas", literature: "ideas", people: "people", order: "order" };
   // Six families on the chip bar; each lens inside one is precise, a family is what you switch on together.
@@ -538,22 +583,41 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const FAMILIES = [{ id: "land", n: "Land", c: "var(--t-land, var(--l-geography))" }, { id: "power", n: "Power", c: "var(--t-power, var(--y-war))" }, { id: "wealth", n: "Wealth", c: "var(--t-wealth, var(--y-money))" },
     { id: "peoples", n: "Peoples", c: "var(--t-peoples, var(--y-people))" }, { id: "mind", n: "Mind", c: "var(--t-mind, var(--y-ideas))" }, { id: "shocks", n: "Shocks", c: "var(--t-shocks, var(--y-disease))" }];
   // The family emblem (views/pixel/icons.js) for a layer or lens, tinted with its family's tincture.
+  // A family's emblem for a kicker; nothing when the key belongs to no family.
+  const emblem = k => { const h = famIcon(k); return h === "<i></i>" ? "" : h; };
   const famIcon = k => { const f = FAMILIES.some(x => x.id === k) ? k : FAM_OF[k] || (ATLAS.lenses.find(d => d && d.id === k) || {}).family; return f && window.PIXEL_ICONS ? `<span class="fi" style="--t:var(--t-${f})">${PIXEL_ICONS.svg(f, "s")}</span>` : "<i></i>"; };
-  const FAM_OF = { places: "land", war: "power", order: "power", money: "wealth", people: "peoples", ideas: "mind", disease: "shocks" };
+  const FAM_OF = { places: "land", war: "power", order: "power", money: "wealth", people: "peoples", ideas: "mind", disease: "shocks",
+    geography: "land", military: "power", economy: "wealth", population: "peoples", religion: "mind", literature: "mind" };
   const PLUG = ATLAS.lenses.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !(d.id in FAM_OF) && FAMILIES.some(f => f.id === d.family) && a.findIndex(x => x && x.id === d.id) === i);
+  // A lens with with: "<chip>" has no chip of its own: it is part of that one, on whenever it is (Provinces with Borders).
+  const WITH = Object.fromEntries(PLUG.filter(d => d.with && !d.tab).map(d => [d.id, d.with]));
+  // A part splits a built-in layer's chip by subject: Plague & climate shows as Epidemics and Famine & climate. The layer
+  // stays one switch underneath (stories and modes turn on "disease"); a part is on while its layer is on and the part
+  // has not been switched off. A lens can go with a part (Epidemics goes with "epidemics").
+  const PARTS = { epidemics: "disease", famine: "disease" };
+  const PARTS_OF = {};
+  for (const [p, l] of Object.entries(PARTS)) (PARTS_OF[l] = PARTS_OF[l] || []).push(p);
+  const partOn = p => !!state.on[PARTS[p]] && state.on[p] !== false;
+  // Which part a built-in shock belongs to: epidemics, or everything nature and hunger do (famine, eruption, cold, collapse).
+  const shockPart = e => e.subtype === "epidemic" ? "epidemics" : "famine";
+  // covers: page records a lens draws in more detail; the page skips them while that lens is on (the Middle Passage
+  // draws the Atlantic slave trade, so the migration line for it steps aside).
+  const COVERS = PLUG.filter(d => Array.isArray(d.covers)).map(d => [d, new Set(d.covers)]);
+  // Its data has to be in (the Middle Passage reads the data of On the move, the lens it goes with).
+  const covered = id => COVERS.some(([d, s]) => s.has(id) && lensOn(d.id) && lensReady(d) && PLUG.every(h => h.id !== WITH[d.id] || lensReady(h)));
+  const lensOn = id => { const w = WITH[id]; return w ? (w in PARTS ? partOn(w) : !!(w in state.on ? state.on[w] : state[w])) : !!state.on[id]; };
   for (const d of PLUG) {
     document.documentElement.style.setProperty("--y-" + d.id, d.color || "#999");
     LAYERS.push({ k: d.id, n: d.name || d.id });
     for (const l of d.guide || []) {
       if (!LENSES.includes(l)) { LENSES.push(l); LENS_NAME[l] = d.name || l; document.documentElement.style.setProperty("--l-" + l, d.color || "#999"); }
-      if (!LENS_LAYER[l]) LENS_LAYER[l] = d.id;
+      if (!LENS_LAYER[l]) LENS_LAYER[l] = d.with || d.id;
     }
   }
   // A plugin lens whose data loads after the first paint (LATE_FILES) is skipped until it has arrived.
   const lensReady = d => typeof LATE_FILES === "undefined" || !LATE_FILES["lens:" + d.id] || (typeof LENS_DATA !== "undefined" && !!LENS_DATA[d.id]);
   const BASEMAP0 = ATLAS.basemaps.find(b => b && typeof b.mount === "function") || null;
-  const fmtAgo = y => { const a = NOW - y, r = a >= 100000 ? 1000 : 100; return `${(Math.round(a / r) * r).toLocaleString("en-US")} years ago`; };
-  const fmtYear = y => y <= -10000 ? fmtAgo(y) : y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : y < 1000 ? `${y} CE` : `${y}`;
+  const fmtYear = ATLAS.fmtYear;
   const fmtSpan = (s, e) => `${s == null ? "?" : fmtYear(s)}–${e == null ? "today" : fmtYear(e)}`;
   const tToYearF = t => t >= DEEP_T ? NOW - SPAN * Math.pow(Math.max(0, 1 - (t - DEEP_T) / (1 - DEEP_T)), CURVE)
     : NOW - Math.exp(LBP0 + (LBP1 - LBP0) * Math.max(0, t) / DEEP_T);
@@ -700,6 +764,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     sel: null, tab: "now", basemap: !!BASEMAP0, fam: null,
   };
   for (const d of PLUG) state.on[d.id] = !!d.on;
+  for (const p in PARTS) state.on[p] = true;
 
   // ---------- map ----------
   const mapEl = document.getElementById("map");
@@ -710,6 +775,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const projection = d3.geoNaturalEarth1();
   const path = d3.geoPath(projection);
   const land = topojson.feature(LAND, LAND.objects.land);
+  ATLAS.landFeature = land;  // decoded once; the pixel map and compare use the same shapes
   const gSphere = root.append("path").attr("class", "sphere");
   const gGrat = root.append("path").attr("class", "grat");
   const gRelief = root.append("g").attr("class", "g-relief");
@@ -789,12 +855,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (fk[0] === "t") fc = (TL.realms(y, 1) || []).map(r => r.feature);
     else { const t = POLITIES[y]; fc = precise("l0", y, onPrecise(y)) || (t ? topojson.feature(t, Object.values(t.objects)[0]).features : []); }
     const list = fc.map(f => {
-      // A timeline row is shared by every frame of its years, so its shape is projected once.
-      if (FEAT.has(f)) return FEAT.get(f);
+      // A timeline row is shared by every frame of its years, so its shape is projected once per projection (projV).
+      const hit = FEAT.get(f); if (hit && hit.v === projV) return hit;
       const p = f.properties || {}, name = (p.name || p.NAME || "").trim(), subj = (p.subject_of || p.SUBJECTO || "").trim(), at = p.s ?? y;
       const emp = (p.la && EMPIRES.find(e => e.id === p.la)) || EMPIRES.find(e => at >= e.start && at <= (e.end ?? 9999) && (e.match.includes(name) || e.match.includes(subj))) || null;
       // The SVG outline is only built when a frame is drawn as SVG (no basemap, or a highlighted state).
-      const d = { f, id: p.id, name: name || subj, emp, wiki: p.wiki, s: p.s, e: p.e,
+      const d = { f, v: projV, id: p.id, name: name || subj, emp, wiki: p.wiki, s: p.s, e: p.e,
         get d() { return this._d ?? (this._d = path(f) || ""); },
         get area() { return this._a ?? (this._a = path.area(f)); }, get c() { return this._c ?? (this._c = path.centroid(f)); } };
       if (fk[0] === "t") FEAT.set(f, d);
@@ -935,34 +1001,63 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // zoom.transform skips the zoom's limits; fitT applies them (no empty sky past the world's edge on a phone).
   let kMin = 1;
   const fitT = t => zoom.constrain()(t, [[0, 0], [W, H]], zoom.translateExtent());
+  // The free part of the map, in map pixels: what the docked panel, the lens rail, the question well and the time bar
+  // leave uncovered.
+  // The whole world starts fitted to it (the "home" view), a flight lands in its middle and "the view" means it, so
+  // nothing starts under the panel. It is read when the map is laid out (a resize), not when the panel folds.
+  // The projection itself still fits the whole window, so a zoom level means what it always did: the same detail,
+  // the same label and city thresholds, the same work per frame. Home is a zoom a little below 1.
+  let FREE = [0, 0, 0, 0], SB = [[0, 0], [0, 0]], tall = false;
+  function freeRect() {
+    const m = mapEl.getBoundingClientRect();
+    const box = q => { const el = document.querySelector(q); if (!el || el.hidden) return null; const r = el.getBoundingClientRect(); return r.width > 1 && r.height > 1 ? [r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top] : null; };
+    let x0 = 0, y0 = 0, x1 = W, y1 = H;
+    const p = box(".app .panel"), t = box(".app .time"), q = box(".app .askbar"), l = box("#layers");
+    if (p && p[3] - p[1] > H * 0.5 && p[0] > W * 0.45) x1 = Math.min(x1, p[0]);   // docked at the side, not a bottom sheet
+    if (t && t[1] > H * 0.6) y1 = Math.min(y1, t[1]);
+    if (q && q[3] < H * 0.2) y0 = Math.max(y0, q[3]);
+    if (l && l[3] - l[1] > 2 * (l[2] - l[0])) { if (l[2] < W * 0.15) x0 = Math.max(x0, l[2]); }   // a rail down the left
+    else if (l && l[3] < H * 0.3) y0 = Math.max(y0, l[3]);                                      // a row along the top
+    return x1 - x0 > W * 0.45 && y1 - y0 > H * 0.45 ? [x0, y0, x1, y1] : [0, 0, W, H];
+  }
+  const freeMid = () => [(FREE[0] + FREE[2]) / 2, (FREE[1] + FREE[3]) / 2];
   function layout() {
     const r = mapEl.getBoundingClientRect();
     // Keep the same place in the middle when the map changes size.
-    const t0 = d3.zoomTransform(svg.node()), had = W && projection.invert ? projection.invert(t0.invert([W / 2, H / 2])) : null;
+    const t0 = d3.zoomTransform(svg.node()), had = W && projection.invert ? projection.invert(t0.invert(freeMid())) : null, k0 = kMin;
     W = Math.max(200, r.width); H = Math.max(200, r.height);
+    FREE = freeRect();
     svg.attr("viewBox", `0 0 ${W} ${H}`);
     projection.fitExtent([[6, 6], [W - 6, H - 6]], { type: "Sphere" });
     gSphere.attr("d", path({ type: "Sphere" }));
     gGrat.attr("d", path(d3.geoGraticule10()));
     gLand.attr("d", path(land));
-    for (const k in featCache) delete featCache[k];
+    featCache.clear();  // shapes are cached in screen space, so a new size needs new ones
     projV++;
     // A tall map (a phone held upright) would show the whole world as a thin band with empty sky above and below it,
     // so there the smallest zoom fills the height and the view stops at the world's edges.
-    const sb = path.bounds({ type: "Sphere" }), worldH = sb[1][1] - sb[0][1];
-    kMin = worldH < H * 0.75 ? Math.min(6, H / worldH) : 1;
-    zoom.scaleExtent([kMin, K_MAX]).translateExtent(kMin > 1 ? sb : [[-W, -H], [W * 2, H * 2]]);
+    // Anywhere else the smallest zoom is the one that fits the whole world in the free space.
+    const sb = SB = path.bounds({ type: "Sphere" }), worldW = sb[1][0] - sb[0][0], worldH = sb[1][1] - sb[0][1];
+    tall = worldH < H * 0.75;
+    kMin = tall ? Math.min(6, H / worldH) : Math.min(1, (FREE[2] - FREE[0] - 12) / worldW, (FREE[3] - FREE[1] - 12) / worldH);
+    zoom.scaleExtent([kMin, K_MAX]).translateExtent(tall ? sb : [[-W, -H], [W * 2, H * 2]]);
     drawTerrainLayer(); drawRealmsLayer(true); drawPolys(true); drawAll(true); drawOverlay(); drawSel(); renderBasemap();
-    if (had && isFinite(had[0]) && t0.k > 1) { const [x, y] = projection(had), k = Math.max(kMin, t0.k); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k))); }
-    else if (kMin > 1) { const [x, y] = projection([30, 25]); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(W / 2 - kMin * x, H / 2 - kMin * y).scale(kMin))); }
-    else if (t0.k > 1 || t0.x || t0.y) svg.call(zoom.transform, d3.zoomIdentity);
+    const [cx, cy] = freeMid();
+    if (had && isFinite(had[0]) && t0.k > k0 * 1.001) { const [x, y] = projection(had), k = Math.max(kMin, t0.k); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(cx - k * x, cy - k * y).scale(k))); }
+    else if (tall) { const [x, y] = projection([30, 25]); svg.call(zoom.transform, fitT(d3.zoomIdentity.translate(cx - kMin * x, cy - kMin * y).scale(kMin))); }
+    else { const h = home(); if (h.k !== t0.k || h.x !== t0.x || h.y !== t0.y) svg.call(zoom.transform, h); }
+  }
+  // The whole world, centred in the free space at the smallest zoom.
+  function home() {
+    const [cx, cy] = freeMid(), x = (SB[0][0] + SB[1][0]) / 2, y = (SB[0][1] + SB[1][1]) / 2;
+    return fitT(d3.zoomIdentity.translate(cx - kMin * x, cy - kMin * y).scale(kMin));
   }
   function flyTo(v, ms = 1400) {
     if (!v || !isFinite(v.lon) || !isFinite(v.lat)) return;
     const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]);
-    const k = Math.max(kMin, Math.min(K_MAX, v.span ? W / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
-    const [x, y] = projection([v.lon, v.lat]);
-    const t = fitT(d3.zoomIdentity.translate(W / 2 - k * x, H / 2 - k * y).scale(k));
+    const k = Math.max(kMin, Math.min(K_MAX, v.span ? (FREE[2] - FREE[0]) / (Number(v.span) * pxPerDeg) : Number(v.zoom) || state.k));
+    const [x, y] = projection([v.lon, v.lat]), [cx, cy] = freeMid();
+    const t = fitT(d3.zoomIdentity.translate(cx - k * x, cy - k * y).scale(k));
     // No time to fly: jump now, in this call (a zero-length transition would still wait a frame and render twice).
     if (!ms || reduceMotion()) svg.interrupt().call(zoom.transform, t);
     else svg.interrupt().transition().duration(ms).call(zoom.transform, t);
@@ -972,7 +1067,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function reveal(lon, lat) {
     const t = d3.zoomTransform(svg.node()), p = projection([lon, lat]); if (!p) return;
     const [sx, sy] = t.apply(p);
-    if (sx < 30 || sy < 30 || sx > W - 30 || sy > H - 30) flyTo({ lon, lat, zoom: Math.max(t.k, 2) }, 900);
+    if (sx < FREE[0] + 30 || sy < FREE[1] + 30 || sx > FREE[2] - 30 || sy > FREE[3] - 30) flyTo({ lon, lat, zoom: Math.max(t.k, 2) }, 900);
   }
 
   // ---------- layers: every lens mark is a record on one canvas ----------
@@ -1083,6 +1178,19 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     else if (r.stroke !== false) { c.strokeStyle = r.hi ? cssColor("var(--ink)") : paper; c.lineWidth = r.hi ? 1.4 : .8; c.stroke(); }
   }
   // Labels: highest priority first, each placed only where it does not overlap one already placed.
+  // The selection's label: vellum on a solid ink plate, snapped to whole pixels. Every other label keeps its halo.
+  const PLATE_INK = "#221f1a", PLATE_VELLUM = "#f6f0dc", PLATE_PAD = [4, 2];
+  const plateBox = (x0, y0, x1, y1) => [Math.floor(x0 - PLATE_PAD[0]), Math.floor(y0 - PLATE_PAD[1]), Math.ceil(x1 + PLATE_PAD[0]), Math.ceil(y1 + PLATE_PAD[1])];
+  function drawLabel(c, L, x0, w) {
+    if (L.sel) {
+      const y1 = L.y + L.px * .25, b = plateBox(x0, y1 - L.px, x0 + w, y1);
+      c.fillStyle = PLATE_INK; c.fillRect(b[0], b[1], b[2] - b[0], b[3] - b[1]);
+      c.fillStyle = PLATE_VELLUM; c.fillText(L.text, L.x, L.y);
+      return;
+    }
+    c.strokeStyle = L.halo; c.lineWidth = L.haloW; c.strokeText(L.text, L.x, L.y);
+    c.fillStyle = L.fill; c.fillText(L.text, L.x, L.y);
+  }
   function placeLabels(c, labels, W, H) {
     labels.sort((a, b) => b.pri - a.pri);
     const boxes = [], cell = 64, grid = new Map();
@@ -1100,11 +1208,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       const x0 = L.center ? L.x - w / 2 : L.x, y1 = L.y + h * .25, y0 = y1 - h;
       if (x0 > W || x0 + w < 0 || y1 < 0 || y0 > H) continue;
       if (!L.force && hits(x0 - 1, y0, x0 + w + 1, y1)) continue;
-      const b = [x0 - 1, y0, x0 + w + 1, y1]; boxes.push(b); add(b);
+      const b = L.sel ? plateBox(x0, y0, x0 + w, y1) : [x0 - 1, y0, x0 + w + 1, y1]; boxes.push(b); add(b);
       c.globalAlpha = L.alpha;
       c.textAlign = L.center ? "center" : "left";
-      c.strokeStyle = L.halo; c.lineWidth = L.haloW; c.strokeText(L.text, L.x, L.y);
-      c.fillStyle = L.fill; c.fillText(L.text, L.x, L.y);
+      drawLabel(c, L, x0, w);
     }
     c.globalAlpha = 1; c.textAlign = "left";
     return boxes.length;
@@ -1124,6 +1231,9 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const pixel = !!BASEMAP, moving = mapEl.classList.contains("moving"), zoomed = k >= 4;
     const paper = cssColor("var(--paper)"), soft = cssColor("var(--ink-soft)"), ink = cssColor("var(--ink)");
     const labels = [], Q = queueState(), dimOf = key => Q.f && famOfLayer(key) !== Q.f ? .28 : 1;
+    const S = state.sel, selName = S && (S.name || S.title) || "", selP = selName ? projection([S.lon, S.lat]) : null;
+    const selX = selP ? selP[0] * k + t.x : NaN, selY = selP ? selP[1] * k + t.y : NaN;
+    let selDone = false;
     // Lines first (all layers), in world coordinates through the zoom transform.
     if (!selfPaint) {
       c.setTransform(dpr * k, 0, 0, dpr * k, dpr * t.x, dpr * t.y);
@@ -1177,9 +1287,15 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
           halo: onArt ? "#221f1a" : paper, haloW: 3, pri: (r.hi ? 100 : 0) + (r.always ? 20 : 0) + (r.pri || 0), force: r.hi,
           r, fam, kind: r.kind,
         });
+        if (selName && !selDone && r.label === selName && Math.abs(x - selX) < 3 && Math.abs(y - selY) < 3) {
+          const L = labels[labels.length - 1]; L.sel = true; L.pri = 101; L.force = true; L.alpha = 1; selDone = true;
+        }
       }
     }
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (selName && !selDone && !moving && isFinite(selX) && selX > -40 && selY > -40 && selX < W + 40 && selY < H + 40)
+      labels.push({ text: selName, x: Math.round(selX) + 10, y: Math.round(selY) + 4, px: 12, alpha: 1, sel: true, pri: 101, force: true, kind: "sel",
+        font: `600 12px ${pixel ? FONT.pixel : FONT.serif}`, fill: PLATE_VELLUM, halo: PLATE_INK, haloW: 0 });
     if (Q.lq) { if (!moving) queueLabels(c, labels, t, Q.f, pixel); }
     else placeLabels(c, labels, W, H);
     lastPaint = { labels };
@@ -1222,7 +1338,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   };
   const markWatch = [];
   ATLAS.onMarks = fn => { if (typeof fn === "function") markWatch.push(fn); };
-  const marksChanged = () => { for (const fn of markWatch) try { fn(ATLAS.marks()); } catch (err) { console.error(err); } };
+  // One record for every watcher, and none built when nothing watches (the pixel map is off).
+  const marksChanged = () => { if (!markWatch.length) return; const r = ATLAS.marks(); for (const fn of markWatch) try { fn(r); } catch (err) { console.error(err); } };
   // Hover: a tip with the record's title, and a pointer cursor over anything clickable.
   let hoverRaf = 0, hoverEv = null;
   svg.on("mousemove.marks", ev => {
@@ -1265,7 +1382,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const y = state.year, on = state.on.money, L = MK.money;
     const tr = on ? TRADE.filter(t => y >= t.start && y <= t.end) : [];
     // A migration pours along its line while it happens (Minard: width = people, one art pixel per tenfold) and leaves a fading trace for 40 years.
-    const mg = on ? MIGS.filter(m => y >= m.start && y <= m.end + (m.start > -3000 ? 40 : 0)) : [];
+    const mg = on ? MIGS.filter(m => y >= m.start && y <= m.end + (m.start > -3000 ? 40 : 0) && !(COVERS.length && covered(m.id))) : [];
     const hb = on ? HUBS.filter(h => y >= h.start && y <= h.end) : [];
     const flowConf = d => d.people == null ? (d.start < -3000 ? 3 : 2) : d.low && d.high / d.low > 1.5 ? 1 : 0;
     L.lines = [
@@ -1283,11 +1400,11 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   function drawDisease() {
     const y = state.year, on = state.on.disease, L = MK.disease;
-    const ev = on ? SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 2 && y <= (e.end ?? NOW) + 8) : [];
+    const ev = on ? SHOCKS.filter(e => e.start >= -5000 && y >= e.start - 2 && y <= (e.end ?? NOW) + 8 && partOn(shockPart(e))) : [];
     L.points = ev.map(d => P(d, { kind: "shock", color: SHOCK_C[d.subtype] || "var(--y-disease)", size: d.deaths ? 5 + Math.max(0, Math.log10(d.deaths[1]) - 3) * 2.6 : 7,
       dash: d.subtype === "famine" ? [3, 2] : null, famine: d.subtype === "famine", label: d.name, always: true, pri: 9, title: () => `${d.name} · ${SHOCK_N[d.subtype] || d.subtype} · ${fmtSpan(d.start, d.end)}`, card: cardFn(shockCard, d) }));
     // The Black Death month by month, from the Plague & Climate workstream.
-    const bdOn = on && y >= 1338 && y <= 1365;
+    const bdOn = partOn("epidemics") && y >= 1338 && y <= 1365;
     const bd = () => shockCard(SHOCKS.find(e => e.id === "event:black_death"));
     L.lines = (bdOn ? BD.filter(r => r.year <= y) : []).map(d => ({ src: d, pts: d.pts, kind: "bd", color: "var(--y-disease)", width: 1.6, alpha: .7, card: bd }));
     const reached = bdOn ? Object.entries(ARRIVE).filter(([id, a]) => a.y <= y && PL[id]) : [];
@@ -1421,7 +1538,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   function drawLenses() {
     for (const d of PLUG) {
       const L = MK["lens:" + d.id]; L.points = []; L.lines = [];
-      if (!state.on[d.id] || typeof d.draw !== "function" || !lensReady(d)) { G["lens:" + d.id].selectAll("*").remove(); continue; }
+      if (!lensOn(d.id) || typeof d.draw !== "function" || !lensReady(d)) { G["lens:" + d.id].selectAll("*").remove(); continue; }
       try { const c = lensCtx(d); d.draw(c); c._end(); } catch (err) { console.error("lens " + d.id, err); }
     }
   }
@@ -1542,17 +1659,18 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       L.on = false;
       const y1 = L.y + px * .25, y0 = y1 - px;
       if (y0 < 0 || y1 > H || L.x < 0 && !L.center || L.x > W) continue;  // off the frame: no need to measure it
-      L.font = labelFont(hi || settle ? 600 : 500, px, fam); L.px = px; L.fill = settle && !hi ? VELLUM : INK; L.halo = settle && !hi ? INK : VELLUM;
+      L.font = labelFont(hi || settle || L.sel ? 600 : 500, px, fam); L.px = px; L.fill = settle && !hi ? VELLUM : INK; L.halo = settle && !hi ? INK : VELLUM;
       const w = textW(c, L.font, L.text), x0 = L.center ? L.x - w / 2 : L.x;
       if (x0 < 0 || x0 + w > W) continue;  // whole labels only, never cut by the frame
-      extra.push({ pri, note: L.note || !settle, text: L.text, box: [x0 - 1, y0, x0 + w + 1, y1], show: on => { L.on = on; } });
+      L.x0 = x0; L.w = w;
+      if (L.sel) pri = 101;
+      extra.push({ pri, note: L.note || !settle, text: L.text, box: L.sel ? plateBox(x0, y0, x0 + w, y1) : [x0 - 1, y0, x0 + w + 1, y1], show: on => { L.on = on; } });
     }
     try { LQ.layout(t, W, H, { year: state.year, focus: f, extra, avoid: chromeRects() }); } catch (err) { console.error("labels", err); }
     c.lineJoin = "round";
     for (const L of labels) if (L.on) {
       c.font = L.font; c.globalAlpha = L.alpha; c.textAlign = L.center ? "center" : "left";
-      c.strokeStyle = L.halo; c.lineWidth = L.haloW; c.strokeText(L.text, L.x, L.y);
-      c.fillStyle = L.fill; c.fillText(L.text, L.x, L.y);
+      drawLabel(c, L, L.x0, L.w);
     }
     c.globalAlpha = 1; c.textAlign = "left";
   }
@@ -1573,7 +1691,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const m = mapEl.getBoundingClientRect(), rel = r => [r.left - m.left, r.top - m.top, r.right - m.left, r.bottom - m.top];
     if (typeof ATLAS.chromeRects === "function") try { return ATLAS.chromeRects().map(r => Array.isArray(r) ? r : rel(r)); } catch (err) { console.error(err); }
     const out = [];
-    for (const el of mapEl.querySelectorAll(".mapctl, .maphint, .keycard, .pxhud .hit, .pxhud .scale")) if (el.offsetParent) out.push(rel(el.getBoundingClientRect()));
+    for (const el of mapEl.querySelectorAll(".mapctl, .maphint, .keycard, .pxhud-br")) if (el.offsetParent) out.push(rel(el.getBoundingClientRect()));
     return out;
   }
   // Every label change (a source refreshes, a pin, the focus) repaints the mark layer, which runs the queue.
@@ -1588,6 +1706,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     marksChanged();
     gSel.selectAll("g.sel").data(d).join(e => { const g = e.append("g").attr("class", "pt sel"); g.append("circle").attr("class", "pulse").attr("r", 8); g.append("circle").attr("r", 4); return g; });
     placeScaled();
+    paintSoon();
   }
   const R_KM = 300;
   function select(card, opts = {}) {
@@ -1597,6 +1716,12 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (card.year != null && opts.setYear) animateYear(card.year);
     drawSel();
     if (opts.fly) reveal(card.lon, card.lat);
+    // A click on the map goes to the open tab first, when it has a use for one (Who was there, Live a life); otherwise Here.
+    if (opts.click) {
+      const t = ATLAS.tabs.find(d => d && d.id === state.tab && typeof d.pick === "function");
+      let took = false; if (t) try { took = t.pick({ ...card }) === true; } catch (err) { console.error(err); }
+      if (took) return;
+    }
     setTab("here");
     renderHere();
   }
@@ -1613,8 +1738,8 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const [mx, my] = d3.pointer(ev, root.node());
     const inCity = cityFeatureAt(mx, my);
     // A building beats the city's own dot it stands beside; any other lens mark keeps its priority.
-    if (hit && !(inCity && (MK.places ? MK.places.points : []).includes(hit))) { const c = hit.card(); if (c) return select(c); }
-    if (inCity) return select(inCity);
+    if (hit && !(inCity && (MK.places ? MK.places.points : []).includes(hit))) { const c = hit.card(); if (c) return select(c, { click: true }); }
+    if (inCity) return select(inCity, { click: true });
     const ll = projection.invert([mx, my]);
     if (!ll || !isFinite(ll[0])) return;
     // Snap to the nearest named place within a few pixels.
@@ -1622,7 +1747,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     let best = null, bd = tol;
     for (const e of ENTRIES) { const d = near(e.lon, e.lat); if (d < bd) { bd = d; best = { lon: e.lon, lat: e.lat, name: nameAt(e, state.year) }; } }
     for (const p of NAMED) { const d = near(p.lon, p.lat); if (d < bd) { bd = d; best = { ...p }; } }
-    select(best || { lon: ll[0], lat: ll[1], name: null });
+    select(best || { lon: ll[0], lat: ll[1], name: null }, { click: true });
   });
 
   // Every named place any workstream knows, for snapping clicks and naming spots.
@@ -1710,7 +1835,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   }
   function cardHTML(c) {
     if (!c || !c.title) return "";
-    return `<div class="focus" style="--c:${c.c}"><span class="fk">${esc(c.kick)}</span><span class="ft">${esc(c.title)}</span>
+    return `<div class="focus" style="--c:${c.c}"><span class="fk">${emblem(c.fam || (/--y-([\w-]+)/.exec(c.c || "") || [])[1])}${esc(c.kick)}</span><span class="ft">${esc(c.title)}</span>
       ${c.meta ? `<span class="sub">${esc(c.meta)}</span>` : ""}${c.body ? `<p>${esc(c.body)}</p>` : ""}${c.why ? `<p class="why">${esc(c.why)}</p>` : ""}
       ${c.html || ""}${c.polity && !(ATLAS.cardViz || []).length ? sparkHTML(c.polity) : ""}${cardViz(c)}${(() => { try { return ATLAS.cardMore ? ATLAS.cardMore(c) : ""; } catch (err) { console.error("cardMore", err); return ""; } })()}
       ${c.holders && c.holders.length ? `<div class="items">${c.holders.map(r => item(`${esc(r.n)}`, fmtSpan(r.s, r.e), "", () => animateYear(r.s), !(state.year >= r.s && state.year <= r.e))).join("")}</div>` : ""}
@@ -1763,7 +1888,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   // ---------- This year ----------
   function renderNow() {
     const y = state.year; ACTS = ACTS.slice(0, 0);
-    const el = document.getElementById("pane-now");
+    const el = document.getElementById("now-body");
     const evs = [];
     for (const e of ENTRIES) for (const [yy, t, bad] of (EVENTS[e.id] || [])) if (Math.abs(yy - y) <= 25) evs.push({ e, yy, t, bad });
     evs.sort((a, b) => Math.abs(a.yy - y) - Math.abs(b.yy - y));
@@ -1785,9 +1910,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     flips.sort((a, b) => Math.abs(a.h.s - y) - Math.abs(b.h.s - y));
     const total = { pol: pols.length, shaky: pols.filter(o => o.f != null && o.f >= ORDER.thr).length };
     const ind = MONEY.econ.india, uk = MONEY.econ.uk, gi = interp(ind.gdp_per_capita, y), gu = interp(uk.gdp_per_capita, y);
-    el.innerHTML = `
+    fillHost(el, `
       <div><p class="kick">The world in</p><h2 class="ttl">${esc(fmtYear(y))}</h2>
       <p class="sub">${pols.length} states on the map${total.shaky ? `, ${total.shaky} of them fragile` : ""} · ${ppl.length ? adultsAt(y).length + " famous people alive" : "no famous people recorded yet"} · ${tr.length} trade routes running</p></div>
+      <div class="part-slot"></div>
       ${vizOf(ATLAS.nowViz)}
       ${sec("places", "Happening now", evs.slice(0, 6).map(o => item(`<b>${esc(nameAt(o.e, o.yy))}</b>: ${esc(o.t)}`, fmtYear(o.yy), "", goCard(cityCard(o.e)))))}
       ${lensRows("land", "now")}${sec("places", "Biggest cities", cities.map(o => item(`<b>${esc(nameAt(o.e, y))}</b>`, "~" + fmtN(o.p), "", goCard(cityCard(o.e)))))}
@@ -1810,7 +1936,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
         ...broke.map(p => item(`<b>${esc(p.n)}</b> broke apart`, fmtYear(p.e), "", goCard(polityCard(p)))),
       ])}${lensRows("power", "now")}
       <div class="row"><button class="btn" data-a="${act(() => { document.getElementById("qbox").value = `What was the world like in ${fmtYear(y)}, and what was about to change?`; document.getElementById("ask").requestSubmit(); })}">Ask the guide about ${esc(fmtYear(y))}</button></div>
-      ${footHTML()}`;
+      ${footHTML()}`);
   }
   function footHTML() {
     return `<p class="foot">One map, seven workstreams: Living Atlas (cities, wonders, borders from historical-basemaps, GPL-3.0); a border for every year one changed, about 500 frames from 3400 BCE to 2024, from Seshat Cliopatria (CC BY 4.0); Who Could Have Met (Pantheon 2025, CC BY 4.0); Where the Money Moved (Maddison Project 2020); Plague &amp; Climate; Atlas of Ideas; Borders and Battles (curated battles plus about 11,000 from Wikidata, chokepoints and their holders from Cliopatria borders); terrain basemap (relief, rivers, named ranges, deserts and seas); Order &amp; Chaos lab (Seshat Cliopatria, CC BY 4.0; fragility from territory only, AUC ${ORDER.auc}). Most curated records are drafts awaiting the judge.</p>`;
@@ -1821,7 +1947,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const el = document.getElementById("pane-here");
     const s = state.sel, y = state.year;
     ACTS = [];
-    if (!s) { el.innerHTML = `<p class="sub">Click anywhere on the map, or on anything in the other tabs, and this column gathers every lens for that spot and year.</p>`; return; }
+    if (!s) { el.innerHTML = `<p class="sub">${ATLAS.click} anywhere on the map, or on anything in the other tabs, and this column gathers every lens for that spot and year.</p>`; return; }
     const { lon, lat } = s;
     const rb = ruledBy(lon, lat, y);
     const city = ENTRIES.map(e => ({ e, d: km([lon, lat], [e.lon, e.lat]) })).sort((a, b) => a.d - b.d)[0];
@@ -1891,7 +2017,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       <div><p class="kick">Here, in ${esc(fmtYear(y))}</p><h2 class="ttl">${esc(name)}</h2>
       ${y < HIST ? `<p class="sub">Before the first states</p>` : rb ? `<p class="sub">Inside ${esc(rb.emp ? rb.emp.name : rb.name)} on the ${esc(fmtYear(frameYear(y)))} border map</p>` : `<p class="sub">No state drawn here on the ${esc(fmtYear(frameYear(y)))} border map</p>`}</div>
       ${cardHTML(s)}
-      ${rb && rb.emp ? `<div class="focus" style="--c:${rb.emp.color}"><span class="fk">Empire</span><span class="ft">${esc(rb.emp.name)}</span><span class="sub">${esc(fmtSpan(rb.emp.start, rb.emp.end))}${rb.emp.peak ? ` · peak ${rb.emp.peak[1]} million km² in ${esc(fmtYear(rb.emp.peak[0]))}` : ""}</span><p>${esc(rb.emp.what || "")}</p>${rb.emp.why ? `<p class="why">${esc(rb.emp.why)}</p>` : ""}</div>` : ""}
+      ${rb && rb.emp ? `<div class="focus" style="--c:${rb.emp.color}"><span class="fk">${emblem("power")}Empire</span><span class="ft">${esc(rb.emp.name)}</span><span class="sub">${esc(fmtSpan(rb.emp.start, rb.emp.end))}${rb.emp.peak ? ` · peak ${rb.emp.peak[1]} million km² in ${esc(fmtYear(rb.emp.peak[0]))}` : ""}</span><p>${esc(rb.emp.what || "")}</p>${rb.emp.why ? `<p class="why">${esc(rb.emp.why)}</p>` : ""}</div>` : ""}
       ${sec("places", "The place", cityItems)}${P("land")}
       ${sec("order", "Order & chaos", orderItems)}
       ${sec("people", "People", pItems, meet ? "" : null)}${meet ? `<p class="note">${esc(meet)}</p>` : ""}${P("peoples")}
@@ -1900,30 +2026,52 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       ${sec("disease", "Plague & climate", dItems)}${P("shocks")}
       ${sec("ideas", "Ideas & faith", iItems)}${P("mind")}
       <p class="note">Within about ${R_KM} km of the marked spot (people: born within 60 km). Rows from other centuries fold under "from other times"; tap one to jump there.</p>
-      <div class="row"><button class="btn primary" data-a="${act(() => askAbout({ title: name, year: y, here: true }))}">Ask the guide about ${esc(name)} in ${esc(fmtYear(y))}</button></div>`;
+      <div class="row"><button class="btn primary" data-a="${act(() => askAbout({ title: name, year: y, here: true }))}">Ask the guide about ${esc(name)} in ${esc(fmtYear(y))}</button>${TABS.some(d => d.id === "upclose") ? `<button class="btn" data-a="${act(() => studyUpClose(name, lon, lat))}">Study it up close</button>` : ""}</div>`;
+  }
+  // Here hands its spot to Up close: the map frames the region around it, and the tab studies it by the month under its name.
+  function studyUpClose(name, lon, lat) {
+    if (ATLAS.deep) ATLAS.deep.place = { name, lon, lat };
+    const v = ATLAS.api.view();
+    flyTo({ lon, lat, span: Math.min(8, v && isFinite(v.w) ? v.w : 8) }, 900);
+    setTab("upclose");
   }
 
   // ---------- tabs ----------
   function setTab(t) {
+    // A part of another tab (ATLAS.tab({ within })) opens its host, switched on.
+    const part = NESTED.find(d => d.id === t); if (part) { t = part.within; try { if (part.open) part.open(); } catch (err) { console.error("tab " + part.id, err); } }
     state.tab = t;
     document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === t));
-    for (const k of ["now", "here", "guide", ...TABS.map(d => d.id)]) document.getElementById("pane-" + k).hidden = k !== t;
+    for (const k of ["now", "here", "guide", ...TABS.filter(d => !NESTED.includes(d)).map(d => d.id)]) document.getElementById("pane-" + k).hidden = k !== t;
     if (t === "now") renderNow(); else if (t === "here") renderHere();
+    for (const d of NESTED) try { if (d.within === t) { if (d.show) d.show(); } else if (d.hide) d.hide(); } catch (err) { console.error("tab " + d.id, err); }
     // One question box at a time: the header box steps aside (keeping its space, so the map does not jump) while the Ask tab, with its big box, is open.
     document.querySelector(".app").classList.toggle("asking", t === "guide");
     const pt = TABS.find(d => d.id === t); if (pt && pt.show) try { pt.show(); } catch (err) { console.error("tab " + t, err); }
   }
   // Plugin tabs (ATLAS.tab) sit after Here, each with its own pane; mount() runs once the page is up.
   const TABS = ATLAS.tabs.filter((d, i, a) => d && /^[a-z][a-z0-9_-]*$/.test(d.id || "") && !["now", "here", "guide"].includes(d.id) && a.findIndex(x => x && x.id === d.id) === i);
+  // A plugin tab can instead be a part of a built-in one (within: "now"): no ribbon button; its element (.part) sits in
+  // the host's .part-slot, kept whole across the host's re-renders; show() runs when the host opens, hide() when it closes.
+  const NEST_HOST = { now: "now-body" };
+  const NESTED = TABS.filter(d => NEST_HOST[d.within]);
+  for (const d of NESTED) { const el = document.createElement("div"); el.className = "part"; el.id = "pane-" + d.id; document.getElementById(NEST_HOST[d.within]).appendChild(el); }
+  // Write a host's HTML without losing its parts: they step out, the HTML goes in, and they step back into its slot.
+  function fillHost(el, html) {
+    const keep = [...el.querySelectorAll(":scope .part")]; for (const p of keep) p.remove();
+    el.innerHTML = html;
+    const slot = el.querySelector(".part-slot"); if (slot) slot.replaceWith(...keep); else el.prepend(...keep);
+  }
   for (const d of TABS) {
+    if (NESTED.includes(d)) continue;
     const b = document.createElement("button"); b.className = "tab"; b.setAttribute("role", "tab"); b.dataset.tab = d.id; b.setAttribute("aria-selected", "false"); b.textContent = d.name || d.id;
     document.querySelector(".tabs").appendChild(b);
     const el = document.createElement("div"); el.className = "pane"; el.id = "pane-" + d.id; el.hidden = true;
     document.getElementById("panel").appendChild(el);
   }
-  // Fourteen tabs don't fit one row, so they sit in three labelled groups that wrap: no sideways scrolling.
+  // The tabs don't fit one row, so they sit in three labelled groups that wrap: no sideways scrolling.
   // Tabs not named here join Explore.
-  const TAB_GROUPS = [["Learn", ["guide", "now", "here", "why", "stories", "travels"]], ["Explore", ["upclose", "life", "objects", "shrink", "compare"]], ["Play", ["whatif", "guess", "codex"]]];
+  const TAB_GROUPS = [["Learn", ["guide", "now", "here", "why", "stories", "travels"]], ["Explore", ["upclose", "life", "objects", "shrink"]], ["Play", ["whatif", "guess", "codex"]]];
   (function groupTabs() {
     const bar = document.querySelector(".tabs"), all = [...bar.querySelectorAll(".tab")], used = new Set();
     const groups = TAB_GROUPS.map(([n, ids]) => [n, ids.map(id => all.find(b => b.dataset.tab === id)).filter(Boolean)]);
@@ -1947,13 +2095,43 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
   const layersEl = document.getElementById("layers"), subEl = document.getElementById("sublayers");
   // Switches that are not data lenses live in state directly; the rest in state.on.
   const FLAG = { basemap: 1, terrain: 1, borders: 1, political: 1 };
-  const isOn = k => k in FLAG ? !!state[k] : !!state.on[k];
-  const setOn = (k, v) => { if (k in FLAG) state[k] = v; else state.on[k] = v; };
-  const NAME = { basemap: BASEMAP0 ? BASEMAP0.name || "Pixel map" : "", terrain: "Terrain", borders: "Borders", political: "Political colours", ...Object.fromEntries(LAYERS.map(l => [l.k, l.n])) };
-  const COLOR = k => k === "borders" ? "var(--land-edge)" : k === "terrain" || k === "basemap" ? "var(--l-geography)" : k === "political" ? "var(--y-order)" : `var(--y-${k})`;
-  const MEMBERS = Object.fromEntries(FAMILIES.map(f => [f.id, [
+  const isOn = k => k in FLAG ? !!state[k] : k in PARTS ? partOn(k) : k in WITH ? lensOn(k) : !!state.on[k];
+  // Switching a part keeps its layer in step: on with any part, off with the last one. A layer switched off that way
+  // keeps its parts on, so the next story or tap that turns the layer on shows all of it again.
+  const setOn = (k, v) => {
+    if (k in FLAG) { state[k] = v; return; }
+    if (!(k in PARTS)) { state.on[k] = v; return; }
+    const l = PARTS[k], ps = PARTS_OF[l];
+    if (v && !state.on[l]) for (const p of ps) state.on[p] = false;
+    state.on[k] = v; state.on[l] = ps.some(p => state.on[p]);
+    if (!state.on[l]) for (const p of ps) state.on[p] = true;
+  };
+  const NAME = { basemap: BASEMAP0 ? BASEMAP0.name || "Pixel map" : "", terrain: "Terrain", borders: "Borders", political: "Political colours", ...Object.fromEntries(LAYERS.map(l => [l.k, l.n])),
+    epidemics: "Epidemics", famine: "Famine & climate" };
+  const PART_C = { epidemics: "var(--y-disease)", famine: "var(--b-watch)" };
+  const COLOR = k => k === "borders" ? "var(--land-edge)" : k === "terrain" || k === "basemap" ? "var(--l-geography)" : k === "political" ? "var(--y-order)" : PART_C[k] || `var(--y-${k})`;
+  // Every lens of a family (the key card lists them all) and the ones with a chip. A lens that belongs to a tab
+  // (tab: "codex") has no chip: its tab switches it on, and leaving the mode puts the lenses back. A lens that goes
+  // with another chip (WITH) has none either. The map style (pixel, relief, plain) is a choice, not a lens: its
+  // switch sits at the top of Land.
+  const TAB_LENS = new Set(PLUG.filter(d => d.tab).map(d => d.id));
+  // chip: false is a lens that switches itself by era (Deep time draws only before the first cities), so it needs no chip
+  // and keeps its default whatever was saved.
+  const FIXED = new Set(PLUG.filter(d => d.chip === false && !d.tab && !d.with).map(d => d.id));
+  const NO_CHIP = new Set([...TAB_LENS, ...Object.keys(WITH), ...FIXED, "basemap", "terrain"]);
+  const ALL_MEMBERS = Object.fromEntries(FAMILIES.map(f => [f.id, [
     ...(f.id === "land" ? [...(BASEMAP0 ? ["basemap"] : []), ...(TERRAIN ? ["terrain"] : []), "places", "borders", ...(TERRAIN && RELIEF_POL && window.drawRealms ? ["political"] : [])] : []),
     ...LAYERS.filter(l => FAM_OF[l.k] === f.id).map(l => l.k), ...PLUG.filter(d => d.family === f.id).map(d => d.id)].filter((k, i, a) => a.indexOf(k) === i)]));
+  // A layer with parts shows its parts as chips instead of itself.
+  const MEMBERS = Object.fromEntries(Object.entries(ALL_MEMBERS).map(([f, m]) => [f, m.filter(k => !NO_CHIP.has(k)).flatMap(k => PARTS_OF[k] || [k])]));
+  // Pixel: the pixel basemap, with its own terrain names. Relief: the painted relief. Plain: neither. Political
+  // colours paint over the relief, so they keep the terrain layer on in any style.
+  const STYLES = [...(BASEMAP0 ? [["pixel", "Pixel"]] : []), ...(TERRAIN ? [["relief", "Relief"]] : []), ["plain", "Plain"]];
+  const mapStyle = () => state.style || (state.style = state.basemap && BASEMAP0 ? "pixel" : state.terrain && TERRAIN ? "relief" : "plain");
+  function setMapStyle(st) {
+    state.style = st; state.basemap = st === "pixel" && !!BASEMAP0;
+    state.terrain = !!TERRAIN && (st !== "plain" || !!state.political);
+  }
   const chip = (el, k, n, c, cls) => { const b = document.createElement("button"); b.className = "chip" + (cls ? " " + cls : ""); b.dataset.k = k; b.style.setProperty("--c", c); b.innerHTML = `<i></i>${esc(n)}`; el.appendChild(b); return b; };
   const famChips = {};
   for (const f of FAMILIES) famChips[f.id] = chip(layersEl, f.id, f.n, f.c, "fam");
@@ -1968,6 +2146,10 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
       const f = FAMILIES.find(x => x.id === state.fam);
       subEl.style.setProperty("--c", f.c);
       subEl.insertAdjacentHTML("beforeend", `<span class="lab">${esc(f.n)}</span>`);
+      if (f.id === "land" && STYLES.length > 1) {
+        const cur = mapStyle();
+        subEl.insertAdjacentHTML("beforeend", `<div class="mstyle" role="radiogroup" aria-label="Map style">${STYLES.map(([id, n]) => `<button type="button" role="radio" data-style="${id}" aria-checked="${id === cur}">${esc(n)}</button>`).join("")}</div>`);
+      }
       for (const k of MEMBERS[f.id]) chip(subEl, k, NAME[k], COLOR(k)).setAttribute("aria-pressed", isOn(k));
     }
     mapEl.classList.toggle("war-on", state.on.war);
@@ -1995,15 +2177,23 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const b = ev.target.closest(".chip"); if (!b) return;
     const f = b.dataset.k, m = MEMBERS[f];
     if (state.fam !== f && m.some(isOn)) state.fam = f;
-    else { const on = !m.some(isOn); m.forEach(k => setOn(k, on && !(k === "political" || (k === "terrain" && BASEMAP0) || OPT_IN.has(k)))); state.fam = f; redrawToggles(); }
+    else { const on = !m.some(isOn); m.forEach(k => setOn(k, on && !(k === "political" || OPT_IN.has(k)))); state.fam = f; redrawToggles(); }
     syncChips(); refreshPanel();
   });
   subEl.addEventListener("click", ev => {
+    const st = ev.target.closest("[data-style]");
+    if (st) { setMapStyle(st.dataset.style); redrawToggles(); syncChips(); subEl.querySelector(`[data-style="${st.dataset.style}"]`)?.focus(); return; }
     const b = ev.target.closest(".chip"); if (!b) return;
     const k = b.dataset.k; setOn(k, !isOn(k));
+    if (k === "political") setMapStyle(mapStyle());
     redrawToggles(); syncChips(); refreshPanel();
   });
-  function ensureLayers(list) { let ch = false; for (const k of list) if (k && state.on[k] === false) { state.on[k] = true; ch = true; } if (ch) { syncChips(); drawAll(); drawStrip(); } }
+  // A story or the guide asks for layers by key; a lens that goes with a chip or a part switches that one on.
+  function ensureLayers(list) {
+    let ch = false;
+    for (let k of list) { k = WITH[k] || k; if (k && (k in PARTS ? !partOn(k) : state.on[k] === false)) { setOn(k, true); ch = true; } }
+    if (ch) { syncChips(); drawAll(); drawStrip(); }
+  }
 
   // ---------- year ----------
   const yearIn = document.getElementById("year"), yout = document.getElementById("yout"), yp = document.getElementById("yp");
@@ -2015,6 +2205,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     yearIn.value = Math.round(yearToT(y) * 1000);
     yout.textContent = fmtYear(y);
     yp.textContent = fmtYear(y);
+    yearIn.setAttribute("aria-valuetext", fmtYear(y));  // a screen reader says the year, not the slider's 0 to 1000
     drawAll(); refreshPanel();
     for (const fn of yearWatch) try { fn(y); } catch (err) { console.error(err); }
   }
@@ -2067,7 +2258,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     st.selectAll("*").remove();
     const rows = [
       ["places", ENTRIES.flatMap(e => (EVENTS[e.id] || []).map(v => v[0]))],
-      ["disease", SHOCKS.map(e => e.start)],
+      ["disease", SHOCKS.filter(e => partOn(shockPart(e))).map(e => e.start)],
       ["ideas", JOURNEYS.flatMap(j => j.steps.map(s => s.y))],
       ["war", BATTLES.map(b => b.start)],
     ];
@@ -2143,7 +2334,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     const sp = state.answer && (state.answer.steps || []).includes(s) ? specOf(s) : s.by && SPEC[s.by];
     caption.style.setProperty("--lc", sp ? specColor(sp) : lensColor(s.lens));
     caption.style.setProperty("--c", sp ? specColor(sp) : lensColor(s.lens));
-    caption.innerHTML = `${sp ? portrait(sp.id, 2) : ""}<span class="lens">${esc(sp ? sp.name : LENS_NAME[s.lens] || s.lens || "")}${s.year != null ? " · " + esc(fmtYear(clampYear(s.year))) : ""}</span><b>${esc(s.title || s.q || "")}</b>`;
+    caption.innerHTML = `${sp ? portrait(sp.id, 2) : ""}<span class="ck">${sp ? "" : emblem(s.lens)}${esc(sp ? sp.name : LENS_NAME[s.lens] || s.lens || "")}${s.year != null ? " · " + esc(fmtYear(clampYear(s.year))) : ""}</span><b>${esc(s.title || s.q || "")}</b>`;
   }
   // The guide's one tool: set the year, the view, the lenses and the highlights together.
   function applyScene(s) {
@@ -2211,7 +2402,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     steps.forEach((s, i) => { const sp = specOf(s); if (!groups.length || groups[groups.length - 1].sp !== sp) groups.push({ sp, items: [] }); groups[groups.length - 1].items.push([s, i]); });
     return groups.map(({ sp, items }) => `<div class="spg" style="--c:${specColor(sp)}" data-by="${esc(sp.id)}">${speakerHtml(A, sp, items.length)}${items.map(([s, i]) => `
           <div class="step${i === state.active ? " on" : ""}${state.muted.has(s.lens) ? " muted" : ""}" style="--c:${lensColor(s.lens)}" data-i="${i}">
-            <button aria-expanded="${i === state.active}" aria-label="${esc(sp.name)}: ${esc(s.title)}"><span class="i">${String(i + 1).padStart(2, "0")}</span><span class="t">${esc(s.title)}</span><span class="y">${s.year != null ? esc(fmtYear(clampYear(s.year))) : ""}</span><span class="ln">${esc(LENS_NAME[s.lens] || s.lens || "")}</span></button>
+            <button aria-expanded="${i === state.active}" aria-label="${esc(sp.name)}: ${esc(s.title)}"><span class="i">${String(i + 1).padStart(2, "0")}</span><span class="t">${esc(s.title)}</span><span class="y">${s.year != null ? esc(fmtYear(clampYear(s.year))) : ""}</span><span class="ln">${emblem(s.lens)}${esc(LENS_NAME[s.lens] || s.lens || "")}</span></button>
             <div class="body"><p>${esc(s.text)}</p>${s.confidence != null ? `<span class="conf">confidence ${Math.round(Number(s.confidence) * 100)}%</span>` : ""}${srcList(s.sources, A.live)}</div>
           </div>`).join("")}${A.passes && A.passes[sp.id] ? `<p class="pass"><b>${esc(sp.name)} asks the panel:</b> ${esc(A.passes[sp.id])}</p>` : ""}</div>`).join("");
   }
@@ -2237,7 +2428,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     answerEl.innerHTML = `
       <div class="sec">
         <h2 class="q">${esc(A.question)}</h2>
-        <div><span class="badge">${live ? "Live AI draft · sources unchecked" : "Curated draft · sources listed, judge pending"}</span> <button class="btn" id="newq" style="float:right">New question</button></div>
+        <div>${ATLAS.prov(live ? "ai" : "draft")} <button class="btn" id="newq" style="float:right">New question</button></div>
         ${A.short || A.frame ? `<div class="${live ? "chair" : ""}" style="--c:#b8892a">${live ? `${portrait("chair", 2)}<b class="by">The chair${A.short ? "" : " frames it"}</b>` : ""}${A.short ? `<p class="short">${esc(A.short)}</p>` : `<p class="short frame">${esc(A.frame)}</p>`}</div>` : ""}
         <div class="status" ${A.loading ? "" : "hidden"}><span class="dot"></span><span>${esc(A.loading || "")}</span></div>
         ${A.error ? `<div class="error">${esc(A.error)}</div>` : ""}
@@ -2281,7 +2472,7 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     if (ev.target.id === "prev") { stopPlay(); step(-1); }
     if (ev.target.id === "next") { stopPlay(); step(1); }
     if (ev.target.id === "play") { state.playing ? stopPlay() : startPlay(); }
-    if (ev.target.id === "newq") { abortLive(); stopPlay(); state.answer = null; state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); drawAll(); showCaption(null); answerEl.hidden = true; document.getElementById("examples").hidden = false; const q2b = document.getElementById("qbox2"); q2b.value = ""; q2b.focus(); }
+    if (ev.target.id === "newq") { abortLive(); stopPlay(); state.answer = null; state.hi = new Set(); overlay = { routes: [], pins: [] }; drawOverlay(); drawAll(); showCaption(null); answerEl.hidden = true; showKnown(null); document.getElementById("examples").hidden = false; const q2b = document.getElementById("qbox2"); q2b.value = ""; q2b.focus(); }
   });
   answerEl.addEventListener("submit", ev => {
     if (ev.target.id !== "follow") return;
@@ -2342,15 +2533,24 @@ window.ATLAS = { lenses: [], basemaps: [], sprites: {}, tabs: [], polityAt: null
     { q: "When did Western Europe actually start to become rich?" },
   ];
   const exEl = document.getElementById("examples");
-  exEl.innerHTML = `<h3 class="kick">Try one</h3>` + EXAMPLES.map((e, i) => `<button class="ex" data-x="${i}">${esc(e.q)}<span class="tg${e.tour != null ? " cur" : ""}">${e.tour != null ? "curated tour" : "live"}</span></button>`).join("");
+  exEl.innerHTML = `<h3 class="kick">Try one</h3>` + EXAMPLES.map((e, i) => `<button class="ex" data-x="${i}">${esc(e.q)}<span class="tg${e.tour != null ? " cur" : ""}">${e.tour != null ? "curated tour" : "AI answer"}</span></button>`).join("");
   exEl.addEventListener("click", ev => {
     const b = ev.target.closest(".ex"); if (!b) return;
     const e = EXAMPLES[+b.dataset.x];
     document.getElementById("qbox").value = e.q;
     if (e.tour != null) openTour(TOURS[e.tour]); else ask(e.q, false);
   });
+  // Before the panel speaks (and when Claude isn't there at all): the why chains and debates the historians
+  // already mapped for this question, from the Why lens. A curated tour or a new question clears it.
+  const knownEl = document.getElementById("known");
+  function showKnown(q) {
+    const hits = q && ATLAS.scholar && ATLAS.scholar.find ? ATLAS.scholar.find(q) : [];
+    knownEl.hidden = !hits.length;
+    knownEl.innerHTML = hits.length ? `<h3 style="border:0;padding:0">The historians have mapped this</h3><p class="sub">Play a why chain on the map, or open a debate.</p><div class="sch-links">${hits.join("")}</div>` : "";
+    return hits.length > 0;
+  }
   function openTour(t) {
-    abortLive(); convo = []; state.muted.clear();
+    abortLive(); convo = []; state.muted.clear(); showKnown(null);
     state.answer = JSON.parse(JSON.stringify(t)); state.active = -1;
     setTab("guide"); renderAnswer(); activate(0);
   }
@@ -2436,7 +2636,8 @@ JOURNEYS OF IDEAS:\n${cap(JOURNEYS.filter(j => overlaps(j.y0, j.y1, w)).map(j =>
   // Plugin lenses join the specialist whose lenses they share; a lens nobody owns gets its own specialist.
   for (const d of PLUG) {
     if (d.specialist && d.specialist.id && !SPECS.some(s => s.id === d.specialist.id)) { SPECS.push({ lenses: ["order"], layers: [d.id], plugs: [], ...d.specialist }); continue; }
-    const sp = SPECS.find(s => (d.guide || []).some(l => s.lenses.includes(l)));
+    // The lens names who speaks for it (by), or the first of its guide names that a specialist reads decides.
+    const sp = (d.by && SPECS.find(s => s.id === d.by)) || (d.guide || []).map(l => SPECS.find(s => s.lenses.includes(l))).find(Boolean);
     if (sp) { if (!sp.layers.includes(d.id)) sp.layers.push(d.id); (sp.plugs = sp.plugs || []).push(d); }
     else if ((d.guide || []).length) SPECS.push({ id: d.id, name: `${d.name} specialist`, lenses: d.guide.slice(), layers: [d.id], voice: (d.name || d.id).toLowerCase(), plugs: [d], digest: () => "" });
   }
@@ -2514,12 +2715,12 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
 
   // use() resolves after the viewer answers; ask() waits for it so an early question is not turned away.
   sampleReady = (async () => {
-    try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; }
-    if (!sample) hint.textContent = "Live answers need this page open in Claude. Curated tours work anywhere.";
+    sample = await ATLAS.ai.sample();
+    if (!sample) hint.textContent = "AI answers need this page open in Claude. Curated tours work anywhere.";
   })();
   function abortLive() { if (ctl) { ctl.abort(); ctl = null; } }
   const ERR = {
-    not_granted: "Live answers are off because Claude access was not allowed for this page. The curated tour still works.",
+    not_granted: "AI answers are off because Claude access was not allowed for this page. The curated tour still works.",
     sampling_disabled: "Claude isn't available for this account here.",
     rate_limited: "Too many questions at once. Wait a minute and ask again.",
     session_expired: "Your Claude session expired. Sign in again and retry.",
@@ -2625,11 +2826,12 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   async function ask(q, followUp) {
     setTab("guide");
     document.getElementById("qbox2").value = q;
+    const has = showKnown(q);
     if (!sample) { hint.textContent = "Connecting to Claude…"; await sampleReady; hint.textContent = ""; }
     if (!sample) {
       const t = TOURS.find(t => t.question.toLowerCase() === q.toLowerCase());
       if (t) return openTour(t);
-      hint.textContent = "Live answers need this page open in Claude. Try a curated tour below."; document.getElementById("examples").hidden = false; return;
+      hint.textContent = has ? "AI answers need this page open in Claude. The historians' own work on it is here, and curated tours below." : "AI answers need this page open in Claude. Try a curated tour below."; document.getElementById("examples").hidden = false; return;
     }
     abortLive(); stopPlay();
     const prev = followUp && state.answer;
@@ -2662,7 +2864,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     } catch (e) {
       if (e?.code !== "cancelled" && e?.name !== "AbortError") A.error = ERR[e?.code] || ERR.upstream_error;
       my.abort();  // one specialist hit a wall the others will hit too: stop them all
-      if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; hint.textContent = ERR[e.code]; }
+      if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; ATLAS.ai.lost(); hint.textContent = ERR[e.code]; }
     } finally {
       if (ctl === my) { ctl = null; goBtn.disabled = false; stopBtn.hidden = true; }
       A.loading = ""; A.speaking = null;
@@ -2711,11 +2913,12 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     lenses: () => Object.keys(NAME).filter(isOn),
     fly: (v, ms) => flyTo(v, ms), setOn: (k, v = true) => { if (isOn(k) !== v) { setOn(k, v); redrawToggles(); syncChips(); } },
     redraw: () => drawAll(), setTab: t => setTab(t), fmtYear, onYear: fn => yearWatch.push(fn),
-    // What the map shows now: the centre, the zoom and roughly how many degrees fit across and down.
+    // What the map shows now, in its free part (beside the panel): the centre, the zoom and roughly how many degrees
+    // fit across and down.
     view: () => {
-      const t = d3.zoomTransform(svg.node()), c = projection.invert(t.invert([W / 2, H / 2]));
+      const t = d3.zoomTransform(svg.node()), c = projection.invert(t.invert(freeMid()));
       const pxPerDeg = Math.abs(projection([1, 0])[0] - projection([0, 0])[0]) * t.k;
-      return c && isFinite(c[0]) ? { lon: c[0], lat: c[1], k: t.k, w: W / pxPerDeg, h: H / pxPerDeg } : null;
+      return c && isFinite(c[0]) ? { lon: c[0], lat: c[1], k: t.k, w: (FREE[2] - FREE[0]) / pxPerDeg, h: (FREE[3] - FREE[1]) / pxPerDeg } : null;
     },
     onView: fn => viewWatch.push(fn),  // called when a pan or zoom settles
     select: card => select(card, { fly: true }),
@@ -2728,8 +2931,6 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   for (const d of TABS) try { d.mount(document.getElementById("pane-" + d.id), ATLAS.api); } catch (err) { console.error("tab " + d.id, err); }
 
   // ---------- eras under the slider: where you are in time, one tap to jump ----------
-  const ERAS = [[MIN, -70000, "First modern humans"], [-70000, -40000, "Out of Africa"], [-40000, -9700, "Ice Age"], [-9700, HIST, "First farmers"], [HIST, -3300, "First cities"], [-3300, -1200, "Bronze Age"], [-1200, -500, "Iron Age"], [-500, 500, "Classical"], [500, 1450, "Post-classical"],
-    [1450, 1800, "Early modern"], [1800, 1914, "Industrial"], [1914, 1945, "World wars"], [1945, NOW, "Since 1945"]];
   const erasEl = document.getElementById("eras");
   erasEl.innerHTML = ERAS.map(([a, b, n], i) => `<button type="button" data-i="${i}" style="left:${(yearToT(a) * 100).toFixed(2)}%;width:${((yearToT(b) - yearToT(a)) * 100).toFixed(2)}%" title="${esc(n)}, ${esc(fmtYear(a))} to ${esc(fmtYear(b))}">${esc(n)}</button>`).join("");
   erasEl.addEventListener("click", ev => { const b = ev.target.closest("button"); if (!b) return; const [a, z] = ERAS[+b.dataset.i]; stopTime(); animateYear(Math.round(a + (z - a) / 2), 900); });
@@ -2761,7 +2962,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   function renderKey() {
     if (keyEl.hidden) return;
     const groups = FAMILIES.map(f => {
-      const rows = MEMBERS[f.id].filter(k => isOn(k) && k !== "terrain" && k !== "political").flatMap(k => {
+      const rows = ALL_MEMBERS[f.id].filter(k => isOn(k) && k !== "terrain" && k !== "political").flatMap(k => {
         const d = PLUG.find(x => x.id === k);
         const rs = KEY[k] || (d ? (Array.isArray(d.key) ? d.key : [["dot", d.desc || d.name || k]]) : []);
         // A basemap that paints marks itself (the pixel map) can draw the key's glyphs in the same style.
@@ -2769,22 +2970,25 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
       });
       return rows.length ? `<div class="kg" style="--c:${f.c}"><b>${famIcon(f.id)}${esc(f.n)}</b>${rows.join("")}</div>` : "";
     }).join("");
-    // Year steps only change the heading: keep the rows (and their pixel glyphs) when they are the same.
-    const head = `On the map in ${fmtYear(state.year)}`;
-    if (groups === keyGroups && keyEl.firstElementChild) { keyEl.firstElementChild.textContent = head; return; }
+    // Keep the rows (and their pixel glyphs) when they are the same. The year is on the plate, not repeated here.
+    if (groups === keyGroups && keyEl.firstElementChild) return;
     keyGroups = groups;
-    keyEl.innerHTML = `<h4>${esc(head)}</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
+    keyEl.innerHTML = `<h4>On the map</h4>${groups || '<p class="sub">Nothing switched on. Tap a lens family above.</p>'}
+      <div class="klook" hidden><h4>Map look</h4></div>
       <h4>Keys</h4><div class="keys"><kbd>WASD</kbd><span>Pan; Q E zoom</span><kbd>, .</kbd><span>Step through time (Shift for bigger steps)</span><kbd>Space</kbd><span>Play or pause time</span><kbd>?</kbd><span>Every key</span></div>`;
+    // The pixel map's look (chrome.js makes the picker once; it moves in here each time the key is drawn).
+    const look = keyEl.querySelector(".klook");
+    if (look && ATLAS.lookPicker) { look.appendChild(ATLAS.lookPicker); look.hidden = false; }
   }
+  ATLAS.renderKey = () => { keyGroups = null; renderKey(); };
   function toggleKey(v = keyEl.hidden) { keyEl.hidden = !v; keyBtn.setAttribute("aria-pressed", v); renderKey(); }
   keyBtn.onclick = () => toggleKey();
   yearWatch.push(() => { if (!keyEl.hidden) renderKey(); });
   layersEl.addEventListener("click", () => setTimeout(renderKey)); subEl.addEventListener("click", () => setTimeout(renderKey));
 
-  // ---------- focus: the map alone ----------
-  const appEl = document.querySelector(".app"), focusBtn = document.getElementById("focusbtn");
-  function toggleFocus(v = !appEl.classList.contains("focus")) { appEl.classList.toggle("focus", v); focusBtn.setAttribute("aria-pressed", v); }
-  focusBtn.onclick = () => toggleFocus();
+  // The map alone is the eye in the map controls (chrome.js): H or F hides the interface, Esc or / brings it back.
+  const appEl = document.querySelector(".app");
+  const showUI = () => { if (appEl.classList.contains("ui-hidden") && ATLAS.hideUI) ATLAS.hideUI(false); };
 
   // ---------- surprise me: a random moment worth seeing, framed and explained ----------
   const SURPRISES = [
@@ -2865,23 +3069,36 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     const ids = [...document.querySelectorAll(".tab")].map(b => b.dataset.tab);
     if (ids.length) setTab(ids[(ids.indexOf(state.tab) + dir + ids.length) % ids.length]);
   }
-  function wholeWorld() { const c = projection.invert([W / 2, H / 2]); flyTo({ lon: c[0], lat: c[1], zoom: kMin }, 900); }
+  function wholeWorld() {
+    if (tall) { const c = projection.invert([(SB[0][0] + SB[1][0]) / 2, (SB[0][1] + SB[1][1]) / 2]); flyTo({ lon: c[0], lat: c[1], zoom: kMin }, 900); return; }
+    if (reduceMotion()) svg.interrupt().call(zoom.transform, home()); else svg.interrupt().transition().duration(900).call(zoom.transform, home());
+    if (BASEMAP && BASEMAP.fly) try { BASEMAP.fly({ lon: 0, lat: 0, zoom: kMin }, reduceMotion() ? 0 : 900); } catch (err) { console.error(err); }
+  }
 
   // ? : every key on one pixel card.
   const cheatEl = document.createElement("div");
-  cheatEl.className = "cheat"; cheatEl.hidden = true; cheatEl.setAttribute("role", "dialog"); cheatEl.setAttribute("aria-label", "Keyboard controls");
+  cheatEl.className = "cheat"; cheatEl.hidden = true; cheatEl.tabIndex = -1;
+  cheatEl.setAttribute("role", "dialog"); cheatEl.setAttribute("aria-modal", "true"); cheatEl.setAttribute("aria-label", "Keyboard controls");
   const KB = s => s.split(" ").map(k => `<kbd>${k}</kbd>`).join("");
   const CHEAT = [
     ["Move", [["W A S D", "Pan (or the arrow keys)"], ["Q E", "Zoom out, in (or − +)"], ["Shift", "Hold to go faster"], ["0", "The whole world"], ["Enter", "What's here, under the cross"]]],
     ["Time", [[", .", "A step back, forward"], ["< >", "Ten steps (Shift+, .)"], ["Space", "Play or pause"], ["[ ]", "A month, in Up close"]]],
     ["Look", [["1 – 6", "Lens families on or off"], ["T", "Next tab (Shift+T back)"], ["/", "Ask a question"], ["R", "Surprise me"], ["N", "Night and day"]]],
-    ["Screen", [["H", "Hide the interface"], ["P", "Fold the panel"], ["F", "Focus: map only"], ["K", "Map key"], ["Esc", "Back, close"]]],
-    ["In a story", [["Space →", "Next scene"], ["←", "Back a scene"], ["W", "Why?"], ["P", "Autoplay"]]],
+    ["Screen", [["H F", "Hide or show the interface"], ["P", "Fold the panel"], ["K", "Map key"], ["Esc", "Back, close"]]],
+    ["In a story", [["Space →", "Next scene"], ["←", "Back a scene"], ["W Enter", "Why?"], ["H", "How do we know"], ["Home End", "First, last scene"], ["P", "Autoplay"], ["Esc", "Leave the story"]]],
+    ["Living world", [[", .", "A day back, forward"]]],
   ];
   cheatEl.innerHTML = `<h3>Controls</h3><div class="ch-g">${CHEAT.map(([n, rows]) => `<section><h4>${n}</h4>${rows.map(([k, t]) => `<div class="ch-r"><span class="ch-k">${KB(k)}</span><span>${t}</span></div>`).join("")}</section>`).join("")}</div><p class="ch-f">${KB("?")} or ${KB("Esc")} to close</p>`;
   cheatEl.addEventListener("click", () => toggleCheat(false));
   mapEl.appendChild(cheatEl);
-  function toggleCheat(v = cheatEl.hidden) { cheatEl.hidden = !v; }
+  // Focus moves into the card while it is open and goes back where it was when it closes.
+  let cheatBack = null;
+  function toggleCheat(v = cheatEl.hidden) {
+    if (v === !cheatEl.hidden) return;
+    cheatEl.hidden = !v;
+    if (v) { cheatBack = document.activeElement; cheatEl.focus({ preventScroll: true }); }
+    else if (cheatBack && cheatBack.focus && document.contains(cheatBack)) { cheatBack.focus({ preventScroll: true }); cheatBack = null; }
+  }
   // Esc closes the card before anything else hears it (a story's Esc would leave the story).
   addEventListener("keydown", ev => { if (ev.key === "Escape" && !cheatEl.hidden) { toggleCheat(false); ev.preventDefault(); ev.stopImmediatePropagation(); } }, true);
 
@@ -2896,9 +3113,8 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
     if (ev.repeat && !",.<>".includes(k)) { if (k.length === 1 || k === "Enter") ev.preventDefault(); return; }
     if (k === "," || k === "." || k === "<" || k === ">") stepYear(k === "," || k === "<" ? -1 : 1, ev.shiftKey || k === "<" || k === ">");
     else if (k === " ") playBtn.click();
-    else if (k === "/") { if (appEl.classList.contains("focus")) toggleFocus(false); const q = state.tab === "guide" ? q2 : document.getElementById("qbox"); q.focus(); }
+    else if (k === "/") { showUI(); const q = state.tab === "guide" ? q2 : document.getElementById("qbox"); q.focus(); }
     else if (k === "r") surprise();
-    else if (k === "f") toggleFocus();
     else if (k === "k") toggleKey();
     else if (k === "?") toggleCheat();
     else if (k === "t") cycleTab(ev.shiftKey ? -1 : 1);
@@ -2908,7 +3124,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
       // The key closes first; a game or mode (chrome.js) gets Esc next.
       if (!keyEl.hidden) { toggleKey(false); ev.stopImmediatePropagation(); }
       else if (appEl.classList.contains("in-mode")) return;
-      else if (appEl.classList.contains("focus")) toggleFocus(false); else showCaption(null);
+      else if (appEl.classList.contains("ui-hidden")) showUI(); else showCaption(null);
     }
     else if (/^[1-6]$/.test(k) && FAMILIES[+k - 1]) famChips[FAMILIES[+k - 1].id].click();
     else return;
@@ -2919,7 +3135,7 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   const SAVE_KEY = "atlas.resume.v1";
   function saveView() {
     try {
-      const tr = d3.zoomTransform(svg.node()), c = projection.invert(tr.invert([W / 2, H / 2]));
+      const tr = d3.zoomTransform(svg.node()), c = projection.invert(tr.invert(freeMid()));
       localStorage.setItem(SAVE_KEY, JSON.stringify({ year: state.year, lon: c[0], lat: c[1], k: tr.k, on: state.on, basemap: state.basemap, terrain: state.terrain, borders: state.borders, political: state.political }));
     } catch (err) { /* storage may be blocked; resuming is a convenience */ }
   }
@@ -2933,10 +3149,13 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   // ---------- start: where you left off, or 1348, the Black Death year, where five lenses overlap ----------
   const RESUME = loadView();
   if (RESUME) {
-    // Opt-in modes (Travel time) do not come back on by themselves after a reload.
-    for (const k in RESUME.on || {}) if (k in state.on) state.on[k] = !!RESUME.on[k] && !OPT_IN.has(k);
+    // Opt-in modes (Travel time) and a tab's own lens (Codex, Why) do not come back on by themselves after a reload.
+    // Eyewitnesses joined Historians argue as one lens, Sources and debates.
+    if (RESUME.on && RESUME.on.witness) RESUME.on.debates = true;
+    for (const k in RESUME.on || {}) if (k in state.on && !FIXED.has(k)) state.on[k] = !!RESUME.on[k] && !OPT_IN.has(k) && !TAB_LENS.has(k);
     for (const k of ["basemap", "terrain", "borders", "political"]) if (typeof RESUME[k] === "boolean") state[k] = RESUME[k] && (k !== "basemap" || !!BASEMAP0);
   }
+  state.style = null; mapStyle();
   syncChips(); drawStrip();
   // ---------- phone: the panel is a bottom sheet over a full-screen map ----------
   // Three heights: peek (tabs only), half, full. Drag the handle or the tabs; tap the handle to step up; picking
@@ -3017,9 +3236,11 @@ Where the specialists disagree, say who the evidence favours.${(() => { try { re
   setYear(RESUME ? RESUME.year : 1348);
   syncEra(state.year);
   setTab("guide");
+  const hintEl = document.getElementById("maphint");
+  if (ATLAS.click !== "Click") { mapEl.setAttribute("aria-label", `World map. ${ATLAS.click} anywhere to see everything there.`); hintEl.textContent = `${ATLAS.click} anywhere to see every lens there`; }
   if (RESUME) {
-    flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(1, Math.min(K_MAX, +RESUME.k || 1)) }, 0);
-    document.getElementById("maphint").textContent = `Picked up where you left off, in ${fmtYear(state.year)}. Press S for a surprise.`;
+    flyTo({ lon: RESUME.lon, lat: RESUME.lat, zoom: Math.max(kMin, Math.min(K_MAX, +RESUME.k || kMin)) }, 0);
+    hintEl.textContent = `Picked up where you left off, in ${fmtYear(state.year)}. ${ATLAS.click === "Click" ? "Press R" : "Tap Surprise me"} for a surprise.`;
   } else flyTo({ lon: 45, lat: 35, span: 140 }, 0);
   setBasemap();
 })();

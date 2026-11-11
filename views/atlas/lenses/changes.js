@@ -46,6 +46,7 @@
     color: "#a0527a",
     on: false,
     guide: ["borders", "political", "military"],
+    by: "political",
     index: D => {
       const C = prep(D);
       return "Biggest border changes (Cliopatria): " + C.list.filter(c => c.k !== "f" || c.a > 3e5).slice().sort(big).slice(0, 160)

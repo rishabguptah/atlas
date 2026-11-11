@@ -12,13 +12,14 @@
   let rectT = 0;
 
   // ---------- icons on the existing controls ----------
-  const TAB_ICON = { now: "year", here: "here", guide: "ask", codex: "codex", whatif: "whatif", stories: "stories", objects: "objects", upclose: "lens", compare: "compare", life: "life", travels: "travels", guess: "guess" };
-  const TAB_SHORT = { now: "Year", upclose: "Close", travels: "Who" };
+  // Each plugin tab says how it looks here (ATLAS.tab({ icon, short, mode })); the page's own three tabs are listed here.
+  const OWN_TABS = { now: { icon: "year", short: "Year" }, here: { icon: "here" }, guide: { icon: "ask" } };
+  const tabDef = id => OWN_TABS[id] || (A.tabs || []).find(d => d && d.id === id) || {};
   function dressTab(b) {
     if (b.querySelector(".ico")) return;
-    const name = b.textContent.replace(/\s+\d+$/, "").trim();
-    b.innerHTML = ico(TAB_ICON[b.dataset.tab] || "seal") + `<span class="nm"></span>`;
-    b.querySelector(".nm").textContent = TAB_SHORT[b.dataset.tab] || TAB_SHORT[name] || name;
+    const name = b.textContent.replace(/\s+\d+$/, "").trim(), d = tabDef(b.dataset.tab);
+    b.innerHTML = ico(d.icon || "seal") + `<span class="nm"></span>`;
+    b.querySelector(".nm").textContent = d.short || name;
     b.title = name;
   }
   $$(".tab").forEach(dressTab);
@@ -39,7 +40,7 @@
     });
   }
   dressFamilies();
-  const ctlIcon = { surprise: "die", keybtn: "key", focusbtn: "focus" };
+  const ctlIcon = { surprise: "die", keybtn: "key" };
   for (const [id, n] of Object.entries(ctlIcon)) {
     const b = document.getElementById(id); if (!b || b.querySelector(".ico")) continue;
     for (const t of [...b.childNodes]) if (t.nodeType === 3 && t.textContent.trim()) { const s = document.createElement("span"); s.className = "lb"; s.textContent = t.textContent.trim(); t.replaceWith(s); }
@@ -62,39 +63,34 @@
     dress();
   }
 
-  // ---------- the year cartouche's era line, and era names under the slider ----------
-  // Year steps must stay inside one frame, so this only touches the DOM when the era changes, and measures
-  // the era buttons once per resize. The era-styles thread owns data-era and the --era-* accents on the root.
+  // ---------- the year cartouche's era line, and the era ribbon under the slider ----------
+  // The era is named once, on the cartouche. The ribbon under the slider fills the current era's band and marks the
+  // others with a 2-px tick; each band keeps its name for a tooltip and a screen reader. Year steps stay inside one
+  // frame, so the DOM is touched only when the era changes. The era-styles thread owns data-era and the --era-* accents.
   const ypEra = $("#ypera");
-  let eraIdx = -2, eraW = null;
-  function syncEraNames(force) {
+  let eraIdx = -2;
+  function syncEraNames() {
     const bs = $$("#eras button"), i = bs.findIndex(b => b.getAttribute("aria-current") === "true");
-    if (i === eraIdx && !force) return;
+    if (i === eraIdx) return;
     eraIdx = i;
-    if (!eraW || force) eraW = bs.map(b => b.getBoundingClientRect().width);
-    bs.forEach((b, j) => {
-      if (!b.dataset.full) b.dataset.full = b.textContent;
-      const full = b.dataset.full, w = eraW[j] || 0;
-      const short = full.split(/[\s-]+/).filter(Boolean).map(s => /^\d/.test(s) ? s : s[0]).join("").toUpperCase();
-      // Full names near you where they fit, initials elsewhere; the name is always in the tooltip.
-      const t = Math.abs(j - i) <= 1 && w >= full.length * 6.4 ? full : w >= short.length * 7 + 6 ? short : "";
-      if (b.textContent !== t) b.textContent = t;
-    });
+    for (const b of bs) if (!b.dataset.full) { b.dataset.full = b.textContent; b.setAttribute("aria-label", b.textContent); b.textContent = ""; }
     if (ypEra) ypEra.textContent = i >= 0 ? bs[i].dataset.full : "";
   }
   api.onYear(() => syncEraNames());
-  syncEraNames(true);
+  syncEraNames();
   let rsT = 0;
-  addEventListener("resize", () => { clearTimeout(rsT); rsT = setTimeout(() => { syncEraNames(true); emitRects(); }, 150); });
+  addEventListener("resize", () => { clearTimeout(rsT); rsT = setTimeout(() => emitRects(), 150); });
 
-  // The map's era style (views/pixel/eras.js), picked on the cartouche: "By year" follows the year, the rest pin one look.
-  if (A.eraStyles && A.setEraStyle && ypEra) {
+  // The pixel map's look (views/pixel/eras.js): "By year" follows the year, the rest pin one look. It lives in the Key,
+  // next to what the map is showing; the page moves it in each time it draws the key.
+  if (A.eraStyles && A.setEraStyle) {
     const sel = document.createElement("select");
-    sel.className = "yp-style"; sel.title = "Map style"; sel.setAttribute("aria-label", "Map style");
+    sel.className = "lookpick"; sel.title = "How the pixel map is drawn"; sel.setAttribute("aria-label", "Map look");
     sel.innerHTML = A.eraStyles.map(s => `<option value="${s.id}">${s.name}</option>`).join("");
     sel.value = (A.eraStyle && A.eraStyle().choice) || "auto";
     sel.addEventListener("change", () => A.setEraStyle(sel.value));
-    ypEra.parentNode.appendChild(sel);
+    A.lookPicker = sel;
+    if (A.renderKey) A.renderKey();
   }
 
   // ---------- the one next thing ----------
@@ -105,7 +101,9 @@
   let current = null, nextT = 0;
   A.nextThing = d => { if (d && typeof d.get === "function") { nexts.push(d); nexts.sort((a, b) => (b.pri || 0) - (a.pri || 0)); scheduleNext(); } };
   for (const d of A.nexts || []) A.nextThing(d);
+  // One welcome: someone who has seen the cold open (lenses/stories.js) is not then offered a first tour as well.
   let toured = false; try { toured = !!localStorage.getItem("atlas.toured.v1"); } catch (e) {}
+  const welcomed = () => { try { return !!localStorage.getItem("atlas.coldopen.v1"); } catch (e) { return false; } };
   A.nextThing({ id: "tour-step", pri: 100, get() {
     const nb = document.getElementById("next"), steps = $$("#answer .step");
     if (!nb || !nb.isConnected || !steps.length) return null;
@@ -115,7 +113,7 @@
     return { kick: `Next step · ${on + 2} of ${steps.length}`, title: t ? t.textContent : "The next step", go: () => nb.click() };
   } });
   A.nextThing({ id: "first-tour", pri: 30, get() {
-    if (toured) return null;
+    if (toured || welcomed() || (A.world && A.world.director && A.world.director.active)) return null;
     const ex = $$("#examples .ex").find(b => b.querySelector(".tg.cur"));
     if (!ex) return null;
     return { kick: "Start here · a guided tour", title: ex.firstChild.textContent.trim(), go: () => { toured = true; try { localStorage.setItem("atlas.toured.v1", "1"); } catch (e) {} api.setTab("guide"); ex.click(); } };
@@ -182,9 +180,10 @@
   // Plugin panes added later still sit above the grip.
   new MutationObserver(() => { if (panel.lastElementChild !== grip) panel.appendChild(grip); }).observe(panel, { childList: true });
 
-  // ---------- show or hide the interface: the eye (H). Panning fades it; hovering brings it back ----------
+  // ---------- show or hide the interface: the eye (H, or F). Panning fades it; hovering brings it back ----------
+  // The one way to clear the screen: the eye is open while the interface shows and shut while it is hidden.
   const eye = document.createElement("button");
-  eye.type = "button"; eye.className = "btn eyebtn"; eye.innerHTML = ico("focus") + `<span class="nm">Hide</span>`;
+  eye.type = "button"; eye.className = "btn eyebtn"; eye.innerHTML = ico("eye") + `<span class="nm">Hide</span>`;
   const mapctl = $(".mapctl"); if (mapctl) mapctl.appendChild(eye);
   function setHidden(v) {
     const was = app.classList.contains("ui-hidden");
@@ -194,13 +193,15 @@
       if (!seen) { const t = document.createElement("div"); t.className = "uihint"; t.textContent = "Press H or the eye to bring it back"; map.appendChild(t); setTimeout(() => t.remove(), 2200); } }
     eye.setAttribute("aria-pressed", v); eye.title = v ? "Show the interface (H)" : "Hide the interface: just the map (H)";
     eye.querySelector(".nm").textContent = v ? "Show" : "Hide";
+    if (was !== v || !eye.dataset.ico) { eye.querySelector(".ico").outerHTML = ico(v ? "eyeshut" : "eye"); eye.dataset.ico = "1"; }
     try { localStorage.setItem("atlas.uihidden.v1", v ? "1" : ""); } catch (e) {}
     emitRects();
   }
+  A.hideUI = setHidden;
   eye.addEventListener("click", () => setHidden(!app.classList.contains("ui-hidden")));
   document.addEventListener("keydown", ev => {
     if (ev.target.closest("input, textarea, select, [contenteditable]") || ev.metaKey || ev.ctrlKey || ev.altKey) return;
-    if (ev.key === "h" || ev.key === "H") { ev.preventDefault(); setHidden(!app.classList.contains("ui-hidden")); }
+    if ("hHfF".includes(ev.key) && ev.key.length === 1) { ev.preventDefault(); setHidden(!app.classList.contains("ui-hidden")); }
   });
   let hid = false; try { hid = !!localStorage.getItem("atlas.uihidden.v1"); } catch (e) {}
   setHidden(hid);
@@ -216,7 +217,8 @@
   // ---------- games and modes: one way in, one way out ----------
   // Opening a game or mode remembers the year, view, lenses and tab you came from; "Back to map" (or Esc) puts them back
   // and folds the panel, so the map is where you left it.
-  const MODES = { codex: "Codex", guess: "Guess the past", life: "Live a life", whatif: "What if", stories: "Stories", travels: "Who was there", objects: "Objects", compare: "Compare", upclose: "Up close" };
+  // A tab is a mode when it says so (ATLAS.tab({ mode: "Its name on the plate" }), or mode: true for its own name).
+  const modeName = id => { const d = tabDef(id); return d.mode ? (typeof d.mode === "string" ? d.mode : d.name || id) : null; };
   let home = null;
   const plate = document.createElement("div");
   plate.className = "modeplate"; plate.hidden = true;
@@ -229,16 +231,16 @@
   function syncMode() {
     const t = curTab();
     if (t === lastTab) return;
-    if (MODES[t] && !home) {
+    if (modeName(t) && !home) {
       const v = api.view();
-      home = { tab: MODES[lastTab] ? "here" : lastTab || "guide", year: api.year, view: v, lenses: api.lenses ? api.lenses() : null };
+      home = { tab: modeName(lastTab) ? "here" : lastTab || "guide", year: api.year, view: v, lenses: api.lenses ? api.lenses() : null };
     }
-    if (!MODES[t]) home = null;
+    if (!modeName(t)) home = null;
     if (lastTab !== null && app.classList.contains("panel-min") && !phone.matches) setFold(false);
     lastTab = t;
     plate.hidden = !home;
     app.classList.toggle("in-mode", !!home);
-    if (home) plate.querySelector(".mp-nm").textContent = MODES[t];
+    if (home) plate.querySelector(".mp-nm").textContent = modeName(t);
     syncPeek(); emitRects();
   }
   function exitMode() {

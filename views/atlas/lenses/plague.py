@@ -1,7 +1,26 @@
 # Epidemics: data for the one-page Atlas, read straight from data/disease-climate/.
 # Plague returns (15k geocoded outbreaks 1347-1900, Biraben and Sticker), the cholera (1826-1832) and smallpox (1518-1528)
 # spreads city by city, and the Wikidata epidemics. The Black Death itself is drawn by the page's built-in disease layer.
-import json, os
+import json, os, re
+
+# Words that say what kind of thing a record is, not which one (a disease's name included): two records sharing only
+# these are not the same.
+KIND_WORDS = {'the', 'of', 'and', 'in', 'great', 'famine', 'famines', 'plague', 'epidemic', 'pandemic', 'outbreak', 'eruption', 'drought', 'first', 'second', 'third',
+              'cholera', 'smallpox', 'typhus', 'influenza', 'flu', 'measles', 'malaria', 'yellow', 'fever', 'sweating', 'sickness'}
+
+
+def words(name):
+    return {w for w in re.findall(r'[a-z]+', name.lower()) if len(w) > 2 and w not in KIND_WORDS}
+
+
+def curated_twin(curated, subtype, name, start, end):
+    """The curated record a bulk row repeats: same kind, years that overlap, and a name word in common (Bengal, Soviet)."""
+    w = words(name)
+    for e in curated:
+        if e.get('subtype') == subtype and e.get('start') is not None and e['start'] <= end and start <= (e.get('end') or e['start']) and w & words(e['name']):
+            return e['id']
+    return None
+
 
 SPREADS = {'event:cholera_1826': 'route:cholera_1826_spread', 'event:smallpox_aztec': 'route:smallpox_americas_spread'}
 OUTBREAK_SRC = [
@@ -24,7 +43,19 @@ def build(repo):
         return out
     r2 = lambda x: round(x, 2)
 
-    # Outbreaks: [lon, lat, year, name index, 0 Biraben | 1 Sticker], one row per place and year (Biraben wins a tie).
+    # Curated records, and where the Black Death reached and when (the page's built-in layer draws those towns).
+    ev = {r['id']: r for r in rows('events.jsonl')}
+    curated = [e for e in ev.values() if not e.get('stub') and e.get('lat') is not None]
+    places = {r['id']: r for r in rows('places.jsonl')}
+    rels = [r for r in rows('relations.jsonl') if r['type'] == 'spread_to']
+    norm = lambda n: re.sub(r'[^a-z]', '', n.lower())
+    bd = {}
+    for r in rels:
+        if r['from'] == 'event:black_death' and r['to'] in places:
+            bd.setdefault(norm(places[r['to']]['name']), []).append(r['start'])
+
+    # Outbreaks: [lon, lat, year, name index, 0 Biraben | 1 Sticker, 1 if the Black Death layer already marks this town
+    # within a year], one row per place and year (Biraben wins a tie).
     names, nid, seen, ob = [], {}, set(), []
     gp = os.path.join(d, 'geo', 'plague_outbreaks.geojson')
     feats = json.load(open(gp, encoding='utf-8'))['features'] if os.path.exists(gp) else []
@@ -36,13 +67,11 @@ def build(repo):
         if p['name'] not in nid:
             nid[p['name']] = len(names); names.append(p['name'])
         lon, lat = f['geometry']['coordinates']
-        ob.append([r2(lon), r2(lat), p['year'], nid[p['name']], 0 if p['src'] == 'biraben' else 1])
+        twin = any(abs(p['year'] - y) <= 1 for y in bd.get(norm(p['name']), []))
+        ob.append([r2(lon), r2(lat), p['year'], nid[p['name']], 0 if p['src'] == 'biraben' else 1] + ([1] if twin else []))
     ob.sort(key=lambda r: r[2])
 
     # Spreads: each stop is where the disease arrived, when, from where and how.
-    ev = {r['id']: r for r in rows('events.jsonl')}
-    places = {r['id']: r for r in rows('places.jsonl')}
-    rels = [r for r in rows('relations.jsonl') if r['type'] == 'spread_to']
     routes = {r['id']: r for r in rows('routes.jsonl')}
     gr = os.path.join(d, 'geo', 'spread_routes.geojson')
     lines = json.load(open(gr, encoding='utf-8'))['features'] if os.path.exists(gr) else []
@@ -66,9 +95,12 @@ def build(repo):
                         'src': S(e.get('sources')), 'stops': stops, 'legs': legs})
 
     # Wikidata epidemics with a date and a place: [name, start, end, lat, lon, deaths low, deaths high, wikidata id, source].
+    # One that repeats a curated record (Black Death in England, during the Black Death) is left to the curated one.
     epi = []
     for r in rows('bulk_wikidata.jsonl'):
         if r['subtype'] != 'epidemic' or r.get('lat') is None:
+            continue
+        if curated_twin(curated, 'epidemic', r['name'], r['start'], r.get('end') or r['start']):
             continue
         dl, dh = (r.get('deaths') or [None, None])
         epi.append([r['name'], r['start'], r.get('end') or r['start'], r2(r['lat']), r2(r['lon']), dl, dh, r.get('wikidata') or '', S(r['sources'])[0]])

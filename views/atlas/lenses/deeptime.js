@@ -72,7 +72,7 @@
   const landShown = (l, y) => !!P && P.ready() && y < -5500 && (l.subtype === "ice_sheet" ? P.iceAt(l.lon, l.lat, y) : P.landAt(l.lon, l.lat, y) && !P.iceAt(l.lon, l.lat, y));
 
   ATLAS.lens({
-    id: "deeptime", name: "Deep time", family: "peoples", color: "#b8612e", on: true, guide: ["population", "geography"],
+    id: "deeptime", name: "Deep time", family: "peoples", color: "#b8612e", on: true, chip: false, guide: ["population", "geography"], by: "geographer",
     key: [["arrow", "Our species on the move: the band walks with the year (dotted: approximate)"], ["line", "Where another kind of human lived"],
       ["diamond", "Fossil or burial"], ["square", "Climate shock"], ["sprite", "Ice Age animals, camps, painted caves and first farms"]],
     index: d => "Deep time lens (300,000 years ago to 4000 BCE): sea level and ice sheets by year, human species "

@@ -22,9 +22,9 @@ Pick the one your lens belongs to:
 | `land`    | Terrain, Cities, Borders                                     |
 | `power`   | Rule & law, War & chokepoints, Order & chaos                 |
 | `wealth`  | Trade & migration, Technology, food & energy, Object journeys, VOC ships |
-| `peoples` | People, Peoples & languages, Journeys, Middle Passage        |
-| `mind`    | Ideas & faith, Art & architecture                            |
-| `shocks`  | Plague & climate, Epidemics, Eruptions, famine & cold          |
+| `peoples` | People (with Lives), Peoples & languages, On the move (journeys, with Middle Passage) |
+| `mind`    | Ideas, faith & art (with Art & architecture), Sources and debates |
+| `shocks`  | Plague & climate (chips: Epidemics, Famine & climate), Epidemics, Eruptions, famine & cold |
 
 A lens is precise (one question, one kind of record); a family is a group you switch on together.
 
@@ -38,7 +38,15 @@ ATLAS.lens({
   color: "#b0744f",                // one hue; the page derives light/dark variants
   on: false,                       // on by default?
   optIn: true,                     // optional: never switched on by tapping its family (a mode of its own)
+  tab: "codex",                    // optional: the lens belongs to that tab and has no chip; the tab switches it on
+                                   //   (and a mode tab puts the lenses back on Back to map)
+  with: "borders",                 // optional: no chip; the lens is part of that chip (a FLAG or a layer) and is on with it;
+                                   //   a part of a layer works too (with: "epidemics", one of Plague & climate's PARTS)
+  covers: ["route:…"],             // optional: ids of page records this lens draws in more detail; the page skips them while it is on
+  chip: false,                     // optional: no chip; the lens keeps its `on` default and gates itself (Deep time, by era)
   guide: ["law", "government"],    // kernel lens names the AI guide may use to switch this lens on
+  by: "political",                 // optional: the panel specialist who speaks for it; otherwise the first `guide`
+                                   //   name a specialist reads decides (roster: SPECS in atlas.src.html)
   index: d => "...",               // optional: a few-KB text index of your records for the guide prompt
 
   // Draw what is true in ctx.year. Called on year change and when a zoom settles.
@@ -109,8 +117,13 @@ A plugin can add its own tab to the right column (after Here) with `ATLAS.tab`. 
 ```js
 ATLAS.tab({
   id: "whatif", name: "What if",
+  icon: "whatif",                  // a PIXEL_ICONS name for its ribbon (views/pixel/icons.js)
+  short: "What if",                // optional: a shorter ribbon label
+  mode: true,                      // optional: a game or mode with "Back to map"; a string names it on the plate
   mount(el, api) { /* el is the empty pane; runs once when the page is up */ },
   show() { /* the tab was opened */ },
+  pick(at) { /* optional: a click on the map while this tab is open; {lon, lat, name} for a spot, or a mark's card (it has a title). Return true to keep it, else Here opens */ },
+  within: "now",                   // optional: a part of This year instead of a tab (Compare); open() runs when asked for by id, hide() on leaving
 });
 ```
 
@@ -121,11 +134,17 @@ caption), `clearScene()`, `fly(view, ms)`, `setOn(lensId, on = true)`, `redraw()
 centre, zoom and about how many degrees fit across and down), `onView(fn)` (called when a pan or zoom settles) and
 `select(card)` (opens a card in Here, panning to it if it is off screen).
 
+Two helpers on `ATLAS` keep every pane saying things the same way: `ATLAS.fmtYear(y)` writes a year ("45,000 years
+ago", "300 BCE", "300 CE", "1453"), and `ATLAS.prov(k)` is the one provenance badge, with `k` one of `ai` (an AI draft,
+sources unchecked), `draft` (curated, awaiting check) or a confidence word (`attested`, `estimated`, `approximate`,
+`unknown`; see VIZ.md). Call the life game Live a life and anything Claude wrote an AI draft.
+
 The Objects tab (`lenses/objects.js`) is the example of a tab that plays a sequence on the map (fly, step the year,
 animate along a leg with `api.redraw()` each frame, caption with `api.scene`). It also exposes `ATLAS.objects` (`list`,
 `journey`, `at(year)`, `near(lon, lat, year, km)`, `follow(id)`) for other plugins.
 
-The Who was there tab (`lenses/travels.js`) is the Contemporaries finder and exposes `ATLAS.travel` (`journeys`,
+The Who was there tab (`lenses/travels.js`) is the Contemporaries finder; its On the road view is the living world's
+(`ATLAS.living`, see README). It exposes `ATLAS.travel` (`journeys`,
 `journey(id)` in the shared itinerary format, `positionAt(id, t)`, `travellers(t)`, `ships(t)`, and the promises
 `presentAt(lon, lat, km, y0, y1)`, `contemporaries(personId)`, `lifeline(personId)`). Times are fractional years.
 
@@ -135,6 +154,11 @@ The Codex tab (`lenses/codex.js`) is the example of a plugin that keeps the view
 The Live tab (`lenses/life.js`) is the life RPG: play a real life from `data/life/lives/*.json` (or ask for anyone,
 drafted by AI and marked so) or an ordinary one from base rates in `data/life/rules.json`. It travels with
 `ATLAS.world.route` and exposes `ATLAS.life.story()`, the life so far as a Story of Scenes (WORLD.md L4), registered with `ATLAS.world.stories` (kind `life`) and played by the Director.
+
+A tab or lens that asks Claude gets the page's one AI connection from `await ATLAS.ai.sample()`: the `sample`
+function, or null where the page isn't open in Claude. The first call asks once for everyone; later calls share it. After a
+`not_granted` or `sampling_disabled` error, call `ATLAS.ai.lost()` so every tab knows. The state is on
+`<html data-ai="on|off">`; put `data-ai` on a control that only works with Claude and it is marked "needs Claude" when off.
 
 ## Pixel sprites from a lens
 

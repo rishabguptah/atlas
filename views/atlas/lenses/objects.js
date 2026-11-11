@@ -6,11 +6,12 @@
 // which object is where in a given year.
 (() => {
   const ID = "objects", COLOR = "#9a5b2e";
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const CONF = { sure: "documented", likely: "likely", legend: "legend or tradition" };
   const FRESH = 60;  // a kind's newest stops are labelled and its legs drawn strong for this many years
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const first = s => { const m = String(s || "").match(/^.*?[.!?](\s|$)/); return (m ? m[0] : String(s || "")).trim(); };
-  const fmtY = y => (window.ATLAS.api && ATLAS.api.fmtYear) ? ATLAS.api.fmtYear(y) : y < 0 ? -y + " BCE" : String(y);
+  const fmtY = ATLAS.fmtYear;
 
   // ---------- pixel sprites for the objects (fills only; the dark outline is baked on, as in views/pixel) ----------
   const GRIDS = {
@@ -274,8 +275,8 @@
 .obj .row { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 6px 4px; border-top: 1px solid var(--rule, #ddd); cursor: pointer; background: none; border-left: 0; border-right: 0; border-bottom: 0; text-align: left; color: inherit; font: inherit; width: 100%; }
 .obj .row:hover, .obj .row:focus-visible { background: color-mix(in srgb, ${COLOR} 10%, transparent); }
 .obj .row img, .obj .hd img { width: 27px; height: auto; image-rendering: pixelated; }
-.obj .row b { display: block; } .obj .row span { color: var(--ink-soft); font-size: 12.5px; }
-.obj .row .yr { font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
+.obj .row b { display: block; } .obj .row span { color: var(--ink-soft); font-size: var(--fs-note); }
+.obj .row .yr { font-size: var(--fs-note); color: var(--ink-soft); white-space: nowrap; }
 .obj .go { font: 600 13px/1 inherit; padding: 8px 12px; border-radius: 6px; border: 1px solid ${COLOR}; background: ${COLOR}; color: #fff; cursor: pointer; }
 .obj .go.ghost { background: none; color: ${COLOR}; }
 .obj .hd { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 8px; align-items: start; }
@@ -288,16 +289,16 @@
 .obj .stops li.likely i { border-style: dashed; } .obj .stops li.legend i { border-style: dotted; opacity: .7; }
 .obj .stops li.on { background: color-mix(in srgb, ${COLOR} 12%, transparent); }
 .obj .stops li.on i, .obj .stops li.done i { background: ${COLOR}; }
-.obj .stops li .m { font-size: 12px; color: var(--ink-soft); }
-.obj .stops li p { margin: 4px 0 0; font-size: 13.5px; display: none; }
+.obj .stops li .m { font-size: var(--fs-note); color: var(--ink-soft); }
+.obj .stops li p { margin: 4px 0 0; font-size: var(--fs-note); display: none; }
 .obj .stops li.on p { display: block; }
-.obj .note { font-size: 13px; color: var(--ink-soft); margin: 0; }
+.obj .note { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; }
 .obj .trace { display: flex; gap: 6px; margin: 8px 0 0; } .obj .trace input { flex: 1; min-width: 0; font: inherit; padding: 6px 8px; border: 1px solid #b9ab8e; border-radius: 6px; background: transparent; color: inherit; }
 .obj .ai { color: #a33a2a; font-weight: 600; }
 .obj .quiz { display: grid; gap: 6px; padding: 10px; border: 2px solid ${COLOR}; border-radius: 8px; }
 .obj .quiz .go { text-align: left; } .obj .quiz .dim { opacity: .45; }
 .obj .quiz .yes { color: #2f7a4b; margin: 0; font-weight: 600; } .obj .quiz .no { color: #a33a2a; margin: 0; font-weight: 600; }
-.obj .conf { display: flex; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--ink-soft); }
+.obj .conf { display: flex; gap: 12px; flex-wrap: wrap; font-size: var(--fs-note); color: var(--ink-soft); }
 .obj .conf span::before { content: ""; display: inline-block; width: 18px; margin-right: 5px; vertical-align: middle; border-top: 2px solid ${COLOR}; }
 .obj .conf .likely::before { border-top-style: dashed; } .obj .conf .legend::before { border-top-style: dotted; }
 `;
@@ -312,22 +313,22 @@
       <div class="ctl"><button type="button" class="go" data-act="surprise">Follow something</button></div>
       <form id="obj-trace" class="trace"><input id="obj-q" type="text" placeholder="Trace any object: the Holy Lance, tea, the Crown of Saint Stephen…" aria-label="Object to trace" autocomplete="off"><button type="submit" class="go">Trace</button></form>
       <p class="note" id="obj-hint" aria-live="polite"></p>
-      ${C.objs.some(o => o.ai) ? `<p class="grp">Traced by AI (unchecked drafts)</p>${C.objs.filter(o => o.ai).map(row).join("")}` : ""}
+      ${C.objs.some(o => o.ai) ? `<p class="grp">AI drafts</p>${C.objs.filter(o => o.ai).map(row).join("")}` : ""}
       <p class="grp">Famous objects</p>${C.objs.filter(o => o.t === "single" && !o.ai).map(row).join("")}
       <p class="grp">Kinds of things</p>${C.objs.filter(o => o.t === "kind" && !o.ai).map(row).join("")}
-      <p class="note">Drafts written from the cited works, waiting for the judge. Routes between stops are drawn as likely paths, not tracks.</p></div>`;
+      <p class="note">Drafts written from the cited works, awaiting check. Routes between stops are drawn as likely paths, not tracks.</p></div>`;
   }
   function renderObj() {
     const C = C0(), o = C.byId[openId]; if (!o) return renderList();
     const on = follow.id === o.id;
     pane.innerHTML = `<div class="obj">
-      <div class="ctl"><button type="button" class="go ghost" data-act="back">← All objects</button></div>
-      <div class="hd">${thumb(o.sp)}<div><h3>${esc(o.n)}</h3><p class="note">${esc(fmtY(o.y0))} – ${esc(fmtY(o.y1))} · ${o.stops.length} stops${o.ai ? ` · <b class="ai">AI draft, unchecked</b>` : ""}</p></div></div>
+      <div class="ctl"><button type="button" class="go ghost" data-act="back">${ICO("back", "←")} All objects</button></div>
+      <div class="hd">${thumb(o.sp)}<div><h3>${esc(o.n)}</h3><p class="note">${esc(fmtY(o.y0))} – ${esc(fmtY(o.y1))} · ${o.stops.length} stops${o.ai ? " · " + ATLAS.prov("ai") : ""}</p></div></div>
       <p>${esc(o.w)}</p>${o.why ? `<p class="note">${esc(o.why)}</p>` : ""}
-      <div class="ctl">${on ? `<button type="button" class="go ghost" data-act="prev" aria-label="Previous stop">◀</button>
-        <button type="button" class="go" data-act="pause">${follow.playing ? "❚❚ Pause" : "▶ Play"}</button>
-        <button type="button" class="go ghost" data-act="next" aria-label="Next stop">▶</button><button type="button" class="go ghost" data-act="stop">✕ Stop</button>`
-        : `<button type="button" class="go" data-act="follow">▶ Follow its journey</button><button type="button" class="go ghost" data-act="play">🎲 Play: guess where it goes</button>${W().director ? `<button type="button" class="go ghost" data-act="story">🎬 Play as a story</button>` : ""}`}</div>
+      <div class="ctl">${on ? `<button type="button" class="go ghost" data-act="prev" aria-label="Previous stop">${ICO("back", "◀")}</button>
+        <button type="button" class="go" data-act="pause">${follow.playing ? ICO("pause", "❚❚") + " Pause" : ICO("play", "▶") + " Play"}</button>
+        <button type="button" class="go ghost" data-act="next" aria-label="Next stop">${ICO("next", "▶")}</button><button type="button" class="go ghost" data-act="stop">${ICO("close", "✕")} Stop</button>`
+        : `<button type="button" class="go" data-act="follow">${ICO("play", "▶")} Follow its journey</button><button type="button" class="go ghost" data-act="play">${ICO("die", "🎲")} Play: guess where it goes</button>${W().director ? `<button type="button" class="go ghost" data-act="story">${ICO("stories", "🎬")} Play as a story</button>` : ""}`}</div>
       ${on ? quizHtml(o) : best(o.id) != null ? `<p class="note">Your best guessing game: ${best(o.id)} of ${rounds(o)}.</p>` : ""}
       <div class="conf"><span>documented</span><span class="likely">likely</span><span class="legend">legend or unknown route</span></div>
       <ol class="stops">${o.stops.map(s => `<li data-i="${s.i}" class="${s.c}${on && s.i === follow.i ? " on" : ""}${on && s.i < follow.i ? " done" : ""}"><i></i><div>
@@ -469,7 +470,7 @@
   }
 
   ATLAS.tab({
-    id: ID, name: "Objects",
+    id: ID, name: "Objects", icon: "objects", mode: true,
     mount(el, a) {
       pane = el; api = a;
       if (!document.getElementById("objects-style")) { const st = document.createElement("style"); st.id = "objects-style"; st.textContent = STYLE; document.head.appendChild(st); }
@@ -497,7 +498,7 @@
   // For things nobody has curated yet: Claude writes the journey as JSON lines, stop by stop, in the same compact rows
   // objects.py emits, and it plays like any other. Marked as an unchecked AI draft. Kept in this browser only.
   let sample = null, tracing = null;
-  const sampleReady = (async () => { try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; } })();
+  const sampleReady = ATLAS.ai.sample().then(s => { sample = s; });
   const TRACED = "atlas.objects.traced.v1";
   const TRACE_RULES = () => `You are the Atlas object historian. Trace one object, or one kind of thing, through space and time for a world map: where it was made or first found, every place it went, who held it, how it moved, and how sure we are.
 Mix: 55% vivid, 45% rigorous. Prefer concrete people, dates and numbers. Never present legend as fact: mark it.
@@ -582,7 +583,7 @@ SOURCE RULES: cite works you are confident exist, or en.wikipedia.org URLs you a
     } catch (e) {
       if (e && e.text) feed(e.text + "\n");
       if (e?.code !== "cancelled") say(ERR[e?.code] || "The connection dropped. Try again.");
-      if (e?.code === "not_granted" || e?.code === "sampling_disabled") sample = null;
+      if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; ATLAS.ai.lost(); }
       if (tracing === my) tracing = null;
       return;
     }

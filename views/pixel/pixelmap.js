@@ -31,7 +31,8 @@
   const NIGHT_RGB = ([r, g, b]) => [r * 0.3 + 4, g * 0.36 + 8, b * 0.5 + 26].map(Math.round);
   const MOODS = {
     dusk: (v, o) => { v[o] = Math.min(255, v[o] * 1.04 + 18); v[o + 1] = v[o + 1] * 0.86 + 6; v[o + 2] = v[o + 2] * 0.72 + 10; },
-    night: (v, o) => { const [r, g, b] = NIGHT_RGB([v[o], v[o + 1], v[o + 2]]); v[o] = r; v[o + 1] = g; v[o + 2] = b; },
+    // The same sums as NIGHT_RGB, without an array per pixel (this runs over every pixel of every night paint).
+    night: (v, o) => { v[o] = Math.round(v[o] * 0.3 + 4); v[o + 1] = Math.round(v[o + 1] * 0.36 + 8); v[o + 2] = Math.round(v[o + 2] * 0.5 + 26); },
     chronicle: (v, o) => { const l = (v[o] * 0.3 + v[o + 1] * 0.55 + v[o + 2] * 0.15) / 255; v[o] = 58 + l * 186; v[o + 1] = 42 + l * 178; v[o + 2] = 28 + l * 150; },
   };
   const GLOW = { city_metropolis: 22, city_city: 16, city_town: 11, city_village: 7 };
@@ -68,6 +69,13 @@
     const cctx = chromeC.getContext("2d");
     let chromeKey = "";
     const off = document.createElement("canvas"), octx = off.getContext("2d", { willReadFrequently: true });
+    // The container's size, read once and kept: a read after the page has changed the DOM forces a layout, and a year
+    // step read it several times, after the lenses had redrawn. It is read again when the container is resized, or when
+    // the projection was refitted (the page refits it on every resize, which can come before this observer's call).
+    let cW = 0, cH = 0, cKey = null;
+    const sizeKey = () => projection.scale() + "," + projection.translate().join(",");
+    const size = () => { const key = sizeKey(); if (key !== cKey) { cW = container.clientWidth; cH = container.clientHeight; cKey = key; } return [cW, cH]; };
+    if (typeof ResizeObserver === "function") new ResizeObserver(() => { cKey = null; }).observe(container);
     let lastW = 0, lastH = 0, terrain = null, last = null, base = null, cls = null, hs = null, band = null, lowNoise = null, latA = null, lonA = null, elevA = null, riv = null, anim = null, art = null, detailFn = null, ids = null, w = 0, h = 0, U0 = 0, V0 = 0, frame = 0, allSprites = [], realmsNow = [], paleo = null, paleoKey = "";
 
     // Terrain tiles: levels coarse to fine, each {cell (degrees), tdeg (tile size in degrees), url(col, row)}.
@@ -81,14 +89,29 @@
       // Neighbouring pixels nearly always hit the same tile as the last call on this level.
       if (L._key === key) return L._tile;
       const t = tiles[key];
-      if (t) { if (t.data) { L._key = key; L._tile = t; } return t.data ? t : null; }
+      if (t) { if (t.data) { L._key = key; L._tile = t; t.used = tilePass; } return t.data ? t : null; }
       const P = col < 0 ? L.patches[row] : null;
       const rec = tiles[key] = P ? { x0: P.box[0], y0: P.box[3], cell: L.cell, patch: true, crop: P.crop } : { x0: -180 + col * L.tdeg, y0: 90 - row * L.tdeg, cell: L.cell };
       const img = new Image(); pending++;
-      img.onload = () => { rec.img = img; decode(rec); pending--; tileVer++; tileSoon(); };
+      img.onload = () => { rec.img = img; decode(rec); rec.used = tilePass; pending--; tileVer++; evictTiles(); tileSoon(); };
       img.onerror = () => { pending--; rec.data = null; rec.failed = true; tileSoon(); };
       img.src = P ? P.url : L.url(col, row);
       return null;
+    }
+    // Decoded finer tiles (an l2 tile is about 3 MB of pixels) are kept up to a budget, then the ones the last terrain
+    // pass did not touch go, least recently used first; the coarse world tile always stays. Panning back loads them again.
+    let tilePass = 0;
+    const TILE_BYTES = 96e6;
+    function evictTiles() {
+      let bytes = 0; const held = [];
+      for (const key in tiles) { const r = tiles[key]; if (+key >= 100000 && r.data) { bytes += r.data.length; held.push([key, r]); } }
+      if (bytes <= TILE_BYTES) return;
+      held.sort((a, b) => a[1].used - b[1].used);
+      for (const [key, r] of held) {
+        if (bytes <= TILE_BYTES || r.used >= tilePass) break;
+        bytes -= r.data.length; delete tiles[key];
+        for (const L of levels) if (L._tile === r) { L._key = null; L._tile = null; }
+      }
     }
     // A finer tile redraws all the terrain (100-500 ms), so a view that asked for several waits for the batch: one
     // redraw when the last arrives (60 ms after it), or every 600 ms while a slow batch is still coming in.
@@ -324,6 +347,8 @@
     function terrainPass(t, need) { const g = terrainSteps(t, need); while (!g.next().done); }
     // The same pass as a generator that yields every few dozen rows and between the terrain art's stages (renderSoon).
     function* terrainSteps(t, need) {
+      // A new pass: tiles mark themselves used again (the one-tile shortcut per level is reset so each is seen).
+      tilePass++; for (const L of levels) { L._key = null; L._tile = null; }
       const landM = maskFor([opts.land], () => "#fff");
       yield;
       base = new Uint32Array(w * h); cls = new Uint8Array(w * h).fill(255);
@@ -427,7 +452,7 @@
 
     // Where the art-pixel grid sits for transform t with `pd` art px of pad past each screen edge.
     function geom(t, pd) {
-      const W = container.clientWidth, H = container.clientHeight;
+      const [W, H] = size();
       const ox = ((t.x % PX) + PX) % PX - PX - pd * PX, oy = ((t.y % PX) + PX) % PX - PX - pd * PX;
       const sw = Math.abs(projection([180, 0])[0] - projection([-180, 0])[0]);
       return { ox, oy, U0: Math.round((ox - t.x) / PX), V0: Math.round((oy - t.y) / PX), w: Math.ceil((W - ox) / PX) + 1 + pd, h: Math.ceil((H - oy) / PX) + 1 + pd, need: 360 / (sw * t.k / PX) };
@@ -470,7 +495,7 @@
     }
 
     function render(t, o = {}) {
-      const W = container.clientWidth, H = container.clientHeight; lastW = W; lastH = H;
+      const [W, H] = size(); lastW = W; lastH = H;
       last = t; realmsNow = o.realms || realmsNow; if (o.mood) mood = o.mood; rv++; fade = null;
       // Art pixel (i, j) covers screen x in [ox + i*PX, ox + (i+1)*PX); U0 + i is its column in the zoomed world grid.
       // pad: art pixels drawn past every edge of the screen (sticky until a render asks for another), so a pan
@@ -587,7 +612,6 @@
       return false;
     }
 
-    function setPx(i, j, col) { if (i >= 0 && j >= 0 && i < w && j < h) base[j * w + i] = col; }
     function line(x0, y0, x1, y1, col) {
       x0 |= 0; y0 |= 0; x1 |= 0; y1 |= 0;
       const dx = Math.abs(x1 - x0), dy = -Math.abs(y1 - y0), sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
@@ -663,23 +687,26 @@
       const enc = i => { const n = i + 1; return `rgb(${n & 255},${(n >> 8) & 255},${(n * 97 + 31) & 255})`; };
       const d = maskFor(realmsNow.map(r => r.feature), (f, i) => enc(i));
       ids = new Int32Array(w * h);
+      // One 32-bit read a pixel (RGBA in memory order, as pack() assumes): id in red and green, its check in blue.
+      const d32 = new Uint32Array(d.buffer, d.byteOffset, w * h), nR = realmsNow.length;
       for (let k = 0; k < w * h; k++) {
-        const a = d[k * 4 + 3]; if (a < 250) { ids[k] = a > 0 ? -1 : 0; continue; }
-        const n = d[k * 4] | d[k * 4 + 1] << 8;
-        ids[k] = n && ((n * 97 + 31) & 255) === d[k * 4 + 2] && n <= realmsNow.length ? n : -1;
+        const v = d32[k], a = v >>> 24; if (a < 250) { ids[k] = a > 0 ? -1 : 0; continue; }
+        const n = v & 0xffff;
+        ids[k] = n && ((n * 97 + 31) & 255) === ((v >>> 16) & 255) && n <= nR ? n : -1;
       }
       // Anti-aliased edge pixels take the id of a clean neighbour.
       for (let k = 0; k < w * h; k++) if (ids[k] === -1) ids[k] = ids[k - 1] > 0 ? ids[k - 1] : ids[k - w] > 0 ? ids[k - w] : 0;
       // An era style draws realms its own way from the id buffer (eras.js), so the default tint is skipped.
       if (era) return;
-      const tint = realmsNow.map(r => rgb(r.color));
+      const Q = global.PIXEL_PALETTE && global.PIXEL_PALETTE.quiet || (c => c);
+      const tint = realmsNow.map(r => rgb(Q(r.color))), edgeTint = tint.map(tc => mix(tc, [30, 22, 18], 0.45));
       const view = new Uint8Array(base.buffer);
       for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         const k = j * w + i, n = ids[k]; if (!n || cls[k] <= 2 || cls[k] === 255) continue;
         const o = k * 4, tc = tint[n - 1];
         const edge = (i + 1 < w && ids[k + 1] !== n && !(cls[k + 1] <= 2)) || (j + 1 < h && ids[k + w] !== n && !(cls[k + w] <= 2)) ||
           (i > 0 && ids[k - 1] !== n && !(cls[k - 1] <= 2)) || (j > 0 && ids[k - w] !== n && !(cls[k - w] <= 2));
-        if (edge) { const e = mix(tc, [30, 22, 18], 0.45); view[o] = e[0]; view[o + 1] = e[1]; view[o + 2] = e[2]; continue; }
+        if (edge) { const e = edgeTint[n - 1]; view[o] = e[0]; view[o + 1] = e[1]; view[o + 2] = e[2]; continue; }
         const inner = (i + 2 < w && ids[k + 2] !== n) || (j + 2 < h && ids[k + 2 * w] !== n) || (i > 1 && ids[k - 2] !== n) || (j > 1 && ids[k - 2 * w] !== n);
         const a = inner ? 0.5 : 0.17;
         view[o] = view[o] + (tc[0] - view[o]) * a; view[o + 1] = view[o + 1] + (tc[1] - view[o + 1]) * a; view[o + 2] = view[o + 2] + (tc[2] - view[o + 2]) * a;
@@ -707,6 +734,7 @@
     // up to max; sprites sharing a grp (a battle's two armies and clash) are kept or dropped together.
     let spriteOpts = {}, spriteMask = null, overlay = null, underlay = null, shown = [], lastOut = null, kept = [], outNow = null, water = true;
     const GLINT = pack(rgb("#8ab8c4"));
+    let img = null, imgOut = null, preBuf = null;
     function declutter(src, t) {
       if (!src.some(s => s.pri != null)) return src;
       const pad = spriteOpts.pad == null ? 2 : spriteOpts.pad, max = spriteOpts.max || Infinity, groups = new Map();
@@ -732,14 +760,16 @@
       if (!base) return;
       const list = declutter(allSprites, last);
       shown = kept = list;
-      const img = ctx.createImageData(w, h), out = new Uint32Array(img.data.buffer);
+      // One image buffer per frame size, reused paint after paint (a new one was about 1 MB of garbage each time).
+      if (!img || img.width !== w || img.height !== h) { img = ctx.createImageData(w, h); imgOut = new Uint32Array(img.data.buffer); }
+      const out = imgOut;
       out.set(base);
-      // Water shimmer: a few world-anchored wave glints that move with the frame.
+      // Water shimmer: a few world-anchored wave glints that move with the frame, on every fifth art row.
       const glint = era && era.glint !== undefined ? era.glint : GLINT;
-      if (water && glint !== null) for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+      if (water && glint !== null) for (let j = ((-V0 % 5) + 5) % 5; j < h; j += 5) for (let i = 0; i < w; i++) {
         const k = j * w + i, c = cls[k]; if (c > 1) continue;
         const u = U0 + i, v = V0 + j;
-        if (v % 5 === 0 && hash(u >> 2, v) < 0.035 && ((u + frame) & 3) < 2) out[k] = glint;
+        if (hash(u >> 2, v) < 0.035 && ((u + frame) & 3) < 2) out[k] = glint;
       }
       const t = last, view = new Uint8Array(out.buffer);
       const M = MOODS[mood];
@@ -777,7 +807,8 @@
         }
       }
       // The frame before lens marks, so era ornaments can keep clear of marks.
-      const pre = era && era.over ? out.slice() : null;
+      if (era && era.over) { if (!preBuf || preBuf.length !== out.length) preBuf = new Uint32Array(out.length); preBuf.set(out); }
+      const pre = era && era.over ? preBuf : null;
       if (overlay) try { overlay(frameInfo()); } catch (err) { console.error("pixel overlay", err); }
       const vis = [Math.ceil(-parseFloat(canvas.style.left) / PX), Math.ceil(-parseFloat(canvas.style.top) / PX), Math.floor((lastW - parseFloat(canvas.style.left)) / PX) - 1, Math.floor((lastH - parseFloat(canvas.style.top)) / PX) - 1];
       if (era && era.over) try { era.over({ out, pre, w, h, px: PX, frame, vis, cls, sprite: spriteMask, U0, V0, k: t.k, projection, at: (x, y) => [(x * t.k) / PX - U0, (y * t.k) / PX - V0] }); } catch (err) { console.error("pixel era", err); }
@@ -818,7 +849,9 @@
       // o.paint false: the caller sets sprites next, which paints (one paint per year step, not two).
       setRealms(r, o) { realmsNow = r || NONE; if (!terrain) return; applyRealms(); realmsDone(o); },
       // Is the last render for this transform (so a year change can use setRealms)?
-      same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === container.clientWidth && lastH === container.clientHeight; },
+      same(t) { return !!last && !!terrain && t.k === last.k && t.x === last.x && t.y === last.y && lastW === size()[0] && lastH === size()[1]; },
+      // The container's size in CSS px, as the map last read it (pm.size is the art grid's).
+      cssSize: size,
       // Switch era style (null = today's look): regrade, then dissolve from the old frame over about 400 ms.
       setEra(st, o = {}) {
         if ((st && st.id) === (era && era.id)) return;

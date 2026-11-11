@@ -133,6 +133,20 @@
       frames[key] = { all, list };
       return list;
     }
+    // Decoded chunks are kept within KEEP chunks of the year in view (all levels); further ones go, with their frames,
+    // so a long session's memory stops growing. Coming back loads them again (the browser has the files cached).
+    const KEEP = 4;
+    let chunkAt = null;
+    function evictChunks(ci) {
+      if (!chunkAt) { chunkAt = {}; index.chunks.forEach((c, i) => { chunkAt[c[2]] = i; }); }
+      for (const key in cache) {
+        if (key[0] !== "t" || !Array.isArray(cache[key])) continue;
+        const i = chunkAt[key.slice(key.indexOf(":") + 1)];
+        if (i == null || Math.abs(i - ci) <= KEEP) continue;
+        const gone = cache[key]; delete cache[key];
+        for (const f in frames) if (frames[f].all === gone) delete frames[f];
+      }
+    }
     let lastY = null;
     function timeRealms(y, k) {
       const c = chunkFor(y), want = levelFor(k);
@@ -142,6 +156,7 @@
       // and a second one in the direction the years are moving: modern chunks span only 12-25 years, so one chunk
       // ahead arrived mid-scrub and every outline in it was then built inside year steps.
       const ci = index.chunks.indexOf(c), dir = lastY == null || y >= lastY ? 1 : -1; lastY = y;
+      evictChunks(ci);
       if (Array.isArray(cache["t" + want + ":" + c[2]])) for (const n of [index.chunks[ci + dir], index.chunks[ci - dir], index.chunks[ci + 2 * dir]]) if (n) loadChunk(n, want);
       for (let l = want; l >= 0; l--) { const r = frame(c, l, y); if (r) return r; if (l < want) loadChunk(c, l); }
       for (let l = want + 1; l <= 2; l++) { const r = frame(c, l, y); if (r) return r; }

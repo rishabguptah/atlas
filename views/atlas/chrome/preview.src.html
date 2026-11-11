@@ -23,11 +23,11 @@ button, input, select { font: inherit; color: inherit; }
 .plate .yr { font-family: var(--f-head); font-size: 48px; line-height: 44px; font-weight: 600; letter-spacing: .01em; font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: 6px; }
 .plate .yr small { font-family: var(--f-tiny); font-size: 16px; line-height: 16px; font-weight: 400; color: var(--ink-soft); }
 .plate .era { font-family: var(--f-tiny); font-size: 8px; line-height: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--era); display: flex; gap: 6px; align-items: center; }
-.plate .era::before { content: ""; width: 8px; height: 8px; background: var(--era-2); box-shadow: 2px 2px 0 var(--ink); }
+.plate .era::before { content: ""; width: 8px; height: 8px; background: var(--era-2); box-shadow: var(--sh-raise); }
 
 /* One obvious next thing: a gold-ruled card that always sits in the same place. */
 .next { all: unset; box-sizing: border-box; position: absolute; cursor: pointer; display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 2px 8px; align-items: center; padding: 4px 10px 6px 6px; color: var(--ink);
-  border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 var(--shade)); transition: transform 120ms var(--ease); }
+  border: 6px solid transparent; border-image: var(--f-card-gold) 3 fill / 6px stretch; image-rendering: pixelated; filter: drop-shadow(var(--sh-float)); transition: transform 120ms var(--ease); }
 .next .ico { --t: var(--gold); grid-row: 1 / 3; }
 .next .kick { color: var(--gold-2); }
 .next b { font-family: var(--f-head); font-weight: 500; font-size: 16px; line-height: 18px; }
@@ -127,7 +127,7 @@ button, input, select { font: inherit; color: inherit; }
   linear-gradient(var(--gold-hi), var(--gold-hi)) 100% 0 / 8px 2px no-repeat, linear-gradient(var(--gold-hi), var(--gold-hi)) 100% 0 / 2px 8px no-repeat,
   linear-gradient(var(--gold-hi), var(--gold-hi)) 0 100% / 8px 2px no-repeat, linear-gradient(var(--gold-hi), var(--gold-hi)) 0 100% / 2px 8px no-repeat,
   linear-gradient(var(--gold-hi), var(--gold-hi)) 100% 100% / 8px 2px no-repeat, linear-gradient(var(--gold-hi), var(--gold-hi)) 100% 100% / 2px 8px no-repeat;
-  filter: drop-shadow(2px 2px 0 var(--ink-fixed)); }
+  filter: drop-shadow(var(--sh-raise)); }
 @media (prefers-reduced-motion: no-preference) { .selmark { animation: sel 1s steps(2) infinite; } }
 @keyframes sel { 50% { transform: scale(1.25); } }
 
@@ -175,7 +175,7 @@ button, input, select { font: inherit; color: inherit; }
 
 /* ---------- C: console (a JRPG command bar) ---------- */
 [data-dir="c"] .console-bg { position: absolute; left: 0; right: 0; bottom: 0; height: 158px; background: linear-gradient(transparent, rgba(16, 14, 12, .45)); pointer-events: none; }
-[data-dir="c"] .tabs { left: max(var(--g), env(safe-area-inset-left, 0px)); bottom: var(--g); width: 196px; height: 140px; flex-direction: column; gap: 0; padding: 6px 4px; border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); image-rendering: pixelated; justify-content: center; }
+[data-dir="c"] .tabs { left: max(var(--g), env(safe-area-inset-left, 0px)); bottom: var(--g); width: 196px; height: 140px; flex-direction: column; gap: 0; padding: 6px 4px; border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(var(--sh-float)); image-rendering: pixelated; justify-content: center; }
 [data-dir="c"] .tabs .tabk { padding: 1px 6px 1px 20px; position: relative; font-size: 16px; line-height: 20px; letter-spacing: 0; color: var(--ink); }
 [data-dir="c"] .tabs .tabk[aria-selected="true"] { color: var(--rubric); }
 [data-dir="c"] .lens { font-size: 16px; line-height: 16px; letter-spacing: 0; }
@@ -191,7 +191,7 @@ button, input, select { font: inherit; color: inherit; }
 [data-dir="c"] .time .readout b { display: none; }
 [data-dir="c"] .plate { display: none; }
 [data-dir="c"] .lenses { right: max(var(--g), env(safe-area-inset-right, 0px)); bottom: var(--g); width: 380px; height: 140px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 6px; padding: 6px 8px;
-  border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(4px 4px 0 var(--shade)); image-rendering: pixelated; align-content: center; }
+  border: 10px solid transparent; border-image: var(--f-panel) 5 fill / 10px stretch; filter: drop-shadow(var(--sh-float)); image-rendering: pixelated; align-content: center; }
 [data-dir="c"] .lens { padding: 0 6px 0 2px; }
 [data-dir="c"] .sub { right: max(var(--g), env(safe-area-inset-right, 0px)); bottom: 168px; width: 380px; }
 [data-dir="c"] .panel { right: max(var(--g), env(safe-area-inset-right, 0px)); width: var(--pw); top: 72px; bottom: 168px; }
@@ -257,7 +257,7 @@ button, input, select { font: inherit; color: inherit; }
   <div class="mapctl" role="toolbar" aria-label="Map controls">
     <button class="pbtn q" type="button" title="Surprise me (S)"><span data-ico="die"></span><span>Surprise</span></button>
     <button class="pbtn q" type="button" title="Key (K)"><span data-ico="key"></span><span>Key</span></button>
-    <button class="pbtn q" type="button" title="Focus (F)"><span data-ico="focus"></span><span>Focus</span></button>
+    <button class="pbtn q" type="button" title="Hide the interface (H)"><span data-ico="eye"></span><span>Hide</span></button>
   </div>
   <nav class="lenses" id="lenses" aria-label="Lens families"></nav>
   <div class="sub fr fr-panel" id="sub" hidden></div>
@@ -306,7 +306,7 @@ button, input, select { font: inherit; color: inherit; }
   let open = null;
   for (const f of FAM) {
     const b = document.createElement("button");
-    b.className = "lens"; b.type = "button"; b.dataset.f = f.id; b.style.setProperty("--t", `var(--t-${f.id})`);
+    b.className = "lens"; b.type = "button"; b.dataset.f = f.id; b.style.setProperty("--t", `var(--t-${f.id})`); b.style.setProperty("--td", `var(--td-${f.id})`);
     b.innerHTML = ico(f.id) + `<span>${f.n}</span><span class="cnt">${f.lenses.filter(l => l[1]).length}/${f.lenses.length}</span>`;
     b.setAttribute("aria-pressed", f.lenses.some(l => l[1]));
     lensesEl.appendChild(b);

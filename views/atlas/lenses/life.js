@@ -7,10 +7,9 @@
   const D = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.life) || null;
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const SEASON = m => ["winter", "winter", "spring", "spring", "spring", "summer", "summer", "summer", "autumn", "autumn", "autumn", "winter"][m - 1];
   const KEY = "atlas.life.v1";
   let api = null, el = null;
-  const fy = y => api ? api.fmtYear(y) : y < 0 ? `${-y} BCE` : `${y}`;
+  const fy = ATLAS.fmtYear;
   const R = Math.PI / 180;
   const km = (a, b) => { const dl = (b.lat - a.lat) * R, dn = (b.lon - a.lon) * R, x = Math.sin(dl / 2) ** 2 + Math.cos(a.lat * R) * Math.cos(b.lat * R) * Math.sin(dn / 2) ** 2; return 12742 * Math.asin(Math.min(1, Math.sqrt(x))); };
   const interp = (rows, y, col = 1) => { if (y <= rows[0][0]) return rows[0][col]; for (let i = 1; i < rows.length; i++) if (y <= rows[i][0]) { const a = rows[i - 1], b = rows[i]; return a[col] + (b[col] - a[col]) * (y - a[0]) / (b[0] - a[0]); } return rows[rows.length - 1][col]; };
@@ -91,7 +90,8 @@
   }
   function story(g = G0()) {
     if (!g) return null;
-    const life = lifeOf(g), who = life ? `person:${life.id}` : null, gen = g.kind !== "real";
+    // An ordinary life, or a real one Claude drafted (life.ai), is never shown as attested: at most estimated.
+    const life = lifeOf(g), who = life ? `person:${life.id}` : null, gen = g.kind !== "real" || !!(life && life.ai);
     const conf = e => gen ? "estimated" : e.k === "real" ? "attested" : e.k === "travel" ? "estimated" : "approximate";
     const scenes = g.log.map((e, i) => {
       const at = e.at || g.at, cap = e.t.split(/(?<=\.)\s/)[0];
@@ -338,7 +338,7 @@
 
   // ---------- anyone: Claude drafts a life from the record ----------
   let sample = null, sampleReady = null, drafting = null;
-  function connect() { if (!sampleReady) sampleReady = (async () => { try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; } })(); return sampleReady; }
+  function connect() { if (!sampleReady) sampleReady = ATLAS.ai.sample().then(s => { sample = s; }); return sampleReady; }
   async function draft(name) {
     const p = PPL().find(x => x.name.toLowerCase() === name.toLowerCase()) || null;
     const id = "ai_" + name.toLowerCase().replace(/[^a-z0-9]+/g, "_").slice(0, 40);
@@ -379,21 +379,21 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
 
   // ---------- drawing on the map ----------
   ATLAS.lens({
-    id: "life", name: "Your life", family: "peoples", color: "#d0602a", on: false, guide: [],
+    id: "life", name: "Live a life", family: "peoples", color: "#d0602a", on: false, guide: [], tab: "life",
     key: [["line", "Your road so far"], ["sprite", "You, and how you travel"], ["dot", "Where your next chapter happens"]],
     draw(ctx) {
       lensProj = ctx.projection; lensG = ctx.g; lensPath = ctx.path;
       const g = G0(); if (!g) { ctx.g.selectAll(".lf-me").remove(); return; }
       // Lines go to the page's canvas mark layer: your road solid, the record dashed green, route options dashed.
-      if (g.real && g.kind === "real" && (g.showReal || g.phase === "over")) ctx.paths([{ id: "real", pts: g.real }], { cls: "ghost", color: "#2f7a5a", title: () => "The real route, from the record" });
+      if (g.real && g.kind === "real" && (g.showReal || g.phase === "over")) ctx.paths([{ id: "real", pts: g.real }], { cls: "ghost", color: "var(--fam-land)", title: () => "The real route, from the record" });
       if (g.plan && g.phase === "travel") ctx.paths(g.plan.map((r, i) => ({ id: "p" + i, pts: r.pts, sel: i === (g.sel || 0) })), { key: r => r.id, title: () => "A possible route" })
-        .classed("ghost", r => !(r.x || r).sel).style("--c", r => (r.x || r).sel ? "#d0602a" : "#8a7a6a");
-      ctx.paths([{ id: "road", pts: g.path }], { color: "#d0602a", title: () => "Your road so far" }).style("stroke-width", 3);
+        .classed("ghost", r => !(r.x || r).sel).style("--c", r => (r.x || r).sel ? "var(--y-life)" : "var(--ink-soft)");
+      ctx.paths([{ id: "road", pts: g.path }], { title: () => "Your road so far" }).style("stroke-width", 3);
       const life = lifeOf(g), next = life && life.chapters[g.i + 1];
       const pins = [];
       if (next && g.phase !== "over") pins.push({ id: "next", lon: next.at.lon, lat: next.at.lat, n: next.at.n });
       if (g.dest && g.kind === "ordinary" && g.phase === "travel") pins.push({ id: "next", lon: g.dest.lon, lat: g.dest.lat, n: g.dest.n });
-      ctx.pins(pins, { key: p => p.id, shape: "diamond", color: "#d0602a", label: p => p.n, title: p => `Next: ${p.n}`, always: true });
+      ctx.pins(pins, { key: p => p.id, shape: "diamond", label: p => p.n, title: p => `Next: ${p.n}`, always: true });
       let me = ctx.g.select("g.lf-me");
       if (me.empty()) { me = ctx.g.append("g").attr("class", "pt lf-me always"); me.append("image").style("image-rendering", "pixelated"); }
       spriteG = me;
@@ -405,54 +405,48 @@ Rules: 5 to 8 chapters in date order, each at a real place with correct coordina
       const xy = ctx.projection([at.lon, at.lat]); if (xy) me.attr("transform", `translate(${xy[0]},${xy[1]}) scale(${1 / ctx.k})`);
       ctx.g.selectAll("path.lf-done").data(anim ? [anim.done || []] : []).join("path").attr("class", "lf-done").attr("d", d => d.length > 1 ? ctx.path({ type: "LineString", coordinates: d }) : null);
     },
-    here(ctx, at) {
-      const g = G0();
-      if (pickWait) { const f = pickWait; pickWait = null; setTimeout(() => { api.setTab("life"); f(at); }, 0); return [{ title: "Chosen for your life", why: "Back to the Live tab" }]; }
-      if (g && g.phase === "pick") { setTimeout(() => { api.setTab("life"); chooseDest({ n: (nearestTown(at.lon, at.lat, g.y) || {}).n || "this spot", lon: at.lon, lat: at.lat }); }, 0); return [{ title: "Your destination", why: "Back to the Live tab to plan the trip" }]; }
-      return [];
-    },
   });
   let pickWait = null;
   const css = document.createElement("style");
   css.textContent = `
 .lf { display: grid; gap: 12px; }
-.lf h2 { font-family: var(--fell); font-size: 22px; margin: 0; }
-.lf .sub { color: var(--ink-soft); font-size: 13.5px; margin: 0; }
+.lf h2 { font-family: var(--fell); font-size: var(--fs-h3); margin: 0; }
+.lf .sub { color: var(--ink-soft); font-size: var(--fs-note); margin: 0; }
 .lf .cards { display: grid; gap: 8px; }
 .lf .life { text-align: left; border: 1px solid var(--rule); background: var(--card); border-radius: 6px; padding: 9px 11px; cursor: pointer; display: grid; grid-template-columns: 40px 1fr auto; gap: 2px 10px; align-items: center; }
 .lf .life:hover { border-color: var(--ink-soft); }
 .lf .life img { grid-row: span 2; width: 36px; height: 36px; image-rendering: pixelated; object-fit: contain; }
-.lf .life b { font-family: var(--fell); font-size: 16px; } .lf .life span { font-size: 12.5px; color: var(--ink-soft); }
-.lf .life .tg { grid-row: span 2; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
+.lf .life b { font-family: var(--fell); font-size: var(--fs-h4); } .lf .life span { font-size: var(--fs-note); color: var(--ink-soft); }
+.lf .life .tg { grid-row: span 2; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
 .lf .hud { position: sticky; top: 36px; z-index: 2; background: var(--paper); border-bottom: 1px solid var(--rule); padding: 8px 0; display: grid; grid-template-columns: 44px 1fr auto; gap: 2px 10px; align-items: center; }
 .lf .hud img { grid-row: span 2; width: 42px; height: 42px; image-rendering: pixelated; object-fit: contain; }
-.lf .hud b { font-family: var(--fell); font-size: 17px; } .lf .hud .meta { font-size: 12.5px; color: var(--ink-soft); }
+.lf .hud b { font-family: var(--fell); font-size: var(--fs-h4); } .lf .hud .meta { font-size: var(--fs-note); color: var(--ink-soft); }
 .lf .stats { display: flex; gap: 4px; flex-wrap: wrap; grid-column: 2 / 4; }
-.lf .stat { font-family: var(--mono); font-size: 10.5px; border: 1px solid var(--rule); border-radius: 3px; padding: 1px 6px; }
+.lf .stat { font-family: var(--mono); font-size: var(--fs-tiny); border: 1px solid var(--rule); border-radius: 3px; padding: 1px 6px; }
 .lf .ch { border: 1px solid var(--rule); border-left: 4px solid #d0602a; background: var(--card); border-radius: 4px; padding: 11px 13px; display: grid; gap: 8px; }
-.lf .ch .k { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .1em; color: #d0602a; }
-.lf .ch h3 { font-family: var(--fell); font-size: 19px; margin: 0; }
-.lf .ch p { margin: 0; font-size: 14.5px; line-height: 1.45; }
-.lf .opt { all: unset; box-sizing: border-box; cursor: pointer; border: 1.5px solid var(--rule); border-radius: 5px; padding: 8px 11px; font-size: 14.5px; line-height: 1.35; display: grid; gap: 2px; background: var(--paper); }
+.lf .ch .k { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .1em; color: #d0602a; }
+.lf .ch h3 { font-family: var(--fell); font-size: var(--fs-h4); margin: 0; }
+.lf .ch p { margin: 0; font-size: var(--fs-read); line-height: 1.45; }
+.lf .opt { all: unset; box-sizing: border-box; cursor: pointer; border: 1.5px solid var(--rule); border-radius: 5px; padding: 8px 11px; font-size: var(--fs-read); line-height: 1.35; display: grid; gap: 2px; background: var(--paper); }
 .lf .opt:hover, .lf .opt:focus-visible { border-color: #d0602a; }
-.lf .opt small { color: var(--ink-soft); font-size: 12.5px; }
+.lf .opt small { color: var(--ink-soft); font-size: var(--fs-note); }
 .lf .opt.sel { border-color: #d0602a; background: color-mix(in srgb, #d0602a 8%, var(--paper)); }
-.lf .go { all: unset; cursor: pointer; background: #d0602a; color: #fff; border-radius: 5px; padding: 9px 14px; font-size: 15px; text-align: center; font-weight: 600; }
+.lf .go { all: unset; cursor: pointer; background: #d0602a; color: #fff; border-radius: 5px; padding: 9px 14px; font-size: var(--fs-read); text-align: center; font-weight: 600; }
 .lf .go:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
-.lf .ghost { all: unset; cursor: pointer; color: var(--ink-soft); font-size: 13px; text-decoration: underline; }
-.lf .badge2 { display: inline-block; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 1px 6px; color: #fff; background: #2f7a5a; }
+.lf .ghost { all: unset; cursor: pointer; color: var(--ink-soft); font-size: var(--fs-note); text-decoration: underline; }
+.lf .badge2 { display: inline-block; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 1px 6px; color: #fff; background: #2f7a5a; }
 .lf .badge2.alt { background: #7a4a8a; } .lf .badge2.ai { background: #8a6418; }
-.lf .news { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 13.5px; }
+.lf .news { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: var(--fs-note); }
 .lf .news li { border-left: 3px solid var(--rule); padding-left: 8px; } .lf .news li b { font-weight: 600; }
 .lf .news li.plague, .lf .news li.epidemic { border-color: #8a2a2a; } .lf .news li.famine { border-color: #a8742a; } .lf .news li.battle, .lf .news li.fall { border-color: #444; }
 .lf .news li.person { border-color: #3a5aa8; } .lf .news li.trade { border-color: #2f7a5a; } .lf .news li.ruler { border-color: #7a4a8a; }
-.lf .src { font-size: 11.5px; color: var(--ink-soft); }
-.lf .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13.5px; }
-.lf .cmp > div { border: 1px solid var(--rule); border-radius: 4px; padding: 7px 9px; } .lf .cmp b { display: block; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); font-weight: 500; }
+.lf .src { font-size: var(--fs-note); color: var(--ink-soft); }
+.lf .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: var(--fs-note); }
+.lf .cmp > div { border: 1px solid var(--rule); border-radius: 4px; padding: 7px 9px; } .lf .cmp b { display: block; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); font-weight: 500; }
 .lf input[type=text], .lf input[type=number], .lf select { border: 1px solid var(--rule); background: var(--card); padding: 6px 9px; border-radius: 4px; font-size: 14px; font-family: inherit; }
 .lf .row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-.lf .log { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 13px; max-height: 320px; overflow: auto; }
-.lf .log li span { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-right: 6px; }
+.lf .log { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: var(--fs-note); max-height: 320px; overflow: auto; }
+.lf .log li span { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); margin-right: 6px; }
 path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .9; }
 `;
   document.head.appendChild(css);
@@ -488,7 +482,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
     const nm = g.kind === "real" ? life.name : g.name;
     const role = g.kind === "real" ? life.role : (D().rules.roles.find(r => r.id === g.role) || {}).n;
     const sp = g.kind === "real" ? life.sprite : (D().rules.roles.find(r => r.id === g.role) || {}).sprite;
-    return `<div class="hud">${img(sp || "person_pilgrim", g.team)}<b>${esc(nm)}${life && life.ai ? ' <span class="badge2 ai">Claude draft</span>' : ""}</b><button class="ghost" data-a="quit">Leave</button>
+    return `<div class="hud">${img(sp || "person_pilgrim", g.team)}<b>${esc(nm)}${life && life.ai ? " " + ATLAS.prov("ai") : ""}</b><button class="ghost" data-a="quit">Leave</button>
       <span class="meta">${esc(role || "")} · age ${age} · ${MONTHS[(g.m || 1) - 1]} ${fy(g.y)} · ${esc(g.at.n)}${g.kind === "real" ? ` · ${g.div ? `${g.div} choices your own` : "true to the record"}` : ""}</span>
       <div class="stats">${statLine(g.st)}<span class="stat" title="Distance travelled">↝ ${Math.round(g.km).toLocaleString()} km</span></div></div>`;
   }
@@ -554,7 +548,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
         ${choicesFor(g).map(c => `<button class="opt" data-a="act" data-id="${c.id}">${esc(c.t)}<small>${esc(c.why || "")}</small></button>`).join("")}</div>`;
     } else if (g.phase === "pick") {
       const y = g.y, towns = typeof ENTRIES !== "undefined" ? ENTRIES.filter(e => e.layer !== "wonders" && e.start <= y && (e.end == null || y < e.end)).map(e => ({ n: e.name, lon: e.lon, lat: e.lat, d: km(g.at, e) })).filter(e => e.d > 40 && e.d < 4000).sort((a, b) => a.d - b.d) : [];
-      body = `<div class="ch"><h3>Where to?</h3><p class="sub">Click anywhere on the map, or pick a city that stands in ${esc(fy(y))}.</p>
+      body = `<div class="ch"><h3>Where to?</h3><p class="sub">${ATLAS.click} anywhere on the map, or pick a city that stands in ${esc(fy(y))}.</p>
         ${towns.slice(0, 10).map(t => `<button class="opt" data-a="dest" data-n="${esc(t.n)}" data-lon="${t.lon}" data-lat="${t.lat}">${esc(t.n)} <small>${Math.round(t.d).toLocaleString()} km as the crow flies</small></button>`).join("")}
         <button class="ghost" data-a="nogo">Stay home after all</button></div>`;
     } else if (g.phase === "travel") body = travelView(g, g.dest, false);
@@ -569,7 +563,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
       const real = g.picks.filter(p => p.real).length;
       rows = `<div class="cmp"><div><b>Your life</b>${esc(o.t)}<br>${Math.round(g.km).toLocaleString()} km travelled · ${real} of ${g.picks.length} choices as in the record</div>
         <div><b>The real ${esc(life.name)}</b>${fy(life.born)}–${fy(life.died)}. ${esc(life.epilogue || "")}</div></div>
-        ${life.ai ? `<p class="sub"><span class="badge2 ai">Claude draft</span> This life was drafted by Claude and has not been checked against the sources.</p>` : ""}
+        ${life.ai ? `<p class="sub">${ATLAS.prov("ai")} This life was drafted by Claude and has not been checked against the sources.</p>` : ""}
         <div class="sec"><h3>Sources</h3><ul class="src">${(life.sources || []).map(s => `<li>${s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite)}</a>` : esc(s.cite)}</li>`).join("")}</ul></div>`;
     } else {
       const e15 = interp(rules.life_table.rows, g.born + 15, 4), alive = g.kids.filter(k => k.d == null).length;
@@ -593,7 +587,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
   }
   function show(fresh) {
     const g = G0();
-    if (g && !api.isOnLife) { api.setOn("life", true); }
+    if (g) api.setOn("life", true);
     render();
     if (fresh && g) { api.setYear(g.y, true, 700); api.fly({ lon: g.at.lon, lat: g.at.lat, span: 24 }, 1100); }
     api.redraw();
@@ -668,7 +662,7 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
     else if (a === "settle") { g.phase = "year"; g.news = yearNews(g); g.lastYears = null; save(); show(); }
   }
   ATLAS.tab({
-    id: "life", name: "Live",
+    id: "life", name: "Live a life", short: "Live", icon: "life", mode: true,
     mount(pane, a) {
       el = pane; api = a;
       el.addEventListener("click", onClick);
@@ -679,14 +673,21 @@ path.lf-done { stroke: #fff4d6; stroke-width: 4px; fill: none; stroke-linecap: r
         if (!D() || !ATLAS.world.motionReady()) { el.innerHTML = tries > 150 ? '<p class="sub">The life data did not load.</p>' : '<p class="sub">Loading lives…</p>'; if (tries++ <= 150) setTimeout(ready, 200); return; }
         // A game left mid-trip resumes at the planning step.
         const g = G0(); if (g && g.phase === "moving") { g.phase = g.plan ? "travel" : g.kind === "real" ? "choose" : "year"; save(); }
-        if (g) { api.setOn("life", true); api.redraw(); }
-        if (!el.hidden) render();
+        // Your road shows while the tab is open (show() switches the lens on), not on the map at large.
+        if (!el.hidden) { if (g) api.setOn("life", true); render(); }
       };
       ready();
       a.onYear(() => { if (el && !el.hidden && !G0()) { clearTimeout(homeT); homeT = setTimeout(render, 250); } });
       if (a.onView) a.onView(() => { if (el && !el.hidden && !G0()) render(); });
     },
     show() { render(); },
+    // A click on the map while the game waits for a place: where to be born, or where to go next. Otherwise Here.
+    pick(at) {
+      if (pickWait) { const f = pickWait; pickWait = null; f(at); return true; }
+      const g = G0();
+      if (g && g.phase === "pick") { chooseDest({ n: (nearestTown(at.lon, at.lat, g.y) || {}).n || "this spot", lon: at.lon, lat: at.lat }); return true; }
+      return false;
+    },
   });
   let homeT = 0;
   // For tests and other plugins: the router and the world reader.

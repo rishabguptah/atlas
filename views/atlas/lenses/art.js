@@ -1,8 +1,10 @@
 // Art & architecture: styles are born somewhere and spread; each monument is one record with a year, a place and a source.
 // On the map: monuments standing in ctx.year (curated ones always, Wikidata ones thinned by zoom), the birthplace of each
-// living style, and lines from that birthplace to the style's key monuments built in the last two centuries.
+// living style, and lines from that birthplace to the style's key monuments built in the last two centuries. It has no
+// chip of its own: it comes with Ideas, faith & art. At world zoom it keeps to the styles' birthplaces and the curated
+// works begun in the last 40 years, so the idea journeys stay readable; the buildings arrive as you zoom in.
 (() => {
-  const NOW = 2025;
+  const NOW = 2025, WORLD_K = 2, FRESH = 40;
   let D = null, S, F, MONS, BY_STYLE, INFL_IN, INFL_OUT;
   const prep = d => {
     if (D === d) return; D = d;
@@ -48,26 +50,26 @@
   }
 
   ATLAS.lens({
-    id: "art", name: "Art & architecture", family: "mind", color: "#a8577a", on: false,
+    id: "art", name: "Art & architecture", family: "mind", color: "#a8577a", on: false, with: "ideas",
     guide: ["art", "architecture"],
     index: d => { prep(d); return S.map(s => `${s.id} ${s.n} (${s.fam.n}) ${s.s} to ${s.e ?? "now"}, from ${s.o}`).join("\n"); },
 
     draw(ctx) {
       prep(ctx.data);
-      const y = ctx.year, k = ctx.k || 1;
+      const y = ctx.year, k = ctx.k || 1, world = k < WORLD_K;
       const famC = m => m.st[0] ? m.st[0].fam.c : "#a8577a";
       // Spread: from a style's birthplace to each key monument built in the last 200 years; the newest lines are bold.
       const born = S.filter(s => live(s, y)), legs = [];
       for (const s of born.concat(S.filter(s => !live(s, y) && s.e != null && y - s.e < 150)))
-        for (const m of BY_STYLE[s.i]) if (m.cur && m.from <= y && y - m.from < 200 && (Math.abs(m.lon - s.lon) > 0.05 || Math.abs(m.lat - s.lat) > 0.05))
+        for (const m of BY_STYLE[s.i]) if (m.cur && m.from <= y && y - m.from < (world ? FRESH : 200) && (Math.abs(m.lon - s.lon) > 0.05 || Math.abs(m.lat - s.lat) > 0.05))
           legs.push({ id: s.id + ">" + m.id, s, m, age: y - m.from });
       ctx.paths(legs, { key: l => l.id, coords: l => [[l.s.lon, l.s.lat], [l.m.lon, l.m.lat]], cls: "art-spread",
         title: l => `${l.s.n}: ${l.s.o} to ${l.m.name}, ${ctx.fmtYear(l.m.from)}`, card: l => monCard(ctx, l.m) })
         .style("--c", l => l.x.s.fam.c).style("stroke-width", l => l.x.age < 40 ? "1.8px" : "1px")
         .style("stroke-opacity", l => Math.max(0.15, 0.8 - l.x.age / 250)).style("stroke-dasharray", l => l.x.age < 40 ? null : "3 3");
       // Monuments standing now: every curated one, plus the best-known Wikidata buildings for this zoom (new ones first).
-      const cap = Math.round(25 * Math.pow(k, 1.4));
-      const cur = MONS.filter(m => m.cur && standing(m, y));
+      const cap = world ? 0 : Math.round(25 * Math.pow(k, 1.4));
+      const cur = MONS.filter(m => m.cur && standing(m, y) && (!world || y - m.from < FRESH));
       const wd = MONS.filter(m => !m.cur && standing(m, y)).sort((a, b) => ((y - b.from < 50) - (y - a.from < 50)) || b.sl - a.sl).slice(0, cap);
       const mon = (list, shape) => ctx.pins(list, { key: m => m.id, shape, cls: "art-mon", label: m => m.name,
         title: m => `${m.name} · ${styleNames(m)} · ${ctx.fmtYear(m.s)}`, card: m => monCard(ctx, m) })
@@ -75,8 +77,8 @@
       mon(wd, "circle");
       mon(cur.filter(m => !m.art), "triangle");
       mon(cur.filter(m => m.art), "square");
-      // Birthplaces of the styles alive this year, labelled.
-      ctx.pins(born, { key: s => "style:" + s.id, shape: "diamond", cls: "art-style", always: true, label: s => s.n.split(" (")[0],
+      // Birthplaces of the styles alive this year, labelled (at world zoom a style's name always shows for its first century).
+      ctx.pins(born, { key: s => "style:" + s.id, shape: "diamond", cls: "art-style", always: s => !world || y - s.s < 100, label: s => s.n.split(" (")[0],
         title: s => `${s.n} · ${s.fam.n} · ${ctx.fmtSpan(s.s, s.e)}`, card: s => styleCard(ctx, s) }).style("--c", s => s.fam.c);
     },
 

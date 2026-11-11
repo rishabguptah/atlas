@@ -1,16 +1,19 @@
 // Codex and quests: the game layer. Lost cities and sites, wonders and battles fill a codex as you visit them on
 // the map (click near one, or zoom in on it; battles only count in the year they were fought). Quests are built
-// from the codex, the guide's tours and the what-if turning points. A daily riddle points at one discovery, and
-// an optional fog of war covers each era until you have looked around in it. Progress stays in this browser
+// from the codex, the guide's tours and the what-if turning points. Today puts the daily riddle (one discovery) beside
+// Guess's daily five, with one streak for both (ATLAS.today), and an optional fog of war covers each era until you have looked around in it. Progress stays in this browser
 // (localStorage). Data: views/atlas/lenses/codex.py.
 (function () {
   const D = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.codex) || { sites: [], quests: [], trails: [] };
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const KIND = { c: ["Lost city or site", "Lost cities & sites", "square"], w: ["Wonder", "Wonders", "diamond"], b: ["Battle", "Battles", "cross"] };
   const R_CLICK = 150, R_BATTLE = 120, BATTLE_YEARS = 10, FALL_YEARS = 30;
-  const ERAS = [[-4000, "Bronze Age"], [-1200, "Iron Age"], [-500, "Classical age"], [500, "Early Middle Ages"], [1000, "High and late Middle Ages"],
-    [1450, "Early modern age"], [1750, "Long nineteenth century"], [1914, "Modern age"]];
-  const era = y => { let i = 0; for (let j = 0; j < ERAS.length; j++) if (y >= ERAS[j][0]) i = j; return i; };
+  // Eras come from the page's one list (ATLAS.eras), so the fog's eras are the ribbon's. Each era's fog is kept under
+  // the year it begins ("y-1200"); era(y) gives that key, eraName(y) its name.
+  const eraList = () => (window.ATLAS && ATLAS.eras) || [{ from: -Infinity, to: Infinity, name: "All of time" }];
+  const eraIdx = y => (window.ATLAS && ATLAS.eraAt) ? ATLAS.eraAt(y) : 0;
+  const era = y => "y" + eraList()[eraIdx(y)].from;
+  const eraName = y => eraList()[eraIdx(y)].name;
   const CELL = 3, COLS = 360 / CELL, ROWS = 180 / CELL;
   let api = null, el = null, mode = "next", showAll = {};
 
@@ -22,7 +25,7 @@
   const save = () => { clearTimeout(saveT); saveT = setTimeout(() => { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) { /* private window: progress lasts this visit */ } }, 250); };
 
   // ---------- helpers ----------
-  const fy = y => api ? api.fmtYear(y) : String(y);
+  const fy = ATLAS.fmtYear;
   const km = (a, b) => { const r = Math.PI / 180, x = Math.sin((b.lat - a.lat) * r / 2) ** 2 + Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin((b.lon - a.lon) * r / 2) ** 2; return 12742 * Math.asin(Math.sqrt(x)); };
   const century = y => {
     if (y <= -3000) { const m = Math.ceil(-y / 1000); return `${m}${m === 1 ? "st" : m === 2 ? "nd" : m === 3 ? "rd" : "th"} millennium BCE`; } const n = y < 0 ? Math.ceil(-y / 100) : Math.floor(y / 100) + 1; const sfx = n % 10 === 1 && n !== 11 ? "st" : n % 10 === 2 && n !== 12 ? "nd" : n % 10 === 3 && n !== 13 ? "rd" : "th"; return `${n}${sfx} century${y < 0 ? " BCE" : ""}`; };
@@ -57,10 +60,10 @@
   const css = document.createElement("style");
   css.textContent = `
 .cx-toasts { position: absolute; right: 12px; top: 12px; justify-items: end; display: grid; gap: 8px; z-index: 30; pointer-events: none; max-width: min(340px, calc(100% - 24px)); }
-.cx-toast { pointer-events: auto; cursor: pointer; background: var(--card); color: var(--ink); border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); padding: 7px 11px 8px; display: grid; gap: 2px; animation: cx-in .25s steps(4) both; }
-.cx-toast .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--y-codex); }
-.cx-toast b { font-family: var(--fell); font-weight: 400; font-size: 17px; line-height: 1.2; }
-.cx-toast span { font-size: 12.5px; color: var(--ink-soft); }
+.cx-toast { pointer-events: auto; cursor: pointer; background: var(--card); color: var(--ink); border: 2px solid var(--ink); box-shadow: var(--sh-float); padding: 7px 11px 8px; display: grid; gap: 2px; animation: cx-in .25s steps(4) both; }
+.cx-toast .k { font-family: var(--mono); font-size: var(--fs-tiny); letter-spacing: .1em; text-transform: uppercase; color: var(--y-codex); }
+.cx-toast b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); line-height: 1.2; }
+.cx-toast span { font-size: var(--fs-note); color: var(--ink-soft); }
 .cx-toast.out { animation: cx-out .3s steps(3) both; }
 @keyframes cx-in { from { transform: translateY(-10px); opacity: 0; } }
 @keyframes cx-out { to { transform: translateY(-10px); opacity: 0; } }
@@ -68,21 +71,21 @@
 @media (prefers-reduced-motion: reduce) { .cx-toast, .cx-toast.out { animation: none; } }
 .cx { display: grid; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
 .cx .seg { display: flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; width: max-content; max-width: 100%; }
-.cx .seg button { border: 0; background: transparent; padding: 6px 13px; cursor: pointer; font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.cx .seg button { border: 0; background: transparent; padding: 6px 13px; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
 .cx .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-.cx h2 { font-family: var(--fell); font-weight: 400; font-size: 21px; line-height: 1.2; margin: 0; }
-.cx h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; gap: 8px; align-items: baseline; }
+.cx h2 { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h3); line-height: 1.2; margin: 0; }
+.cx h3 { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; gap: 8px; align-items: baseline; }
 .cx h3 .n { margin-left: auto; font-variant-numeric: tabular-nums; }
 .cx p { margin: 0; }
-.cx .lede { font-size: 14.5px; color: var(--ink-soft); }
-.cx .note { font-size: 12.5px; color: var(--ink-soft); }
+.cx .lede { font-size: var(--fs-read); color: var(--ink-soft); }
+.cx .note { font-size: var(--fs-note); color: var(--ink-soft); }
 .cx .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .cx .stat { border: 1px solid var(--rule); background: var(--card); padding: 8px 10px; display: grid; gap: 2px; }
-.cx .stat b { font-family: var(--mono); font-size: 19px; font-weight: 500; font-variant-numeric: tabular-nums; }
-.cx .stat span { font-size: 11.5px; color: var(--ink-soft); }
-.cx .next { border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); background: var(--card); padding: 11px 13px; display: grid; gap: 6px; }
-.cx .next .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--y-codex); }
-.cx .next b { font-family: var(--fell); font-weight: 400; font-size: 18px; line-height: 1.25; }
+.cx .stat b { font-family: var(--mono); font-size: var(--fs-tiny-2); font-weight: 500; font-variant-numeric: tabular-nums; }
+.cx .stat span { font-size: var(--fs-note); color: var(--ink-soft); }
+.cx .next { border: 2px solid var(--ink); box-shadow: var(--sh-float); background: var(--card); padding: 11px 13px; display: grid; gap: 6px; }
+.cx .next .k { font-family: var(--mono); font-size: var(--fs-tiny); letter-spacing: .1em; text-transform: uppercase; color: var(--y-codex); }
+.cx .next b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); line-height: 1.25; }
 .cx .meter { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 2px; height: 8px; }
 .cx .meter i { background: var(--wash); outline: 1px solid var(--rule); outline-offset: -1px; }
 .cx .meter i.on { background: var(--y-codex); outline: 0; }
@@ -90,33 +93,33 @@
 .cx .bar i { display: block; height: 100%; background: var(--y-codex); }
 .cx ul.ent { list-style: none; margin: 0; padding: 0; display: grid; }
 .cx ul.ent li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--rule); }
-.cx ul.ent li button.nm { all: unset; cursor: pointer; font-family: var(--fell); font-size: 16px; line-height: 1.25; }
+.cx ul.ent li button.nm { all: unset; cursor: pointer; font-family: var(--fell); font-size: var(--fs-h4); line-height: 1.25; }
 .cx ul.ent li button.nm:focus-visible { outline: 2px solid var(--y-codex); }
-.cx ul.ent li .y { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); white-space: nowrap; }
-.cx ul.ent li .sub { grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-soft); }
+.cx ul.ent li .y { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); white-space: nowrap; }
+.cx ul.ent li .sub { grid-column: 1 / -1; font-size: var(--fs-note); color: var(--ink-soft); }
 .cx ul.ent li.lock .nm { color: var(--ink-soft); letter-spacing: .12em; }
-.cx .cx-st { color: var(--y-codex); margin-left: 4px; font-size: 12px; }
+.cx .cx-st { color: var(--y-codex); margin-left: 4px; font-size: var(--fs-note); }
 .cx .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.cx .lnk { all: unset; cursor: pointer; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.cx .lnk { all: unset; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
 .cx .lnk:focus-visible { outline: 2px solid var(--accent); }
 .cx .quest { border: 1px solid var(--rule); border-left: 4px solid var(--y-codex); background: var(--card); padding: 9px 12px; display: grid; gap: 6px; }
 .cx .quest.done { border-left-color: var(--ink); }
-.cx .quest b { font-family: var(--fell); font-weight: 400; font-size: 16.5px; line-height: 1.25; }
+.cx .quest b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); line-height: 1.25; }
 .cx .quest .hd { display: flex; gap: 8px; align-items: baseline; }
-.cx .quest .hd span { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); white-space: nowrap; }
-.cx ol.steps { margin: 0; padding-left: 20px; display: grid; gap: 3px; font-size: 13.5px; }
+.cx .quest .hd span { margin-left: auto; font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); white-space: nowrap; }
+.cx ol.steps { margin: 0; padding-left: 20px; display: grid; gap: 3px; font-size: var(--fs-note); }
 .cx ol.steps li.ok { color: var(--ink-soft); text-decoration: line-through; text-decoration-color: var(--y-codex); }
 .cx ol.steps li.cur { font-weight: 600; }
-.cx .clues { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14.5px; }
+.cx .clues { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: var(--fs-read); }
 .cx .clues .mask { letter-spacing: .1em; color: var(--y-codex); }
 .cx form.guess { display: flex; gap: 6px; }
 .cx form.guess input { flex: 1; min-width: 0; font: inherit; font-size: 14px; padding: 5px 9px; border: 1px solid var(--rule); background: var(--card); color: var(--ink); border-radius: 4px; }
 .cx .ok-msg { border: 2px solid var(--y-codex); padding: 9px 12px; background: var(--card); }
-.cx .bad { color: var(--warn); font-size: 13px; }
+.cx .bad { color: var(--warn); font-size: var(--fs-note); }
 .cx .switch { display: flex; gap: 10px; align-items: center; border: 1px solid var(--rule); background: var(--card); padding: 8px 12px; }
 .cx .switch input { width: 18px; height: 18px; accent-color: var(--y-codex); }
 .cx .switch label { display: grid; gap: 1px; cursor: pointer; }
-.cx .switch label span { font-size: 12px; color: var(--ink-soft); }
+.cx .switch label span { font-size: var(--fs-note); color: var(--ink-soft); }
 #svg .cx-fog { pointer-events: none; fill: var(--paper); fill-opacity: .86; shape-rendering: crispEdges; }
 `;
   document.head.appendChild(css);
@@ -169,7 +172,7 @@
     badge();
     return news;
   }
-  // Other plugins (the Live tab's journeys) can visit places too: what you pass on the road joins the codex.
+  // Other plugins (Live a life's journeys) can visit places too: what you pass on the road joins the codex.
   window.ATLAS.codex = { visit: (lon, lat, y, r) => visit({ lon, lat }, y, r ?? R_CLICK) };
   function checkQuests() {
     for (const q of D().quests) if (!P.qd[q.id] && qGot(q) >= qNeed(q)) { P.qd[q.id] = Date.now(); toast("Quest complete", q.n, q.d, () => openCodex("quests")); }
@@ -196,7 +199,26 @@
   // ---------- fog of war ----------
   // One bit per 3° cell per era: lifted where you have zoomed in or clicked.
   const fogBits = {};
+  // Fog saved before the shared list was kept by the Codex's own eight eras (keys 0 to 7, starting at these years):
+  // each one's lifted cells carry over to every shared era it overlaps, once.
+  const OLD_FOG = [-Infinity, -1200, -500, 500, 1000, 1450, 1750, 1914, Infinity];
+  function moveOldFog() {
+    if (P.fogv === 2 || !(window.ATLAS && ATLAS.eras)) return;
+    const n = Math.ceil(COLS * ROWS / 8), out = {};
+    const dec = v => { const b = new Uint8Array(n); try { const t = atob(v || ""); for (let i = 0; i < t.length && i < n; i++) b[i] = t.charCodeAt(i); } catch (err) { /* unreadable: nothing lifted */ } return b; };
+    for (const [k, v] of Object.entries(P.fog)) {
+      if (!/^[0-7]$/.test(k)) { out[k] = v; continue; }
+      const a = OLD_FOG[+k], z = OLD_FOG[+k + 1], src = dec(v);
+      for (const E of ATLAS.eras) if (E.from < z && E.to > a) {
+        const key = "y" + E.from, dst = out[key] ? dec(out[key]) : new Uint8Array(n);
+        for (let i = 0; i < n; i++) dst[i] |= src[i];
+        let t = ""; for (const x of dst) t += String.fromCharCode(x); out[key] = btoa(t);
+      }
+    }
+    P.fog = out; P.fogv = 2; save();
+  }
   function bits(e) {
+    moveOldFog();
     if (fogBits[e]) return fogBits[e];
     const b = new Uint8Array(Math.ceil(COLS * ROWS / 8));
     try { const s = atob(P.fog[e] || ""); for (let i = 0; i < s.length && i < b.length; i++) b[i] = s.charCodeAt(i); } catch (err) { /* start fresh */ }
@@ -261,7 +283,6 @@
 
   // ---------- the daily riddle ----------
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
-  const yesterday = () => { const d = new Date(); d.setDate(d.getDate() - 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
   const hash = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
   const R = { target: null, st: null };
   const norm = s => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/^(the |battle of |siege of |sack of )/, "").replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim();
@@ -295,9 +316,9 @@
     if (!R.st || R.st.ok) return;
     R.st.ok = 1; R.st.map = onMap ? 1 : 0;
     const d = R.st.d;
-    if (P.sk.last !== d) { P.sk.n = P.sk.last === yesterday() ? P.sk.n + 1 : 1; P.sk.last = d; }
+    const n = ATLAS.today.mark();
     save();
-    toast("Riddle solved", R.target.n, `${R.st.c} clue${R.st.c > 1 ? "s" : ""}${onMap ? ", found on the map" : ""} · streak ${P.sk.n} day${P.sk.n > 1 ? "s" : ""}`, () => openCodex("riddle"));
+    toast("Riddle solved", R.target.n, `${R.st.c} clue${R.st.c > 1 ? "s" : ""}${onMap ? ", found on the map" : ""} · streak ${n} day${n > 1 ? "s" : ""}`, () => openCodex("riddle"));
   }
 
   // ---------- pointing the way, without giving it away ----------
@@ -336,7 +357,8 @@
     : `<div class="bar" role="img" aria-label="${got} of ${need}"><i style="width:${Math.round(100 * got / need)}%"></i></div>`;
 
   function nextThing() {
-    if (R.target && !R.st.ok) return `<div class="next"><span class="k">Today's riddle</span><b>${clues(R.target)[0]}</b><div class="row"><button class="btn primary" data-a="mode" data-m="riddle">Solve it</button><span class="note">${P.sk.n ? `Streak: ${P.sk.n} day${P.sk.n > 1 ? "s" : ""}` : "Start a streak"}</span></div></div>`;
+    if (R.target && !R.st.ok) return `<div class="next"><span class="k">Today's riddle</span><b>${clues(R.target)[0]}</b><div class="row"><button class="btn primary" data-a="mode" data-m="riddle">Solve it</button><span class="note">${streakNote()}</span></div></div>`;
+    const five = fiveLeft(); if (five) return fiveHTML(five);
     for (const t of D().trails) { const i = trailNext(t); if (i >= 0 && trailDone(t) > 0) return trailNextHTML(t, i, "Continue your trail"); }
     const v = api && api.view ? api.view() : null, from = v ? v : { lon: 30, lat: 35 };
     const q = D().quests.find(q => !P.qd[q.id] && qGot(q) > 0) || D().quests.find(q => !P.qd[q.id]);
@@ -354,18 +376,18 @@
     if (!R.st || R.st.d !== today()) setupRiddle();
     const S = sites(), got = S.filter(s => found(s.id)).length;
     const qs = D().quests.length + D().trails.length, qdone = [...D().quests, ...D().trails].filter(q => P.qd[q.id]).length;
-    const head = `<div class="seg" role="group" aria-label="Codex view">${[["next", "Next"], ["codex", "Codex"], ["quests", "Quests"], ["riddle", "Riddle"]].map(([m, n]) => `<button data-a="mode" data-m="${m}" aria-pressed="${mode === m}">${n}</button>`).join("")}</div>`;
-    const stats = `<div class="stats"><div class="stat"><b>${got}<small style="font-size:12px;color:var(--ink-soft)"> / ${S.length}</small></b><span>discoveries</span></div><div class="stat"><b>${qdone}<small style="font-size:12px;color:var(--ink-soft)"> / ${qs}</small></b><span>quests & trails</span></div><div class="stat"><b>${P.sk.n || 0}</b><span>riddle streak</span></div></div>`;
+    const head = `<div class="seg" role="group" aria-label="Codex view">${[["next", "Next"], ["riddle", "Today"], ["codex", "Codex"], ["quests", "Quests"]].map(([m, n]) => `<button data-a="mode" data-m="${m}" aria-pressed="${mode === m}">${n}</button>`).join("")}</div>`;
+    const stats = `<div class="stats"><div class="stat"><b>${got}<small style="font-size:12px;color:var(--ink-soft)"> / ${S.length}</small></b><span>discoveries</span></div><div class="stat"><b>${qdone}<small style="font-size:12px;color:var(--ink-soft)"> / ${qs}</small></b><span>quests & trails</span></div><div class="stat"><b>${ATLAS.today.streak()}</b><span>day streak</span></div></div>`;
     let body = "";
     if (mode === "next") body = `${stats}${nextThing()}${fogSwitch()}<p class="note">Lost cities and wonders count in any year; being there while they stood, or in their last ${FALL_YEARS} years, earns a star. Battles only count in the year they were fought. Your progress stays in this browser.</p>`;
     else if (mode === "codex") body = renderCodex();
     else if (mode === "quests") body = renderQuests();
-    else body = renderRiddle();
+    else body = renderToday();
     el.innerHTML = `<div class="cx">${head}${body}</div>`;
   }
   function fogSwitch() {
     const y = api ? api.year : 0, e = era(y);
-    return `<div class="switch"><input type="checkbox" id="cx-fog" ${fogOn() ? "checked" : ""}><label for="cx-fog"><b>Fog of war</b><span>${esc(ERAS[e][1])}: ${(p => p > 0 && p < 1 ? p.toFixed(1) : Math.round(p))(litShare(e) * 100)}% of the map explored. Each era has its own fog; zoom in to lift it.</span></label></div>`;
+    return `<div class="switch"><input type="checkbox" id="cx-fog" ${fogOn() ? "checked" : ""}><label for="cx-fog"><b>Fog of war</b><span>${esc(eraName(y))}: ${(p => p > 0 && p < 1 ? p.toFixed(1) : Math.round(p))(litShare(e) * 100)}% of the map explored. Each era has its own fog; zoom in to lift it.</span></label></div>`;
   }
   function renderCodex() {
     const from = api && api.view ? api.view() || { lon: 30, lat: 35 } : { lon: 30, lat: 35 };
@@ -399,12 +421,22 @@
     return `<p class="lede">Quests fill from your codex. Trails are the guide's tours and the what-if turning points: be roughly where and when each stop is, and it ticks off.</p>
       <h3>Trails</h3>${D().trails.map(tHTML).join("")}<h3>Quests</h3>${D().quests.map(qHTML).join("")}`;
   }
+  // ---------- today: the riddle and the Guess daily five, one streak for both (ATLAS.today) ----------
+  const streakNote = () => { const n = ATLAS.today.streak(); return n ? `Streak: ${n} day${n > 1 ? "s" : ""}` : "Start a streak"; };
+  // The daily five's questions still to answer today (0 when done or when Guess is not on the page).
+  const fiveLeft = () => { const g = ATLAS.guess; return g && g.todayLeft ? g.todayLeft() : 0; };
+  const fiveHTML = n => `<div class="next"><span class="k">Today's five · Guess</span><b>${n === 5 ? "Five questions, one for each kind" : `${n} of 5 still to answer`}</b><div class="row"><button class="btn primary" data-a="five">Play today's five</button><span class="note">${streakNote()}</span></div></div>`;
+  function renderToday() {
+    const n = fiveLeft(), g = ATLAS.guess;
+    const five = !g ? "" : n ? fiveHTML(n) : `<div class="next"><span class="k">Today's five · Guess</span><b>Done for today</b><div class="row"><button class="btn" data-a="five">See your five</button></div></div>`;
+    return renderRiddle() + `<h3>Also today</h3>` + five;
+  }
   function renderRiddle() {
     const s = R.target, st = R.st; if (!s) return `<p class="note">No riddle today.</p>`;
     const cl = clues(s), shown = st.ok ? cl.length : Math.min(st.c, cl.length);
     return `<p class="kick">Daily riddle · ${esc(st.d)}</p><h2>Where, and what, am I?</h2>
       <ol class="clues">${cl.slice(0, shown).map(c => `<li>${c}</li>`).join("")}</ol>
-      ${st.ok ? `<div class="ok-msg"><b>${esc(s.n)}</b> · ${esc(when(s))}<br><span class="note">${st.ok === -1 ? "Revealed. A new riddle comes tomorrow." : `Solved with ${st.c} clue${st.c > 1 ? "s" : ""}${st.map ? ", by finding it on the map" : ""}. Streak: ${P.sk.n} day${P.sk.n > 1 ? "s" : ""}.`}</span></div>
+      ${st.ok ? `<div class="ok-msg"><b>${esc(s.n)}</b> · ${esc(when(s))}<br><span class="note">${st.ok === -1 ? "Revealed. A new riddle comes tomorrow." : `Solved with ${st.c} clue${st.c > 1 ? "s" : ""}${st.map ? ", by finding it on the map" : ""}. ${streakNote()}.`}</span></div>
         <div class="row"><button class="btn primary" data-a="go" data-id="${esc(s.id)}">Show it on the map</button></div>`
       : `<form class="guess" id="cx-guess"><input id="cx-g" autocomplete="off" placeholder="Name it…" aria-label="Your guess"><button class="btn primary" type="submit">Guess</button></form>
         ${st.bad ? `<p class="bad">${esc(st.bad)}</p>` : ""}
@@ -422,6 +454,7 @@
     else if (a === "qsite") { const q = D().quests.find(q => q.id === b.dataset.q), s = site(b.dataset.id); if (q && s) found(s.id) ? hintStar(q, s) : pointMe(s, qYear(q, s) ?? undefined); }
     else if (a === "stop") { const t = D().trails.find(t => t.id === b.dataset.t), st = t && t.steps[+b.dataset.i]; if (st) api.scene({ year: st.year, view: { lon: st.lon, lat: st.lat, span: st.span }, title: st.n }); }
     else if (a === "all") { showAll[b.dataset.k] = !showAll[b.dataset.k]; render(); }
+    else if (a === "five") { if (ATLAS.guess && ATLAS.guess.playDaily) ATLAS.guess.playDaily(); }
     else if (a === "clue") { R.st.c++; R.st.bad = ""; save(); render(); }
     else if (a === "giveup") { R.st.ok = -1; R.st.c = clues(R.target).length; save(); render(); }
   }
@@ -434,7 +467,7 @@
 
   // ---------- map layers: your finds, and the fog ----------
   ATLAS.lens({
-    id: "codex", name: "Your finds", family: "land", color: "#c08a1e", on: false, guide: [],
+    id: "codex", name: "Codex", family: "land", color: "#c08a1e", on: false, guide: [], tab: "codex",
     draw(ctx) {
       for (const k of ["c", "w", "b"]) {
         const list = sites().filter(s => s.k === k && found(s.id) && (k !== "b" || Math.abs(ctx.year - s.s) <= 25));
@@ -451,7 +484,7 @@
     },
   });
   ATLAS.lens({
-    id: "fog", name: "Fog of war", family: "land", color: "#7d7a70", on: false, guide: [],
+    id: "fog", name: "Fog of war", family: "land", color: "#7d7a70", on: false, guide: [], tab: "codex",
     draw(ctx) {
       const d = fogPath(ctx.projection, era(ctx.year));
       ctx.g.selectAll("path.cx-fog").data([d]).join("path").attr("class", "cx-fog").attr("d", x => x);
@@ -465,6 +498,7 @@
       if (!api) return null;
       if (!R.st || R.st.d !== today()) setupRiddle();
       if (R.target && !R.st.ok) return { kick: "Today's riddle", title: clues(R.target)[0], go: () => { mode = "riddle"; api.setTab("codex"); } };
+      const five = fiveLeft(); if (five) return { kick: "Today's five · Guess", title: five === 5 ? "Five questions, one for each kind" : `${five} of 5 still to answer`, go: () => ATLAS.guess.playDaily() };
       for (const t of D().trails) { const i = trailNext(t); if (i >= 0 && trailDone(t) > 0) { const st = t.steps[i]; return { kick: `Your trail · stop ${i + 1} of ${t.steps.length}`, title: st.n, go: () => api.scene({ year: st.year, view: { lon: st.lon, lat: st.lat, span: st.span }, title: st.n }) }; } }
       const v = api.view ? api.view() : null, from = v || { lon: 30, lat: 35 };
       const q = D().quests.find(q => !P.qd[q.id] && qGot(q) > 0);
@@ -474,7 +508,7 @@
   });
 
   ATLAS.tab({
-    id: "codex", name: "Codex",
+    id: "codex", name: "Codex", icon: "codex", mode: true,
     mount(pane, a) {
       el = pane; api = a;
       setupRiddle();
@@ -492,7 +526,8 @@
       a.onYear(() => { look(); clearTimeout(yearT); yearT = setTimeout(() => { if (el && !el.hidden && mode === "next") render(); }, 300); });
       badge();
     },
-    show() { render(); },
+    // Your finds are on the map while the Codex is open; Back to map puts the lenses as they were.
+    show() { api.setOn("codex", true); render(); },
   });
   let yearT = 0;
 })();

@@ -4,15 +4,19 @@
 // draft for windows the data leaves thin. Lenses: Chronicle (dated events, things founded and ended, works made)
 // and Lives (births, deaths, people living or working here). The month cursor is shared on ATLAS.deep.m
 // (year * 12 + month - 1): lenses, the pixel map's zoom detail and the travellers layer read it while the page's
-// year is that month's year, and fall back to the whole year when the main slider moves.
+// year is that month's year, and fall back to the whole year when the main slider moves. Here's "Study it up close"
+// opens the tab on its spot (ATLAS.deep.place names the study while the view stays around it), and a click on empty
+// map while the tab is open moves the study there instead of leaving for Here.
 (function () {
   const W = window.ATLAS.world;
   if (!W || !W.at) { console.warn("Up close needs views/atlas/world/world.js"); return; }
-  const DS = window.ATLAS.deep = Object.assign(window.ATLAS.deep || {}, { m: null, story: null, focus: null });
+  const DS = window.ATLAS.deep = Object.assign(window.ATLAS.deep || {}, { m: null, story: null, focus: null, place: null });
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const { mOf, fmtDate, fmtM, fmtYear } = W;
-  const FAM = { w: ["War", "cross", "#a3321f"], d: ["Diplomacy & law", "square", "#1d4f6e"], u: ["Revolt & unrest", "triangle", "#b8641c"],
-    x: ["Disaster", "diamond", "#5f6b2a"], c: ["Culture, trade & faith", "circle", "#6a4c93"], p: ["People", "circle", "#a24b6e"] };
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
+  // Every mark takes a family tincture (palette.js LENS); the shape says which kind of event it is.
+  const FAM = { w: ["War", "cross", "var(--fam-power)"], d: ["Diplomacy & law", "square", "var(--fam-power)"], u: ["Revolt & unrest", "triangle", "var(--fam-shocks)"],
+    x: ["Disaster", "diamond", "var(--fam-shocks)"], c: ["Culture, trade & faith", "circle", "var(--fam-mind)"], p: ["People", "circle", "var(--fam-peoples)"] };
   const VERB = { e: "", b: "born", d: "died", r: "lived or worked here", f: "founded or built", z: "ended", w: "made", s: "" };
   const nice = s => String(s || "").replace(/_/g, " ");
 
@@ -28,7 +32,7 @@
   const cursor = y => DS.m != null && Math.floor(DS.m / 12) === y ? { m: DS.m, m0: DS.m - 2, m1: DS.m, month: true } : { m: y * 12, m0: y * 12, m1: y * 12 + 11, month: false };
   const fade = (r, c) => !c.month ? 1 : r.prec === "y" ? 0.45 : Math.max(0.3, 1 - 0.25 * (c.m - r.m));
   const wdSrc = r => typeof r.ref === "number" && r.ref ? { cite: `Wikidata Q${r.ref} (CC0)`, url: `https://www.wikidata.org/wiki/Q${r.ref}` } : null;
-  const SRC = { base: "the world index (Wikidata, Pantheon, the kernel)", ai: "a live AI draft (not checked)" };
+  const SRC = { base: "the world index (Wikidata, Pantheon, the kernel)", ai: "an AI draft (sources unchecked)" };
   function card(r) {
     const when = fmtDate(r.d) + (r.e && r.e !== r.d ? ` to ${fmtDate(r.e)}` : "");
     const what = r.k === "e" ? nice(r.sub) : `${r.k === "b" || r.k === "d" || r.k === "r" ? nice(r.sub) || "Person" : nice(r.sub)} · ${VERB[r.k]}`;
@@ -46,14 +50,14 @@
   const css = document.createElement("style");
   css.textContent = `
 .uc { display: grid; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
-.uc h2 { font-family: var(--fell); font-weight: 400; font-size: 21px; line-height: 1.2; margin: 0; }
-.uc h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; gap: 8px; align-items: baseline; }
+.uc h2 { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h3); line-height: 1.2; margin: 0; }
+.uc h3 { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; gap: 8px; align-items: baseline; }
 .uc h3 .n { margin-left: auto; letter-spacing: 0; }
-.uc .lede { font-size: 14px; margin: 0; color: var(--ink-soft); }
-.uc .when { font-family: "Pixelify Sans", "Silkscreen", var(--mono); font-size: 26px; line-height: 1.1; letter-spacing: .02em; }
-.uc .when small { display: block; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); letter-spacing: .08em; text-transform: uppercase; }
+.uc .lede { font-size: var(--fs-read); margin: 0; color: var(--ink-soft); }
+.uc .when { font-family: "Pixelify Sans", "Silkscreen", var(--mono); font-size: var(--fs-h3); line-height: 1.1; letter-spacing: .02em; }
+.uc .when small { display: block; font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); letter-spacing: .08em; text-transform: uppercase; }
 .uc .ctl { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; }
-.uc .ctl button, .uc .seg button { border: 1px solid var(--rule); background: var(--card); color: var(--ink); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-family: var(--mono); font-size: 12px; min-width: 32px; }
+.uc .ctl button, .uc .seg button { border: 1px solid var(--rule); background: var(--card); color: var(--ink); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); min-width: 32px; }
 .uc .ctl button.play { background: var(--ink); color: var(--paper); border-color: var(--ink); min-width: 44px; }
 .uc .seg { display: inline-flex; flex-wrap: wrap; }
 .uc .ctl .seg { margin-left: auto; }
@@ -62,41 +66,41 @@
 .uc .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 .uc input[type=range] { width: 100%; accent-color: var(--y-deep); }
 .uc .chips { display: flex; flex-wrap: wrap; gap: 5px; }
-.uc .chips button { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 3px 10px; cursor: pointer; font-size: 13px; color: var(--ink); text-align: left; }
-.uc .chips button small { color: var(--ink-soft); font-size: 11.5px; margin-left: 4px; }
+.uc .chips button { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 3px 10px; cursor: pointer; font-size: var(--fs-note); color: var(--ink); text-align: left; }
+.uc .chips button small { color: var(--ink-soft); font-size: var(--fs-note); margin-left: 4px; }
 .uc .chips button[aria-pressed="true"] { border-color: var(--y-deep); background: color-mix(in srgb, var(--y-deep) 14%, transparent); }
 .uc .next { all: unset; box-sizing: border-box; cursor: pointer; display: grid; gap: 2px; border: 1.5px solid var(--y-deep); border-radius: 6px; padding: 9px 12px; background: var(--card); }
-.uc .next b { font-family: var(--fell); font-weight: 400; font-size: 17px; line-height: 1.25; }
-.uc .next span { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; }
-.uc .next small { font-size: 13px; color: var(--ink-soft); }
+.uc .next b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); line-height: 1.25; }
+.uc .next span { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; }
+.uc .next small { font-size: var(--fs-note); color: var(--ink-soft); }
 .uc .next:hover, .uc .next:focus-visible { background: color-mix(in srgb, var(--y-deep) 10%, var(--card)); }
 .uc .steps { display: grid; gap: 1px; max-height: 280px; overflow: auto; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
-.uc .row { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 7.4em 1fr; gap: 0 10px; padding: 4px 6px; border-radius: 3px; font-size: 14px; line-height: 1.35; }
+.uc .row { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 7.4em 1fr; gap: 0 10px; padding: 4px 6px; border-radius: 3px; font-size: var(--fs-read); line-height: 1.35; }
 .uc .row:hover, .uc .row:focus-visible { background: var(--wash); }
 .uc .row.on { background: color-mix(in srgb, var(--y-deep) 14%, transparent); }
 .uc .row.past { color: var(--ink-soft); }
 .uc .row.draft { font-style: italic; }
-.uc .row .d { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); padding-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.uc .row .d { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); padding-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .uc .row i { display: inline-block; width: 8px; height: 8px; margin-right: 6px; background: var(--fc); vertical-align: 1px; }
 .uc .row i.triangle { clip-path: polygon(50% 0, 100% 100%, 0 100%); } .uc .row i.diamond { transform: rotate(45deg) scale(.85); } .uc .row i.circle { border-radius: 50%; }
-.uc .row i.cross { background: none; position: relative; } .uc .row i.cross::before { content: "\\00d7"; position: absolute; left: -1px; top: -6px; color: var(--fc); font-size: 13px; font-weight: 700; }
-.uc .row small { display: block; color: var(--ink-soft); font-size: 12.5px; }
-.uc .tagd { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; border: 1px dashed var(--ink-soft); border-radius: 3px; padding: 0 3px; margin-left: 4px; color: var(--ink-soft); font-style: normal; }
-.uc .quiet { all: unset; cursor: pointer; font-size: 12.5px; color: var(--accent); text-decoration: underline; }
+.uc .row i.cross { background: none; position: relative; } .uc .row i.cross::before { content: "\\00d7"; position: absolute; left: -1px; top: -6px; color: var(--fc); font-size: var(--fs-note); font-weight: 700; }
+.uc .row small { display: block; color: var(--ink-soft); font-size: var(--fs-note); }
+.uc .tagd { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; border: 1px dashed var(--ink-soft); border-radius: 3px; padding: 0 3px; margin-left: 4px; color: var(--ink-soft); font-style: normal; }
+.uc .quiet { all: unset; cursor: pointer; font-size: var(--fs-note); color: var(--accent); text-decoration: underline; }
 .uc .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
 .uc .stat { border: 1px solid var(--rule); border-radius: 3px; padding: 6px 8px; background: var(--card); display: grid; gap: 2px; }
-.uc .stat b { font-family: var(--fell); font-weight: 400; font-size: 20px; line-height: 1.1; overflow-wrap: anywhere; }
-.uc .stat span { font-size: 11.5px; color: var(--ink-soft); line-height: 1.3; }
+.uc .stat b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h3); line-height: 1.1; overflow-wrap: anywhere; }
+.uc .stat span { font-size: var(--fs-note); color: var(--ink-soft); line-height: 1.3; }
 .uc .depth { display: grid; gap: 4px; border: 1px solid var(--rule); border-radius: 4px; padding: 8px 10px; background: var(--card); }
 .uc .depth .bar { height: 6px; border-radius: 3px; background: var(--wash); overflow: hidden; }
 .uc .depth .bar i { display: block; height: 100%; background: var(--y-deep); }
-.uc .depth p { margin: 0; font-size: 13px; color: var(--ink-soft); }
+.uc .depth p { margin: 0; font-size: var(--fs-note); color: var(--ink-soft); }
 .uc .depth .acts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
-.uc .depth .acts button { border: 1px solid var(--y-deep); background: transparent; color: var(--ink); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-size: 13px; }
-.uc .note { font-size: 12px; color: var(--ink-soft); margin: 0; }
-.uc .empty { font-size: 13.5px; color: var(--ink-soft); margin: 0; font-style: italic; }
-.uc details summary { cursor: pointer; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); }
-.uc .era { margin: 8px 0 3px; font-size: 12px; color: var(--ink-soft); }
+.uc .depth .acts button { border: 1px solid var(--y-deep); background: transparent; color: var(--ink); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-size: var(--fs-note); }
+.uc .note { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; }
+.uc .empty { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; font-style: italic; }
+.uc details summary { cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); }
+.uc .era { margin: 8px 0 3px; font-size: var(--fs-note); color: var(--ink-soft); }
 `;
   document.head.appendChild(css);
 
@@ -140,8 +144,8 @@
       const s = story();
       if (s) {
         const y = ctx.year;
-        ctx.paths([{ id: s.id, pts: s.steps.map(st => [st.lon, st.lat]) }], { color: "#6a4c93", conf: "likely", width: 1.4, alpha: 0.55, title: () => s.title });
-        ctx.paths(journeys(s), { color: "#a24b6e", width: 2.2, alpha: 0.8, arrow: true, title: j => `${j.who}: ${j.steps.length} stops in this storyline`,
+        ctx.paths([{ id: s.id, pts: s.steps.map(st => [st.lon, st.lat]) }], { color: "var(--y-deep)", conf: "likely", width: 1.4, alpha: 0.55, title: () => s.title });
+        ctx.paths(journeys(s), { color: "var(--fam-peoples)", width: 2.2, alpha: 0.8, arrow: true, title: j => `${j.who}: ${j.steps.length} stops in this storyline`,
           card: j => ({ kick: "Journey in " + s.title, title: j.who, body: j.steps.map(st => `${fmtDate(st.date)} ${st.place_name || st.name}`).join(" → "), sources: [] }) });
         ctx.pins(s.steps, { key: st => s.id + st.j, shape: st => FAM[(st.family || "c")[0]] ? FAM[st.family[0]][1] : "circle", color: st => FAM[(st.family || "c")[0]] ? FAM[st.family[0]][2] : FAM.c[2],
           label: st => Math.abs(Math.floor(st.m / 12) - y) <= 3 || ctx.k >= 4 ? st.name : null, always: st => st.j === DS.step,
@@ -162,23 +166,27 @@
   });
   function stepCard(s, st) {
     return { kick: `Storyline · ${s.title}`, title: st.name, year: Math.floor(st.m / 12), lon: st.lon, lat: st.lat,
-      meta: [fmtDate(st.date) + (st.end_date ? ` to ${fmtDate(st.end_date)}` : ""), st.place_name, st.date_note, (st.who || []).join(", "), "study text: draft, waiting for the judge"].filter(Boolean).join(" · "),
+      meta: [fmtDate(st.date) + (st.end_date ? ` to ${fmtDate(st.end_date)}` : ""), st.place_name, st.date_note, (st.who || []).join(", "), "study text: draft, awaiting check"].filter(Boolean).join(" · "),
       body: st.what || "", why: st.why || "",
       sources: [st.wikipedia ? { cite: "Wikipedia: " + st.wikipedia, url: "https://en.wikipedia.org/wiki/" + encodeURIComponent(st.wikipedia.replace(/ /g, "_")) } : null,
         st.wikidata ? { cite: `Wikidata ${st.wikidata}`, url: `https://www.wikidata.org/wiki/${st.wikidata}` } : null, ...(st.sources || [])].filter(Boolean) };
   }
 
   // ---------- lens: Lives ----------
+  // No chip of its own: it comes with People, which already shows who was alive at world zoom. From 2x it adds who was
+  // born or died here that month or year and who lived or worked here, from the same people.
+  const LIVES_K = 2;
   ATLAS.lens({
-    id: "deeplives", name: "Lives", family: "peoples", color: "#a24b6e", on: false,
+    id: "deeplives", name: "Lives", family: "peoples", color: "#a24b6e", on: false, with: "people",
     guide: ["people"],
     key: [["triangle", "Born here this month or year"], ["cross", "Died here"], ["ring", "Lived, worked or held office here"]],
     draw(ctx) {
+      if ((ctx.k || 1) < LIVES_K) { ctx.pins([], {}); return; }
       const c = cursor(ctx.year), bbox = viewBox(1.3), cap = Math.round(18 * Math.pow(Math.max(1, ctx.k), 1.2));
       const list = W.at({ m0: c.m0, m1: c.m1 }, bbox, { kinds: "bd" }).slice(0, cap);
       // People living or working here: anyone whose stay overlaps this year, fewer of them.
       const live = W.at({ m0: c.m - 12 * 40, m1: c.m1 }, bbox, { kinds: "r" }).filter(r => r.me == null ? c.m - r.m < 12 * 25 : r.me >= c.m0).slice(0, Math.round(cap / 2));
-      ctx.pins([...list, ...live], { key: r => r.id + r.d, shape: shapeOf, color: "#a24b6e", ghost: r => r.conf >= 2 || r.src === "ai", fill: r => r.k === "r" ? 0.2 : 0.85,
+      ctx.pins([...list, ...live], { key: r => r.id + r.d, shape: shapeOf, color: "var(--fam-peoples)", ghost: r => r.conf >= 2 || r.src === "ai", fill: r => r.k === "r" ? 0.2 : 0.85,
         label: r => r.k === "d" ? `† ${r.name}` : r.name, title: r => `${r.name} ${VERB[r.k]} · ${fmtDate(r.d)}${r.x.place ? " · " + r.x.place : ""}`, card,
         fade: r => r.k === "r" ? 0.7 : fade(r, c), pri: r => 2 + r.rank / 30, size: r => 3 + Math.min(2.5, Math.sqrt(r.rank) / 4) });
     },
@@ -262,7 +270,8 @@
     if (!W.state.index) { el.innerHTML = `<div class="uc"><h2>Up close</h2><p class="empty">${W.state.err ? "The world index is not beside this page (atlas-files/world/). " + esc(W.state.err) : "Loading the world index…"}</p></div>`; return; }
     const sp = spanNow(), m = DS.m != null && DS.m >= sp.m0 && DS.m <= sp.m1 ? DS.m : (T.api.year * 12 >= sp.m0 && T.api.year * 12 <= sp.m1 ? T.api.year * 12 : sp.m0), y = Math.floor(m / 12);
     const rb = v ? W.ruler(v.lon, v.lat, y) : null, pk = packHere(y), s = story();
-    const place = pk ? pk.name : rb ? rb.name : "This part of the world";
+    const named = DS.place && DS.place.name && v && Math.abs(DS.place.lon - v.lon) < v.w / 4 && Math.abs(DS.place.lat - v.lat) < v.h / 4;
+    const place = named ? DS.place.name : pk ? pk.name : rb ? rb.name : "This part of the world";
     const hn = hereNow(m, bbox), ong = W.at({ m0: m, m1: m }, bbox, { kinds: "e", long: 60 }).filter(r => r.me != null && r.m < m && r.me >= m).slice(0, 6);
     const lives = W.at({ m0: m - 2, m1: m }, bbox, { kinds: "bd" }).slice(0, 8);
     const livedHere = W.at({ m0: m - 12 * 30, m1: m }, bbox, { kinds: "r" }).filter(r => r.me == null ? m - r.m < 12 * 25 : r.me >= m).slice(0, 6);
@@ -281,9 +290,9 @@
       <div><h2>${esc(place)}, up close</h2><p class="lede">The map view is the region: pan or zoom anywhere. Time runs by the month; pick a span, a storyline, or play.</p></div>
       <div class="when">${esc(fmtM(m))}<small>${esc(sp.name)}${pk && sp.pack ? " · dense pack" : ""}</small></div>
       <input type="range" min="${sp.m0}" max="${sp.m1}" value="${m}" aria-label="Month">
-      <div class="ctl"><button data-a="-12" title="Back a year">«</button><button data-a="-1" title="Back a month">‹</button>
-        <button class="play" data-a="play" aria-label="${T.playing ? "Pause" : "Play"}">${T.playing ? "❚❚" : "▶"}</button>
-        <button data-a="1" title="Forward a month">›</button><button data-a="12" title="Forward a year">»</button>
+      <div class="ctl"><button data-a="-12" title="Back a year" aria-label="Back a year">${ICO("back", "«")}</button><button data-a="-1" title="Back a month">‹</button>
+        <button class="play" data-a="play" aria-label="${T.playing ? "Pause" : "Play"}">${T.playing ? ICO("pause", "❚❚") : ICO("play", "▶")}</button>
+        <button data-a="1" title="Forward a month">›</button><button data-a="12" title="Forward a year" aria-label="Forward a year">${ICO("back", "»", "s flip")}</button>
         <span class="seg" role="group" aria-label="Speed">${[[1, "1 mo/s"], [12, "1 yr/s"], [120, "10 yr/s"]].map(([v, l]) => `<button data-speed="${v}" aria-pressed="${T.speed === v}">${l}</button>`).join("")}</span></div>
       <div class="seg" role="group" aria-label="Span">${[...(pk ? [["pack", "This pack"]] : []), ...(s ? [["story", "Storyline"]] : []), ...SPANS.map(a => a.slice(0, 2))].map(([k, n]) => `<button data-span="${k}" aria-pressed="${T.span === k || (T.span === "auto" && (k === "pack" && pk || !pk && k === "century"))}">${n}</button>`).join("")}</div>
       <div class="chips">${lens("deep", "Chronicle")}${lens("deeplives", "Lives")}${(ATLAS.lenses || []).length ? "" : ""}</div>
@@ -291,11 +300,11 @@
       <div class="depth"><div class="bar"><i style="width:${depthPct}%"></i></div>
         <p><b>How deep:</b> ${dens.level === "rich" ? "rich" : dens.level === "some" ? "some" : dens.level === "thin" ? "thin" : "almost nothing"} for ${esc(fmtYear(y))} in this view: ${dens.n.toLocaleString()} dated records (${Object.entries(dens.by).map(([k, n]) => `${n} ${W.KIND[k]}`).join(", ") || "none loaded"}).
         ${dens.packs.length ? "Dense pack: " + dens.packs.map(p => esc(p.name)).join(", ") + "." : "No dense pack covers this window yet."}${dens.grid ? ` The coverage grid counts ${dens.grid.n.toLocaleString()} kernel records here for ${esc(fmtYear(dens.grid.bin[0]))}–${esc(fmtYear(dens.grid.bin[1]))}.` : ""}</p>
-        <div class="acts"><button data-a="fill">${T.busy === "fill" ? "Asking Claude…" : "Fill in with Claude"}</button><button data-a="tell">${T.busy === "tell" ? "Writing…" : "Write a storyline for here and now"}</button></div>
+        <div class="acts"><button data-a="fill" data-ai>${T.busy === "fill" ? "Asking Claude…" : "Fill in with Claude"}</button><button data-a="tell" data-ai>${T.busy === "tell" ? "Writing…" : "Write a storyline for here and now"}</button></div>
         ${T.msg ? `<p>${esc(T.msg)}</p>` : ""}</div>
       ${stats.length ? `<div class="stats">${stats.map(o => `<div class="stat"><b>${esc(o.v)}</b><span>${esc(o.t)}</span></div>`).join("")}</div>` : ""}
       <h3>Storylines${s ? "" : " here"}</h3>
-      ${s ? `<div class="chips"><button aria-pressed="true" data-story="${esc(s.id)}">${esc(s.title)}<small>${esc(s.region || "")}</small></button>${W.director ? `<button data-a="direct" title="Play this storyline scene by scene on the map">▶ Play on the map</button>` : ""}<button data-a="unstory">Close</button></div>
+      ${s ? `<div class="chips"><button aria-pressed="true" data-story="${esc(s.id)}">${esc(s.title)}<small>${esc(s.region || "")}</small></button>${W.director ? `<button data-a="direct" title="Play this storyline scene by scene on the map">${ICO("play", "▶")} Play on the map</button>` : ""}<button data-a="unstory">Close</button></div>
         <p class="lede">${esc(s.blurb)} <span class="note">(${esc(fmtYear(s.start))}–${esc(fmtYear(s.end))}, ${s.steps.length} steps${journeys(s).length ? ", journeys of " + journeys(s).map(j => esc(j.who)).join(", ") : ""})</span></p>
         ${(() => { const st = next || s.steps[0]; return `<button class="next" data-step="${st.j}"><span>${next ? "Next" : "Start"} · ${esc(fmtDate(st.date))}${st.place_name ? " · " + esc(st.place_name) : ""}</span><b>${esc(st.name)}</b>${st.what ? `<small>${esc(st.what)}</small>` : ""}</button>`; })()}
         <div class="steps">${s.steps.map(st => `<button class="row${st.j === DS.step ? " on" : st.m < m ? " past" : ""}" data-step="${st.j}"><span class="d">${esc(fmtDate(st.date))}</span><span><i class="${FAM[(st.family || "c")[0]] ? FAM[st.family[0]][1] : "circle"}" style="--fc:${FAM[(st.family || "c")[0]] ? FAM[st.family[0]][2] : FAM.c[2]}"></i>${esc(st.name)}${st.why ? `<small>${esc(st.why)}</small>` : ""}</span></button>`).join("")}</div>`
@@ -314,13 +323,13 @@
   // ---------- live AI: fill a thin window, or write a storyline for it ----------
   async function getSample() {
     if (T.sample !== undefined) return T.sample;
-    try { T.sample = window.claude ? await window.claude.use("sample") : null; } catch { T.sample = null; }
+    T.sample = await ATLAS.ai.sample();
     return T.sample;
   }
   const parse = line => { const s = line.trim().replace(/^```\w*|```$/g, ""); if (!s.startsWith("{") && !s.startsWith("[")) return null; try { return JSON.parse(s); } catch { return null; } };
   async function aiFill(kind) {
     const sample = await getSample();
-    if (!sample) { T.msg = "Live drafts need this page open in Claude."; return renderSoon(true); }
+    if (!sample) { T.msg = "AI drafts need this page open in Claude."; return renderSoon(true); }
     const bbox = viewBox(1), v = ATLAS.api.view(), sp = spanNow(), m = DS.m ?? sp.m0, y = Math.floor(m / 12);
     const rb = W.ruler(v.lon, v.lat, y), have = W.at({ m0: m - 120, m1: m + 120 }, bbox, { kinds: "efzwbd", limit: 40 });
     const where = `the box lon ${bbox[0].toFixed(1)} to ${bbox[2].toFixed(1)}, lat ${bbox[1].toFixed(1)} to ${bbox[3].toFixed(1)} (centre ${v.lon.toFixed(2)}, ${v.lat.toFixed(2)}${rb ? ", ruled by " + rb.name : ""})`;
@@ -361,14 +370,15 @@ Answer with JSON only, one object: {"title":"...","blurb":"one sentence question
         goStep(STORIES[STORIES.length - 1], STORIES[STORIES.length - 1].steps[0]);
       }
     } catch (e) {
-      T.msg = e && (e.code === "not_granted" || e.code === "sampling_disabled") ? "Live drafts are switched off for this page." : "That did not work: " + (e && e.message || e);
+      if (e && (e.code === "not_granted" || e.code === "sampling_disabled")) { T.sample = null; ATLAS.ai.lost(); }
+      T.msg = e && (e.code === "not_granted" || e.code === "sampling_disabled") ? "AI drafts are switched off for this page." : "That did not work: " + (e && e.message || e);
     } finally { T.busy = false; redraw(); renderSoon(true); }
   }
   // AI storylines written in this browser come back on the next visit.
   W.storylines().then(() => { try { for (const st of JSON.parse(localStorage.getItem("atlas.deep.aistories.v1") || "[]")) if (!STORIES.some(s => s.id === st.id)) STORIES.push({ ...st, i: STORIES.length, steps: st.steps.map((p, k) => ({ ...p, j: k, m: mOf(p.date) })) }); } catch { /* none */ } });
 
   ATLAS.tab({
-    id: "upclose", name: "Up close",
+    id: "upclose", name: "Up close", icon: "lens", mode: true,
     mount(el, api) {
       T.el = el; T.api = api;
       el.addEventListener("input", ev => { if (ev.target.type === "range") { stop(); setMonth(+ev.target.value); } });
@@ -402,6 +412,15 @@ Answer with JSON only, one object: {"title":"...","blurb":"one sentence question
         DS.m = T.api.year * 12;
         setMonth(DS.m, { now: true });
       } else renderSoon(true);
+    },
+    // An empty spot on the map (not a mark, whose card still opens in Here) becomes the centre of the study.
+    pick(at) {
+      if (at.title || at.kick) return false;
+      const v = T.api.view();
+      DS.place = { name: at.name || null, lon: at.lon, lat: at.lat };
+      T.api.fly({ lon: at.lon, lat: at.lat, span: v && isFinite(v.w) ? v.w : 8 }, 700);
+      renderSoon(true);
+      return true;
     },
   });
   // Keyboard: [ and ] step a month while the Up close tab is open (the page keeps arrows for years).

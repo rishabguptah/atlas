@@ -55,16 +55,20 @@
   const ORDER = { city: 1, person: 2, school: 3, work: 3, stop: 3, hub: 4, reached: 4, lens: 5, broke: 6, choke: 6, battle: 6, pin: 9, sel: 10 };
 
   const GR = typeof PixelGrammar !== "undefined" ? PixelGrammar : null;
+  // The pixel world keeps its day inks whatever the page theme (palette.js day()).
+  const inDay = c => typeof PIXEL_PALETTE !== "undefined" && PIXEL_PALETTE.day ? PIXEL_PALETTE.day(c) : c;
   function PixelMarks(svg, projection) {
     let points = [], lines = [], dirty = true;
-    const colorCache = new Map(), polyCache = new WeakMap();
+    let colorCache = new Map(), cacheSheets = -1;
+    const polyCache = new WeakMap();
     const probe = document.createElement("i");
-    const tone = c => { // any CSS colour to [r, g, b] (var() and color-mix included), cached
+    const tone = c => { // any CSS colour to [r, g, b] (var() and color-mix included, var() in day values), cached
       let v = colorCache.get(c);
       if (!v) {
+        const key = c; if (typeof c === "string" && c.includes("var(")) c = inDay(c);
         if (/^#[0-9a-f]{6}$/i.test(c)) v = [parseInt(c.slice(1, 3), 16), parseInt(c.slice(3, 5), 16), parseInt(c.slice(5, 7), 16)];
         else { probe.style.color = c; document.body.appendChild(probe); v = rgbOf(getComputedStyle(probe).color); probe.remove(); }
-        colorCache.set(c, v);
+        colorCache.set(key, v);
       }
       return v;
     };
@@ -257,8 +261,11 @@
         case "shock": {
           const R = Math.max(2, Math.round(m.size / PX));
           circle(i, j, R, T, { a, ink: !m.famine, dotted: m.famine });
-          // A ripple that spreads from the centre every few frames.
-          const f = G.frame % 4; if (f) circle(i, j, R + f, T, { a: a * (0.6 - f * 0.12), dotted: true });
+          // A ripple that spreads twice from the centre when the shock first appears (a year step), then rests.
+          const key = m.lon + "," + m.lat; shocksNow.add(key);
+          if (!shockAt.has(key)) shockAt.set(key, G.frame);
+          const age = G.frame - shockAt.get(key), f = age % 4;
+          if (age > 0 && age < 8 && f) circle(i, j, R + f, T, { a: a * (0.6 - f * 0.12), dotted: true });
           icon("dot3", i, j, T, a); return;
         }
         case "lens": icon(SHAPE_ICON[m.shape] || "dot5", i, j, T, a, m.ghost, cf); if (m.hi) brackets(i, j, 4, a); return;
@@ -278,6 +285,8 @@
     }
 
     function paint(g) {
+      // A stylesheet added since the last paint (a lens's own) may define tokens the colours read.
+      if (typeof document !== "undefined" && document.styleSheets.length !== cacheSheets) { colorCache = new Map(); cacheSheets = document.styleSheets.length; }
       if (dirty && svg) fromSvg();
       G = g;
       for (const L of lines) {
@@ -294,10 +303,14 @@
         list.push([m, i, j]);
       }
       // World zoom (below 2x): marks of one family that crowd one cell fold into a count badge (art direction critique 1).
-      if (g.k && g.k < 2) aggregate(list);
+      // People are the densest layer, so they keep folding up to 3x.
+      if (g.k && g.k < 3) aggregate(list, g.k);
       // Big rings first, then small icons north to south, then the selection and guide pins on top.
       list.sort((A, B) => (ORDER[A[0].kind] || (A[0].kind === "order" || A[0].kind === "shock" ? 0 : 5)) - (ORDER[B[0].kind] || (B[0].kind === "order" || B[0].kind === "shock" ? 0 : 5)) || A[2] - B[2]);
+      shocksNow.clear();
       for (const [m, i, j] of list) point(m, i, j);
+      // A shock that left the map ripples again when it comes back.
+      if (shockAt.size > shocksNow.size) for (const key of shockAt.keys()) if (!shocksNow.has(key)) shockAt.delete(key);
       for (const b of badges) badge(b);
       badges = [];
       G = null;
@@ -306,11 +319,12 @@
     const KIND_FAM = { city: "land", person: "peoples", hub: "wealth", shock: "shocks", reached: "shocks", school: "mind", work: "mind", stop: "mind", battle: "power", broke: "power", choke: "power" };
     const FOLD = { city: 1, person: 1, school: 1, work: 1, stop: 1, battle: 1, reached: 1, lens: 1, hub: 1 };
     let badges = [];
-    function aggregate(list) {
+    const shockAt = new Map(), shocksNow = new Set();
+    function aggregate(list, k) {
       const cell = 22, groups = new Map();
       for (let n = 0; n < list.length; n++) {
         const [m, i, j] = list[n];
-        if (!FOLD[m.kind] || m.hi || m.always) continue;
+        if (!FOLD[m.kind] || m.hi || m.always || (k >= 2 && m.kind !== "person")) continue;
         const fam = m.kind === "lens" ? (GR && GR.FAMILY[m.lens]) || m.lens : KIND_FAM[m.kind];
         const key = fam + ":" + Math.floor(i / cell) + ":" + Math.floor(j / cell);
         let gr = groups.get(key); if (!gr) groups.set(key, gr = { fam, idx: [], si: 0, sj: 0, color: m.color });

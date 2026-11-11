@@ -11,7 +11,7 @@
   const LD = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.shrink) || null;
   const R = Math.PI / 180;
   const gc = (a, b) => { const dl = (b[1] - a[1]) * R, dn = (b[0] - a[0]) * R, x = Math.sin(dl / 2) ** 2 + Math.cos(a[1] * R) * Math.cos(b[1] * R) * Math.sin(dn / 2) ** 2; return 12742 * Math.asin(Math.min(1, Math.sqrt(x))); };
-  const fy = y => (A.api && A.api.fmtYear ? A.api.fmtYear(y) : y < 0 ? -y + " BCE" : String(y));
+  const fy = A.fmtYear;
   // News lag as written: -1 means the same month with no day recorded; rough ones get a tilde; "by" is a latest date.
   const lagTxt = a => a[3] < 0 ? "within the month" : a[3] === 0 ? "same day" : `${a[5] ? "by day " : a[4] ? "about " : ""}${a[3]} days`;
   const dd = d => !isFinite(d) ? "out of reach" : d < 1.5 ? (d < 0.75 ? "under a day" : "a day") : d < 60 ? Math.round(d) + " days" : d < 400 ? Math.round(d / 30.4) + " months" : "over a year";
@@ -147,9 +147,9 @@
   A.shrink = { get rings() { return S.res; }, origin, compute, S };
 
   // ---------- centres of the world ----------
-  const TRACKS = [["cities", "Centre of the cities", "#b0462c", "Where the world's big cities balance on the globe (Reba, Reitsma and Seto 2016 city sizes, weighted by population)."],
-    ["trade", "Centre of trade", "#c28a1a", "Midpoint on the globe of the richest trade crossroads of the day, east and west (the trade-hub relays)."],
-    ["ideas", "Centre of ideas", "#3a6fb8", "Where thinkers were born and great works were made, within 150 years (Ideas & faith records)."]];
+  const TRACKS = [["cities", "Centre of the cities", "var(--fam-peoples)", "Where the world's big cities balance on the globe (Reba, Reitsma and Seto 2016 city sizes, weighted by population)."],
+    ["trade", "Centre of trade", "var(--fam-wealth)", "Midpoint on the globe of the richest trade crossroads of the day, east and west (the trade-hub relays)."],
+    ["ideas", "Centre of ideas", "var(--fam-mind)", "Where thinkers were born and great works were made, within 150 years (Ideas & faith records)."]];
   function trackAt(rows, y) {
     if (!rows.length || y < rows[0][0] - 50) return null;
     let a = rows[0]; for (const r of rows) { if (r[0] <= y) a = r; else { const f = (y - a[0]) / (r[0] - a[0]); if (f > 0 && Math.abs(r[1] - a[1]) < 180) return { r: a, lon: a[1] + (r[1] - a[1]) * f, lat: a[2] + (r[2] - a[2]) * f }; break; } }
@@ -190,19 +190,19 @@
       const D = ctx.data; if (!D || !D.hubs) return;
       schedule();
       const o = origin(), y = ctx.year;
-      if (S.mode === "rings") ctx.pins([{ ...o, lon: o.lon, lat: o.lat }], { key: () => "shrink:o", shape: "diamond", size: 6, always: true, pri: 40, color: "#b2462c",
+      if (S.mode === "rings") ctx.pins([{ ...o, lon: o.lon, lat: o.lat }], { key: () => "shrink:o", shape: "diamond", size: 6, always: true, pri: 40,
         label: () => `From ${o.n}${S.busy ? " · measuring…" : ""}`, title: () => `Travel-time rings from ${o.n}`,
         card: () => ({ kick: "Travel time", title: `From ${o.n}, ${ctx.fmtYear(snap(y))}`, lon: o.lon, lat: o.lat, year: y, body: summary(), why: "Worked out by the Atlas's shared router: the fastest way that year by foot, horse, camel, river boat, ship, steamer, rail, road and air, with ports, canals, seasons, empire roads and rest days. Rings are estimates; open the Travel tab to see how the router does against real journeys.", sources: [{ cite: "Francis Galton, On the construction of isochronic passage-charts (1881)" }, { cite: "J. G. Bartholomew, Atlas of the World's Commerce / Isochronic distances (1907, 1914)" }, { cite: "Scheidel and Meeks, ORBIS: The Stanford Geospatial Network Model of the Roman World", url: "https://orbis.stanford.edu/" }] }) });
       // News within a dozen years of the slider, fading with distance in time.
       const near = D.news.filter(n => Math.abs(n.y - y) <= NEWS_WIN);
       for (const conf of ["sure", "likely", "legend"]) {
         const legs = []; for (const n of near) for (const a of n.a) if (confLine(a[7]) === conf) legs.push({ n, a, id: n.id + ":" + a[2], pts: [[n.o[0], n.o[1]], [a[0], a[1]]] });
-        if (legs.length) ctx.paths(legs, { key: l => l.id, coords: l => l.pts, conf, arrow: true, color: "#7b3f8f", width: 1.8, alpha: .85, title: l => `${l.n.n}: ${l.a[2]}, ${lagTxt(l.a)}`, card: l => newsCard(l.n, l.a, ctx) });
+        if (legs.length) ctx.paths(legs, { key: l => l.id, coords: l => l.pts, conf, arrow: true, color: "var(--fam-mind)", width: 1.8, alpha: .85, title: l => `${l.n.n}: ${l.a[2]}, ${lagTxt(l.a)}`, card: l => newsCard(l.n, l.a, ctx) });
       }
       const arr = near.flatMap(n => n.a.map(a => ({ n, a, lon: a[0], lat: a[1] })));
-      ctx.pins(arr, { key: x => "nw:" + x.n.id + ":" + x.a[2], shape: "circle", size: 3.5, color: "#7b3f8f", pri: 12, fade: x => 1 - Math.abs(x.n.y - y) / (NEWS_WIN + 4),
+      ctx.pins(arr, { key: x => "nw:" + x.n.id + ":" + x.a[2], shape: "circle", size: 3.5, color: "var(--fam-mind)", pri: 12, fade: x => 1 - Math.abs(x.n.y - y) / (NEWS_WIN + 4),
         label: x => `${x.a[2]} · ${x.a[3] < 0 ? "same month" : x.a[3] === 0 ? "same day" : (x.a[4] ? "~" : "") + x.a[3] + " d"}`, title: x => `${x.n.n} reaches ${x.a[2]}`, card: x => newsCard(x.n, x.a, ctx) });
-      ctx.pins(near.filter((n, i, l) => l.findIndex(m => m.o[2] === n.o[2] && m.y === n.y) === i).map(n => ({ n, lon: n.o[0], lat: n.o[1] })), { key: x => "ns:" + x.n.id, shape: "square", size: 4.5, color: "#7b3f8f", pri: 14,
+      ctx.pins(near.filter((n, i, l) => l.findIndex(m => m.o[2] === n.o[2] && m.y === n.y) === i).map(n => ({ n, lon: n.o[0], lat: n.o[1] })), { key: x => "ns:" + x.n.id, shape: "square", size: 4.5, color: "var(--fam-mind)", pri: 14,
         label: x => x.n.n, title: x => `${x.n.n}, ${ctx.fmtYear(x.n.y)}`, card: x => ({ kick: "News breaks", title: x.n.n, year: x.n.y, lon: x.n.o[0], lat: x.n.o[1], meta: `${x.n.o[2]} · ${x.n.date}`, body: x.n.a.map(a => `${a[2]}: ${lagTxt(a)}`).join(" · ") + (x.n.note ? " " + x.n.note : "") }) });
       // Centres of the world: the trail so far, and where each stands now.
       for (const t of TRACKS) {
@@ -273,22 +273,22 @@
   const css = document.createElement("style");
   css.textContent = `
 .shk { display: grid; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
-.shk p { margin: 0; font-size: 14px; color: var(--ink-soft); line-height: 1.45; }
-.shk .big { font-family: var(--fell); font-size: 17px; color: var(--ink); line-height: 1.35; }
-.shk h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 4px 0 0; }
+.shk p { margin: 0; font-size: var(--fs-read); color: var(--ink-soft); line-height: 1.45; }
+.shk .big { font-family: var(--fell); font-size: var(--fs-h4); color: var(--ink); line-height: 1.35; }
+.shk h3 { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 4px 0 0; }
 .shk .row { display: flex; flex-wrap: wrap; gap: 6px; }
-.shk button.c { all: unset; cursor: pointer; font-size: 13px; padding: 4px 9px; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
+.shk button.c { all: unset; cursor: pointer; font-size: var(--fs-note); padding: 4px 9px; border: 1px solid var(--rule); border-radius: 3px; background: var(--card); }
 .shk button.c[aria-pressed="true"] { background: #221f1a; color: #f6f0dc; border-color: #221f1a; }
 .shk button.c:focus-visible { outline: 2px solid var(--ink); }
-.shk .lg { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 4px 10px; font-size: 12.5px; color: var(--ink-soft); }
+.shk .lg { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 4px 10px; font-size: var(--fs-note); color: var(--ink-soft); }
 .shk .lg i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -2px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.25); }
 .shk .bars { display: grid; gap: 4px; }
-.shk .bar { all: unset; cursor: pointer; display: grid; grid-template-columns: 48px minmax(0, 1fr) 92px; gap: 8px; align-items: center; font-size: 12.5px; }
+.shk .bar { all: unset; cursor: pointer; display: grid; grid-template-columns: 48px minmax(0, 1fr) 92px; gap: 8px; align-items: center; font-size: var(--fs-note); }
 .shk .bar .t { font-family: var(--mono); color: var(--ink-soft); }
 .shk .bar .b { height: 12px; background: #e2ba54; box-shadow: inset -2px -2px 0 rgba(0,0,0,.2); min-width: 2px; }
 .shk .bar.now .t { color: var(--ink); font-weight: 600; }
 .shk .bar .v { text-align: right; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
-.shk table { border-collapse: collapse; font-size: 12.5px; width: 100%; }
+.shk table { border-collapse: collapse; font-size: var(--fs-note); width: 100%; }
 .shk td { padding: 3px 4px; border-top: 1px solid var(--rule); vertical-align: top; }
 .shk td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }`;
   document.head.appendChild(css);
@@ -304,7 +304,7 @@
       <p class="big">${res ? esc(summary()) : S.busy ? "Measuring the roads…" : "Turn the slider: the rings show how far you could get from one city in that year."}</p>
       <div class="lg">${BANDS.map(b => `<span><i style="background:rgb(${b[2].join(",")})"></i>${b[1]}</span>`).join("")}<span><i style="background:#342c28"></i>out of reach</span></div>
       <div class="row"><button class="c" data-mode="rings" aria-pressed="${S.mode === "rings"}">Travel-time rings</button><button class="c" data-mode="centres" aria-pressed="${S.mode === "centres"}">Centres of the world</button></div>
-      ${S.mode === "centres" ? `<p>Three balance points on the globe, one a century since 3000 BCE: <b style="color:#b0462c">the world's big cities</b> by size, <b style="color:#c28a1a">the richest trade crossroads</b>, and <b style="color:#3a6fb8">where thinkers were born and great works were made</b>. Press Play to watch them wander.</p>` : ""}
+      ${S.mode === "centres" ? `<p>Three balance points on the globe, one a century since 3000 BCE: <b style="color:var(--fam-peoples)">the world's big cities</b> by size, <b style="color:var(--fam-wealth)">the richest trade crossroads</b>, and <b style="color:var(--fam-mind)">where thinkers were born and great works were made</b>. Press Play to watch them wander.</p>` : ""}
       <h3>Start from</h3>
       <div class="row">${hubs().map(h => `<button class="c" data-from="${h.id}" aria-pressed="${!S.custom && S.from === h.id}">${esc(h.n)}</button>`).join("")}<button class="c" data-from="centre" aria-pressed="${!!S.custom}">Map centre</button></div>
       ${o.from > y ? `<p>${esc(o.n)} does not exist yet in ${esc(fy(y))}. ${esc(o.note || "")}</p>` : ""}
@@ -313,7 +313,7 @@
       ${dests.length ? `<h3>To the other cities, ${esc(fy(res.y))}</h3><table>${dests.map(([n, d]) => `<tr><td>${esc(n)}</td><td class="n">${esc(dd(d))}</td></tr>`).join("")}</table>` : ""}
       ${D.trips.length ? `<h3>How good is the router?</h3><p>Real journeys with their recorded days, against the Atlas's router for the same trip and year (time under way; its days waiting for a ship are left out, as the records leave them out).</p>
         ${S.checks ? `<table>${S.checks.map(c => `<tr><td>${esc(c.t[0])} → ${esc(c.t[3])}, ${esc(fy(c.t[6]))}<br><small>${esc(c.t[9] || c.t[8])}</small></td><td class="n">${c.t[7]} d recorded<br>${c.m == null ? "…" : isFinite(c.m) ? Math.round(c.m) + " d model" : "no route"}</td></tr>`).join("")}</table><p>${esc(checkLine())}</p>` : `<div class="row"><button class="c" data-a="check">Check ${D.trips.length} journeys</button></div>`}` : ""}
-      <p>Rings come from the Atlas's shared router (the same one Live a life uses), worked out for each decade. Click anywhere on the map: Here says how long it took to get there.</p>
+      <p>Rings come from the Atlas's shared router (the same one Live a life uses), worked out for each decade. ${A.click} anywhere on the map: Here says how long it took to get there.</p>
     </div>`;
   }
   function checkLine() {
@@ -342,7 +342,7 @@
   }
 
   A.tab({
-    id: "shrink", name: "Travel",
+    id: "shrink", name: "Travel time", short: "Travel", icon: "compass", mode: true,
     mount(pane, api) {
       el = pane; S.api = api;
       pane.addEventListener("click", ev => {

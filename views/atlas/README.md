@@ -1,7 +1,7 @@
 # Atlas (one page)
 
 Every workstream on one map with one year. Lenses (Cities, People, Trade & migration, Plague & climate,
-Ideas & faith, Order & chaos, War & chokepoints, Borders, Terrain) toggle layers on the same map; the slider and Play move them all.
+Ideas, faith & art, Order & chaos, War & chokepoints, Borders, Terrain) toggle layers on the same map; the slider and Play move them all.
 Click anywhere and the "Here" column gathers every lens for that spot and year. "This year" is the
 world digest. The guide's question box sits on top and switches on the lenses its steps use.
 
@@ -77,13 +77,14 @@ Roadmap and critique: https://claude.ai/artifact/6saKUD2YsaVezRGC9M3z6o
 
 The Up close tab studies whatever the map shows, by the month: pan or zoom anywhere, pick a span (a dense pack's
 window, a decade, a lifetime, a century, five centuries, or a storyline's), and scrub or play (1 month, a year or ten
-years per second; `[` and `]` step a month). It reads the world index (`views/atlas/world/`, see WORLD.md L1):
+years per second; `[` and `]` step a month). Here's "Study it up close" opens it on the spot you marked, under
+that place's name, and a click on empty map while it is open moves the study there. It reads the world index (`views/atlas/world/`, see WORLD.md L1):
 what happened here this month (widening to the year, five years, a generation when that is thin), wars under way,
 who was born, died, lived or worked here, a "how deep" meter with the dense pack that covers the view, and the
 study storylines that pass through (75 of them, from Sumer to 1991, each with a Next button and the journeys of the
 people it names drawn on the map). Where the data is thin, "Fill in with Claude" adds draft rows (dashed on the map,
 marked draft, kept in this browser) and "Write a storyline for here and now" drafts a storyline. Its lenses:
-Chronicle (Power) and Lives (Peoples); Europe 1789-1914 adds Provinces, Growing cities and railway numbers
+Chronicle (Power) and Lives (with People, from 2x zoom); Europe 1789-1914 adds Provinces (with Borders), Growing cities (with Cities) and railway numbers
 (`lenses/e19.*`). Everything loads after the first paint from `atlas-files/world/` and `atlas-files/packs/`, which
 `build.py` writes beside the page: publish them with it (about 20 MB, fetched a slice or pack at a time).
 
@@ -100,7 +101,7 @@ drafts. See `data/cities/README.md` to add a city.
 
 ## Travellers in motion
 
-Lenses Journeys and Middle Passage (Peoples) and VOC ships (Wealth), and the Who was there tab: famous journeys move
+Lenses On the move (Peoples: journeys, with the Middle Passage) and VOC ships (Wealth), and the Who was there tab: famous journeys move
 along dated legs, every Dutch East India Company ship at sea, the forced crossing of enslaved Africans with the human
 toll, and real co-presence (who was in Vienna in 1913). Data: `data/travels/`. Presences and the slave voyages load
 only when needed, from a sidecar to publish beside the page:
@@ -131,9 +132,10 @@ also drawn on canvas with `PIXEL_ICONS.draw`); the six family emblems live there
 - Map first: the panel starts folded to a row of emblem ribbons and opens when a ribbon is tapped, a place clicked or a
   question asked. The eye button (or **H**) hides the whole interface but a faint year plate and the eye; dragging the map
   turns the interface into a ghost until you let go.
-- Games and modes (Codex, Guess, Live, What if, Stories, Who was there, Objects, Compare, Up close) share one way out: a
+- Games and modes (Codex, Guess, Live, What if, Stories, Who was there, Objects, Up close, Travel) share one way out: a
   "Back to map" plate top left (or **Esc**) puts back the year, view, lenses and tab you came from and folds the panel.
-  `ATLAS.exitMode()` does the same; `ATLAS.api.lenses()` lists the lenses that are on.
+  `ATLAS.exitMode()` does the same; `ATLAS.api.lenses()` lists the lenses that are on. A tab joins them with
+  `mode` in its `ATLAS.tab` call, and names its ribbon icon with `icon` (LENSES.md).
 - Preview of the three directions considered: https://claude.ai/artifact/4wm6AUUts9hzFK2trCmmq2
 
 ## Deep time (300,000 years ago to 4000 BCE)
@@ -144,8 +146,8 @@ grows with age (1,000 years before 100,000 years ago) and read as "45,000 years 
 or chokepoints. The pixel map redraws the ice-age world from sea level: exposed shelves and land bridges, ice sheets,
 glacial tundra and steppe, the Green Sahara (`views/pixel/paleo.js`, `ATLAS.paleo`; rasters `atlas-files/paleo-*.png`
 from `data/deep-time/`, about 0.7 MB, fetched only when the year goes before 5500 BCE). A new sea level or ice extent
-redraws all the terrain, so while the year moves it swaps at most every 400 ms. The Deep time lens (Peoples) adds the
-other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
+redraws all the terrain, so while the year moves it swaps at most every 400 ms. The Deep time lens (Peoples; no chip, it is on
+by itself and draws only before 1 CE) adds the other kinds of human and their ranges, Ice Age animals, sites, dispersal fronts that walk with the year, farming
 hearths, land-bridge and ice-sheet names, and climate shocks. Sources and rebuild: `ingest/deep-time/README.md`.
 
 ## The whole world (People lens)
@@ -159,7 +161,12 @@ Genghis Khan, Zhu Xi, Jayavarman VII and a Zagwe king next to Fibonacci instead 
 ## Lens families and plugins
 
 The chip bar shows six families (Land, Power, Wealth, Peoples, Mind, Shocks); tapping one opens its lenses
-in a second row. New lenses plug in from `views/atlas/lenses/<id>.py` (data) and `<id>.js` (drawing,
+in a second row. Land's row starts with the map style (Pixel, Relief or Plain). A lens that only makes sense inside a
+tab (What if, Live a life, Codex, Why, Living world in Who was there) has no chip and comes on with its tab; a lens that belongs to another chip has
+none either (Provinces draws with Borders, Growing cities with Cities, Art & architecture with Ideas, faith & art). Shocks has two chips by subject, Epidemics and
+Famine & climate: each draws the curated records of the built-in Plague & climate layer together with the catalogue that
+goes with it (plague returns and Wikidata epidemics; eruptions, famines and temperature). At world zoom the catalogues
+keep to their largest records, and a catalogue row that repeats a curated one is left out. New lenses plug in from `views/atlas/lenses/<id>.py` (data) and `<id>.js` (drawing,
 Here and This year rows), a basemap and sprites register the same way; see [LENSES.md](LENSES.md).
 Zoom frames only move the map: labels hide while the scale changes and thinning runs when it settles.
 
@@ -171,14 +178,14 @@ one-line caption types into a pixel dialog box, Space or → is the next scene, 
 leaves the story. The panel, with Ask, stays open beside the story; the cold open waits until the map has painted. `world/story.js` holds the Scene/Story format, the registry (`ATLAS.world.stories.add/list/get/check`)
 and converters for guide tours, panel answers (live ones keep streaming in), What-ifs (a fork scene, then dashed branch
 scenes), Up close storylines (by the month) and Codex trails. Authored Stories live in `data/stories/*.json`; the Stories
-tab (`lenses/stories.*`) lists them all. The Atlas opens on a cold open (Constantinople 1453) on a first visit or after
-twelve hours away; `#story=<id>` plays any story on load and `#nostory` skips it. Other threads emit Stories and register
+tab (`lenses/stories.*`) lists them all. The Atlas opens on a cold open (Constantinople 1453) on a first visit only, and
+never offers a first tour after it; `#story=<id>` plays any story on load and `#nostory` skips it. Other threads emit Stories and register
 them with `ATLAS.world.stories.add(story)` or a provider `{kind, list()}`; `ATLAS.world.director.play(story, {at, auto})`
 plays one.
 
 ## Living world (travellers, meetings, stories of the road)
 
-The Travellers lens (Peoples) and the Living world tab show who was on the road, day by day. Engine:
+The Travellers lens (Peoples) and the On the road view of the Who was there tab show who was on the road, day by day. Engine:
 `views/atlas/world/agents.js` (L3 in WORLD.md: `ATLAS.world.agents / meetings / step / story / passing / add`), data
 from `views/atlas/lenses/living.py` (late file `atlas-files/lens-living.json`). Named travellers follow documented
 journeys (the travels kernel via `lenses/travels.py:journeys_as_stops`, and the life RPG's `data/life/lives/`); dates between known stops are spread by
@@ -187,7 +194,8 @@ distance, legs take road time and the rest is a stay. The crowd is generated fro
 `data/world/names.json` by culture and era, and is always labelled generated. On slave-trade routes the generated
 people are the enslaved, named, never cargo. Meetings: `data/world/meetings.json` (documented, disputed, legend)
 plus co-presence at the moment. Follow a traveller to get a story of scenes; "Play as scenes" hands it to the
-Director; "Tell this story" asks Claude (needs `sample`). Keys in the tab: `,` and `.` step a day.
+Director; "Tell this story" asks Claude (needs `sample`). Keys in the view: `,` and `.` step a day. The view is `ATLAS.living` (`name`, `mount(el, api)`, `show()`, `hide()`), which
+`lenses/travels.js` mounts in its own pane; the travellers come on with the view and go when you leave it.
 `data/world/news.json` and `speeds.json` are ground truth for backtesting the motion model.
 
 ## Guess the past
@@ -198,9 +206,12 @@ income per head (Maddison Project 2020), an empire's land at its height (Cliopat
 days news took to travel. Every answer is read from a sourced measure or record at a year it actually gives, never
 interpolated. You give a range you are 80% sure of; the reveal plays as a Director story (the answer, a comparison or
 the motion model's own estimate for the same trip, then your calibration) with Why? and How do we know. The tab keeps
-calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five with streaks and a copyable
+calibration ("you said 80%, you were right 64%"), points for tight hits, a daily five and a copyable
 result, Endless and About here modes, and finds; each reveal also visits the spot for the Codex. Progress stays in
-localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `calibration` and `play(id)`.
+localStorage `atlas.guess.v1`. `ATLAS.guess` exposes `list`, `daily`, `todayLeft`, `playDaily`, `calibration` and `play(id)`.
+The Codex's Today view shows the daily riddle and the daily five together, and the Next card offers whichever is
+undone. Either one keeps the Atlas's one day streak, `ATLAS.today` (localStorage `atlas.today.v1`, which starts from the
+better of the two streaks the Codex and Guess used to keep apart).
 
 ## Travel time: watch the world shrink
 

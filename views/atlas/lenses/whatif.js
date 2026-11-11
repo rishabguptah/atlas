@@ -1,6 +1,6 @@
-// Simulate & predict: the "What if" tab and its map layer.
+// What if: the tab and its map layer (simulations and predictions).
 // Simulate plays a curated what-if (data/whatif/scenarios/*.json): real history up to the turning point,
-// then the branch, each branch step marked speculative with a plausibility score. Live what-ifs use the
+// then the branch, each branch step marked speculative with a plausibility score. AI what-ifs use the
 // viewer's Claude. Predict stands in a year, shows which states the Order and Chaos model flags as likely
 // to break within 50 years, then fast-forwards to score it. Data: views/atlas/lenses/whatif.py + ORDER.
 (function () {
@@ -9,75 +9,75 @@
   const D = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.whatif) || { scenarios: [], bt: null };
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const pct = x => Math.round(x * 100) + "%";
-  const fy = y => api ? api.fmtYear(y) : String(y);
+  const fy = ATLAS.fmtYear;
   const LAST = 2024;  // Cliopatria's last year: breaks after this are not in the data yet
 
   const css = document.createElement("style");
   css.textContent = `
 .wf { display: grid; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
 .wf .seg { display: flex; gap: 0; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; width: max-content; }
-.wf .seg button { border: 0; background: transparent; padding: 6px 16px; cursor: pointer; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.wf .seg button { border: 0; background: transparent; padding: 6px 16px; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
 .wf .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
-.wf .lede { font-size: 14.5px; margin: 0; color: var(--ink-soft); }
-.wf h2 { font-family: var(--fell); font-weight: 400; font-size: 21px; line-height: 1.2; margin: 0; }
-.wf h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 4px 0 0; }
+.wf .lede { font-size: var(--fs-read); margin: 0; color: var(--ink-soft); }
+.wf h2 { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h3); line-height: 1.2; margin: 0; }
+.wf h3 { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 4px 0 0; }
 .wf .sc { all: unset; box-sizing: border-box; cursor: pointer; border: 1px solid var(--rule); border-left: 4px solid var(--y-whatif); background: var(--card); border-radius: 3px; padding: 9px 12px; display: grid; gap: 4px; }
 .wf .sc:hover, .wf .sc:focus-visible { border-color: var(--y-whatif); }
-.wf .sc b { font-family: var(--fell); font-weight: 400; font-size: 16.5px; line-height: 1.25; }
-.wf .sc .meta { display: flex; gap: 10px; align-items: center; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+.wf .sc b { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h4); line-height: 1.25; }
+.wf .sc .meta { display: flex; gap: 10px; align-items: center; font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); }
 .wf .pl { display: inline-flex; align-items: center; gap: 6px; }
 .wf .pl .bar { width: 60px; height: 6px; border-radius: 3px; background: var(--wash); overflow: hidden; display: inline-block; }
 .wf .pl .bar i { display: block; height: 100%; background: var(--y-whatif); }
-.wf .tagr, .wf .tagb { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 1px 6px; }
+.wf .tagr, .wf .tagb { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .06em; border-radius: 3px; padding: 1px 6px; }
 .wf .tagr { background: var(--wash); color: var(--ink); }
 .wf .tagb { border: 1px dashed var(--y-whatif); color: var(--y-whatif); }
-.wf .badge2 { display: inline-block; font-family: var(--mono); font-size: 11px; border: 1px dashed var(--y-whatif); color: var(--y-whatif); border-radius: 3px; padding: 1px 7px; }
-.wf .short { font-size: 15px; margin: 0; }
-.wf .note { font-size: 13px; color: var(--ink-soft); margin: 0; }
+.wf .badge2 { display: inline-block; font-family: var(--mono); font-size: var(--fs-tiny); border: 1px dashed var(--y-whatif); color: var(--y-whatif); border-radius: 3px; padding: 1px 7px; }
+.wf .short { font-size: var(--fs-read); margin: 0; }
+.wf .note { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; }
 .wf .player { display: flex; gap: 6px; align-items: center; }
-.wf .player .count { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-left: 4px; }
+.wf .player .count { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); margin-left: 4px; }
 .wf .wst { border: 1px solid var(--rule); border-left: 4px solid var(--ink-soft); background: var(--card); border-radius: 3px; }
 .wf .wst.alt { border-left-style: dashed; border-left-color: var(--y-whatif); border-style: dashed; border-left-width: 4px; }
 .wf .wst.on { box-shadow: 0 0 0 1.5px var(--ink) inset; }
 .wf .wst.alt.on { box-shadow: 0 0 0 1.5px var(--y-whatif) inset; }
 .wf .wst > button { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; padding: 8px 11px; display: grid; grid-template-columns: auto 1fr auto; gap: 3px 10px; align-items: baseline; }
-.wf .wst .t { font-family: var(--fell); font-size: 15.5px; line-height: 1.25; }
-.wf .wst .y { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); white-space: nowrap; }
-.wf .wst .body { display: none; padding: 0 11px 10px; font-size: 14.5px; line-height: 1.45; }
+.wf .wst .t { font-family: var(--fell); font-size: var(--fs-h4); line-height: 1.25; }
+.wf .wst .y { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); white-space: nowrap; }
+.wf .wst .body { display: none; padding: 0 11px 10px; font-size: var(--fs-read); line-height: 1.45; }
 .wf .wst.on .body { display: grid; gap: 6px; }
 .wf .wst .body p { margin: 0; }
-.wf .src { font-size: 12px; color: var(--ink-soft); margin: 0; padding-left: 16px; }
-.wf .fork { display: flex; gap: 8px; align-items: baseline; font-size: 14px; color: var(--y-whatif); border-top: 1px dashed var(--y-whatif); padding-top: 8px; }
-.wf .fork b { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
-.wf .view { border-top: 1px solid var(--rule); padding-top: 7px; display: grid; gap: 2px; font-size: 14px; }
+.wf .src { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; padding-left: 16px; }
+.wf .fork { display: flex; gap: 8px; align-items: baseline; font-size: var(--fs-read); color: var(--y-whatif); border-top: 1px dashed var(--y-whatif); padding-top: 8px; }
+.wf .fork b { font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; white-space: nowrap; }
+.wf .view { border-top: 1px solid var(--rule); padding-top: 7px; display: grid; gap: 2px; font-size: var(--fs-read); }
 .wf .view .hd { display: flex; gap: 8px; align-items: baseline; }
-.wf .view .nm { font-family: var(--fell); font-size: 15px; }
-.wf .view .sch { font-size: 12px; color: var(--ink-soft); }
-.wf ul { margin: 0; padding-left: 18px; font-size: 14px; }
+.wf .view .nm { font-family: var(--fell); font-size: var(--fs-h4); }
+.wf .view .sch { font-size: var(--fs-note); color: var(--ink-soft); }
+.wf ul { margin: 0; padding-left: 18px; font-size: var(--fs-read); }
 .wf .chart svg { width: 100%; height: auto; display: block; }
 .wf .chart .real { fill: none; stroke: var(--ink); stroke-width: 1.6; }
 .wf .chart .alt { fill: none; stroke: var(--y-whatif); stroke-width: 1.8; stroke-dasharray: 5 3; }
-.wf .chart .ax { font-family: var(--mono); font-size: 9.5px; fill: var(--ink-soft); }
+.wf .chart .ax { font-family: var(--mono); font-size: var(--fs-tiny); fill: var(--ink-soft); }
 .wf .chart .thr { stroke: var(--warn); stroke-dasharray: 2 3; stroke-width: 1; }
 .wf .chart .shock { stroke: var(--l-disease, #a3321f); stroke-width: 1; opacity: .6; }
-.wf .legend { display: flex; gap: 14px; font-size: 12px; color: var(--ink-soft); flex-wrap: wrap; }
+.wf .legend { display: flex; gap: 14px; font-size: var(--fs-note); color: var(--ink-soft); flex-wrap: wrap; }
 .wf .legend i { display: inline-block; width: 18px; height: 0; border-top: 2px solid var(--ink); vertical-align: middle; margin-right: 5px; }
 .wf .legend i.a { border-top: 2px dashed var(--y-whatif); }
 .wf textarea { width: 100%; box-sizing: border-box; resize: vertical; min-height: 56px; border: 1.5px solid var(--y-whatif); background: var(--card); padding: 8px 10px; border-radius: 6px; font-size: 15.5px; font-family: var(--fell); }
 .wf .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .wf .picks { display: flex; gap: 6px; flex-wrap: wrap; }
-.wf .picks button { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 3px 11px; cursor: pointer; font-size: 13px; }
-.wf .stat .big, .wf .big { font-family: var(--fell); font-size: 30px; line-height: 1; color: var(--ink); }
+.wf .picks button { border: 1px solid var(--rule); background: transparent; border-radius: 999px; padding: 3px 11px; cursor: pointer; font-size: var(--fs-note); }
+.wf .stat .big, .wf .big { font-family: var(--fell); font-size: var(--fs-h2); line-height: 1; color: var(--ink); }
 .wf .stat .big.v-hit { color: var(--warn); } .wf .stat .big.v-held { color: var(--ink-soft); } .wf .stat .big.v-miss { color: var(--y-money, #9a6f0e); }
 .wf .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .wf .stat { border: 1px solid var(--rule); border-radius: 3px; padding: 7px 9px; background: var(--card); display: grid; gap: 3px; }
-.wf .stat span { font-size: 12px; color: var(--ink-soft); line-height: 1.3; }
-.wf .fl { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 0 10px; padding: 3px 6px; border-radius: 3px; font-size: 14px; }
+.wf .stat span { font-size: var(--fs-note); color: var(--ink-soft); line-height: 1.3; }
+.wf .fl { all: unset; box-sizing: border-box; cursor: pointer; display: grid; grid-template-columns: 1fr auto; gap: 0 10px; padding: 3px 6px; border-radius: 3px; font-size: var(--fs-read); }
 .wf .fl:hover { background: var(--wash); }
-.wf .fl .r { font-family: var(--mono); font-size: 12px; }
-.wf .fl small { grid-column: 1 / -1; color: var(--ink-soft); font-size: 12px; }
+.wf .fl .r { font-family: var(--mono); font-size: var(--fs-tiny); }
+.wf .fl small { grid-column: 1 / -1; color: var(--ink-soft); font-size: var(--fs-note); }
 .wf .v-hit { color: var(--warn); } .wf .v-held { color: var(--ink-soft); } .wf .v-miss { color: var(--y-money, #9a6f0e); }
-.wf .err { border: 1px solid var(--warn); color: var(--warn); padding: 7px 10px; border-radius: 3px; font-size: 14px; }
+.wf .err { border: 1px solid var(--warn); color: var(--warn); padding: 7px 10px; border-radius: 3px; font-size: var(--fs-read); }
 .pt.lp.ghost circle, .pt.lp.ghost rect, .pt.lp.ghost path { fill-opacity: .25; stroke: var(--c); stroke-width: 1.4; stroke-dasharray: 3 2; }
 .pt.lp.ghost text { font-style: italic; }
 .line.lpath.ghost { stroke-dasharray: 7 5; stroke-width: 2.4px; stroke-opacity: .9; }
@@ -150,7 +150,7 @@
 
   // ---------- the map layer ----------
   ATLAS.lens({
-    id: "whatif", name: "Simulate & predict", family: "power", color: "#8a4fc0", on: false, guide: [],
+    id: "whatif", name: "What if", family: "power", color: "#8a4fc0", on: false, guide: [], tab: "whatif",
     draw(ctx) {
       if (W.mode === "sim" && W.sc && W.sc.steps[W.i] && W.sc.steps[W.i].branch) {
         const s = W.sc.steps[W.i];
@@ -193,13 +193,13 @@
       <h3>Your own what-if</h3>
       <form class="wf-live" id="wf-live"><textarea id="wf-q" rows="2" placeholder="What if the Library of Alexandria never burned?"></textarea>
         <div class="row"><button class="btn primary" type="submit">Simulate it</button><span class="note" id="wf-hint"></span></div></form>
-      <p class="note">Live what-ifs are drafted by Claude in the same shape: real history first, then the branch, each step scored. Sources are unchecked.</p>`;
+      <p class="note">AI what-ifs are drafted by Claude in the same shape: real history first, then the branch, each step scored. Sources are unchecked.</p>`;
   }
   function renderScenario() {
     const s = W.sc, n = s.steps.length, fork = s.steps.findIndex(x => x.branch);
     return `<div class="row"><button class="btn" data-a="back">◀ All what-ifs</button></div>
       <h2>${esc(s.question)}</h2>
-      <div class="row"><span class="badge2">${s.live ? "Live AI draft · sources unchecked" : "Simulation · speculative after " + esc(fy(s.divergence.year))}</span>${s.plausibility != null ? `<span class="note">premise plausibility ${plBar(s.plausibility)}</span>` : ""}</div>
+      <div class="row">${s.live ? ATLAS.prov("ai") : `<span class="badge2">Simulation · speculative after ${esc(fy(s.divergence.year))}</span>`}${s.plausibility != null ? `<span class="note">premise plausibility ${plBar(s.plausibility)}</span>` : ""}</div>
       ${s.short ? `<p class="short">${esc(s.short)}</p>` : ""}
       ${s.plausibility_note ? `<p class="note">${esc(s.plausibility_note)}</p>` : ""}
       ${s.loading ? `<p class="note">${esc(s.loading)}</p>` : ""}${s.error ? `<div class="err">${esc(s.error)}</div>` : ""}
@@ -304,9 +304,9 @@
     clearTimeout(yt); yt = setTimeout(render, 160);
   }
 
-  // ---------- live what-ifs ----------
+  // ---------- AI what-ifs ----------
   let sample = null, live = null;
-  const ready = (async () => { try { sample = window.claude ? await window.claude.use("sample") : null; } catch { sample = null; } })();
+  const ready = ATLAS.ai.sample().then(s => { sample = s; });
   const RULES = `You are the Atlas simulator. Rishi asks a counterfactual ("what if...") about history. Play it out on a world map: real history up to the turning point, then the branch.
 Mix: 55% rigorous, 45% fun. Branch steps must follow what the real actors wanted and could do, with their constraints (geography, money, disease, logistics, rivals). Say plainly when a branch is a long shot. Never present the branch as fact.
 
@@ -320,7 +320,7 @@ OUTPUT: JSON Lines only, one object per line, no prose, no markdown, no code fen
 MAP RULES: span 300 = whole world, 50 = Mediterranean, 15 = a country, 4 = a city. Points are [lon,lat], longitude first. Use real coordinates.
 SOURCE RULES: real steps cite works you are confident exist, or en.wikipedia.org URLs you are confident exist. Branch steps may have no sources. Never invent a URL.`;
   const LENS_OK = ["geography", "military", "economy", "population", "disease", "religion", "ideas", "literature", "people", "order"];
-  const ERR = { not_granted: "Live what-ifs are off because Claude access was not allowed for this page.", sampling_disabled: "Claude isn't available for this account here.", rate_limited: "Too many requests at once. Wait a minute and try again.", refused: "Claude declined this one. Try rephrasing it." };
+  const ERR = { not_granted: "AI what-ifs are off because Claude access was not allowed for this page.", sampling_disabled: "Claude isn't available for this account here.", rate_limited: "Too many requests at once. Wait a minute and try again.", refused: "Claude declined this one. Try rephrasing it." };
   function normStep(o) {
     const fin = Number.isFinite;
     return { branch: !!o.branch, lens: LENS_OK.includes(o.lens) ? o.lens : "order", title: String(o.title || ""), text: String(o.text || ""),
@@ -334,7 +334,7 @@ SOURCE RULES: real steps cite works you are confident exist, or en.wikipedia.org
   async function liveWhatIf(q) {
     const hint = el.querySelector("#wf-hint");
     if (!sample) { if (hint) hint.textContent = "Connecting to Claude…"; await ready; }
-    if (!sample) { if (hint) hint.textContent = "Live what-ifs need this page open in Claude. The curated ones work anywhere."; return; }
+    if (!sample) { if (hint) hint.textContent = "AI what-ifs need this page open in Claude. The curated ones work anywhere."; return; }
     stop(); if (live) live.abort();
     const S = { id: "live", live: true, question: q, short: "", divergence: { year: null, text: "" }, plausibility: null, steps: [], views: [], unknowns: [], loading: "Simulating…" };
     W.sc = S; W.i = -1; render();
@@ -356,7 +356,7 @@ SOURCE RULES: real steps cite works you are confident exist, or en.wikipedia.org
     } catch (e) {
       if (e && e.text) consume(e.text + "\n");
       if (e?.code !== "cancelled") S.error = ERR[e?.code] || "The connection dropped. Try again.";
-      if (e?.code === "not_granted" || e?.code === "sampling_disabled") sample = null;
+      if (e?.code === "not_granted" || e?.code === "sampling_disabled") { sample = null; ATLAS.ai.lost(); }
     } finally {
       if (live === my) live = null;
       S.loading = ""; if (S.divergence.year == null) S.divergence.year = (S.steps.find(x => x.branch) || {}).year ?? api.year;
@@ -365,7 +365,7 @@ SOURCE RULES: real steps cite works you are confident exist, or en.wikipedia.org
   }
 
   ATLAS.tab({
-    id: "whatif", name: "What if",
+    id: "whatif", name: "What if", icon: "whatif", mode: true,
     mount(pane, a) {
       el = pane; api = a;
       el.addEventListener("click", onClick);

@@ -1,6 +1,8 @@
 // Eruptions, famine & cold: every large eruption (VEI 4 and up, Smithsonian GVP), the famines on Wikidata and in the World
 // Peace Foundation list, and the global temperature of the year (PAGES 2k). Each big eruption's card measures what the
-// reconstruction shows in the years after it, so the volcano and the cold can be checked against each other.
+// reconstruction shows in the years after it, so the volcano and the cold can be checked against each other. It has no
+// chip of its own: it comes with Famine & climate, the part of the Plague & climate chip that also draws the curated
+// famines, eruptions and climate shifts.
 (() => {
   const NAME = { 4: "large", 5: "very large", 6: "colossal", 7: "super-colossal" };
   let D = null, SRC, ER, FAM, T, T31, TS, FD;
@@ -54,8 +56,8 @@
   }
 
   ATLAS.lens({
-    id: "climate", name: "Eruptions, famine & cold", family: "shocks", color: "#4f7aa8", on: false,
-    guide: ["climate", "geography", "disease"],
+    id: "climate", name: "Eruptions, famine & cold", family: "shocks", color: "#4f7aa8", on: false, with: "famine",
+    guide: ["climate", "geography", "disease"], by: "epidemiologist",
     key: [["diamond", "Eruption of VEI 4 or more; bigger is larger, a VEI 6 or 7 stays a decade"], ["square", "Famine under way, bigger with more deaths"]],
     index: d => {
       prep(d);

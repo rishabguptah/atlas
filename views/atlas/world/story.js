@@ -8,11 +8,11 @@
 //         sources: [{cite, url}], branch (null or a what-if id), next, ask (a question for the live panel),
 //         deeper: {story: id} | {q: question} | {tab: id}, kick (optional label over the caption),
 //         set: {<plugin>: value} (hands a plugin its own scene state through ATLAS.sceneSet[plugin], e.g. shrink: {from: "london"})}
-// Story: {id, title, kind: tour|answer|life|simulation|object|storyline|whatif|quest, blurb, scenes, next?}
+// Story: {id, title, kind: tour|chain|answer|life|simulation|object|storyline|whatif|quest, blurb, scenes, next?}
 (function () {
   const A = window.ATLAS, world = A.world = A.world || {};
-  const KINDS = ["tour", "answer", "life", "simulation", "object", "storyline", "whatif", "quest"];
-  const KIND_NAME = { tour: "Guided tour", answer: "Panel answer", life: "A life", simulation: "Living world", object: "Object journey", storyline: "Up close", whatif: "What if", quest: "Trail" };
+  const KINDS = ["tour", "chain", "answer", "life", "simulation", "object", "storyline", "whatif", "quest"];
+  const KIND_NAME = { tour: "Guided tour", chain: "Why chain", answer: "Panel answer", life: "A life", simulation: "Living world", object: "Object journey", storyline: "Up close", whatif: "What if", quest: "Trail" };
   const CONF = ["attested", "estimated", "approximate", "unknown"];
   const LD = id => (typeof LENS_DATA !== "undefined" && LENS_DATA[id]) || null;
 

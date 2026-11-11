@@ -12,10 +12,11 @@
 // ATLAS.travel lets the living-world simulation, the life RPG and the objects lens ask who was where.
 (() => {
   const ID = "travels", COLOR = "#a0522d", VOC = "voc", VOC_COLOR = "#c07a1e", MP = "passage", MP_COLOR = "#6e2b2b";
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const CONF = ["attested", "estimated", "approximate", "unknown"];
   const CONF_LINE = ["sure", "likely", "legend", "legend"];
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const fmtY = y => (window.ATLAS.api && ATLAS.api.fmtYear) ? ATLAS.api.fmtYear(y) : y < 0 ? -y + " BCE" : String(y);
+  const fmtY = ATLAS.fmtYear;
   const num = n => Math.round(n).toLocaleString("en");
   const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const fmtT = t => { if (t == null) return "date unknown"; const y = Math.floor(t), m = Math.floor((t - y) * 12); return `${MONTHS[Math.max(0, Math.min(11, m))]} ${fmtY(y)}`; };
@@ -40,7 +41,6 @@
     ready.add(name);
     return name;
   }
-  const lib = () => window.PIXEL_SPRITE_LIBRARY;
   function moverSprite(mode, y, lon, lat, own) {
     const E = window.PixelEra;
     if (mode === "sea" || mode === "river") return sprite(E ? E.mover(y, lon, lat, true) : "ship_galleon") || sprite("ship_galleon");
@@ -252,7 +252,7 @@
   // ---------- cards ----------
   function legCard(C, j, g) {
     return { kick: "Journeys · " + j.wn, title: `${g.pa[0]} → ${g.pb[0]}`, year: Math.floor(g.t1), lon: g.pb[1], lat: g.pb[2], line: g.L.pts,
-      meta: `${fmtT(g.t0)} to ${fmtT(g.t1)} · by ${g.mode} · ${CONF[g.conf]}${j.st === "draft" ? " · draft for the judge" : ""} · ${g.routed ? `path estimated by the motion model${g.days ? ` (about ${Math.round(g.days)} days)` : ""}` : "path drawn straight (route unknown)"}`,
+      meta: `${fmtT(g.t0)} to ${fmtT(g.t1)} · by ${g.mode} · ${CONF[g.conf]}${j.st === "draft" ? " · draft, awaiting check" : ""} · ${g.routed ? `path estimated by the motion model${g.days ? ` (about ${Math.round(g.days)} days)` : ""}` : "path drawn straight (route unknown)"}`,
       body: g.note || j.w, why: j.n + ": " + j.w, sources: j.sources };
   }
   function voyCard(C, v) {
@@ -308,7 +308,6 @@
   let lastAt = null;
   function hereTravellers(ctx, at) {
     lastAt = { lon: at.lon, lat: at.lat, year: ctx.year };
-    if (pane && pane.offsetParent && TAB.mode === "place") { TAB.where = { n: "Here", ...lastAt }; deep().then(renderTab, renderTab); }
     const C = prep(), y = ctx.year, out = [], r = Math.max(at.r || 300, 200);
     if (C) for (const j of C.J) for (const g of j.legs) {
       if (ctx.km([at.lon, at.lat], [g.pb[1], g.pb[2]]) > r) continue;
@@ -329,7 +328,8 @@
       why: w.leg.note || j.w, card: legCard(C, j, w.leg) }));
   }
   ATLAS.lens({
-    id: ID, name: "Journeys", family: "peoples", color: COLOR, on: false, guide: ["people", "geography"],
+    // The On the move chip: famous journeys, and the Middle Passage with it (the Living world runs in its own tab).
+    id: ID, name: "On the move", family: "peoples", color: COLOR, on: false, guide: ["people", "geography"],
     desc: "Famous journeys and their trails, with who was really where",
     key: [["sprite", "A traveller where they were this year: walking, riding, with a caravan or aboard ship"],
       ["line", "Their trail: solid = dated by the source, dashed = estimated, dots = route or date uncertain"],
@@ -422,7 +422,10 @@
         sources: [{ cite: Dd.sv_src.cite, url: `https://www.slavevoyages.org/voyage/${SV.id[s.i]}/variables` }] }) });
   }
   ATLAS.lens({
-    id: MP, name: "Middle Passage", family: "peoples", color: MP_COLOR, on: false, guide: ["economy", "population"],
+    // No chip of its own: it comes with On the move. It draws the Atlantic slave trade decade by decade, so the page's
+    // migration line for the same trade steps aside while it is on (covers).
+    id: MP, name: "Middle Passage", family: "peoples", color: MP_COLOR, on: false, guide: ["economy", "population"], by: "demographer",
+    with: ID, covers: ["route:migration_atlantic_slave_trade"],
     desc: "The forced crossing of 12.5 million Africans, by decade, with the ships of each year and the human toll",
     key: [["arrow", "People forced aboard ships from an African region to an American one in this decade (width = how many)"],
       ["sprite", "A slave ship that crossed this year; open it for the people aboard and how many died"]],
@@ -458,7 +461,8 @@
     { n: "Nalanda, 638", lon: 85.44, lat: 25.14, y: 638, why: "Xuanzang studies at the great monastery" },
   ];
   const TAB = { mode: "place", where: null, who: null, q: "" };
-  let pane = null, api = null;
+  // The On the road view is the living world's (lenses/living.js, ATLAS.living): it keeps its own element, after ours.
+  let pane = null, body = null, roadEl = null, roadOn = false, api = null;
   const STYLE = `
 .trv { display: grid; gap: 10px; }
 .trv .lede { margin: 0; color: var(--ink-soft); }
@@ -470,18 +474,19 @@
 .trv .grp { font: 600 11px/1.2 var(--mono, ui-monospace, monospace); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); margin: 6px 0 0; }
 .trv .row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding: 6px 4px; border-top: 1px solid var(--rule, #ddd); cursor: pointer; background: none; border-left: 0; border-right: 0; border-bottom: 0; text-align: left; color: inherit; font: inherit; width: 100%; }
 .trv .row:hover, .trv .row:focus-visible { background: color-mix(in srgb, ${COLOR} 10%, transparent); }
-.trv .row b { display: block; } .trv .row span { color: var(--ink-soft); font-size: 12.5px; }
-.trv .row .c { font-size: 11.5px; white-space: nowrap; color: var(--ink-soft); }
+.trv .row b { display: block; } .trv .row span { color: var(--ink-soft); font-size: var(--fs-note); }
+.trv .row .c { font-size: var(--fs-note); white-space: nowrap; color: var(--ink-soft); }
 .trv .row .c.c0 { color: ${COLOR}; }
 .trv input { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--rule, #ccc); border-radius: 6px; font: inherit; background: var(--paper, #fff); color: inherit; }
-.trv .note { font-size: 12.5px; color: var(--ink-soft); margin: 0; }
+.trv .note { font-size: var(--fs-note); color: var(--ink-soft); margin: 0; }
 .trv .go { font: 600 13px/1 inherit; padding: 8px 12px; border-radius: 6px; border: 1px solid ${COLOR}; background: ${COLOR}; color: #fff; cursor: pointer; }
 .trv .go.ghost { background: none; color: ${COLOR}; }
+.trv-road { margin-top: 12px; }
 `;
   const confTag = c => `<span class="c c${c}">${CONF[c]}</span>`;
   function placeView() {
     const w = TAB.where;
-    if (!w) return `<p class="note">Click anywhere on the map (or pick one of these) to see who was really there in the year on the slider.</p>`;
+    if (!w) return `<p class="note">${ATLAS.click} anywhere on the map (or pick one of these) to see who was really there in the year on the slider.</p>`;
     if (!DEEP.data) return `<p class="note">${DEEP.err ? "Presences could not load (atlas-files/travels-deep.json is not beside this page)." : "Loading presences…"}</p>`;
     const y = api ? api.year : w.y, now = presentAt(w.lon, w.lat, 30, y), near = presentAt(w.lon, w.lat, 30, y - 5, y + 5).filter(o => !now.some(n => n.pid === o.pid));
     const rows = l => l.slice(0, 40).map(o => `<button type="button" class="row" data-pres="${o.i}"><div><b>${esc(o.name)}</b><span>${esc(o.place)} · ${esc(o.role)} · ${esc(fmtY(o.y0))}${o.y1 !== o.y0 ? "–" + esc(fmtY(o.y1)) : ""}</span></div>${confTag(o.conf)}</button>`).join("");
@@ -511,16 +516,24 @@
   function journeysView() {
     const C = prep(); if (!C) return `<p class="note">Loading journeys…</p>`;
     return C.J.map(j => `<button type="button" class="row" data-follow="${esc(j.id)}"><div><b>${esc(j.n)}</b><span>${esc(j.w)}</span></div><span class="c">${esc(fmtY(Math.floor(j.t0)))}–${esc(fmtY(Math.floor(j.t1)))}</span></button>`).join("")
-      + `<p class="note">Hand-entered from the cited accounts; drafts waiting for the judge. Paths between stops are straight great circles until the shared router lands.</p>`;
+      + `<p class="note">Hand-entered from the cited accounts; drafts awaiting check. Paths between stops are worked out by the shared router once it has loaded (roads, rivers and sea lanes as they ran that year); until then they are straight.</p>`;
   }
   function renderTab() {
-    if (!pane) return;
+    if (!body) return;
     const b = (m, n) => `<button type="button" data-mode="${m}" aria-pressed="${TAB.mode === m}">${n}</button>`;
-    pane.innerHTML = `<div class="trv"><p class="lede">Who was really in the same place at the same time, and the great journeys that crossed the world.</p>
-      <div class="tabs">${b("place", "Here and now")}${b("person", "A person")}${b("journeys", "Follow a journey")}</div>
-      ${followId ? `<div class="chips"><button type="button" class="go" data-act="stop">✕ Stop following</button></div>` : ""}
+    body.innerHTML = `<div class="trv"><p class="lede">Who was really in the same place at the same time, who was on the road, and the great journeys that crossed the world.</p>
+      <div class="tabs">${b("place", "Here and now")}${b("person", "A person")}${ATLAS.living ? b("road", ATLAS.living.name) : ""}${b("journeys", "Follow a journey")}</div>
+      ${followId ? `<div class="chips"><button type="button" class="go" data-act="stop">${ICO("close", "✕")} Stop following</button></div>` : ""}
       ${TAB.mode === "place" ? `<div class="chips">${PRESETS.map((p, i) => `<button type="button" class="chip" data-preset="${i}" title="${esc(p.why)}">${esc(p.n)}</button>`).join("")}</div>${placeView()}`
-        : TAB.mode === "person" ? personView() : journeysView()}</div>`;
+        : TAB.mode === "person" ? personView() : TAB.mode === "road" ? "" : journeysView()}</div>`;
+  }
+  function setMode(m) {
+    TAB.mode = m; if (m === "place" || m === "person") deep();
+    const R = ATLAS.living, on = m === "road" && !!R;
+    roadEl.hidden = !on;
+    if (on) { if (!roadEl.dataset.up) { roadEl.dataset.up = "1"; R.mount(roadEl, api); } R.show(); }
+    else if (roadOn && R) R.hide();
+    roadOn = on; renderTab();
   }
 
   // Follow a journey: time runs by the month along each leg; the camera frames the leg; stops get a caption.
@@ -561,13 +574,14 @@
   function stopFollow(clear = true) { run++; followId = null; cursor = null; if (api) { if (clear) api.clearScene(); api.redraw(); } renderTab(); }
 
   ATLAS.tab({
-    id: ID, name: "Who was there",
+    id: ID, name: "Who was there", icon: "travels", short: "Who", mode: true,
     mount(el, a) {
       pane = el; api = a;
+      el.innerHTML = `<div></div><div class="trv-road" hidden></div>`; body = el.firstChild; roadEl = el.lastChild;
       if (!document.getElementById("travels-style")) { const st = document.createElement("style"); st.id = "travels-style"; st.textContent = STYLE; document.head.appendChild(st); }
       el.addEventListener("click", ev => {
-        const t = ev.target;
-        const m = t.closest("[data-mode]"); if (m) { TAB.mode = m.dataset.mode; if (TAB.mode !== "journeys") deep(); return renderTab(); }
+        const t = ev.target; if (roadEl.contains(t)) return;  // the On the road view handles its own buttons
+        const m = t.closest("[data-mode]"); if (m) return setMode(m.dataset.mode);
         if (t.closest("[data-act=stop]")) return stopFollow();
         const p = t.closest("[data-preset]");
         if (p) { const s = PRESETS[+p.dataset.preset]; TAB.where = s; api.setYear(s.y, true, 900); api.fly({ lon: s.lon, lat: s.lat, span: 6 }, 1200); deep().then(renderTab, renderTab); return renderTab(); }
@@ -582,7 +596,15 @@
       DEEP.waiting.push(renderTab);
       renderTab();
     },
-    show() { if (!TAB.where && lastAt) TAB.where = { n: "Here", ...lastAt }; deep().then(renderTab, renderTab); renderTab(); },
+    show() { if (!TAB.where && lastAt) TAB.where = { n: "Here", ...lastAt }; deep().then(renderTab, renderTab); renderTab(); if (roadOn) ATLAS.living.show(); },
+    // In "Here and now", a click on the map asks who was there, in this tab; the other views leave it to Here.
+    pick(at) {
+      if (TAB.mode !== "place") return false;
+      lastAt = { lon: at.lon, lat: at.lat, year: api.year };
+      TAB.where = { n: at.name || "Here", lon: at.lon, lat: at.lat, year: api.year };
+      deep().then(renderTab, renderTab); renderTab();
+      return true;
+    },
   });
 
   // ---------- for other plugins: the living world, the life RPG, objects ----------

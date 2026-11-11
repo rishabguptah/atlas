@@ -2,11 +2,13 @@
 // size, a continent's people, a share of world GDP, an empire at its peak, kilometres of railway, days for news to
 // travel). You answer with a range you are 80% sure of; the reveal plays as a short Director scene (the answer, a
 // comparison, your calibration) with "Why?" and "How do we know" one tap away. The tab keeps score: hits, points
-// for tight ranges, and calibration ("you said 80%, you were right 64%"). A daily five, streaks, an endless mode,
+// for tight ranges, and calibration ("you said 80%, you were right 64%"). A daily five (it also shows in the Codex's Today and keeps the
+// Atlas's one streak, ATLAS.today), an endless mode,
 // questions about wherever the map is, and finds. Reveals also visit the spot for the Codex.
 // Data: views/atlas/lenses/guess.py (sourced measures read at a year they give). Progress: localStorage atlas.guess.v1.
 (function () {
   const A = window.ATLAS;
+  const ICO = (n, t, c = "s") => window.PIXEL_ICONS ? PIXEL_ICONS.svg(n, c) : t;  // a pixel glyph (views/pixel/icons.js), or the text one
   const D = () => (typeof LENS_DATA !== "undefined" && LENS_DATA.guess) || null;
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const KIND = { city: "Cities", region: "Continents", gdpshare: "Share of world GDP", gdppc: "Income per person", area: "Empires at their height", rail: "Railways", news: "News travels" };
@@ -19,7 +21,6 @@
   P.h = P.h || []; P.day = P.day || {}; P.st = P.st || { last: null, n: 0, best: 0 }; P.f = P.f || {};
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) { /* private window: progress lasts this visit */ } };
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
-  const dayBefore = s => { const d = new Date(s + "T12:00:00"); d.setDate(d.getDate() - 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
   const answered = id => P.h.find(h => h.id === id);
 
   // ---------- numbers ----------
@@ -51,7 +52,7 @@
   // ---------- questions ----------
   const Q = () => (D() || {}).q || [];
   const byId = id => Q().find(q => q.id === id);
-  const fy = y => api ? api.fmtYear(y) : String(y);
+  const fy = ATLAS.fmtYear;
   function rng(seed) { let a = 0; for (const c of seed) a = (Math.imul(a ^ c.charCodeAt(0), 2654435761) >>> 0); return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
   // The daily five: the same five for a given date, five different kinds of question.
   function daily(date) {
@@ -99,7 +100,7 @@
     ["bull", "Bullseye", "A hit with a range no wider than ×1.5."],
     ["five", "Five in a row", "Five hits running."],
     ["daily", "Daily five", "Finished a daily five."],
-    ["week", "Seven-day streak", "A daily five seven days running."],
+    ["week", "Seven-day streak", "Seven days running on the daily five or the Codex riddle."],
     ["cal", "Calibrated", "Twenty answers, right between 72% and 88% of the time."],
     ["all", "All the lenses", "Answered every kind of question."],
     ["deep", "Deep time", "Answered a question set before 1 CE."],
@@ -111,7 +112,7 @@
     if (res.hit && hi / lo <= 1.5) give("bull");
     let run = 0; for (let i = P.h.length - 1; i >= 0 && P.h[i].hit; i--) run++;
     if (run >= 5) give("five");
-    if (P.st.n >= 7) give("week");
+    if (ATLAS.today.streak() >= 7) give("week");
     const c = calib(); if (c.n >= 20 && c.r >= 0.72 && c.r <= 0.88) give("cal");
     const kinds = new Set(P.h.map(h => (byId(h.id) || {}).k)); if (Object.keys(KIND).every(k => kinds.has(k))) give("all");
     if (q.y < 1) give("deep");
@@ -201,8 +202,7 @@
       if (ds.ids.includes(q.id) && !ds.done.includes(q.id)) {
         P.day[ds.d] = [...ds.done, q.id];
         if (P.day[ds.d].length === DAILY_N) {
-          P.st.n = P.st.last === dayBefore(ds.d) ? P.st.n + 1 : P.st.last === ds.d ? P.st.n : 1;
-          P.st.last = ds.d; P.st.best = Math.max(P.st.best || 0, P.st.n);
+          ATLAS.today.mark();   // the Atlas's one streak, shared with the Codex riddle
           if (!P.f.daily) P.f.daily = ds.d;
         }
       }
@@ -229,62 +229,62 @@
 .gp { --gp: #b4542f; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) 24px 14px; }
 .gp p { margin: 0; }
 .gp .seg { display: flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 14px; overflow: hidden; width: max-content; max-width: 100%; }
-.gp .seg button { border: 0; background: transparent; padding: 6px 8px; cursor: pointer; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; flex: 1 1 auto; color: var(--ink-soft); }
+.gp .seg button { border: 0; background: transparent; padding: 6px 8px; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; flex: 1 1 auto; color: var(--ink-soft); }
 .gp .seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
 .gp .gp-top { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .gp .stat { border: 1px solid var(--rule); background: var(--card); padding: 7px 10px; display: grid; gap: 1px; }
-.gp .stat b { font-family: var(--mono); font-size: 18px; font-weight: 500; font-variant-numeric: tabular-nums; }
-.gp .stat span { font-size: 11.5px; color: var(--ink-soft); line-height: 1.3; }
-.gp .card { border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink); background: var(--card); padding: 12px 14px; display: grid;  grid-template-columns: minmax(0, 1fr); gap: 10px; }
-.gp .k { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gp); display: flex; gap: 10px; }
+.gp .stat b { font-family: var(--mono); font-size: var(--fs-tiny-2); font-weight: 500; font-variant-numeric: tabular-nums; }
+.gp .stat span { font-size: var(--fs-note); color: var(--ink-soft); line-height: 1.3; }
+.gp .card { border: 2px solid var(--ink); box-shadow: var(--sh-float); background: var(--card); padding: 12px 14px; display: grid;  grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.gp .k { font-family: var(--mono); font-size: var(--fs-tiny); letter-spacing: .1em; text-transform: uppercase; color: var(--gp); display: flex; gap: 10px; }
 .gp .k span:last-child { margin-left: auto; color: var(--ink-soft); }
-.gp .qq { font-family: var(--fell); font-weight: 400; font-size: 21px; line-height: 1.25; margin: 0; }
-.gp .hint { font-size: 13px; color: var(--ink-soft); }
+.gp .qq { font-family: var(--fell); font-weight: 400; font-size: var(--fs-h3); line-height: 1.25; margin: 0; }
+.gp .hint { font-size: var(--fs-note); color: var(--ink-soft); }
 .gp .dual { position: relative; height: 44px; margin: 0 9px; touch-action: none; cursor: pointer; }
 .gp .dual .tr { position: absolute; left: 0; right: 0; top: 19px; height: 6px; background: var(--wash); outline: 1px solid var(--rule); }
 .gp .dual .rg { position: absolute; top: 17px; height: 10px; background: var(--gp); opacity: .85; }
-.gp .dual .tk { position: absolute; top: 31px; font-family: var(--mono); font-size: 9.5px; color: var(--ink-soft); transform: translateX(-50%); white-space: nowrap; }
+.gp .dual .tk { position: absolute; top: 31px; font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); transform: translateX(-50%); white-space: nowrap; }
 .gp .dual .tk::before { content: ""; position: absolute; left: 50%; top: -6px; height: 4px; border-left: 1px solid var(--rule); }
-.gp .dual .h { position: absolute; top: 10px; width: 18px; height: 24px; margin-left: -9px; background: var(--card); border: 2px solid var(--ink); box-shadow: 2px 2px 0 var(--ink); cursor: grab; display: grid; place-items: center; font-size: 9px; font-family: var(--mono); }
+.gp .dual .h { position: absolute; top: 10px; width: 18px; height: 24px; margin-left: -9px; background: var(--card); border: 2px solid var(--ink); box-shadow: var(--sh-raise); cursor: grab; display: grid; place-items: center; font-size: var(--fs-tiny); font-family: var(--mono); }
 .gp .dual .h:focus-visible { outline: 3px solid var(--gp); outline-offset: 1px; }
 .gp .dual .truth { position: absolute; top: 4px; height: 36px; border-left: 3px solid var(--ink); }
-.gp .dual .truth::after { content: "▼"; position: absolute; top: -12px; left: -7px; font-size: 11px; color: var(--ink); }
+.gp .dual .truth::after { content: "▼"; position: absolute; top: -12px; left: -7px; font-size: var(--fs-note); color: var(--ink); }
 .gp .ins { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 8px; align-items: end; }
-.gp .ins label { display: grid; gap: 2px; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.gp .ins label { display: grid; gap: 2px; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
 .gp .ins input { font: inherit; font-family: var(--mono); font-size: 15px; padding: 6px 8px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); width: 100%; box-sizing: border-box; text-transform: none; letter-spacing: 0; }
 .gp .ins input:focus { outline: 2px solid var(--gp); }
-.gp .ins .to { padding-bottom: 8px; color: var(--ink-soft); font-size: 13px; }
-.gp .wide { font-family: var(--mono); font-size: 11.5px; color: var(--ink-soft); }
+.gp .ins .to { padding-bottom: 8px; color: var(--ink-soft); font-size: var(--fs-note); }
+.gp .wide { font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); }
 .gp .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.gp .btn { border: 2px solid var(--ink); background: var(--card); color: var(--ink); padding: 7px 14px; cursor: pointer; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; box-shadow: 2px 2px 0 var(--ink); }
+.gp .btn { border: 2px solid var(--ink); background: var(--card); color: var(--ink); padding: 7px 14px; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; box-shadow: var(--sh-raise); }
 .gp .btn.pri { background: var(--ink); color: var(--paper); }
 .gp .btn:active { transform: translate(2px, 2px); box-shadow: none; }
-.gp .lnk { all: unset; cursor: pointer; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.gp .lnk { all: unset; cursor: pointer; font-family: var(--mono); font-size: var(--fs-tiny); text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
 .gp .lnk:focus-visible, .gp .btn:focus-visible { outline: 2px solid var(--gp); outline-offset: 2px; }
-.gp .big { font-family: var(--fell); font-size: 28px; line-height: 1.15; }
+.gp .big { font-family: var(--fell); font-size: var(--fs-h2); line-height: 1.15; }
 .gp .res.hit .k { color: #3f7d3a; } .gp .res.miss .k { color: var(--gp); }
-.gp ul.ctx { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
-.gp .src { font-size: 12px; color: var(--ink-soft); }
+.gp ul.ctx { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: var(--fs-read); }
+.gp .src { font-size: var(--fs-note); color: var(--ink-soft); }
 .gp .src a { color: inherit; }
 .gp .finds { display: flex; flex-wrap: wrap; gap: 6px; }
-.gp .find { border: 1px solid var(--gp); color: var(--gp); padding: 3px 8px; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; }
+.gp .find { border: 1px solid var(--gp); color: var(--gp); padding: 3px 8px; font-family: var(--mono); font-size: var(--fs-tiny); letter-spacing: .04em; }
 .gp .find.lock { border-color: var(--rule); color: var(--ink-soft); opacity: .7; }
 .gp .dots { display: flex; gap: 6px; }
-.gp .dots i { width: 22px; height: 22px; display: grid; place-items: center; font-style: normal; font-family: var(--mono); font-size: 12px; border: 2px solid var(--ink); background: var(--wash); }
+.gp .dots i { width: 22px; height: 22px; display: grid; place-items: center; font-style: normal; font-family: var(--mono); font-size: var(--fs-tiny); border: 2px solid var(--ink); background: var(--wash); }
 .gp .dots i.hit { background: #3f7d3a; color: #fff; border-color: #2c5a29; }
 .gp .dots i.miss { background: var(--gp); color: #fff; }
 .gp .dots i.cur { box-shadow: 0 0 0 2px var(--gp); }
 .gp .cal { position: relative; height: 14px; background: var(--wash); outline: 1px solid var(--rule); }
 .gp .cal i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--gp); }
 .gp .cal b { position: absolute; top: -4px; bottom: -4px; border-left: 2px dashed var(--ink); }
-.gp h3 { font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; }
+.gp h3 { font-family: var(--mono); font-size: var(--fs-tiny); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; color: var(--ink-soft); margin: 6px 0 0; display: flex; }
 .gp h3 span:last-child { margin-left: auto; }
-.gp table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+.gp table { border-collapse: collapse; width: 100%; font-size: var(--fs-note); }
 .gp td { padding: 4px 0; border-bottom: 1px solid var(--rule); }
-.gp td.n { text-align: right; font-family: var(--mono); font-size: 12px; white-space: nowrap; }
+.gp td.n { text-align: right; font-family: var(--mono); font-size: var(--fs-tiny); white-space: nowrap; }
 .gp ul.hist { list-style: none; margin: 0; padding: 0; display: grid; }
-.gp ul.hist li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 8px; padding: 5px 0; border-bottom: 1px solid var(--rule); font-size: 13.5px; }
-.gp ul.hist li .m { grid-column: 2; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
+.gp ul.hist li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 8px; padding: 5px 0; border-bottom: 1px solid var(--rule); font-size: var(--fs-note); }
+.gp ul.hist li .m { grid-column: 2; font-family: var(--mono); font-size: var(--fs-tiny); color: var(--ink-soft); }
 .gp ul.hist button { all: unset; cursor: pointer; }
 .gp ul.hist button:hover { text-decoration: underline; }
 @media (max-width: 640px) { .gp .qq { font-size: 19px; } .gp .gp-top { grid-template-columns: repeat(3, minmax(0, 1fr)); } }`;
@@ -296,7 +296,7 @@
     return `<div class="seg" role="group" aria-label="Mode">${MODES.map(([m, n]) => `<button data-a="mode" data-m="${m}" aria-pressed="${S.mode === m}">${n}</button>`).join("")}</div>
       <div class="gp-top">
         <div class="stat"><b>${c.n >= 1 ? Math.round(c.r * 100) + "%" : "–"}</b><span>inside your 80% ranges${c.n ? ` (${c.hit}/${c.n})` : ""}</span></div>
-        <div class="stat"><b>${P.st.last === today() || P.st.last === dayBefore(today()) ? P.st.n : 0}</b><span>day streak${P.st.best ? ` · best ${P.st.best}` : ""}</span></div>
+        <div class="stat"><b>${ATLAS.today.streak()}</b><span>day streak${ATLAS.today.best() ? ` · best ${ATLAS.today.best()}` : ""}</span></div>
         <div class="stat"><b>${pts.toLocaleString("en")}</b><span>points</span></div>
       </div>`;
   }
@@ -346,7 +346,7 @@
       ${(q.ctx || []).filter(Boolean).length ? `<ul class="ctx">${q.ctx.filter(Boolean).map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : ""}
       ${S.finds.length ? `<div class="finds">${S.finds.map(id => { const f = FINDS.find(x => x[0] === id); return f ? `<span class="find" title="${esc(f[2])}">★ ${esc(f[1])}</span>` : ""; }).join("")}</div>` : ""}
       <p class="src">${srcs.map(s => s.url ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.cite)}</a>` : esc(s.cite)).join(" · ")} · ${esc(q.conf || "")}</p>
-      <div class="row"><button class="btn pri" data-a="next">${more}</button><button class="btn" data-a="replay">▶ Replay</button><button class="lnk" data-a="why">Ask the panel why</button></div>
+      <div class="row"><button class="btn pri" data-a="next">${more}</button><button class="btn" data-a="replay">${ICO("play", "▶")} Replay</button><button class="lnk" data-a="why">Ask the panel why</button></div>
     </div>`;
   }
   function shareText(ds) {
@@ -359,7 +359,7 @@
     const hits = list.filter(x => x[1] && x[1].hit).length;
     return `${dots()}<div class="card"><div class="k"><span>Today's five, done</span><span>${esc(ds.d)}</span></div>
       <p class="big">${hits} of ${DAILY_N} inside your ranges</p>
-      <p class="hint">${hits === 4 ? "Four of five is exactly what a calibrated 80% looks like." : hits === 5 ? "Five of five: perfect, or your ranges were wide. Check the points." : "Over many days, a calibrated player lands four in five."} Streak: ${P.st.n} day${P.st.n === 1 ? "" : "s"}. A new five arrives tomorrow.</p>
+      <p class="hint">${hits === 4 ? "Four of five is exactly what a calibrated 80% looks like." : hits === 5 ? "Five of five: perfect, or your ranges were wide. Check the points." : "Over many days, a calibrated player lands four in five."} Streak: ${ATLAS.today.streak()} day${ATLAS.today.streak() === 1 ? "" : "s"}. A new five arrives tomorrow.</p>
       <ul class="hist">${list.map(([q, h]) => q && h ? `<li><span>${h.hit ? "✓" : "✗"}</span><button data-a="look" data-id="${esc(q.id)}">${esc(q.p)}</button><span class="m">${esc(U[q.u].f(q.v))} · you said ${esc(U[q.u].f(h.lo))}–${esc(U[q.u].f(h.hi))}</span></li>` : "").join("")}</ul>
       <div class="row"><button class="btn pri" data-a="mode" data-m="endless">Keep playing</button><button class="btn" data-a="mode" data-m="here">About here</button><button class="lnk" data-a="share">Copy result</button></div>
     </div>`;
@@ -439,7 +439,7 @@
   }
 
   ATLAS.tab({
-    id: "guess", name: "Guess",
+    id: "guess", name: "Guess", icon: "guess", mode: "Guess the past",
     mount(pane, a) {
       el = pane; api = a;
       el.addEventListener("click", onClick);
@@ -453,5 +453,8 @@
       else { render(); if (S.stage === "ask") stage(); }
     },
   });
-  A.guess = { list: Q, daily: () => daily(today()), calibration: () => calib(), play: id => { const q = byId(id); if (!q) return false; S.q = q; S.stage = "ask"; S.mode = "endless"; startRange(q); api.setTab("guess"); return true; } };
+  // For the Codex's Today: how many of today's five are left, and a way to play them.
+  const todayLeft = () => { try { const ds = dailyState(); return ds.ids.length - ds.done.filter(id => ds.ids.includes(id)).length; } catch (e) { return 0; } };
+  const playDaily = () => { if (!api) return; S.mode = "daily"; S.q = null; S.stage = "ask"; api.setTab("guess"); };
+  A.guess = { list: Q, daily: () => daily(today()), todayLeft, playDaily, calibration: () => calib(), play: id => { const q = byId(id); if (!q) return false; S.q = q; S.stage = "ask"; S.mode = "endless"; startRange(q); api.setTab("guess"); return true; } };
 })();

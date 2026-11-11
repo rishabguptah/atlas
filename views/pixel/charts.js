@@ -12,7 +12,8 @@
 (function (global) {
   const PX = 3, INK = "#221f1a";
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const fmtYear = y => y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : `${y}`;
+  // The Atlas's year format when it is on the page ("300 CE", "45,000 years ago"); a bare page keeps the short one.
+  const fmtYear = y => global.ATLAS && global.ATLAS.fmtYear ? global.ATLAS.fmtYear(y) : y < 0 ? `${-y} BCE` : y === 0 ? "1 CE" : `${y}`;
   const fmtShortYear = y => y < 0 ? `${-y}BC` : `${y}`;
   const compact = n => n == null || !isFinite(n) ? "–" : Math.abs(n) >= 1e9 ? +(n / 1e9).toFixed(1) + "B" : Math.abs(n) >= 1e6 ? +(n / 1e6).toFixed(1) + "M" : Math.abs(n) >= 1e4 ? Math.round(n / 1e3) + "K" : Math.abs(n) >= 1e3 ? +(n / 1e3).toFixed(1) + "K" : Math.abs(n) >= 10 ? String(Math.round(n)) : String(+n.toFixed(2));
   let uid = 0;
@@ -227,36 +228,36 @@ ${o.yearA != null ? `<div class="vz-db-key"><span><i class="ring"></i>${esc(fmtY
   }
   const CSS = `
 .vz { margin: 10px 0 4px; position: relative; }
-.vz-k { display: block; font-family: "Silkscreen", "Pixelify Sans", ui-monospace, monospace; font-size: 8px; line-height: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft, #625e51); margin: 0; }
+.vz-k { display: block; font-family: "Silkscreen", "Pixelify Sans", ui-monospace, monospace; font-size: var(--fs-tiny); line-height: 16px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft, #625e51); margin: 0; }
 .vz-plot { position: relative; width: max-content; max-width: 100%; }
 .vz-svg { display: block; image-rendering: pixelated; max-width: 100%; height: auto; overflow: visible; }
-.vz-v { position: absolute; transform: translate(-50%, -100%); font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; line-height: 8px; color: var(--ink, #221f1a); background: var(--card, #fbf8ef); padding: 1px 2px; white-space: nowrap; pointer-events: none; }
+.vz-v { position: absolute; transform: translate(-50%, -100%); font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); line-height: 8px; color: var(--ink, #221f1a); background: var(--card, #fbf8ef); padding: 1px 2px; white-space: nowrap; pointer-events: none; }
 .vz-now { box-shadow: 0 0 0 1px var(--ink, #221f1a); }
-.vz-axis, .vz-ticks { display: flex; justify-content: space-between; font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; line-height: 12px; color: var(--ink-soft, #625e51); max-width: 372px; }
+.vz-axis, .vz-ticks { display: flex; justify-content: space-between; font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); line-height: 12px; color: var(--ink-soft, #625e51); max-width: 372px; }
 .vz-ticks { position: relative; height: 12px; margin-left: 96px; max-width: 252px; }
 .vz-ticks span { position: absolute; transform: translateX(-50%); }
-.vz-note { font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; color: var(--ink-soft, #625e51); }
+.vz-note { font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); color: var(--ink-soft, #625e51); }
 .vz-hover { position: absolute; top: 0; bottom: 0; width: 3px; background: var(--ink, #221f1a); opacity: .35; pointer-events: none; }
 .vz-labs { position: relative; height: 14px; max-width: 372px; }
-.vz-tl { position: absolute; top: 1px; font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; line-height: 10px; color: var(--ink, #221f1a); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-left: 2px; border-left: 3px solid var(--ink, #221f1a); }
+.vz-tl { position: absolute; top: 1px; font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); line-height: 10px; color: var(--ink, #221f1a); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-left: 2px; border-left: 3px solid var(--ink, #221f1a); }
 .vz-db-row { display: grid; grid-template-columns: 92px auto 44px 40px; gap: 4px; align-items: center; min-height: 18px; }
 .vz-db-row.me .vz-db-n { font-weight: 600; color: var(--ink); }
-.vz-db-n { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-soft, #625e51); }
-.vz-db-v, .vz-db-d { font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; text-align: right; color: var(--ink, #221f1a); }
+.vz-db-n { font-size: var(--fs-note); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-soft, #625e51); }
+.vz-db-v, .vz-db-d { font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); text-align: right; color: var(--ink, #221f1a); }
 .vz-db-d.up::before { content: "▲ "; } .vz-db-d.down::before { content: "▼ "; }
-.vz-db-key { display: flex; gap: 14px; font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; color: var(--ink-soft); margin-bottom: 2px; }
+.vz-db-key { display: flex; gap: 14px; font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); color: var(--ink-soft); margin-bottom: 2px; }
 .vz-db-key i { display: inline-block; width: 7px; height: 7px; margin-right: 4px; vertical-align: -1px; box-sizing: border-box; border: 2px solid var(--ink, #221f1a); }
 .vz-db-key i.dot { background: var(--vz-c); }
 .vz-db-key i.ring { background: #f6f0dc; }
 .vz-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 10px 3px 12px 0; }
-.vz-tile { border: 3px solid var(--ink, #221f1a); background: var(--card, #fbf8ef); box-shadow: 3px 3px 0 var(--ink, #221f1a); padding: 4px 6px 2px; min-width: 0; }
+.vz-tile { border: 3px solid var(--ink, #221f1a); background: var(--card, #fbf8ef); box-shadow: var(--sh-float, 3px 3px 0 #221f1a); padding: 4px 6px 2px; min-width: 0; }
 .vz-tile .vz { margin: 2px 0 0; } .vz-tile .vz-axis, .vz-tile .vz-v { display: none; } .vz-tile .vz-note { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.vz-big { display: block; font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace; font-size: 24px; line-height: 26px; font-weight: 600; color: var(--ink, #221f1a); }
+.vz-big { display: block; font-family: "Pixelify Sans", "Silkscreen", ui-monospace, monospace; font-size: var(--fs-h3); line-height: 26px; font-weight: 600; color: var(--ink, #221f1a); }
 .vz-multi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 8px; }
 .vz-mcell { min-width: 0; cursor: default; } .vz-mcell[data-a] { cursor: pointer; } .vz-mcell.on .vz-mn { color: var(--ink); font-weight: 600; }
 .vz-mcell .vz { margin: 0; } .vz-mcell .vz-axis { display: none; }
-.vz-mn { display: block; font-size: 12.5px; line-height: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-soft, #625e51); }
-.vz-tip { position: fixed; z-index: 50; pointer-events: none; font-family: "Silkscreen", ui-monospace, monospace; font-size: 8px; line-height: 12px; padding: 3px 6px; background: var(--ink, #221f1a); color: #f6f0dc; white-space: nowrap; }
+.vz-mn { display: block; font-size: var(--fs-note); line-height: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-soft, #625e51); }
+.vz-tip { position: fixed; z-index: 50; pointer-events: none; font-family: "Silkscreen", ui-monospace, monospace; font-size: var(--fs-tiny); line-height: 12px; padding: 3px 6px; background: var(--ink, #221f1a); color: #f6f0dc; white-space: nowrap; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .vz-svg { filter: none; } }
 `;
   function install() {
