@@ -326,8 +326,9 @@ body { background: var(--sea); font-family: var(--f-prose); }
   .app .dr, .app.directing .dr { bottom: calc(var(--peek, 92px) - 8px + env(safe-area-inset-bottom, 0px)); }
   /* and sits under the sheet, so a sheet pulled up over a playing story is all readable and tappable. */
   .app .dr { z-index: 19; }
-  /* Each tab group keeps its own width in the sideways scroller, so one group's tabs never slide under the next. */
-  .app .tabs .tg { flex: none; }
+  /* The group labels are hidden here, so the tabs flow as one row set: a group sized without its open tab's extra width
+     let that tab push the group's last tab under the next group's first. */
+  .app .tabs .tg { display: contents; }
 }
 
 /* Icons inside the map's own layer are not the map's SVG. */
