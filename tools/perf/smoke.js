@@ -61,7 +61,11 @@ const KEYS = ["k", "k", "?", "Escape", "t", "t", "t", "0", ".", ",", "r", "n", "
     let step = "load"; const errors = [], steps = [];
     p.on("pageerror", e => errors.push(`[${step}] ${e.message}`));
     p.on("console", m => { if (m.type() === "error" && !/Failed to load resource/.test(m.text())) errors.push(`[${step}] console: ${m.text()}`); });
-    const go = async (name, fn) => { step = name; try { await fn(); } catch (e) { errors.push(`[${name}] walk: ${e.message.split("\n")[0]}`); } steps.push(name); await p.waitForTimeout(250); };
+    // Playwright's first line says what timed out; the reason (what covers the element, or that it is off screen) is in its log.
+    const why = e => { const ls = e.message.split("\n"); return [ls[0], ...ls.filter(l => /intercepts pointer|not visible|outside of the viewport|not stable|not enabled|detached/.test(l)).slice(-1).map(l => l.trim())].join(" | "); };
+    const go = async (name, fn) => { step = name; try { await fn(); } catch (e) { errors.push(`[${name}] walk: ${why(e)}`); } steps.push(name); await p.waitForTimeout(250); };
+    // First paint, as perf.js marks it: the map canvas has a painted pixel at its centre.
+    await p.addInitScript(() => { const t = setInterval(() => { const cv = document.querySelector("canvas.pixelmap"); if (cv && cv.width > 0) { try { const d = cv.getContext("2d").getImageData(cv.width >> 1, cv.height >> 1, 1, 1).data; if (d[3] > 0 && d[0] + d[1] + d[2] > 0) { window.__map = performance.now(); clearInterval(t); } } catch (e) {} } }, 50); });
     await go("load", async () => { await p.goto(URL0, { waitUntil: "load", timeout: 120000 }); await p.waitForFunction(() => window.ATLAS && ATLAS.api && window.__map, null, { timeout: 90000 }); });
     // Every tab, by its own button where it has one, else through the API.
     const tabs = await p.evaluate(() => [...new Set(["guide", "now", "here", ...(ATLAS.tabs || []).filter(Boolean).map(d => d.id)])]);
